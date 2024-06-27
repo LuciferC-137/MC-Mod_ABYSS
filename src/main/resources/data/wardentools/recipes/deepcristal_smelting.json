@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "wardentools:deepcristal"
+  },
+  "result": "wardentools:deepingots",
+  "experience": 2,
+  "cookingtime": 400
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E E",
+    "EEE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:deepingots"
+    }
+  },
+  "result": {
+    "item": "wardentools:deepcristal_chestplate"
+  }
+}

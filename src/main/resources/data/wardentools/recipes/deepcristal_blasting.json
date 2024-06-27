@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "wardentools:deepcristal"
+  },
+  "result": "wardentools:deepingots",
+  "experience": 2,
+  "cookingtime": 200
+}

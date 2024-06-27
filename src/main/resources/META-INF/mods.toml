@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+
+license="All Rights Reserved"
+showAsResourcePack=false
+
+[[mods]]
+  modId="wardentools"
+  version="0.1"
+  displayName="Deep Armor"
+  logoFile="logo.png"
+  credits="I'd like to thank my mother and father."
+  authors="Lucifer_C-137"
+  description='''Adds cool armors from ancient city'''
+
+[[dependencies.wardentools]]
+  modId="forge"
+  mandatory=true
+  versionRange="${forge_version_range}"
+  ordering="NONE"
+  side="BOTH"
+
+[[dependencies.wardentools]]
+  modId="minecraft"
+  mandatory=true
+  versionRange="${minecraft_version_range}"
+  ordering="NONE"
+  side="BOTH"
+
+[[dependencies.wardentools]]
+  modId="terrablender"
+  mandatory=true
+  versionRange="${terrablender_version_range}"
+  ordering="NONE"
+  side="BOTH"

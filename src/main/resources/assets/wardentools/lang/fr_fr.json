@@ -1,0 +1,24 @@
+{ 
+	"item.wardentools.deepcristal_helmet": "Casque des abîmes",
+	"item.wardentools.deepcristal_chestplate": "Plastron des abîmes",
+	"item.wardentools.deepcristal_leggings": "Jambières des abîmes",
+	"item.wardentools.deepcristal_boots": "Bottes des abîmes",
+	"item.wardentools.deepingots": "Lingot des abîmes",
+	"item.wardentools.warden_heart": "Coeur de Warden",
+	"item.wardentools.deeplurker_spawn_egg": "Oeuf d'apparition de Rôdeur des abîmes",
+	
+	"block.wardentools.deepblock": "Bloc des abîmes",
+	"block.wardentools.deepcristal": "Cristal des abîmes",
+	
+	"block.wardentools.darktree_log": "Bûche de sombrabre",
+	"block.wardentools.darktree_leaves": "Feuilles de sombrabre",
+	"block.wardentools.stripped_darktree_log": "Bûche de sombrabre écorcée",
+	"block.wardentools.darktree_wood": "Bois de sombrabre",
+	"block.wardentools.stripped_darktree_wood": "Bois de sombrabre écorcée",
+	"block.wardentools.darktree_planks": "Planches de sombrabre",
+	"block.wardentools.darktree_sapling": "Pousse de sombrabre",
+	"block.wardentools.darkdirt": "Terre Noire",
+	"block.wardentools.darkgrass_block": "Bloc d'herbe noire",
+	
+	"entity.wardentools.deeplurker": "Rôdeur des abîmes"
+}

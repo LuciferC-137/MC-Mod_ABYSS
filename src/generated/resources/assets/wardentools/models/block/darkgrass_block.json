@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "wardentools:block/darkdirt",
+    "side": "wardentools:block/darkgrass_block_side",
+    "top": "wardentools:block/darkgrass_block_top"
+  }
+}
