@@ -1,3 +1,22 @@
+---------------
+MINECRAFT ABYSS
+---------------
+
+
+This mod is a small addition to vanilla with a essentially a new dimension "abyss".
+The abyss is completly overwhelmed with sculk and wardens are listening closely.
+The main features are:
+	- New set of armor
+	- New material
+	- New tree
+	- New mob
+	- New structures generating in the abyss
+
+
+
+------------------
+FORGE INSTRUCTIONS
+------------------
 
 Source installation information for modders
 -------------------------------------------
