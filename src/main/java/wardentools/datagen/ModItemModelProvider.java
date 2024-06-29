@@ -13,6 +13,7 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.registries.ArmorRegistry;
@@ -51,12 +52,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         //Simple Item
         simpleItem(ItemRegistry.DEEPINGOTS);
         simpleItem(ItemRegistry.WARDEN_HEART);
+        simpleItem(ItemRegistry.DEEP_FRUIT);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
         blockItemWithItemModel(BlockRegistry.DARKTREE_SAPLING);
+        blockItemWithItemModel(BlockRegistry.DARKTREE_DOOR);
         
-        //Blocks did not created their own item model in the blockstate generator
+        //Blocks that did not created their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/darktree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_DARKTREE_WOOD.getId().getPath(),
@@ -65,14 +68,24 @@ public class ModItemModelProvider extends ItemModelProvider {
         		new ResourceLocation(ModMain.MOD_ID, "block/stripped_darktree_log"));
         withExistingParent(BlockRegistry.DARKTREE_LOG.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/darktree_log"));
+        withExistingParent(BlockRegistry.DARKTREE_STAIR.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_stair"));
+        withExistingParent(BlockRegistry.DARKTREE_SLAB.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_slab"));
+        withExistingParent(BlockRegistry.DARKTREE_PRESSURE_PLATE.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_pressure_plate"));
+        withExistingParent(BlockRegistry.DARKTREE_FENCE_GATE.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_fence_gate"));
         
-        //Spawn Egg
-       
+        
+        //Blocks that use custom methods
+        fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);
+        buttonItem(BlockRegistry.DARKTREE_BUTTON, BlockRegistry.DARKTREE_PLANKS);
+        trapdoorItem(BlockRegistry.DARKTREE_TRAPDOOR);
         
     }
-
- 
     
+ 
     private ItemModelBuilder blockItemWithItemModel(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
@@ -83,6 +96,21 @@ public class ModItemModelProvider extends ItemModelProvider {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(ModMain.MOD_ID,"item/" + item.getId().getPath()));
+    }
+    
+    public void trapdoorItem(RegistryObject<Block> block) {
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
+                modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath() + "_bottom"));
+    }
+
+    public void fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
+                .texture("texture",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    }
+
+    public void buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
+                .texture("texture",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
     
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {

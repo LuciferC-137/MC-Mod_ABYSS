@@ -23,7 +23,6 @@ public class ModBiomes {
             new ResourceLocation(ModMain.MOD_ID, "deep_forest"));
 	public static final ResourceKey<Biome> WASTE_LAND = ResourceKey.create(Registries.BIOME,
             new ResourceLocation(ModMain.MOD_ID, "waste_land"));
-	
 
     public static void bootstrap(BootstapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));
@@ -88,11 +87,12 @@ public class ModBiomes {
                 		context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
         
         //need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
-        globalAbyssGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(biomeBuilder);
+        BiomeDefaultFeatures.addSurfaceFreezing(biomeBuilder);
+        BiomeDefaultFeatures.addSculk(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultCrystalFormations(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
         BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
-        
-        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DARKTREE_PLACED_KEY);
         
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)

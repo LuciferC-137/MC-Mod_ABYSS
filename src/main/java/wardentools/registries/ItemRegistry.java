@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
+import wardentools.items.ModFoods;
 import wardentools.items.WardenHeartItem;
 
 public class ItemRegistry {
@@ -64,6 +65,39 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> DARKTREE_PLANKS =
 			REGISTAR.register("darktree_planks",
 			() -> new BlockItem(BlockRegistry.DARKTREE_PLANKS.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARKTREE_STAIRS =
+			REGISTAR.register("darktree_stair",
+			() -> new BlockItem(BlockRegistry.DARKTREE_STAIR.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARKTREE_SLAB =
+			REGISTAR.register("darktree_slab",
+			() -> new BlockItem(BlockRegistry.DARKTREE_SLAB.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARKTREE_BUTTON =
+			REGISTAR.register("darktree_button",
+			() -> new BlockItem(BlockRegistry.DARKTREE_BUTTON.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARKTREE_PRESSURE_PLATE =
+			REGISTAR.register("darktree_pressure_plate",
+			() -> new BlockItem(BlockRegistry.DARKTREE_PRESSURE_PLATE.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARKTREE_DOOR =
+			REGISTAR.register("darktree_door",
+			() -> new BlockItem(BlockRegistry.DARKTREE_DOOR.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARKTREE_TRAPDOOR =
+			REGISTAR.register("darktree_trapdoor",
+			() -> new BlockItem(BlockRegistry.DARKTREE_TRAPDOOR.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARKTREE_FENCE =
+			REGISTAR.register("darktree_fence",
+			() -> new BlockItem(BlockRegistry.DARKTREE_FENCE.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARKTREE_FENCE_GATE =
+			REGISTAR.register("darktree_fence_gate",
+			() -> new BlockItem(BlockRegistry.DARKTREE_FENCE_GATE.get(), new Item.Properties()));
+	
 	public static final RegistryObject<Item> DARKTREE_SAPLING =
 			REGISTAR.register("darktree_sapling",
 			() -> new BlockItem(BlockRegistry.DARKTREE_SAPLING.get(), new Item.Properties()));
@@ -85,5 +119,10 @@ public class ItemRegistry {
 			() -> new ForgeSpawnEggItem(ModEntities.DEEPLURKER, 0x005693,
 					0x00ebff, new Item.Properties()));
 	
-
+	public static final RegistryObject<Item> DEEP_FRUIT =
+			REGISTAR.register("deep_fruit",
+			() -> new Item(new Item.Properties()
+					.food(ModFoods.DEEP_FRUIT_PROPERTIES)
+					.stacksTo(64)
+					));
 }

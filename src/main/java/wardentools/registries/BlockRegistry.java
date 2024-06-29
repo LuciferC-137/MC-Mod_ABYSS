@@ -5,14 +5,12 @@ import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -84,6 +82,37 @@ public class BlockRegistry {
 		    	
 		    });
 	
+	public static final RegistryObject<Block> DARKTREE_STAIR = REGISTAR.register("darktree_stair",
+            () -> new StairBlock(Blocks.OAK_STAIRS.defaultBlockState(),
+            		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)));
+	
+	public static final RegistryObject<Block> DARKTREE_SLAB = REGISTAR.register("darktree_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)));
+	
+	public static final RegistryObject<Block> DARKTREE_BUTTON = REGISTAR.register("darktree_button",
+            () -> new ButtonBlock(BlockSetType.OAK, 10,
+            		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+            		));
+	
+	public static final RegistryObject<Block> DARKTREE_PRESSURE_PLATE = REGISTAR.register("darktree_pressure_plate",
+            () -> new PressurePlateBlock(BlockSetType.OAK,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
+	
+	public static final RegistryObject<Block> DARKTREE_FENCE = REGISTAR.register("darktree_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)));
+	
+	public static final RegistryObject<Block> DARKTREE_FENCE_GATE = REGISTAR.register("darktree_fence_gate",
+            () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)));
+	
+	public static final RegistryObject<Block> DARKTREE_DOOR = REGISTAR.register("darktree_door",
+            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)
+            		.noOcclusion()));
+	
+	public static final RegistryObject<Block> DARKTREE_TRAPDOOR = REGISTAR.register("darktree_trapdoor",
+            () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)
+            		.noOcclusion()));
+	
+ 
 	public static final RegistryObject<Block> DARKTREE_LEAVES = REGISTAR.register("darktree_leaves",
 			() -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
 					.lightLevel((state) -> 11)) {

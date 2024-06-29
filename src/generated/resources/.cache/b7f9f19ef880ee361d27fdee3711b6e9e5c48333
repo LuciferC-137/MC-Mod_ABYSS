@@ -1,6 +1,14 @@
-// 1.20.4	2024-06-08T19:00:11.9666854	Item Models: wardentools
+// 1.20.4	2024-06-29T18:00:19.4881228	Item Models: wardentools
+870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
+2ff2920242f212bb929d1e90c3067d261230dab1 assets/wardentools/models/item/darktree_door.json
+3354bf96093acd396295256292028c0a8676e6c7 assets/wardentools/models/item/darktree_fence.json
+177c0163bab52f7c11f49d214085cdc5971b8fea assets/wardentools/models/item/darktree_fence_gate.json
 296a1edc4651e3ab4b1bd3b07fc7627e086b9ab9 assets/wardentools/models/item/darktree_log.json
+de83d2a261f049509646088b13ca740d55e297c9 assets/wardentools/models/item/darktree_pressure_plate.json
 5ddc66d5604e2b53dc978bd5003720f9633c2b0c assets/wardentools/models/item/darktree_sapling.json
+405871e71c1d5a0823329fc40dde5d32a5e68121 assets/wardentools/models/item/darktree_slab.json
+b2f3a969469e5e3c9fda37d848ceef30f76072c7 assets/wardentools/models/item/darktree_stair.json
+9e76d716b05b3bb48a1d5099174aea81ec2f58a8 assets/wardentools/models/item/darktree_trapdoor.json
 d676ad7b5b2f157b1cb496608c3317f202baa939 assets/wardentools/models/item/darktree_wood.json
 612fe5b76c2dddff4c31a60401102131d92879cf assets/wardentools/models/item/deepcristal.json
 4e799593736356aa9fe33c05c984218884ac1e77 assets/wardentools/models/item/deepcristal_boots.json
@@ -48,6 +56,7 @@ b133d2cfef508948acd5b01845a6ca9a4d6a2ecb assets/wardentools/models/item/deepcris
 8adf3c418391753122129642c95bf9a5f5dcd0b3 assets/wardentools/models/item/deepcristal_leggings_quartz_trim.json
 96b9b323813ef4c2903a7fcdf4e67a57d3ddaff8 assets/wardentools/models/item/deepcristal_leggings_redstone_trim.json
 c5601a628d3e815a6009f166c0a91ee346230c75 assets/wardentools/models/item/deepingots.json
+2a9e549dc648cc8057df5b206cea9d58fd8f403b assets/wardentools/models/item/deep_fruit.json
 7a7d9fd169318dfa32e885c5db7cb5abbbccce3d assets/wardentools/models/item/stripped_darktree_log.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json

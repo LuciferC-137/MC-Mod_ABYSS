@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  E",
+    " EE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:darktree_planks"
+    }
+  },
+  "result": {
+    "item": "wardentools:darktree_stair",
+    "count": 6
+  }
+}

@@ -43,6 +43,12 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 		this.tag(BlockTags.DIRT)
 			.add(BlockRegistry.DARKDIRT.get())
 			.add(BlockRegistry.DARKGRASS_BLOCK.get());
+		
+		this.tag(BlockTags.FENCES)
+			.add(BlockRegistry.DARKTREE_FENCE.get());
+		
+		this.tag(BlockTags.FENCE_GATES)
+			.add(BlockRegistry.DARKTREE_FENCE_GATE.get());
 
 
     }

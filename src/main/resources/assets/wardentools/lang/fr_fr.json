@@ -6,6 +6,7 @@
 	"item.wardentools.deepingots": "Lingot des abîmes",
 	"item.wardentools.warden_heart": "Coeur de Warden",
 	"item.wardentools.deeplurker_spawn_egg": "Oeuf d'apparition de Rôdeur des abîmes",
+	"item.wardentools.deep_fruit": "Fruit des abîmes",
 	
 	"block.wardentools.deepblock": "Bloc des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",
@@ -19,6 +20,14 @@
 	"block.wardentools.darktree_sapling": "Pousse de sombrabre",
 	"block.wardentools.darkdirt": "Terre Noire",
 	"block.wardentools.darkgrass_block": "Bloc d'herbe noire",
+		"block.wardentools.darktree_stair": "Escalier en sombrabre",
+	"block.wardentools.darktree_slab": "Dalle en sombrabre",
+	"block.wardentools.darktree_button": "Bouton en sombrabre",
+	"block.wardentools.darktree_pressure_plate": "Plaque de pression en sombrabre",
+	"block.wardentools.darktree_fence": "Barrière en sombrabre",
+	"block.wardentools.darktree_fence_gate": "Portillon en sombrabre",
+	"block.wardentools.darktree_door": "Porte en sombrabre",
+	"block.wardentools.darktree_trapdoor": "Trape en sombrabre",
 	
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes"
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:darktree_planks"
+    }
+  },
+  "result": {
+    "item": "wardentools:darktree_trapdoor",
+    "count": 2
+  }
+}

@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import terrablender.api.SurfaceRuleManager;
+import wardentools.GUI.ModCreativeTabs;
 import wardentools.entity.ModEntities;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.registries.ArmorRegistry;
@@ -41,6 +42,7 @@ public class ModMain {
 		ModTrunkPlacerTypes.TRUNK_PLACER.register(bus);
 		ModFoliagePlacers.FOLIAGE_PLACERS.register(bus);
 		ModEntities.ENTITY_TYPES.register(bus);
+		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);;
 		
 		ModTerrablender.registerBiomes();
 
@@ -64,43 +66,6 @@ public class ModMain {
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ItemRegistry.DEEPINGOTS);
-        }
-        
-        if(event.getTabKey()==CreativeModeTabs.COMBAT) {
-        	event.accept(ArmorRegistry.DEEPCRISTAL_HELMET);
-            event.accept(ArmorRegistry.DEEPCRISTAL_CHESTPLATE);
-            event.accept(ArmorRegistry.DEEPCRISTAL_LEGGINGS);
-            event.accept(ArmorRegistry.DEEPCRISTAL_BOOTS);
-        }
-        
-        if(event.getTabKey()==CreativeModeTabs.BUILDING_BLOCKS) {
-        	event.accept(ItemRegistry.DEEPBLOCK);
-        	event.accept(ItemRegistry.DARKTREE_WOOD);
-        	event.accept(ItemRegistry.STRIPPED_DARKTREE_LOG);
-        	event.accept(ItemRegistry.STRIPPED_DARKTREE_WOOD);
-        	event.accept(ItemRegistry.DARKTREE_PLANKS);
-        }
-        
-        if (event.getTabKey()==CreativeModeTabs.NATURAL_BLOCKS) {
-        	event.accept(ItemRegistry.DEEPCRISTAL);
-        	event.accept(ItemRegistry.DARKTREE_LEAVES);
-        	event.accept(ItemRegistry.DARKTREE_LOG);
-        	event.accept(ItemRegistry.DARKTREE_SAPLING);
-        	event.accept(ItemRegistry.DARKDIRT);
-        	event.accept(ItemRegistry.DARKGRASS_BLOCK);
-        	
-        }
-        
-        if (event.getTabKey()==CreativeModeTabs.TOOLS_AND_UTILITIES) {
-        	event.accept(ItemRegistry.WARDEN_HEART);
-        }
-        
-        if (event.getTabKey()==CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-        	event.accept(ItemRegistry.ABYSS_PORTAL);
-        }
-        
-        if (event.getTabKey()==CreativeModeTabs.SPAWN_EGGS) {
-        	event.accept(ItemRegistry.DEEPLURKER_EGG);
         }
 	}
 	

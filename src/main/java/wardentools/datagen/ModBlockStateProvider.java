@@ -41,6 +41,25 @@ public class ModBlockStateProvider extends BlockStateProvider {
         logBlock((RotatedPillarBlock) BlockRegistry.DARKTREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_DARKTREE_LOG.get());
         
+        // Registering block states for planks derivates
+        stairsBlock(((StairBlock)BlockRegistry.DARKTREE_STAIR.get()),
+        		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()));
+        slabBlock(((SlabBlock)BlockRegistry.DARKTREE_SLAB.get()),
+        		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()),
+        		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()));
+        buttonBlock(((ButtonBlock)BlockRegistry.DARKTREE_BUTTON.get()),
+        		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()));
+        pressurePlateBlock(((PressurePlateBlock)BlockRegistry.DARKTREE_PRESSURE_PLATE.get()),
+        		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()));
+        fenceBlock(((FenceBlock)BlockRegistry.DARKTREE_FENCE.get()),
+        		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()));
+        fenceGateBlock(((FenceGateBlock)BlockRegistry.DARKTREE_FENCE_GATE.get()),
+        		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()));
+        doorBlockWithRenderType(((DoorBlock)BlockRegistry.DARKTREE_DOOR.get()),
+        		modLoc("block/darktree_door_bottom"), modLoc("block/darktree_door_top"), "cutout");
+        trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.DARKTREE_TRAPDOOR.get()),
+        		modLoc("block/darktree_trap_door"), true, "cutout");
+        
     }
 
     private void registerCrossCutoutBlock(RegistryObject<Block> blockRegistryObject) {
