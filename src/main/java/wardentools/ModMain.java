@@ -42,7 +42,7 @@ public class ModMain {
 		ModTrunkPlacerTypes.TRUNK_PLACER.register(bus);
 		ModFoliagePlacers.FOLIAGE_PLACERS.register(bus);
 		ModEntities.ENTITY_TYPES.register(bus);
-		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);;
+		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 		
 		ModTerrablender.registerBiomes();
 
