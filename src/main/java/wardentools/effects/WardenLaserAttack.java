@@ -15,7 +15,7 @@ public class WardenLaserAttack {
 	
     public void tick(ServerLevel level, Player player, long time, Vec3 startPosition, Vec3 direction, int laserLength) {
 
-        // Applique les dégâts et les effets aux entités touchées
+        // Apply damage and effects to target entities
         for (Entity entity : level.getEntities(player,
         		player.getBoundingBox().expandTowards(direction.scale(laserLength)).inflate(3.0D))) {
             if (entity instanceof LivingEntity) {

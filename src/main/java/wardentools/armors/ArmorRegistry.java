@@ -1,4 +1,4 @@
-package wardentools.registries;
+package wardentools.armors;
 
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -7,7 +7,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.material.DeepCristalMaterial;
 
 public class ArmorRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);

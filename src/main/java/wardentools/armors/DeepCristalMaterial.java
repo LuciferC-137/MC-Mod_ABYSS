@@ -1,4 +1,4 @@
-package wardentools.material;
+package wardentools.armors;
 
 import java.util.function.Supplier;
 
@@ -8,7 +8,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import wardentools.ModMain;
-import wardentools.registries.ItemRegistry;
+import wardentools.items.ItemRegistry;
 
 public enum DeepCristalMaterial implements ArmorMaterial {
 	DEEPCRISTAL("deepcristal",  37, new int[]{3, 6, 8, 3}, 25,

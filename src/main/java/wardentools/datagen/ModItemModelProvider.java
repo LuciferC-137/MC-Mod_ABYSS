@@ -16,9 +16,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.registries.ArmorRegistry;
-import wardentools.registries.BlockRegistry;
-import wardentools.registries.ItemRegistry;
+import wardentools.armors.ArmorRegistry;
+import wardentools.block.BlockRegistry;
+import wardentools.items.ItemRegistry;
 
 import java.util.LinkedHashMap;
 
@@ -53,6 +53,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DEEPINGOTS);
         simpleItem(ItemRegistry.WARDEN_HEART);
         simpleItem(ItemRegistry.DEEP_FRUIT);
+        simpleItem(ItemRegistry.ABYSS_DIVER);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);

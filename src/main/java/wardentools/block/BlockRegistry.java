@@ -1,4 +1,4 @@
-package wardentools.registries;
+package wardentools.block;
 
 import java.util.Optional;
 
@@ -15,9 +15,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.block.AbyssPortalBlock;
-import wardentools.block.DeepCristalBlock;
-import wardentools.block.ModFlammableRotatedPillarBlock;
 import wardentools.worldgen.ModConfiguredFeatures;
 
 public class BlockRegistry {
@@ -142,11 +139,6 @@ public class BlockRegistry {
 					.lightLevel((state) -> 11)
 			));
 	
-	public static final RegistryObject<Block> ABYSS_PORTAL = REGISTAR.register("abyss_portal",
-			() -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
-					.noLootTable()
-					.noOcclusion()
-					.noCollission()));
 	
 	public static final RegistryObject<Block> DARKGRASS_BLOCK = REGISTAR.register("darkgrass_block",
 			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)

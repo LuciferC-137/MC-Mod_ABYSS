@@ -7,9 +7,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-import wardentools.registries.ArmorRegistry;
-import wardentools.registries.ItemRegistry;
 import wardentools.ModMain;
+import wardentools.armors.ArmorRegistry;
+import wardentools.items.ItemRegistry;
 
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
@@ -22,7 +22,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DEEPINGOTS.get());
                     	event.accept(ItemRegistry.DEEPCRISTAL.get());
                     	event.accept(ItemRegistry.DEEPBLOCK.get());
-                    	
+
                     	event.accept(ArmorRegistry.DEEPCRISTAL_HELMET.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get());
@@ -49,8 +49,8 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DARKGRASS_BLOCK.get());
                     	
                     	event.accept(ItemRegistry.WARDEN_HEART.get());
-                    	event.accept(ItemRegistry.ABYSS_PORTAL.get());
-                    	
+                    	event.accept(ItemRegistry.ABYSS_DIVER.get());
+
                     	event.accept(ItemRegistry.DEEPLURKER_EGG.get());
                     	event.accept(ItemRegistry.DEEP_FRUIT.get());
                     	

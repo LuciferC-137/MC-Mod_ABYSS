@@ -14,7 +14,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import wardentools.ModMain;
-import wardentools.registries.BlockRegistry;
+import wardentools.block.BlockRegistry;
 
 import java.util.List;
 

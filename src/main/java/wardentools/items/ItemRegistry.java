@@ -1,4 +1,4 @@
-package wardentools.registries;
+package wardentools.items;
 
 
 import net.minecraft.world.item.BlockItem;
@@ -9,9 +9,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
+import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
-import wardentools.items.ModFoods;
-import wardentools.items.WardenHeartItem;
 
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
@@ -102,10 +101,6 @@ public class ItemRegistry {
 			REGISTAR.register("darktree_sapling",
 			() -> new BlockItem(BlockRegistry.DARKTREE_SAPLING.get(), new Item.Properties()));
 	
-	public static final RegistryObject<Item> ABYSS_PORTAL = 
-			REGISTAR.register("abyss_portal",
-			() -> new BlockItem(BlockRegistry.ABYSS_PORTAL.get(), new Item.Properties()));
-	
 	public static final RegistryObject<Item> DARKGRASS_BLOCK = 
 			REGISTAR.register("darkgrass_block",
 			() -> new BlockItem(BlockRegistry.DARKGRASS_BLOCK.get(), new Item.Properties()));
@@ -124,5 +119,13 @@ public class ItemRegistry {
 			() -> new Item(new Item.Properties()
 					.food(ModFoods.DEEP_FRUIT_PROPERTIES)
 					.stacksTo(64)
+					));
+	
+	public static final RegistryObject<Item> ABYSS_DIVER =
+			REGISTAR.register("abyss_diver",
+			() -> new TeleporterItem(new Item.Properties()
+					.stacksTo(1)
+					.rarity(Rarity.EPIC)
+					.defaultDurability(10)
 					));
 }

@@ -10,7 +10,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
-import wardentools.registries.BlockRegistry;
 
 public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
 

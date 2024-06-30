@@ -10,9 +10,9 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wardentools.ModMain;
+import wardentools.block.BlockRegistry;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticleWardenDeathPacket;
-import wardentools.registries.BlockRegistry;
 
 
 

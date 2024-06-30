@@ -12,8 +12,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wardentools.ModMain;
-import wardentools.registries.ArmorRegistry;
-import wardentools.registries.BlockRegistry;
+import wardentools.armors.ArmorRegistry;
+import wardentools.block.BlockRegistry;
 
 public class ModItemTagGenerator extends ItemTagsProvider {
 

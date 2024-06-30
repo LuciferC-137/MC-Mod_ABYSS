@@ -7,7 +7,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wardentools.ModMain;
-import wardentools.registries.BlockRegistry;
+import wardentools.block.BlockRegistry;
 
 import org.jetbrains.annotations.Nullable;
 

@@ -23,8 +23,8 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
-import wardentools.registries.BlockRegistry;
-import wardentools.registries.ItemRegistry;
+import wardentools.block.BlockRegistry;
+import wardentools.items.ItemRegistry;
 
 import java.util.List;
 import java.util.Set;

@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import wardentools.ModMain;
-import wardentools.registries.BlockRegistry;
+import wardentools.block.BlockRegistry;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
 

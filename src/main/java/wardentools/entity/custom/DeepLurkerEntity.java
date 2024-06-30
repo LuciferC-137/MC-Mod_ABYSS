@@ -23,7 +23,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import wardentools.entity.ModEntities;
-import wardentools.registries.ItemRegistry;
+import wardentools.items.ItemRegistry;
 
 public class DeepLurkerEntity extends Animal {
 	

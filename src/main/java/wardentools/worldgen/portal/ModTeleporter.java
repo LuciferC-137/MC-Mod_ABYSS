@@ -8,8 +8,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.util.ITeleporter;
-import wardentools.block.AbyssPortalBlock;
-import wardentools.registries.BlockRegistry;
 
 public class ModTeleporter implements ITeleporter {
 	
@@ -43,20 +41,6 @@ public class ModTeleporter implements ITeleporter {
 	        }
 
 	        entity.setPos(destinationPos.getX(), destinationPos.getY(), destinationPos.getZ());
-
-	        if (insideDimension) {
-	            boolean doSetBlock = true;
-	            for (BlockPos checkPos : BlockPos.betweenClosed(destinationPos.below(10).west(10),
-	                    destinationPos.above(10).east(10))) {
-	                if (destinationWorld.getBlockState(checkPos).getBlock() instanceof AbyssPortalBlock) {
-	                    doSetBlock = false;
-	                    break;
-	                }
-	            }
-	            if (doSetBlock) {
-	                destinationWorld.setBlock(destinationPos, BlockRegistry.ABYSS_PORTAL.get().defaultBlockState(), 3);
-	            }
-	        }
 
 	        return entity;
 	    }

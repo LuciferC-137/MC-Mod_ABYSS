@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import wardentools.registries.BlockRegistry;
+import wardentools.block.BlockRegistry;
 import wardentools.worldgen.biome.ModBiomes;
 
 public class ModSurfaceRules {

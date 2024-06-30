@@ -14,11 +14,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import terrablender.api.SurfaceRuleManager;
 import wardentools.GUI.ModCreativeTabs;
+import wardentools.armors.ArmorRegistry;
+import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
+import wardentools.items.ItemRegistry;
 import wardentools.loot.WardenLootTableModifier;
-import wardentools.registries.ArmorRegistry;
-import wardentools.registries.BlockRegistry;
-import wardentools.registries.ItemRegistry;
 import wardentools.worldgen.biome.ModTerrablender;
 import wardentools.worldgen.biome.surface.ModSurfaceRules;
 import wardentools.worldgen.tree.ModFoliagePlacers;
@@ -29,7 +29,7 @@ import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 @Mod(ModMain.MOD_ID)
 public class ModMain {
 	public static final String MOD_ID = "wardentools";
-	public static final String MODNAME = "DEEP ARMOR";
+	public static final String MODNAME = "ABYSS";
 	public static final Logger LOGGER = LogUtils.getLogger();
 	public static final String VERSION = "0.0.1";
 	

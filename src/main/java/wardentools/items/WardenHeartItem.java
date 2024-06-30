@@ -10,8 +10,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import wardentools.armors.DeepCristalMaterial;
 import wardentools.effects.WardenLaserAttack;
-import wardentools.material.DeepCristalMaterial;
 import wardentools.network.PacketHandler;
 import wardentools.network.WardenLaserParticleAndSoundPacket;
 
@@ -49,7 +49,7 @@ public class WardenHeartItem extends Item {
 		}
 
 	    return InteractionResultHolder.success(player.getItemInHand(interactionHand));
-  
+
 	}
 	
 	@Override

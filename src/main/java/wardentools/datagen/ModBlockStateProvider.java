@@ -9,7 +9,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.registries.BlockRegistry;
+import wardentools.block.BlockRegistry;
 
 public class ModBlockStateProvider extends BlockStateProvider {
 

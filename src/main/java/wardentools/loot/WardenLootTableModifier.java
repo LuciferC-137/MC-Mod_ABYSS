@@ -11,7 +11,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import wardentools.registries.ItemRegistry;
+import wardentools.items.ItemRegistry;
 
 @Mod.EventBusSubscriber(modid = "wardentools")
 public class WardenLootTableModifier {
