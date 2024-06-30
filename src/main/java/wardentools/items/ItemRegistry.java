@@ -126,6 +126,6 @@ public class ItemRegistry {
 			() -> new TeleporterItem(new Item.Properties()
 					.stacksTo(1)
 					.rarity(Rarity.EPIC)
-					.defaultDurability(10)
+					.defaultDurability(20)
 					));
 }
