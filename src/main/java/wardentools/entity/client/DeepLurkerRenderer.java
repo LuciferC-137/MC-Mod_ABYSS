@@ -22,7 +22,6 @@ public class DeepLurkerRenderer extends MobRenderer<DeepLurkerEntity, DeepLurker
 		return DEEPLURKER_TEXTURE;
 	}
 	
-	//NOT NECESSARY: TO HAVE BABY SIZE
 	@Override
 	public void render(DeepLurkerEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
 						MultiBufferSource pBuffer, int pPackedLight) {

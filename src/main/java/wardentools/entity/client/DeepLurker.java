@@ -1,8 +1,12 @@
 package wardentools.entity.client;
 
+import org.joml.Vector3f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.animation.AnimationDefinition;
+import net.minecraft.client.animation.KeyframeAnimations;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -85,13 +89,20 @@ public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
 		root().getAllParts().forEach(ModelPart::resetPose);
 		animate(entity.calmAnimationState, DeepLurkerAnimation.calm1, ageInTicks);
 		
-		if (!entity.isInWaterOrBubble()){
-			animateWalk(DeepLurkerAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
-			
-		}
-		else {
-			//TODO swim animation
-		}
+		if (entity.isClimbing()) {
+	        animateClimb(DeepLurkerAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
+	    } else if (entity.isInWaterOrBubble()) {
+	        // TODO swim animation
+	    } else {
+	        animateWalk(DeepLurkerAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
+	    }
 	}
-	
+
+	protected void animateClimb(AnimationDefinition animation,
+			float limbSwing, float limbSwingAmount, float p_268138_, float p_268165_) {
+	      long i = (long)(limbSwing * 50.0F * p_268138_);
+	      float f = Math.min(limbSwingAmount * p_268165_, 1.0F);
+	      KeyframeAnimations.animate(this, animation, i, f,  new Vector3f());
+	   }
+
 }
