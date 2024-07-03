@@ -44,9 +44,9 @@ public class deeplurker<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition earL = HEAD.addOrReplaceChild("earL", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, -2.0F, -1.0F, 1.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, 4.0F, 3.0F));
 
-		PartDefinition earR = HEAD.addOrReplaceChild("earR", CubeListBuilder.create(), PartPose.offset(0.0F, 4.0F, -3.0F));
+		PartDefinition earR = HEAD.addOrReplaceChild("earR", CubeListBuilder.create(), PartPose.offset(-1.0F, 4.0F, -3.0F));
 
-		PartDefinition earR_r1 = earR.addOrReplaceChild("earR_r1", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(0.0F, 0.0F, -1.0F, 1.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, -2.0F, 0.0F, -3.1416F, 0.0F, 3.1416F));
+		PartDefinition earR_r1 = earR.addOrReplaceChild("earR_r1", CubeListBuilder.create().texOffs(0, 0).mirror().addBox(0.0F, 0.0F, -1.0F, 1.0F, 5.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(1.0F, -2.0F, 0.0F, -3.1416F, 0.0F, 3.1416F));
 
 		PartDefinition LOW_BODY = FULL.addOrReplaceChild("LOW_BODY", CubeListBuilder.create(), PartPose.offset(1.0F, 1.0F, 0.0F));
 
