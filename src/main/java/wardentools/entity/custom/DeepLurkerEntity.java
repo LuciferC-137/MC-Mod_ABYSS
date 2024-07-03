@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
@@ -35,6 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
@@ -42,7 +44,10 @@ import wardentools.items.ItemRegistry;
 
 public class DeepLurkerEntity extends Animal {
 	public final AnimationState calmAnimationState = new AnimationState();
+	public final AnimationState scaredAnimationState = new AnimationState();
 	private static final EntityDataAccessor<Boolean> CLIMBING =
+            SynchedEntityData.defineId(DeepLurkerEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> SCARED =
             SynchedEntityData.defineId(DeepLurkerEntity.class, EntityDataSerializers.BOOLEAN);
 
 	public DeepLurkerEntity(EntityType<? extends Animal> entity, Level level) {
@@ -77,8 +82,9 @@ public class DeepLurkerEntity extends Animal {
 	@Override
 	public void tick() {
 		if (level().isClientSide()) {
+			this.scaredAnimationState.animateWhen(this.isScared(), this.tickCount);
 			this.calmAnimationState.animateWhen(
-					!isInWaterOrBubble() && !this.walkAnimation.isMoving(), this.tickCount);
+					!isInWaterOrBubble() && !this.walkAnimation.isMoving() && !this.isScared(), this.tickCount);
 		}
 		super.tick();
 	}
@@ -107,6 +113,7 @@ public class DeepLurkerEntity extends Animal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(CLIMBING, false);
+        this.entityData.define(SCARED, false);
     }
 
     public boolean isClimbing() {
@@ -116,12 +123,44 @@ public class DeepLurkerEntity extends Animal {
     public void setClimbing(boolean climbing) {
         this.entityData.set(CLIMBING, climbing);
     }
+    
+    public boolean isScared() {
+    	return this.entityData.get(SCARED);
+    }
+    
+    public void setScared(boolean scared) {
+        this.entityData.set(SCARED, scared);
+    }
 	
 	public static boolean canSpawn(EntityType<DeepLurkerEntity> entityType, ServerLevelAccessor level,
 			MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return Animal.checkAnimalSpawnRules(entityType, level, spawnType, pos, random);
 	}
-
+	
+	@Override
+    protected void playStepSound(BlockPos pos, BlockState blockIn) {
+    }
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return null;
+    }
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return null;
+    }
+    @Override
+    protected SoundEvent getDeathSound() {
+        return null;
+    }
+    @Override
+    public void makeStuckInBlock(BlockState state, Vec3 motionMultiplier) {
+    }
+    @Override
+    public void playSound(SoundEvent soundIn, float volume, float pitch) {
+    }
+    @Override
+    public void playAmbientSound() {  
+    }
 }
 
 class ClimbGoal extends Goal {
@@ -157,6 +196,7 @@ class ClimbGoal extends Goal {
             }
         }
     }
+    
 }
 
 
@@ -218,6 +258,7 @@ class AvoidWardenAndClimbTreeGoal extends Goal {
         this.targetTreePos = null;
         this.entity.setClimbing(false);
         this.entity.setNoGravity(false);
+        this.entity.setScared(false);
     }
 
     @Override
@@ -231,9 +272,10 @@ class AvoidWardenAndClimbTreeGoal extends Goal {
         }
 
         else if (isAtTopOfTree()) {
-        	 this.entity.setDeltaMovement(Vec3.ZERO);;
+        	this.entity.setDeltaMovement(Vec3.ZERO);;
             this.entity.getNavigation().stop();
             this.entity.setNoGravity(true);
+            this.entity.setScared(true);
         }
     }
 
