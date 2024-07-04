@@ -53,7 +53,7 @@ public class DeepLurkerEntity extends Animal {
 	public DeepLurkerEntity(EntityType<? extends Animal> entity, Level level) {
 		super(entity, level);
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -272,6 +272,7 @@ class AvoidWardenAndClimbTreeGoal extends Goal {
         }
 
         else if (isAtTopOfTree()) {
+        	this.entity.getLookControl().setLookAt(this.target);
         	this.entity.setDeltaMovement(Vec3.ZERO);;
             this.entity.getNavigation().stop();
             this.entity.setNoGravity(true);

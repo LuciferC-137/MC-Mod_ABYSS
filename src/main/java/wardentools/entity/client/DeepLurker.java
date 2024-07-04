@@ -94,5 +94,8 @@ public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
 	    } else {
 	        animateWalk(DeepLurkerAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
 	    }
+		
+		parts.HEAD().yRot = parts.HEAD().yRot + netHeadYaw * ((float)Math.PI / 180F);
+        parts.HEAD().zRot = parts.HEAD().zRot + headPitch * ((float)Math.PI / 180F);
 	}
 }
