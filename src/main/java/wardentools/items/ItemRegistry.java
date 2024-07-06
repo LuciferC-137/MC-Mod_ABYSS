@@ -167,4 +167,19 @@ public class ItemRegistry {
 					.rarity(Rarity.EPIC)
 					.fireResistant()
 					));
+	
+	public static final RegistryObject<Item> CORRUPTED_VESSEL =
+			REGISTAR.register("corrupted_vessel",
+			() -> new Item(new Item.Properties()
+					.stacksTo(64)
+					.rarity(Rarity.EPIC)
+					.fireResistant()
+					));
+	
+	public static final RegistryObject<Item> DARK_STICK =
+			REGISTAR.register("dark_stick",
+			() -> new Item(new Item.Properties()
+					.stacksTo(64)
+					.fireResistant()
+					));
 }

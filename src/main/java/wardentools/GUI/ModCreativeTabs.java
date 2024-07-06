@@ -46,6 +46,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DARKTREE_TRAPDOOR.get());
                     	event.accept(ItemRegistry.DARKTREE_FENCE_GATE.get());
                     	event.accept(ItemRegistry.DARKTREE_PRESSURE_PLATE.get());
+                    	event.accept(ItemRegistry.DARK_STICK.get());
                     	
                     	event.accept(ItemRegistry.DARKDIRT.get());
                     	event.accept(ItemRegistry.DARKGRASS_BLOCK.get());
@@ -56,6 +57,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DEEPLURKER_EGG.get());
                     	event.accept(ItemRegistry.DEEP_FRUIT.get());
                     	
+                    	event.accept(ItemRegistry.CORRUPTED_VESSEL.get());
                     	event.accept(ItemRegistry.WIND_WHISPERER.get());
                     	event.accept(ItemRegistry.ABYSS_DIVER.get());
                     	                	

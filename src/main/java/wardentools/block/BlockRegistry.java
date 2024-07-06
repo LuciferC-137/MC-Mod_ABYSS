@@ -35,6 +35,7 @@ public class BlockRegistry {
 	public static final RegistryObject<Block> PALE_SHARD = REGISTAR.register("pale_shard",
 			() -> new CristalBlock(10.0F, 5.0F, BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 11)
 					.strength(20.0F, 700.0F)));
 	
 	

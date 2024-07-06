@@ -1,5 +1,6 @@
-// 1.20.4	2024-07-06T13:34:50.2194069	Item Models: wardentools
+// 1.20.4	2024-07-06T17:55:25.5302732	Item Models: wardentools
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
+85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
 2ff2920242f212bb929d1e90c3067d261230dab1 assets/wardentools/models/item/darktree_door.json
 3354bf96093acd396295256292028c0a8676e6c7 assets/wardentools/models/item/darktree_fence.json
@@ -11,6 +12,7 @@ de83d2a261f049509646088b13ca740d55e297c9 assets/wardentools/models/item/darktree
 b2f3a969469e5e3c9fda37d848ceef30f76072c7 assets/wardentools/models/item/darktree_stair.json
 9e76d716b05b3bb48a1d5099174aea81ec2f58a8 assets/wardentools/models/item/darktree_trapdoor.json
 d676ad7b5b2f157b1cb496608c3317f202baa939 assets/wardentools/models/item/darktree_wood.json
+675611e0a9b1c15082c459e76ad074045ff25e58 assets/wardentools/models/item/dark_stick.json
 612fe5b76c2dddff4c31a60401102131d92879cf assets/wardentools/models/item/deepcristal.json
 4e799593736356aa9fe33c05c984218884ac1e77 assets/wardentools/models/item/deepcristal_boots.json
 f8808daeeb12cc5482eac33f5a2612bddbab0fad assets/wardentools/models/item/deepcristal_boots_amethyst_trim.json

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E",
+    "E",
+    "E"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:darktree_planks"
+    }
+  },
+  "result": {
+    "item": "wardentools:dark_stick"
+  }
+}

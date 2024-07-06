@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  C",
+    " E ",
+    "E  "
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:dark_stick"
+    },
+    "C": { 
+      "item": "wardentools:corrupted_vessel"
+    }
+  },
+  "result": {
+    "item": "wardentools:abyss_diver"
+  }
+}
