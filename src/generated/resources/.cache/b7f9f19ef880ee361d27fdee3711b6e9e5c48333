@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-03T22:41:10.667943	Item Models: wardentools
+// 1.20.4	2024-07-05T22:03:11.0414064	Item Models: wardentools
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
 2ff2920242f212bb929d1e90c3067d261230dab1 assets/wardentools/models/item/darktree_door.json
 3354bf96093acd396295256292028c0a8676e6c7 assets/wardentools/models/item/darktree_fence.json
@@ -60,3 +60,4 @@ c5601a628d3e815a6009f166c0a91ee346230c75 assets/wardentools/models/item/deepingo
 7a7d9fd169318dfa32e885c5db7cb5abbbccce3d assets/wardentools/models/item/stripped_darktree_log.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json
+a3d05db92e4f0bff003e1d385472849de2427cca assets/wardentools/models/item/wind_whisperer.json

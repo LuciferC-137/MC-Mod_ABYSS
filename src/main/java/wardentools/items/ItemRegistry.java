@@ -128,4 +128,10 @@ public class ItemRegistry {
 					.rarity(Rarity.EPIC)
 					.defaultDurability(20)
 					));
+	
+	public static final RegistryObject<Item> WIND_WHISPERER = 
+			REGISTAR.register("wind_whisperer",
+			() -> new WindWhisperer(new Item.Properties()
+					.stacksTo(1)
+					.rarity(Rarity.EPIC)));
 }

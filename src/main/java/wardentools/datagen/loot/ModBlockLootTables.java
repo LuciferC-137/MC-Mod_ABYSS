@@ -4,14 +4,11 @@ package wardentools.datagen.loot;
 
 
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
-import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.*;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition.Builder;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.item.Items;
@@ -26,9 +23,7 @@ import net.minecraftforge.registries.RegistryObject;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 
-import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
     public ModBlockLootTables() {
@@ -77,8 +72,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
             this.dropSelf(block.get());
         }
     }
-    
-    private LootTable.Builder dropDarktreeLeaves(Block block) {
+
+    @SuppressWarnings("unused")
+	private LootTable.Builder dropDarktreeLeaves(Block block) {
         LootItemCondition.Builder shearsCondition = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS));
         LootItemCondition.Builder silkTouchCondition = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
 

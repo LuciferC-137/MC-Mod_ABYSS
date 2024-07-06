@@ -8,6 +8,7 @@
 	"item.wardentools.deeplurker_spawn_egg": "Spawn Deep Lurker",
 	"item.wardentools.deep_fruit": "Deep Fruit",
 	"item.wardentools.abyss_diver": "Abyss Diver",
+	"item.wardentools.wind_whisperer": "Wind Whisperer",
 	
 	
 	"block.wardentools.deepblock": "Deep Block",
@@ -31,5 +32,7 @@
 	"block.wardentools.darktree_door": "Darktree Door",
 	"block.wardentools.darktree_trapdoor": "Darktree Trap Door",
 	
-	"entity.wardentools.deeplurker": "Deep Lurker"
+	"entity.wardentools.deeplurker": "Deep Lurker",
+	
+	"creativetab.abyss_tab": "Abyss"
 }

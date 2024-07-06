@@ -8,6 +8,7 @@
 	"item.wardentools.deeplurker_spawn_egg": "Oeuf d'apparition de Rôdeur des abîmes",
 	"item.wardentools.deep_fruit": "Fruit des abîmes",
 	"item.wardentools.abyss_diver": "Éclaireur de l'Abysse",
+	"item.wardentools.wind_whisperer": "Chuchoteur de Vent",
 
 	"block.wardentools.deepblock": "Bloc des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",
@@ -30,5 +31,7 @@
 	"block.wardentools.darktree_door": "Porte en sombrabre",
 	"block.wardentools.darktree_trapdoor": "Trape en sombrabre",
 	
-	"entity.wardentools.deeplurker": "Rôdeur des abîmes"
+	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
+	
+	"creativetab.abyss_tab": "Abyss"
 }

@@ -1,37 +1,37 @@
-[03juil.2024 22:40:46.302] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forge_userdev_data, --assetIndex, 12, --assetsDir, C:\Users\maxos\.gradle\caches\forge_gradle\assets, --gameDir, ., --mod, wardentools, --all, --output, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources, --existing, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\main\resources]
-[03juil.2024 22:40:46.307] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 17.0.11+9
-[03juil.2024 22:40:46.312] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.1.2 starting: java version 17.0.11 by Eclipse Adoptium; OS Windows 10 arch amd64 version 10.0
-[03juil.2024 22:40:46.546] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_data
-[03juil.2024 22:40:46.805] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=jar:file:///C:/Users/maxos/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar!/ Service=ModLauncher Env=UNKNOWN
-[03juil.2024 22:40:49.271] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
-[03juil.2024 22:40:51.903] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[03juil.2024 22:40:51.923] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_data' with arguments [--gameDir, ., --assetsDir, C:\Users\maxos\.gradle\caches\forge_gradle\assets, --assetIndex, 12, --mod, wardentools, --all, --output, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources, --existing, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\main\resources]
-[03juil.2024 22:40:52.668] [main/INFO] [mixin/]: Remapping refMap terrablender.refmap.json using D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\build\createSrgToMcp\output.srg
-[03juil.2024 22:40:52.674] [main/INFO] [mixin/]: Remapping refMap terrablender.refmap.json using D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\build\createSrgToMcp\output.srg
-[03juil.2024 22:40:52.838] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
-[03juil.2024 22:40:52.839] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
-[03juil.2024 22:41:06.794] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 49.0.50, for MC 1.20.4 with MCP 20231207.112700
-[03juil.2024 22:41:06.795] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v49.0.50 Initialized
-[03juil.2024 22:41:06.838] [modloading-worker-0/INFO] [terrablender/]: Registered region minecraft:overworld to index 0 for type OVERWORLD
-[03juil.2024 22:41:06.839] [modloading-worker-0/INFO] [terrablender/]: Registered region minecraft:nether to index 0 for type NETHER
-[03juil.2024 22:41:06.840] [modloading-worker-0/INFO] [terrablender/]: Registered region wardentools:overworld to index 1 for type OVERWORLD
-[03juil.2024 22:41:06.947] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Opening jdk.naming.dns/com.sun.jndi.dns to java.naming
-[03juil.2024 22:41:08.457] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [wardentools]
-[03juil.2024 22:41:08.734] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/maxos/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.4-49.0.50_mapped_official_1.20.4/forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar%230!/assets/.mcassetsroot' uses unexpected schema
-[03juil.2024 22:41:08.734] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/maxos/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.4-49.0.50_mapped_official_1.20.4/forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar%230!/data/.mcassetsroot' uses unexpected schema
-[03juil.2024 22:41:09.153] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[03juil.2024 22:41:09.387] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 233 ms
-[03juil.2024 22:41:09.388] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id wardentools
-[03juil.2024 22:41:09.757] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id wardentools finished after 369 ms
-[03juil.2024 22:41:09.758] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id wardentools
-[03juil.2024 22:41:09.763] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id wardentools finished after 4 ms
-[03juil.2024 22:41:09.764] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : wardentools
-[03juil.2024 22:41:09.781] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : wardentools finished after 16 ms
-[03juil.2024 22:41:09.781] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
-[03juil.2024 22:41:10.259] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 478 ms
-[03juil.2024 22:41:10.260] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: wardentools
-[03juil.2024 22:41:10.552] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: wardentools finished after 291 ms
-[03juil.2024 22:41:10.552] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: wardentools
-[03juil.2024 22:41:10.664] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: wardentools finished after 111 ms
-[03juil.2024 22:41:10.665] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 1513 ms
-[03juil.2024 22:41:10.865] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 161, old count: 164, new count: 162, removed stale: 0, written: 0
+[05juil.2024 22:02:52.857] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forge_userdev_data, --assetIndex, 12, --assetsDir, C:\Users\maxos\.gradle\caches\forge_gradle\assets, --gameDir, ., --mod, wardentools, --all, --output, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources, --existing, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\main\resources]
+[05juil.2024 22:02:52.861] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 17.0.11+9
+[05juil.2024 22:02:52.863] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.1.2 starting: java version 17.0.11 by Eclipse Adoptium; OS Windows 10 arch amd64 version 10.0
+[05juil.2024 22:02:53.028] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_data
+[05juil.2024 22:02:53.238] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=jar:file:///C:/Users/maxos/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar!/ Service=ModLauncher Env=UNKNOWN
+[05juil.2024 22:02:54.827] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[05juil.2024 22:02:56.869] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[05juil.2024 22:02:56.881] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_data' with arguments [--gameDir, ., --assetsDir, C:\Users\maxos\.gradle\caches\forge_gradle\assets, --assetIndex, 12, --mod, wardentools, --all, --output, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources, --existing, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\main\resources]
+[05juil.2024 22:02:57.461] [main/INFO] [mixin/]: Remapping refMap terrablender.refmap.json using D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\build\createSrgToMcp\output.srg
+[05juil.2024 22:02:57.492] [main/INFO] [mixin/]: Remapping refMap terrablender.refmap.json using D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\build\createSrgToMcp\output.srg
+[05juil.2024 22:02:57.656] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
+[05juil.2024 22:02:57.657] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
+[05juil.2024 22:03:08.028] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 49.0.50, for MC 1.20.4 with MCP 20231207.112700
+[05juil.2024 22:03:08.028] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v49.0.50 Initialized
+[05juil.2024 22:03:08.057] [modloading-worker-0/INFO] [terrablender/]: Registered region minecraft:overworld to index 0 for type OVERWORLD
+[05juil.2024 22:03:08.058] [modloading-worker-0/INFO] [terrablender/]: Registered region minecraft:nether to index 0 for type NETHER
+[05juil.2024 22:03:08.058] [modloading-worker-0/INFO] [terrablender/]: Registered region wardentools:overworld to index 1 for type OVERWORLD
+[05juil.2024 22:03:08.140] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Opening jdk.naming.dns/com.sun.jndi.dns to java.naming
+[05juil.2024 22:03:08.899] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [wardentools]
+[05juil.2024 22:03:09.087] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/maxos/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.4-49.0.50_mapped_official_1.20.4/forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar%230!/assets/.mcassetsroot' uses unexpected schema
+[05juil.2024 22:03:09.088] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/maxos/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.4-49.0.50_mapped_official_1.20.4/forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar%230!/data/.mcassetsroot' uses unexpected schema
+[05juil.2024 22:03:09.435] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[05juil.2024 22:03:09.561] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 125 ms
+[05juil.2024 22:03:09.562] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id wardentools
+[05juil.2024 22:03:09.850] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id wardentools finished after 288 ms
+[05juil.2024 22:03:09.850] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id wardentools
+[05juil.2024 22:03:09.853] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id wardentools finished after 3 ms
+[05juil.2024 22:03:09.854] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : wardentools
+[05juil.2024 22:03:09.861] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : wardentools finished after 7 ms
+[05juil.2024 22:03:09.862] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
+[05juil.2024 22:03:10.637] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 774 ms
+[05juil.2024 22:03:10.637] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: wardentools
+[05juil.2024 22:03:10.968] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: wardentools finished after 331 ms
+[05juil.2024 22:03:10.969] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: wardentools
+[05juil.2024 22:03:11.040] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: wardentools finished after 70 ms
+[05juil.2024 22:03:11.040] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 1605 ms
+[05juil.2024 22:03:11.057] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 162, old count: 163, new count: 163, removed stale: 0, written: 1

@@ -54,6 +54,8 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DEEPLURKER_EGG.get());
                     	event.accept(ItemRegistry.DEEP_FRUIT.get());
                     	
+                    	event.accept(ItemRegistry.WIND_WHISPERER.get());
+                    	
                     	
                     	
                     	
