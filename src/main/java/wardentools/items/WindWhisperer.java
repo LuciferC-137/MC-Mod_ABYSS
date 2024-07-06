@@ -41,10 +41,11 @@ public class WindWhisperer extends Item {
                     	Minecraft minecraft = Minecraft.getInstance();
                         LanguageManager languageManager = minecraft.getLanguageManager();
                         String currentLanguage = languageManager.getSelected();
-                        if ("en_us".equals(currentLanguage) || "en_gb".equals(currentLanguage)) {
-                            sendMessage(event.player, "<Wind> " + this.windWhisper.getWhisperEn());
-                        } else if ("fr_fr".equals(currentLanguage)) {
+                        if ("fr_fr".equals(currentLanguage)) {
                             sendMessage(event.player, "<Vent> " + this.windWhisper.getWhisperFr());
+                        }
+                        else {
+                            sendMessage(event.player, "<Wind> " + this.windWhisper.getWhisperEn());
                         }
                     }
                 }

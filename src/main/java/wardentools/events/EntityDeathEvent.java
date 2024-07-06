@@ -56,40 +56,30 @@ public class EntityDeathEvent {
         	}
 	private static int placeDeepCristal(Level level, BlockPos pos) {
         BlockState deepCristalState = BlockRegistry.DEEP_CRISTAL.get().defaultBlockState();
-
-        
-        // Vérifier et placer le bloc au plafond
         if (level.getBlockState(pos.above()).isFaceSturdy(level, pos.above(), Direction.DOWN)) {
             level.setBlock(pos, deepCristalState.setValue(BlockStateProperties.FACING, Direction.DOWN), 3);
             return 1;
         }
-        // Vérifier et placer le bloc contre un mur (nord)
         else if (level.getBlockState(pos.north()).isFaceSturdy(level, pos.north(), Direction.SOUTH)) {
             level.setBlock(pos, deepCristalState.setValue(BlockStateProperties.FACING, Direction.SOUTH), 3);
             return 1;
         }
-        // Vérifier et placer le bloc contre un mur (sud)
         else if (level.getBlockState(pos.south()).isFaceSturdy(level, pos.south(), Direction.NORTH)) {
             level.setBlock(pos, deepCristalState.setValue(BlockStateProperties.FACING, Direction.NORTH), 3);
             return 1;
         }
-        // Vérifier et placer le bloc contre un mur (ouest)
         else if (level.getBlockState(pos.west()).isFaceSturdy(level, pos.west(), Direction.EAST)) {
             level.setBlock(pos, deepCristalState.setValue(BlockStateProperties.FACING, Direction.EAST), 3);
             return 1;
         }
-        // Vérifier et placer le bloc contre un mur (est)
         else if (level.getBlockState(pos.east()).isFaceSturdy(level, pos.east(), Direction.WEST)) {
             level.setBlock(pos, deepCristalState.setValue(BlockStateProperties.FACING, Direction.WEST), 3);
             return 1;
         }
-        
-        // Vérifier et placer le bloc au sol
         else if (level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP)) {
             level.setBlock(pos, deepCristalState.setValue(BlockStateProperties.FACING, Direction.UP), 3);
             return 1;
         }
-        
         return 0;
     }
         	

@@ -39,6 +39,14 @@ public class WindWhisper {
 		whispers_en.add("Do you think he will be able to find what used to make the beauty of this world ?");
 		whispers_en.add("Silence ! He is listening !");
 		whispers_en.add("So it is true that you can hear us...");
+		whispers_en.add("Who we are ? Some kind of ghosts I guess... But you are no different. You have seen it, don't you ? The Great Void ?");
+		whispers_en.add("Before it came, what we most fear was our best ally...");
+		whispers_en.add("It turned our protectors against us... They became blind and angry. They couldn't listen to the music anymore. All they wanted to hear was screams.");
+		whispers_en.add("Were we alive some day ? I don't remember...");
+		whispers_en.add("The sun hasn't shed a light on the wind for so long down here...");
+		whispers_en.add("I couldn't imagine that the corruption would also reach the sky itself...");
+		whispers_en.add("No hope. No light. Only infinite nothingness, watched by aimless wardens.");
+		whispers_en.add("I fly in the sky, I dive into caves, I hurl on the Void, and yet, you are more free than I will ever be.");
 
 		whispers_fr.add("Tu es perdu ?");
 		whispers_fr.add("Est-ce que tu entends ça ?");
@@ -68,6 +76,14 @@ public class WindWhisper {
 		whispers_fr.add("Tu pense qu'il sera capable de découvrir ce qui faisait la beauté de ce monde ?");
 		whispers_fr.add("Silence ! Il nous écoute !");
 		whispers_fr.add("Il est donc vrai que tu peux nous entendre dorénavant...");
+		whispers_en.add("Qui sommes nous ? Des sortes de fantômes, j'imagine... Mais nous ne sommes pas différents. Tu l'as déjà vu, n'est-ce pas ? Le Grand Néant ?");
+		whispers_en.add("Avant qu'il ne vienne, ce que nous craignons aujourd'hui le plus était notre plus grand allié...");
+		whispers_en.add("Il a retourné nos protecteurs contre nous... Ils sont devenus aveugle et furieux. Ils ne pouvaient plus entendre la musique. Tout ce qu'ils voulaient entendre, c'était des hurlements.");
+		whispers_en.add("Etions-nous en vie à un moment ? Je ne me souviens plus...");
+		whispers_en.add("Le moindre rayon de soleil n'a pas éclairé le vent depuis si longtemps ici-bas...");
+		whispers_en.add("Je ne pouvais pas imaginer que la corruption gagnerait le ciel lui-même...");
+		whispers_en.add("Pas d'espoir. Pas de lumière. Seulement l'infini Néant, surveillé par des gardiens sans but.");
+		whispers_en.add("Je vole dans le ciel, je plonge dans les cavernes, je rugis dans le Néant et pourtant, pourtant tu es plus libre que je ne le serai jamais.");
 		
 	}
 	

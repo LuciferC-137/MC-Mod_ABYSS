@@ -23,26 +23,29 @@ public class ModTeleporter implements ITeleporter {
 	    public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destinationWorld,
 	                              float yaw, Function<Boolean, Entity> repositionEntity) {
 	        entity = repositionEntity.apply(false);
-	        int y = 61;
-
-	        if (!insideDimension) {
-	            y = thisPos.getY();
-	        }
-
-	        BlockPos destinationPos = new BlockPos(thisPos.getX(), y, thisPos.getZ());
-
-	        int tries = 0;
-	        while ((destinationWorld.getBlockState(destinationPos).getBlock() != Blocks.AIR) &&
-	                !destinationWorld.getBlockState(destinationPos).canBeReplaced(Fluids.WATER) &&
-	                (destinationWorld.getBlockState(destinationPos.above()).getBlock()  != Blocks.AIR) &&
-	                !destinationWorld.getBlockState(destinationPos.above()).canBeReplaced(Fluids.WATER) && (tries < 25)) {
-	            destinationPos = destinationPos.above(2);
-	            tries++;
+	        BlockPos destinationPos = thisPos;
+	        
+		    int y = 61;
+	
+		    if (!insideDimension) {
+		        y = thisPos.getY();
+		    }
+	
+		    destinationPos = new BlockPos(thisPos.getX(), y, thisPos.getZ());
+	
+		    int tries = 0;
+		    while ((destinationWorld.getBlockState(destinationPos).getBlock() != Blocks.AIR) &&
+		                !destinationWorld.getBlockState(destinationPos).canBeReplaced(Fluids.WATER) &&
+		                (destinationWorld.getBlockState(destinationPos.above()).getBlock()  != Blocks.AIR) &&
+		                !destinationWorld.getBlockState(destinationPos.above()).canBeReplaced(Fluids.WATER) && (tries < 25)) {
+		        destinationPos = destinationPos.above(2);
+		        tries++;
 	        }
 
 	        entity.setPos(destinationPos.getX(), destinationPos.getY(), destinationPos.getZ());
 
 	        return entity;
 	    }
+	    
 
 }

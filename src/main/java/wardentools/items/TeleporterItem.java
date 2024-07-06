@@ -33,8 +33,12 @@ public class TeleporterItem extends Item {
         	context.getItemInHand().hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
         	if (player.level() instanceof ServerLevel serverlevel) {
                 MinecraftServer minecraftserver = serverlevel.getServer();
-                ResourceKey<Level> resourcekey = player.level().dimension() == ModDimensions.ABYSS_LEVEL_KEY ?
-                        Level.OVERWORLD : ModDimensions.ABYSS_LEVEL_KEY;
+                
+                ResourceKey<Level> resourcekey = ModDimensions.ABYSS_LEVEL_KEY;
+                if (player.level().dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
+                	resourcekey = Level.OVERWORLD;
+                }
+                
                 ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
                 if (portalDimension != null && !player.isPassenger()) {
                     if(resourcekey == ModDimensions.ABYSS_LEVEL_KEY) {
