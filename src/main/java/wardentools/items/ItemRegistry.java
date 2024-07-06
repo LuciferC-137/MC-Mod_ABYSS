@@ -159,4 +159,12 @@ public class ItemRegistry {
 					.rarity(Rarity.EPIC)
 					.fireResistant()
 					));
+	
+	public static final RegistryObject<Item> CORRUPTED_ESSENCE =
+			REGISTAR.register("corrupted_essence", 
+			() -> new Item(new Item.Properties()
+					.stacksTo(64)
+					.rarity(Rarity.EPIC)
+					.fireResistant()
+					));
 }

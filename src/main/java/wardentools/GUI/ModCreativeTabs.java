@@ -22,6 +22,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DEEPINGOTS.get());
                     	event.accept(ItemRegistry.DEEPCRISTAL.get());
                     	event.accept(ItemRegistry.PALE_SHARD.get());
+                    	event.accept(ItemRegistry.PALE_FRAGMENT.get());
                     	event.accept(ItemRegistry.DEEPBLOCK.get());
 
                     	event.accept(ArmorRegistry.DEEPCRISTAL_HELMET.get());
@@ -50,13 +51,14 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DARKGRASS_BLOCK.get());
                     	
                     	event.accept(ItemRegistry.WARDEN_HEART.get());
-                    	event.accept(ItemRegistry.ABYSS_DIVER.get());
+                    	event.accept(ItemRegistry.CORRUPTED_ESSENCE.get());
 
                     	event.accept(ItemRegistry.DEEPLURKER_EGG.get());
                     	event.accept(ItemRegistry.DEEP_FRUIT.get());
                     	
                     	event.accept(ItemRegistry.WIND_WHISPERER.get());
-                    	
+                    	event.accept(ItemRegistry.ABYSS_DIVER.get());
+                    	                	
                     	
                     	
                     	

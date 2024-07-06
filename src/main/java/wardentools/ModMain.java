@@ -53,7 +53,6 @@ public class ModMain {
         
         MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);
         
-
 	}
 	
 	private void commonSetup(final FMLCommonSetupEvent event) {
