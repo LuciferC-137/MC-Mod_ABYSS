@@ -21,12 +21,14 @@ public class ItemRegistry {
 			() -> new Item(new Item.Properties()
 					.stacksTo(64)
 					.rarity(Rarity.EPIC)
+					.fireResistant()
 					));
 	
 	public static final RegistryObject<BlockItem> DEEPBLOCK =
 			REGISTAR.register("deepblock",
 			() -> new BlockItem(BlockRegistry.DEEPBLOCK.get(), new Item.Properties()
 					.rarity(Rarity.EPIC)
+					.fireResistant()
 					));
 	
 	public static final RegistryObject<BlockItem> DEEPCRISTAL =
@@ -34,12 +36,32 @@ public class ItemRegistry {
 			() -> new BlockItem(BlockRegistry.DEEP_CRISTAL.get(), new Item.Properties()
 					.stacksTo(64)
 					.rarity(Rarity.EPIC)
+					.fireResistant()
 					));
+	
+	public static final RegistryObject<Item> PALE_FRAGMENT =
+			REGISTAR.register("pale_fragment", 
+			() -> new Item(new Item.Properties()
+					.stacksTo(64)
+					.rarity(Rarity.EPIC)
+					.fireResistant()
+					));
+	
+	public static final RegistryObject<BlockItem> PALE_SHARD = 
+			REGISTAR.register("pale_shard",
+			() -> new BlockItem(BlockRegistry.PALE_SHARD.get(), new Item.Properties()
+					.stacksTo(64)
+					.rarity(Rarity.EPIC)
+					.fireResistant()
+					));
+	
 	public static final RegistryObject<Item> WARDEN_HEART =
 			REGISTAR.register("warden_heart",
 			() -> new WardenHeartItem(new Item.Properties()
 					.stacksTo(1)
-					.rarity(Rarity.EPIC)));
+					.rarity(Rarity.EPIC)
+					.fireResistant()
+					));
 	
 	public static final RegistryObject<Item> DARKTREE_LOG =
 			REGISTAR.register("darktree_log",
@@ -127,11 +149,14 @@ public class ItemRegistry {
 					.stacksTo(1)
 					.rarity(Rarity.EPIC)
 					.defaultDurability(20)
+					.fireResistant()
 					));
 	
 	public static final RegistryObject<Item> WIND_WHISPERER = 
 			REGISTAR.register("wind_whisperer",
 			() -> new WindWhisperer(new Item.Properties()
 					.stacksTo(1)
-					.rarity(Rarity.EPIC)));
+					.rarity(Rarity.EPIC)
+					.fireResistant()
+					));
 }

@@ -14,18 +14,22 @@ public class ArmorRegistry {
 	public static final RegistryObject<Item> DEEPCRISTAL_HELMET =
 			REGISTAR.register("deepcristal_helmet",
 			()->new ArmorItem(DeepCristalMaterial.DEEPCRISTAL, ArmorItem.Type.HELMET, new Item.Properties()
-					.rarity(Rarity.EPIC)));
+					.rarity(Rarity.EPIC)
+					.fireResistant()));
 	public static final RegistryObject<Item> DEEPCRISTAL_CHESTPLATE =
 			REGISTAR.register("deepcristal_chestplate",
 			()->new ArmorItem(DeepCristalMaterial.DEEPCRISTAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
-					.rarity(Rarity.EPIC)));
+					.rarity(Rarity.EPIC)
+					.fireResistant()));
 	public static final RegistryObject<Item> DEEPCRISTAL_LEGGINGS =
 			REGISTAR.register("deepcristal_leggings",
 			()->new ArmorItem(DeepCristalMaterial.DEEPCRISTAL, ArmorItem.Type.LEGGINGS, new Item.Properties()
-					.rarity(Rarity.EPIC)));
+					.rarity(Rarity.EPIC)
+					.fireResistant()));
 	public static final RegistryObject<Item> DEEPCRISTAL_BOOTS =
 			REGISTAR.register("deepcristal_boots",
 			()->new ArmorItem(DeepCristalMaterial.DEEPCRISTAL, ArmorItem.Type.BOOTS, new Item.Properties()
-					.rarity(Rarity.EPIC)));
+					.rarity(Rarity.EPIC)
+					.fireResistant()));
 	
 }

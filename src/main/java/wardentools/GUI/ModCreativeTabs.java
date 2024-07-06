@@ -21,6 +21,7 @@ public class ModCreativeTabs {
                     .displayItems((pParameters, event) -> {
                     	event.accept(ItemRegistry.DEEPINGOTS.get());
                     	event.accept(ItemRegistry.DEEPCRISTAL.get());
+                    	event.accept(ItemRegistry.PALE_SHARD.get());
                     	event.accept(ItemRegistry.DEEPBLOCK.get());
 
                     	event.accept(ArmorRegistry.DEEPCRISTAL_HELMET.get());

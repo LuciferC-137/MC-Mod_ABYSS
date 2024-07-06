@@ -23,12 +23,14 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(BlockRegistry.DEEP_CRISTAL.get())
-                .add(BlockRegistry.DEEPBLOCK.get());
+                .add(BlockRegistry.DEEPBLOCK.get())
+                .add(BlockRegistry.PALE_SHARD.get());
 
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
         		.add(BlockRegistry.DEEP_CRISTAL.get())
-        		.add(BlockRegistry.DEEPBLOCK.get());
+        		.add(BlockRegistry.DEEPBLOCK.get())
+        		.add(BlockRegistry.PALE_SHARD.get());
         
         
         this.tag(BlockTags.LOGS_THAT_BURN)

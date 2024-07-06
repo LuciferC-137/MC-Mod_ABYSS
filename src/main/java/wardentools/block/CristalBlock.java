@@ -30,13 +30,13 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
-public class DeepCristalBlock extends Block implements SimpleWaterloggedBlock {
-	public static final MapCodec<DeepCristalBlock> CODEC = RecordCodecBuilder.mapCodec((p_313213_) -> {
+public class CristalBlock extends Block implements SimpleWaterloggedBlock {
+	public static final MapCodec<CristalBlock> CODEC = RecordCodecBuilder.mapCodec((p_313213_) -> {
 	      return p_313213_.group(Codec.FLOAT.fieldOf("height").forGetter((p_313043_) -> {
 	         return p_313043_.height;
 	      }), Codec.FLOAT.fieldOf("aabb_offset").forGetter((p_310115_) -> {
 	         return p_310115_.aabbOffset;
-	      }), propertiesCodec()).apply(p_313213_, DeepCristalBlock::new);
+	      }), propertiesCodec()).apply(p_313213_, CristalBlock::new);
 	   });
 	
 	
@@ -51,17 +51,17 @@ public class DeepCristalBlock extends Block implements SimpleWaterloggedBlock {
 	private final float height;
 	private final float aabbOffset;
 
-	public DeepCristalBlock(float p_313148_, float p_309607_, BlockBehaviour.Properties p_152017_) {
+	public CristalBlock(float height, float length, BlockBehaviour.Properties p_152017_) {
 	      super(p_152017_);
 	      this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(FACING, Direction.UP));
-	      this.upAabb = Block.box((double)p_309607_, 0.0D, (double)p_309607_, (double)(16.0F - p_309607_), (double)p_313148_, (double)(16.0F - p_309607_));
-	      this.downAabb = Block.box((double)p_309607_, (double)(16.0F - p_313148_), (double)p_309607_, (double)(16.0F - p_309607_), 16.0D, (double)(16.0F - p_309607_));
-	      this.northAabb = Block.box((double)p_309607_, (double)p_309607_, (double)(16.0F - p_313148_), (double)(16.0F - p_309607_), (double)(16.0F - p_309607_), 16.0D);
-	      this.southAabb = Block.box((double)p_309607_, (double)p_309607_, 0.0D, (double)(16.0F - p_309607_), (double)(16.0F - p_309607_), (double)p_313148_);
-	      this.eastAabb = Block.box(0.0D, (double)p_309607_, (double)p_309607_, (double)p_313148_, (double)(16.0F - p_309607_), (double)(16.0F - p_309607_));
-	      this.westAabb = Block.box((double)(16.0F - p_313148_), (double)p_309607_, (double)p_309607_, 16.0D, (double)(16.0F - p_309607_), (double)(16.0F - p_309607_));
-	      this.height = p_313148_;
-	      this.aabbOffset = p_309607_;
+	      this.upAabb = Block.box((double)length, 0.0D, (double)length, (double)(16.0F - length), (double)height, (double)(16.0F - length));
+	      this.downAabb = Block.box((double)length, (double)(16.0F - height), (double)length, (double)(16.0F - length), 16.0D, (double)(16.0F - length));
+	      this.northAabb = Block.box((double)length, (double)length, (double)(16.0F - height), (double)(16.0F - length), (double)(16.0F - length), 16.0D);
+	      this.southAabb = Block.box((double)length, (double)length, 0.0D, (double)(16.0F - length), (double)(16.0F - length), (double)height);
+	      this.eastAabb = Block.box(0.0D, (double)length, (double)length, (double)height, (double)(16.0F - length), (double)(16.0F - length));
+	      this.westAabb = Block.box((double)(16.0F - height), (double)length, (double)length, 16.0D, (double)(16.0F - length), (double)(16.0F - length));
+	      this.height = height;
+	      this.aabbOffset = length;
 	   }
 	
 	
@@ -126,7 +126,7 @@ public class DeepCristalBlock extends Block implements SimpleWaterloggedBlock {
 
 
 	@Override
-	protected MapCodec<DeepCristalBlock> codec() {
+	protected MapCodec<CristalBlock> codec() {
 	      return CODEC;
 	   }
 	

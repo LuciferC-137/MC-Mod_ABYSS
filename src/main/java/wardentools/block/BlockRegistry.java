@@ -27,10 +27,15 @@ public class BlockRegistry {
 	
 	
 	public static final RegistryObject<Block> DEEP_CRISTAL = REGISTAR.register("deepcristal",
-			()->new DeepCristalBlock(5.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+			()->new CristalBlock(7.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 					.requiresCorrectToolForDrops()
 					.strength(30.0F, 900.0F)
 					));
+	
+	public static final RegistryObject<Block> PALE_SHARD = REGISTAR.register("pale_shard",
+			() -> new CristalBlock(10.0F, 5.0F, BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+					.requiresCorrectToolForDrops()
+					.strength(20.0F, 700.0F)));
 	
 	
 	public static final RegistryObject<Block> DARKTREE_LOG = REGISTAR.register("darktree_log", 

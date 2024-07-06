@@ -23,7 +23,9 @@ import net.minecraftforge.registries.RegistryObject;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
     public ModBlockLootTables() {
@@ -33,7 +35,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
     	
-    	this.addDropSelf(BlockRegistry.DARKTREE_LEAVES);
     	this.addDropSelf(BlockRegistry.DARKTREE_LOG);
     	this.addDropSelf(BlockRegistry.DARKTREE_PLANKS);
     	this.addDropSelf(BlockRegistry.DARKTREE_SAPLING);
@@ -72,7 +73,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
             this.dropSelf(block.get());
         }
     }
-
+    
     @SuppressWarnings("unused")
 	private LootTable.Builder dropDarktreeLeaves(Block block) {
         LootItemCondition.Builder shearsCondition = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS));
@@ -97,8 +98,16 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     }
  
 
-    @Override
+	@Override
     protected Iterable<Block> getKnownBlocks() {
-        return BlockRegistry.REGISTAR.getEntries().stream().map(RegistryObject::get)::iterator;
+    	Set<Block> blocksToIgnore = Set.of(
+    	        BlockRegistry.PALE_SHARD.get(),
+    	        BlockRegistry.DARKTREE_LEAVES.get()
+    	);
+    	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
+    	        .map(RegistryObject::get)
+    	        .filter(block -> !blocksToIgnore.contains(block))
+    	        .collect(Collectors.toList());
+        return knownBlocks;
     }
 }

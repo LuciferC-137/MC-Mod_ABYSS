@@ -54,9 +54,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.WARDEN_HEART);
         simpleItem(ItemRegistry.DEEP_FRUIT);
         simpleItem(ItemRegistry.WIND_WHISPERER);
+        simpleItem(ItemRegistry.PALE_FRAGMENT);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
+        blockItemWithItemModel(BlockRegistry.PALE_SHARD);
         blockItemWithItemModel(BlockRegistry.DARKTREE_SAPLING);
         blockItemWithItemModel(BlockRegistry.DARKTREE_DOOR);
         

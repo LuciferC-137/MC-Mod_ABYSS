@@ -1,11 +1,10 @@
-// 1.20.4	2024-06-29T18:00:19.4951637	Loot Tables
+// 1.20.4	2024-07-06T12:38:02.1184863	Loot Tables
 cd3afcd604acda173c23bfbfc1381b05dbe7bb16 data/wardentools/loot_tables/blocks/darkdirt.json
 389f559700304e07f380d250e3ab3cfbf609406b data/wardentools/loot_tables/blocks/darkgrass_block.json
 05a6e49c435dc40acf7731ef3d51fa13f66df208 data/wardentools/loot_tables/blocks/darktree_button.json
 392b5b44b484a1a86f6e469655e1a96aea7a70d5 data/wardentools/loot_tables/blocks/darktree_door.json
 7a70c14c1f1a54d2f45596f912089261b48d690a data/wardentools/loot_tables/blocks/darktree_fence.json
 749d1035eab93e67337df9f8387556ddd926ca32 data/wardentools/loot_tables/blocks/darktree_fence_gate.json
-61c81a45d6be0664a40ca701d8ec123660bf1ca6 data/wardentools/loot_tables/blocks/darktree_leaves.json
 8a9a55094ed1af77ad40d7dc002a164bd6104f2d data/wardentools/loot_tables/blocks/darktree_log.json
 0f89f6fc52d8e75b12b54c20ad0380a775668834 data/wardentools/loot_tables/blocks/darktree_planks.json
 bf0242f14b7e0b3b8094f311983eb24e8049e8c3 data/wardentools/loot_tables/blocks/darktree_pressure_plate.json

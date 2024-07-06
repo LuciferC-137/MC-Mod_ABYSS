@@ -1,4 +1,4 @@
-// 1.20.4	2024-06-29T18:00:19.497158	Block States: wardentools
+// 1.20.4	2024-07-06T11:23:14.5394395	Block States: wardentools
 786df544494ab109a939a8fc2255998bb62935e4 assets/wardentools/blockstates/darkdirt.json
 34bb67b3f479b2fb38819eced6715b182b76edea assets/wardentools/blockstates/darkgrass_block.json
 1ab7c0fe7f50c897afb2fc4c018a27417b4cc3a2 assets/wardentools/blockstates/darktree_button.json
@@ -15,7 +15,6 @@ e6db47555c92963a33dfeadfe8d109e5fff12f69 assets/wardentools/blockstates/darktree
 f6c0654de0d6f496827cfb8ccdff525d0a4c1bbc assets/wardentools/blockstates/darktree_trapdoor.json
 f3052013b650de591927032f80a9db55e7da64b8 assets/wardentools/blockstates/darktree_wood.json
 251f122db456c0207bedcaebd9d908de1710908e assets/wardentools/blockstates/deepblock.json
-be30825a48bd85272b912f0245eca8e7e4a58d32 assets/wardentools/blockstates/deepcristal.json
 a2aa2f359f25278ebf8429a8104c9da9981236ed assets/wardentools/blockstates/stripped_darktree_log.json
 0f2523273c4ce21426bbaa3a735a153bffea1608 assets/wardentools/blockstates/stripped_darktree_wood.json
 3f1448463d69ecb0fb36a6f556cd5dc26c2d6ee2 assets/wardentools/models/block/darkdirt.json
@@ -53,7 +52,6 @@ b9b599cb9ae52f0d1713f71c980efb4d82b03643 assets/wardentools/models/block/darktre
 c14dc90dbcb5fc720834278c741e329a3db3a2f8 assets/wardentools/models/block/darktree_trapdoor_top.json
 518843593778766545a96be612ede8ddcd059c94 assets/wardentools/models/block/darktree_wood.json
 992fbe7e5ee76c7ecbbca35f116723b5be828498 assets/wardentools/models/block/deepblock.json
-98cb840027260bc3217ea3e53ac32d34cde1b170 assets/wardentools/models/block/deepcristal.json
 9cd47817e5d088260fe6cb0d94a0ec974284701d assets/wardentools/models/block/stripped_darktree_log.json
 aae9eb1fd9e748d40d6878219c105ebf5fecadad assets/wardentools/models/block/stripped_darktree_log_horizontal.json
 522c393683ffab98ec990cf368c7589a5fa2df8e assets/wardentools/models/block/stripped_darktree_wood.json

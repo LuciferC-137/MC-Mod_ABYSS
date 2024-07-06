@@ -12,7 +12,7 @@ public class WindWhisper {
 	
 	public WindWhisper() {
 		whispers_en.add("Are you lost ?");
-		whispers_en.add("Do you here this ?");
+		whispers_en.add("Do you hear this ?");
 		whispers_en.add("After all, you might have gotten too deep...");
 		whispers_en.add("It is so quiet...");
 		whispers_en.add("Even the wind here listen to you.");
@@ -26,18 +26,22 @@ public class WindWhisper {
 		whispers_en.add("How long have you been sneaking in the dark ?");
 		whispers_en.add("Death is only another form of silence.");
 		whispers_en.add("You really became a good listener.");
-		whispers_en.add("How about jupping in the Void ?");
+		whispers_en.add("How about jumping in the Void ?");
 		whispers_en.add("There is no limits.");
 		whispers_en.add("You are free from the light here. Come and rest among the shadows.");
 		whispers_en.add("There used to be people here. Only I can remember.");
 		whispers_en.add("Do you know how the story ends ? I have seen an End once...");
 		whispers_en.add("What are you doing here ?");
 		whispers_en.add("Nobody came for so long...");
-		whispers_en.add("This darkness devour everything...");
+		whispers_en.add("This darkness devours everything...");
 		whispers_en.add("This world used to be noisy and peacefull. Now, it is silent and even more peacefull.");
+		whispers_en.add("The darkness of this world has gotten into yours, hasn't it ?");
+		whispers_en.add("Do you think he will be able to find what used to make the beauty of this world ?");
+		whispers_en.add("Silence ! He is listening !");
+		whispers_en.add("So it is true that you can hear us...");
 
 		whispers_fr.add("Tu es perdu ?");
-		whispers_fr.add("Tu entends ça ?");
+		whispers_fr.add("Est-ce que tu entends ça ?");
 		whispers_fr.add("Après tout, tu t'es peut-être enfoncé trop profondément...");
 		whispers_fr.add("Tout est tellement silencieux...");
 		whispers_fr.add("Ici, même le vent t'écoute.");
@@ -60,6 +64,11 @@ public class WindWhisper {
 		whispers_fr.add("Personne n'est venu depuis si longtemps...");
 		whispers_fr.add("Ces ténèbres dévorent tout...");
 		whispers_fr.add("Ce monde était bruyant et paisible autrefois. Maintenant, il est silencieux et encore plus paisible.");
+		whispers_fr.add("Les ténèbres de ce monde ont gagné le tiens, n'est-ce pas ?");
+		whispers_fr.add("Tu pense qu'il sera capable de découvrir ce qui faisait la beauté de ce monde ?");
+		whispers_fr.add("Silence ! Il nous écoute !");
+		whispers_fr.add("Il est donc vrai que tu peux nous entendre dorénavant...");
+		
 	}
 	
 	public WindWhisper(List<String> addWhispers) {
