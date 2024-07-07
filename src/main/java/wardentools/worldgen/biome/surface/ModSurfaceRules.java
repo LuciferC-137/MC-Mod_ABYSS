@@ -14,7 +14,6 @@ public class ModSurfaceRules {
     private static final SurfaceRules.RuleSource DEEPSLATE = makeStateRule(Blocks.DEEPSLATE);
     private static final SurfaceRules.RuleSource BEDROCK = makeStateRule(Blocks.BEDROCK);
     private static final SurfaceRules.RuleSource AIR = makeStateRule(Blocks.AIR);
-    private static final SurfaceRules.RuleSource GRAVEL = makeStateRule(Blocks.GRAVEL);
     
     private static final SurfaceRules.RuleSource DIRT = makeStateRule(Blocks.DIRT);
     private static final SurfaceRules.RuleSource GRASS_BLOCK = makeStateRule(Blocks.GRASS_BLOCK);
@@ -36,7 +35,9 @@ public class ModSurfaceRules {
        // Default darkgrass surface in the abyss
        SurfaceRules.RuleSource darkgrassSurface = SurfaceRules.sequence(
                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
-                       SurfaceRules.ifTrue(isAtOrAboveWaterLevel, DARKGRASS)),
+                       SurfaceRules.ifTrue(isAtOrAboveWaterLevel,
+                    		   SurfaceRules.ifTrue(SurfaceRules.yStartCheck(VerticalAnchor.absolute(50), 0),
+                    				   DARKGRASS))),
                SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, DARKDIRT),
                SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DARKDIRT)
        );

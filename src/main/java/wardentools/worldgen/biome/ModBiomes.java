@@ -33,7 +33,6 @@ public class ModBiomes {
         BiomeDefaultFeatures.addDefaultCarversAndLakes(builder);
         BiomeDefaultFeatures.addDefaultUndergroundVariety(builder);
         BiomeDefaultFeatures.addSurfaceFreezing(builder);
-        BiomeDefaultFeatures.addSculk(builder);
         BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
     }
 
@@ -41,9 +40,11 @@ public class ModBiomes {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 5, 4, 4));
+        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 5, 1, 4));
+        // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 5, 4, 4));
+        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
+        spawnBuilder.creatureGenerationProbability(0.1F);
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(
@@ -55,6 +56,7 @@ public class ModBiomes {
         BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
         
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DARKTREE_PLACED_KEY);
+        
         
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
@@ -78,9 +80,11 @@ public class ModBiomes {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 5, 4, 4));
+        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 5, 1, 4));
+        // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 5, 4, 4));
+        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
+        spawnBuilder.creatureGenerationProbability(0.1F);
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(

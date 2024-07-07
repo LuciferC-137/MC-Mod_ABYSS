@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
@@ -35,6 +36,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -131,12 +133,18 @@ public class DeepLurkerEntity extends Animal {
     public void setScared(boolean scared) {
         this.entityData.set(SCARED, scared);
     }
+    
+    @Override
+	public boolean checkSpawnRules(LevelAccessor p_21686_, MobSpawnType p_21687_) {
+    	return true;
+    }
 	
-	public static boolean canSpawn(EntityType<DeepLurkerEntity> entityType, ServerLevelAccessor level,
-			MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		return Animal.checkAnimalSpawnRules(entityType, level, spawnType, pos, random);
-	}
-	
+    public static boolean canSpawn(EntityType<DeepLurkerEntity> entityType, ServerLevelAccessor level,
+            MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+    	boolean canSpawn = level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
+		return canSpawn;// Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
+    }
+    	
 	@Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
     }

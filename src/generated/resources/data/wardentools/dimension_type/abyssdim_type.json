@@ -1,9 +1,9 @@
 {
-  "ambient_light": 0.1,
+  "ambient_light": 0.0,
   "bed_works": false,
   "coordinate_scale": 1.0,
   "effects": "minecraft:the_nether",
-  "fixed_time": 18000,
+  "fixed_time": 1000,
   "has_ceiling": false,
   "has_raids": false,
   "has_skylight": false,
@@ -13,7 +13,7 @@
   "min_y": -64,
   "monster_spawn_block_light_limit": 0,
   "monster_spawn_light_level": 0,
-  "natural": false,
+  "natural": true,
   "piglin_safe": false,
   "respawn_anchor_works": false,
   "ultrawarm": false

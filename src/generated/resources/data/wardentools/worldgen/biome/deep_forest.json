@@ -61,10 +61,7 @@
       "minecraft:ore_copper",
       "minecraft:underwater_magma"
     ],
-    [
-      "minecraft:sculk_vein",
-      "minecraft:sculk_patch_deep_dark"
-    ],
+    [],
     [],
     [
       "minecraft:glow_lichen",
@@ -85,14 +82,14 @@
       {
         "type": "wardentools:deeplurker",
         "maxCount": 4,
-        "minCount": 4,
+        "minCount": 1,
         "weight": 5
       },
       {
         "type": "minecraft:allay",
-        "maxCount": 4,
-        "minCount": 4,
-        "weight": 5
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
       }
     ],
     "misc": [],

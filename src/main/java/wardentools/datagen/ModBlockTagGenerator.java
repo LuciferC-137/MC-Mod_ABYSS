@@ -51,6 +51,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 		
 		this.tag(BlockTags.FENCE_GATES)
 			.add(BlockRegistry.DARKTREE_FENCE_GATE.get());
+		
+		this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
+			.add(BlockRegistry.DARKGRASS_BLOCK.get())
+			.add(BlockRegistry.DARKDIRT.get());
 
 
     }

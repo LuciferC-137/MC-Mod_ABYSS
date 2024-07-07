@@ -36,11 +36,11 @@ public class ModDimensions {
     
     public static void bootstrapType(BootstapContext<DimensionType> context) {
         context.register(ABYSS_DIM_TYPE, new DimensionType(
-                OptionalLong.of(18000), // fixedTime
+                OptionalLong.of(1000), // fixedTime
                 false, // hasSkylight
                 false, // hasCeiling
                 false, // ultraWarm
-                false, // natural
+                true, // natural
                 1.0, // coordinateScale
                 false, // bedWorks
                 false, // respawnAnchorWorks
@@ -49,7 +49,7 @@ public class ModDimensions {
                 256, // logicalHeight
                 BlockTags.INFINIBURN_OVERWORLD, // infiniburn
                 BuiltinDimensionTypes.NETHER_EFFECTS, // Base effectsLocation
-                0.1f, // ambientLight
+                0.0f, // ambientLight
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
     }
 
