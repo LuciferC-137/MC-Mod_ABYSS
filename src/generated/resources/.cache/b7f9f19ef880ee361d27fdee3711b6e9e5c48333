@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-06T17:55:25.5302732	Item Models: wardentools
+// 1.20.4	2024-07-07T21:04:29.6577772	Item Models: wardentools
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
@@ -64,5 +64,10 @@ c5601a628d3e815a6009f166c0a91ee346230c75 assets/wardentools/models/item/deepingo
 ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_shard.json
 7a7d9fd169318dfa32e885c5db7cb5abbbccce3d assets/wardentools/models/item/stripped_darktree_log.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
+980a11934130b33d9a8df5e91eaebc563aa907bd assets/wardentools/models/item/stripped_whitetree_log.json
+f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped_whitetree_wood.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json
+412ffe9b32940e056d569e60d48f50d0281ebc7a assets/wardentools/models/item/whitetree_log.json
+fe98545ef679b35c4eeedc0429bd84ba385d423e assets/wardentools/models/item/whitetree_sapling.json
+2a10a53cd83293f47a165d533f1c145c442ca612 assets/wardentools/models/item/whitetree_wood.json
 a3d05db92e4f0bff003e1d385472849de2427cca assets/wardentools/models/item/wind_whisperer.json

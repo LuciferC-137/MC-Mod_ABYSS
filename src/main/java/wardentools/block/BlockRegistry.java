@@ -19,7 +19,8 @@ import wardentools.worldgen.ModConfiguredFeatures;
 
 public class BlockRegistry {
 	public static final DeferredRegister<Block> REGISTAR = DeferredRegister.create(ForgeRegistries.BLOCKS, ModMain.MOD_ID);
-	public static final int LIGHT_DARK_TREE = 6;
+	private static final int LIGHT_DARK_TREE = 6;
+	private static final int LIGHT_WHITE_TREE = 10;
 	
 	public static final RegistryObject<Block> DEEPBLOCK = REGISTAR.register("deepblock",
 			()->new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
@@ -118,7 +119,7 @@ public class BlockRegistry {
  
 	public static final RegistryObject<Block> DARKTREE_LEAVES = REGISTAR.register("darktree_leaves",
 			() -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
-					.lightLevel((state) -> 11)) {
+					.lightLevel((state) -> LIGHT_DARK_TREE + 2)) {
 				
 				@Override
 				public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
@@ -155,6 +156,60 @@ public class BlockRegistry {
 	public static final RegistryObject<Block> DARKDIRT = REGISTAR.register("darkdirt",
 			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
 					.strength(0.8F)));
+	
+	public static final RegistryObject<Block> WHITETREE_LOG = REGISTAR.register("whitetree_log", 
+		    () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+		    		.ofFullCopy(Blocks.OAK_LOG)
+		    		.strength(4F)
+		    		.lightLevel((state) -> LIGHT_WHITE_TREE))
+		    );
+	
+	public static final RegistryObject<Block> WHITETREE_WOOD = REGISTAR.register("whitetree_wood", 
+		    () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+		    		.ofFullCopy(Blocks.OAK_WOOD)
+		    		.strength(4F)
+		    		.lightLevel((state) -> LIGHT_WHITE_TREE)));
+	
+	public static final RegistryObject<Block> STRIPPED_WHITETREE_LOG = REGISTAR.register("stripped_whitetree_log", 
+		    () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+		    		.ofFullCopy(Blocks.STRIPPED_OAK_LOG)
+		    		.strength(4F)
+		    		.lightLevel((state) -> LIGHT_WHITE_TREE)));
+	
+	public static final RegistryObject<Block> STRIPPED_WHITETREE_WOOD = REGISTAR.register("stripped_whitetree_wood", 
+		    () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+		    		.ofFullCopy(Blocks.STRIPPED_OAK_WOOD)
+		    		.strength(4F)
+		    		.lightLevel((state) -> LIGHT_WHITE_TREE)));
+	
+	public static final RegistryObject<Block> WHITETREE_LEAVES = REGISTAR.register("whitetree_leaves",
+			() -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+					.lightLevel((state) -> LIGHT_WHITE_TREE + 2)) {
+				
+				@Override
+				public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+						return true;
+				}
+				@Override
+				public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+					return 60;
+				}
+				@Override
+				public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+					return 30;
+				}
+				
+				
+			});
+	
+	public static final RegistryObject<Block> WHITETREE_SAPLING = REGISTAR.register("whitetree_sapling",
+			()-> new SaplingBlock(new TreeGrower("whitetree",
+					Optional.of(ModConfiguredFeatures.WHITETREE_KEY),
+					Optional.of(ModConfiguredFeatures.WHITETREE_KEY),
+					Optional.of(ModConfiguredFeatures.WHITETREE_KEY)),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+					.lightLevel((state) -> 12)
+			));
 	
 	
 	

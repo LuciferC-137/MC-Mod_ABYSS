@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-06T12:38:02.1184863	Loot Tables
+// 1.20.4	2024-07-07T21:10:07.5685205	Loot Tables
 cd3afcd604acda173c23bfbfc1381b05dbe7bb16 data/wardentools/loot_tables/blocks/darkdirt.json
 389f559700304e07f380d250e3ab3cfbf609406b data/wardentools/loot_tables/blocks/darkgrass_block.json
 05a6e49c435dc40acf7731ef3d51fa13f66df208 data/wardentools/loot_tables/blocks/darktree_button.json
@@ -17,3 +17,8 @@ a6477c1450db15e892ab553a8f6b5ae10392ad23 data/wardentools/loot_tables/blocks/dar
 5f70f91d16d65f46bad25ad1e6464f72bcabcb09 data/wardentools/loot_tables/blocks/deepcristal.json
 22c5562d49c153eef742057e576bbd90d943acd0 data/wardentools/loot_tables/blocks/stripped_darktree_log.json
 d2ebb7754472b3337e9083f43187a35173fe6ff5 data/wardentools/loot_tables/blocks/stripped_darktree_wood.json
+957888082175208144cd83b53a9cbc5f4e7ff47f data/wardentools/loot_tables/blocks/stripped_whitetree_log.json
+84bd6a30c1f27aedbf5bb4103c869a2a060007ff data/wardentools/loot_tables/blocks/stripped_whitetree_wood.json
+1ba34cb34617aad82d39ec61da4d1e65772045cd data/wardentools/loot_tables/blocks/whitetree_log.json
+e97f4a5e8c44d9e73a7f6803ca687a31c435c91d data/wardentools/loot_tables/blocks/whitetree_sapling.json
+2f6f06e30a5b4ed62eb9893d2f2421f61b08b17d data/wardentools/loot_tables/blocks/whitetree_wood.json

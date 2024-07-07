@@ -8,6 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
+import wardentools.worldgen.tree.custom.WhitetreeTrunkPlacer;
 
 public class ModTrunkPlacerTypes {
     public static final DeferredRegister<TrunkPlacerType<?>> TRUNK_PLACER =
@@ -16,6 +17,10 @@ public class ModTrunkPlacerTypes {
     public static final RegistryObject<TrunkPlacerType<DarktreeTrunkPlacer>> DARKTREE_TRUNK_PLACER =
             TRUNK_PLACER.register("darktree_trunk_placer",
             		() -> new TrunkPlacerType<>(DarktreeTrunkPlacer.CODEC));
+    
+    public static final RegistryObject<TrunkPlacerType<WhitetreeTrunkPlacer>> WHITETREE_TRUNK_PLACER =
+            TRUNK_PLACER.register("whitetree_trunk_placer",
+            		() -> new TrunkPlacerType<>(WhitetreeTrunkPlacer.CODEC));
 
     public static void register(IEventBus eventBus) {
         TRUNK_PLACER.register(eventBus);

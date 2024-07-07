@@ -23,10 +23,13 @@ public class ModBiomes {
             new ResourceLocation(ModMain.MOD_ID, "deep_forest"));
 	public static final ResourceKey<Biome> WASTE_LAND = ResourceKey.create(Registries.BIOME,
             new ResourceLocation(ModMain.MOD_ID, "waste_land"));
+	public static final ResourceKey<Biome> WHITE_FOREST = ResourceKey.create(Registries.BIOME,
+            new ResourceLocation(ModMain.MOD_ID, "white_forest"));
 
     public static void bootstrap(BootstapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));
         context.register(WASTE_LAND, wasteLand(context));
+        context.register(WHITE_FOREST, whiteForest(context));
     }
 
     public static void globalAbyssGeneration(BiomeGenerationSettings.Builder builder) {
@@ -97,6 +100,42 @@ public class ModBiomes {
         BiomeDefaultFeatures.addDefaultCrystalFormations(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
         BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
+        
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(false)
+                .downfall(0.8f)
+                .temperature(0.7f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects((new BiomeSpecialEffects.Builder())
+                        .waterColor(0x0a4c5b)
+                        .waterFogColor(0x296472)
+                        .skyColor(0x063D45)
+                        .grassColorOverride(0x147B75)
+                        .foliageColorOverride(0x147B63)
+                        .fogColor(0x082127)
+                        .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
+                        //.backgroundMusic(Musics.createGameMusic())
+                        .build()).build();
+    }
+    
+    public static Biome whiteForest(BootstapContext<Biome> context) {
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+        
+        // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
+        spawnBuilder.addSpawn(MobCategory.CREATURE,
+        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
+        spawnBuilder.creatureGenerationProbability(0.1F);
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(
+                		context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+        
+        //need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
+        globalAbyssGeneration(biomeBuilder);
+        BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
+        
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.WHITETREE_PLACED_KEY);
         
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)

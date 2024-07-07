@@ -29,16 +29,22 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         // Registering specific block models
         registerLeavesBlock(BlockRegistry.DARKTREE_LEAVES);
+        registerLeavesBlock(BlockRegistry.WHITETREE_LEAVES);
         registerCrossCutoutBlock(BlockRegistry.DARKTREE_SAPLING);
+        registerCrossCutoutBlock(BlockRegistry.WHITETREE_SAPLING);
         registerDarkGrassBlock(BlockRegistry.DARKGRASS_BLOCK);
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
         registerFromLocation(BlockRegistry.STRIPPED_DARKTREE_WOOD, "block/stripped_darktree_log");
+        registerFromLocation(BlockRegistry.WHITETREE_WOOD, "block/whitetree_log");
+        registerFromLocation(BlockRegistry.STRIPPED_WHITETREE_WOOD, "block/stripped_whitetree_log");
 
         // Registering block states for logs
         logBlock((RotatedPillarBlock) BlockRegistry.DARKTREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_DARKTREE_LOG.get());
+        logBlock((RotatedPillarBlock) BlockRegistry.WHITETREE_LOG.get());
+        logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_WHITETREE_LOG.get());
         
         // Registering block states for planks derivates
         stairsBlock(((StairBlock)BlockRegistry.DARKTREE_STAIR.get()),

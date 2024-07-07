@@ -22,22 +22,26 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
         
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(BlockRegistry.DEEP_CRISTAL.get())
-                .add(BlockRegistry.DEEPBLOCK.get())
-                .add(BlockRegistry.PALE_SHARD.get());
+            .add(BlockRegistry.DEEP_CRISTAL.get())
+            .add(BlockRegistry.DEEPBLOCK.get())
+            .add(BlockRegistry.PALE_SHARD.get());
 
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
-        		.add(BlockRegistry.DEEP_CRISTAL.get())
-        		.add(BlockRegistry.DEEPBLOCK.get())
-        		.add(BlockRegistry.PALE_SHARD.get());
+        	.add(BlockRegistry.DEEP_CRISTAL.get())
+        	.add(BlockRegistry.DEEPBLOCK.get())
+        	.add(BlockRegistry.PALE_SHARD.get());
         
         
         this.tag(BlockTags.LOGS_THAT_BURN)
 	        .add(BlockRegistry.DARKTREE_LOG.get())
 	        .add(BlockRegistry.DARKTREE_WOOD.get())
 	        .add(BlockRegistry.STRIPPED_DARKTREE_LOG.get())
-	        .add(BlockRegistry.STRIPPED_DARKTREE_WOOD.get());
+	        .add(BlockRegistry.STRIPPED_DARKTREE_WOOD.get())
+	        .add(BlockRegistry.WHITETREE_LOG.get())
+	        .add(BlockRegistry.WHITETREE_WOOD.get())
+	        .add(BlockRegistry.STRIPPED_WHITETREE_LOG.get())
+	        .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get());
 
 		this.tag(BlockTags.PLANKS)
 		    .add(BlockRegistry.DARKTREE_PLANKS.get());

@@ -41,11 +41,19 @@ public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
 				return BlockRegistry.STRIPPED_DARKTREE_LOG
 						.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
 			}
+			else if (state.is(BlockRegistry.WHITETREE_LOG.get())) {
+				return BlockRegistry.STRIPPED_WHITETREE_LOG
+						.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+			}
 		}
 		
 		if (context.getItemInHand().getItem() instanceof AxeItem) {
 			if (state.is(BlockRegistry.DARKTREE_WOOD.get())) {
 				return BlockRegistry.STRIPPED_DARKTREE_WOOD
+						.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+			}
+			else if (state.is(BlockRegistry.WHITETREE_WOOD.get())) {
+				return BlockRegistry.STRIPPED_WHITETREE_WOOD
 						.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
 			}
 		}

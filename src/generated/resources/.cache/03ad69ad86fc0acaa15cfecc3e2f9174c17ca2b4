@@ -1,5 +1,5 @@
-// 1.20.4	2024-06-15T17:40:42.5081949	Tags for minecraft:item mod id wardentools
+// 1.20.4	2024-07-07T21:10:07.5635349	Tags for minecraft:item mod id wardentools
 b6ce86dae9c0863c20ed176110b5c8a0cbed91a6 data/minecraft/tags/items/dirt.json
-8b13e52af880452cc8c2cc478cd8dce95fc26b95 data/minecraft/tags/items/logs_that_burn.json
+b8d3fede55bff9a0af3aff1f4f5ac9f0ce926adf data/minecraft/tags/items/logs_that_burn.json
 2e7603b256a6aaf246c4f4e9c17234887586a6b3 data/minecraft/tags/items/planks.json
 6cb5dd6b7d155f50a6c80162ad9f5c7465830b19 data/minecraft/tags/items/trimmable_armor.json

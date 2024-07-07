@@ -30,13 +30,12 @@ public class ModCreativeTabs {
                         event.accept(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_BOOTS.get());
                         
+                        event.accept(ItemRegistry.DARKTREE_LOG.get());
                     	event.accept(ItemRegistry.DARKTREE_WOOD.get());
                     	event.accept(ItemRegistry.STRIPPED_DARKTREE_LOG.get());
                     	event.accept(ItemRegistry.STRIPPED_DARKTREE_WOOD.get());
-                    	
                     	event.accept(ItemRegistry.DARKTREE_PLANKS.get());
                     	event.accept(ItemRegistry.DARKTREE_LEAVES.get());
-                    	event.accept(ItemRegistry.DARKTREE_LOG.get());
                     	event.accept(ItemRegistry.DARKTREE_SAPLING.get());
                     	event.accept(ItemRegistry.DARKTREE_STAIRS.get());
                     	event.accept(ItemRegistry.DARKTREE_SLAB.get());
@@ -48,15 +47,21 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DARKTREE_PRESSURE_PLATE.get());
                     	event.accept(ItemRegistry.DARK_STICK.get());
                     	
+                    	event.accept(ItemRegistry.WHITETREE_LOG.get());
+                    	event.accept(ItemRegistry.WHITETREE_WOOD.get());
+                    	event.accept(ItemRegistry.STRIPPED_WHITETREE_LOG.get());
+                    	event.accept(ItemRegistry.STRIPPED_WHITETREE_WOOD.get());
+                    	event.accept(ItemRegistry.WHITETREE_LEAVES.get());
+                    	event.accept(ItemRegistry.WHITETREE_SAPLING.get());
+                    	
                     	event.accept(ItemRegistry.DARKDIRT.get());
                     	event.accept(ItemRegistry.DARKGRASS_BLOCK.get());
-                    	
-                    	event.accept(ItemRegistry.WARDEN_HEART.get());
-                    	event.accept(ItemRegistry.CORRUPTED_ESSENCE.get());
 
                     	event.accept(ItemRegistry.DEEPLURKER_EGG.get());
                     	event.accept(ItemRegistry.DEEP_FRUIT.get());
                     	
+                    	event.accept(ItemRegistry.WARDEN_HEART.get());
+                    	event.accept(ItemRegistry.CORRUPTED_ESSENCE.get());
                     	event.accept(ItemRegistry.CORRUPTED_VESSEL.get());
                     	event.accept(ItemRegistry.WIND_WHISPERER.get());
                     	event.accept(ItemRegistry.ABYSS_DIVER.get());

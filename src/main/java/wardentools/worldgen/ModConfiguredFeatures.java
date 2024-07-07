@@ -15,11 +15,14 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
+import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;
+import wardentools.worldgen.tree.custom.WhitetreeTrunkPlacer;
 
 
 public class ModConfiguredFeatures {
 	
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DARKTREE_KEY = registerKey("darktree");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITETREE_KEY = registerKey("whitetree");
 		
 	
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
@@ -31,6 +34,12 @@ public class ModConfiguredFeatures {
                 new DarktreeFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), 3),
                 new TwoLayersFeatureSize(1, 0, 2)).build());
     	
+    	register(context, WHITETREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(BlockRegistry.WHITETREE_LOG.get()),
+                new WhitetreeTrunkPlacer(5, 4, 4),
+                BlockStateProvider.simple(BlockRegistry.WHITETREE_LEAVES.get()),
+                new WhitetreeFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), 3),
+                new TwoLayersFeatureSize(1, 0, 2)).build());
     }
     
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

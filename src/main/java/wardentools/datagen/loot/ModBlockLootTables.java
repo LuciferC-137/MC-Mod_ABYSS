@@ -51,6 +51,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.DARKTREE_FENCE);
     	this.addDropSelf(BlockRegistry.DARKTREE_FENCE_GATE);
     	this.addDropSelf(BlockRegistry.DARKTREE_TRAPDOOR);
+    	this.addDropSelf(BlockRegistry.WHITETREE_LOG);
+    	this.addDropSelf(BlockRegistry.WHITETREE_SAPLING);
+    	this.addDropSelf(BlockRegistry.WHITETREE_WOOD);
+    	this.addDropSelf(BlockRegistry.STRIPPED_WHITETREE_LOG);
+    	this.addDropSelf(BlockRegistry.STRIPPED_WHITETREE_WOOD);
     	
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
     			block -> createSlabItemTable(BlockRegistry.DARKTREE_SLAB.get()));
@@ -102,7 +107,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     protected Iterable<Block> getKnownBlocks() {
     	Set<Block> blocksToIgnore = Set.of(
     	        BlockRegistry.PALE_SHARD.get(),
-    	        BlockRegistry.DARKTREE_LEAVES.get()
+    	        BlockRegistry.DARKTREE_LEAVES.get(),
+    	        BlockRegistry.WHITETREE_LEAVES.get()
     	);
     	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
     	        .map(RegistryObject::get)

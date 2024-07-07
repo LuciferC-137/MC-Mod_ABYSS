@@ -1,9 +1,9 @@
-// 1.20.4	2024-07-07T09:08:38.8223923	Tags for minecraft:block mod id wardentools
+// 1.20.4	2024-07-07T21:04:29.6647594	Tags for minecraft:block mod id wardentools
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/blocks/animals_spawnable_on.json
 fe0dfed652c709c1c46de9234483b847471a0111 data/minecraft/tags/blocks/dirt.json
 2e7d4659216302060589fb0cededa8d00f926e27 data/minecraft/tags/blocks/fences.json
 a262dc7433964f4bc78f3a192fa91730512e96d3 data/minecraft/tags/blocks/fence_gates.json
-3b917800a65a3dd8338f7de06032edb32ff9ecce data/minecraft/tags/blocks/logs_that_burn.json
+e43039466b443e6e2090b89b06ff5884f78e3251 data/minecraft/tags/blocks/logs_that_burn.json
 04595905dd9514d79b01de6e254717619ff598ba data/minecraft/tags/blocks/mineable/pickaxe.json
 04595905dd9514d79b01de6e254717619ff598ba data/minecraft/tags/blocks/needs_diamond_tool.json
 2e7603b256a6aaf246c4f4e9c17234887586a6b3 data/minecraft/tags/blocks/planks.json

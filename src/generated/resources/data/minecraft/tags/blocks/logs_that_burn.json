@@ -3,6 +3,10 @@
     "wardentools:darktree_log",
     "wardentools:darktree_wood",
     "wardentools:stripped_darktree_log",
-    "wardentools:stripped_darktree_wood"
+    "wardentools:stripped_darktree_wood",
+    "wardentools:whitetree_log",
+    "wardentools:whitetree_wood",
+    "wardentools:stripped_whitetree_log",
+    "wardentools:stripped_whitetree_wood"
   ]
 }

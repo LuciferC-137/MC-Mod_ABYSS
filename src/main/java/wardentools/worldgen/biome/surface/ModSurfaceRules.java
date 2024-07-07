@@ -33,13 +33,14 @@ public class ModSurfaceRules {
 				BEDROCK);
        
        // Default darkgrass surface in the abyss
-       SurfaceRules.RuleSource darkgrassSurface = SurfaceRules.sequence(
-               SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
-                       SurfaceRules.ifTrue(isAtOrAboveWaterLevel,
-                    		   SurfaceRules.ifTrue(SurfaceRules.yStartCheck(VerticalAnchor.absolute(50), 0),
-                    				   DARKGRASS))),
-               SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, DARKDIRT),
-               SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DARKDIRT)
+       SurfaceRules.RuleSource darkgrassSurface = SurfaceRules.ifTrue(
+    		   SurfaceRules.yStartCheck(VerticalAnchor.absolute(50), 0),
+    		   		SurfaceRules.sequence(
+    		   			SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
+    		   					SurfaceRules.ifTrue(isAtOrAboveWaterLevel, DARKGRASS)),
+    		   			SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, DARKDIRT),
+    		   			SurfaceRules.ifTrue(SurfaceRules.UNDER_FLOOR, DARKDIRT)
+    		   		)
        );
 
        // Default abyss waste land
@@ -63,7 +64,8 @@ public class ModSurfaceRules {
         //Make abyss generation in each abyss biome
         SurfaceRules.RuleSource abyssGeneration = SurfaceRules.sequence(
         		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.DEEP_FOREST), abyssSurface),
-        		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WASTE_LAND), wasteLand)
+        		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WASTE_LAND), wasteLand),
+        		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WHITE_FOREST), abyssSurface)
         		//Add here other abyss biomes
         		);
 

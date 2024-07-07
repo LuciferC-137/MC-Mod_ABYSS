@@ -40,8 +40,8 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 			BiConsumer<BlockPos, BlockState> pBlockSetter,
 			RandomSource pRandom, int pFreeTreeHeight, BlockPos pPos,
 			TreeConfiguration pConfig) {
-		
 		setDirtAt(pLevel, pBlockSetter, pRandom, pPos.below(), pConfig);
+		
 		int heightFirstBranch = pFreeTreeHeight + pRandom.nextInt(-2, 2);
 		List<BlockPos> listTrunk = new ArrayList<BlockPos>();
 		List<FoliageAttachment> foliagePositions = new ArrayList<>();
@@ -133,66 +133,6 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		}
 		
 		return foliagePositions;
-	}
-	
-	
-	@SuppressWarnings("unused")
-	private List<BlockPos> getBranch(List<BlockPos> currentTree,
-			BlockPos startPoint, int maxLength,
-			RandomSource pRandom, int nbCurrentBranch, int direction, int lengthTree){
-		
-		int branchLength = (int)(pRandom.nextGaussian()/3+1)*(maxLength);
-		if (branchLength<2) {
-			return currentTree;
-		}
-		
-		
-		double branchCurvature = 0.4;
-		
-			if (direction==1) {
-				for (int x = 0; x <= branchLength; x++) {
-		            int y = (int) Math.round(branchCurvature * x * x);
-		            currentTree.add(startPoint.offset(-x, y, 0));
-	        	}
-			}
-			if (direction==2) {
-				for (int z = 0; z <= branchLength; z++) {
-		            int y = (int) Math.round(branchCurvature * z * z);
-		            currentTree.add(startPoint.offset(0, y, z));
-				}
-			}
-		
-			if (direction==3) {
-				for (int x = 0; x <= branchLength; x++) {
-		            int y = (int) Math.round(branchCurvature * x * x);
-		            currentTree.add(startPoint.offset(x, y, 0));
-		        }
-			}
-			if (direction==4) {
-				for (int z = 0; z <= branchLength; z++) {
-		            int y = (int) Math.round(branchCurvature * z * z);
-		            currentTree.add(startPoint.offset(0, y, -z));
-				}
-			}
-		
-		
-		List<Integer> directionOut = new ArrayList<>();
-		if (!(direction==3)) {directionOut.add(1);}
-		if (!(direction==4)) {directionOut.add(2);}
-		if (!(direction==1)) {directionOut.add(3);}
-		if (!(direction==2)) {directionOut.add(4);}		
-		
-		if (nbCurrentBranch<=lengthTree){
-			for (int i=0; i<=2; i++) {
-				currentTree.addAll(getBranch(
-						currentTree, currentTree.get(currentTree.size()-1),
-						branchLength-1, pRandom, nbCurrentBranch+1, directionOut.get(i), lengthTree));
-			}
-			return currentTree;
-		}
-		else {
-			return currentTree;
-		}
 	}
 
 }

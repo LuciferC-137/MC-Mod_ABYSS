@@ -182,4 +182,28 @@ public class ItemRegistry {
 					.stacksTo(64)
 					.fireResistant()
 					));
+	
+	public static final RegistryObject<Item> WHITETREE_LOG =
+			REGISTAR.register("whitetree_log",
+		    () -> new BlockItem(BlockRegistry.WHITETREE_LOG.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_LEAVES =
+			REGISTAR.register("whitetree_leaves",
+			() -> new BlockItem(BlockRegistry.WHITETREE_LEAVES.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> STRIPPED_WHITETREE_LOG =
+			REGISTAR.register("stripped_whitetree_log",
+			() -> new BlockItem(BlockRegistry.STRIPPED_WHITETREE_LOG.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_WOOD =
+			REGISTAR.register("whitetree_wood",
+			() -> new BlockItem(BlockRegistry.WHITETREE_WOOD.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> STRIPPED_WHITETREE_WOOD =
+			REGISTAR.register("stripped_whitetree_wood",
+			() -> new BlockItem(BlockRegistry.STRIPPED_WHITETREE_WOOD.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_SAPLING =
+			REGISTAR.register("whitetree_sapling",
+			() -> new BlockItem(BlockRegistry.WHITETREE_SAPLING.get(), new Item.Properties()));
 }

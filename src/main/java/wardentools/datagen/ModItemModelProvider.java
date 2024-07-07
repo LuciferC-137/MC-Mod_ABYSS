@@ -64,6 +64,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.PALE_SHARD);
         blockItemWithItemModel(BlockRegistry.DARKTREE_SAPLING);
         blockItemWithItemModel(BlockRegistry.DARKTREE_DOOR);
+        blockItemWithItemModel(BlockRegistry.WHITETREE_SAPLING);
         
         //Blocks that did not created their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
@@ -82,6 +83,15 @@ public class ModItemModelProvider extends ItemModelProvider {
         		new ResourceLocation(ModMain.MOD_ID, "block/darktree_pressure_plate"));
         withExistingParent(BlockRegistry.DARKTREE_FENCE_GATE.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/darktree_fence_gate"));
+        
+        withExistingParent(BlockRegistry.WHITETREE_WOOD.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_wood"));
+        withExistingParent(BlockRegistry.STRIPPED_WHITETREE_WOOD.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/stripped_whitetree_wood"));
+        withExistingParent(BlockRegistry.STRIPPED_WHITETREE_LOG.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/stripped_whitetree_log"));
+        withExistingParent(BlockRegistry.WHITETREE_LOG.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_log"));
         
         
         //Blocks that use custom methods
