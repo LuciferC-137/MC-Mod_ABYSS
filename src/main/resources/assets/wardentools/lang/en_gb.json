@@ -37,6 +37,13 @@
 	"block.wardentools.darktree_door": "Darktree Door",
 	"block.wardentools.darktree_trapdoor": "Darktree Trap Door",
 	
+	"block.wardentools.whitetree_log": "Whitetree Log",
+	"block.wardentools.whitetree_wood": "Whitetree Wood",
+	"block.wardentools.stripped_whitetree_log": "Stripped Whitetree Log",
+	"block.wardentools.stripped_whitetree_wood": "Stripped Whitetree Wood",
+	"block.wardentools.whitetree_sapling": "Whitetree Sapling",
+	"block.wardentools.whitetree_leaves": "Whitetree leaves",
+	
 	"entity.wardentools.deeplurker": "Deep Lurker",
 	
 	"creativetab.abyss_tab": "Abyss"

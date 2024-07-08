@@ -34,35 +34,65 @@ public class WhitetreeFoliagePlacer extends FoliagePlacer{
             int pMaxFreeTreeHeight, FoliageAttachment pAttachment,
             int pFoliageHeight, int pFoliageRadius, int pOffset) {
     	boolean doubleTrunk = pAttachment.doubleTrunk();
-    	System.out.println("pMaxFreeTreeHeight :" + pMaxFreeTreeHeight
-    			+ " pFoliageHeight :" + pFoliageHeight + " pFoliageRadius :"
-    			+ pFoliageRadius + " pOffset :" + pOffset + " this.height :" + this.height);
-    	   	
-    	int radius_wide = (int)Math.round((pMaxFreeTreeHeight - this.height) / 2) + 1;
+    	
+    	double radius_base = pMaxFreeTreeHeight / 2 + 1;
+    	double radius_base_height = radius_base;
+    	int start = Math.round(pMaxFreeTreeHeight/3);
+    	
+    	placeFoliageDisk(pLevel, pBlockSetter, pRandom, pConfig,
+				pMaxFreeTreeHeight, pAttachment, (int)Math.round(radius_base_height / 2),
+				pOffset + start - 1, doubleTrunk);   	
 
-	    placeFoliageDisk(pLevel, pBlockSetter, pRandom, pConfig,
-	    			pMaxFreeTreeHeight, pAttachment, radius_wide, pOffset);
-	    placeFoliageDisk(pLevel, pBlockSetter, pRandom, pConfig,
-    			pMaxFreeTreeHeight, pAttachment, (int)Math.round(radius_wide/2) + 1, pOffset + 1);
-	    placeFoliageDisk(pLevel, pBlockSetter, pRandom, pConfig,
-    			pMaxFreeTreeHeight, pAttachment, (int)Math.round(radius_wide/3) + 1, pOffset + 2);
+    	//Making the whole Foliage
+    	for (int i=start; i<pMaxFreeTreeHeight + (doubleTrunk ? 0 : 2); i++) {
+    		radius_base_height = radius_base * (pMaxFreeTreeHeight - i) / pMaxFreeTreeHeight + 1;
+    		double radius = radius_base_height /(1 + (i - start) % 3) / 1.5 + 1;
+    		placeFoliageDisk(pLevel, pBlockSetter, pRandom, pConfig,
+    				pMaxFreeTreeHeight, pAttachment, radius, pOffset + i, doubleTrunk);
+    	}
+    	//Making top tree
+    	if (doubleTrunk) {
+    		for (int x=-1; x<3; x++) {
+    			for (int z=-1; z<3; z++) {
+    				if (!(x==-1 && z==-1) && !(x==2 && z==2) && !(x==-1 && z==2) && !(x==2 && z==-1)) {
+    					WhitetreeFoliagePlacer.tryPlaceLeaf(pLevel, pBlockSetter, pRandom, pConfig,
+    		    				pAttachment.pos().offset(x, pMaxFreeTreeHeight, z));
+    				}
+    			}
+    		}
+    		for (int x=0; x<2; x++) {
+    			for (int y=0; y<2; y++) {
+    				WhitetreeFoliagePlacer.tryPlaceLeaf(pLevel, pBlockSetter, pRandom, pConfig,
+		    				pAttachment.pos().offset(x, pMaxFreeTreeHeight + 1, y));
+    			}
+    		}
+    		
+    	}
     }
     
     private void placeFoliageDisk(LevelSimulatedReader pLevel, FoliageSetter pBlockSetter,
 			RandomSource pRandom, TreeConfiguration pConfig,
-				int pMaxFreeTreeHeight, FoliageAttachment pAttachment,
-					 int pFoliageRadius, int pOffset) {
+			int pMaxFreeTreeHeight, FoliageAttachment pAttachment,
+			double pFoliageRadius, int pOffset, boolean doubleTrunk) {
 	
-		int radiusSquared = pFoliageRadius * pFoliageRadius;
-		for (int x = -pFoliageRadius; x <= pFoliageRadius; x++) {
-			for (int z = -pFoliageRadius; z <= pFoliageRadius; z++) {
-				if (x * x + z * z <= radiusSquared) {
+		double radiusSquared = (pFoliageRadius + (doubleTrunk ? 1 : 0)) * (pFoliageRadius + (doubleTrunk ? 1 : 0));
+		double centerXOffset = doubleTrunk ? -0.5 : 0;
+		double centerZOffset = doubleTrunk ? -0.5 : 0;
+		
+		for (int x = -(int)Math.round(pFoliageRadius); x <= pFoliageRadius + 2; x++) {
+			for (int z = -(int)Math.round(pFoliageRadius); z <= pFoliageRadius + 2; z++) {
+				boolean cond = (x + centerXOffset) * (x + centerXOffset)
+						+ (z + centerZOffset) * (z + centerZOffset) < radiusSquared;
+				if (cond) {
 					BlockPos pos = pAttachment.pos().offset(x, pOffset, z);
 					WhitetreeFoliagePlacer.tryPlaceLeaf(pLevel, pBlockSetter, pRandom, pConfig, pos);
 				}
 			}
-     }
-}
+		}
+    }
+
+
+
     
 
     @Override

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE",
+    "EE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:stripped_whitetree_log"
+    }
+  },
+  "result": {
+    "item": "wardentools:stripped_whitetree_wood",
+    "count": 3
+  }
+}

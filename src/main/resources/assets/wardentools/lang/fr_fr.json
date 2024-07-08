@@ -36,6 +36,13 @@
 	"block.wardentools.darktree_door": "Porte en sombrabre",
 	"block.wardentools.darktree_trapdoor": "Trape en sombrabre",
 	
+	"block.wardentools.whitetree_log": "Bûche de Blancharbre",
+	"block.wardentools.whitetree_wood": "Bois de Blancharbre",
+	"block.wardentools.stripped_whitetree_log": "Bûche de Blancharbre écorcée",
+	"block.wardentools.stripped_whitetree_wood": "Bois de Blancharbre écorcée",
+	"block.wardentools.whitetree_sapling": "Pousse de Blancharbre",
+	"block.wardentools.whitetree_leaves": "Feuille de Blancharbre",
+	
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	
 	"creativetab.abyss_tab": "Abyss"

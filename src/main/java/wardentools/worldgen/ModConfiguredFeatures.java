@@ -36,7 +36,7 @@ public class ModConfiguredFeatures {
     	
     	register(context, WHITETREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(BlockRegistry.WHITETREE_LOG.get()),
-                new WhitetreeTrunkPlacer(5, 4, 4),
+                new WhitetreeTrunkPlacer(6, 4, 4),
                 BlockStateProvider.simple(BlockRegistry.WHITETREE_LEAVES.get()),
                 new WhitetreeFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), 3),
                 new TwoLayersFeatureSize(1, 0, 2)).build());

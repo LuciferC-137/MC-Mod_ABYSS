@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE",
+    "EE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:darktree_log"
+    }
+  },
+  "result": {
+    "item": "wardentools:darktree_wood",
+    "count": 3
+  }
+}

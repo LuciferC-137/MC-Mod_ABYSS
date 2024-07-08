@@ -31,7 +31,7 @@ public class ModPlacedFeatures {
                         BlockRegistry.DARKTREE_SAPLING.get()));
         
         register(context, WHITETREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WHITETREE_KEY),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1f, 2),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(14, 0.1f, 2),
                         BlockRegistry.WHITETREE_SAPLING.get()));
     }
 	
