@@ -55,6 +55,7 @@ public class ModBiomes {
         
         //need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
         globalAbyssGeneration(biomeBuilder);
+        //BiomeDefaultFeatures.addSculk(biomeBuilder);
         BiomeDefaultFeatures.addDefaultOres(biomeBuilder);
         BiomeDefaultFeatures.addDefaultMushrooms(biomeBuilder);
         

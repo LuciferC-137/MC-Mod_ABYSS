@@ -15,6 +15,7 @@ public class DeepLurkerRenderer extends MobRenderer<DeepLurkerEntity, DeepLurker
 
 	public DeepLurkerRenderer(EntityRendererProvider.Context context) {
 		super(context, new DeepLurker(context.bakeLayer(DeepLurker.LAYER_LOCATION)), 0.5f);
+		this.addLayer(new DeepLurkerEyesLayer(this));
 	}
 
 	@Override
