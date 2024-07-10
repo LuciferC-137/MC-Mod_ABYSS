@@ -15,9 +15,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
-public class TeleporterItem extends Item {
+public class AbyssDiverItem extends Item {
 
-	public TeleporterItem(Properties prop) {
+	public AbyssDiverItem(Properties prop) {
 		super(prop);
 	}
 		

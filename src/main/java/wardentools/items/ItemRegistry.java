@@ -145,7 +145,7 @@ public class ItemRegistry {
 	
 	public static final RegistryObject<Item> ABYSS_DIVER =
 			REGISTAR.register("abyss_diver",
-			() -> new TeleporterItem(new Item.Properties()
+			() -> new AbyssDiverItem(new Item.Properties()
 					.stacksTo(1)
 					.rarity(Rarity.EPIC)
 					.defaultDurability(20)

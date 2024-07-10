@@ -3,7 +3,7 @@
   // Yes, worldgen json files can have comments. Minecraft does "lenient" parsing of these json files.
 
   // This is the name of the template pool itself. I tend to just put the file path and file name here with modid.
-  "name": "wardentools:cristal_ruin_1/start_pool",
+  "name": "wardentools:cristal_ruin/start_pool",
 
   // The template pool to refer to if the entries in 'elements' fails to generate.
   "fallback": "minecraft:empty",
@@ -12,11 +12,9 @@
   // Do note that placed features needs a special element entry stuff.
   "elements": [
     {
-
       // How likely out of all the element for this one to be chosen.
-      "weight": 1,
+      "weight": 2,
       "element": {
-
         // The Identifier of the nbt file itself of the structure piece.
         // Note, this will automatically check into the 'structures' folder for the nbt file.
         // The final path would look like 'resources/data/tutorialmod/structures/run_down_house_left_side.nbt'
@@ -34,6 +32,24 @@
         // There's 'minecraft:legacy_single_pool_element' but that swaps the behavior of
         // Air and Structure Void in your piece as well as change the attachment mechanism.
         // It's only for old Vanilla Jigsaw Structures so don't use it. Stick with non-legacy.
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:cristal_ruin_2",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:cristal_ruin_3",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     }
