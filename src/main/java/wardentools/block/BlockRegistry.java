@@ -211,6 +211,57 @@ public class BlockRegistry {
 					.lightLevel((state) -> 12)
 			));
 	
+	public static final RegistryObject<Block> WHITETREE_PLANKS = REGISTAR.register("whitetree_planks", 
+		    () -> new Block(BlockBehaviour.Properties
+		    		.ofFullCopy(Blocks.OAK_PLANKS)
+		    		.lightLevel((state) -> LIGHT_DARK_TREE)) {
+		    	
+		    	@Override
+		    	public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+		    			return true;
+		    	}
+		    	@Override
+		    	public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+		    		return 20;
+		    	}
+		    	@Override
+		    	public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+		    		return 5;
+		    	}
+		    	
+		    	
+		    });
+	
+	public static final RegistryObject<Block> WHITETREE_STAIR = REGISTAR.register("whitetree_stair",
+            () -> new StairBlock(Blocks.OAK_STAIRS.defaultBlockState(),
+            		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)));
+	
+	public static final RegistryObject<Block> WHITETREE_SLAB = REGISTAR.register("whitetree_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)));
+	
+	public static final RegistryObject<Block> WHITETREE_BUTTON = REGISTAR.register("whitetree_button",
+            () -> new ButtonBlock(BlockSetType.OAK, 10,
+            		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+            		));
+	
+	public static final RegistryObject<Block> WHITETREE_PRESSURE_PLATE = REGISTAR.register("whitetree_pressure_plate",
+            () -> new PressurePlateBlock(BlockSetType.OAK,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
+	
+	public static final RegistryObject<Block> WHITETREE_FENCE = REGISTAR.register("whitetree_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)));
+	
+	public static final RegistryObject<Block> WHITETREE_FENCE_GATE = REGISTAR.register("whitetree_fence_gate",
+            () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)));
+	
+	public static final RegistryObject<Block> WHITETREE_DOOR = REGISTAR.register("whitetree_door",
+            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)
+            		.noOcclusion()));
+	
+	public static final RegistryObject<Block> WHITETREE_TRAPDOOR = REGISTAR.register("whitetree_trapdoor",
+            () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)
+            		.noOcclusion()));
+	
 	
 	
 }

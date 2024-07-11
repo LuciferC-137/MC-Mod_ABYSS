@@ -43,6 +43,15 @@
 	"block.wardentools.stripped_whitetree_wood": "Stripped Whitetree Wood",
 	"block.wardentools.whitetree_sapling": "Whitetree Sapling",
 	"block.wardentools.whitetree_leaves": "Whitetree leaves",
+	"block.wardentools.whitetree_planks": "Whitetree Planks",
+	"block.wardentools.whitetree_stair": "Whitetree Stair",
+	"block.wardentools.whitetree_slab": "Whitetree Slab",
+	"block.wardentools.whitetree_button": "Whitetree Button",
+	"block.wardentools.whitetree_pressure_plate": "Whitetree Pressure Plate",
+	"block.wardentools.whitetree_fence": "Whitetree Fence",
+	"block.wardentools.whitetree_fence_gate": "Whitetree Fence Gate",
+	"block.wardentools.whitetree_door": "Whitetree Door",
+	"block.wardentools.whitetree_trapdoor": "Whitetree Trap Door",
 	
 	"entity.wardentools.deeplurker": "Deep Lurker",
 	

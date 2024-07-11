@@ -53,6 +53,15 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.STRIPPED_WHITETREE_WOOD.get());
                     	event.accept(ItemRegistry.WHITETREE_LEAVES.get());
                     	event.accept(ItemRegistry.WHITETREE_SAPLING.get());
+                    	event.accept(ItemRegistry.WHITETREE_PLANKS.get());
+                    	event.accept(ItemRegistry.WHITETREE_STAIRS.get());
+                    	event.accept(ItemRegistry.WHITETREE_SLAB.get());
+                    	event.accept(ItemRegistry.WHITETREE_FENCE.get());
+                    	event.accept(ItemRegistry.WHITETREE_BUTTON.get());
+                    	event.accept(ItemRegistry.WHITETREE_DOOR.get());
+                    	event.accept(ItemRegistry.WHITETREE_TRAPDOOR.get());
+                    	event.accept(ItemRegistry.WHITETREE_FENCE_GATE.get());
+                    	event.accept(ItemRegistry.WHITETREE_PRESSURE_PLATE.get());
                     	
                     	event.accept(ItemRegistry.DARKDIRT.get());
                     	event.accept(ItemRegistry.DARKGRASS_BLOCK.get());

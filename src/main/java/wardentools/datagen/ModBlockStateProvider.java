@@ -21,6 +21,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         // Registering blocks with item models
         registerBlockWithItem(BlockRegistry.DARKTREE_PLANKS);
+        registerBlockWithItem(BlockRegistry.WHITETREE_PLANKS);
         registerBlockWithItem(BlockRegistry.DEEPBLOCK);
         registerBlockWithItem(BlockRegistry.DARKDIRT);
 
@@ -64,6 +65,24 @@ public class ModBlockStateProvider extends BlockStateProvider {
         		modLoc("block/darktree_door_bottom"), modLoc("block/darktree_door_top"), "cutout");
         trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.DARKTREE_TRAPDOOR.get()),
         		modLoc("block/darktree_trap_door"), true, "cutout");
+        
+        stairsBlock(((StairBlock)BlockRegistry.WHITETREE_STAIR.get()),
+        		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()));
+        slabBlock(((SlabBlock)BlockRegistry.WHITETREE_SLAB.get()),
+        		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()),
+        		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()));
+        buttonBlock(((ButtonBlock)BlockRegistry.WHITETREE_BUTTON.get()),
+        		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()));
+        pressurePlateBlock(((PressurePlateBlock)BlockRegistry.WHITETREE_PRESSURE_PLATE.get()),
+        		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()));
+        fenceBlock(((FenceBlock)BlockRegistry.WHITETREE_FENCE.get()),
+        		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()));
+        fenceGateBlock(((FenceGateBlock)BlockRegistry.WHITETREE_FENCE_GATE.get()),
+        		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()));
+        doorBlockWithRenderType(((DoorBlock)BlockRegistry.WHITETREE_DOOR.get()),
+        		modLoc("block/whitetree_door_bottom"), modLoc("block/whitetree_door_top"), "cutout");
+        trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.WHITETREE_TRAPDOOR.get()),
+        		modLoc("block/whitetree_trap_door"), true, "cutout");
         
     }
 

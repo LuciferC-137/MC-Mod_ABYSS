@@ -65,6 +65,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.DARKTREE_SAPLING);
         blockItemWithItemModel(BlockRegistry.DARKTREE_DOOR);
         blockItemWithItemModel(BlockRegistry.WHITETREE_SAPLING);
+        blockItemWithItemModel(BlockRegistry.WHITETREE_DOOR);
         
         //Blocks that did not created their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
@@ -92,12 +93,23 @@ public class ModItemModelProvider extends ItemModelProvider {
         		new ResourceLocation(ModMain.MOD_ID, "block/stripped_whitetree_log"));
         withExistingParent(BlockRegistry.WHITETREE_LOG.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_log"));
+        withExistingParent(BlockRegistry.WHITETREE_STAIR.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_stair"));
+        withExistingParent(BlockRegistry.WHITETREE_SLAB.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_slab"));
+        withExistingParent(BlockRegistry.WHITETREE_PRESSURE_PLATE.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_pressure_plate"));
+        withExistingParent(BlockRegistry.WHITETREE_FENCE_GATE.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_fence_gate"));
         
         
         //Blocks that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);
         buttonItem(BlockRegistry.DARKTREE_BUTTON, BlockRegistry.DARKTREE_PLANKS);
         trapdoorItem(BlockRegistry.DARKTREE_TRAPDOOR);
+        fenceItem(BlockRegistry.WHITETREE_FENCE, BlockRegistry.WHITETREE_PLANKS);
+        buttonItem(BlockRegistry.WHITETREE_BUTTON, BlockRegistry.WHITETREE_PLANKS);
+        trapdoorItem(BlockRegistry.WHITETREE_TRAPDOOR);
         
     }
     

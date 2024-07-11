@@ -41,7 +41,8 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 	        .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get().asItem());
 		
 		 this.tag(ItemTags.PLANKS)
-         	.add(BlockRegistry.DARKTREE_PLANKS.get().asItem());
+         	.add(BlockRegistry.DARKTREE_PLANKS.get().asItem())
+         	.add(BlockRegistry.WHITETREE_PLANKS.get().asItem());
 		 
 		 this.tag(ItemTags.DIRT)
 		 	.add(BlockRegistry.DARKDIRT.get().asItem());

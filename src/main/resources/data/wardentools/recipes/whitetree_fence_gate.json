@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EKE",
+    "EKE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:whitetree_planks"
+    },
+    "K": {
+    	"item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "wardentools:whitetree_fence_gate",
+    "count": 3
+  }
+}

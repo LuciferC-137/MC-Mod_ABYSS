@@ -7,11 +7,11 @@ showAsResourcePack=false
 [[mods]]
   modId="wardentools"
   version="0.1"
-  displayName="Deep Armor"
+  displayName="ABYSS"
   logoFile="logo.png"
-  credits="I'd like to thank my mother and father."
+  credits="I pretty much did this by myself"
   authors="Lucifer_C-137"
-  description='''Adds cool armors from ancient city'''
+  description='''Adds the new dimension of ABYSS, with its new biome, mobs, structures, items, lore, etc...'''
 
 [[dependencies.wardentools]]
   modId="forge"

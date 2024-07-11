@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE",
+    "EE",
+    "EE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:whitetree_planks"
+    }
+  },
+  "result": {
+    "item": "wardentools:whitetree_door",
+    "count": 3
+  }
+}

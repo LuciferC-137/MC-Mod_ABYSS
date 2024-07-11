@@ -35,36 +35,49 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
     	
+    	
+    	this.addDropSelf(BlockRegistry.DEEPBLOCK);
+    	this.addDropSelf(BlockRegistry.DARKDIRT);
+    	this.addDropSelf(BlockRegistry.DARKGRASS_BLOCK);
+    	this.addDropSelf(BlockRegistry.DEEP_CRISTAL);
+    	
     	this.addDropSelf(BlockRegistry.DARKTREE_LOG);
     	this.addDropSelf(BlockRegistry.DARKTREE_PLANKS);
     	this.addDropSelf(BlockRegistry.DARKTREE_SAPLING);
     	this.addDropSelf(BlockRegistry.DARKTREE_WOOD);
-    	this.addDropSelf(BlockRegistry.DEEP_CRISTAL);
-    	this.addDropSelf(BlockRegistry.DEEPBLOCK);
     	this.addDropSelf(BlockRegistry.STRIPPED_DARKTREE_LOG);
     	this.addDropSelf(BlockRegistry.STRIPPED_DARKTREE_WOOD);
-    	this.addDropSelf(BlockRegistry.DARKDIRT);
-    	this.addDropSelf(BlockRegistry.DARKGRASS_BLOCK);
     	this.addDropSelf(BlockRegistry.DARKTREE_STAIR);
     	this.addDropSelf(BlockRegistry.DARKTREE_BUTTON);
     	this.addDropSelf(BlockRegistry.DARKTREE_PRESSURE_PLATE);
     	this.addDropSelf(BlockRegistry.DARKTREE_FENCE);
     	this.addDropSelf(BlockRegistry.DARKTREE_FENCE_GATE);
     	this.addDropSelf(BlockRegistry.DARKTREE_TRAPDOOR);
+    	
     	this.addDropSelf(BlockRegistry.WHITETREE_LOG);
     	this.addDropSelf(BlockRegistry.WHITETREE_SAPLING);
     	this.addDropSelf(BlockRegistry.WHITETREE_WOOD);
     	this.addDropSelf(BlockRegistry.STRIPPED_WHITETREE_LOG);
     	this.addDropSelf(BlockRegistry.STRIPPED_WHITETREE_WOOD);
+    	this.addDropSelf(BlockRegistry.WHITETREE_PLANKS);
+    	this.addDropSelf(BlockRegistry.WHITETREE_STAIR);
+    	this.addDropSelf(BlockRegistry.WHITETREE_BUTTON);
+    	this.addDropSelf(BlockRegistry.WHITETREE_PRESSURE_PLATE);
+    	this.addDropSelf(BlockRegistry.WHITETREE_FENCE);
+    	this.addDropSelf(BlockRegistry.WHITETREE_FENCE_GATE);
+    	this.addDropSelf(BlockRegistry.WHITETREE_TRAPDOOR);
     	
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
     			block -> createSlabItemTable(BlockRegistry.DARKTREE_SLAB.get()));
     	this.add(BlockRegistry.DARKTREE_DOOR.get(), 
     			block -> createDoorTable(BlockRegistry.DARKTREE_DOOR.get()));
     	
-    	//Temporary blocks
-    	//this.dropSelf(BlockRegistry.ABYSS_PORTAL.get());
+    	this.add(BlockRegistry.WHITETREE_SLAB.get(), 
+    			block -> createSlabItemTable(BlockRegistry.WHITETREE_SLAB.get()));
+    	this.add(BlockRegistry.WHITETREE_DOOR.get(), 
+    			block -> createDoorTable(BlockRegistry.WHITETREE_DOOR.get()));
     	
+   	
         //Special leave drop
     	//this.add(BlockRegistry.DARKTREE_LEAVES.get(), block -> 
 		//createLeavesDrops(block, BlockRegistry.DARKTREE_SAPLING.get(),

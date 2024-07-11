@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:whitetree_planks"
+    }
+  },
+  "result": {
+    "item": "wardentools:whitetree_pressure_plate",
+    "count": 2
+  }
+}

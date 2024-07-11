@@ -206,4 +206,40 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> WHITETREE_SAPLING =
 			REGISTAR.register("whitetree_sapling",
 			() -> new BlockItem(BlockRegistry.WHITETREE_SAPLING.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_PLANKS =
+			REGISTAR.register("whitetree_planks",
+			() -> new BlockItem(BlockRegistry.WHITETREE_PLANKS.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_STAIRS =
+			REGISTAR.register("whitetree_stair",
+			() -> new BlockItem(BlockRegistry.WHITETREE_STAIR.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_SLAB =
+			REGISTAR.register("whitetree_slab",
+			() -> new BlockItem(BlockRegistry.WHITETREE_SLAB.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_BUTTON =
+			REGISTAR.register("whitetree_button",
+			() -> new BlockItem(BlockRegistry.WHITETREE_BUTTON.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_PRESSURE_PLATE =
+			REGISTAR.register("whitetree_pressure_plate",
+			() -> new BlockItem(BlockRegistry.WHITETREE_PRESSURE_PLATE.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_DOOR =
+			REGISTAR.register("whitetree_door",
+			() -> new BlockItem(BlockRegistry.WHITETREE_DOOR.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_TRAPDOOR =
+			REGISTAR.register("whitetree_trapdoor",
+			() -> new BlockItem(BlockRegistry.WHITETREE_TRAPDOOR.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_FENCE =
+			REGISTAR.register("whitetree_fence",
+			() -> new BlockItem(BlockRegistry.WHITETREE_FENCE.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITETREE_FENCE_GATE =
+			REGISTAR.register("whitetree_fence_gate",
+			() -> new BlockItem(BlockRegistry.WHITETREE_FENCE_GATE.get(), new Item.Properties()));
 }

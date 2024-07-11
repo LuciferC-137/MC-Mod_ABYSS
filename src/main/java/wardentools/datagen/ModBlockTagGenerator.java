@@ -44,17 +44,20 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 	        .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get());
 
 		this.tag(BlockTags.PLANKS)
-		    .add(BlockRegistry.DARKTREE_PLANKS.get());
+		    .add(BlockRegistry.DARKTREE_PLANKS.get())
+		    .add(BlockRegistry.WHITETREE_PLANKS.get());
 		
 		this.tag(BlockTags.DIRT)
 			.add(BlockRegistry.DARKDIRT.get())
 			.add(BlockRegistry.DARKGRASS_BLOCK.get());
 		
 		this.tag(BlockTags.FENCES)
-			.add(BlockRegistry.DARKTREE_FENCE.get());
+			.add(BlockRegistry.DARKTREE_FENCE.get())
+			.add(BlockRegistry.WHITETREE_FENCE.get());
 		
 		this.tag(BlockTags.FENCE_GATES)
-			.add(BlockRegistry.DARKTREE_FENCE_GATE.get());
+			.add(BlockRegistry.DARKTREE_FENCE_GATE.get())
+			.add(BlockRegistry.WHITETREE_FENCE_GATE.get());
 		
 		this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
 			.add(BlockRegistry.DARKGRASS_BLOCK.get())
