@@ -1,5 +1,7 @@
 {
-  "carvers": {},
+  "carvers": {
+    "air": "minecraft:cave_extra_underground"
+  },
   "downfall": 0.8,
   "effects": {
     "fog_color": 532775,
