@@ -67,6 +67,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DARKGRASS_BLOCK.get());
 
                     	event.accept(ItemRegistry.DEEPLURKER_EGG.get());
+                    	event.accept(ItemRegistry.PALEWANDERER_EGG.get());
                     	event.accept(ItemRegistry.DEEP_FRUIT.get());
                     	
                     	event.accept(ItemRegistry.WARDEN_HEART.get());

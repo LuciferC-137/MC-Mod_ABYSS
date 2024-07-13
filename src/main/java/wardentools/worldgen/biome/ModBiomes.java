@@ -14,7 +14,6 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.NoiseSettings;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.worldgen.ModPlacedFeatures;
@@ -129,7 +128,9 @@ public class ModBiomes {
         // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
         spawnBuilder.addSpawn(MobCategory.CREATURE,
         		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
-        spawnBuilder.creatureGenerationProbability(0.1F);
+        spawnBuilder.addSpawn(MobCategory.CREATURE,
+        		new MobSpawnSettings.SpawnerData(ModEntities.PALE_WANDERER.get(), 4, 1, 1));
+        spawnBuilder.creatureGenerationProbability(0.3F);
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(

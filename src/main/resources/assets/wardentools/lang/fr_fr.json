@@ -6,6 +6,7 @@
 	"item.wardentools.deepingots": "Lingot des abîmes",
 	"item.wardentools.warden_heart": "Coeur de Warden",
 	"item.wardentools.deeplurker_spawn_egg": "Oeuf d'apparition de Rôdeur des abîmes",
+	"item.wardentools.pale_wanderer_spawn_egg": "Oeuf d'apparition de Vagabond pâle",
 	"item.wardentools.deep_fruit": "Fruit des abîmes",
 	"item.wardentools.abyss_diver": "Éclaireur de l'Abysse",
 	"item.wardentools.wind_whisperer": "Chuchoteur de Vent",
@@ -53,6 +54,7 @@
 	"block.wardentools.whitetree_trapdoor": "Trappe en Blancharbre",
 	
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
+	"entity.wardentools.pale_wanderer": "Vagabond pâle",
 	
 	"creativetab.abyss_tab": "Abyss"
 }

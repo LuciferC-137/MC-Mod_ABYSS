@@ -242,4 +242,9 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> WHITETREE_FENCE_GATE =
 			REGISTAR.register("whitetree_fence_gate",
 			() -> new BlockItem(BlockRegistry.WHITETREE_FENCE_GATE.get(), new Item.Properties()));
+	
+	public static final RegistryObject<ForgeSpawnEggItem> PALEWANDERER_EGG =
+			REGISTAR.register("pale_wanderer_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
+					0x00ebff, new Item.Properties()));
 }

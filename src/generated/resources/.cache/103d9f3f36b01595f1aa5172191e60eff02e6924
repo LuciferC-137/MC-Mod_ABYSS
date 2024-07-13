@@ -1,9 +1,9 @@
-// 1.20.4	2024-07-12T21:30:54.037379	Registries
+// 1.20.4	2024-07-13T18:46:58.9680647	Registries
 7e17d1e4d9d391b73997200d8d6e8190e9d86f43 data/wardentools/dimension/abyssdim.json
 4f4b6381203d0d69976faf5808dbca980d234b11 data/wardentools/dimension_type/abyssdim_type.json
 386aa15d9a5dfd15d30c80104c6bf996131a721e data/wardentools/worldgen/biome/deep_forest.json
 d6ef287339957f6d2510c97d2f1473bbf3ab6302 data/wardentools/worldgen/biome/waste_land.json
-6193fddf260c3a717006efa9e2a172f4e77b4eb0 data/wardentools/worldgen/biome/white_forest.json
+80081c3e92082b810ba770d647c7a7c543b49b48 data/wardentools/worldgen/biome/white_forest.json
 e610de6322d940fe34e0c93e71527c52e78c3a5a data/wardentools/worldgen/configured_feature/darktree.json
 9289acf39603d1e155e5b201ac654f3dd9656728 data/wardentools/worldgen/configured_feature/whitetree.json
 73d4be31f6ae176258bf94ff051cdf28bedac907 data/wardentools/worldgen/placed_feature/darktree_placed.json

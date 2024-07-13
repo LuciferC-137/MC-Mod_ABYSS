@@ -20,7 +20,7 @@ import wardentools.entity.custom.DeepLurkerEntity;
 
 
 public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
-    // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
+
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
             new ResourceLocation(ModMain.MOD_ID, "deeplurker"), "main");
 

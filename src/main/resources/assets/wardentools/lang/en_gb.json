@@ -6,6 +6,7 @@
 	"item.wardentools.deepingots": "Deep Ingots",
 	"item.wardentools.warden_heart": "Warden Heart",
 	"item.wardentools.deeplurker_spawn_egg": "Spawn Deep Lurker",
+	"item.wardentools.pale_wanderer_spawn_egg": "Spawn Pale Wanderer",
 	"item.wardentools.deep_fruit": "Deep Fruit",
 	"item.wardentools.abyss_diver": "Abyss Diver",
 	"item.wardentools.wind_whisperer": "Wind Whisperer",
@@ -54,6 +55,7 @@
 	"block.wardentools.whitetree_trapdoor": "Whitetree Trap Door",
 	
 	"entity.wardentools.deeplurker": "Deep Lurker",
+	"entity.wardentools.pale_wanderer": "Pale Wanderer",
 	
 	"creativetab.abyss_tab": "Abyss"
 }

@@ -11,6 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.DeepLurkerEntity;
+import wardentools.entity.custom.PaleWandererEntity;
 import wardentools.network.PacketHandler;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -24,6 +25,7 @@ public class CommonModEvents {
     @SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
 		event.put(ModEntities.DEEPLURKER.get(), DeepLurkerEntity.createAttribute().build());
+		event.put(ModEntities.PALE_WANDERER.get(), PaleWandererEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
@@ -32,6 +34,11 @@ public class CommonModEvents {
     			SpawnPlacements.Type.ON_GROUND,
     			Heightmap.Types.WORLD_SURFACE,
     			DeepLurkerEntity::canSpawn,
+    			SpawnPlacementRegisterEvent.Operation.OR);
+    	event.register(ModEntities.PALE_WANDERER.get(),
+    			SpawnPlacements.Type.ON_GROUND,
+    			Heightmap.Types.WORLD_SURFACE,
+    			PaleWandererEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     }
 }
