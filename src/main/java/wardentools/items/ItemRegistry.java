@@ -259,4 +259,8 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> WHITE_TORCHFLOWER = 
 			REGISTAR.register("white_torchflower",
 			() -> new BlockItem(BlockRegistry.WHITE_TORCHFLOWER.get(), new Item.Properties()));
+	
+	public static final RegistryObject<BlockItem> RADIANCE_CATALYST =
+			REGISTAR.register("radiance_catalyst",
+			() -> new BlockItem(BlockRegistry.RADIANCE_CATALYST.get(), new Item.Properties()));
 }

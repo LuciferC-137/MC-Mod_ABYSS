@@ -281,6 +281,9 @@ public class BlockRegistry {
 					.noCollission()
 					.lightLevel((state) -> LIGHT_WHITE_TREE)));
 	
-	
-	
+	public static final RegistryObject<RadianceCatalystBlock> RADIANCE_CATALYST =
+			REGISTAR.register("radiance_catalyst",
+			() -> new RadianceCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMITHING_TABLE)
+					.strength(5.0f, 15.0f)));
+		
 }

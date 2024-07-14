@@ -16,6 +16,7 @@ import terrablender.api.SurfaceRuleManager;
 import wardentools.GUI.ModCreativeTabs;
 import wardentools.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
+import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.items.ItemRegistry;
 import wardentools.loot.WardenLootTableModifier;
@@ -39,6 +40,7 @@ public class ModMain {
 		ArmorRegistry.REGISTAR.register(bus);
 		ItemRegistry.REGISTAR.register(bus);
 		BlockRegistry.REGISTAR.register(bus);
+		BlockEntityRegistry.BLOCK_ENTITIES.register(bus);
 		ModTrunkPlacerTypes.TRUNK_PLACER.register(bus);
 		ModFoliagePlacers.FOLIAGE_PLACERS.register(bus);
 		ModEntities.ENTITY_TYPES.register(bus);

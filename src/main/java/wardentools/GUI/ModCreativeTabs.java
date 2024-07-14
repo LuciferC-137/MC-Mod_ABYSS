@@ -80,6 +80,8 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.TALL_WHITE_GRASS.get());
                     	event.accept(ItemRegistry.WHITE_TORCHFLOWER.get());
                     	
+                    	event.accept(ItemRegistry.RADIANCE_CATALYST.get());
+                    	
                     	
                     }).build());
     

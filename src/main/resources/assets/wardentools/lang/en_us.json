@@ -61,5 +61,8 @@
 	"entity.wardentools.deeplurker": "Deep Lurker",
 	"entity.wardentools.pale_wanderer": "Pale Wanderer",
 	
-	"creativetab.abyss_tab": "Abyss"
+	"creativetab.abyss_tab": "Abyss",
+	
+	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
+	"gui.wardentools.radiance_catalyst_screen.button.done": "DONE"
 }

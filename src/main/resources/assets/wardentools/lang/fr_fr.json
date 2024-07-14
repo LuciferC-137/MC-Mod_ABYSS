@@ -60,5 +60,8 @@
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",
 	
-	"creativetab.abyss_tab": "Abyss"
+	"creativetab.abyss_tab": "Abyss",
+	
+	"gui.wardentools.radiance_catalyst_screen": "Cataliseur de Radiance",
+	"gui.wardentools.radiance_catalyst_screen.button.done": "TERMINER"
 }

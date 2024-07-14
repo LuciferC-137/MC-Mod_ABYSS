@@ -69,6 +69,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
     	
+    	this.dropSelf(BlockRegistry.RADIANCE_CATALYST.get());
+    	
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
     			block -> createSlabItemTable(BlockRegistry.DARKTREE_SLAB.get()));
     	this.add(BlockRegistry.DARKTREE_DOOR.get(), 
