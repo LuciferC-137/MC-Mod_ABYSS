@@ -144,7 +144,12 @@ public class DeepLurkerEntity extends Animal {
     	boolean canSpawn = level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
 		return canSpawn;// Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
     }
-    	
+    
+    @Override
+    public boolean dampensVibrations() {
+        return true;
+     }
+         
 	@Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
     }
@@ -160,9 +165,7 @@ public class DeepLurkerEntity extends Animal {
     protected SoundEvent getDeathSound() {
         return null;
     }
-    @Override
-    public void makeStuckInBlock(BlockState state, Vec3 motionMultiplier) {
-    }
+    
     @Override
     public void playSound(SoundEvent soundIn, float volume, float pitch) {
     }
@@ -222,22 +225,26 @@ class AvoidWardenAndClimbTreeGoal extends Goal {
         this.climbSpeedModifier = climbSpeedModifier;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
-
-    @Override
+    
     public boolean canUse() {
-        List<Warden> wardens = entity.level().getEntitiesOfClass(Warden.class, entity.getBoundingBox().inflate(scaredRadius));
+        List<Warden> wardens = entity.level().getEntitiesOfClass(Warden.class,
+        		entity.getBoundingBox().inflate(scaredRadius));
         if (!wardens.isEmpty()) {
             this.target = wardens.get(0);
             BlockPos startPos = entity.blockPosition();
             BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-            for (int dx = -scaredRadius; dx <= scaredRadius; dx++) {
-                for (int dz = -scaredRadius; dz <= scaredRadius; dz++) {
-                    for (int dy = -scaredRadius; dy <= scaredRadius; dy++) {
-                        mutableBlockPos.set(startPos.getX() + dx, startPos.getY() + dy, startPos.getZ() + dz);
-                        if (entity.level().getBlockState(mutableBlockPos).getBlock() == BlockRegistry.DARKTREE_LOG.get()) {
-                            this.targetTreePos = mutableBlockPos.immutable();
-                            this.targetTreePos = this.getTargetOnTree();
-                            return true;
+            int y = startPos.getY();
+            for (int r = 1; r <= scaredRadius; r++) {
+                for (int dx = -r; dx <= r; dx++) {
+                    for (int dz = -r; dz <= r; dz++) {
+                        if (Math.abs(dx) == r || Math.abs(dz) == r) {
+                            mutableBlockPos.set(startPos.getX() + dx, y, startPos.getZ() + dz);
+                            if (entity.level().getBlockState(mutableBlockPos).getBlock()
+                            		== BlockRegistry.DARKTREE_LOG.get()) {
+                                this.targetTreePos = mutableBlockPos.immutable();
+                                this.targetTreePos = this.getTargetOnTree();
+                                return true;
+                            }
                         }
                     }
                 }
@@ -290,7 +297,8 @@ class AvoidWardenAndClimbTreeGoal extends Goal {
 
     private boolean isAtTopOfTree() {
         BlockPos pos = this.entity.blockPosition();
-        return this.entity.level().getBlockState(pos.above()).getBlock() == BlockRegistry.DARKTREE_LEAVES.get();
+        return this.entity.level().getBlockState(pos.above()).getBlock() == BlockRegistry.DARKTREE_LEAVES.get()
+        		|| this.entity.level().getBlockState(pos.above()).getBlock() == BlockRegistry.DARKTREE_LOG.get();
     }
 
     private BlockPos getTargetOnTree() {
