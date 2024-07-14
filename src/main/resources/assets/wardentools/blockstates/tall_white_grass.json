@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "wardentools:block/tall_white_grass_bottom"
+    },
+    "half=upper": {
+      "model": "wardentools:block/tall_white_grass_top"
+    }
+  }
+}

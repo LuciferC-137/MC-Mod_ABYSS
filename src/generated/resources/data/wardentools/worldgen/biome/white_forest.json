@@ -2,6 +2,7 @@
   "carvers": {
     "air": "minecraft:cave_extra_underground"
   },
+  "creature_spawn_probability": 0.3,
   "downfall": 0.8,
   "effects": {
     "fog_color": 532775,
@@ -58,7 +59,10 @@
     [],
     [
       "minecraft:glow_lichen",
-      "wardentools:whitetree_placed"
+      "wardentools:whitetree_placed",
+      "wardentools:white_grass",
+      "wardentools:tall_white_grass",
+      "wardentools:white_torchflower"
     ],
     [
       "minecraft:freeze_top_layer"

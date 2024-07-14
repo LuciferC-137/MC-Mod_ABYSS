@@ -67,6 +67,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITETREE_FENCE_GATE);
     	this.addDropSelf(BlockRegistry.WHITETREE_TRAPDOOR);
     	
+    	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
+    	
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
     			block -> createSlabItemTable(BlockRegistry.DARKTREE_SLAB.get()));
     	this.add(BlockRegistry.DARKTREE_DOOR.get(), 
@@ -76,6 +78,12 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     			block -> createSlabItemTable(BlockRegistry.WHITETREE_SLAB.get()));
     	this.add(BlockRegistry.WHITETREE_DOOR.get(), 
     			block -> createDoorTable(BlockRegistry.WHITETREE_DOOR.get()));
+    	
+    	this.add(BlockRegistry.TALL_WHITE_GRASS.get(),
+    			block -> createDoublePlantShearsDrop(BlockRegistry.WHITE_GRASS.get()));
+    	
+    	this.add(BlockRegistry.WHITE_GRASS.get(),
+    			block -> createShearsOnlyDrop(BlockRegistry.WHITE_GRASS.get()));
     	
    	
         //Special leave drop

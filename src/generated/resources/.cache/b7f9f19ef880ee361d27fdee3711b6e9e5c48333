@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-11T22:30:32.4614331	Item Models: wardentools
+// 1.20.4	2024-07-14T13:36:10.697306	Item Models: wardentools
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
@@ -66,6 +66,7 @@ ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_sha
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 980a11934130b33d9a8df5e91eaebc563aa907bd assets/wardentools/models/item/stripped_whitetree_log.json
 f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped_whitetree_wood.json
+6c32364d24d94cdf7cf4110c71b0502f0f641a6e assets/wardentools/models/item/tall_white_grass.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json
 e61691d51da15842832df57a056926f39474d0ff assets/wardentools/models/item/whitetree_button.json
 a057571a70512821efc095109a514129a88c13f2 assets/wardentools/models/item/whitetree_door.json
@@ -78,4 +79,6 @@ fe98545ef679b35c4eeedc0429bd84ba385d423e assets/wardentools/models/item/whitetre
 09d7cb6fd7b92ec6f4ca0b1c4c263ba0b648e8d3 assets/wardentools/models/item/whitetree_stair.json
 c7530c3852dc236fd7b9b95e6342ec77cfe613cc assets/wardentools/models/item/whitetree_trapdoor.json
 2a10a53cd83293f47a165d533f1c145c442ca612 assets/wardentools/models/item/whitetree_wood.json
+47cce41962cb1181704ad2e7a743d26caa74e098 assets/wardentools/models/item/white_grass.json
+e2cf8e585be27ee77d9e063df22e240d125f7332 assets/wardentools/models/item/white_torchflower.json
 a3d05db92e4f0bff003e1d385472849de2427cca assets/wardentools/models/item/wind_whisperer.json

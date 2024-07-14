@@ -21,6 +21,7 @@ public class BlockRegistry {
 	public static final DeferredRegister<Block> REGISTAR = DeferredRegister.create(ForgeRegistries.BLOCKS, ModMain.MOD_ID);
 	private static final int LIGHT_DARK_TREE = 6;
 	private static final int LIGHT_WHITE_TREE = 10;
+	private static final int LIGHT_WHITE_VEGETATION = 8;
 	
 	public static final RegistryObject<Block> DEEPBLOCK = REGISTAR.register("deepblock",
 			()->new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
@@ -261,6 +262,24 @@ public class BlockRegistry {
 	public static final RegistryObject<Block> WHITETREE_TRAPDOOR = REGISTAR.register("whitetree_trapdoor",
             () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)
             		.noOcclusion()));
+	
+	public static final RegistryObject<Block> TALL_WHITE_GRASS = REGISTAR.register("tall_white_grass",
+			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> LIGHT_WHITE_VEGETATION)));
+	
+	public static final RegistryObject<Block> WHITE_GRASS = REGISTAR.register("white_grass",
+			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> LIGHT_WHITE_VEGETATION)));
+	
+	public static final RegistryObject<Block> WHITE_TORCHFLOWER = REGISTAR.register("white_torchflower",
+			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TORCHFLOWER)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> LIGHT_WHITE_TREE)));
 	
 	
 	

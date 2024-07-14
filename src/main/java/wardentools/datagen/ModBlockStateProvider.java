@@ -34,6 +34,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerCrossCutoutBlock(BlockRegistry.DARKTREE_SAPLING);
         registerCrossCutoutBlock(BlockRegistry.WHITETREE_SAPLING);
         registerDarkGrassBlock(BlockRegistry.DARKGRASS_BLOCK);
+        registerCrossCutoutBlock(BlockRegistry.WHITE_GRASS);
+        registerCrossCutoutBlock(BlockRegistry.WHITE_TORCHFLOWER);
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");

@@ -247,4 +247,16 @@ public class ItemRegistry {
 			REGISTAR.register("pale_wanderer_spawn_egg",
 			() -> new ForgeSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
 					0x00ebff, new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITE_GRASS =
+			REGISTAR.register("white_grass",
+			() -> new BlockItem(BlockRegistry.WHITE_GRASS.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> TALL_WHITE_GRASS = 
+			REGISTAR.register("tall_white_grass",
+			() -> new BlockItem(BlockRegistry.TALL_WHITE_GRASS.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> WHITE_TORCHFLOWER = 
+			REGISTAR.register("white_torchflower",
+			() -> new BlockItem(BlockRegistry.WHITE_TORCHFLOWER.get(), new Item.Properties()));
 }

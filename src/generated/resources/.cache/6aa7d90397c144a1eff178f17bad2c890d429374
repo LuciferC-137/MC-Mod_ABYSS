@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-11T22:14:58.2230184	Block States: wardentools
+// 1.20.4	2024-07-14T13:36:10.7092743	Block States: wardentools
 786df544494ab109a939a8fc2255998bb62935e4 assets/wardentools/blockstates/darkdirt.json
 34bb67b3f479b2fb38819eced6715b182b76edea assets/wardentools/blockstates/darkgrass_block.json
 1ab7c0fe7f50c897afb2fc4c018a27417b4cc3a2 assets/wardentools/blockstates/darktree_button.json
@@ -32,6 +32,8 @@ e5446001711eefa7f4db4a9b71dbcdc757cbf25a assets/wardentools/blockstates/whitetre
 17983f889fcce47e750ea3dc710e661444826686 assets/wardentools/blockstates/whitetree_stair.json
 94469572eed0f5d0c9a7f7be33b2f8d21a37b439 assets/wardentools/blockstates/whitetree_trapdoor.json
 5b844dd3d56b11eaaca39668e38a0067385d374a assets/wardentools/blockstates/whitetree_wood.json
+5230bce220f399274dc1b014c42e320e7e403c1a assets/wardentools/blockstates/white_grass.json
+802f89e754fa8fcdc01a74f529807eccea8049e4 assets/wardentools/blockstates/white_torchflower.json
 3f1448463d69ecb0fb36a6f556cd5dc26c2d6ee2 assets/wardentools/models/block/darkdirt.json
 15d33e7072aaec459b2dccd83c3c495a621539eb assets/wardentools/models/block/darkgrass_block.json
 7069796399e68dd9cd2ebcaad6e8d9e1bd652902 assets/wardentools/models/block/darktree_button.json
@@ -105,6 +107,8 @@ b4d81c1a376464c8cf552b2da20c28fc3dcfe94b assets/wardentools/models/block/whitetr
 6d43af69fe4492cf5bbd5a9edc4c6feb322c0d44 assets/wardentools/models/block/whitetree_trapdoor_open.json
 fdfe25be98cd5a2593bf9a7ed3639cb4f5ba76b0 assets/wardentools/models/block/whitetree_trapdoor_top.json
 175059b993e999fbef967c3fc818d8ad125b864f assets/wardentools/models/block/whitetree_wood.json
+ee65cbbe3205aed5d6d57f874b22ff7c61916063 assets/wardentools/models/block/white_grass.json
+1449a936cf1493dfa4a3840d00e0996a3df418f6 assets/wardentools/models/block/white_torchflower.json
 fab7fd1ee403c56f4159e159a8685806d46447f5 assets/wardentools/models/item/darkdirt.json
 4905e1a853513744f3d7dfe232fa48dd703f7db5 assets/wardentools/models/item/darkgrass_block.json
 e59c8e6d745356ab553878419938c2e9b2633ea5 assets/wardentools/models/item/darktree_leaves.json

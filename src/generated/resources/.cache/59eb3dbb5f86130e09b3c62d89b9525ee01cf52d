@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-11T22:22:03.9965155	Loot Tables
+// 1.20.4	2024-07-14T13:36:10.7052842	Loot Tables
 cd3afcd604acda173c23bfbfc1381b05dbe7bb16 data/wardentools/loot_tables/blocks/darkdirt.json
 389f559700304e07f380d250e3ab3cfbf609406b data/wardentools/loot_tables/blocks/darkgrass_block.json
 05a6e49c435dc40acf7731ef3d51fa13f66df208 data/wardentools/loot_tables/blocks/darktree_button.json
@@ -19,6 +19,7 @@ a6477c1450db15e892ab553a8f6b5ae10392ad23 data/wardentools/loot_tables/blocks/dar
 d2ebb7754472b3337e9083f43187a35173fe6ff5 data/wardentools/loot_tables/blocks/stripped_darktree_wood.json
 957888082175208144cd83b53a9cbc5f4e7ff47f data/wardentools/loot_tables/blocks/stripped_whitetree_log.json
 84bd6a30c1f27aedbf5bb4103c869a2a060007ff data/wardentools/loot_tables/blocks/stripped_whitetree_wood.json
+745a1751edd3dc10d7130f4fcd769ea6f895204e data/wardentools/loot_tables/blocks/tall_white_grass.json
 f5d1324776086098c2b89d34dd34881696fe35ab data/wardentools/loot_tables/blocks/whitetree_button.json
 d82b56a14233b8fe9856210c641192be371cbdab data/wardentools/loot_tables/blocks/whitetree_door.json
 2a67903cbf8f125053e9fb215441e8ffa5319a7e data/wardentools/loot_tables/blocks/whitetree_fence.json
@@ -31,3 +32,5 @@ e97f4a5e8c44d9e73a7f6803ca687a31c435c91d data/wardentools/loot_tables/blocks/whi
 2458b63d19e89d12cc63361351361c8ba1e3d0b4 data/wardentools/loot_tables/blocks/whitetree_stair.json
 0fe42511e78aac14c9b5b7704f97692187f8b222 data/wardentools/loot_tables/blocks/whitetree_trapdoor.json
 2f6f06e30a5b4ed62eb9893d2f2421f61b08b17d data/wardentools/loot_tables/blocks/whitetree_wood.json
+e40f758592c80218618b832d5df7dd1835327a45 data/wardentools/loot_tables/blocks/white_grass.json
+51f30eea15653359410c5be9ece438d299c74d15 data/wardentools/loot_tables/blocks/white_torchflower.json

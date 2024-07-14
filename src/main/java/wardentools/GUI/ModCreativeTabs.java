@@ -75,8 +75,10 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.CORRUPTED_VESSEL.get());
                     	event.accept(ItemRegistry.WIND_WHISPERER.get());
                     	event.accept(ItemRegistry.ABYSS_DIVER.get());
-                    	                	
                     	
+                    	event.accept(ItemRegistry.WHITE_GRASS.get());
+                    	event.accept(ItemRegistry.TALL_WHITE_GRASS.get());
+                    	event.accept(ItemRegistry.WHITE_TORCHFLOWER.get());
                     	
                     	
                     }).build());

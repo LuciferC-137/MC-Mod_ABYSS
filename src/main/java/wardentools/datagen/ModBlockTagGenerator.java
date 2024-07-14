@@ -63,6 +63,5 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.DARKGRASS_BLOCK.get())
 			.add(BlockRegistry.DARKDIRT.get());
 
-
     }
 }
