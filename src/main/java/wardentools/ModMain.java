@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import terrablender.api.SurfaceRuleManager;
+import wardentools.GUI.MenuRegistry;
 import wardentools.GUI.ModCreativeTabs;
 import wardentools.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
@@ -44,6 +45,7 @@ public class ModMain {
 		ModTrunkPlacerTypes.TRUNK_PLACER.register(bus);
 		ModFoliagePlacers.FOLIAGE_PLACERS.register(bus);
 		ModEntities.ENTITY_TYPES.register(bus);
+		MenuRegistry.MENU_TYPES.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 		
 		ModTerrablender.registerBiomes();

@@ -6,20 +6,28 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 import wardentools.ModMain;
+import wardentools.GUI.menu.RadianceCatalystMenu;
 
-public class RadianceCatalystBlockEntity extends BlockEntity {
+public class RadianceCatalystBlockEntity extends BlockEntity implements MenuProvider {
+	private static final Component TITLE =
+			Component.translatable("container." + ModMain.MOD_ID + ".radiance_catalyst_block");
 	private int ticks = 0, secondsExisted = 0;
-	private final ItemStackHandler inventory = new ItemStackHandler(2) {
+	private final ItemStackHandler inventory = new ItemStackHandler(3) {
 		@Override
 		protected void onContentsChanged(int slot) {
 			super.onContentsChanged(slot);
@@ -93,5 +101,19 @@ public class RadianceCatalystBlockEntity extends BlockEntity {
 	public Packet<ClientGamePacketListener> getUpdatePacket(){
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
+
+	@Override
+	public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+		return new RadianceCatalystMenu(containerId, playerInventory, this);
+	}
+
+	@Override
+	public Component getDisplayName() {
+		return TITLE;
+	}
+	
+	public LazyOptional<ItemStackHandler> getOptional() {
+        return this.optional;
+    }
 
 }

@@ -64,5 +64,6 @@
 	"creativetab.abyss_tab": "Abyss",
 	
 	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
-	"gui.wardentools.radiance_catalyst_screen.button.done": "DONE"
+	"gui.wardentools.radiance_catalyst_screen.button.done": "DONE",
+	"container.wardentools.radiance_catalyst_block": "Radiance Catalyst"
 }

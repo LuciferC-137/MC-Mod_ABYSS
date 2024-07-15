@@ -5,12 +5,12 @@ import org.jetbrains.annotations.Nullable;
 
 import com.mojang.serialization.MapCodec;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,12 +25,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.items.ItemStackHandler;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
-import wardentools.client.ClientHooks;
 
 public class RadianceCatalystBlock extends HorizontalDirectionalBlock implements EntityBlock {
 	public static final MapCodec<RadianceCatalystBlock> CODEC = simpleCodec(RadianceCatalystBlock::new);
@@ -59,13 +56,18 @@ public class RadianceCatalystBlock extends HorizontalDirectionalBlock implements
 	@Override
 	public @NotNull InteractionResult use(BlockState state, Level level, BlockPos pos,
 			Player player, InteractionHand interactionHand, BlockHitResult result) {
-		if (interactionHand != InteractionHand.MAIN_HAND) {return InteractionResult.PASS;}
-		if (!level.isClientSide()) {return InteractionResult.SUCCESS;}
 		
-		BlockEntity be = level.getBlockEntity(pos);
-		if (be instanceof RadianceCatalystBlockEntity) {
-			DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHooks.openRadianceCatalystScreen(pos));
+		BlockEntity blockEntity = level.getBlockEntity(pos);
+		if (!(blockEntity instanceof RadianceCatalystBlockEntity)) {
+			return InteractionResult.PASS;
+		}
+		
+		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
+		}
+		
+		if (player instanceof ServerPlayer sPlayer) {
+			sPlayer.openMenu((MenuProvider)blockEntity, pos);
 		}
 		return InteractionResult.FAIL;
 	}
