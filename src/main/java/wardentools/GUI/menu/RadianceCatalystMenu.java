@@ -1,31 +1,34 @@
 package wardentools.GUI.menu;
 
-import org.jetbrains.annotations.NotNull;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import wardentools.GUI.MenuRegistry;
+import wardentools.GUI.menu.slot.CustomFuelSlot;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
-import wardentools.items.ItemRegistry;
 
 public class RadianceCatalystMenu extends AbstractContainerMenu {
 	private final RadianceCatalystBlockEntity blockEntity;
 	private final ContainerLevelAccess levelAccess;
+	private final ContainerData data;
 	
 	public RadianceCatalystMenu(int containerId, Inventory playerInventory, FriendlyByteBuf additionalData) {
 		this(containerId, playerInventory,
-				playerInventory.player.level().getBlockEntity(additionalData.readBlockPos()));
+				playerInventory.player.level().getBlockEntity(additionalData.readBlockPos()),
+				new SimpleContainerData(4));
 	}
 	
-	public RadianceCatalystMenu(int containerId, Inventory playerInventory, BlockEntity blockEntity) {
+	public RadianceCatalystMenu(int containerId, Inventory playerInventory,
+			BlockEntity blockEntity, ContainerData data) {
 		super(MenuRegistry.RADIANCE_CATALYST_MENU.get(), containerId);
 		if (blockEntity instanceof RadianceCatalystBlockEntity be) {
 			this.blockEntity = be;
@@ -35,20 +38,18 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 		}
 		
 		this.levelAccess = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
+		this.data = data;
 		
 		createPlayerHotbar(playerInventory);
 		createPlayerInventory(playerInventory);
 		createBlockEntityInventory(be);
+		
+		addDataSlots(data);
 	}
 
 	private void createBlockEntityInventory(RadianceCatalystBlockEntity be) {
-		be.getOptional().ifPresent(inventory -> {
-			addSlot(new SlotItemHandler(inventory, 0, 44, 36){
-				@Override
-				public boolean mayPlace(@NotNull ItemStack stack) {
-					return stack.is(ItemRegistry.CORRUPTED_ESSENCE.get());
-				}
-			});
+		be.getInventoryOptional().ifPresent(inventory -> {
+			addSlot(new CustomFuelSlot(inventory, 0, 44, 36));
 			addSlot(new SlotItemHandler(inventory, 1, 80, 36));
 			addSlot(new SlotItemHandler(inventory, 2, 116, 36));
 		});
@@ -105,5 +106,23 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 	
 	public RadianceCatalystBlockEntity getBlockEntity() {
 		return this.blockEntity;
+	}
+	
+	public int getEnergy() {
+		return this.data.get(0);
+	}
+	
+	public int getMaxEnergy() {
+		return this.data.get(1);
+	}
+	public int getBurnTime() {
+		return this.data.get(2);
+	}
+	public int getMaxBurnTime() {
+		return this.data.get(3);
+	}
+	
+	public int getEnergyStoredScale() {
+		return (int)((float)getEnergy() / (float)getMaxEnergy() * 38);
 	}
 }

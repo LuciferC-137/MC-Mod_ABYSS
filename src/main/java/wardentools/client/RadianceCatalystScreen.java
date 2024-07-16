@@ -24,6 +24,24 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		renderTransparentBackground(guiGraphics);
 		guiGraphics.blit(TEXTURE, this.leftPos,this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		
+		int energyScale = this.menu.getEnergyStoredScale();
+		
+		//energy bar background
+		guiGraphics.fill(
+				this.leftPos + 115,
+				this.topPos + 20,
+				this.leftPos + 131,
+				this.topPos + 60,
+				0xFF555555);
+		
+		//energy bar foreground
+		guiGraphics.fill(
+				this.leftPos + 116,
+				this.topPos + 21 + 38 - energyScale,
+				this.leftPos + 130,
+				this.topPos + 59,
+				0xFFCC2222);
 	}
 	
 	@Override
@@ -31,6 +49,13 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 		super.render(graphics, mouseX, mouseY, partialTicks);
 		renderTooltip(graphics, mouseX, mouseY);
 		
+		int energyStored = this.menu.getEnergy();
+		int maxEnergy = this.menu.getMaxBurnTime();
+		
+		Component text = Component.literal("Energy: " + energyStored + " / " + maxEnergy);
+		if (isHovering(115, 20, 16, 40, mouseX, mouseY)) {
+			graphics.renderTooltip(this.font, text, mouseX, mouseY);
+		}
 	}
 
 }
