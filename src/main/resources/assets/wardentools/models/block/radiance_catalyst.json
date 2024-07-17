@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "wardentools:block/radiance_catalyst_top",
+    "side": "wardentools:block/radiance_catalyst_side",
+    "top": "wardentools:block/radiance_catalyst_top"
+  }
+}

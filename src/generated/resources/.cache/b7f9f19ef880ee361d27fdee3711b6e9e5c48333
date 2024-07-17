@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-14T13:36:10.697306	Item Models: wardentools
+// 1.20.4	2024-07-17T23:04:39.2751723	Item Models: wardentools
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
@@ -62,6 +62,7 @@ c5601a628d3e815a6009f166c0a91ee346230c75 assets/wardentools/models/item/deepingo
 2a9e549dc648cc8057df5b206cea9d58fd8f403b assets/wardentools/models/item/deep_fruit.json
 9cba400d275554731c001c288d69be1be90007a7 assets/wardentools/models/item/pale_fragment.json
 ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_shard.json
+aa0f198d94171a477a56c2fde4dcf0ae195b02f8 assets/wardentools/models/item/radiance_catalyst.json
 7a7d9fd169318dfa32e885c5db7cb5abbbccce3d assets/wardentools/models/item/stripped_darktree_log.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 980a11934130b33d9a8df5e91eaebc563aa907bd assets/wardentools/models/item/stripped_whitetree_log.json

@@ -18,6 +18,7 @@
 	"block.wardentools.deepblock": "Bloc des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",
 	"block.wardentools.pale_shard": "Eclat pâle",
+	"block.wardentools.radiance_catalyst": "Catalyseur de Radiance",
 	
 	"block.wardentools.darktree_log": "Bûche de sombrabre",
 	"block.wardentools.darktree_leaves": "Feuilles de sombrabre",
@@ -63,6 +64,5 @@
 	"creativetab.abyss_tab": "Abyss",
 	
 	"gui.wardentools.radiance_catalyst_screen": "Cataliseur de Radiance",
-	"gui.wardentools.radiance_catalyst_screen.button.done": "TERMINER",
 	"container.wardentools.radiance_catalyst_block": "Cataliseur de Radiance"
 }

@@ -104,6 +104,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_pressure_plate"));
         withExistingParent(BlockRegistry.WHITETREE_FENCE_GATE.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_fence_gate"));
+        withExistingParent(BlockRegistry.RADIANCE_CATALYST.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/radiance_catalyst"));
         
         
         //Blocks that use custom methods

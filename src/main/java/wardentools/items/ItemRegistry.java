@@ -263,4 +263,8 @@ public class ItemRegistry {
 	public static final RegistryObject<BlockItem> RADIANCE_CATALYST =
 			REGISTAR.register("radiance_catalyst",
 			() -> new BlockItem(BlockRegistry.RADIANCE_CATALYST.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> RADIANCE_CATALYST_INTERIOR =
+			REGISTAR.register("radiance_catalyst_interior",
+			() -> new Item(new Item.Properties()));
 }

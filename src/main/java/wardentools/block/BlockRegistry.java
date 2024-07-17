@@ -283,7 +283,9 @@ public class BlockRegistry {
 	
 	public static final RegistryObject<RadianceCatalystBlock> RADIANCE_CATALYST =
 			REGISTAR.register("radiance_catalyst",
-			() -> new RadianceCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SMITHING_TABLE)
-					.strength(5.0f, 15.0f)));
+			() -> new RadianceCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEACON)
+					.strength(5.0f, 15.0f)
+					.noOcclusion()
+					.lightLevel((state) -> 10)));
 		
 }
