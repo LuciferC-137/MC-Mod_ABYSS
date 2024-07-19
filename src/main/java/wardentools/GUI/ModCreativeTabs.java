@@ -62,6 +62,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.WHITETREE_TRAPDOOR.get());
                     	event.accept(ItemRegistry.WHITETREE_FENCE_GATE.get());
                     	event.accept(ItemRegistry.WHITETREE_PRESSURE_PLATE.get());
+                    	event.accept(ItemRegistry.WHITE_SEED.get());
                     	
                     	event.accept(ItemRegistry.DARKDIRT.get());
                     	event.accept(ItemRegistry.DARKGRASS_BLOCK.get());
@@ -81,7 +82,8 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.WHITE_TORCHFLOWER.get());
                     	
                     	event.accept(ItemRegistry.RADIANCE_CATALYST.get());
-                    	
+                    	event.accept(ItemRegistry.PURE_ESSENCE.get());
+                    	event.accept(ItemRegistry.RADIANT_CORE.get());
                     	
                     }).build());
     

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GPG",
+    "PEP",
+    "GPG"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:radiant_core"
+    },
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+	"G": {
+	  "item": "minecraft:glass"
+	}
+  },
+  "result": {
+    "item": "wardentools:radiance_catalyst"
+  }
+}

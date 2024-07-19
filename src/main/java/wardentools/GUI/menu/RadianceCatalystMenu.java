@@ -24,7 +24,7 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 	public RadianceCatalystMenu(int containerId, Inventory playerInventory, FriendlyByteBuf additionalData) {
 		this(containerId, playerInventory,
 				playerInventory.player.level().getBlockEntity(additionalData.readBlockPos()),
-				new SimpleContainerData(4));
+				new SimpleContainerData(5));
 	}
 	
 	public RadianceCatalystMenu(int containerId, Inventory playerInventory,
@@ -120,6 +120,10 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 	}
 	public int getMaxBurnTime() {
 		return this.data.get(3);
+	}
+	
+	public int getPurifyingTime() {
+		return this.data.get(4);
 	}
 	
 }

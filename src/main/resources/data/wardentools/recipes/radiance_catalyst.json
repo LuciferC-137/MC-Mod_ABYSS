@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PEP",
+    "PPP"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:white_seed"
+    },
+    "P": { 
+      "item": "wardentools:pale_fragment"
+    }
+  },
+  "result": {
+    "item": "wardentools:radiant_core"
+  }
+}

@@ -13,6 +13,12 @@ import wardentools.GUI.menu.RadianceCatalystMenu;
 public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
 			new ResourceLocation(ModMain.MOD_ID, "textures/gui/radiance_catalyst_menu.png");
+	private static final Component CORRUPTED =
+			Component.translatable("gui." + ModMain.MOD_ID + ".radiance_catalyst_screen.hover.corrupted");
+	private static final Component PURE =
+			Component.translatable("gui." + ModMain.MOD_ID + ".radiance_catalyst_screen.hover.pure");
+	
+	private static final int purifyTime = 200; // WARNING this is not synched with the block entity
 
 	public RadianceCatalystScreen(RadianceCatalystMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
@@ -24,11 +30,8 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		renderTransparentBackground(guiGraphics);
 		guiGraphics.blit(TEXTURE, this.leftPos,this.topPos, 0, 0, this.imageWidth, this.imageHeight);
-		
-		if (this.menu.getMaxBurnTime() == 0){
-			return;
-		}
-		
+			
+		// Render Energy bar
 		int bar1Length1 = 36;
 		int bar1Length2 = 7;
 		int bar1Height = 15;
@@ -139,6 +142,17 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 					this.topPos + 45,
 					0xFF33DDDD);
 		}
+		
+		// Render purifying bar
+		int bar2Height = 17;
+		int purifyScale = (int)((float)this.menu.getPurifyingTime()/(float)purifyTime * bar2Height);
+		System.out.println("purifyScale : " + purifyScale);
+		guiGraphics.fill(
+				this.leftPos + 118,
+				this.topPos + 36 + purifyScale,
+				this.leftPos + 120,
+				this.topPos + 53,
+				0xFF8B8B8B);
 	}
 	
 	@Override
@@ -146,14 +160,16 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 		super.render(graphics, mouseX, mouseY, partialTicks);
 		renderTooltip(graphics, mouseX, mouseY);
 		
-		Component corrupted = Component.literal("Corrupted material");
-		if (isHovering(131, 22, 140, 31, mouseX, mouseY)) {
-			graphics.renderTooltip(this.font, corrupted, mouseX, mouseY);
+		if (customIsHovering(131, 22, 140, 31, mouseX, mouseY)) {
+			graphics.renderTooltip(this.font, CORRUPTED, mouseX, mouseY);
 		}
-		
-		Component purified = Component.literal("Puriefied material");
-		if (isHovering(131, 57, 140, 66, mouseX, mouseY)) {
-			graphics.renderTooltip(this.font, purified, mouseX, mouseY);
+		if (customIsHovering(131, 57, 140, 66, mouseX, mouseY)) {
+			graphics.renderTooltip(this.font, PURE, mouseX, mouseY);
 		}
+	}
+	
+	private boolean customIsHovering(int x1, int y1, int x2, int y2, int mouseX, int mouseY) {
+		return this.leftPos + x1 <= mouseX && this.topPos + y1 <= mouseY &&
+				this.leftPos + x2 >= mouseX && this.topPos +  y2 >= mouseY;
 	}
 }

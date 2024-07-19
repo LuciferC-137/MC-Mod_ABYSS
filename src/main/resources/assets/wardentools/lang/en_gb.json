@@ -14,6 +14,9 @@
 	"item.wardentools.dark_stick": "Dark stick",
 	"item.wardentools.corrupted_essence": "Corrupted essence",
 	"item.wardentools.corrupted_vessel": "Corrupted vessel",
+	"item.wardentools.pure_essence": "Pure Essence",
+	"item.wardentools.white_seed": "White Seed",
+	"item.wardentools.radiant_core": "Radiant Core",
 
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",	
@@ -65,6 +68,7 @@
 	"creativetab.abyss_tab": "Abyss",
 	
 	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
-	"gui.wardentools.radiance_catalyst_screen.button.done": "DONE",
+	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "Corrupted material",
+		"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",
 	"container.wardentools.radiance_catalyst_block": "Radiance Catalyst"
 }

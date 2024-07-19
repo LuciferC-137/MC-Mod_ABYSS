@@ -58,6 +58,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.CORRUPTED_ESSENCE);
         simpleItem(ItemRegistry.CORRUPTED_VESSEL);
         simpleItem(ItemRegistry.DARK_STICK);
+        simpleItem(ItemRegistry.PURE_ESSENCE);
+        simpleItem(ItemRegistry.WHITE_SEED);
+        simpleItem(ItemRegistry.RADIANT_CORE);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);

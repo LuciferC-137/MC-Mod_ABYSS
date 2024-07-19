@@ -48,6 +48,8 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	private final LazyOptional<CustomEnergyStorage> energyOptional = LazyOptional.of(() -> this.energy);
 	
 	private int burnTime, maxBurnTime = 0;
+	private final static int purifyTime = 200; // WARNING this is not synched with the screen
+	private int purifyingTime = 0;
 	
 	private final ContainerData containerData = new ContainerData() {
 		@Override
@@ -57,6 +59,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 			case 1 -> RadianceCatalystBlockEntity.this.energy.getMaxEnergyStored();
 			case 2 -> RadianceCatalystBlockEntity.this.burnTime;
 			case 3 -> RadianceCatalystBlockEntity.this.maxBurnTime;
+			case 4 -> RadianceCatalystBlockEntity.this.purifyingTime;
 			default -> throw new IllegalStateException("Unexpected value: " + index);
 			};
 		}
@@ -67,12 +70,13 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 				case 0 -> RadianceCatalystBlockEntity.this.energy.setEnergy(value);
 				case 2 -> RadianceCatalystBlockEntity.this.burnTime = value;
 				case 3 -> RadianceCatalystBlockEntity.this.maxBurnTime = value;
+				case 4 -> RadianceCatalystBlockEntity.this.purifyingTime = value;
 			}
 		}
 		
 		@Override
 		public int getCount() {
-			return 4;
+			return 5;
 		}
 	};
 
@@ -97,6 +101,9 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		if (wardentoolsData.contains("MaxBurnTime", Tag.TAG_INT)) {
 			this.maxBurnTime = wardentoolsData.getInt("MaxBurnTime");
 		}
+		if (wardentoolsData.contains("PurifyingTime", Tag.TAG_INT)) {
+			this.purifyingTime = wardentoolsData.getInt("PurifyingTime");
+		}
 	}
 	
 	@Override
@@ -107,6 +114,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		wardentoolsData.putInt("Energy", this.energy.getEnergyStored());
 		wardentoolsData.putInt("BurnTime", this.burnTime);
 		wardentoolsData.putInt("MaxBurnTime", this.maxBurnTime);
+		wardentoolsData.putInt("PurifyingTime", this.purifyingTime);
 		nbt.put(ModMain.MOD_ID, wardentoolsData);
 	}
 	
@@ -126,9 +134,45 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 					this.energy.addEnergy(1);
 					sendUpdate();
 				}
-			} else if (this.tickFractionner%5==1) {
+			} else {
 				// is charged
-				PacketHandler.sendToAllClient(new ParticleRadianceCatalystCharged(this.getBlockPos()));
+				if (this.purifyingTime > 0 && this.purifyingTime < purifyTime) {
+					
+					if (!canPurify(this.inventory.getStackInSlot(1))){
+						this.purifyingTime = 0;
+						sendUpdate();
+					} else {
+						this.purifyingTime++;
+						if (this.purifyingTime>=purifyTime) {
+							this.purifyingTime = 0;
+							if (this.inventory.getStackInSlot(2).isEmpty()) {
+								this.energy.setEnergy(0);
+								if (getPurifiedVersion(this.inventory.getStackInSlot(1))!=null) {
+									this.inventory.setStackInSlot(2,
+											getPurifiedVersion(this.inventory.getStackInSlot(1)));
+									this.inventory.getStackInSlot(1).shrink(1);
+								} else {
+									
+								}
+								
+							} else if (ItemStack.isSameItem(this.inventory.getStackInSlot(2),
+											(getPurifiedVersion(this.inventory.getStackInSlot(1))))){
+								this.inventory.getStackInSlot(2).grow(1);
+								this.inventory.getStackInSlot(1).shrink(1);
+								this.energy.setEnergy(0);
+							}
+						}
+						sendUpdate();
+					}
+				} else if (canPurify(this.inventory.getStackInSlot(1))
+						&& (this.inventory.getStackInSlot(2).isEmpty()
+								||ItemStack.isSameItem(this.inventory.getStackInSlot(2),
+										(getPurifiedVersion(this.inventory.getStackInSlot(1)))))){
+					this.purifyingTime++;
+					sendUpdate();
+				} else if (this.tickFractionner%5==1){
+					PacketHandler.sendToAllClient(new ParticleRadianceCatalystCharged(this.getBlockPos()));
+				}
 			}
 		}
 	}
@@ -182,13 +226,26 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	
 	public int getBurnTime(@NotNull ItemStack stack) {
 		if (stack.is(ItemRegistry.PALE_FRAGMENT.get())) {
-			return 15;
+			return 101;
+		} else if (stack.is(ItemRegistry.PALE_SHARD.get())) {
+			return 501;
 		}
 		return 0;
+	}
+	
+	public ItemStack getPurifiedVersion(ItemStack stack) {
+		if (stack.is(ItemRegistry.CORRUPTED_ESSENCE.get())) {
+			return new ItemStack(ItemRegistry.PURE_ESSENCE.get());
+		}
+		return null;
 	}
 
 	public boolean canBurn(@NotNull ItemStack stack) {
 		return getBurnTime(stack) > 0;
+	}
+	
+	public boolean canPurify(@NotNull ItemStack stack) {
+		return getPurifiedVersion(stack)!=null;
 	}
 	
 	public ItemStackHandler getInventory() {

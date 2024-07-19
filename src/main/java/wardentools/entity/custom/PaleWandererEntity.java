@@ -80,7 +80,7 @@ public class PaleWandererEntity extends Animal {
 
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob mob) {
-		return ModEntities.DEEPLURKER.get().create(level);
+		return ModEntities.PALE_WANDERER.get().create(level);
 	}
 	
 	@Override

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wardentools:whitetree_log"
+    }
+  ],
+  "result": {
+    "item": "wardentools:whitetree_planks",
+    "count": 4
+  }
+}
