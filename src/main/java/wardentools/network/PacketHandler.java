@@ -8,6 +8,9 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
 import net.minecraftforge.network.PacketDistributor;
 import wardentools.ModMain;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
+import wardentools.network.ParticulesSoundsEffects.ParticleWardenDeathPacket;
+import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;
 
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -29,6 +32,11 @@ public class PacketHandler {
         		.encoder(WardenLaserParticleAndSoundPacket::encode)
         		.decoder(WardenLaserParticleAndSoundPacket::new)
         		.consumerMainThread(WardenLaserParticleAndSoundPacket::handle)
+        		.add();
+        INSTANCE.messageBuilder(ParticleRadianceCatalystCharged.class, NetworkDirection.PLAY_TO_CLIENT)
+        		.encoder(ParticleRadianceCatalystCharged::encode)
+        		.decoder(ParticleRadianceCatalystCharged::new)
+        		.consumerMainThread(ParticleRadianceCatalystCharged::handle)
         		.add();
     }
 

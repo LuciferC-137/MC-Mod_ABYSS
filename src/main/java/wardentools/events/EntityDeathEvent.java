@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.network.PacketHandler;
-import wardentools.network.ParticleWardenDeathPacket;
+import wardentools.network.ParticulesSoundsEffects.ParticleWardenDeathPacket;
 
 
 

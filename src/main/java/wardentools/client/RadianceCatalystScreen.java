@@ -11,8 +11,8 @@ import wardentools.ModMain;
 import wardentools.GUI.menu.RadianceCatalystMenu;
 
 public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCatalystMenu> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(ModMain.MOD_ID,
-			"textures/gui/radiance_catalyst_menu.png");
+	private static final ResourceLocation TEXTURE =
+			new ResourceLocation(ModMain.MOD_ID, "textures/gui/radiance_catalyst_menu.png");
 
 	public RadianceCatalystScreen(RadianceCatalystMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
@@ -25,23 +25,120 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 		renderTransparentBackground(guiGraphics);
 		guiGraphics.blit(TEXTURE, this.leftPos,this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 		
-		int energyScale = this.menu.getEnergyStoredScale();
+		if (this.menu.getMaxBurnTime() == 0){
+			return;
+		}
 		
-		//energy bar background
-		guiGraphics.fill(
-				this.leftPos + 115,
-				this.topPos + 20,
-				this.leftPos + 131,
-				this.topPos + 60,
-				0xFF555555);
-		
-		//energy bar foreground
-		guiGraphics.fill(
-				this.leftPos + 116,
-				this.topPos + 21 + 38 - energyScale,
-				this.leftPos + 130,
-				this.topPos + 59,
-				0xFFCC2222);
+		int bar1Length1 = 36;
+		int bar1Length2 = 7;
+		int bar1Height = 15;
+		int barTotalLength = bar1Length1 + bar1Length2 + bar1Height + 6;
+		int energyScaleBar = (int)((float)this.menu.getEnergy()/(float)this.menu.getMaxEnergy()*barTotalLength);
+
+		if (energyScaleBar <= bar1Length1) {
+			guiGraphics.fill(
+					this.leftPos + 64,
+					this.topPos + 43,
+					this.leftPos + 65 + energyScaleBar,
+					this.topPos + 45,
+					0xFF33DDDD);
+		} else if (energyScaleBar == bar1Length1 + 1){
+			guiGraphics.fill(
+					this.leftPos + 101,
+					this.topPos + 44,
+					this.leftPos + 102,
+					this.topPos + 45,
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 64,
+					this.topPos + 43,
+					this.leftPos + 65 + bar1Length1,
+					this.topPos + 45,
+					0xFF33DDDD);
+		} else if (energyScaleBar == bar1Length1 + 2){
+			guiGraphics.fill(
+					this.leftPos + 102,
+					this.topPos + 44,
+					this.leftPos + 103,
+					this.topPos + 45,
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 64,
+					this.topPos + 43,
+					this.leftPos + 66 + bar1Length1,
+					this.topPos + 45,
+					0xFF33DDDD);
+		} else if (energyScaleBar <= bar1Length1 + bar1Height + 3) {
+			guiGraphics.fill(
+					this.leftPos + 101,
+					this.topPos + 43,
+					this.leftPos + 103,
+					this.topPos + 43 - (energyScaleBar - (bar1Length1 + 3)),
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 64,
+					this.topPos + 43,
+					this.leftPos + 67 + bar1Length1,
+					this.topPos + 45,
+					0xFF33DDDD);
+		} else if (energyScaleBar == bar1Length1 + bar1Height + 4) {
+			guiGraphics.fill(
+					this.leftPos + 101,
+					this.topPos + 27,
+					this.leftPos + 102,
+					this.topPos + 28,
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 101,
+					this.topPos + 43,
+					this.leftPos + 103,
+					this.topPos + 43 - bar1Height,
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 64,
+					this.topPos + 43,
+					this.leftPos + 67 + bar1Length1,
+					this.topPos + 45,
+					0xFF33DDDD);
+		} else if (energyScaleBar == bar1Length1 + bar1Height + 5) {
+			guiGraphics.fill(
+					this.leftPos + 101,
+					this.topPos + 26,
+					this.leftPos + 102,
+					this.topPos + 27,
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 101,
+					this.topPos + 43,
+					this.leftPos + 103,
+					this.topPos + 42 - bar1Height,
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 64,
+					this.topPos + 43,
+					this.leftPos + 67 + bar1Length1,
+					this.topPos + 45,
+					0xFF33DDDD);
+		} else if (energyScaleBar <= barTotalLength) {
+			guiGraphics.fill(
+					this.leftPos + 103,
+					this.topPos + 26,
+					this.leftPos + 103 + energyScaleBar - (bar1Length1 + bar1Height + 6),
+					this.topPos + 28,
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 101,
+					this.topPos + 43,
+					this.leftPos + 103,
+					this.topPos + 41 - bar1Height,
+					0xFF33DDDD);
+			guiGraphics.fill(
+					this.leftPos + 64,
+					this.topPos + 43,
+					this.leftPos + 67 + bar1Length1,
+					this.topPos + 45,
+					0xFF33DDDD);
+		}
 	}
 	
 	@Override
@@ -49,13 +146,14 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 		super.render(graphics, mouseX, mouseY, partialTicks);
 		renderTooltip(graphics, mouseX, mouseY);
 		
-		int energyStored = this.menu.getEnergy();
-		int maxEnergy = this.menu.getMaxBurnTime();
+		Component corrupted = Component.literal("Corrupted material");
+		if (isHovering(131, 22, 140, 31, mouseX, mouseY)) {
+			graphics.renderTooltip(this.font, corrupted, mouseX, mouseY);
+		}
 		
-		Component text = Component.literal("Energy: " + energyStored + " / " + maxEnergy);
-		if (isHovering(115, 20, 16, 40, mouseX, mouseY)) {
-			graphics.renderTooltip(this.font, text, mouseX, mouseY);
+		Component purified = Component.literal("Puriefied material");
+		if (isHovering(131, 57, 140, 66, mouseX, mouseY)) {
+			graphics.renderTooltip(this.font, purified, mouseX, mouseY);
 		}
 	}
-
 }

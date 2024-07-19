@@ -12,11 +12,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.ContainerData;
@@ -29,6 +27,9 @@ import wardentools.ModMain;
 import wardentools.GUI.menu.RadianceCatalystMenu;
 import wardentools.blockentity.util.CustomEnergyStorage;
 import wardentools.blockentity.util.TickableBlockEntity;
+import wardentools.items.ItemRegistry;
+import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
 
 public class RadianceCatalystBlockEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
 	private static final Component TITLE =
@@ -40,9 +41,10 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 			RadianceCatalystBlockEntity.this.setChanged();
 		}
 	};
+	private int tickFractionner = 0;
 	private final LazyOptional<ItemStackHandler> inventoryOptional = LazyOptional.of(() -> this.inventory);
 	
-	private final CustomEnergyStorage energy = new CustomEnergyStorage(10000, 0, 100, 0); //capacity, maxReceive, maxExtract, defaultEnergy
+	private final CustomEnergyStorage energy = new CustomEnergyStorage(1000, 0, 100, 0); //capacity, maxReceive, maxExtract, defaultEnergy
 	private final LazyOptional<CustomEnergyStorage> energyOptional = LazyOptional.of(() -> this.energy);
 	
 	private int burnTime, maxBurnTime = 0;
@@ -109,20 +111,24 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	public void tick() {
-		if (this.level == null || this.level.isClientSide()) {
-			return;
-		}
-		if (this.energy.getEnergyStored() < this.energy.getMaxEnergyStored()) {
-			if (this.burnTime <= 0) {
-				if (canBurn(this.inventory.getStackInSlot(0))) {
-					this.burnTime = this.maxBurnTime = getBurnTime(this.inventory.getStackInSlot(0));
-					this.inventory.getStackInSlot(0).shrink(1);
+		this.tickFractionner++;
+		if (this.level != null && !this.level.isClientSide()) {
+			if (this.energy.getEnergyStored() < this.energy.getMaxEnergyStored()) {
+				if (this.burnTime <= 0) {
+					if (canBurn(this.inventory.getStackInSlot(0))) {
+						this.burnTime = this.maxBurnTime = getBurnTime(this.inventory.getStackInSlot(0));
+						this.inventory.getStackInSlot(0).shrink(1);
+						sendUpdate();
+					}
+				} else {
+					// is burning
+					this.burnTime--;
+					this.energy.addEnergy(1);
 					sendUpdate();
 				}
-			} else {
-				this.burnTime--;
-				this.energy.addEnergy(1);
-				sendUpdate();
+			} else if (this.tickFractionner%5==1) {
+				// is charged
+				PacketHandler.sendToAllClient(new ParticleRadianceCatalystCharged(this.getBlockPos()));
 			}
 		}
 	}
@@ -175,7 +181,10 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	public int getBurnTime(@NotNull ItemStack stack) {
-		return ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
+		if (stack.is(ItemRegistry.PALE_FRAGMENT.get())) {
+			return 15;
+		}
+		return 0;
 	}
 
 	public boolean canBurn(@NotNull ItemStack stack) {

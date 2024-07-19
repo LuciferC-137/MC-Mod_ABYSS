@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import wardentools.GUI.MenuRegistry;
-import wardentools.GUI.menu.slot.CustomFuelSlot;
+import wardentools.GUI.menu.slot.PaleShardSlot;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 
@@ -49,9 +49,9 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 
 	private void createBlockEntityInventory(RadianceCatalystBlockEntity be) {
 		be.getInventoryOptional().ifPresent(inventory -> {
-			addSlot(new CustomFuelSlot(inventory, 0, 44, 36));
-			addSlot(new SlotItemHandler(inventory, 1, 80, 36));
-			addSlot(new SlotItemHandler(inventory, 2, 116, 36));
+			addSlot(new PaleShardSlot(inventory, 0, 44, 36));
+			addSlot(new SlotItemHandler(inventory, 1, 111, 19));
+			addSlot(new SlotItemHandler(inventory, 2, 111, 54));
 		});
 	}
 
@@ -122,7 +122,4 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 		return this.data.get(3);
 	}
 	
-	public int getEnergyStoredScale() {
-		return (int)((float)getEnergy() / (float)getMaxEnergy() * 38);
-	}
 }

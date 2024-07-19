@@ -1,4 +1,4 @@
-package wardentools.network;
+package wardentools.network.ParticulesSoundsEffects;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

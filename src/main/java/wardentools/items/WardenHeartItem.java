@@ -13,7 +13,7 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.armors.DeepCristalMaterial;
 import wardentools.effects.WardenLaserAttack;
 import wardentools.network.PacketHandler;
-import wardentools.network.WardenLaserParticleAndSoundPacket;
+import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;
 
 
 public class WardenHeartItem extends Item {
