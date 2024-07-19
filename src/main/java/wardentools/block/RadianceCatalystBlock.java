@@ -55,6 +55,7 @@ public class RadianceCatalystBlock extends Block implements EntityBlock {
 		
 		if (player instanceof ServerPlayer sPlayer) {
 			sPlayer.openMenu((MenuProvider)blockEntity, pos);
+			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;
 	}
