@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-19T22:32:23.2559021	Item Models: wardentools
+// 1.20.4	2024-07-20T09:21:54.3464568	Item Models: wardentools
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
@@ -62,7 +62,9 @@ c5601a628d3e815a6009f166c0a91ee346230c75 assets/wardentools/models/item/deepingo
 2a9e549dc648cc8057df5b206cea9d58fd8f403b assets/wardentools/models/item/deep_fruit.json
 9cba400d275554731c001c288d69be1be90007a7 assets/wardentools/models/item/pale_fragment.json
 ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_shard.json
+df6103769189e8270bb718f6da221cb40c2044b7 assets/wardentools/models/item/protector_heart.json
 a211e3021be071d858d1d178572b1cc4763e29b1 assets/wardentools/models/item/pure_essence.json
+41b094b08a051cb8b0541ab8a2d7edfdd2eb1178 assets/wardentools/models/item/pure_vessel.json
 aa0f198d94171a477a56c2fde4dcf0ae195b02f8 assets/wardentools/models/item/radiance_catalyst.json
 79b9b9007d2d61b7abd2b611933b7bd36995bb5d assets/wardentools/models/item/radiant_core.json
 7a7d9fd169318dfa32e885c5db7cb5abbbccce3d assets/wardentools/models/item/stripped_darktree_log.json

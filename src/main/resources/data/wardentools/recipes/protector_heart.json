@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "EEE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:pure_essence"
+    }
+  },
+  "result": {
+    "item": "wardentools:protector_heart"
+  }
+}

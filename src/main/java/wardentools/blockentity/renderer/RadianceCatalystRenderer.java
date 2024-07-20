@@ -18,6 +18,7 @@ import wardentools.blockentity.RadianceCatalystBlockEntity;
 import wardentools.client.model.RadianceCatalystInterior;
 
 public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCatalystBlockEntity> {
+	private double rotationSpeed = 3.0;
 	private static final RadianceCatalystInterior model =
 			new RadianceCatalystInterior(RadianceCatalystInterior.createBodyLayer().bakeRoot());
 	
@@ -28,7 +29,8 @@ public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCat
     public void render(RadianceCatalystBlockEntity blockEntity, float partialTick, PoseStack poseStack,
                        MultiBufferSource buffer, int packedLight, int packedOverlay) {
         if (blockEntity == null) return;
-
+        
+        this.rotationSpeed = blockEntity.getRotationSpeed();
         Level level = blockEntity.getLevel();
         if (level == null) return;
 
@@ -38,7 +40,7 @@ public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCat
         poseStack.scale(1.0F, 1.0F, 1.0F);
 
         double relativeGameTime = level.getGameTime() + partialTick;
-        float rotation = (float) (relativeGameTime * 3.0);
+        float rotation = (float) (relativeGameTime * this.rotationSpeed);
         poseStack.mulPose(Axis.XP.rotationDegrees(rotation));
         poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
         poseStack.mulPose(Axis.ZP.rotationDegrees(rotation));

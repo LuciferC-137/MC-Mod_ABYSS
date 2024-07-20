@@ -4,9 +4,9 @@
 	"item.wardentools.deepcristal_leggings": "Deep Leggings",
 	"item.wardentools.deepcristal_boots": "Deep Boots",
 	"item.wardentools.deepingots": "Deep Ingots",
-	"item.wardentools.warden_heart": "Warden Heart",
-	"item.wardentools.deeplurker_spawn_egg": "Spawn Deep Lurker",
-	"item.wardentools.pale_wanderer_spawn_egg": "Spawn Pale Wanderer",
+	"item.wardentools.warden_heart": "Warden heart",
+	"item.wardentools.deeplurker_spawn_egg": "Deep Lurker spawn egg",
+	"item.wardentools.pale_wanderer_spawn_egg": "Pale Wanderer spawn egg",
 	"item.wardentools.deep_fruit": "Deep Fruit",
 	"item.wardentools.abyss_diver": "Abyss Diver",
 	"item.wardentools.wind_whisperer": "Wind Whisperer",
@@ -17,6 +17,8 @@
 	"item.wardentools.pure_essence": "Pure Essence",
 	"item.wardentools.white_seed": "White Seed",
 	"item.wardentools.radiant_core": "Radiant Core",
+	"item.wardentools.pure_vessel": "Pure Vessel",
+	"item.wardentools.protector_heart": "Protector heart",
 	
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",

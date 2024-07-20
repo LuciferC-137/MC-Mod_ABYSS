@@ -4,9 +4,9 @@
 	"item.wardentools.deepcristal_leggings": "Deep Leggings",
 	"item.wardentools.deepcristal_boots": "Deep Boots",
 	"item.wardentools.deepingots": "Deep Ingots",
-	"item.wardentools.warden_heart": "Warden Heart",
-	"item.wardentools.deeplurker_spawn_egg": "Spawn Deep Lurker",
-	"item.wardentools.pale_wanderer_spawn_egg": "Spawn Pale Wanderer",
+	"item.wardentools.warden_heart": "Warden heart",
+	"item.wardentools.deeplurker_spawn_egg": "Deep Lurker spawn egg",
+	"item.wardentools.pale_wanderer_spawn_egg": "Pale Wanderer spawn egg",
 	"item.wardentools.deep_fruit": "Deep Fruit",
 	"item.wardentools.abyss_diver": "Abyss Diver",
 	"item.wardentools.wind_whisperer": "Wind Whisperer",
@@ -17,22 +17,24 @@
 	"item.wardentools.pure_essence": "Pure Essence",
 	"item.wardentools.white_seed": "White Seed",
 	"item.wardentools.radiant_core": "Radiant Core",
-
+	"item.wardentools.pure_vessel": "Pure Vessel",
+	"item.wardentools.protector_heart": "Protector heart",
 	
-	"block.wardentools.radiance_catalyst": "Radiance Catalyst",	
+	
+	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
 	"block.wardentools.deepblock": "Deep Block",
 	"block.wardentools.deepcristal": "Deep Cristal",
 	"block.wardentools.pale_shard": "Pale Shard",
+	"block.wardentools.darkdirt": "Dark Dirt",
+	"block.wardentools.darkgrass_block": "Dark Grass Block",
 	
 	"block.wardentools.darktree_log": "Darktree Log",
 	"block.wardentools.darktree_leaves": "Darktree Leaves",
 	"block.wardentools.stripped_darktree_log": "Stripped Darktree Log",
 	"block.wardentools.darktree_wood": "Darktree Wood",
 	"block.wardentools.stripped_darktree_wood": "Stripped Darktree Wood",
-	"block.wardentools.darktree_planks": "Darktree Planks",
 	"block.wardentools.darktree_sapling": "Darktree Sapling",
-	"block.wardentools.darkdirt": "Dark Dirt",
-	"block.wardentools.darkgrass_block": "Dark Grass Block",
+	"block.wardentools.darktree_planks": "Darktree Planks",
 	"block.wardentools.darktree_stair": "Darktree Stair",
 	"block.wardentools.darktree_slab": "Darktree Slab",
 	"block.wardentools.darktree_button": "Darktree Button",
@@ -69,6 +71,6 @@
 	
 	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "Corrupted material",
-		"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",
+	"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",
 	"container.wardentools.radiance_catalyst_block": "Radiance Catalyst"
 }

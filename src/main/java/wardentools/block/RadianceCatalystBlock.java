@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,6 +24,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.ItemStackHandler;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
+import wardentools.items.ItemRegistry;
 
 public class RadianceCatalystBlock extends Block implements EntityBlock {
 
@@ -74,16 +76,24 @@ public class RadianceCatalystBlock extends Block implements EntityBlock {
 		if (!level.isClientSide()) {
 			BlockEntity be = level.getBlockEntity(pos);
 			if (be instanceof RadianceCatalystBlockEntity blockEntity) {
+	            ItemStack stack = new ItemStack(ItemRegistry.RADIANCE_CATALYST.get());
+	            int energy = blockEntity.getEnergy().getEnergyStored();
+	            CompoundTag tag = new CompoundTag();
+	            tag.putInt("Energy", energy);
+	            stack.addTagElement("Energy", tag);
+	            ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D,
+	            		pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+	            level.addFreshEntity(itemEntity);
+				
 				ItemStackHandler inventory = blockEntity.getInventory();
 				for (int index = 0; index < inventory.getSlots(); index++) {
-					ItemStack stack = inventory.getStackInSlot(index);
+					ItemStack stackDrop = inventory.getStackInSlot(index);
 					var entity = new ItemEntity(level, pos.getX() + 0.5D,
-							pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
+							pos.getY() + 0.5D, pos.getZ() + 0.5D, stackDrop);
 					level.addFreshEntity(entity);
 				}
 			}
 		}
 		super.onRemove(state, level, pos, newState, isMoving);
-	}
-	
+	}	
 }

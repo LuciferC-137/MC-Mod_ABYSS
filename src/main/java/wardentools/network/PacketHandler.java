@@ -9,6 +9,8 @@ import net.minecraftforge.network.SimpleChannel;
 import net.minecraftforge.network.PacketDistributor;
 import wardentools.ModMain;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharging;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystPurifying;
 import wardentools.network.ParticulesSoundsEffects.ParticleWardenDeathPacket;
 import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;
 
@@ -38,6 +40,16 @@ public class PacketHandler {
         		.decoder(ParticleRadianceCatalystCharged::new)
         		.consumerMainThread(ParticleRadianceCatalystCharged::handle)
         		.add();
+        INSTANCE.messageBuilder(ParticleRadianceCatalystPurifying.class, NetworkDirection.PLAY_TO_CLIENT)
+		.encoder(ParticleRadianceCatalystPurifying::encode)
+		.decoder(ParticleRadianceCatalystPurifying::new)
+		.consumerMainThread(ParticleRadianceCatalystPurifying::handle)
+		.add();
+        INSTANCE.messageBuilder(ParticleRadianceCatalystCharging.class, NetworkDirection.PLAY_TO_CLIENT)
+		.encoder(ParticleRadianceCatalystCharging::encode)
+		.decoder(ParticleRadianceCatalystCharging::new)
+		.consumerMainThread(ParticleRadianceCatalystCharging::handle)
+		.add();
     }
 
     public static void sendToServer(Object msg) {

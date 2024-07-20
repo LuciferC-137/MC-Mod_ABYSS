@@ -29,7 +29,9 @@ import wardentools.blockentity.util.CustomEnergyStorage;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharging;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystPurifying;
 
 public class RadianceCatalystBlockEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
 	private static final Component TITLE =
@@ -42,6 +44,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		}
 	};
 	private int tickFractionner = 0;
+	private double rotationSpeed = 3.0;
 	private final LazyOptional<ItemStackHandler> inventoryOptional = LazyOptional.of(() -> this.inventory);
 	
 	private final CustomEnergyStorage energy = new CustomEnergyStorage(1000, 0, 100, 0); //capacity, maxReceive, maxExtract, defaultEnergy
@@ -130,6 +133,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 					}
 				} else {
 					// is burning
+					PacketHandler.sendToAllClient(new ParticleRadianceCatalystCharging(this.getBlockPos()));
 					this.burnTime--;
 					this.energy.addEnergy(1);
 					sendUpdate();
@@ -139,14 +143,18 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 				if (this.purifyingTime > 0 && this.purifyingTime < purifyTime) {
 					
 					if (!canPurify(this.inventory.getStackInSlot(1))){
+						this.rotationSpeed = 3.0;
 						this.purifyingTime = 0;
 						sendUpdate();
 					} else {
+						PacketHandler.sendToAllClient(new ParticleRadianceCatalystPurifying(this.getBlockPos()));
 						this.purifyingTime++;
 						if (this.purifyingTime>=purifyTime) {
 							this.purifyingTime = 0;
+							this.rotationSpeed = 3.0;
 							if (this.inventory.getStackInSlot(2).isEmpty()) {
-								this.energy.setEnergy(0);
+								this.energy.setEnergy(this.energy.getEnergyStored() -
+										energyCost(this.inventory.getStackInSlot(1)));
 								if (getPurifiedVersion(this.inventory.getStackInSlot(1))!=null) {
 									this.inventory.setStackInSlot(2,
 											getPurifiedVersion(this.inventory.getStackInSlot(1)));
@@ -157,9 +165,10 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 								
 							} else if (ItemStack.isSameItem(this.inventory.getStackInSlot(2),
 											(getPurifiedVersion(this.inventory.getStackInSlot(1))))){
+								this.energy.setEnergy(this.energy.getEnergyStored() -
+										energyCost(this.inventory.getStackInSlot(1)));
 								this.inventory.getStackInSlot(2).grow(1);
 								this.inventory.getStackInSlot(1).shrink(1);
-								this.energy.setEnergy(0);
 							}
 						}
 						sendUpdate();
@@ -168,6 +177,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 						&& (this.inventory.getStackInSlot(2).isEmpty()
 								||ItemStack.isSameItem(this.inventory.getStackInSlot(2),
 										(getPurifiedVersion(this.inventory.getStackInSlot(1)))))){
+					this.rotationSpeed = 6.0;
 					this.purifyingTime++;
 					sendUpdate();
 				} else if (this.tickFractionner%5==1){
@@ -226,9 +236,9 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	
 	public int getBurnTime(@NotNull ItemStack stack) {
 		if (stack.is(ItemRegistry.PALE_FRAGMENT.get())) {
-			return 101;
+			return 51;
 		} else if (stack.is(ItemRegistry.PALE_SHARD.get())) {
-			return 501;
+			return 251;
 		}
 		return 0;
 	}
@@ -236,8 +246,23 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	public ItemStack getPurifiedVersion(ItemStack stack) {
 		if (stack.is(ItemRegistry.CORRUPTED_ESSENCE.get())) {
 			return new ItemStack(ItemRegistry.PURE_ESSENCE.get());
+		} else if (stack.is(ItemRegistry.WARDEN_HEART.get())) {
+			return new ItemStack(ItemRegistry.PROTECTOR_HEART.get());
+		} else if (stack.is(ItemRegistry.CORRUPTED_VESSEL.get())) {
+			return new ItemStack(ItemRegistry.PURE_VESSEL.get());
 		}
 		return null;
+	}
+
+	public int energyCost(ItemStack stack) {
+		if (stack.is(ItemRegistry.CORRUPTED_ESSENCE.get())) {
+			return 100;
+		} else if (stack.is(ItemRegistry.WARDEN_HEART.get())) {
+			return 900;
+		} else if (stack.is(ItemRegistry.CORRUPTED_VESSEL.get())) {
+			return 100;
+		}
+		return this.energy.getMaxEnergyStored();
 	}
 
 	public boolean canBurn(@NotNull ItemStack stack) {
@@ -260,7 +285,17 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		return this.energy;
 	}
 	
+	public void setEnergy(int energy) {
+        this.energy.setEnergy(energy);
+    }
+	
 	public LazyOptional<CustomEnergyStorage> getEnergyOptional() {
         return this.energyOptional;
     }
+	
+	public double getRotationSpeed() {
+		return this.rotationSpeed;
+	}
+	
+	
 }

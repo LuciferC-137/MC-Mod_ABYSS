@@ -267,9 +267,10 @@ public class ItemRegistry {
 			REGISTAR.register("white_torchflower",
 			() -> new BlockItem(BlockRegistry.WHITE_TORCHFLOWER.get(), new Item.Properties()));
 	
-	public static final RegistryObject<BlockItem> RADIANCE_CATALYST =
+	public static final RegistryObject<RadianceCatalystItem> RADIANCE_CATALYST =
 			REGISTAR.register("radiance_catalyst",
-			() -> new BlockItem(BlockRegistry.RADIANCE_CATALYST.get(), new Item.Properties().rarity(Rarity.RARE)));
+			() -> new RadianceCatalystItem(BlockRegistry.RADIANCE_CATALYST.get(),
+					new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 	
 	public static final RegistryObject<Item> PURE_ESSENCE =
 			REGISTAR.register("pure_essence",
@@ -278,4 +279,13 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> RADIANT_CORE =
 			REGISTAR.register("radiant_core",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+	
+	public static final RegistryObject<Item> PURE_VESSEL =
+			REGISTAR.register("pure_vessel",
+			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+	
+	public static final RegistryObject<Item> PROTECTOR_HEART =
+			REGISTAR.register("protector_heart",
+			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+	
 }

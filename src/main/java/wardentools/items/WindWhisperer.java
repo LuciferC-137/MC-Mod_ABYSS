@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wardentools.ModMain;
 import wardentools.effects.WindWhisper;
+import wardentools.worldgen.dimension.ModDimensions;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class WindWhisperer extends Item {
@@ -36,7 +37,7 @@ public class WindWhisperer extends Item {
 		this.currentPlayer = event.player;
         if (event.phase == TickEvent.Phase.END) {
             if (event.player.level().isClientSide) {
-                if (isInHotbar(event.player)) {
+                if (isInHotbar(event.player) && isInAbyss(event.player)) {
                     if (this.rand.nextInt(10000) == 1) {
                     	Minecraft minecraft = Minecraft.getInstance();
                         LanguageManager languageManager = minecraft.getLanguageManager();
@@ -62,6 +63,11 @@ public class WindWhisperer extends Item {
         return false;
     }
     
+    private static boolean isInAbyss(Player player) {
+    	if (player==null) return false;
+    	return player.level().dimension() == ModDimensions.ABYSS_LEVEL_KEY;
+    }
+    
     private static void sendMessage(Player player, String message) {
         MutableComponent chatComponent = Component.literal(message);
         player.sendSystemMessage(chatComponent);
@@ -69,6 +75,6 @@ public class WindWhisperer extends Item {
     
     @Override
     public boolean isFoil(ItemStack itemStack) {
-        return currentPlayer != null && isInHotbar(this.currentPlayer);
+        return currentPlayer != null && isInHotbar(this.currentPlayer) && isInAbyss(this.currentPlayer);
     }
 }
