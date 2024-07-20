@@ -44,11 +44,11 @@ public class ModBiomes {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 5, 1, 4));
+        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 100, 1, 4));
         // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
         spawnBuilder.addSpawn(MobCategory.CREATURE,
         		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
-        spawnBuilder.creatureGenerationProbability(0.1F);
+        spawnBuilder.creatureGenerationProbability(0.2F);
 
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(
@@ -61,7 +61,10 @@ public class ModBiomes {
         
         biomeBuilder.addCarver(GenerationStep.Carving.AIR, Carvers.CAVE_EXTRA_UNDERGROUND);        
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DARKTREE_PLACED_KEY);
-               
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DEEPFLOWER_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BLUE_BUSH_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.TALL_DARK_GRASS_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DARK_GRASS_KEY);
         
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)

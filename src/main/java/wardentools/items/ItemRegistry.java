@@ -288,4 +288,20 @@ public class ItemRegistry {
 			REGISTAR.register("protector_heart",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
+	public static final RegistryObject<Item> DEEPFLOWER = 
+			REGISTAR.register("deepflower",
+			() -> new BlockItem(BlockRegistry.DEEPFLOWER.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> BLUE_BUSH = 
+			REGISTAR.register("blue_bush",
+			() -> new BlockItem(BlockRegistry.BLUE_BUSH.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> TALL_DARK_GRASS = 
+			REGISTAR.register("tall_dark_grass",
+			() -> new BlockItem(BlockRegistry.TALL_DARK_GRASS.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> DARK_GRASS = 
+			REGISTAR.register("dark_grass",
+			() -> new BlockItem(BlockRegistry.DARK_GRASS.get(), new Item.Properties()));
+	
 }

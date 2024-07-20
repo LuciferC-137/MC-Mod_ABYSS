@@ -23,10 +23,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.DARKTREE_PLANKS);
         registerBlockWithItem(BlockRegistry.WHITETREE_PLANKS);
         registerBlockWithItem(BlockRegistry.DEEPBLOCK);
-        registerBlockWithItem(BlockRegistry.DARKDIRT);
-
-        // Registering blocks without item models
-        
+        registerBlockWithItem(BlockRegistry.DARKDIRT);        
 
         // Registering specific block models
         registerLeavesBlock(BlockRegistry.DARKTREE_LEAVES);
@@ -36,6 +33,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerDarkGrassBlock(BlockRegistry.DARKGRASS_BLOCK);
         registerCrossCutoutBlock(BlockRegistry.WHITE_GRASS);
         registerCrossCutoutBlock(BlockRegistry.WHITE_TORCHFLOWER);
+        registerCrossCutoutBlock(BlockRegistry.BLUE_BUSH);
+        registerCrossCutoutBlock(BlockRegistry.DARK_GRASS);
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");

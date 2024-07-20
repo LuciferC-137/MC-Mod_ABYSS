@@ -26,6 +26,10 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> WHITE_GRASS_KEY = registerKey("white_grass");
 	public static final ResourceKey<PlacedFeature> TALL_WHITE_GRASS_KEY = registerKey("tall_white_grass");
 	public static final ResourceKey<PlacedFeature> WHITE_TORCHFLOWER_KEY = registerKey("white_torchflower");
+	public static final ResourceKey<PlacedFeature> DEEPFLOWER_KEY = registerKey("deepflower");
+	public static final ResourceKey<PlacedFeature> BLUE_BUSH_KEY = registerKey("blue_bush");
+	public static final ResourceKey<PlacedFeature> TALL_DARK_GRASS_KEY = registerKey("tall_dark_grass");
+	public static final ResourceKey<PlacedFeature> DARK_GRASS_KEY = registerKey("dark_grass");
 	
 	
 	public static void bootstrap(BootstapContext<PlacedFeature> context) {
@@ -56,6 +60,34 @@ public class ModPlacedFeatures {
         				));
         
         register(context, WHITE_TORCHFLOWER_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WHITE_TORCHFLOWER),
+        		List.of(
+        				NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
+        				InSquarePlacement.spread(),
+        				PlacementUtils.HEIGHTMAP
+        				));
+        
+        register(context, DEEPFLOWER_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DEEPFLOWER),
+        		List.of(
+        				NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
+        				InSquarePlacement.spread(),
+        				PlacementUtils.HEIGHTMAP
+        				));
+        
+        register(context, BLUE_BUSH_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.BLUE_BUSH),
+        		List.of(
+        				NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
+        				InSquarePlacement.spread(),
+        				PlacementUtils.HEIGHTMAP
+        				));
+        
+        register(context, TALL_DARK_GRASS_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.TALL_DARK_GRASS),
+        		List.of(
+        				NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
+        				InSquarePlacement.spread(),
+        				PlacementUtils.HEIGHTMAP
+        				));
+        
+        register(context, DARK_GRASS_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DARK_GRASS),
         		List.of(
         				NoiseThresholdCountPlacement.of(-0.8D, 5, 10),
         				InSquarePlacement.spread(),

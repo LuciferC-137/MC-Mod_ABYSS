@@ -19,6 +19,7 @@
 	"item.wardentools.radiant_core": "Radiant Core",
 	"item.wardentools.pure_vessel": "Pure Vessel",
 	"item.wardentools.protector_heart": "Protector heart",
+	"item.wardentools.deepflower": "Deep Flower",
 	
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
@@ -63,6 +64,10 @@
 	"block.wardentools.white_grass": "White Grass",
 	"block.wardentools.tall_white_grass": "Tall White Grass",
 	"block.wardentools.white_torchflower": "White Torchflower",
+	
+	"block.wardentools.blue_bush": "Blue Bush",
+	"block.wardentools.tall_dark_grass": "Tall Dark Grass",
+	"block.wardentools.dark_grass": "Dark Grass",
 	
 	"entity.wardentools.deeplurker": "Deep Lurker",
 	"entity.wardentools.pale_wanderer": "Pale Wanderer",

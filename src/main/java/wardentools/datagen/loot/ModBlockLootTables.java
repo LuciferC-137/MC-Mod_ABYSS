@@ -1,24 +1,14 @@
 package wardentools.datagen.loot;
 
-
-
-
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.*;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.advancements.critereon.EnchantmentPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
@@ -34,7 +24,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-    	
     	
     	this.addDropSelf(BlockRegistry.DEEPBLOCK);
     	this.addDropSelf(BlockRegistry.DARKDIRT);
@@ -66,32 +55,28 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITETREE_FENCE);
     	this.addDropSelf(BlockRegistry.WHITETREE_FENCE_GATE);
     	this.addDropSelf(BlockRegistry.WHITETREE_TRAPDOOR);
-    	
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
     	   	
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
     			block -> createSlabItemTable(BlockRegistry.DARKTREE_SLAB.get()));
     	this.add(BlockRegistry.DARKTREE_DOOR.get(), 
     			block -> createDoorTable(BlockRegistry.DARKTREE_DOOR.get()));
-    	
     	this.add(BlockRegistry.WHITETREE_SLAB.get(), 
     			block -> createSlabItemTable(BlockRegistry.WHITETREE_SLAB.get()));
     	this.add(BlockRegistry.WHITETREE_DOOR.get(), 
     			block -> createDoorTable(BlockRegistry.WHITETREE_DOOR.get()));
-    	
     	this.add(BlockRegistry.TALL_WHITE_GRASS.get(),
     			block -> createDoublePlantShearsDrop(BlockRegistry.WHITE_GRASS.get()));
-    	
     	this.add(BlockRegistry.WHITE_GRASS.get(),
     			block -> createShearsOnlyDrop(BlockRegistry.WHITE_GRASS.get()));
-    	
-   	
-        //Special leave drop
-    	//this.add(BlockRegistry.DARKTREE_LEAVES.get(), block -> 
-		//createLeavesDrops(block, BlockRegistry.DARKTREE_SAPLING.get(),
-		//		NORMAL_LEAVES_SAPLING_CHANCES));
-    	//this.add(BlockRegistry.DARKTREE_LEAVES.get(), this::dropDarktreeLeaves);
-
+    	this.add(BlockRegistry.BLUE_BUSH.get(),
+    			block -> createShearsOnlyDrop(BlockRegistry.BLUE_BUSH.get()));
+    	this.add(BlockRegistry.DEEPFLOWER.get(),
+                block -> createDoubleBlockSingleItemDrop(ItemRegistry.DEEPFLOWER));
+    	this.add(BlockRegistry.TALL_DARK_GRASS.get(),
+    			block -> createDoublePlantShearsDrop(BlockRegistry.DARK_GRASS.get()));
+    	this.add(BlockRegistry.DARK_GRASS.get(),
+    			block -> createShearsOnlyDrop(BlockRegistry.DARK_GRASS.get()));
     }
 
     private void addDropSelf(RegistryObject<Block> block) {
@@ -100,29 +85,13 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         }
     }
     
-    @SuppressWarnings("unused")
-	private LootTable.Builder dropDarktreeLeaves(Block block) {
-        LootItemCondition.Builder shearsCondition = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS));
-        LootItemCondition.Builder silkTouchCondition = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
-
+    private LootTable.Builder createDoubleBlockSingleItemDrop(RegistryObject<Item> item) {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(block)
-                                .when(shearsCondition)
-                                .when(silkTouchCondition)
-                        )
-                        .add(LootItem.lootTableItem(BlockRegistry.DARKTREE_SAPLING.get())
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
-                                .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
-                        )
-                        .add(LootItem.lootTableItem(ItemRegistry.DEEP_FRUIT.get())
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F)))
-                                .apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
-                        )
-                );
+                        .add(LootItem.lootTableItem(item.get())
+                                .when(LootItemRandomChanceCondition.randomChance(0.5f))));
     }
- 
 
 	@Override
     protected Iterable<Block> getKnownBlocks() {

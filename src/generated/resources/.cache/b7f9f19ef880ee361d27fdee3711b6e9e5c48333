@@ -1,4 +1,5 @@
-// 1.20.4	2024-07-20T09:21:54.3464568	Item Models: wardentools
+// 1.20.4	2024-07-20T18:13:03.6185596	Item Models: wardentools
+953870e2f0fd3ec8c1e95656a9f7e457d7ec61ca assets/wardentools/models/item/blue_bush.json
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
@@ -12,6 +13,7 @@ de83d2a261f049509646088b13ca740d55e297c9 assets/wardentools/models/item/darktree
 b2f3a969469e5e3c9fda37d848ceef30f76072c7 assets/wardentools/models/item/darktree_stair.json
 9e76d716b05b3bb48a1d5099174aea81ec2f58a8 assets/wardentools/models/item/darktree_trapdoor.json
 d676ad7b5b2f157b1cb496608c3317f202baa939 assets/wardentools/models/item/darktree_wood.json
+ea2874feb6278a75ad639c9f21d5011efba83d5b assets/wardentools/models/item/dark_grass.json
 675611e0a9b1c15082c459e76ad074045ff25e58 assets/wardentools/models/item/dark_stick.json
 612fe5b76c2dddff4c31a60401102131d92879cf assets/wardentools/models/item/deepcristal.json
 4e799593736356aa9fe33c05c984218884ac1e77 assets/wardentools/models/item/deepcristal_boots.json
@@ -58,6 +60,7 @@ b133d2cfef508948acd5b01845a6ca9a4d6a2ecb assets/wardentools/models/item/deepcris
 49a3b13a5a71aaef433d6d2ae3822611de467907 assets/wardentools/models/item/deepcristal_leggings_netherite_trim.json
 8adf3c418391753122129642c95bf9a5f5dcd0b3 assets/wardentools/models/item/deepcristal_leggings_quartz_trim.json
 96b9b323813ef4c2903a7fcdf4e67a57d3ddaff8 assets/wardentools/models/item/deepcristal_leggings_redstone_trim.json
+36c9cbf8ec5b82aeabfefc12d2469b26528e95c9 assets/wardentools/models/item/deepflower.json
 c5601a628d3e815a6009f166c0a91ee346230c75 assets/wardentools/models/item/deepingots.json
 2a9e549dc648cc8057df5b206cea9d58fd8f403b assets/wardentools/models/item/deep_fruit.json
 9cba400d275554731c001c288d69be1be90007a7 assets/wardentools/models/item/pale_fragment.json
@@ -71,6 +74,7 @@ aa0f198d94171a477a56c2fde4dcf0ae195b02f8 assets/wardentools/models/item/radiance
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 980a11934130b33d9a8df5e91eaebc563aa907bd assets/wardentools/models/item/stripped_whitetree_log.json
 f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped_whitetree_wood.json
+0a97dffdd3ad150e8f5754c8e5a285b8d9424e24 assets/wardentools/models/item/tall_dark_grass.json
 6c32364d24d94cdf7cf4110c71b0502f0f641a6e assets/wardentools/models/item/tall_white_grass.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json
 e61691d51da15842832df57a056926f39474d0ff assets/wardentools/models/item/whitetree_button.json

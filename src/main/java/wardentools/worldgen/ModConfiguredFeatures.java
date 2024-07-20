@@ -30,7 +30,10 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_GRASS = registerKey("white_grass");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_WHITE_GRASS = registerKey("tall_white_grass");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_TORCHFLOWER = registerKey("white_torchflower");
-		
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEPFLOWER = registerKey("deepflower");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_BUSH = registerKey("blue_bush");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DARK_GRASS = registerKey("tall_dark_grass");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DARK_GRASS = registerKey("dark_grass");
 	
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -56,6 +59,18 @@ public class ModConfiguredFeatures {
     	
     	register(context, WHITE_TORCHFLOWER, Feature.RANDOM_PATCH,
     			grassPatch(BlockStateProvider.simple(BlockRegistry.WHITE_TORCHFLOWER.get()), 2));
+    	
+    	register(context, DEEPFLOWER, Feature.RANDOM_PATCH,
+    			grassPatch(BlockStateProvider.simple(BlockRegistry.DEEPFLOWER.get()), 1));
+    	
+    	register(context, BLUE_BUSH, Feature.RANDOM_PATCH,
+    			grassPatch(BlockStateProvider.simple(BlockRegistry.BLUE_BUSH.get()), 10));
+    	
+    	register(context, TALL_DARK_GRASS, Feature.RANDOM_PATCH,
+    			grassPatch(BlockStateProvider.simple(BlockRegistry.TALL_DARK_GRASS.get()), 5));
+    	
+    	register(context, DARK_GRASS, Feature.RANDOM_PATCH,
+    			grassPatch(BlockStateProvider.simple(BlockRegistry.DARK_GRASS.get()), 15));
     	  	
     	//Holder<PlacedFeature> vegetationFeature = context.lookup(Registries.PLACED_FEATURE)
     	//		.getOrThrow(ModPlacedFeatures.CHERRY_KEY);

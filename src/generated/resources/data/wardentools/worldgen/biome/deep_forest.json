@@ -2,6 +2,7 @@
   "carvers": {
     "air": "minecraft:cave_extra_underground"
   },
+  "creature_spawn_probability": 0.2,
   "downfall": 0.8,
   "effects": {
     "fog_color": 532775,
@@ -60,7 +61,11 @@
       "minecraft:glow_lichen",
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
-      "wardentools:darktree_placed"
+      "wardentools:darktree_placed",
+      "wardentools:deepflower",
+      "wardentools:blue_bush",
+      "wardentools:tall_dark_grass",
+      "wardentools:dark_grass"
     ],
     [
       "minecraft:freeze_top_layer"
@@ -76,7 +81,7 @@
         "type": "wardentools:deeplurker",
         "maxCount": 4,
         "minCount": 1,
-        "weight": 5
+        "weight": 100
       },
       {
         "type": "minecraft:allay",

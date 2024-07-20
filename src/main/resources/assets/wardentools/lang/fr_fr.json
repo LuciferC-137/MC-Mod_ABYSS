@@ -19,6 +19,7 @@
 	"item.wardentools.radiant_core": "Noyau radiant",
 	"item.wardentools.pure_vessel": "Réceptacle pure",
 	"item.wardentools.protector_heart": "Coeur de Protecteur",
+	"item.wardentools.deepflower": "Fleur des abîmes",
 
 	"block.wardentools.deepblock": "Bloc des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",
@@ -62,6 +63,10 @@
 	"block.wardentools.white_grass": "Herbe blanche",
 	"block.wardentools.tall_white_grass": "Herbes hautes blanches",
 	"block.wardentools.white_torchflower": "Torche-fleur blanche",
+	
+	"block.wardentools.blue_bush": "Buisson bleu",
+	"block.wardentools.tall_dark_grass": "Herbes hautes sombres",
+	"block.wardentools.dark_grass": "Herbe sombre",
 	
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",

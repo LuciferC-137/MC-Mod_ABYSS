@@ -22,6 +22,7 @@ public class BlockRegistry {
 	private static final int LIGHT_DARK_TREE = 6;
 	private static final int LIGHT_WHITE_TREE = 10;
 	private static final int LIGHT_WHITE_VEGETATION = 8;
+	private static final int LIGHT_DARK_VEGETATION = 5;
 	
 	public static final RegistryObject<Block> DEEPBLOCK = REGISTAR.register("deepblock",
 			()->new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
@@ -287,5 +288,28 @@ public class BlockRegistry {
 					.strength(5.0f, 15.0f)
 					.noOcclusion()
 					.lightLevel((state) -> 10)));
-		
+	
+	public static final RegistryObject<Block> DEEPFLOWER = REGISTAR.register("deepflower",
+			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
+	
+	public static final RegistryObject<Block> BLUE_BUSH = REGISTAR.register("blue_bush",
+			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
+	
+	public static final RegistryObject<Block> TALL_DARK_GRASS = REGISTAR.register("tall_dark_grass",
+			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
+	
+	public static final RegistryObject<Block> DARK_GRASS = REGISTAR.register("dark_grass",
+			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
 }

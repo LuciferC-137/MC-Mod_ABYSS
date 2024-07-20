@@ -74,6 +74,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.WHITE_GRASS);
         blockItemWithItemModel(BlockRegistry.TALL_WHITE_GRASS);
         blockItemWithItemModel(BlockRegistry.WHITE_TORCHFLOWER);
+        blockItemWithItemModel(BlockRegistry.DEEPFLOWER);
+        blockItemWithItemModel(BlockRegistry.BLUE_BUSH);
+        blockItemWithItemModel(BlockRegistry.TALL_DARK_GRASS);
+        blockItemWithItemModel(BlockRegistry.DARK_GRASS);
         
         //Blocks that did not created their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),

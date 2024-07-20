@@ -47,6 +47,9 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.DARKTREE_PRESSURE_PLATE.get());
                     	event.accept(ItemRegistry.DARK_STICK.get());
                     	
+                    	event.accept(ItemRegistry.BLUE_BUSH.get());
+                    	event.accept(ItemRegistry.DEEPFLOWER.get());
+                    	
                     	event.accept(ItemRegistry.WHITETREE_LOG.get());
                     	event.accept(ItemRegistry.WHITETREE_WOOD.get());
                     	event.accept(ItemRegistry.STRIPPED_WHITETREE_LOG.get());
@@ -64,8 +67,14 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.WHITETREE_PRESSURE_PLATE.get());
                     	event.accept(ItemRegistry.WHITE_SEED.get());
                     	
+                    	event.accept(ItemRegistry.WHITE_GRASS.get());
+                    	event.accept(ItemRegistry.TALL_WHITE_GRASS.get());
+                    	event.accept(ItemRegistry.WHITE_TORCHFLOWER.get());
+                    	
                     	event.accept(ItemRegistry.DARKDIRT.get());
                     	event.accept(ItemRegistry.DARKGRASS_BLOCK.get());
+                    	event.accept(ItemRegistry.TALL_DARK_GRASS.get());
+                    	event.accept(ItemRegistry.DARK_GRASS.get());
 
                     	event.accept(ItemRegistry.DEEPLURKER_EGG.get());
                     	event.accept(ItemRegistry.PALEWANDERER_EGG.get());
@@ -76,11 +85,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.CORRUPTED_VESSEL.get());
                     	event.accept(ItemRegistry.WIND_WHISPERER.get());
                     	event.accept(ItemRegistry.ABYSS_DIVER.get());
-                    	
-                    	event.accept(ItemRegistry.WHITE_GRASS.get());
-                    	event.accept(ItemRegistry.TALL_WHITE_GRASS.get());
-                    	event.accept(ItemRegistry.WHITE_TORCHFLOWER.get());
-                    	
+                    	                    	
                     	event.accept(ItemRegistry.RADIANCE_CATALYST.get());
                     	event.accept(ItemRegistry.PURE_ESSENCE.get());
                     	event.accept(ItemRegistry.RADIANT_CORE.get());

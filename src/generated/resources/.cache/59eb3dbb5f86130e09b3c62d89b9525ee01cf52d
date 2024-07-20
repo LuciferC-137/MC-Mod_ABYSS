@@ -1,4 +1,5 @@
-// 1.20.4	2024-07-20T12:07:14.2195328	Loot Tables
+// 1.20.4	2024-07-20T18:13:03.6225487	Loot Tables
+ceadaab47e544470a41a80d2a829f016dcfe6359 data/wardentools/loot_tables/blocks/blue_bush.json
 cd3afcd604acda173c23bfbfc1381b05dbe7bb16 data/wardentools/loot_tables/blocks/darkdirt.json
 389f559700304e07f380d250e3ab3cfbf609406b data/wardentools/loot_tables/blocks/darkgrass_block.json
 05a6e49c435dc40acf7731ef3d51fa13f66df208 data/wardentools/loot_tables/blocks/darktree_button.json
@@ -13,12 +14,15 @@ bf0242f14b7e0b3b8094f311983eb24e8049e8c3 data/wardentools/loot_tables/blocks/dar
 c33294a7e832c3388f6fd9052295b7254103f1ae data/wardentools/loot_tables/blocks/darktree_stair.json
 9b893cb916670a439054c6c8d7c249421c6f679b data/wardentools/loot_tables/blocks/darktree_trapdoor.json
 a6477c1450db15e892ab553a8f6b5ae10392ad23 data/wardentools/loot_tables/blocks/darktree_wood.json
+8cb49bb2d0ac34bd229511c6622875337a46f2e3 data/wardentools/loot_tables/blocks/dark_grass.json
 66e25b925be6b45808743ef06b66893a64fe761f data/wardentools/loot_tables/blocks/deepblock.json
 5f70f91d16d65f46bad25ad1e6464f72bcabcb09 data/wardentools/loot_tables/blocks/deepcristal.json
+2f0caaa4337f1c08c215901667bb465de1efccdf data/wardentools/loot_tables/blocks/deepflower.json
 22c5562d49c153eef742057e576bbd90d943acd0 data/wardentools/loot_tables/blocks/stripped_darktree_log.json
 d2ebb7754472b3337e9083f43187a35173fe6ff5 data/wardentools/loot_tables/blocks/stripped_darktree_wood.json
 957888082175208144cd83b53a9cbc5f4e7ff47f data/wardentools/loot_tables/blocks/stripped_whitetree_log.json
 84bd6a30c1f27aedbf5bb4103c869a2a060007ff data/wardentools/loot_tables/blocks/stripped_whitetree_wood.json
+2e96aa37bd3e8aa40aab5a6f1c7abee903971de3 data/wardentools/loot_tables/blocks/tall_dark_grass.json
 745a1751edd3dc10d7130f4fcd769ea6f895204e data/wardentools/loot_tables/blocks/tall_white_grass.json
 f5d1324776086098c2b89d34dd34881696fe35ab data/wardentools/loot_tables/blocks/whitetree_button.json
 d82b56a14233b8fe9856210c641192be371cbdab data/wardentools/loot_tables/blocks/whitetree_door.json

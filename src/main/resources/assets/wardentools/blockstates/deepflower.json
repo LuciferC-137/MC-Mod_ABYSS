@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "wardentools:block/deepflower_bottom"
+    },
+    "half=upper": {
+      "model": "wardentools:block/deepflower_top"
+    }
+  }
+}
