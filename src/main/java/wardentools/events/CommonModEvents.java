@@ -12,6 +12,7 @@ import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.entity.custom.PaleWandererEntity;
+import wardentools.entity.custom.ProtectorEntity;
 import wardentools.network.PacketHandler;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -26,6 +27,7 @@ public class CommonModEvents {
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
 		event.put(ModEntities.DEEPLURKER.get(), DeepLurkerEntity.createAttribute().build());
 		event.put(ModEntities.PALE_WANDERER.get(), PaleWandererEntity.createAttribute().build());
+		event.put(ModEntities.PROTECTOR.get(), ProtectorEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
@@ -39,6 +41,11 @@ public class CommonModEvents {
     			SpawnPlacements.Type.ON_GROUND,
     			Heightmap.Types.WORLD_SURFACE,
     			PaleWandererEntity::canSpawn,
+    			SpawnPlacementRegisterEvent.Operation.OR);
+    	event.register(ModEntities.PROTECTOR.get(),
+    			SpawnPlacements.Type.ON_GROUND,
+    			Heightmap.Types.WORLD_SURFACE,
+    			ProtectorEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     }
 }

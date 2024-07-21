@@ -23,6 +23,7 @@
 	
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
+	"block.wardentools.protector_invoker": "Protector Invoker",
 	"block.wardentools.deepblock": "Deep Block",
 	"block.wardentools.deepcristal": "Deep Cristal",
 	"block.wardentools.pale_shard": "Pale Shard",
@@ -67,6 +68,7 @@
 	
 	"entity.wardentools.deeplurker": "Deep Lurker",
 	"entity.wardentools.pale_wanderer": "Pale Wanderer",
+	"entity.wardentools.protector": "Protector",
 	
 	"block.wardentools.blue_bush": "Blue Bush",
 	"block.wardentools.tall_dark_grass": "Tall Dark Grass",

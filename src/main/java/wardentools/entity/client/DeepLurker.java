@@ -77,7 +77,7 @@ public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
 	@Override
 	public ModelPart root() {
 		return this.parts.FULL();
-		}
+	}
 	
 	
 	@Override

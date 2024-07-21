@@ -92,6 +92,8 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.PROTECTOR_HEART.get());
                     	event.accept(ItemRegistry.PURE_VESSEL.get());
                     	
+                    	event.accept(ItemRegistry.PROTECTOR_INVOKER.get());
+                    	
                     }).build());
     
     

@@ -304,4 +304,9 @@ public class ItemRegistry {
 			REGISTAR.register("dark_grass",
 			() -> new BlockItem(BlockRegistry.DARK_GRASS.get(), new Item.Properties()));
 	
+	public static final RegistryObject<BlockItem> PROTECTOR_INVOKER =
+			REGISTAR.register("protector_invoker",
+			() -> new BlockItem(BlockRegistry.PROTECTOR_INVOKER.get(),
+					new Item.Properties().rarity(Rarity.EPIC)));
+	
 }

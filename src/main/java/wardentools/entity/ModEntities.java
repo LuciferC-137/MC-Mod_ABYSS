@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import wardentools.ModMain;
 import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.entity.custom.PaleWandererEntity;
+import wardentools.entity.custom.ProtectorEntity;
 
 public class ModEntities {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -28,6 +29,12 @@ public class ModEntities {
 					.sized(0.9f, 0.4f)
 					.build(new ResourceLocation(ModMain.MOD_ID, "pale_wanderer").toString())
 					);
+	
+	public static final RegistryObject<EntityType<ProtectorEntity>> PROTECTOR =
+			ENTITY_TYPES.register("protector",
+					()->EntityType.Builder.of(ProtectorEntity::new, MobCategory.CREATURE)
+					.sized(1.5f, 2.5f)
+					.build(new ResourceLocation(ModMain.MOD_ID, "protector").toString()));
 	
 	public static void register(IEventBus eventBus) {
 		ENTITY_TYPES.register(eventBus);

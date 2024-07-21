@@ -25,6 +25,7 @@
 	"block.wardentools.deepcristal": "Cristal des abîmes",
 	"block.wardentools.pale_shard": "Eclat pâle",
 	"block.wardentools.radiance_catalyst": "Catalyseur de Radiance",
+	"block.wardentools.protector_invoker": "Invocateur de Protecteur",
 	
 	"block.wardentools.darktree_log": "Bûche de sombrabre",
 	"block.wardentools.darktree_leaves": "Feuilles de sombrabre",
@@ -70,6 +71,7 @@
 	
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",
+	"entity.wardentools.protector": "Protecteur",
 	
 	"creativetab.abyss_tab": "Abyss",
 	

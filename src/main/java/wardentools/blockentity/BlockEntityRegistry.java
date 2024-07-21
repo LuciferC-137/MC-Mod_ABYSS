@@ -15,5 +15,10 @@ public class BlockEntityRegistry {
 			BLOCK_ENTITIES.register("radiance_catalyst_block_entity",
 					() -> BlockEntityType.Builder.of(RadianceCatalystBlockEntity::new,
 							BlockRegistry.RADIANCE_CATALYST.get()).build(null));
+	
+	public static final RegistryObject<BlockEntityType<ProtectorInvokerBlockEntity>> PROTECTOR_INVOKER_BLOCK_ENTITY =
+			BLOCK_ENTITIES.register("protector_invoker_block_entity",
+					() -> BlockEntityType.Builder.of(ProtectorInvokerBlockEntity::new,
+							BlockRegistry.PROTECTOR_INVOKER.get()).build(null));
 
 }

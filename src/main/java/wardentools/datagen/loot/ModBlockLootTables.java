@@ -56,6 +56,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITETREE_FENCE_GATE);
     	this.addDropSelf(BlockRegistry.WHITETREE_TRAPDOOR);
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
+    	
+    	this.dropSelf(BlockRegistry.PROTECTOR_INVOKER.get());
     	   	
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
     			block -> createSlabItemTable(BlockRegistry.DARKTREE_SLAB.get()));

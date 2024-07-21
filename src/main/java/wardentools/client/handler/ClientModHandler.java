@@ -9,6 +9,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
 import wardentools.GUI.MenuRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
+import wardentools.blockentity.renderer.ProtectorInvokerRenderer;
 import wardentools.blockentity.renderer.RadianceCatalystRenderer;
 import wardentools.client.RadianceCatalystScreen;
 
@@ -26,6 +27,8 @@ public class ClientModHandler {
 	public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerBlockEntityRenderer(BlockEntityRegistry.RADIANCE_CATALYST_BLOCK_ENTITY.get(),
 				RadianceCatalystRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.PROTECTOR_INVOKER_BLOCK_ENTITY.get(),
+				ProtectorInvokerRenderer::new);
 	}
 
 }

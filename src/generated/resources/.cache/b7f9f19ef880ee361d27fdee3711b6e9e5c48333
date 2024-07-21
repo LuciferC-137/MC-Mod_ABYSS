@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-20T18:13:03.6185596	Item Models: wardentools
+// 1.20.4	2024-07-21T22:31:21.2061767	Item Models: wardentools
 953870e2f0fd3ec8c1e95656a9f7e457d7ec61ca assets/wardentools/models/item/blue_bush.json
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
@@ -66,6 +66,7 @@ c5601a628d3e815a6009f166c0a91ee346230c75 assets/wardentools/models/item/deepingo
 9cba400d275554731c001c288d69be1be90007a7 assets/wardentools/models/item/pale_fragment.json
 ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_shard.json
 df6103769189e8270bb718f6da221cb40c2044b7 assets/wardentools/models/item/protector_heart.json
+7fda9eae4c9aaa98fb168b4ef4b89faa6b1e7d6f assets/wardentools/models/item/protector_invoker.json
 a211e3021be071d858d1d178572b1cc4763e29b1 assets/wardentools/models/item/pure_essence.json
 41b094b08a051cb8b0541ab8a2d7edfdd2eb1178 assets/wardentools/models/item/pure_vessel.json
 aa0f198d94171a477a56c2fde4dcf0ae195b02f8 assets/wardentools/models/item/radiance_catalyst.json
