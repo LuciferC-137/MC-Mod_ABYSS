@@ -55,13 +55,23 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 			return InteractionResult.PASS;
 		}
 		ItemStack heldItem = player.getItemInHand(interactionHand);
-		if (heldItem.is(ItemRegistry.PROTECTOR_HEART.get())) {
-			if (!((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
-				return InteractionResult.FAIL;
-			}
+		if (heldItem.is(ItemRegistry.PROTECTOR_HEART.get())
+				&&((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
 			((ProtectorInvokerBlockEntity)blockEntity).getInventory()
 				.setStackInSlot(0, new ItemStack(ItemRegistry.PROTECTOR_HEART.get()));
 			heldItem.shrink(1);
+			return InteractionResult.SUCCESS;
+		} else if (heldItem.isEmpty()&&
+				!((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
+			((ProtectorInvokerBlockEntity)blockEntity).getInventory()
+			.getStackInSlot(0).shrink(1);
+			player.setItemInHand(interactionHand, new ItemStack(ItemRegistry.PROTECTOR_HEART.get()));
+			return InteractionResult.SUCCESS;
+		} else if (heldItem.is(ItemRegistry.PROTECTOR_HEART.get())
+				&&!((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
+			((ProtectorInvokerBlockEntity)blockEntity).getInventory()
+			.getStackInSlot(0).shrink(1);
+			heldItem.grow(1);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;
