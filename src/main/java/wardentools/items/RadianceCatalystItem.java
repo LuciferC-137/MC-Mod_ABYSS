@@ -24,7 +24,12 @@ public class RadianceCatalystItem extends BlockItem {
             ItemStack stack = context.getItemInHand();
             BlockItem.updateCustomBlockEntityTag(level, context.getPlayer(), pos, stack);
             RadianceCatalystBlockEntity blockEntity = (RadianceCatalystBlockEntity) level.getBlockEntity(pos);
-            blockEntity.setEnergy(stack.getTagElement("Energy").getInt("Energy"));
+            if (stack.getTagElement("Energy")!=null) {
+            	blockEntity.setEnergy(stack.getTagElement("Energy").getInt("Energy"));
+            } else {
+            	blockEntity.setEnergy(0);
+            }
+            
         }
         return result;
     }
