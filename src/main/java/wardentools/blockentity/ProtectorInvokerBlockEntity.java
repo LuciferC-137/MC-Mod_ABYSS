@@ -91,5 +91,12 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	public LazyOptional<ItemStackHandler> getInventoryOptional() {
         return this.inventoryOptional;
     }
+	
+	public boolean isProtectorValid() {
+		if (this.inventory.getStackInSlot(0)!=null) {
+			return !this.inventory.getStackInSlot(0).isEmpty();
+		}
+		return false;
+	}
 
 }
