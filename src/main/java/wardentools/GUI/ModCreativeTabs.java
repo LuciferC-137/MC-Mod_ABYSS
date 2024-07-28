@@ -89,8 +89,9 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.RADIANCE_CATALYST.get());
                     	event.accept(ItemRegistry.PURE_ESSENCE.get());
                     	event.accept(ItemRegistry.RADIANT_CORE.get());
-                    	event.accept(ItemRegistry.PROTECTOR_HEART.get());
                     	event.accept(ItemRegistry.PURE_VESSEL.get());
+                    	event.accept(ItemRegistry.PROTECTOR_HEART.get());
+                    	event.accept(ItemRegistry.DYING_PROTECTOR_HEART.get());
                     	
                     	event.accept(ItemRegistry.PROTECTOR_INVOKER.get());
                     	

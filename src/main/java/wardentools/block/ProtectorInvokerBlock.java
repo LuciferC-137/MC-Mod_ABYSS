@@ -24,6 +24,7 @@ import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
+import wardentools.items.ProtectorHeartItem;
 
 public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	public static final int radiusForProtectorSpawn = 5;
@@ -57,11 +58,14 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 		if (!(blockEntity instanceof ProtectorInvokerBlockEntity)) {
 			return InteractionResult.PASS;
 		}
+		if (InteractionHand.MAIN_HAND != interactionHand) {
+			return InteractionResult.FAIL;
+		}
 		ItemStack heldItem = player.getItemInHand(interactionHand);
 		if (heldItem.is(ItemRegistry.PROTECTOR_HEART.get())
 				&&((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
 			((ProtectorInvokerBlockEntity)blockEntity).getInventory()
-				.setStackInSlot(0, new ItemStack(ItemRegistry.PROTECTOR_HEART.get()));
+				.setStackInSlot(0, heldItem.copy());
 			heldItem.shrink(1);
 			
 			if (!level.isClientSide()) {
@@ -69,24 +73,29 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	            if (spawnPos != null) {
 	                ProtectorEntity protec = ModEntities.PROTECTOR.get().create(level);
 	                if (protec != null) {
-	                    protec.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);
+	                    protec.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
+	                    		spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);
+	                    protec.setHealth(((ProtectorHeartItem)((ProtectorInvokerBlockEntity)blockEntity).getInventory()
+	                						.getStackInSlot(0).getItem()).readHealth(((ProtectorInvokerBlockEntity)blockEntity)
+	                								.getInventory().getStackInSlot(0)));
 	                    level.addFreshEntity(protec);
 	                }
-	            } 
+	                if (((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0)
+	                		.is(ItemRegistry.PROTECTOR_HEART.get())) {
+	                	((ProtectorHeartItem)((ProtectorInvokerBlockEntity)blockEntity).getInventory()
+	                			.getStackInSlot(0).getItem()).setProtector(((ProtectorInvokerBlockEntity)blockEntity)
+	                					.getInventory().getStackInSlot(0), protec);
+                    }
+	            }
 	        }
 			return InteractionResult.SUCCESS;
 
 		} else if (heldItem.isEmpty()&&
 				!((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
+			player.setItemInHand(interactionHand, ((ProtectorInvokerBlockEntity)blockEntity).getInventory()
+					.getStackInSlot(0).copy());
 			((ProtectorInvokerBlockEntity)blockEntity).getInventory()
-			.getStackInSlot(0).shrink(1);
-			player.setItemInHand(interactionHand, new ItemStack(ItemRegistry.PROTECTOR_HEART.get()));
-			return InteractionResult.SUCCESS;
-		} else if (heldItem.is(ItemRegistry.PROTECTOR_HEART.get())
-				&&!((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
-			((ProtectorInvokerBlockEntity)blockEntity).getInventory()
-			.getStackInSlot(0).shrink(1);
-			heldItem.grow(1);
+				.getStackInSlot(0).shrink(1);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;
@@ -101,7 +110,7 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 
 				ItemStackHandler inventory = blockEntity.getInventory();
 				for (int index = 0; index < inventory.getSlots(); index++) {
-					ItemStack stackDrop = inventory.getStackInSlot(index);
+					ItemStack stackDrop = inventory.getStackInSlot(index).copy();
 					var entity = new ItemEntity(level, pos.getX() + 0.5D,
 							pos.getY() + 0.5D, pos.getZ() + 0.5D, stackDrop);
 					level.addFreshEntity(entity);

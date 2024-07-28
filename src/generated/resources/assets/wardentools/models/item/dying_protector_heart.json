@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "wardentools:item/protector_invoker"
+    "layer0": "wardentools:item/dying_protector_heart"
   }
 }

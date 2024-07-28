@@ -286,7 +286,7 @@ public class ItemRegistry {
 	
 	public static final RegistryObject<Item> PROTECTOR_HEART =
 			REGISTAR.register("protector_heart",
-			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
+			() -> new ProtectorHeartItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 	
 	public static final RegistryObject<Item> DEEPFLOWER = 
 			REGISTAR.register("deepflower",
@@ -308,5 +308,9 @@ public class ItemRegistry {
 			REGISTAR.register("protector_invoker",
 			() -> new BlockItem(BlockRegistry.PROTECTOR_INVOKER.get(),
 					new Item.Properties().rarity(Rarity.EPIC)));
+	
+	public static final RegistryObject<Item> DYING_PROTECTOR_HEART = 
+			REGISTAR.register("dying_protector_heart",
+			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
 }

@@ -63,6 +63,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.RADIANT_CORE);
         simpleItem(ItemRegistry.PURE_VESSEL);
         simpleItem(ItemRegistry.PROTECTOR_HEART);
+        simpleItem(ItemRegistry.DYING_PROTECTOR_HEART);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
@@ -78,6 +79,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.BLUE_BUSH);
         blockItemWithItemModel(BlockRegistry.TALL_DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.DARK_GRASS);
+        blockItemWithItemModel(BlockRegistry.PROTECTOR_INVOKER);
         
         //Blocks that did not created their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
@@ -115,8 +117,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_fence_gate"));
         withExistingParent(BlockRegistry.RADIANCE_CATALYST.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/radiance_catalyst"));
-        withExistingParent(BlockRegistry.PROTECTOR_INVOKER.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/protector_invoker"));
         
         
         //Blocks that use custom methods

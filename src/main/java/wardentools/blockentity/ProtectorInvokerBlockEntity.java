@@ -9,6 +9,8 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -17,6 +19,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 import wardentools.ModMain;
 import wardentools.blockentity.util.TickableBlockEntity;
+import wardentools.items.ItemRegistry;
+import wardentools.items.ProtectorHeartItem;
 
 public class ProtectorInvokerBlockEntity extends BlockEntity implements TickableBlockEntity {
 	
@@ -25,7 +29,9 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		protected void onContentsChanged(int slot) {
 			super.onContentsChanged(slot);
 			ProtectorInvokerBlockEntity.this.setChanged();
-	
+			if (!level.isClientSide) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+            }
 		}
 	};
 	private final LazyOptional<ItemStackHandler> inventoryOptional = LazyOptional.of(() -> this.inventory);
@@ -36,7 +42,20 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 
 	@Override
 	public void tick() {
-		
+		if (!this.inventory.getStackInSlot(0).isEmpty()
+				&& this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) {
+			((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
+				.saveHealth(level, this.inventory.getStackInSlot(0));
+			this.setChanged();
+			if (!level.isClientSide) {
+                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+            }
+			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem()).readHealth(
+					this.inventory.getStackInSlot(0))<=0.0f) {
+				this.inventory.getStackInSlot(0).shrink(1);
+				this.inventory.setStackInSlot(0, new ItemStack(ItemRegistry.DYING_PROTECTOR_HEART.get()));
+			}
+		}
 	}
 	
 	@Override
@@ -98,5 +117,14 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		}
 		return false;
 	}
-
+	
+	public String healthText() {
+		if (this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) {
+			return ((ProtectorHeartItem)this.inventory.getStackInSlot(0)
+					.getItem()).getTextHealth(this.inventory.getStackInSlot(0));
+		} else {
+			return "--/--";
+		}
+		
+	}
 }

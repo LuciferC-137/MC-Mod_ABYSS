@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import wardentools.ModMain;
 import wardentools.GUI.menu.RadianceCatalystMenu;
+import wardentools.blockentity.RadianceCatalystBlockEntity;
 
 public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
@@ -17,8 +18,6 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 			Component.translatable("gui." + ModMain.MOD_ID + ".radiance_catalyst_screen.hover.corrupted");
 	private static final Component PURE =
 			Component.translatable("gui." + ModMain.MOD_ID + ".radiance_catalyst_screen.hover.pure");
-	
-	private static final int purifyTime = 200; // WARNING this is not synched with the block entity
 
 	public RadianceCatalystScreen(RadianceCatalystMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
@@ -145,8 +144,8 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 		
 		// Render purifying bar
 		int bar2Height = 17;
-		int purifyScale = (int)((float)this.menu.getPurifyingTime()/(float)purifyTime * bar2Height);
-		System.out.println("purifyScale : " + purifyScale);
+		int purifyScale = (int)((float)this.menu.getPurifyingTime()
+				/(float)RadianceCatalystBlockEntity.purifyTime * bar2Height);
 		guiGraphics.fill(
 				this.leftPos + 118,
 				this.topPos + 36 + purifyScale,

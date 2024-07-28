@@ -313,7 +313,7 @@ public class BlockRegistry {
 					.noCollission()
 					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
 	
-	public static final RegistryObject<ProtectorInvokerBlock> PROTECTOR_INVOKER = REGISTAR.register("protector_invoker",
+	public static final RegistryObject<Block> PROTECTOR_INVOKER = REGISTAR.register("protector_invoker",
 			 () -> new ProtectorInvokerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEACON)
 					 .strength(5.0f, 15.0f)
 					 .noOcclusion()

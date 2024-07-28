@@ -47,6 +47,7 @@ public class ProtectorEntity extends AbstractGolem {
 	public final AnimationState attackAnimationState = new AnimationState();
 	public final AnimationState earTickle = new AnimationState();
 	public BlockPos invokerPos;
+	public static final double MAX_HEALTH = 550;
 	
 	public ProtectorEntity(EntityType<? extends AbstractGolem> entity, Level level) {
 		super(entity, level);
@@ -67,7 +68,7 @@ public class ProtectorEntity extends AbstractGolem {
 	
 	public static AttributeSupplier.Builder createAttribute(){
 		return Animal.createLivingAttributes()
-				.add(Attributes.MAX_HEALTH, 550D)
+				.add(Attributes.MAX_HEALTH, MAX_HEALTH)
 				.add(Attributes.MOVEMENT_SPEED, 0.2D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 1.0f)
 				.add(Attributes.JUMP_STRENGTH, 1D)
@@ -218,7 +219,6 @@ public class ProtectorEntity extends AbstractGolem {
                 for (int z = -lookRadius; z <= lookRadius; z++) {
                     mutablePos.set(this.blockPosition()).move(x, y, z);
                     if (level.getBlockState(mutablePos).is(BlockRegistry.PROTECTOR_INVOKER.get())) {
-                        System.out.println("Block found at: " + mutablePos.toString());
                         return mutablePos.immutable();
                     }
                 }

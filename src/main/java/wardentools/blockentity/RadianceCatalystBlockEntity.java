@@ -44,14 +44,13 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		}
 	};
 	private int tickFractionner = 0;
-	private double rotationSpeed = 3.0;
 	private final LazyOptional<ItemStackHandler> inventoryOptional = LazyOptional.of(() -> this.inventory);
 	
 	private final CustomEnergyStorage energy = new CustomEnergyStorage(1000, 0, 100, 0); //capacity, maxReceive, maxExtract, defaultEnergy
 	private final LazyOptional<CustomEnergyStorage> energyOptional = LazyOptional.of(() -> this.energy);
 	
 	private int burnTime, maxBurnTime = 0;
-	private final static int purifyTime = 200; // WARNING this is not synched with the screen
+	public final static int purifyTime = 200;
 	private int purifyingTime = 0;
 	
 	private final ContainerData containerData = new ContainerData() {
@@ -143,7 +142,6 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 				if (this.purifyingTime > 0 && this.purifyingTime < purifyTime) {
 					
 					if (!canPurify(this.inventory.getStackInSlot(1))){
-						this.rotationSpeed = 3.0;
 						this.purifyingTime = 0;
 						sendUpdate();
 					} else {
@@ -151,7 +149,6 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 						this.purifyingTime++;
 						if (this.purifyingTime>=purifyTime) {
 							this.purifyingTime = 0;
-							this.rotationSpeed = 3.0;
 							if (this.inventory.getStackInSlot(2).isEmpty()) {
 								this.energy.setEnergy(this.energy.getEnergyStored() -
 										energyCost(this.inventory.getStackInSlot(1)));
@@ -177,7 +174,6 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 						&& (this.inventory.getStackInSlot(2).isEmpty()
 								||ItemStack.isSameItem(this.inventory.getStackInSlot(2),
 										(getPurifiedVersion(this.inventory.getStackInSlot(1)))))){
-					this.rotationSpeed = 6.0;
 					this.purifyingTime++;
 					sendUpdate();
 				} else if (this.tickFractionner%5==1){
@@ -250,6 +246,8 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 			return new ItemStack(ItemRegistry.PROTECTOR_HEART.get());
 		} else if (stack.is(ItemRegistry.CORRUPTED_VESSEL.get())) {
 			return new ItemStack(ItemRegistry.PURE_VESSEL.get());
+		} else if (stack.is(ItemRegistry.DYING_PROTECTOR_HEART.get())) {
+			return new ItemStack(ItemRegistry.PROTECTOR_HEART.get());
 		}
 		return null;
 	}
@@ -261,6 +259,8 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 			return 900;
 		} else if (stack.is(ItemRegistry.CORRUPTED_VESSEL.get())) {
 			return 100;
+		} else if (stack.is(ItemRegistry.DYING_PROTECTOR_HEART.get())) {
+			return 600;
 		}
 		return this.energy.getMaxEnergyStored();
 	}
@@ -293,9 +293,8 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
         return this.energyOptional;
     }
 	
-	public double getRotationSpeed() {
-		return this.rotationSpeed;
+	public int getPurifyingTime() {
+		return this.purifyingTime;
 	}
-	
 	
 }
