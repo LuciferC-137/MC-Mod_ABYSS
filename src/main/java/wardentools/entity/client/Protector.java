@@ -76,6 +76,7 @@ public class Protector extends HierarchicalModel<ProtectorEntity> {
 			animateWalk(ProtectorAnimation.running, limbSwing, limbSwingAmount, 1f, 2.5f);
 		}
 		animate(entity.attackAnimationState, ProtectorAnimation.hit, ageInTicks);
+		//animate(entity.earTickle, ProtectorAnimation.earsTickle, ageInTicks);
 		
 		parts.HEAD().xRot = parts.HEAD().xRot + headPitch * ((float)Math.PI / 180F);
         parts.HEAD().yRot = parts.HEAD().yRot + netHeadYaw * ((float)Math.PI / 180F);

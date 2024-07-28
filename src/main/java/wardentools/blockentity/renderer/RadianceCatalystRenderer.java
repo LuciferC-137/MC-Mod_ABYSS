@@ -50,7 +50,7 @@ public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCat
         } else {
         	float rotation = (float) (relativeGameTime);
         	float rotationRate = 1.0f + (float) ((float)blockEntity.getPurifyingTime()
-        			/(float)RadianceCatalystBlockEntity.purifyTime * 6.0f);
+        			/(float)RadianceCatalystBlockEntity.purifyTime * 3.0f);
         	poseStack.scale(0.8F, 0.8F, 0.8F);
         	poseStack.mulPose(Axis.YP.rotationDegrees(rotation * rotationRate));
         }

@@ -57,6 +57,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITETREE_TRAPDOOR);
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
     	
+    	this.add(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(),
+    			createPotFlowerItemTable(BlockRegistry.WHITE_TORCHFLOWER.get()));
+    	
     	this.dropSelf(BlockRegistry.PROTECTOR_INVOKER.get());
     	   	
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 

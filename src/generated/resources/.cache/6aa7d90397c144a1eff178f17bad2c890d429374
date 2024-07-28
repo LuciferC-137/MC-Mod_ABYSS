@@ -1,4 +1,4 @@
-// 1.20.4	2024-07-20T18:13:03.6245433	Block States: wardentools
+// 1.20.4	2024-07-28T19:05:51.5908674	Block States: wardentools
 0000972ed5f4eea4b55adbb287e61396aac33c3c assets/wardentools/blockstates/blue_bush.json
 786df544494ab109a939a8fc2255998bb62935e4 assets/wardentools/blockstates/darkdirt.json
 34bb67b3f479b2fb38819eced6715b182b76edea assets/wardentools/blockstates/darkgrass_block.json
@@ -17,6 +17,7 @@ f6c0654de0d6f496827cfb8ccdff525d0a4c1bbc assets/wardentools/blockstates/darktree
 f3052013b650de591927032f80a9db55e7da64b8 assets/wardentools/blockstates/darktree_wood.json
 2ec4db5a9ce76777fc02fc610207a8e047a047e2 assets/wardentools/blockstates/dark_grass.json
 251f122db456c0207bedcaebd9d908de1710908e assets/wardentools/blockstates/deepblock.json
+1a61632702ad702d78c90d3245e2103963ebfc03 assets/wardentools/blockstates/potted_white_torchflower.json
 a2aa2f359f25278ebf8429a8104c9da9981236ed assets/wardentools/blockstates/stripped_darktree_log.json
 0f2523273c4ce21426bbaa3a735a153bffea1608 assets/wardentools/blockstates/stripped_darktree_wood.json
 cd5fdb5199928d02d848477f596ff4e0f39904e3 assets/wardentools/blockstates/stripped_whitetree_log.json
@@ -73,6 +74,7 @@ c14dc90dbcb5fc720834278c741e329a3db3a2f8 assets/wardentools/models/block/darktre
 518843593778766545a96be612ede8ddcd059c94 assets/wardentools/models/block/darktree_wood.json
 3c870b1bba111557141fc04f543e1c812f1648e9 assets/wardentools/models/block/dark_grass.json
 992fbe7e5ee76c7ecbbca35f116723b5be828498 assets/wardentools/models/block/deepblock.json
+bbf38487fda97a974cdd74f6e4793a03ea217d1e assets/wardentools/models/block/potted_white_torchflower.json
 9cd47817e5d088260fe6cb0d94a0ec974284701d assets/wardentools/models/block/stripped_darktree_log.json
 aae9eb1fd9e748d40d6878219c105ebf5fecadad assets/wardentools/models/block/stripped_darktree_log_horizontal.json
 522c393683ffab98ec990cf368c7589a5fa2df8e assets/wardentools/models/block/stripped_darktree_wood.json
@@ -119,6 +121,7 @@ e59c8e6d745356ab553878419938c2e9b2633ea5 assets/wardentools/models/item/darktree
 35e3d40442a6e4f1c37a8024d551804d874a8321 assets/wardentools/models/item/darktree_planks.json
 d676ad7b5b2f157b1cb496608c3317f202baa939 assets/wardentools/models/item/darktree_wood.json
 3fec50c47807379a4160eff6e846c982d1966dc2 assets/wardentools/models/item/deepblock.json
+805a5b55f77396fdb34d9224de784ab878beacf4 assets/wardentools/models/item/potted_white_torchflower.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped_whitetree_wood.json
 4b375f1ce4729047f07fd1ca8e18d73af5e6d44f assets/wardentools/models/item/whitetree_leaves.json

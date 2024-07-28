@@ -6,6 +6,8 @@ import com.mojang.logging.LogUtils;
 
 
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -61,7 +63,11 @@ public class ModMain {
 	
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD,
-				MOD_ID, ModSurfaceRules.makeRules());;
+				MOD_ID, ModSurfaceRules.makeRules());
+		event.enqueueWork(()->{
+			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
+					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
+		});
 
     }
 	

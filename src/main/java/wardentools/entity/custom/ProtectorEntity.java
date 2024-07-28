@@ -56,9 +56,9 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 	
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 4.0D, true));
-	    this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 4.0D, 32.0F));
-	    this.goalSelector.addGoal(3, new RerturnToInvoker(this, 3.0D, true));
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 3.0D, true));
+	    this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 3.0D, 32.0F));
+	    this.goalSelector.addGoal(3, new RerturnToInvoker(this, 1.0D, true));
 		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 4f));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
@@ -88,7 +88,7 @@ public class ProtectorEntity extends AbstractGolem {
 		if (this.earTickleAnimation > 0) {
 			this.earTickleAnimation-=1;
 		}
-		if (random.nextInt(100)==1) {
+		if (random.nextInt(200)==1) {
 			this.earTickleAnimation = earTickleDuration;
 		}
 		if (level().isClientSide()) {

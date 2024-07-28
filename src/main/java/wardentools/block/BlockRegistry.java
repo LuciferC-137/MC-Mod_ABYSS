@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.grower.TreeGrower;
@@ -277,10 +278,17 @@ public class BlockRegistry {
 					.lightLevel((state) -> LIGHT_WHITE_VEGETATION)));
 	
 	public static final RegistryObject<Block> WHITE_TORCHFLOWER = REGISTAR.register("white_torchflower",
-			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TORCHFLOWER)
+			() -> new FlowerBlock(MobEffects.LUCK, 5, BlockBehaviour.Properties.ofFullCopy(Blocks.TORCHFLOWER)
 					.noOcclusion()
 					.noCollission()
 					.lightLevel((state) -> LIGHT_WHITE_TREE)));
+	@SuppressWarnings("deprecation")
+	public static final RegistryObject<Block> POTTED_WHITE_TORCHFLOWER = REGISTAR.register("potted_white_torchflower",
+			() -> new FlowerPotBlock(BlockRegistry.WHITE_TORCHFLOWER.get(),
+			BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_ALLIUM)
+			.noOcclusion()
+			.lightLevel((state) -> LIGHT_WHITE_TREE)));
+	
 	
 	public static final RegistryObject<RadianceCatalystBlock> RADIANCE_CATALYST =
 			REGISTAR.register("radiance_catalyst",
