@@ -1,17 +1,22 @@
 package wardentools.blockentity.renderer;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -24,6 +29,11 @@ import wardentools.items.ItemRegistry;
 public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorInvokerBlockEntity> {
 	private final BlockEntityRendererProvider.Context context;
 	private boolean sentParticle = false;
+	private static final float HALF_SQRT_3 = (float)(Math.sqrt(3.0D) / 2.0D);
+	private int time = 0; // In ticks
+	private float previouspTick = 0;
+	private static final int RAY_NUMBER = 5;
+	private static final float RAY_SPEED = 0.2f; // In degrees per tick
 	
 	public ProtectorInvokerRenderer(BlockEntityRendererProvider.Context ctx) {
 		this.context = ctx;
@@ -103,16 +113,44 @@ public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorIn
             }
 	        
             if (stack.is(ItemRegistry.PROTECTOR_HEART.get())) {
-            	if (level.getGameTime()%30 == 0 && !this.sentParticle) {
-    	        	this.sentParticle = true;
-    	        	double offsetX = (level.random.nextDouble() - 0.5) * 0.2;
-    	            double offsetY = (level.random.nextDouble() - 0.5) * 0.2;
-    	            double offsetZ = (level.random.nextDouble() - 0.5) * 0.2;
-    		        level.addParticle(ParticleTypes.END_ROD, true,
-    		        		pos.getX() + 0.5, pos.getY() - offset + 1.0, pos.getZ() + 0.5, offsetX, offsetY, offsetZ);
-    	        } else {
-    	        	this.sentParticle = false;
-    	        }
+            	if (partialTick < this.previouspTick) {
+            		this.time++;
+            	}
+            	RandomSource randomsource = RandomSource.create(432L);
+            	float lengthOfRay = 0.7f + randomsource.nextFloat() * 0.3f;
+            	float widthOfRay = 0.1f + randomsource.nextFloat() * 0.05f;
+            	float f5 = (float)this.time / 20.0f;
+                float f7 = Math.min(f5 > 0.8F ? (f5 - 0.8F) / 0.2F : 0.0F, 1.0F);
+                VertexConsumer vertexconsumer2 = buffer.getBuffer(RenderType.lightning());
+
+                poseStack.pushPose();
+                poseStack.translate(0.5, offset, 0.5);
+
+                for (int i = 0; i < RAY_NUMBER; ++i) {
+                	poseStack.mulPose(Axis.XP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+                	poseStack.mulPose(Axis.YP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+                	poseStack.mulPose(Axis.ZP.rotationDegrees(randomsource.nextFloat() * 360.0F
+                			+ this.time * RAY_SPEED));
+                	poseStack.mulPose(Axis.XP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+                    poseStack.mulPose(Axis.YP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(randomsource.nextFloat() * 360.0F
+                    		+ this.time * RAY_SPEED));
+                    float f3 = lengthOfRay + f7 * lengthOfRay / 4f;
+                    float f4 = widthOfRay + f7 * widthOfRay / 4f;
+                    Matrix4f matrix4f = poseStack.last().pose();
+                    int j = 200;
+                    vertex01(vertexconsumer2, matrix4f, j);
+                    vertex2(vertexconsumer2, matrix4f, f3, f4);
+                    vertex3(vertexconsumer2, matrix4f, f3, f4);
+                    vertex01(vertexconsumer2, matrix4f, j);
+                    vertex3(vertexconsumer2, matrix4f, f3, f4);
+                    vertex4(vertexconsumer2, matrix4f, f3, f4);
+                    vertex01(vertexconsumer2, matrix4f, j);
+                    vertex4(vertexconsumer2, matrix4f, f3, f4);
+                    vertex2(vertexconsumer2, matrix4f, f3, f4);
+                }
+                poseStack.popPose();
+                
             } else {
             	if (level.getGameTime()%25 == 0 && !this.sentParticle) {
     	        	this.sentParticle = true;
@@ -126,7 +164,23 @@ public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorIn
     	        }
             }
         }
-		
+		this.previouspTick = partialTick;
 	}
+	
+	private static void vertex01(VertexConsumer vertexConsumer, Matrix4f mat, int alpha) {
+		vertexConsumer.vertex(mat, 0.0F, 0.0F, 0.0F).color(183, 208, 226, alpha).endVertex();
+	   }
+
+	private static void vertex2(VertexConsumer vertexConsumer, Matrix4f mat, float f1, float f2) {
+		vertexConsumer.vertex(mat, -HALF_SQRT_3 * f2, f1, -0.5F * f2).color(0, 255, 255, 0).endVertex();
+	   }
+
+	private static void vertex3(VertexConsumer vertexConsumer, Matrix4f mat, float f1, float f2) {
+		vertexConsumer.vertex(mat, HALF_SQRT_3 * f2, f1, -0.5F * f2).color(15, 195, 183, 0).endVertex();
+	   }
+
+	private static void vertex4(VertexConsumer vertexConsumer, Matrix4f mat, float f1, float f2) {
+		vertexConsumer.vertex(mat, 0.0F, f1, 1.0F * f2).color(117, 176, 216, 0).endVertex();
+	   }
 
 }
