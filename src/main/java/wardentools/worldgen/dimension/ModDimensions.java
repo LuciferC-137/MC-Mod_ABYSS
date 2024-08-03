@@ -15,7 +15,6 @@ import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate;
-import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -57,25 +56,17 @@ public class ModDimensions {
         HolderGetter<Biome> biomeRegistry = context.lookup(Registries.BIOME);
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
-        
 
-        
-        //To have one biome on the dimension
-        @SuppressWarnings("unused")
-        NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
-                new FixedBiomeSource(biomeRegistry.getOrThrow(ModBiomes.DEEP_FOREST)),
-                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.OVERWORLD));
-        
-        //To have multiple biome on the dimension. Check the datagen website to visualize
-        @SuppressWarnings("unused")
 		NoiseBasedChunkGenerator noiseBasedChunkGenerator = new NoiseBasedChunkGenerator(
                 MultiNoiseBiomeSource.createFromList(
                         new Climate.ParameterList<>(List.of(
-                        		Pair.of(Climate.parameters(0.7F, 0.9F, 0.3F, 0.5F, 0.0F, 0.3F, 0.4F),
+                        		// Temperature(0,1), Humidity(0,1), Continentalness(0,1),
+                        		//Erosion(0,1), Depth(-1,1), Weirdness(0,1), Offset (0,1)
+                        		Pair.of(Climate.parameters(0.5F, 0.6F, 0.3F, 0.5F, 0.0F, 0.3F, 0.0F),
                                         biomeRegistry.getOrThrow(ModBiomes.DEEP_FOREST)),
-                                Pair.of(Climate.parameters(2.0F, 0.1F, 0.7F, 0.2F, -0.5F, 0.5F, 0.6F),
+                                Pair.of(Climate.parameters(0.9F, 0.2F, 0.7F, 0.2F, 0.0F, 0.5F, 0.0F),
                                         biomeRegistry.getOrThrow(ModBiomes.WASTE_LAND)),
-                                Pair.of(Climate.parameters(-0.5F, 0.6F, 0.5F, 0.3F, 0.0F, 0.4F, 0.5F),
+                                Pair.of(Climate.parameters(0.3F, 0.6F, 0.5F, 0.8F, 0.0F, 0.8F, 0.0F),
                                         biomeRegistry.getOrThrow(ModBiomes.WHITE_FOREST))
                         ))),
                 noiseGenSettings.getOrThrow(NoiseGeneratorSettings.OVERWORLD));
@@ -84,7 +75,5 @@ public class ModDimensions {
         LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimensions.ABYSS_DIM_TYPE), noiseBasedChunkGenerator);
 
         context.register(ABYSS_KEY, stem);
-    }
-    
-    
+    }    
 }

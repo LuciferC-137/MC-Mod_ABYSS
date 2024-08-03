@@ -12,6 +12,7 @@ import wardentools.ModMain;
 import wardentools.worldgen.ModBiomeModifiers;
 import wardentools.worldgen.ModPlacedFeatures;
 import wardentools.worldgen.biome.ModBiomes;
+import wardentools.worldgen.carvers.ModConfiguredCarver;
 import wardentools.worldgen.dimension.ModDimensions;
 
 import java.util.Set;
@@ -27,6 +28,7 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
             .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap)
     		.add(Registries.LEVEL_STEM, ModDimensions::bootstrapStem)
     		.add(Registries.BIOME, ModBiomes::bootstrap)
+    		.add(Registries.CONFIGURED_CARVER, ModConfiguredCarver::bootstrap)
     		;
 
     public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

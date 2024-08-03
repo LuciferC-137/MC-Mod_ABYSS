@@ -1,6 +1,9 @@
 {
   "carvers": {
-    "air": "minecraft:cave_extra_underground"
+    "air": [
+      "wardentools:abyss_cave",
+      "minecraft:cave"
+    ]
   },
   "downfall": 0.8,
   "effects": {

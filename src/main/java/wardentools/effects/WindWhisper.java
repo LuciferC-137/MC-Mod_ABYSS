@@ -47,6 +47,7 @@ public class WindWhisper {
 		whispers_en.add("I couldn't imagine that the corruption would also reach the sky itself...");
 		whispers_en.add("No hope. No light. Only infinite nothingness, watched by aimless wardens.");
 		whispers_en.add("I fly in the sky, I dive into caves, I hurl on the Void, and yet, you are more free than I will ever be.");
+		whispers_en.add("Do you think he could perform the reactivation ritual ?");
 
 		whispers_fr.add("Tu es perdu ?");
 		whispers_fr.add("Est-ce que tu entends ça ?");
@@ -76,15 +77,15 @@ public class WindWhisper {
 		whispers_fr.add("Tu pense qu'il sera capable de découvrir ce qui faisait la beauté de ce monde ?");
 		whispers_fr.add("Silence ! Il nous écoute !");
 		whispers_fr.add("Il est donc vrai que tu peux nous entendre dorénavant...");
-		whispers_en.add("Qui sommes nous ? Des sortes de fantômes, j'imagine... Mais nous ne sommes pas différents. Tu l'as déjà vu, n'est-ce pas ? Le Grand Néant ?");
-		whispers_en.add("Avant qu'il ne vienne, ce que nous craignons aujourd'hui le plus était notre plus grand allié...");
-		whispers_en.add("Il a retourné nos protecteurs contre nous... Ils sont devenus aveugle et furieux. Ils ne pouvaient plus entendre la musique. Tout ce qu'ils voulaient entendre, c'était des hurlements.");
-		whispers_en.add("Etions-nous en vie à un moment ? Je ne me souviens plus...");
-		whispers_en.add("Le moindre rayon de soleil n'a pas éclairé le vent depuis si longtemps ici-bas...");
-		whispers_en.add("Je ne pouvais pas imaginer que la corruption gagnerait le ciel lui-même...");
-		whispers_en.add("Pas d'espoir. Pas de lumière. Seulement l'infini Néant, surveillé par des gardiens sans but.");
-		whispers_en.add("Je vole dans le ciel, je plonge dans les cavernes, je rugis dans le Néant et pourtant, pourtant tu es plus libre que je ne le serai jamais.");
-		
+		whispers_fr.add("Qui sommes nous ? Des sortes de fantômes, j'imagine... Mais nous ne sommes pas différents. Tu l'as déjà vu, n'est-ce pas ? Le Grand Néant ?");
+		whispers_fr.add("Avant qu'il ne vienne, ce que nous craignons aujourd'hui le plus était notre plus grand allié...");
+		whispers_fr.add("Il a retourné nos protecteurs contre nous... Ils sont devenus aveugle et furieux. Ils ne pouvaient plus entendre la musique. Tout ce qu'ils voulaient entendre, c'était des hurlements.");
+		whispers_fr.add("Etions-nous en vie à un moment ? Je ne me souviens plus...");
+		whispers_fr.add("Le moindre rayon de soleil n'a pas éclairé le vent depuis si longtemps ici-bas...");
+		whispers_fr.add("Je ne pouvais pas imaginer que la corruption gagnerait le ciel lui-même...");
+		whispers_fr.add("Pas d'espoir. Pas de lumière. Seulement l'infini Néant, surveillé par des gardiens sans but.");
+		whispers_fr.add("Je vole dans le ciel, je plonge dans les cavernes, je rugis dans le Néant et pourtant, pourtant tu es plus libre que je ne le serai jamais.");
+		whispers_fr.add("Tu pense qu'il pourrait réaliser le rituel de réactivation ?");
 	}
 	
 	public WindWhisper(List<String> addWhispers) {

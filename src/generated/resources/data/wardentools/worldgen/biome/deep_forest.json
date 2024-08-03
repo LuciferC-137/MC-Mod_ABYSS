@@ -1,6 +1,9 @@
 {
   "carvers": {
-    "air": "minecraft:cave_extra_underground"
+    "air": [
+      "wardentools:abyss_cave",
+      "minecraft:cave"
+    ]
   },
   "creature_spawn_probability": 0.2,
   "downfall": 0.8,
@@ -22,7 +25,9 @@
     [],
     [],
     [
-      "minecraft:amethyst_geode"
+      "minecraft:amethyst_geode",
+      "minecraft:sculk_patch_deep_dark",
+      "minecraft:sculk_vein"
     ],
     [],
     [],
@@ -66,9 +71,6 @@
       "wardentools:blue_bush",
       "wardentools:tall_dark_grass",
       "wardentools:dark_grass"
-    ],
-    [
-      "minecraft:freeze_top_layer"
     ]
   ],
   "has_precipitation": false,
