@@ -8,6 +8,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraft.resources.ResourceLocation;
 import wardentools.ModMain;
+import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.entity.custom.PaleWandererEntity;
 import wardentools.entity.custom.ProtectorEntity;
@@ -35,6 +36,13 @@ public class ModEntities {
 					()->EntityType.Builder.of(ProtectorEntity::new, MobCategory.CREATURE)
 					.sized(1.5f, 2.5f)
 					.build(new ResourceLocation(ModMain.MOD_ID, "protector").toString()));
+	
+	public static final RegistryObject<EntityType<ContagionIncarnationEntity>> CONTAGION_INCARNATION =
+			ENTITY_TYPES.register("contagion_incarnation",
+					()->EntityType.Builder.of(ContagionIncarnationEntity::new, MobCategory.MONSTER)
+					.sized(4f, 4f)
+					.build(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation").toString())
+					);
 	
 	public static void register(IEventBus eventBus) {
 		ENTITY_TYPES.register(eventBus);

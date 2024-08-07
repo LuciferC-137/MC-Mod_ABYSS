@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
+import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.entity.custom.PaleWandererEntity;
 import wardentools.entity.custom.ProtectorEntity;
@@ -28,6 +29,7 @@ public class CommonModEvents {
 		event.put(ModEntities.DEEPLURKER.get(), DeepLurkerEntity.createAttribute().build());
 		event.put(ModEntities.PALE_WANDERER.get(), PaleWandererEntity.createAttribute().build());
 		event.put(ModEntities.PROTECTOR.get(), ProtectorEntity.createAttribute().build());
+		event.put(ModEntities.CONTAGION_INCARNATION.get(), ContagionIncarnationEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
@@ -46,6 +48,11 @@ public class CommonModEvents {
     			SpawnPlacements.Type.ON_GROUND,
     			Heightmap.Types.WORLD_SURFACE,
     			ProtectorEntity::canSpawn,
+    			SpawnPlacementRegisterEvent.Operation.OR);
+    	event.register(ModEntities.CONTAGION_INCARNATION.get(),
+    			SpawnPlacements.Type.ON_GROUND,
+    			Heightmap.Types.WORLD_SURFACE,
+    			ContagionIncarnationEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     }
 }

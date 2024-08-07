@@ -6,6 +6,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
+import wardentools.entity.client.ContagionIncarnation;
+import wardentools.entity.client.ContagionIncarnationRenderer;
 import wardentools.entity.client.DeepLurker;
 import wardentools.entity.client.DeepLurkerRenderer;
 import wardentools.entity.client.PaleWanderer;
@@ -20,6 +22,7 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.DEEPLURKER.get(), DeepLurkerRenderer::new);
 		event.registerEntityRenderer(ModEntities.PALE_WANDERER.get(), PaleWandererRenderer::new);
 		event.registerEntityRenderer(ModEntities.PROTECTOR.get(), ProtectorRenderer::new);
+		event.registerEntityRenderer(ModEntities.CONTAGION_INCARNATION.get(), ContagionIncarnationRenderer::new);
 	}
 	
 	@SubscribeEvent
@@ -27,5 +30,6 @@ public class ClientModEvents {
 		event.registerLayerDefinition(DeepLurker.LAYER_LOCATION, DeepLurker::createBodyLayer);
 		event.registerLayerDefinition(PaleWanderer.LAYER_LOCATION, PaleWanderer::createBodyLayer);
 		event.registerLayerDefinition(Protector.LAYER_LOCATION, Protector::createBodyLayer);
+		event.registerLayerDefinition(ContagionIncarnation.LAYER_LOCATION, ContagionIncarnation::createBodyLayer);
 	}
 }
