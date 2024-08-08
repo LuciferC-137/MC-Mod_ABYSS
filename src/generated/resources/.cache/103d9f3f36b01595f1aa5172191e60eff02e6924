@@ -1,9 +1,9 @@
-// 1.20.4	2024-08-03T16:33:00.1453119	Registries
+// 1.20.4	2024-08-08T20:04:00.4328083	Registries
 abac8a853616b9d5df1a2882f11937bc2ee60adc data/wardentools/dimension/abyssdim.json
 4f4b6381203d0d69976faf5808dbca980d234b11 data/wardentools/dimension_type/abyssdim_type.json
-3c2c8b02a69977d1149f65b53b10f701ded11875 data/wardentools/worldgen/biome/deep_forest.json
-74353ca74d98cb2ed6ea10857205c310597080dc data/wardentools/worldgen/biome/waste_land.json
-f969c5691ba5ecf3e167eebcc91ea08b5923debf data/wardentools/worldgen/biome/white_forest.json
+e02f1cd4e627b46bc7c40d5280b82b5ae6a874d8 data/wardentools/worldgen/biome/deep_forest.json
+719764434c4c7054bd577af400aa1dec5bbf8e7c data/wardentools/worldgen/biome/waste_land.json
+b0219809f08d0e8d6dff9d757daeec68c2793c9a data/wardentools/worldgen/biome/white_forest.json
 370995d50c9f2463b997a6c96e077573d4267603 data/wardentools/worldgen/configured_carver/abyss_cave.json
 ee1fbc8c0487057aa85d16fce95b0ad537add709 data/wardentools/worldgen/configured_feature/blue_bush.json
 e610de6322d940fe34e0c93e71527c52e78c3a5a data/wardentools/worldgen/configured_feature/darktree.json

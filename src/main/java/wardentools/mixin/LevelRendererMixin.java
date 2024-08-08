@@ -37,21 +37,21 @@ public class LevelRendererMixin {
         ClientLevel level = mc.level;
 		
 		if (level.effects().renderSky(level, levelRenderer.getTicks(),
-				f, pose, cam, matrix, bool, runnable))
-	         return;
+				f, pose, cam, matrix, bool, runnable)) {
+			
+			return;
+		}
 		runnable.run();
-	      if (!bool) {
-	         FogType fogtype = cam.getFluidInCamera();
-	         if (fogtype != FogType.POWDER_SNOW && fogtype != FogType.LAVA) {
-	        	 if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
-	        		 renderAbyssSky(pose);
-	        	 }
-	         }
-	      }
+	    FogType fogtype = cam.getFluidInCamera();
+	    if (fogtype != FogType.POWDER_SNOW && fogtype != FogType.LAVA) {
+	    	if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
+	    		renderAbyssSky(pose);
+	    	}
+	    }
     }
 	
 	private static void renderAbyssSky(PoseStack pose) {
-		RenderSystem.enableBlend();
+		  RenderSystem.enableBlend();
 	      RenderSystem.depthMask(false);
 	      RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 	      RenderSystem.setShaderTexture(0, ABYSS_SKY_LOCATION);
@@ -91,6 +91,7 @@ public class LevelRendererMixin {
 	      }
 	      RenderSystem.depthMask(true);
 	      RenderSystem.disableBlend();
-	      System.out.println("Sky Rendered!");
 	}
+	
+	
 }

@@ -21,6 +21,8 @@ import wardentools.worldgen.ModPlacedFeatures;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
 
 public class ModBiomes {
+	private static final int FOG_COLOR = 0x010d24;
+	private static final int WATER_COLOR = 0x0a4c5b;
 	
 	public static final ResourceKey<Biome> DEEP_FOREST = ResourceKey.create(Registries.BIOME,
             new ResourceLocation(ModMain.MOD_ID, "deep_forest"));
@@ -82,12 +84,12 @@ public class ModBiomes {
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                .waterColor(0x0a4c5b)
-                .waterFogColor(0x296472)
-                .skyColor(0x063D45)
+                .waterColor(WATER_COLOR)
+                .waterFogColor(FOG_COLOR)
+                .skyColor(FOG_COLOR)
                 .grassColorOverride(0x147B75)
                 .foliageColorOverride(0x147B63)
-                .fogColor(0x082127)
+                .fogColor(FOG_COLOR)
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                 //.backgroundMusic(Musics.createGameMusic())
                 .build()).build();
@@ -120,12 +122,12 @@ public class ModBiomes {
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                .waterColor(0x0a4c5b)
-                .waterFogColor(0x296472)
-                .skyColor(0x063D45)
+                .waterColor(WATER_COLOR)
+                .waterFogColor(FOG_COLOR)
+                .skyColor(FOG_COLOR)
                 .grassColorOverride(0x147B75)
                 .foliageColorOverride(0x147B63)
-                .fogColor(0x082127)
+                .fogColor(FOG_COLOR)
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                 //.backgroundMusic(Musics.createGameMusic())
                 .build()).build();
@@ -162,12 +164,12 @@ public class ModBiomes {
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects((new BiomeSpecialEffects.Builder())
-                .waterColor(0x0a4c5b)
-                .waterFogColor(0x296472)
-                .skyColor(0x063D45)
+                .waterColor(WATER_COLOR)
+                .waterFogColor(FOG_COLOR)
+                .skyColor(FOG_COLOR)
                 .grassColorOverride(0x147B75)
                 .foliageColorOverride(0x147B63)
-                .fogColor(0x082127)
+                .fogColor(FOG_COLOR)
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
                 //.backgroundMusic(Musics.createGameMusic())
                 .build()).build();
