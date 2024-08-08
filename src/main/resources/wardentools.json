@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "wardentools.mixin",
+  "mixins": [
+    "LevelRendererMixin"
+  ]
+}

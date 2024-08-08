@@ -8,7 +8,7 @@
   "creature_spawn_probability": 0.2,
   "downfall": 0.8,
   "effects": {
-    "fog_color": 532775,
+    "fog_color": 68900,
     "foliage_color": 1342307,
     "grass_color": 1342325,
     "mood_sound": {
@@ -17,9 +17,9 @@
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
-    "sky_color": 408901,
+    "sky_color": 68900,
     "water_color": 674907,
-    "water_fog_color": 2712690
+    "water_fog_color": 68900
   },
   "features": [
     [],
