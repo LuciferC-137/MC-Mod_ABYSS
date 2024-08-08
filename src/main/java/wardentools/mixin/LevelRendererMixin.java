@@ -25,8 +25,9 @@ import wardentools.worldgen.dimension.ModDimensions;
 
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
+	private static final int BRIGHTNESS = 230; 
 	private static final ResourceLocation ABYSS_SKY_LOCATION
-		= new ResourceLocation(ModMain.MOD_ID, "textures/environment/abyss_sky.png");
+		= new ResourceLocation(ModMain.MOD_ID, "textures/environment/abyss_skyb.png");
 	
 	@Inject(method = "renderSky", at = @org.spongepowered.asm.mixin.injection.At("HEAD"))
 	private void onRenderSky(PoseStack pose, Matrix4f matrix,
@@ -82,10 +83,14 @@ public class LevelRendererMixin {
 
 	         Matrix4f matrix4f = pose.last().pose();
 	         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-	         bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(40, 40, 40, 255).endVertex();
-	         bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 16.0F).color(40, 40, 40, 255).endVertex();
-	         bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(16.0F, 16.0F).color(40, 40, 40, 255).endVertex();
-	         bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(16.0F, 0.0F).color(40, 40, 40, 255).endVertex();
+	         bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F)
+	         	.uv(0.0F, 0.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, 255).endVertex();
+	         bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F)
+	         	.uv(0.0F, 1.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, 255).endVertex();
+	         bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F)
+	         	.uv(1.0F, 1.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, 255).endVertex();
+	         bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F)
+	         	.uv(1.0F, 0.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, 255).endVertex();
 	         tesselator.end();
 	         pose.popPose();
 	      }
