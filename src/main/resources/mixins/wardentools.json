@@ -1,0 +1,6 @@
+{
+  "package": "wardentools.mixin",
+  "mixins": [
+    "LevelRendererMixin"
+  ]
+}

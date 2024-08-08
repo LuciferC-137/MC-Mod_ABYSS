@@ -3,6 +3,7 @@ package wardentools.mixin;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -29,8 +30,7 @@ public class LevelRendererMixin {
 	
 	@Inject(method = "renderSky", at = @org.spongepowered.asm.mixin.injection.At("HEAD"))
 	private void onRenderSky(PoseStack pose, Matrix4f matrix,
-			float f, Camera cam, boolean bool, Runnable runnable) {
-		System.out.println("Mixin functional");
+			float f, Camera cam, boolean bool, Runnable runnable, CallbackInfo ci) {
 		@SuppressWarnings("resource")
 		LevelRenderer levelRenderer = (LevelRenderer) (Object) this;
         Minecraft mc = Minecraft.getInstance();
@@ -45,7 +45,6 @@ public class LevelRendererMixin {
 	         if (fogtype != FogType.POWDER_SNOW && fogtype != FogType.LAVA) {
 	        	 if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
 	        		 renderAbyssSky(pose);
-	        		 System.out.println("Sky Rendered!");
 	        	 }
 	         }
 	      }
@@ -90,9 +89,8 @@ public class LevelRendererMixin {
 	         tesselator.end();
 	         pose.popPose();
 	      }
-
 	      RenderSystem.depthMask(true);
 	      RenderSystem.disableBlend();
-	   
+	      System.out.println("Sky Rendered!");
 	}
 }
