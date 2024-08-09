@@ -23,6 +23,7 @@ import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.items.ItemRegistry;
 import wardentools.loot.WardenLootTableModifier;
+import wardentools.sounds.ModSounds;
 import wardentools.worldgen.biome.ModTerrablender;
 import wardentools.worldgen.biome.surface.ModSurfaceRules;
 import wardentools.worldgen.tree.ModFoliagePlacers;
@@ -49,6 +50,7 @@ public class ModMain {
 		ModEntities.ENTITY_TYPES.register(bus);
 		MenuRegistry.MENU_TYPES.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
+		ModSounds.SOUND_EVENTS.register(bus);
 		
 		ModTerrablender.registerBiomes();
 

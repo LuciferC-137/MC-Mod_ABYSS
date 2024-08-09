@@ -21,7 +21,7 @@ import wardentools.worldgen.ModPlacedFeatures;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
 
 public class ModBiomes {
-	private static final int FOG_COLOR = 0x010d24;
+	private static final int FOG_COLOR = 0x000b1c;
 	private static final int WATER_COLOR = 0x0a4c5b;
 	
 	public static final ResourceKey<Biome> DEEP_FOREST = ResourceKey.create(Registries.BIOME,

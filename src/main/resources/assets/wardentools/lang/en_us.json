@@ -73,11 +73,15 @@
 	"entity.wardentools.deeplurker": "Deep Lurker",
 	"entity.wardentools.pale_wanderer": "Pale Wanderer",
 	"entity.wardentools.protector": "Protector",
+	"entity.wardentools.contagion_incarnation": "Contagion Incarnation",
 	
 	"creativetab.abyss_tab": "Abyss",
 	
 	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "Corrupted material",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",
-	"container.wardentools.radiance_catalyst_block": "Radiance Catalyst"
+	"container.wardentools.radiance_catalyst_block": "Radiance Catalyst",
+	
+	"sounds.wardentools.contagion_incarnation_crawl": "Contagion Incarnation Crawling",
+	"sounds.wardentools.contagion_incarnation_scream": "Contagion Incarnation Screams"
 }

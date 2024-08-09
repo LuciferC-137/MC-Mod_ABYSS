@@ -1,6 +1,7 @@
 package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -19,6 +20,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import wardentools.sounds.ModSounds;
 
 public class ContagionIncarnationEntity extends Monster {
 
@@ -29,10 +32,9 @@ public class ContagionIncarnationEntity extends Monster {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new PanicGoal(this, 3.0D));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 2D));
-		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 4f));
-		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 2D));
+		this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 4f));
+		this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 		
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	    this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
@@ -67,6 +69,23 @@ public class ContagionIncarnationEntity extends Monster {
 	@Override
 	public boolean checkSpawnRules(LevelAccessor p_21686_, MobSpawnType p_21687_) {
     	return true;
+    }
+	
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.CONTAGION_INCARNATION_SCREAM.get();
+    }
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return null;
+    }
+    @Override
+    protected SoundEvent getDeathSound() {
+        return null;
+    }
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState blockIn) {
+        this.playSound(ModSounds.CONTAGION_INCARNATION_CRAWL.get(), 1.0F, 1.0F);
     }
 
 }

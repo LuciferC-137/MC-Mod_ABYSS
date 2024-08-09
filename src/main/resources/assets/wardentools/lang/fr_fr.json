@@ -73,11 +73,15 @@
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",
 	"entity.wardentools.protector": "Protecteur",
+	"entity.wardentools.contagion_incarnation": "Incarnation de la Contagion",
 	
 	"creativetab.abyss_tab": "Abyss",
 	
 	"gui.wardentools.radiance_catalyst_screen": "Cataliseur de Radiance",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "matière corrompue",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "matière purifiée",
-	"container.wardentools.radiance_catalyst_block": "Cataliseur de Radiance"
+	"container.wardentools.radiance_catalyst_block": "Cataliseur de Radiance",
+	
+	"sounds.wardentools.contagion_incarnation_crawl": "L'Incarnation de la Contagion rampe",
+	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle"
 }

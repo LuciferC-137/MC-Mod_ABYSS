@@ -1,0 +1,14 @@
+{
+	"contagion_incarnation_scream": {
+		"subtitles": "sounds.wardentools.contagion_incarnation_scream",
+		"sounds": [
+			"wardentools:contagion_incarnation_scream"
+		]
+	},
+	"contagion_incarnation_crawl": {
+			"subtitles": "sounds.wardentools.contagion_incarnation_crawl",
+			"sounds": [
+				"wardentools:contagion_incarnation_crawl"
+			]
+		}
+}
