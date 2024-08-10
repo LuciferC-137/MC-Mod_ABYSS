@@ -781,8 +781,17 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	public void setupAnim(ContagionIncarnationEntity entity, float limbSwing,
 			float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		animateWalk(ContagionIncarnationAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
+		if (!entity.isInWaterOrBubble() && !entity.isSprinting()) {
+			animateWalk(ContagionIncarnationAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
+		} else {
+			animateWalk(ContagionIncarnationAnimation.crawling, limbSwing, limbSwingAmount, 1f, 2.5f);
+		}
+		
 		animate(entity.dyingAnimationState, ContagionIncarnationAnimation.death, ageInTicks);
+		animate(entity.idleAmbient, ContagionIncarnationAnimation.arm_ambient, ageInTicks);
+		animate(entity.idleAmbient, ContagionIncarnationAnimation.mane_and_head_ambient, ageInTicks);
+		animate(entity.ambient, ContagionIncarnationAnimation.leg_spasm, ageInTicks);
+		
 	}
 
 	@Override

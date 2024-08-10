@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -34,8 +35,16 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 						MultiBufferSource pBuffer, int pPackedLight) {
 
 		pMatrixStack.scale(2f, 2f, 2f);
+		int blockLight = (pPackedLight >> 4) & 0xF;
+		int skyLight = (pPackedLight >> 20) & 0xF;
+		float reductionFactor = ((float)ContagionIncarnationEntity.DEATH_DURATION - (float)pEntity.contagionIncarnationDeathTime)
+		                        / (float)ContagionIncarnationEntity.DEATH_DURATION;
+		int decreasingBlockLight = (int)(blockLight * reductionFactor);
+		int decreasingSkyLight = (int)(skyLight * reductionFactor);
+		int decreasingLight = LightTexture.pack(decreasingSkyLight, decreasingBlockLight);
 
-		super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
+		super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, decreasingLight);
+		
 		if (pEntity.contagionIncarnationDeathTime > 0) {
 	         float f5 = ((float)pEntity.contagionIncarnationDeathTime + pPartialTicks) / 200.0F;
 	         float f7 = Math.min(f5 > 0.8F ? (f5 - 0.8F) / 0.2F : 0.0F, 1.0F);

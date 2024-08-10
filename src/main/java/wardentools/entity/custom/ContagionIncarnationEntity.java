@@ -33,9 +33,13 @@ import wardentools.sounds.ModSounds;
 
 public class ContagionIncarnationEntity extends Monster implements Enemy {
 	private final ServerBossEvent bossEvent;
+	public static final int CHANCE_OF_SCREAM_ON_HIT = 4;
 	public static final int DEATH_DURATION = 200;
 	public int contagionIncarnationDeathTime = 0;
 	public final AnimationState dyingAnimationState = new AnimationState();
+	public final AnimationState ambient = new AnimationState();
+	public final AnimationState idleAmbient = new AnimationState();
+	public final AnimationState sprint = new AnimationState();
 
 	public ContagionIncarnationEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
@@ -96,6 +100,9 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
 	public void tick() {
 		if (level().isClientSide()) {
 			this.dyingAnimationState.animateWhen(this.contagionIncarnationDeathTime > 0, this.tickCount);
+			this.idleAmbient.animateWhen(!this.isSprinting() && !this.isDeadOrDying(), this.tickCount);
+			this.ambient.animateWhen(!this.walkAnimation.isMoving() && !this.isDeadOrDying(), this.tickCount);
+			this.sprint.animateWhen(this.isSprinting(), this.tickCount);
 		}
 		super.tick();
 	}
@@ -114,9 +121,14 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
     protected SoundEvent getAmbientSound() {
         return ModSounds.CONTAGION_INCARNATION_AMBIENT.get();
     }
-    @Override
+
+    @SuppressWarnings("resource")
+	@Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-    	return ModSounds.CONTAGION_INCARNATION_SCREAM.get();
+    	if (level().random.nextInt(CHANCE_OF_SCREAM_ON_HIT)==0) {
+    		return ModSounds.CONTAGION_INCARNATION_SCREAM.get();
+    	}
+    	return null;
     }
     @Override
     protected SoundEvent getDeathSound() {
@@ -140,7 +152,6 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
            this.level().broadcastEntityEvent(this, (byte)60);
            this.remove(Entity.RemovalReason.KILLED);
         }
-
      }
     
     @SuppressWarnings("resource")
