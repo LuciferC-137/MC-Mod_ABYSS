@@ -258,9 +258,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r9 = SUBSECTION_6_1.addOrReplaceChild("cube_r9", CubeListBuilder.create().texOffs(13, 101).addBox(-0.8F, -9.0F, -1.5F, 2.0F, 11.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.8F, 5.5904F, -0.2868F, 1.4835F, 0.1309F, 1.309F));
 
-		PartDefinition SECTION_7 = SECTION_6.addOrReplaceChild("SECTION_7", CubeListBuilder.create(), PartPose.offset(-12.2229F, 9.2223F, 11.6118F));
+		PartDefinition SECTION_7 = SECTION_6.addOrReplaceChild("SECTION_7", CubeListBuilder.create(), PartPose.offset(0.7771F, 4.2223F, 1.6118F));
 
-		PartDefinition SUBSECTION_7_1 = SECTION_7.addOrReplaceChild("SUBSECTION_7_1", CubeListBuilder.create(), PartPose.offset(12.2229F, -9.0223F, -6.3118F));
+		PartDefinition SUBSECTION_7_1 = SECTION_7.addOrReplaceChild("SUBSECTION_7_1", CubeListBuilder.create(), PartPose.offset(-0.7771F, -4.0223F, 3.6882F));
 
 		PartDefinition cube_r10 = SUBSECTION_7_1.addOrReplaceChild("cube_r10", CubeListBuilder.create().texOffs(46, 26).addBox(0.0F, -2.5F, -1.5F, 0.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.0472F, 0.0F, 0.0F));
 
@@ -280,7 +280,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r18 = SUBSECTION_7_1.addOrReplaceChild("cube_r18", CubeListBuilder.create().texOffs(44, 11).addBox(-2.0F, -1.0F, -3.0F, 4.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.5904F, -0.0868F, 0.1134F, 0.0F, 0.0F));
 
-		PartDefinition SUBSECTION_7_2 = SECTION_7.addOrReplaceChild("SUBSECTION_7_2", CubeListBuilder.create(), PartPose.offset(12.2229F, -9.2223F, 0.0882F));
+		PartDefinition SUBSECTION_7_2 = SECTION_7.addOrReplaceChild("SUBSECTION_7_2", CubeListBuilder.create(), PartPose.offset(-0.7771F, -4.2223F, 10.0882F));
 
 		PartDefinition cube_r19 = SUBSECTION_7_2.addOrReplaceChild("cube_r19", CubeListBuilder.create().texOffs(28, 34).addBox(0.0F, -1.5F, -1.5F, 0.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.1781F, 0.0F, 0.0F));
 
@@ -300,7 +300,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r27 = SUBSECTION_7_2.addOrReplaceChild("cube_r27", CubeListBuilder.create().texOffs(103, 13).addBox(0.5F, -1.0F, -3.4F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.5F, 7.3404F, -0.2868F, 0.1745F, 0.0F, 0.0F));
 
-		PartDefinition LEG_LEFT_3 = SECTION_7.addOrReplaceChild("LEG_LEFT_3", CubeListBuilder.create(), PartPose.offset(17.4457F, -5.0F, -3.0F));
+		PartDefinition LEG_LEFT_3 = SECTION_7.addOrReplaceChild("LEG_LEFT_3", CubeListBuilder.create(), PartPose.offset(4.4457F, 0.0F, 7.0F));
 
 		PartDefinition BASE_L_3 = LEG_LEFT_3.addOrReplaceChild("BASE_L_3", CubeListBuilder.create(), PartPose.offset(6.197F, -2.4777F, 1.6996F));
 
@@ -326,7 +326,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r36 = FEET_L_3.addOrReplaceChild("cube_r36", CubeListBuilder.create().texOffs(57, 80).addBox(-0.5F, -1.0F, -1.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.1F, 0.0F, -0.5F, 0.3927F, -0.1745F, -0.3054F));
 
-		PartDefinition LEG_RIGHT_3 = SECTION_7.addOrReplaceChild("LEG_RIGHT_3", CubeListBuilder.create(), PartPose.offset(8.0F, -5.0F, -3.0F));
+		PartDefinition LEG_RIGHT_3 = SECTION_7.addOrReplaceChild("LEG_RIGHT_3", CubeListBuilder.create(), PartPose.offset(-5.0F, 0.0F, 7.0F));
 
 		PartDefinition BASE_R_3 = LEG_RIGHT_3.addOrReplaceChild("BASE_R_3", CubeListBuilder.create(), PartPose.offset(-7.197F, -2.4777F, 1.6996F));
 
@@ -352,9 +352,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r45 = FEET_R_3.addOrReplaceChild("cube_r45", CubeListBuilder.create().texOffs(54, 77).addBox(-0.5F, -1.0F, -1.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.1F, 0.75F, 0.5F, 0.3927F, 0.1745F, 0.3054F));
 
-		PartDefinition SECTION_8 = SECTION_7.addOrReplaceChild("SECTION_8", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 12.6F));
+		PartDefinition SECTION_8 = SECTION_7.addOrReplaceChild("SECTION_8", CubeListBuilder.create(), PartPose.offset(-0.5F, 0.0F, 12.6F));
 
-		PartDefinition SUBSECTION_8_1 = SECTION_8.addOrReplaceChild("SUBSECTION_8_1", CubeListBuilder.create(), PartPose.offset(12.2229F, -8.9223F, -7.1118F));
+		PartDefinition SUBSECTION_8_1 = SECTION_8.addOrReplaceChild("SUBSECTION_8_1", CubeListBuilder.create(), PartPose.offset(-0.2771F, -3.9223F, 2.8882F));
 
 		PartDefinition cube_r46 = SUBSECTION_8_1.addOrReplaceChild("cube_r46", CubeListBuilder.create().texOffs(27, 6).addBox(0.0F, -3.5F, -1.5F, 0.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.0472F, 0.0F, 0.0F));
 
@@ -374,7 +374,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r54 = SUBSECTION_8_1.addOrReplaceChild("cube_r54", CubeListBuilder.create().texOffs(15, 0).addBox(-2.0F, -1.0F, -4.0F, 4.0F, 2.0F, 7.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.4904F, 0.8132F, 0.1134F, 0.0F, 0.0F));
 
-		PartDefinition SUBSECTION_8_2 = SECTION_8.addOrReplaceChild("SUBSECTION_8_2", CubeListBuilder.create(), PartPose.offset(10.7229F, -1.8818F, -0.0986F));
+		PartDefinition SUBSECTION_8_2 = SECTION_8.addOrReplaceChild("SUBSECTION_8_2", CubeListBuilder.create(), PartPose.offset(-1.7771F, 3.1182F, 9.9014F));
 
 		PartDefinition cube_r55 = SUBSECTION_8_2.addOrReplaceChild("cube_r55", CubeListBuilder.create().texOffs(103, 21).addBox(0.5F, -1.0F, -3.4F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.1745F, 0.0F, 0.0F));
 
@@ -394,7 +394,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r63 = SUBSECTION_8_2.addOrReplaceChild("cube_r63", CubeListBuilder.create().texOffs(70, 89).addBox(-1.0F, -1.5F, -5.0F, 2.0F, 3.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(4.7598F, -5.1626F, 1.6F, 0.0F, -0.1745F, -0.6981F));
 
-		PartDefinition LEG_LEFT_4 = SECTION_8.addOrReplaceChild("LEG_LEFT_4", CubeListBuilder.create(), PartPose.offset(17.4457F, -5.0F, -3.0F));
+		PartDefinition LEG_LEFT_4 = SECTION_8.addOrReplaceChild("LEG_LEFT_4", CubeListBuilder.create(), PartPose.offset(4.9457F, 0.0F, 7.0F));
 
 		PartDefinition BASE_L_4 = LEG_LEFT_4.addOrReplaceChild("BASE_L_4", CubeListBuilder.create(), PartPose.offset(6.197F, -2.4777F, 1.6996F));
 
@@ -420,7 +420,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r72 = FEET_L_4.addOrReplaceChild("cube_r72", CubeListBuilder.create().texOffs(0, 78).addBox(-0.5F, -1.0F, -1.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.1F, 1.0F, 0.5F, 0.3927F, -0.1745F, -0.3054F));
 
-		PartDefinition LEG_RIGHT_4 = SECTION_8.addOrReplaceChild("LEG_RIGHT_4", CubeListBuilder.create(), PartPose.offset(7.0F, -5.0F, -3.0F));
+		PartDefinition LEG_RIGHT_4 = SECTION_8.addOrReplaceChild("LEG_RIGHT_4", CubeListBuilder.create(), PartPose.offset(-5.5F, 0.0F, 7.0F));
 
 		PartDefinition BASE_R_4 = LEG_RIGHT_4.addOrReplaceChild("BASE_R_4", CubeListBuilder.create(), PartPose.offset(-6.197F, -2.4777F, 1.6996F));
 
@@ -446,9 +446,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r81 = FEET_R_4.addOrReplaceChild("cube_r81", CubeListBuilder.create().texOffs(6, 73).addBox(-0.5F, -1.0F, -1.0F, 1.0F, 3.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.1F, 0.5F, 0.25F, 0.3927F, 0.1745F, 0.3054F));
 
-		PartDefinition SECTION_9 = SECTION_8.addOrReplaceChild("SECTION_9", CubeListBuilder.create(), PartPose.offset(12.2229F, -8.1223F, 5.4882F));
+		PartDefinition SECTION_9 = SECTION_8.addOrReplaceChild("SECTION_9", CubeListBuilder.create(), PartPose.offset(-0.2771F, -0.1223F, 12.4882F));
 
-		PartDefinition SUBSECTION_9_1 = SECTION_9.addOrReplaceChild("SUBSECTION_9_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_9_1 = SECTION_9.addOrReplaceChild("SUBSECTION_9_1", CubeListBuilder.create(), PartPose.offset(0.0F, -3.0F, 3.0F));
 
 		PartDefinition cube_r82 = SUBSECTION_9_1.addOrReplaceChild("cube_r82", CubeListBuilder.create().texOffs(0, 43).addBox(0.0F, -2.5F, -1.5F, 0.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.1345F, 0.0F, 0.0F));
 
@@ -470,7 +470,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition SECTION_10 = SECTION_9.addOrReplaceChild("SECTION_10", CubeListBuilder.create(), PartPose.offset(0.0F, 0.2F, 6.0F));
 
-		PartDefinition SUBSECTION_10_1 = SECTION_10.addOrReplaceChild("SUBSECTION_10_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_10_1 = SECTION_10.addOrReplaceChild("SUBSECTION_10_1", CubeListBuilder.create(), PartPose.offset(0.0F, -3.0F, 3.0F));
 
 		PartDefinition cube_r91 = SUBSECTION_10_1.addOrReplaceChild("cube_r91", CubeListBuilder.create().texOffs(69, 28).addBox(0.0F, -2.5F, -1.5F, 0.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.0472F, 0.0F, 0.0F));
 
@@ -492,7 +492,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition SECTION_11 = SECTION_10.addOrReplaceChild("SECTION_11", CubeListBuilder.create(), PartPose.offset(0.0F, 0.4F, 6.0F));
 
-		PartDefinition SUBSECTION_11_1 = SECTION_11.addOrReplaceChild("SUBSECTION_11_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_11_1 = SECTION_11.addOrReplaceChild("SUBSECTION_11_1", CubeListBuilder.create(), PartPose.offset(0.0F, -3.0F, 3.0F));
 
 		PartDefinition cube_r100 = SUBSECTION_11_1.addOrReplaceChild("cube_r100", CubeListBuilder.create().texOffs(38, 34).addBox(0.0F, -2.5F, -1.5F, 0.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.2217F, 0.0F, 0.0F));
 
@@ -512,9 +512,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r108 = SUBSECTION_11_1.addOrReplaceChild("cube_r108", CubeListBuilder.create().texOffs(30, 18).addBox(-2.0F, -1.0F, -3.0F, 4.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.2904F, -0.3868F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition SECTION_12 = SECTION_11.addOrReplaceChild("SECTION_12", CubeListBuilder.create(), PartPose.offset(0.0F, 0.4F, 5.5F));
+		PartDefinition SECTION_12 = SECTION_11.addOrReplaceChild("SECTION_12", CubeListBuilder.create(), PartPose.offset(-0.25F, -0.6F, 5.5F));
 
-		PartDefinition SUBSECTION_12_1 = SECTION_12.addOrReplaceChild("SUBSECTION_12_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_12_1 = SECTION_12.addOrReplaceChild("SUBSECTION_12_1", CubeListBuilder.create(), PartPose.offset(0.25F, -2.0F, 3.0F));
 
 		PartDefinition cube_r109 = SUBSECTION_12_1.addOrReplaceChild("cube_r109", CubeListBuilder.create().texOffs(0, 33).addBox(0.0F, -2.5F, -1.5F, 0.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.2217F, 0.0F, 0.0F));
 
@@ -534,9 +534,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r117 = SUBSECTION_12_1.addOrReplaceChild("cube_r117", CubeListBuilder.create().texOffs(58, 69).addBox(-1.0F, -1.0F, -3.0F, 3.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.6F, 0.3904F, -0.2868F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition SECTION_13 = SECTION_12.addOrReplaceChild("SECTION_13", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 5.8F));
+		PartDefinition SECTION_13 = SECTION_12.addOrReplaceChild("SECTION_13", CubeListBuilder.create(), PartPose.offset(0.25F, 0.0F, 5.8F));
 
-		PartDefinition SUBSECTION_13_1 = SECTION_13.addOrReplaceChild("SUBSECTION_13_1", CubeListBuilder.create(), PartPose.offset(1.7F, 3.4904F, -0.2868F));
+		PartDefinition SUBSECTION_13_1 = SECTION_13.addOrReplaceChild("SUBSECTION_13_1", CubeListBuilder.create(), PartPose.offset(1.7F, 1.4904F, 2.7132F));
 
 		PartDefinition cube_r118 = SUBSECTION_13_1.addOrReplaceChild("cube_r118", CubeListBuilder.create().texOffs(92, 62).addBox(-1.5F, -1.0F, -3.0F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, -0.5672F));
 
@@ -556,9 +556,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r126 = SUBSECTION_13_1.addOrReplaceChild("cube_r126", CubeListBuilder.create().texOffs(60, 39).addBox(0.0F, -2.5F, -1.5F, 0.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.7F, -3.4904F, 0.2868F, -1.0472F, 0.0F, 0.0F));
 
-		PartDefinition SECTION_14 = SECTION_13.addOrReplaceChild("SECTION_14", CubeListBuilder.create(), PartPose.offset(0.0F, 0.2F, 5.2F));
+		PartDefinition SECTION_14 = SECTION_13.addOrReplaceChild("SECTION_14", CubeListBuilder.create(), PartPose.offset(0.0F, 0.2F, 6.2F));
 
-		PartDefinition SUBSECTION_14_1 = SECTION_14.addOrReplaceChild("SUBSECTION_14_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_14_1 = SECTION_14.addOrReplaceChild("SUBSECTION_14_1", CubeListBuilder.create(), PartPose.offset(0.0F, -2.0F, 2.0F));
 
 		PartDefinition cube_r127 = SUBSECTION_14_1.addOrReplaceChild("cube_r127", CubeListBuilder.create().texOffs(43, 7).addBox(0.0F, -2.5F, -1.5F, 0.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.2217F, 0.0F, 0.0F));
 
@@ -578,9 +578,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r135 = SUBSECTION_14_1.addOrReplaceChild("cube_r135", CubeListBuilder.create().texOffs(81, 25).addBox(-1.0F, -1.0F, -3.0F, 3.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.6F, 0.1904F, 0.1132F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition SECTION_15 = SECTION_14.addOrReplaceChild("SECTION_15", CubeListBuilder.create(), PartPose.offset(0.0F, 0.5F, 5.3F));
+		PartDefinition SECTION_15 = SECTION_14.addOrReplaceChild("SECTION_15", CubeListBuilder.create(), PartPose.offset(0.0F, -0.5F, 5.3F));
 
-		PartDefinition SUBSECTION_15_1 = SECTION_15.addOrReplaceChild("SUBSECTION_15_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_15_1 = SECTION_15.addOrReplaceChild("SUBSECTION_15_1", CubeListBuilder.create(), PartPose.offset(0.0F, -1.0F, 2.0F));
 
 		PartDefinition cube_r136 = SUBSECTION_15_1.addOrReplaceChild("cube_r136", CubeListBuilder.create().texOffs(12, 28).addBox(0.0F, -1.5F, -1.5F, 0.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.2217F, 0.0F, 0.0F));
 
@@ -596,9 +596,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r142 = SUBSECTION_15_1.addOrReplaceChild("cube_r142", CubeListBuilder.create().texOffs(106, 105).addBox(0.0F, -1.0F, -3.0F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.2904F, 0.5132F, -0.0873F, 0.0F, 0.0F));
 
-		PartDefinition SECTION_16 = SECTION_15.addOrReplaceChild("SECTION_16", CubeListBuilder.create(), PartPose.offset(0.0F, -0.7096F, 5.5132F));
+		PartDefinition SECTION_16 = SECTION_15.addOrReplaceChild("SECTION_16", CubeListBuilder.create(), PartPose.offset(0.0F, 0.2904F, 5.5132F));
 
-		PartDefinition SUBSECTION_16_1 = SECTION_16.addOrReplaceChild("SUBSECTION_16_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_16_1 = SECTION_16.addOrReplaceChild("SUBSECTION_16_1", CubeListBuilder.create(), PartPose.offset(0.0F, -2.0F, 2.0F));
 
 		PartDefinition cube_r143 = SUBSECTION_16_1.addOrReplaceChild("cube_r143", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, 1.0F, -3.0F, 2.0F, 0.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.0873F, 0.0F, 0.0F));
 
@@ -612,9 +612,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r148 = SUBSECTION_16_1.addOrReplaceChild("cube_r148", CubeListBuilder.create().texOffs(112, 66).addBox(-1.5F, -1.0F, -3.0F, 2.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.1F, 2.5F, 0.5F, -0.1309F, 0.0F, 0.8727F));
 
-		PartDefinition SECTION_17 = SECTION_16.addOrReplaceChild("SECTION_17", CubeListBuilder.create(), PartPose.offset(0.0F, 1.5278F, 5.2689F));
+		PartDefinition SECTION_17 = SECTION_16.addOrReplaceChild("SECTION_17", CubeListBuilder.create(), PartPose.offset(0.0F, 0.5278F, 5.2689F));
 
-		PartDefinition SUBSECTION_17_1 = SECTION_17.addOrReplaceChild("SUBSECTION_17_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_17_1 = SECTION_17.addOrReplaceChild("SUBSECTION_17_1", CubeListBuilder.create(), PartPose.offset(0.0F, -1.0F, 2.0F));
 
 		PartDefinition cube_r149 = SUBSECTION_17_1.addOrReplaceChild("cube_r149", CubeListBuilder.create().texOffs(7, 11).addBox(0.0F, -1.5F, -1.0F, 0.0F, 3.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.9599F, 0.0F, 0.0F));
 
@@ -622,7 +622,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition SECTION_18 = SECTION_17.addOrReplaceChild("SECTION_18", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 5.6F));
 
-		PartDefinition SUBSECTION_18_1 = SECTION_18.addOrReplaceChild("SUBSECTION_18_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition SUBSECTION_18_1 = SECTION_18.addOrReplaceChild("SUBSECTION_18_1", CubeListBuilder.create(), PartPose.offset(0.0F, -1.0F, 2.0F));
 
 		PartDefinition cube_r151 = SUBSECTION_18_1.addOrReplaceChild("cube_r151", CubeListBuilder.create().texOffs(15, 7).addBox(0.0F, -0.5F, -1.0F, 0.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -1.0472F, 0.0F, 0.0F));
 
@@ -634,9 +634,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r155 = SUBSECTION_18_1.addOrReplaceChild("cube_r155", CubeListBuilder.create().texOffs(20, 93).addBox(-0.5F, -0.5F, -3.0F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.6722F, 0.6311F, -0.0873F, 0.0873F, 0.7854F));
 
-		PartDefinition END = SECTION_18.addOrReplaceChild("END", CubeListBuilder.create(), PartPose.offset(0.0F, 0.9722F, 5.5311F));
+		PartDefinition END = SECTION_18.addOrReplaceChild("END", CubeListBuilder.create(), PartPose.offset(0.0F, -0.0278F, 4.5311F));
 
-		PartDefinition cube_r156 = END.addOrReplaceChild("cube_r156", CubeListBuilder.create().texOffs(65, 78).addBox(-0.5F, -0.5F, -3.0F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.7854F));
+		PartDefinition cube_r156 = END.addOrReplaceChild("cube_r156", CubeListBuilder.create().texOffs(65, 78).addBox(-0.5F, -0.5F, -3.0F, 1.0F, 1.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 3.0F, 0.0F, 0.0F, 0.7854F));
 
 		PartDefinition FRONT_BODY = FULL.addOrReplaceChild("FRONT_BODY", CubeListBuilder.create(), PartPose.offset(0.0F, -9.0F, 1.0F));
 
@@ -724,25 +724,25 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition ARM_RIGHT = TORSO.addOrReplaceChild("ARM_RIGHT", CubeListBuilder.create(), PartPose.offset(-4.9F, -14.5F, -6.0F));
 
-		PartDefinition ARMBASE_R = ARM_RIGHT.addOrReplaceChild("ARMBASE_R", CubeListBuilder.create(), PartPose.offset(-3.0938F, 1.4372F, 1.75F));
+		PartDefinition ARMBASE_R = ARM_RIGHT.addOrReplaceChild("ARMBASE_R", CubeListBuilder.create(), PartPose.offset(-0.0938F, 1.4372F, 1.75F));
 
-		PartDefinition cube_r196 = ARMBASE_R.addOrReplaceChild("cube_r196", CubeListBuilder.create().texOffs(128, 71).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.1309F, -0.2182F));
+		PartDefinition cube_r196 = ARMBASE_R.addOrReplaceChild("cube_r196", CubeListBuilder.create().texOffs(128, 71).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.0F, 0.0F, 0.0F, 0.0F, -0.1309F, -0.2182F));
 
-		PartDefinition cube_r197 = ARMBASE_R.addOrReplaceChild("cube_r197", CubeListBuilder.create().texOffs(44, 53).addBox(-2.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.4928F, 0.6192F, -0.25F, 0.0F, 0.0F, 0.0873F));
+		PartDefinition cube_r197 = ARMBASE_R.addOrReplaceChild("cube_r197", CubeListBuilder.create().texOffs(44, 53).addBox(-2.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.5072F, 0.6192F, -0.25F, 0.0F, 0.0F, 0.0873F));
 
-		PartDefinition cube_r198 = ARMBASE_R.addOrReplaceChild("cube_r198", CubeListBuilder.create().texOffs(56, 31).addBox(-1.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5062F, -0.5372F, -0.25F, 0.0F, 0.0F, -0.3927F));
+		PartDefinition cube_r198 = ARMBASE_R.addOrReplaceChild("cube_r198", CubeListBuilder.create().texOffs(56, 31).addBox(-1.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.5062F, -0.5372F, -0.25F, 0.0F, 0.0F, -0.3927F));
 
-		PartDefinition cube_r199 = ARMBASE_R.addOrReplaceChild("cube_r199", CubeListBuilder.create().texOffs(130, 4).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -0.5F, 0.0F, 0.0873F, -0.2182F));
+		PartDefinition cube_r199 = ARMBASE_R.addOrReplaceChild("cube_r199", CubeListBuilder.create().texOffs(130, 4).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.0F, 0.0F, -0.5F, 0.0F, 0.0873F, -0.2182F));
 
-		PartDefinition cube_r200 = ARMBASE_R.addOrReplaceChild("cube_r200", CubeListBuilder.create().texOffs(132, 89).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.6F, 1.9F, -0.3F, 0.0F, 0.0F, -0.3054F));
+		PartDefinition cube_r200 = ARMBASE_R.addOrReplaceChild("cube_r200", CubeListBuilder.create().texOffs(132, 89).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-12.6F, 1.9F, -0.3F, 0.0F, 0.0F, -0.3054F));
 
-		PartDefinition cube_r201 = ARMBASE_R.addOrReplaceChild("cube_r201", CubeListBuilder.create().texOffs(134, 0).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.6F, 2.3F, -0.3F, 0.0F, 0.0F, -0.1309F));
+		PartDefinition cube_r201 = ARMBASE_R.addOrReplaceChild("cube_r201", CubeListBuilder.create().texOffs(134, 0).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-12.6F, 2.3F, -0.3F, 0.0F, 0.0F, -0.1309F));
 
-		PartDefinition cube_r202 = ARMBASE_R.addOrReplaceChild("cube_r202", CubeListBuilder.create().texOffs(120, 33).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.9F, 1.3F, -0.3F, 0.0F, 0.0F, -0.3054F));
+		PartDefinition cube_r202 = ARMBASE_R.addOrReplaceChild("cube_r202", CubeListBuilder.create().texOffs(120, 33).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-7.9F, 1.3F, -0.3F, 0.0F, 0.0F, -0.3054F));
 
-		PartDefinition cube_r203 = ARMBASE_R.addOrReplaceChild("cube_r203", CubeListBuilder.create().texOffs(122, 57).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.9F, 0.9F, -0.3F, 0.0F, 0.0F, -0.1309F));
+		PartDefinition cube_r203 = ARMBASE_R.addOrReplaceChild("cube_r203", CubeListBuilder.create().texOffs(122, 57).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-7.9F, 0.9F, -0.3F, 0.0F, 0.0F, -0.1309F));
 
-		PartDefinition FOREARM_R = ARMBASE_R.addOrReplaceChild("FOREARM_R", CubeListBuilder.create(), PartPose.offset(-12.7098F, 2.4454F, -0.3205F));
+		PartDefinition FOREARM_R = ARMBASE_R.addOrReplaceChild("FOREARM_R", CubeListBuilder.create(), PartPose.offset(-15.7098F, 2.4454F, -0.3205F));
 
 		PartDefinition cube_r204 = FOREARM_R.addOrReplaceChild("cube_r204", CubeListBuilder.create().texOffs(155, 120).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0792F, 0.3056F, 0.0205F, -0.48F, 0.0F, -0.3054F));
 
@@ -752,45 +752,45 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r206 = HAND_R.addOrReplaceChild("cube_r206", CubeListBuilder.create().texOffs(49, 43).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.2182F, 0.0F, 0.1745F));
 
-		PartDefinition FINGER_R_4 = HAND_R.addOrReplaceChild("FINGER_R_4", CubeListBuilder.create(), PartPose.offset(2.3847F, 1.64F, -3.9627F));
+		PartDefinition FINGER_R_4 = HAND_R.addOrReplaceChild("FINGER_R_4", CubeListBuilder.create(), PartPose.offset(0.6347F, 0.89F, -0.2127F));
 
-		PartDefinition cube_r207 = FINGER_R_4.addOrReplaceChild("cube_r207", CubeListBuilder.create().texOffs(22, 45).addBox(-0.5F, -0.5F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.2693F, -0.5436F, 2.6591F, 0.4363F, -0.7854F, 0.0F));
+		PartDefinition cube_r207 = FINGER_R_4.addOrReplaceChild("cube_r207", CubeListBuilder.create().texOffs(22, 45).addBox(-0.5F, -0.5F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.4807F, 0.2064F, -1.0909F, 0.4363F, -0.7854F, 0.0F));
 
-		PartDefinition FOREFINGER_R_4 = FINGER_R_4.addOrReplaceChild("FOREFINGER_R_4", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition FOREFINGER_R_4 = FINGER_R_4.addOrReplaceChild("FOREFINGER_R_4", CubeListBuilder.create(), PartPose.offset(1.0F, 0.5F, -1.75F));
 
-		PartDefinition cube_r208 = FOREFINGER_R_4.addOrReplaceChild("cube_r208", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.6981F, -0.1309F, 0.0F));
+		PartDefinition cube_r208 = FOREFINGER_R_4.addOrReplaceChild("cube_r208", CubeListBuilder.create().texOffs(0, 12).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.75F, 0.25F, -2.0F, -0.6981F, -0.1309F, 0.0F));
 
-		PartDefinition cube_r209 = FOREFINGER_R_4.addOrReplaceChild("cube_r209", CubeListBuilder.create().texOffs(15, 0).addBox(-0.5F, -0.5F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5693F, -0.1436F, 1.2591F, 0.0873F, -0.1309F, 0.0F));
+		PartDefinition cube_r209 = FOREFINGER_R_4.addOrReplaceChild("cube_r209", CubeListBuilder.create().texOffs(15, 0).addBox(-0.5F, -0.5F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.1807F, 0.1064F, -0.7409F, 0.0873F, -0.1309F, 0.0F));
 
-		PartDefinition FINGER_R_3 = HAND_R.addOrReplaceChild("FINGER_R_3", CubeListBuilder.create(), PartPose.offset(1.9076F, -1.7636F, -4.8254F));
+		PartDefinition FINGER_R_3 = HAND_R.addOrReplaceChild("FINGER_R_3", CubeListBuilder.create(), PartPose.offset(0.4076F, -0.2636F, -0.5754F));
 
-		PartDefinition cube_r210 = FINGER_R_3.addOrReplaceChild("cube_r210", CubeListBuilder.create().texOffs(79, 157).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.7922F, 0.96F, 3.0218F, 0.2618F, -0.6109F, -1.1781F));
+		PartDefinition cube_r210 = FINGER_R_3.addOrReplaceChild("cube_r210", CubeListBuilder.create().texOffs(79, 157).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.7078F, -0.54F, -1.2282F, 0.2618F, -0.6109F, -1.1781F));
 
-		PartDefinition FOREFINGER_R_3 = FINGER_R_3.addOrReplaceChild("FOREFINGER_R_3", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition FOREFINGER_R_3 = FINGER_R_3.addOrReplaceChild("FOREFINGER_R_3", CubeListBuilder.create(), PartPose.offset(1.25F, -1.0F, -2.25F));
 
-		PartDefinition cube_r211 = FOREFINGER_R_3.addOrReplaceChild("cube_r211", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.5672F, 0.0F, -1.3963F));
+		PartDefinition cube_r211 = FOREFINGER_R_3.addOrReplaceChild("cube_r211", CubeListBuilder.create().texOffs(0, 0).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.25F, -0.5F, -2.0F, -0.5672F, 0.0F, -1.3963F));
 
-		PartDefinition cube_r212 = FOREFINGER_R_3.addOrReplaceChild("cube_r212", CubeListBuilder.create().texOffs(70, 3).addBox(-0.4116F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.3922F, 0.46F, 2.2218F, 0.0873F, 0.0F, -1.3963F));
+		PartDefinition cube_r212 = FOREFINGER_R_3.addOrReplaceChild("cube_r212", CubeListBuilder.create().texOffs(70, 3).addBox(-0.4116F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.1422F, -0.04F, 0.2218F, 0.0873F, 0.0F, -1.3963F));
 
-		PartDefinition FINGER_R_2 = HAND_R.addOrReplaceChild("FINGER_R_2", CubeListBuilder.create(), PartPose.offset(-1.2924F, -1.2636F, -6.4254F));
+		PartDefinition FINGER_R_2 = HAND_R.addOrReplaceChild("FINGER_R_2", CubeListBuilder.create(), PartPose.offset(-0.5424F, -0.5136F, -0.9254F));
 
-		PartDefinition cube_r213 = FINGER_R_2.addOrReplaceChild("cube_r213", CubeListBuilder.create().texOffs(156, 110).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5078F, 0.46F, 4.2218F, -0.3054F, 0.1309F, -0.4363F));
+		PartDefinition cube_r213 = FINGER_R_2.addOrReplaceChild("cube_r213", CubeListBuilder.create().texOffs(156, 110).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.2422F, -0.29F, -1.2782F, -0.3054F, 0.1309F, -0.4363F));
 
-		PartDefinition FOREFINGER_R_2 = FINGER_R_2.addOrReplaceChild("FOREFINGER_R_2", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition FOREFINGER_R_2 = FINGER_R_2.addOrReplaceChild("FOREFINGER_R_2", CubeListBuilder.create(), PartPose.offset(-0.75F, -0.5F, -2.25F));
 
-		PartDefinition cube_r214 = FOREFINGER_R_2.addOrReplaceChild("cube_r214", CubeListBuilder.create().texOffs(3, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 0.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.6545F, -0.5672F));
+		PartDefinition cube_r214 = FOREFINGER_R_2.addOrReplaceChild("cube_r214", CubeListBuilder.create().texOffs(3, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 0.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -0.25F, -3.25F, 0.0F, 0.6545F, -0.5672F));
 
-		PartDefinition cube_r215 = FOREFINGER_R_2.addOrReplaceChild("cube_r215", CubeListBuilder.create().texOffs(80, 70).addBox(-0.4116F, -0.3742F, -2.0386F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0078F, 0.16F, 2.3218F, 0.0873F, 0.0F, -0.5672F));
+		PartDefinition cube_r215 = FOREFINGER_R_2.addOrReplaceChild("cube_r215", CubeListBuilder.create().texOffs(80, 70).addBox(-0.4116F, -0.3742F, -2.0386F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0078F, -0.09F, -0.9282F, 0.0873F, 0.0F, -0.5672F));
 
-		PartDefinition FINGER_R_1 = HAND_R.addOrReplaceChild("FINGER_R_1", CubeListBuilder.create(), PartPose.offset(-2.9924F, 1.3364F, -4.9254F));
+		PartDefinition FINGER_R_1 = HAND_R.addOrReplaceChild("FINGER_R_1", CubeListBuilder.create(), PartPose.offset(-0.4924F, 0.8364F, -0.4254F));
 
-		PartDefinition cube_r216 = FINGER_R_1.addOrReplaceChild("cube_r216", CubeListBuilder.create().texOffs(131, 156).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.5078F, -0.44F, 3.4218F, 0.0F, 0.7854F, -0.2618F));
+		PartDefinition cube_r216 = FINGER_R_1.addOrReplaceChild("cube_r216", CubeListBuilder.create().texOffs(131, 156).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.9922F, 0.06F, -1.0782F, 0.0F, 0.7854F, -0.2618F));
 
-		PartDefinition FOREFINGER_R_1 = FINGER_R_1.addOrReplaceChild("FOREFINGER_R_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition FOREFINGER_R_1 = FINGER_R_1.addOrReplaceChild("FOREFINGER_R_1", CubeListBuilder.create(), PartPose.offset(-1.75F, 0.5F, -2.25F));
 
-		PartDefinition cube_r217 = FOREFINGER_R_1.addOrReplaceChild("cube_r217", CubeListBuilder.create().texOffs(0, 14).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.7854F, 0.0F, -0.2182F));
+		PartDefinition cube_r217 = FOREFINGER_R_1.addOrReplaceChild("cube_r217", CubeListBuilder.create().texOffs(0, 14).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.75F, 0.0F, -2.25F, -0.7854F, 0.0F, -0.2182F));
 
-		PartDefinition cube_r218 = FOREFINGER_R_1.addOrReplaceChild("cube_r218", CubeListBuilder.create().texOffs(14, 74).addBox(-0.4116F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.3078F, -0.24F, 2.3218F, 0.0F, 0.0F, -0.2182F));
+		PartDefinition cube_r218 = FOREFINGER_R_1.addOrReplaceChild("cube_r218", CubeListBuilder.create().texOffs(14, 74).addBox(-0.4116F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.4422F, -0.24F, 0.0718F, 0.0F, 0.0F, -0.2182F));
 
 		PartDefinition TORSO_BOUND_R = ARM_RIGHT.addOrReplaceChild("TORSO_BOUND_R", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -934,45 +934,45 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r268 = HAND_L.addOrReplaceChild("cube_r268", CubeListBuilder.create().texOffs(56, 34).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.1154F, -1.0964F, 1.3036F, 0.2182F, 0.0F, -0.1745F));
 
-		PartDefinition FINGER_L_4 = HAND_L.addOrReplaceChild("FINGER_L_4", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition FINGER_L_4 = HAND_L.addOrReplaceChild("FINGER_L_4", CubeListBuilder.create(), PartPose.offset(0.75F, -0.75F, 1.0F));
 
-		PartDefinition cube_r269 = FINGER_L_4.addOrReplaceChild("cube_r269", CubeListBuilder.create().texOffs(11, 46).addBox(-0.5F, -0.5F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.4363F, 0.7854F, 0.0F));
+		PartDefinition cube_r269 = FINGER_L_4.addOrReplaceChild("cube_r269", CubeListBuilder.create().texOffs(11, 46).addBox(-0.5F, -0.5F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.75F, 0.75F, -1.0F, 0.4363F, 0.7854F, 0.0F));
 
-		PartDefinition FOREFINGER_L_4 = FINGER_L_4.addOrReplaceChild("FOREFINGER_L_4", CubeListBuilder.create(), PartPose.offset(-1.2693F, 0.5436F, -2.6591F));
+		PartDefinition FOREFINGER_L_4 = FINGER_L_4.addOrReplaceChild("FOREFINGER_L_4", CubeListBuilder.create(), PartPose.offset(-0.7693F, 1.2936F, -1.1591F));
 
-		PartDefinition cube_r270 = FOREFINGER_L_4.addOrReplaceChild("cube_r270", CubeListBuilder.create().texOffs(0, 13).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.6981F, 0.1309F, 0.0F));
+		PartDefinition cube_r270 = FOREFINGER_L_4.addOrReplaceChild("cube_r270", CubeListBuilder.create().texOffs(0, 13).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.25F, 0.0F, -2.5F, -0.6981F, 0.1309F, 0.0F));
 
-		PartDefinition cube_r271 = FOREFINGER_L_4.addOrReplaceChild("cube_r271", CubeListBuilder.create().texOffs(20, 29).addBox(-0.5F, -0.5F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5693F, -0.1436F, 1.2591F, 0.0873F, 0.1309F, 0.0F));
+		PartDefinition cube_r271 = FOREFINGER_L_4.addOrReplaceChild("cube_r271", CubeListBuilder.create().texOffs(20, 29).addBox(-0.5F, -0.5F, -1.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.6807F, -0.1436F, -1.2409F, 0.0873F, 0.1309F, 0.0F));
 
-		PartDefinition FINGER_L_3 = HAND_L.addOrReplaceChild("FINGER_L_3", CubeListBuilder.create(), PartPose.offset(-0.7922F, -2.86F, -3.5218F));
+		PartDefinition FINGER_L_3 = HAND_L.addOrReplaceChild("FINGER_L_3", CubeListBuilder.create(), PartPose.offset(0.7078F, -1.36F, 0.7282F));
 
-		PartDefinition cube_r272 = FINGER_L_3.addOrReplaceChild("cube_r272", CubeListBuilder.create().texOffs(121, 157).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.7922F, 0.96F, 3.0218F, 0.2618F, 0.6109F, 1.1781F));
+		PartDefinition cube_r272 = FINGER_L_3.addOrReplaceChild("cube_r272", CubeListBuilder.create().texOffs(121, 157).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.7078F, -0.54F, -1.2282F, 0.2618F, 0.6109F, 1.1781F));
 
-		PartDefinition FOREFINGER_L_3 = FINGER_L_3.addOrReplaceChild("FOREFINGER_L_3", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition FOREFINGER_L_3 = FINGER_L_3.addOrReplaceChild("FOREFINGER_L_3", CubeListBuilder.create(), PartPose.offset(-1.25F, -0.75F, -2.0F));
 
-		PartDefinition cube_r273 = FOREFINGER_L_3.addOrReplaceChild("cube_r273", CubeListBuilder.create().texOffs(9, 5).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.5672F, 0.0F, 1.3963F));
+		PartDefinition cube_r273 = FOREFINGER_L_3.addOrReplaceChild("cube_r273", CubeListBuilder.create().texOffs(9, 5).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.25F, -0.75F, -2.25F, -0.5672F, 0.0F, 1.3963F));
 
-		PartDefinition cube_r274 = FOREFINGER_L_3.addOrReplaceChild("cube_r274", CubeListBuilder.create().texOffs(70, 16).addBox(-0.5884F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.3922F, 0.46F, 2.2218F, 0.0873F, 0.0F, 1.3963F));
+		PartDefinition cube_r274 = FOREFINGER_L_3.addOrReplaceChild("cube_r274", CubeListBuilder.create().texOffs(70, 16).addBox(-0.5884F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.1422F, -0.29F, -0.0282F, 0.0873F, 0.0F, 1.3963F));
 
-		PartDefinition FINGER_L_2 = HAND_L.addOrReplaceChild("FINGER_L_2", CubeListBuilder.create(), PartPose.offset(2.4078F, -2.36F, -5.1218F));
+		PartDefinition FINGER_L_2 = HAND_L.addOrReplaceChild("FINGER_L_2", CubeListBuilder.create(), PartPose.offset(1.6578F, -1.61F, 0.3782F));
 
-		PartDefinition cube_r275 = FINGER_L_2.addOrReplaceChild("cube_r275", CubeListBuilder.create().texOffs(116, 156).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5078F, 0.46F, 4.2218F, -0.3054F, -0.1309F, 0.4363F));
+		PartDefinition cube_r275 = FINGER_L_2.addOrReplaceChild("cube_r275", CubeListBuilder.create().texOffs(116, 156).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.2422F, -0.29F, -1.2782F, -0.3054F, -0.1309F, 0.4363F));
 
-		PartDefinition FOREFINGER_L_2 = FINGER_L_2.addOrReplaceChild("FOREFINGER_L_2", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition FOREFINGER_L_2 = FINGER_L_2.addOrReplaceChild("FOREFINGER_L_2", CubeListBuilder.create(), PartPose.offset(0.75F, -0.5F, -2.25F));
 
-		PartDefinition cube_r276 = FOREFINGER_L_2.addOrReplaceChild("cube_r276", CubeListBuilder.create().texOffs(3, 1).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 0.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.6545F, 0.5672F));
+		PartDefinition cube_r276 = FOREFINGER_L_2.addOrReplaceChild("cube_r276", CubeListBuilder.create().texOffs(3, 1).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 0.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -0.25F, -3.25F, 0.0F, -0.6545F, 0.5672F));
 
-		PartDefinition cube_r277 = FOREFINGER_L_2.addOrReplaceChild("cube_r277", CubeListBuilder.create().texOffs(81, 33).addBox(-0.5884F, -0.3742F, -2.0386F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0078F, 0.16F, 2.3218F, 0.0873F, 0.0F, 0.5672F));
+		PartDefinition cube_r277 = FOREFINGER_L_2.addOrReplaceChild("cube_r277", CubeListBuilder.create().texOffs(81, 33).addBox(-0.5884F, -0.3742F, -2.0386F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0078F, -0.09F, -0.9282F, 0.0873F, 0.0F, 0.5672F));
 
-		PartDefinition FINGER_L_1 = HAND_L.addOrReplaceChild("FINGER_L_1", CubeListBuilder.create(), PartPose.offset(4.1078F, 0.24F, -3.6218F));
+		PartDefinition FINGER_L_1 = HAND_L.addOrReplaceChild("FINGER_L_1", CubeListBuilder.create(), PartPose.offset(1.8578F, -0.51F, 0.8782F));
 
-		PartDefinition cube_r278 = FINGER_L_1.addOrReplaceChild("cube_r278", CubeListBuilder.create().texOffs(149, 156).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.5078F, -0.44F, 3.4218F, 0.0F, -0.7854F, 0.2618F));
+		PartDefinition cube_r278 = FINGER_L_1.addOrReplaceChild("cube_r278", CubeListBuilder.create().texOffs(149, 156).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.7422F, 0.31F, -1.0782F, 0.0F, -0.7854F, 0.2618F));
 
-		PartDefinition FOREFINGER_L_1 = FINGER_L_1.addOrReplaceChild("FOREFINGER_L_1", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition FOREFINGER_L_1 = FINGER_L_1.addOrReplaceChild("FOREFINGER_L_1", CubeListBuilder.create(), PartPose.offset(1.85F, 0.65F, -2.25F));
 
-		PartDefinition cube_r279 = FOREFINGER_L_1.addOrReplaceChild("cube_r279", CubeListBuilder.create().texOffs(15, 0).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.7854F, 0.0F, 0.2182F));
+		PartDefinition cube_r279 = FOREFINGER_L_1.addOrReplaceChild("cube_r279", CubeListBuilder.create().texOffs(15, 0).addBox(0.0F, -0.5F, -0.5F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.4F, 0.1F, -2.25F, -0.7854F, 0.0F, 0.2182F));
 
-		PartDefinition cube_r280 = FOREFINGER_L_1.addOrReplaceChild("cube_r280", CubeListBuilder.create().texOffs(77, 48).addBox(-0.5884F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.3078F, -0.24F, 2.3218F, 0.0F, 0.0F, 0.2182F));
+		PartDefinition cube_r280 = FOREFINGER_L_1.addOrReplaceChild("cube_r280", CubeListBuilder.create().texOffs(77, 48).addBox(-0.5884F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0922F, -0.14F, 0.0718F, 0.0F, 0.0F, 0.2182F));
 
 		PartDefinition TORSO_BOUND_L = ARM_LEFT.addOrReplaceChild("TORSO_BOUND_L", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -3.0F));
 
@@ -1117,39 +1117,39 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition HEAD = SECTION_1.addOrReplaceChild("HEAD", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -3.0F));
 
-		PartDefinition JAW = HEAD.addOrReplaceChild("JAW", CubeListBuilder.create(), PartPose.offset(0.0F, 2.95F, -10.0F));
+		PartDefinition JAW = HEAD.addOrReplaceChild("JAW", CubeListBuilder.create(), PartPose.offset(0.0F, 2.95F, -3.0F));
 
-		PartDefinition cube_r335 = JAW.addOrReplaceChild("cube_r335", CubeListBuilder.create().texOffs(120, 41).addBox(-1.5F, 0.0F, -2.0F, 3.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.1745F, 0.0F, 0.0F));
+		PartDefinition cube_r335 = JAW.addOrReplaceChild("cube_r335", CubeListBuilder.create().texOffs(120, 41).addBox(-1.5F, 0.0F, -2.0F, 3.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -7.0F, -0.1745F, 0.0F, 0.0F));
 
-		PartDefinition cube_r336 = JAW.addOrReplaceChild("cube_r336", CubeListBuilder.create().texOffs(7, 56).addBox(-1.5F, -0.5F, -1.0F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -0.8812F, -3.9716F, -0.1745F, 0.0F, 0.0F));
+		PartDefinition cube_r336 = JAW.addOrReplaceChild("cube_r336", CubeListBuilder.create().texOffs(7, 56).addBox(-1.5F, -0.5F, -1.0F, 3.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -0.8812F, -10.9716F, -0.1745F, 0.0F, 0.0F));
 
-		PartDefinition cube_r337 = JAW.addOrReplaceChild("cube_r337", CubeListBuilder.create().texOffs(103, 99).addBox(-0.5F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5F, 0.0188F, -2.6716F, -0.1745F, 0.0F, 0.0F));
+		PartDefinition cube_r337 = JAW.addOrReplaceChild("cube_r337", CubeListBuilder.create().texOffs(103, 99).addBox(-0.5F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.5F, 0.0188F, -9.6716F, -0.1745F, 0.0F, 0.0F));
 
-		PartDefinition cube_r338 = JAW.addOrReplaceChild("cube_r338", CubeListBuilder.create().texOffs(37, 118).addBox(-1.5F, -1.0F, -2.0F, 3.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.75F, 4.0F, -0.1745F, 0.0F, 0.0F));
+		PartDefinition cube_r338 = JAW.addOrReplaceChild("cube_r338", CubeListBuilder.create().texOffs(37, 118).addBox(-1.5F, -1.0F, -2.0F, 3.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.75F, -3.0F, -0.1745F, 0.0F, 0.0F));
 
-		PartDefinition cube_r339 = JAW.addOrReplaceChild("cube_r339", CubeListBuilder.create().texOffs(27, 110).addBox(-1.0F, -1.5F, -2.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.171F, -0.2198F, 4.25F, -0.2618F, 0.0F, 0.8727F));
+		PartDefinition cube_r339 = JAW.addOrReplaceChild("cube_r339", CubeListBuilder.create().texOffs(27, 110).addBox(-1.0F, -1.5F, -2.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.171F, -0.2198F, -2.75F, -0.2618F, 0.0F, 0.8727F));
 
-		PartDefinition cube_r340 = JAW.addOrReplaceChild("cube_r340", CubeListBuilder.create().texOffs(33, 102).addBox(-1.0F, -1.5F, -2.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.9217F, 0.7314F, 4.25F, -0.2618F, 0.0F, -0.5236F));
+		PartDefinition cube_r340 = JAW.addOrReplaceChild("cube_r340", CubeListBuilder.create().texOffs(33, 102).addBox(-1.0F, -1.5F, -2.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.9217F, 0.7314F, -2.75F, -0.2618F, 0.0F, -0.5236F));
 
-		PartDefinition cube_r341 = JAW.addOrReplaceChild("cube_r341", CubeListBuilder.create().texOffs(52, 94).addBox(-1.0F, -1.5F, -2.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.171F, -0.2198F, 4.25F, -0.2618F, 0.0F, -0.8727F));
+		PartDefinition cube_r341 = JAW.addOrReplaceChild("cube_r341", CubeListBuilder.create().texOffs(52, 94).addBox(-1.0F, -1.5F, -2.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.171F, -0.2198F, -2.75F, -0.2618F, 0.0F, -0.8727F));
 
-		PartDefinition cube_r342 = JAW.addOrReplaceChild("cube_r342", CubeListBuilder.create().texOffs(54, 86).addBox(-1.0F, -0.5F, -2.0F, 2.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.9217F, 0.4814F, 1.5F, -0.1745F, 0.0F, -0.5236F));
+		PartDefinition cube_r342 = JAW.addOrReplaceChild("cube_r342", CubeListBuilder.create().texOffs(54, 86).addBox(-1.0F, -0.5F, -2.0F, 2.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.9217F, 0.4814F, -5.5F, -0.1745F, 0.0F, -0.5236F));
 
-		PartDefinition cube_r343 = JAW.addOrReplaceChild("cube_r343", CubeListBuilder.create().texOffs(0, 73).addBox(-1.0F, -0.5F, -2.0F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.171F, -0.4698F, 1.5F, -0.1745F, 0.0F, -0.8727F));
+		PartDefinition cube_r343 = JAW.addOrReplaceChild("cube_r343", CubeListBuilder.create().texOffs(0, 73).addBox(-1.0F, -0.5F, -2.0F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.171F, -0.4698F, -5.5F, -0.1745F, 0.0F, -0.8727F));
 
-		PartDefinition cube_r344 = JAW.addOrReplaceChild("cube_r344", CubeListBuilder.create().texOffs(20, 101).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.4923F, -0.4428F, -2.7659F, -0.3491F, 0.0F, 0.5236F));
+		PartDefinition cube_r344 = JAW.addOrReplaceChild("cube_r344", CubeListBuilder.create().texOffs(20, 101).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.4923F, -0.4428F, -9.7659F, -0.3491F, 0.0F, 0.5236F));
 
-		PartDefinition cube_r345 = JAW.addOrReplaceChild("cube_r345", CubeListBuilder.create().texOffs(106, 0).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.4923F, -0.4428F, -2.7659F, -0.3491F, 0.0F, -0.5236F));
+		PartDefinition cube_r345 = JAW.addOrReplaceChild("cube_r345", CubeListBuilder.create().texOffs(106, 0).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.4923F, -0.4428F, -9.7659F, -0.3491F, 0.0F, -0.5236F));
 
-		PartDefinition cube_r346 = JAW.addOrReplaceChild("cube_r346", CubeListBuilder.create().texOffs(114, 41).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.7923F, -0.1428F, -1.2159F, -0.2182F, 0.0F, -0.5236F));
+		PartDefinition cube_r346 = JAW.addOrReplaceChild("cube_r346", CubeListBuilder.create().texOffs(114, 41).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.7923F, -0.1428F, -8.2159F, -0.2182F, 0.0F, -0.5236F));
 
-		PartDefinition cube_r347 = JAW.addOrReplaceChild("cube_r347", CubeListBuilder.create().texOffs(69, 115).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.7923F, -0.1428F, -1.2159F, -0.2182F, 0.0F, 0.5236F));
+		PartDefinition cube_r347 = JAW.addOrReplaceChild("cube_r347", CubeListBuilder.create().texOffs(69, 115).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.7923F, -0.1428F, -8.2159F, -0.2182F, 0.0F, 0.5236F));
 
-		PartDefinition cube_r348 = JAW.addOrReplaceChild("cube_r348", CubeListBuilder.create().texOffs(139, 104).addBox(-1.0F, -0.5F, -2.0F, 2.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.9217F, 0.4814F, 1.5F, -0.1745F, 0.0F, 0.5236F));
+		PartDefinition cube_r348 = JAW.addOrReplaceChild("cube_r348", CubeListBuilder.create().texOffs(139, 104).addBox(-1.0F, -0.5F, -2.0F, 2.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.9217F, 0.4814F, -5.5F, -0.1745F, 0.0F, 0.5236F));
 
-		PartDefinition cube_r349 = JAW.addOrReplaceChild("cube_r349", CubeListBuilder.create().texOffs(147, 103).addBox(0.0F, -0.5F, -2.0F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.171F, -0.4698F, 1.5F, -0.1745F, 0.0F, 0.8727F));
+		PartDefinition cube_r349 = JAW.addOrReplaceChild("cube_r349", CubeListBuilder.create().texOffs(147, 103).addBox(0.0F, -0.5F, -2.0F, 1.0F, 1.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.171F, -0.4698F, -5.5F, -0.1745F, 0.0F, 0.8727F));
 
-		PartDefinition cube_r350 = JAW.addOrReplaceChild("cube_r350", CubeListBuilder.create().texOffs(49, 102).addBox(-1.0F, -1.5F, -2.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.9217F, 0.7314F, 4.25F, -0.2618F, 0.0F, 0.5236F));
+		PartDefinition cube_r350 = JAW.addOrReplaceChild("cube_r350", CubeListBuilder.create().texOffs(49, 102).addBox(-1.0F, -1.5F, -2.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.9217F, 0.7314F, -2.75F, -0.2618F, 0.0F, 0.5236F));
 
 		PartDefinition FOREHEAD = HEAD.addOrReplaceChild("FOREHEAD", CubeListBuilder.create().texOffs(132, 93).addBox(3.75F, -38.8F, -14.0F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F))
 		.texOffs(76, 113).addBox(-1.5F, -42.8F, -15.0F, 3.0F, 2.0F, 5.0F, new CubeDeformation(0.0F))

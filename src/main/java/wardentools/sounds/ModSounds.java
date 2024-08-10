@@ -16,6 +16,14 @@ public class ModSounds {
 			registerSoundEvents("contagion_incarnation_scream");
 	public static final RegistryObject<SoundEvent> CONTAGION_INCARNATION_CRAWL =
 			registerSoundEvents("contagion_incarnation_crawl");
+	public static final RegistryObject<SoundEvent> CONTAGION_INCARNATION_AMBIENT =
+			registerSoundEvents("contagion_incarnation_ambient");
+	public static final RegistryObject<SoundEvent> CONTAGION_INCARNATION_DEATH =
+			registerSoundEvents("contagion_incarnation_death");
+	
+	
+	
+	
 	
 	public static RegistryObject<SoundEvent> registerSoundEvents(String name){
 		return SOUND_EVENTS.register(name,

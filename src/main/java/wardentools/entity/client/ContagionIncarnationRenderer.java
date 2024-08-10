@@ -1,17 +1,24 @@
 package wardentools.entity.client;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import wardentools.ModMain;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 
 public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnationEntity, ContagionIncarnation>{
 	private static final ResourceLocation CONTAGION_INCARNATION_TEXTURE = 
 			new ResourceLocation(ModMain.MOD_ID, "textures/entity/contagion_incarnation.png");
+	private static final float HALF_SQRT_3 = (float)(Math.sqrt(3.0D) / 2.0D);
 
 	public ContagionIncarnationRenderer(EntityRendererProvider.Context context) {
 		super(context, new ContagionIncarnation(context.bakeLayer(ContagionIncarnation.LAYER_LOCATION)), 0.5f);
@@ -26,9 +33,57 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 	public void render(ContagionIncarnationEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
 						MultiBufferSource pBuffer, int pPackedLight) {
 
-		pMatrixStack.scale(1.5f, 1.5f, 1.5f);
+		pMatrixStack.scale(2f, 2f, 2f);
 
 		super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
+		if (pEntity.contagionIncarnationDeathTime > 0) {
+	         float f5 = ((float)pEntity.contagionIncarnationDeathTime + pPartialTicks) / 200.0F;
+	         float f7 = Math.min(f5 > 0.8F ? (f5 - 0.8F) / 0.2F : 0.0F, 1.0F);
+	         RandomSource randomsource = RandomSource.create(432L);
+	         VertexConsumer vertexconsumer2 = pBuffer.getBuffer(RenderType.lightning());
+	         pMatrixStack.pushPose();
+	         pMatrixStack.translate(0.0F, 1.0F, 0.0F);
+
+	         for(int i = 0; (float)i < (f5 + f5 * f5) / 2.0F * 60.0F; ++i) {
+	        	 pMatrixStack.mulPose(Axis.XP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+	        	pMatrixStack.mulPose(Axis.YP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+	        	pMatrixStack.mulPose(Axis.ZP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+	        	pMatrixStack.mulPose(Axis.XP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+	        	pMatrixStack.mulPose(Axis.YP.rotationDegrees(randomsource.nextFloat() * 360.0F));
+	        	pMatrixStack.mulPose(Axis.ZP.rotationDegrees(randomsource.nextFloat() * 360.0F + f5 * 90.0F));
+	            float f3 = randomsource.nextFloat() * 20.0F + 5.0F + f7 * 10.0F;
+	            float f4 = randomsource.nextFloat() * 2.0F + 1.0F + f7 * 2.0F;
+	            Matrix4f matrix4f = pMatrixStack.last().pose();
+	            int j = (int)(255.0F * (1.0F - f7));
+	            vertex01(vertexconsumer2, matrix4f, j);
+	            vertex2(vertexconsumer2, matrix4f, f3, f4);
+	            vertex3(vertexconsumer2, matrix4f, f3, f4);
+	            vertex01(vertexconsumer2, matrix4f, j);
+	            vertex3(vertexconsumer2, matrix4f, f3, f4);
+	            vertex4(vertexconsumer2, matrix4f, f3, f4);
+	            vertex01(vertexconsumer2, matrix4f, j);
+	            vertex4(vertexconsumer2, matrix4f, f3, f4);
+	            vertex2(vertexconsumer2, matrix4f, f3, f4);
+	         }
+
+	         pMatrixStack.popPose();
+	      }
 	}
+	
+	private static void vertex01(VertexConsumer consumer, Matrix4f matrix, int alpha) {
+		consumer.vertex(matrix, 0.0F, 0.0F, 0.0F).color(0, 55, 70, alpha).endVertex();
+	   }
+
+	   private static void vertex2(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
+		   consumer.vertex(matrix, -HALF_SQRT_3 * f2, f1, -0.5F * f2).color(0, 55, 70, 0).endVertex();
+	   }
+
+	   private static void vertex3(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
+		   consumer.vertex(matrix, HALF_SQRT_3 * f2, f1, -0.5F * f2).color(0, 55, 70, 0).endVertex();
+	   }
+
+	   private static void vertex4(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
+		   consumer.vertex(matrix, 0.0F, f1, 1.0F * f2).color(0, 55, 70, 0).endVertex();
+	   }
 
 }

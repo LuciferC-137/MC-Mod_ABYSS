@@ -10,5 +10,17 @@
 			"sounds": [
 				"wardentools:contagion_incarnation_crawl"
 			]
+		},
+	"contagion_incarnation_ambient":{
+			"subtitles": "sounds.wardentools.contagion_incarnation_ambient",
+			"sounds": [
+				"wardentools:contagion_incarnation_ambient"
+			]
+	},
+	"contagion_incarnation_death":{
+				"subtitles": "sounds.wardentools.contagion_incarnation_death",
+				"sounds": [
+					"wardentools:contagion_incarnation_death"
+				]
 		}
 }
