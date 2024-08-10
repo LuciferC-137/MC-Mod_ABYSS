@@ -1,6 +1,7 @@
 package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -10,25 +11,30 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerBossEvent;
 import wardentools.sounds.ModSounds;
 
-public class ContagionIncarnationEntity extends Monster {
+public class ContagionIncarnationEntity extends Monster implements Enemy {
+	private final ServerBossEvent bossEvent;
 
 	public ContagionIncarnationEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
+		this.bossEvent = new ServerBossEvent(this.getDisplayName(),
+				ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.PROGRESS);
+        this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 	}
-	
+
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -39,7 +45,7 @@ public class ContagionIncarnationEntity extends Monster {
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	    this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
-	
+
 	public static AttributeSupplier.Builder createAttribute(){
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MAX_HEALTH, 1000D)
@@ -47,6 +53,30 @@ public class ContagionIncarnationEntity extends Monster {
 	            .add(Attributes.JUMP_STRENGTH, 3.0D)
 	            .add(Attributes.ATTACK_DAMAGE, 10.0D);
 	}
+
+	@Override
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        this.bossEvent.addPlayer(player);
+    }
+
+    @Override
+    public void stopSeenByPlayer(ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        this.bossEvent.removePlayer(player);
+    }
+
+    @Override
+    public void customServerAiStep() {
+        super.customServerAiStep();
+        this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+        this.bossEvent.removeAllPlayers();
+    }
 	
 	@Override
     public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
