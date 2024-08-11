@@ -7,6 +7,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.ModMain;
 
@@ -18,7 +19,7 @@ public class WardenTargetFilter {
         Entity entity = event.getEntity();
         if (entity instanceof Warden warden) {
             Entity target = warden.getTarget();
-            if (target instanceof DeepLurkerEntity) {
+            if (target instanceof DeepLurkerEntity || target instanceof ContagionIncarnationEntity) {
                 warden.setTarget(null);
                 warden.setAggressive(false);
                 warden.setLastHurtByMob(null);

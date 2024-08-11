@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
@@ -32,14 +33,17 @@ import net.minecraft.server.level.ServerLevel;
 import wardentools.sounds.ModSounds;
 
 public class ContagionIncarnationEntity extends Monster implements Enemy {
+	protected static final float DEFAULT_EYE_HEIGHT = 4.8F;
 	private final ServerBossEvent bossEvent;
 	public static final int CHANCE_OF_SCREAM_ON_HIT = 4;
 	public static final int DEATH_DURATION = 200;
 	public int contagionIncarnationDeathTime = 0;
+	public static final int SWING_DURATION = 10;
 	public final AnimationState dyingAnimationState = new AnimationState();
 	public final AnimationState ambient = new AnimationState();
 	public final AnimationState idleAmbient = new AnimationState();
 	public final AnimationState sprint = new AnimationState();
+	public final AnimationState headAmbient = new AnimationState();
 
 	public ContagionIncarnationEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
@@ -64,7 +68,8 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
 				.add(Attributes.MAX_HEALTH, 1000D)
 	            .add(Attributes.MOVEMENT_SPEED, 0.2D)
 	            .add(Attributes.JUMP_STRENGTH, 3.0D)
-	            .add(Attributes.ATTACK_DAMAGE, 10.0D);
+	            .add(Attributes.ATTACK_DAMAGE, 10.0D)
+	            .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F);
 	}
 
 	@Override
@@ -97,12 +102,23 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
     }
 	
 	@Override
+	public int getMaxHeadYRot() {
+        return 80;
+    }
+	
+	protected float getMaxHeadRotationRelativeToBody() {
+	      return 220F;
+    }
+	
+	@Override
 	public void tick() {
 		if (level().isClientSide()) {
 			this.dyingAnimationState.animateWhen(this.contagionIncarnationDeathTime > 0, this.tickCount);
 			this.idleAmbient.animateWhen(!this.isSprinting() && !this.isDeadOrDying(), this.tickCount);
 			this.ambient.animateWhen(!this.walkAnimation.isMoving() && !this.isDeadOrDying(), this.tickCount);
 			this.sprint.animateWhen(this.isSprinting(), this.tickCount);
+			this.headAmbient.animateWhen(!this.getLookControl().isLookingAtTarget()
+					&& !this.isSprinting() && !this.isDeadOrDying(), this.tickCount);
 		}
 		super.tick();
 	}
@@ -202,6 +218,6 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
            this.level().broadcastEntityEvent(this, (byte)20);
         }
 
-     }
+     }   
 
 }

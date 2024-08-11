@@ -22,6 +22,7 @@ import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.items.ItemRegistry;
+import wardentools.items.PaintingsRegistry;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.biome.ModTerrablender;
@@ -45,6 +46,7 @@ public class ModMain {
 		ItemRegistry.REGISTAR.register(bus);
 		BlockRegistry.REGISTAR.register(bus);
 		BlockEntityRegistry.BLOCK_ENTITIES.register(bus);
+		PaintingsRegistry.PAINTINGS.register(bus);
 		ModTrunkPlacerTypes.TRUNK_PLACER.register(bus);
 		ModFoliagePlacers.FOLIAGE_PLACERS.register(bus);
 		ModEntities.ENTITY_TYPES.register(bus);
