@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
@@ -34,6 +33,7 @@ import wardentools.sounds.ModSounds;
 
 public class ContagionIncarnationEntity extends Monster implements Enemy {
 	protected static final float DEFAULT_EYE_HEIGHT = 4.8F;
+	public static final double MOV_SPEED = 0.2D;
 	private final ServerBossEvent bossEvent;
 	public static final int CHANCE_OF_SCREAM_ON_HIT = 4;
 	public static final int DEATH_DURATION = 200;
@@ -66,7 +66,7 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
 	public static AttributeSupplier.Builder createAttribute(){
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MAX_HEALTH, 1000D)
-	            .add(Attributes.MOVEMENT_SPEED, 0.2D)
+	            .add(Attributes.MOVEMENT_SPEED, MOV_SPEED)
 	            .add(Attributes.JUMP_STRENGTH, 3.0D)
 	            .add(Attributes.ATTACK_DAMAGE, 10.0D)
 	            .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F);
