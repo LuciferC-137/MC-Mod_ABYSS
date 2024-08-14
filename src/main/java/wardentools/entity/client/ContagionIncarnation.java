@@ -35,7 +35,10 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	private static final float rad = (float)Math.PI / 180f;
 	private Vec3 oldPos = null;
 	private float refAngleTail = 0f;
-	private static final float ANGLE_FOR_TAIL_ON_GROUND = 5f;
+	private float TAIL_LIE_INCLINATION = 2f;
+	private static final float UNFOLD_TAIL_MULTIPLICATOR = 0.5f;
+	private static final float TAIL_LENGTH = 90f;
+	private float traveledLength = 0f;
 	
 	private final ModelPart FULL;
 	private final ModelPart TAIL;
@@ -857,7 +860,7 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 		if (this.oldPos == null) {
 			this.oldPos = entity.position();
 		}
-		this.makeTailRotate(entity.yBodyRot, oldPos, entity.position());
+		this.animateTail(entity.yBodyRot, oldPos, entity.position());
 		this.oldPos = entity.position();
 		if (!entity.isInWaterOrBubble() && !entity.isSprinting()) {
 			animateWalk(ContagionIncarnationAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
@@ -879,19 +882,47 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 		this.head.homogeneousRotation(pYaw, pPitch);
 	}
 	
-	private void makeTailRotate(float bodyRot, Vec3 oldPos, Vec3 newPos) {
-		// This call makes the tail to lie on the ground
-		this.section_9.compensatedMovementX(ANGLE_FOR_TAIL_ON_GROUND);
-		
+	private void animateTail(float bodyRot, Vec3 oldPos, Vec3 newPos) {
+		// This call makes the tail to lie on the ground.
+		this.tailLie();
+		// This call makes the tail fold and unfold according to the speed of the entity and its rotation.
+		this.tailFolding(bodyRot, oldPos, newPos);
+	}
+	
+	private void tailFolding(float bodyRot, Vec3 oldPos, Vec3 newPos) {
 		float speed = (float)Math.sqrt((newPos.x - oldPos.x) * (newPos.x - oldPos.x)
                 + (newPos.z - oldPos.z) * (newPos.z - oldPos.z));
-		
-		// This call makes the tail follow the rotation of the body and fold when the entity rotate
-		this.refAngleTail = this.section_7.compensateRotation(bodyRot, this.refAngleTail, speed);
+		this.traveledLength += speed  * UNFOLD_TAIL_MULTIPLICATOR;
+		if (this.traveledLength >= TAIL_LENGTH) {
+			this.traveledLength = 0f;
+		}
+		float speedCompensationFactor = (TAIL_LENGTH - this.traveledLength) / TAIL_LENGTH;
+		this.refAngleTail = this.section_7.compensateRotation(bodyRot, this.refAngleTail);
+		if (speed > 0) {
+			this.refAngleTail = this.refAngleTail * speedCompensationFactor
+					+ bodyRot * (1f - speedCompensationFactor);
+		}
+	}
+	
+	private void tailLie() {
+		this.section_8.rotateX(-2.5f);
+		this.section_9.rotateX(-7.5f);
+		this.section_10.rotateX(-5f);
+		this.section_11.rotateX(10f);
+		this.section_12.rotateX(2.5f);
+		this.section_13.rotateX(2.5f);
+		this.section_14.rotateX(-2.5f);
+		this.section_15.rotateX(-2.5f);
+		this.section_16.rotateX(2.5f);
+		this.section_17.rotateX(0f);
+		this.section_18.rotateX(-5f);
+		this.end.rotateX(7.5f);
 	}
 
 	private class Section {
 		private static final float MAX_ANGLE = 20F;
+		private static final float UNFOLDING_SPEED = 0.3f;
+		private static final float REFOLDING_SPEED = 0.1f;
 		public float length;
 		private final ModelPart section;
 		private final Section nextSection;
@@ -904,10 +935,9 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 			this.rotYOld = this.getRotationY();
 		}
 		
-		public float compensateRotation(float previousPartRot, float refAngleTail, float speed) {
+		public float compensateRotation(float previousPartRot, float refAngleTail) {
 			// This function is specifically designed to mimic the behaviour of something drag on the ground when
-			// its attachement point rotates. The unfoldFactor must be handled externally to add the unfold of the
-			// object if the attachement point move forward.
+			// its attachement point rotates or moves.
 			float rotDiff = previousPartRot - refAngleTail;
 			float rotToDo = - rotDiff;
 			if (Math.abs(rotDiff) < MAX_ANGLE) {
@@ -916,28 +946,21 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 				rotToDo = - MAX_ANGLE * Mth.sign(rotDiff);
 				this.absoluteRotateY(rotToDo);
 				if (this.nextSection!=null) {
-					return this.nextSection.compensateRotation(previousPartRot + rotToDo, refAngleTail, speed);
+						return this.nextSection.compensateRotation(previousPartRot + rotToDo, refAngleTail);
+					
 				} else {
 					return previousPartRot + rotToDo;
 				}
 			}
 			return refAngleTail;
 		}
-			
+
 		public void homogeneousRotation(float yaw, float pitch) {
 			// Create a rotation equally shared among all the children. This creates a simple curvature effect.
 			this.rotateX(pitch);
 			this.rotateY(yaw);
 			if (this.nextSection != null) {
 				this.nextSection.homogeneousRotation(yaw, pitch);
-			}
-		}
-		
-		public void compensatedMovementX(float angle) {
-			// Create a global movement to look like an "offset".
-			this.absoluteRotateX(-angle);
-			if (this.nextSection != null) {
-				this.nextSection.compensatedMovementX(-angle);
 			}
 		}
 
