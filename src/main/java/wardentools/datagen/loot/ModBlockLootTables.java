@@ -29,6 +29,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.DARKDIRT);
     	this.addDropSelf(BlockRegistry.DARKGRASS_BLOCK);
     	this.addDropSelf(BlockRegistry.DEEP_CRISTAL);
+    	this.addDropSelf(BlockRegistry.GRAVESTONE);
     	
     	this.addDropSelf(BlockRegistry.DARKTREE_LOG);
     	this.addDropSelf(BlockRegistry.DARKTREE_PLANKS);

@@ -20,11 +20,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .add(BlockRegistry.DEEP_CRISTAL.get())
             .add(BlockRegistry.DEEPBLOCK.get())
-            .add(BlockRegistry.PALE_SHARD.get());
+            .add(BlockRegistry.PALE_SHARD.get())
+            .add(BlockRegistry.GRAVESTONE.get());
 
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
@@ -62,6 +62,21 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 		this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
 			.add(BlockRegistry.DARKGRASS_BLOCK.get())
 			.add(BlockRegistry.DARKDIRT.get());
+		
+		this.tag(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+			.add(BlockRegistry.GRAVESTONE.get());
+		
+		this.tag(BlockTags.ANCIENT_CITY_REPLACEABLE)
+			.add(BlockRegistry.GRAVESTONE.get());
+		
+		this.tag(BlockTags.SCULK_REPLACEABLE)
+			.add(BlockRegistry.GRAVESTONE.get());
+		
+		this.tag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
+			.add(BlockRegistry.GRAVESTONE.get());
+		
+		this.tag(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
+		.add(BlockRegistry.GRAVESTONE.get());
 
     }
 }

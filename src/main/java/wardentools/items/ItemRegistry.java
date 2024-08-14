@@ -313,4 +313,9 @@ public class ItemRegistry {
 			REGISTAR.register("dying_protector_heart",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
+	public static final RegistryObject<BlockItem> GRAVESTONE =
+			REGISTAR.register("gravestone",
+			() -> new BlockItem(BlockRegistry.GRAVESTONE.get(),
+					new Item.Properties()));
+	
 }

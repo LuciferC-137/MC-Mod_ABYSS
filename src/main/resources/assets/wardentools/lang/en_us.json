@@ -21,6 +21,8 @@
 	"item.wardentools.protector_heart": "Protector heart",
 	"item.wardentools.dying_protector_heart": "Dying Protector heart",
 	
+	"block.wardentools.gravestone": "Gravestone",
+	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
 	"block.wardentools.protector_invoker": "Protector Invoker",
 	"block.wardentools.deepblock": "Deep Block",

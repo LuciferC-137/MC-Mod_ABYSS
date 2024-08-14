@@ -19,6 +19,8 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DEEPCRISTAL.get()))
                     .title(Component.translatable("creativetab.abyss_tab"))
                     .displayItems((pParameters, event) -> {
+                    	event.accept(ItemRegistry.GRAVESTONE.get());
+                    	
                     	event.accept(ItemRegistry.DEEPINGOTS.get());
                     	event.accept(ItemRegistry.DEEPCRISTAL.get());
                     	event.accept(ItemRegistry.PALE_SHARD.get());

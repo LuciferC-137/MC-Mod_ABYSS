@@ -326,4 +326,8 @@ public class BlockRegistry {
 					 .strength(5.0f, 15.0f)
 					 .noOcclusion()
 					 .lightLevel((state) -> 10)));
+	
+	public static final RegistryObject<Block> GRAVESTONE = REGISTAR.register("gravestone",
+			()->new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)
+					));
 }
