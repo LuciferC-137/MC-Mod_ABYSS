@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "wardentools:gravestone"
+          "name": "wardentools:abyssalite_bricks"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "wardentools:blocks/gravestone"
+  "random_sequence": "wardentools:blocks/abyssalite_bricks"
 }

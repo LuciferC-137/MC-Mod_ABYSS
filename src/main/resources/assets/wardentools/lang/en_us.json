@@ -21,7 +21,10 @@
 	"item.wardentools.protector_heart": "Protector heart",
 	"item.wardentools.dying_protector_heart": "Dying Protector heart",
 	
-	"block.wardentools.gravestone": "Gravestone",
+	"block.wardentools.abyssalite": "Abyssalite",
+	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
+	"block.wardentools.abyssalite_bricks": "Abyssalite Bricks",
+	"block.wardentools.cracked_abyssalite_bricks": "Cracked Abyssalite Bricks",
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
 	"block.wardentools.protector_invoker": "Protector Invoker",

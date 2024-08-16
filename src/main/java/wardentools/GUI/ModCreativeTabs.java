@@ -19,7 +19,10 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DEEPCRISTAL.get()))
                     .title(Component.translatable("creativetab.abyss_tab"))
                     .displayItems((pParameters, event) -> {
-                    	event.accept(ItemRegistry.GRAVESTONE.get());
+                    	event.accept(ItemRegistry.ABYSSALITE.get());
+                    	event.accept(ItemRegistry.CHISELED_ABYSSALITE.get());
+                    	event.accept(ItemRegistry.ABYSSALITE_BRICKS.get());
+                    	event.accept(ItemRegistry.CRACKED_ABYSSALITE_BRICKS.get());
                     	
                     	event.accept(ItemRegistry.DEEPINGOTS.get());
                     	event.accept(ItemRegistry.DEEPCRISTAL.get());

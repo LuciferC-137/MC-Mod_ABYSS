@@ -24,7 +24,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             .add(BlockRegistry.DEEP_CRISTAL.get())
             .add(BlockRegistry.DEEPBLOCK.get())
             .add(BlockRegistry.PALE_SHARD.get())
-            .add(BlockRegistry.GRAVESTONE.get());
+            .add(BlockRegistry.ABYSSALITE.get())
+            .add(BlockRegistry.CHISELED_ABYSSALITE.get())
+            .add(BlockRegistry.ABYSSALITE_BRICKS.get())
+            .add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get());
 
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
@@ -64,19 +67,19 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.DARKDIRT.get());
 		
 		this.tag(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
-			.add(BlockRegistry.GRAVESTONE.get());
+			.add(BlockRegistry.ABYSSALITE.get());
 		
 		this.tag(BlockTags.ANCIENT_CITY_REPLACEABLE)
-			.add(BlockRegistry.GRAVESTONE.get());
+			.add(BlockRegistry.ABYSSALITE.get());
 		
 		this.tag(BlockTags.SCULK_REPLACEABLE)
-			.add(BlockRegistry.GRAVESTONE.get());
+			.add(BlockRegistry.ABYSSALITE.get());
 		
 		this.tag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
-			.add(BlockRegistry.GRAVESTONE.get());
+			.add(BlockRegistry.ABYSSALITE.get());
 		
 		this.tag(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
-		.add(BlockRegistry.GRAVESTONE.get());
+		.add(BlockRegistry.ABYSSALITE.get());
 
     }
 }

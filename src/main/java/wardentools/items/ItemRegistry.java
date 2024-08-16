@@ -313,9 +313,24 @@ public class ItemRegistry {
 			REGISTAR.register("dying_protector_heart",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
-	public static final RegistryObject<BlockItem> GRAVESTONE =
-			REGISTAR.register("gravestone",
-			() -> new BlockItem(BlockRegistry.GRAVESTONE.get(),
+	public static final RegistryObject<BlockItem> ABYSSALITE =
+			REGISTAR.register("abyssalite",
+			() -> new BlockItem(BlockRegistry.ABYSSALITE.get(),
+					new Item.Properties()));
+	
+	public static final RegistryObject<BlockItem> CHISELED_ABYSSALITE =
+			REGISTAR.register("chiseled_abyssalite",
+			() -> new BlockItem(BlockRegistry.CHISELED_ABYSSALITE.get(),
+					new Item.Properties()));
+	
+	public static final RegistryObject<BlockItem> ABYSSALITE_BRICKS =
+			REGISTAR.register("abyssalite_bricks",
+			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS.get(),
+					new Item.Properties()));
+	
+	public static final RegistryObject<BlockItem> CRACKED_ABYSSALITE_BRICKS =
+			REGISTAR.register("cracked_abyssalite_bricks",
+			() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
 					new Item.Properties()));
 	
 }

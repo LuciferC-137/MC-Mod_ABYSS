@@ -327,7 +327,16 @@ public class BlockRegistry {
 					 .noOcclusion()
 					 .lightLevel((state) -> 10)));
 	
-	public static final RegistryObject<Block> GRAVESTONE = REGISTAR.register("gravestone",
-			()->new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)
+	public static final RegistryObject<Block> ABYSSALITE = REGISTAR.register("abyssalite",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)
 					));
+	
+	public static final RegistryObject<Block> CHISELED_ABYSSALITE = REGISTAR.register("chiseled_abyssalite",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+	
+	public static final RegistryObject<Block> ABYSSALITE_BRICKS = REGISTAR.register("abyssalite_bricks",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+	
+	public static final RegistryObject<Block> CRACKED_ABYSSALITE_BRICKS = REGISTAR.register("cracked_abyssalite_bricks",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
 }

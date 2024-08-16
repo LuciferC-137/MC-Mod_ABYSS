@@ -12,7 +12,7 @@ public class ModSurfaceRules {
     private static final SurfaceRules.RuleSource DARKDIRT = makeStateRule(BlockRegistry.DARKDIRT.get());
     private static final SurfaceRules.RuleSource DARKGRASS = makeStateRule(BlockRegistry.DARKGRASS_BLOCK.get());
     private static final SurfaceRules.RuleSource DEEPSLATE = makeStateRule(Blocks.DEEPSLATE);
-    private static final SurfaceRules.RuleSource GRAVESTONE = makeStateRule(BlockRegistry.GRAVESTONE.get());
+    private static final SurfaceRules.RuleSource GRAVESTONE = makeStateRule(BlockRegistry.ABYSSALITE.get());
     private static final SurfaceRules.RuleSource BEDROCK = makeStateRule(Blocks.BEDROCK);
     
     private static final SurfaceRules.RuleSource DIRT = makeStateRule(Blocks.DIRT);

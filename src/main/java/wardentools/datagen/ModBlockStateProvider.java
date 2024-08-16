@@ -24,7 +24,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.WHITETREE_PLANKS);
         registerBlockWithItem(BlockRegistry.DEEPBLOCK);
         registerBlockWithItem(BlockRegistry.DARKDIRT);
-        registerBlockWithItem(BlockRegistry.GRAVESTONE);
+        registerBlockWithItem(BlockRegistry.ABYSSALITE);
+        registerBlockWithItem(BlockRegistry.ABYSSALITE_BRICKS);
+        registerBlockWithItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
 
         // Registering specific block models
         registerLeavesBlock(BlockRegistry.DARKTREE_LEAVES);

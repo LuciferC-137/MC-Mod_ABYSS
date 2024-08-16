@@ -3,6 +3,9 @@
     "wardentools:deepcristal",
     "wardentools:deepblock",
     "wardentools:pale_shard",
-    "wardentools:gravestone"
+    "wardentools:abyssalite",
+    "wardentools:chiseled_abyssalite",
+    "wardentools:abyssalite_bricks",
+    "wardentools:cracked_abyssalite_bricks"
   ]
 }
