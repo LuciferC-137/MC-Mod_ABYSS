@@ -51,6 +51,7 @@
 	"block.wardentools.darktree_trapdoor": "Trappe en sombrarbre",
 
 	"item.wardentools.darktree_boat": "Bateau en sombrarbre",
+	"item.wardentools.darktree_chest_boat": "Bateau avec coffre en sombrarbre",
 	
 	"block.wardentools.whitetree_log": "Bûche de Blancharbre",
 	"block.wardentools.whitetree_wood": "Bois de Blancharbre",
@@ -81,6 +82,8 @@
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",
 	"entity.wardentools.protector": "Protecteur",
 	"entity.wardentools.contagion_incarnation": "Incarnation de la Contagion",
+	"entity.wardentools.darktree_boat": "Bateau en sombrarbre",
+	"entity.wardentools.darktree_chest_boat": "Bateau avec coffre en sombrarbre",
 	
 	"creativetab.abyss_tab": "Abyss",
 	

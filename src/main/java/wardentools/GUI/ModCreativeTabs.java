@@ -36,6 +36,8 @@ public class ModCreativeTabs {
                         event.accept(ArmorRegistry.DEEPCRISTAL_BOOTS.get());
 
 						event.accept(ItemRegistry.DARKTREE_BOAT.get());
+						event.accept(ItemRegistry.DARKTREE_CHEST_BOAT.get());
+
                         
                         event.accept(ItemRegistry.DARKTREE_LOG.get());
                     	event.accept(ItemRegistry.DARKTREE_WOOD.get());

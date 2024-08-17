@@ -11,6 +11,8 @@ import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
+import wardentools.entity.custom.ModBoatEntity;
+import wardentools.entity.custom.ModChestBoatEntity;
 
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
@@ -335,6 +337,9 @@ public class ItemRegistry {
 
 	public static final RegistryObject<Item> DARKTREE_BOAT =
 			REGISTAR.register("darktree_boat",
-			() -> new Item(new Item.Properties()));
+			() -> new ModBoatItem(false, ModBoatEntity.Type.DARKTREE, new Item.Properties()));
 
+	public static final RegistryObject<Item> DARKTREE_CHEST_BOAT =
+			REGISTAR.register("darktree_chest_boat",
+			() -> new ModBoatItem(true, ModBoatEntity.Type.DARKTREE, new Item.Properties()));
 }
