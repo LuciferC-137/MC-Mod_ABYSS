@@ -34,6 +34,8 @@ public class ModCreativeTabs {
                         event.accept(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_BOOTS.get());
+
+						event.accept(ItemRegistry.DARKTREE_BOAT.get());
                         
                         event.accept(ItemRegistry.DARKTREE_LOG.get());
                     	event.accept(ItemRegistry.DARKTREE_WOOD.get());
@@ -71,7 +73,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.WHITETREE_FENCE_GATE.get());
                     	event.accept(ItemRegistry.WHITETREE_PRESSURE_PLATE.get());
                     	event.accept(ItemRegistry.WHITE_SEED.get());
-                    	
+
                     	event.accept(ItemRegistry.WHITE_GRASS.get());
                     	event.accept(ItemRegistry.TALL_WHITE_GRASS.get());
                     	event.accept(ItemRegistry.WHITE_TORCHFLOWER.get());

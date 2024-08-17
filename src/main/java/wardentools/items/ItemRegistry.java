@@ -332,5 +332,9 @@ public class ItemRegistry {
 			REGISTAR.register("cracked_abyssalite_bricks",
 			() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
 					new Item.Properties()));
-	
+
+	public static final RegistryObject<Item> DARKTREE_BOAT =
+			REGISTAR.register("darktree_boat",
+			() -> new Item(new Item.Properties()));
+
 }
