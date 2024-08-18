@@ -7,9 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
-import net.minecraftforge.registries.ForgeRegistries;
 import wardentools.ModMain;
-import wardentools.worldgen.ModBiomeModifiers;
 import wardentools.worldgen.ModPlacedFeatures;
 import wardentools.worldgen.biome.ModBiomes;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
@@ -25,7 +23,6 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
                  ModConfiguredFeatures.bootstrap(context);})
             .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
             .add(Registries.DIMENSION_TYPE, ModDimensions::bootstrapType)
-            .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap)
     		.add(Registries.LEVEL_STEM, ModDimensions::bootstrapStem)
     		.add(Registries.BIOME, ModBiomes::bootstrap)
     		.add(Registries.CONFIGURED_CARVER, ModConfiguredCarver::bootstrap)

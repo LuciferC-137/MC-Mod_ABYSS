@@ -1,6 +1,7 @@
 package wardentools;
 
 
+import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
@@ -25,7 +26,6 @@ import wardentools.items.ItemRegistry;
 import wardentools.items.PaintingsRegistry;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.sounds.ModSounds;
-import wardentools.worldgen.biome.ModTerrablender;
 import wardentools.worldgen.biome.surface.ModSurfaceRules;
 import wardentools.worldgen.tree.ModFoliagePlacers;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
@@ -53,8 +53,6 @@ public class ModMain {
 		MenuRegistry.MENU_TYPES.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 		ModSounds.SOUND_EVENTS.register(bus);
-		
-		ModTerrablender.registerBiomes();
 
         MinecraftForge.EVENT_BUS.register(this);
         

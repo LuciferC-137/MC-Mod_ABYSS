@@ -344,5 +344,28 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> ABYSSALITE_BRICKS_WALL =
 			REGISTAR.register("abyssalite_bricks_wall",
 			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_WALL.get(), new Item.Properties()));
-	
+
+	public static final RegistryObject<Item> DEEP_FRAGMENT =
+			REGISTAR.register("deep_fragment",
+					() -> new Item(new Item.Properties()));
+
+	public static final RegistryObject<BlockItem> ABYSSALITE_COAL_ORE =
+			REGISTAR.register("abyssalite_coal_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_COAL_ORE.get(),
+							new Item.Properties()));
+
+	public static final RegistryObject<BlockItem> ABYSSALITE_LAPIS_ORE =
+			REGISTAR.register("abyssalite_lapis_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_LAPIS_ORE.get(),
+							new Item.Properties()));
+
+	public static final RegistryObject<BlockItem> ABYSSALITE_DIAMOND_ORE =
+			REGISTAR.register("abyssalite_diamond_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get(),
+							new Item.Properties()));
+
+	public static final RegistryObject<BlockItem> ABYSSALITE_DEEP_ORE =
+			REGISTAR.register("abyssalite_deep_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
+							new Item.Properties()));
 }

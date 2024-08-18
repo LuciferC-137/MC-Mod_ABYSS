@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " E ",
+    "EEE",
+    " E "
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:deep_fragment"
+    }
+  },
+  "result": {
+    "item": "wardentools:deep_cristal"
+  }
+}

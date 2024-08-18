@@ -349,4 +349,16 @@ public class BlockRegistry {
 	
 	public static final RegistryObject<Block> ABYSSALITE_BRICKS_WALL = REGISTAR.register("abyssalite_bricks_wall",
 			() -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_WALL)));
+
+	public static final RegistryObject<Block> ABYSSALITE_COAL_ORE = REGISTAR.register("abyssalite_coal_ore",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+
+	public static final RegistryObject<Block> ABYSSALITE_LAPIS_ORE = REGISTAR.register("abyssalite_lapis_ore",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+
+	public static final RegistryObject<Block> ABYSSALITE_DIAMOND_ORE = REGISTAR.register("abyssalite_diamond_ore",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+
+	public static final RegistryObject<Block> ABYSSALITE_DEEP_ORE = REGISTAR.register("abyssalite_deep_ore",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
 }

@@ -27,6 +27,11 @@
 	"block.wardentools.abyssalite_bricks_stair": "Abyssalite Bricks Stair",
 	"block.wardentools.abyssalite_bricks_slab": "Abyssalite Bricks Slab",
 	"block.wardentools.cracked_abyssalite_bricks": "Cracked Abyssalite Bricks",
+	"block.wardentools.abyssalite_bricks_wall": "Abyssalite Bricks Wall",
+	"block.wardentools.abyssalite_coal_ore": "Abyssalite Coal Ore",
+	"block.wardentools.abyssalite_lapis_ore": "Abyssalite Lapis-Lazuli Ore",
+	"block.wardentools.abyssalite_diamond_ore": "Abyssalite Diamond Ore",
+	"block.wardentools.abyssalite_deep_ore": "Abyssalite Deep Ore",
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
 	"block.wardentools.protector_invoker": "Protector Invoker",
