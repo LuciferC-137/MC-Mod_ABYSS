@@ -91,6 +91,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.WHITETREE_TRAPDOOR.get()),
         		modLoc("block/whitetree_trap_door"), true, "cutout");
         
+        stairsBlock(((StairBlock)BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get()),
+        		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
+        slabBlock(((SlabBlock)BlockRegistry.ABYSSALITE_BRICKS_SLAB.get()),
+        		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()),
+        		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
+        wallBlock(((WallBlock)BlockRegistry.ABYSSALITE_BRICKS_WALL.get()),
+        		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
+        
     }
 
     private void registerCrossCutoutBlock(RegistryObject<Block> blockRegistryObject) {

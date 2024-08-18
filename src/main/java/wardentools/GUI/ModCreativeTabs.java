@@ -22,6 +22,8 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.ABYSSALITE.get());
                     	event.accept(ItemRegistry.CHISELED_ABYSSALITE.get());
                     	event.accept(ItemRegistry.ABYSSALITE_BRICKS.get());
+                    	event.accept(ItemRegistry.ABYSSALITE_BRICKS_STAIRS.get());
+                    	event.accept(ItemRegistry.ABYSSALITE_BRICKS_SLAB.get());
                     	event.accept(ItemRegistry.CRACKED_ABYSSALITE_BRICKS.get());
                     	
                     	event.accept(ItemRegistry.DEEPINGOTS.get());

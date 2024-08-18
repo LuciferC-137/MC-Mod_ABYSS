@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E",
+    "E"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:abyssalite_bricks_slab"
+    }
+  },
+  "result": {
+    "item": "wardentools:chiseled_abyssalite"
+  }
+}

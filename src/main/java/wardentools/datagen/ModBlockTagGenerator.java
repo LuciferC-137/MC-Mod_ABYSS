@@ -27,6 +27,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             .add(BlockRegistry.ABYSSALITE.get())
             .add(BlockRegistry.CHISELED_ABYSSALITE.get())
             .add(BlockRegistry.ABYSSALITE_BRICKS.get())
+            .add(BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get())
+            .add(BlockRegistry.ABYSSALITE_BRICKS_SLAB.get())
             .add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get());
 
 
@@ -62,6 +64,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.DARKTREE_FENCE_GATE.get())
 			.add(BlockRegistry.WHITETREE_FENCE_GATE.get());
 		
+		this.tag(BlockTags.WALLS)
+			.add(BlockRegistry.ABYSSALITE_BRICKS_WALL.get());
+		
 		this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
 			.add(BlockRegistry.DARKGRASS_BLOCK.get())
 			.add(BlockRegistry.DARKDIRT.get());
@@ -80,6 +85,5 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 		
 		this.tag(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
 		.add(BlockRegistry.ABYSSALITE.get());
-
     }
 }

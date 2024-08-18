@@ -1,4 +1,7 @@
-// 1.20.4	2024-08-16T10:19:16.9637996	Item Models: wardentools
+// 1.20.4	2024-08-17T19:42:43.3983753	Item Models: wardentools
+6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
+dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
+cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
 953870e2f0fd3ec8c1e95656a9f7e457d7ec61ca assets/wardentools/models/item/blue_bush.json
 2386ecb76616df62ada50922746a42f34a611cac assets/wardentools/models/item/chiseled_abyssalite.json
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json

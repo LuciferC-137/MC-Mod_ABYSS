@@ -115,12 +115,16 @@ public class ModItemModelProvider extends ItemModelProvider {
         		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_pressure_plate"));
         withExistingParent(BlockRegistry.WHITETREE_FENCE_GATE.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_fence_gate"));
+
         withExistingParent(BlockRegistry.RADIANCE_CATALYST.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/radiance_catalyst"));
         withExistingParent(BlockRegistry.CHISELED_ABYSSALITE.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/chiseled_abyssalite"));
-        
-        
+        withExistingParent(BlockRegistry.ABYSSALITE_BRICKS_STAIRS.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks_stair"));
+        withExistingParent(BlockRegistry.ABYSSALITE_BRICKS_SLAB.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks_slab"));
+
         //Blocks that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);
         buttonItem(BlockRegistry.DARKTREE_BUTTON, BlockRegistry.DARKTREE_PLANKS);
@@ -128,6 +132,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         fenceItem(BlockRegistry.WHITETREE_FENCE, BlockRegistry.WHITETREE_PLANKS);
         buttonItem(BlockRegistry.WHITETREE_BUTTON, BlockRegistry.WHITETREE_PLANKS);
         trapdoorItem(BlockRegistry.WHITETREE_TRAPDOOR);
+        wallItem(BlockRegistry.ABYSSALITE_BRICKS_WALL, BlockRegistry.ABYSSALITE_BRICKS);
         
     }
     
@@ -157,6 +162,11 @@ public class ModItemModelProvider extends ItemModelProvider {
     public void buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
                 .texture("texture",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    }
+    
+    public void wallItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
     
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {

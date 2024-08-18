@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE",
+    "EE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:abyssalite"
+    }
+  },
+  "result": {
+    "item": "wardentools:abyssalite_bricks",
+    "count": 4
+  }
+}

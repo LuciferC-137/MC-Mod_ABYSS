@@ -118,7 +118,7 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
 			this.ambient.animateWhen(!this.walkAnimation.isMoving() && !this.isDeadOrDying(), this.tickCount);
 			this.sprint.animateWhen(this.isSprinting(), this.tickCount);
 			this.headAmbient.animateWhen(!this.getLookControl().isLookingAtTarget()
-					&& !this.isSprinting() && !this.isDeadOrDying(), this.tickCount);
+					&& !this.isSprinting(), this.tickCount);
 		}
 		super.tick();
 	}

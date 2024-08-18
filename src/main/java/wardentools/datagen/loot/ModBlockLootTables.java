@@ -32,6 +32,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.ABYSSALITE);
     	this.addDropSelf(BlockRegistry.CHISELED_ABYSSALITE);
     	this.addDropSelf(BlockRegistry.ABYSSALITE_BRICKS);
+    	this.addDropSelf(BlockRegistry.ABYSSALITE_BRICKS_STAIRS);
+    	this.addDropSelf(BlockRegistry.ABYSSALITE_BRICKS_SLAB);
+    	this.addDropSelf(BlockRegistry.ABYSSALITE_BRICKS_WALL);
     	this.addDropSelf(BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
     	
     	this.addDropSelf(BlockRegistry.DARKTREE_LOG);

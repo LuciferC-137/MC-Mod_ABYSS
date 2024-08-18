@@ -333,4 +333,16 @@ public class ItemRegistry {
 			() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
 					new Item.Properties()));
 	
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_STAIRS =
+			REGISTAR.register("abyssalite_bricks_stair",
+			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_SLAB =
+			REGISTAR.register("abyssalite_bricks_slab",
+			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_SLAB.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_WALL =
+			REGISTAR.register("abyssalite_bricks_wall",
+			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_WALL.get(), new Item.Properties()));
+	
 }

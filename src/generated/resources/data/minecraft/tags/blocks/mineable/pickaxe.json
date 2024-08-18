@@ -6,6 +6,8 @@
     "wardentools:abyssalite",
     "wardentools:chiseled_abyssalite",
     "wardentools:abyssalite_bricks",
+    "wardentools:abyssalite_bricks_stair",
+    "wardentools:abyssalite_bricks_slab",
     "wardentools:cracked_abyssalite_bricks"
   ]
 }
