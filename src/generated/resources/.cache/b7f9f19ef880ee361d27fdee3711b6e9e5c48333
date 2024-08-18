@@ -1,10 +1,11 @@
-// 1.20.4	2024-08-17T10:11:12.215778	Item Models: wardentools
+// 1.20.4	2024-08-18T09:46:31.513803	Item Models: wardentools
 953870e2f0fd3ec8c1e95656a9f7e457d7ec61ca assets/wardentools/models/item/blue_bush.json
 2386ecb76616df62ada50922746a42f34a611cac assets/wardentools/models/item/chiseled_abyssalite.json
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
 2db4f823d6a343d8a598793326fe6a661a1dae18 assets/wardentools/models/item/darktree_boat.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
+56691d71f6e26ed48bcd0dc29d2ef80ac9fffc15 assets/wardentools/models/item/darktree_chest_boat.json
 2ff2920242f212bb929d1e90c3067d261230dab1 assets/wardentools/models/item/darktree_door.json
 3354bf96093acd396295256292028c0a8676e6c7 assets/wardentools/models/item/darktree_fence.json
 177c0163bab52f7c11f49d214085cdc5971b8fea assets/wardentools/models/item/darktree_fence_gate.json
