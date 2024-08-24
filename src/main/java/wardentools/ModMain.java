@@ -1,10 +1,7 @@
 package wardentools;
 
-
-import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
-
 
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
@@ -15,7 +12,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import terrablender.api.SurfaceRuleManager;
 import wardentools.GUI.MenuRegistry;
 import wardentools.GUI.ModCreativeTabs;
 import wardentools.armors.ArmorRegistry;
@@ -26,7 +22,6 @@ import wardentools.items.ItemRegistry;
 import wardentools.items.PaintingsRegistry;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.sounds.ModSounds;
-import wardentools.worldgen.biome.surface.ModSurfaceRules;
 import wardentools.worldgen.tree.ModFoliagePlacers;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 
