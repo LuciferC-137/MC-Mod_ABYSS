@@ -9,6 +9,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.carver.CarverDebugSettings;
 import net.minecraft.world.level.levelgen.carver.CaveCarverConfiguration;
@@ -28,20 +29,18 @@ public class ModConfiguredCarver {
 		ctx.register(ABYSS_CAVE, WorldCarver.CAVE.configured(getCaveCarver(ctx)));
  
 	}
-	
-	
+
 	public static CaveCarverConfiguration getCaveCarver(BootstapContext<ConfiguredWorldCarver<?>> ctx) {
     	HolderGetter<Block> holdergetter = ctx.lookup(Registries.BLOCK);
     	return new CaveCarverConfiguration(
     			0.2F, //cave probability
     			UniformHeight.of(VerticalAnchor.aboveBottom(8), VerticalAnchor.absolute(30)), // min & max of height
     			UniformFloat.of(1F, 5F), // tunnel size
-    			VerticalAnchor.aboveBottom(8), //lava level
+    			VerticalAnchor.aboveBottom(0), //lava level
     			CarverDebugSettings.of(false, Blocks.CRIMSON_BUTTON.defaultBlockState()),
     			holdergetter.getOrThrow(BlockTags.OVERWORLD_CARVER_REPLACEABLES),
     			UniformFloat.of(2F, 3.5F), //horizontal radius multiplier
     			UniformFloat.of(5F, 7F), //vertical radius multiplier
     			UniformFloat.of(-1.0F, -0.5F)); //floor level
     }
-
 }

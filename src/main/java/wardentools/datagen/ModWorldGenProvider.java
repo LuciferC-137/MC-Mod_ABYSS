@@ -2,6 +2,7 @@ package wardentools.datagen;
 
 
 import net.minecraft.core.registries.Registries;
+import wardentools.worldgen.CustomNoiseSettings;
 import wardentools.worldgen.ModConfiguredFeatures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -26,6 +27,7 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
     		.add(Registries.LEVEL_STEM, ModDimensions::bootstrapStem)
     		.add(Registries.BIOME, ModBiomes::bootstrap)
     		.add(Registries.CONFIGURED_CARVER, ModConfiguredCarver::bootstrap)
+            .add(Registries.NOISE_SETTINGS, CustomNoiseSettings::bootstrap)
     		;
 
     public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

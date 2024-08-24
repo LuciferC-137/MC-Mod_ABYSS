@@ -43,6 +43,6 @@
         }
       ]
     },
-    "settings": "minecraft:overworld"
+    "settings": "wardentools:abyss_noise"
   }
 }

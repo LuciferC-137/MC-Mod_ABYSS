@@ -27,10 +27,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.ABYSSALITE);
         registerBlockWithItem(BlockRegistry.ABYSSALITE_BRICKS);
         registerBlockWithItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
-        registerBlockWithItem(BlockRegistry.ABYSSALITE_COAL_ORE);
-        registerBlockWithItem(BlockRegistry.ABYSSALITE_LAPIS_ORE);
-        registerBlockWithItem(BlockRegistry.ABYSSALITE_DIAMOND_ORE);
-        registerBlockWithItem(BlockRegistry.ABYSSALITE_DEEP_ORE);
+
+        // Registering ores blocks with item models
+        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_COAL_ORE);
+        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_LAPIS_ORE);
+        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_DIAMOND_ORE);
+        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_DEEP_ORE);
 
         // Registering specific block models
         registerLeavesBlock(BlockRegistry.DARKTREE_LEAVES);
@@ -120,6 +122,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
     
 
     private void registerBlockWithItem(RegistryObject<Block> blockRegistryObject) {
+        simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
+    }
+
+    private void registerDropExperienceBlockWithItem(
+            RegistryObject<DropExperienceBlock> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
     

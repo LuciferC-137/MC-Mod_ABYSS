@@ -82,8 +82,5 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 		
 		this.tag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
 			.add(BlockRegistry.ABYSSALITE.get());
-		
-		this.tag(BlockTags.DEEPSLATE_ORE_REPLACEABLES)
-		.add(BlockRegistry.ABYSSALITE.get());
     }
 }

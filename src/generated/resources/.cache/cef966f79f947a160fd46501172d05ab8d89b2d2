@@ -1,7 +1,6 @@
-// 1.20.4	2024-08-17T19:29:36.8590179	Tags for minecraft:block mod id wardentools
+// 1.20.4	2024-08-24T10:13:30.9121121	Tags for minecraft:block mod id wardentools
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/blocks/ancient_city_replaceable.json
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/blocks/animals_spawnable_on.json
-f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/blocks/deepslate_ore_replaceables.json
 fe0dfed652c709c1c46de9234483b847471a0111 data/minecraft/tags/blocks/dirt.json
 aa1a853c7ebdc7617fc951ed87bde709518e78df data/minecraft/tags/blocks/fences.json
 fd8eb08f938bf92ef328db40c3c4d43af55e707d data/minecraft/tags/blocks/fence_gates.json

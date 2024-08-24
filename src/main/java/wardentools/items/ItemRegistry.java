@@ -367,5 +367,5 @@ public class ItemRegistry {
 	public static final RegistryObject<BlockItem> ABYSSALITE_DEEP_ORE =
 			REGISTAR.register("abyssalite_deep_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
-							new Item.Properties()));
+							new Item.Properties().fireResistant()));
 }

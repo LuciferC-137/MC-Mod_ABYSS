@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -328,37 +329,41 @@ public class BlockRegistry {
 					 .lightLevel((state) -> 10)));
 	
 	public static final RegistryObject<Block> ABYSSALITE = REGISTAR.register("abyssalite",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(4,7)
 					));
 	
 	public static final RegistryObject<Block> CHISELED_ABYSSALITE = REGISTAR.register("chiseled_abyssalite",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(4,7)));
 	
 	public static final RegistryObject<Block> ABYSSALITE_BRICKS = REGISTAR.register("abyssalite_bricks",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(4,7)));
 	
 	public static final RegistryObject<Block> CRACKED_ABYSSALITE_BRICKS = REGISTAR.register("cracked_abyssalite_bricks",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(4,7)));
 	
 	public static final RegistryObject<Block> ABYSSALITE_BRICKS_STAIRS = REGISTAR.register("abyssalite_bricks_stair",
             () -> new StairBlock(Blocks.BLACKSTONE_STAIRS.defaultBlockState(),
-            		BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_STAIRS)));
+            		BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_STAIRS).strength(4,7)));
 	
 	public static final RegistryObject<Block> ABYSSALITE_BRICKS_SLAB = REGISTAR.register("abyssalite_bricks_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_SLAB)));
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_SLAB).strength(4,7)));
 	
 	public static final RegistryObject<Block> ABYSSALITE_BRICKS_WALL = REGISTAR.register("abyssalite_bricks_wall",
-			() -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_WALL)));
+			() -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_WALL).strength(4,7)));
 
-	public static final RegistryObject<Block> ABYSSALITE_COAL_ORE = REGISTAR.register("abyssalite_coal_ore",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_COAL_ORE = REGISTAR.register("abyssalite_coal_ore",
+			() -> new DropExperienceBlock(UniformInt.of(1, 3),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(5,8)));
 
-	public static final RegistryObject<Block> ABYSSALITE_LAPIS_ORE = REGISTAR.register("abyssalite_lapis_ore",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_LAPIS_ORE = REGISTAR.register("abyssalite_lapis_ore",
+			() -> new DropExperienceBlock(UniformInt.of(3,6),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(5,8)));
 
-	public static final RegistryObject<Block> ABYSSALITE_DIAMOND_ORE = REGISTAR.register("abyssalite_diamond_ore",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_DIAMOND_ORE = REGISTAR.register("abyssalite_diamond_ore",
+			() -> new DropExperienceBlock(UniformInt.of(4,8),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(5,8)));
 
-	public static final RegistryObject<Block> ABYSSALITE_DEEP_ORE = REGISTAR.register("abyssalite_deep_ore",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_DEEP_ORE = REGISTAR.register("abyssalite_deep_ore",
+			() -> new DropExperienceBlock(UniformInt.of(7,10),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(6,9)));
 }

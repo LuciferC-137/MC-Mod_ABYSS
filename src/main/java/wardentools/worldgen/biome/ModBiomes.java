@@ -15,6 +15,7 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.worldgen.ModPlacedFeatures;
@@ -39,15 +40,25 @@ public class ModBiomes {
 
     public static void globalAbyssGeneration(BiomeGenerationSettings.Builder builder) {
         //BiomeDefaultFeatures.addDefaultCarversAndLakes(builder);
-        BiomeDefaultFeatures.addDefaultUndergroundVariety(builder);
+        //BiomeDefaultFeatures.addDefaultUndergroundVariety(builder);
         BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
-        BiomeDefaultFeatures.addDefaultOres(builder);
         BiomeDefaultFeatures.addDefaultMushrooms(builder);
     }
     
     public static void defaultAbyssCaves(BiomeGenerationSettings.Builder builder) {
     	builder.addCarver(GenerationStep.Carving.AIR, ModConfiguredCarver.ABYSS_CAVE);
-        builder.addCarver(GenerationStep.Carving.AIR, Carvers.CAVE);
+    }
+
+    public static void defaultAbyssOres(BiomeGenerationSettings.Builder builder){
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.COAL_ORE_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.LAPIS_ORE_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DIAMOND_ORE_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_ORE_KEY);
+    }
+
+    public static void defaultAbyssSculk(BiomeGenerationSettings.Builder builder){
+        builder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, CavePlacements.SCULK_PATCH_DEEP_DARK);
+        builder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, CavePlacements.SCULK_VEIN);
     }
 
     public static Biome deepForest(BootstapContext<Biome> context) {
@@ -63,14 +74,12 @@ public class ModBiomes {
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(
                 		context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
-        
-        //need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
+
         globalAbyssGeneration(biomeBuilder);
-        
         defaultAbyssCaves(biomeBuilder);
-        
-        biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, CavePlacements.SCULK_PATCH_DEEP_DARK);
-        biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, CavePlacements.SCULK_VEIN);
+        defaultAbyssOres(biomeBuilder);
+        defaultAbyssSculk(biomeBuilder);
+
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DARKTREE_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DEEPFLOWER_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BLUE_BUSH_KEY);
@@ -111,8 +120,8 @@ public class ModBiomes {
         
         globalAbyssGeneration(biomeBuilder);
         BiomeDefaultFeatures.addSurfaceFreezing(biomeBuilder);
-        BiomeDefaultFeatures.addSculk(biomeBuilder);
-        
+        defaultAbyssSculk(biomeBuilder);
+        defaultAbyssOres(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
 
         return new Biome.BiomeBuilder()
@@ -146,12 +155,12 @@ public class ModBiomes {
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(
                 		context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
-        
-        //need to follow the same order as vanilla biomes for the BiomeDefaultFeatures
+
         globalAbyssGeneration(biomeBuilder);
-        
+        defaultAbyssOres(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
-        
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, CavePlacements.SCULK_PATCH_DEEP_DARK);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.WHITETREE_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.WHITE_GRASS_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.TALL_WHITE_GRASS_KEY);

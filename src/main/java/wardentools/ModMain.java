@@ -64,8 +64,8 @@ public class ModMain {
 	}
 	
 	private void commonSetup(final FMLCommonSetupEvent event) {
-		SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD,
-				MOD_ID, ModSurfaceRules.makeRules());
+		//SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD,
+		//		MOD_ID, ModSurfaceRules.makeRules());
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);

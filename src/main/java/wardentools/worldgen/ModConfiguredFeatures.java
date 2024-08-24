@@ -1,26 +1,31 @@
 package wardentools.worldgen;
 
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
 import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.WhitetreeTrunkPlacer;
+
+import java.util.List;
 
 
 public class ModConfiguredFeatures {
@@ -34,6 +39,10 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_BUSH = registerKey("blue_bush");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DARK_GRASS = registerKey("tall_dark_grass");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DARK_GRASS = registerKey("dark_grass");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> COAL_ORE = registerKey("coal_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> LAPIS_ORE = registerKey("lapis_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DIAMOND_ORE = registerKey("diamond_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEP_ORE = registerKey("deep_ore");
 	
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -71,28 +80,54 @@ public class ModConfiguredFeatures {
     	
     	register(context, DARK_GRASS, Feature.RANDOM_PATCH,
     			grassPatch(BlockStateProvider.simple(BlockRegistry.DARK_GRASS.get()), 15));
-    	  	
-    	//Holder<PlacedFeature> vegetationFeature = context.lookup(Registries.PLACED_FEATURE)
-    	//		.getOrThrow(ModPlacedFeatures.CHERRY_KEY);
-    	
-    	//register(context, WHITE_VEGETATION, Feature.VEGETATION_PATCH, new VegetationPatchConfiguration(
-        //        BlockTags.DIRT,
-        //        BlockStateProvider.simple(Blocks.GRASS_BLOCK.defaultBlockState()),
-        //        vegetationFeature,
-        //        CaveSurface.FLOOR,
-        //        UniformInt.of(2, 5), // Vegetation size
-        //        0.4f, // Vegetation density
-        //        10, // Maximum plants per chunck
-        //        0.7f, // Apparition probability
-        //        UniformInt.of(2, 4), // Size of the patch
-        //        0.6f // Additionnal apparition probability
-        //));
+
+		register(context, COAL_ORE, Feature.ORE,
+				oreGeneration(17, 0.0F,
+						BlockRegistry.ABYSSALITE_COAL_ORE.get(), Blocks.DEEPSLATE_COAL_ORE));
+
+		register(context, LAPIS_ORE, Feature.ORE,
+				oreGeneration(8, 0.0F,
+						BlockRegistry.ABYSSALITE_LAPIS_ORE.get(), Blocks.DEEPSLATE_LAPIS_ORE));
+
+		register(context, DIAMOND_ORE, Feature.ORE,
+				oreGeneration(8, 0.7F,
+						BlockRegistry.ABYSSALITE_DIAMOND_ORE.get(), Blocks.DEEPSLATE_DIAMOND_ORE));
+
+		register(context, DEEP_ORE, Feature.ORE,
+				oreGeneration(5, 0.0F,
+						BlockRegistry.ABYSSALITE_DEEP_ORE.get()));
+
     }
 	
 	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int p_195204_) {
         return FeatureUtils.simpleRandomPatchConfiguration(p_195204_,
         		PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(stateProvider)));
-     }
+    }
+
+	public static OreConfiguration oreGeneration(int size, float discardChanceOnAirExposure,
+									  Block abyssaliteReplaceable, Block deepslateReplaceable){
+		// Configure the target for abyssalite replacement
+		OreConfiguration.TargetBlockState abyssaliteTarget = OreConfiguration
+				.target(new BlockMatchTest(BlockRegistry.ABYSSALITE.get()),
+						abyssaliteReplaceable.defaultBlockState());
+		// Configure the target for deepslate replacement
+		OreConfiguration.TargetBlockState deepslateTarget = OreConfiguration
+				.target(new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES),
+						deepslateReplaceable.defaultBlockState());
+		// Create the ore configuration
+		return new OreConfiguration(
+				List.of(abyssaliteTarget, deepslateTarget),
+				size, discardChanceOnAirExposure);
+	}
+
+	public static OreConfiguration oreGeneration(int size, float discardChanceOnAirExposure,
+				 Block abyssaliteReplaceable){
+		OreConfiguration.TargetBlockState abyssaliteTarget = OreConfiguration
+				.target(new BlockMatchTest(BlockRegistry.ABYSSALITE.get()),
+						abyssaliteReplaceable.defaultBlockState());
+
+		return new OreConfiguration(List.of(abyssaliteTarget), size, discardChanceOnAirExposure);
+	}
     
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ModMain.MOD_ID, name));
@@ -102,8 +137,6 @@ public class ModConfiguredFeatures {
     register(BootstapContext<ConfiguredFeature<?, ?>> context,
         ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
         	context.register(key, new ConfiguredFeature<>(feature, configuration));
-    	}
-    
-    
+	}
     
 }

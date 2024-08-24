@@ -10,14 +10,13 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
-import net.minecraft.world.level.levelgen.placement.NoiseThresholdCountPlacement;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.*;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 
+import java.time.InstantSource;
 import java.util.List;
 
 public class ModPlacedFeatures {
@@ -30,6 +29,11 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> BLUE_BUSH_KEY = registerKey("blue_bush");
 	public static final ResourceKey<PlacedFeature> TALL_DARK_GRASS_KEY = registerKey("tall_dark_grass");
 	public static final ResourceKey<PlacedFeature> DARK_GRASS_KEY = registerKey("dark_grass");
+	public static final ResourceKey<PlacedFeature> COAL_ORE_KEY = registerKey("coal_ore");
+	public static final ResourceKey<PlacedFeature> LAPIS_ORE_KEY = registerKey("lapis_ore");
+	public static final ResourceKey<PlacedFeature> DIAMOND_ORE_KEY = registerKey("diamond_ore");
+	public static final ResourceKey<PlacedFeature> DEEP_ORE_KEY = registerKey("deep_ore");
+	public static final ResourceKey<PlacedFeature> VOID_LAKE = registerKey("void_lake");
 	
 	
 	public static void bootstrap(BootstapContext<PlacedFeature> context) {
@@ -94,10 +98,58 @@ public class ModPlacedFeatures {
         				PlacementUtils.HEIGHTMAP
         				));
 
+		register(
+				context,
+				COAL_ORE_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.COAL_ORE),
+				List.of(
+						CountPlacement.of(20),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.triangle(
+								VerticalAnchor.absolute(-24), VerticalAnchor.absolute(192)),
+						BiomeFilter.biome()
+				)
+		);
+
+		register(
+				context,
+				LAPIS_ORE_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.LAPIS_ORE),
+				List.of(
+						CountPlacement.of(10),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.triangle(
+								VerticalAnchor.absolute(-44), VerticalAnchor.absolute(54)),
+						BiomeFilter.biome()
+				)
+		);
+
+		register(
+				context,
+				DIAMOND_ORE_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.DIAMOND_ORE),
+				List.of(
+						CountPlacement.of(9),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.triangle(
+								VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32)),
+						BiomeFilter.biome()
+				)
+		);
+
+		register(
+				context,
+				DEEP_ORE_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.DEEP_ORE),
+				List.of(
+						CountPlacement.of(6),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.triangle(
+								VerticalAnchor.absolute(-80), VerticalAnchor.absolute(10)),
+						BiomeFilter.biome()
+				)
+		);
     }
-	
-	
-	
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(ModMain.MOD_ID, name));
@@ -107,5 +159,4 @@ public class ModPlacedFeatures {
                                  List<PlacementModifier> modifiers) {
         context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
     }
-
 }

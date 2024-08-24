@@ -21,7 +21,6 @@ public class ModSurfaceRules {
     public static SurfaceRules.RuleSource makeRules() {
         SurfaceRules.ConditionSource isAtOrAboveWaterLevel = SurfaceRules.waterBlockCheck(-1, 0);
 
-        
         // Default grass surface in the overworld
        SurfaceRules.RuleSource defaultOverWorld = SurfaceRules.sequence(
     		   SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
