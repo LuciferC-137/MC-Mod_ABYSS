@@ -14,6 +14,12 @@
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
+    "particle": {
+      "options": {
+        "type": "wardentools:abyss_ambient"
+      },
+      "probability": 0.02
+    },
     "sky_color": 2844,
     "water_color": 674907,
     "water_fog_color": 2844
@@ -24,8 +30,7 @@
     ],
     [],
     [
-      "minecraft:amethyst_geode",
-      "minecraft:sculk_patch_deep_dark"
+      "minecraft:amethyst_geode"
     ],
     [],
     [],

@@ -1,8 +1,10 @@
 package wardentools.events;
 
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,6 +17,8 @@ import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.entity.custom.PaleWandererEntity;
 import wardentools.entity.custom.ProtectorEntity;
 import wardentools.network.PacketHandler;
+import wardentools.particle.ParticleRegistry;
+import wardentools.particle.custom.AbyssAmbient;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonModEvents {
@@ -56,4 +60,10 @@ public class CommonModEvents {
     			ContagionIncarnationEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     }
+
+	@SubscribeEvent
+	public static void registerParticles(RegisterParticleProvidersEvent event) {
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.ABYSS_AMBIENT.get(),
+				AbyssAmbient.Provider::new);
+	}
 }

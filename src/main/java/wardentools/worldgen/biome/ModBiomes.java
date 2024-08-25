@@ -8,14 +8,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.AmbientMoodSettings;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
+import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.features.ModPlacedFeatures;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
 
@@ -58,6 +55,18 @@ public class ModBiomes {
         builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_VEIN);
     }
 
+    public static BiomeSpecialEffects.Builder commonBiomeSpecialEffects(){
+        return new BiomeSpecialEffects.Builder()
+                .waterColor(WATER_COLOR)
+                .waterFogColor(FOG_COLOR)
+                .skyColor(FOG_COLOR)
+                .grassColorOverride(0x147B75)
+                .foliageColorOverride(0x147B63)
+                .fogColor(FOG_COLOR)
+                .ambientParticle(new AmbientParticleSettings(ParticleRegistry.ABYSS_AMBIENT.get(), 0.02F))
+                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS);
+    }
+
     public static Biome deepForest(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
@@ -82,23 +91,14 @@ public class ModBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BLUE_BUSH_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.TALL_DARK_GRASS_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.DARK_GRASS_KEY);
-        
+
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
                 .downfall(0.8f)
                 .temperature(0.7f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
-                .specialEffects((new BiomeSpecialEffects.Builder())
-                .waterColor(WATER_COLOR)
-                .waterFogColor(FOG_COLOR)
-                .skyColor(FOG_COLOR)
-                .grassColorOverride(0x147B75)
-                .foliageColorOverride(0x147B63)
-                .fogColor(FOG_COLOR)
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                //.backgroundMusic(Musics.createGameMusic())
-                .build()).build();
+                .specialEffects(commonBiomeSpecialEffects().build()).build();
     }
     
     public static Biome wasteLand(BootstapContext<Biome> context) {
@@ -127,16 +127,7 @@ public class ModBiomes {
                 .temperature(0.7f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
-                .specialEffects((new BiomeSpecialEffects.Builder())
-                .waterColor(WATER_COLOR)
-                .waterFogColor(FOG_COLOR)
-                .skyColor(FOG_COLOR)
-                .grassColorOverride(0x147B75)
-                .foliageColorOverride(0x147B63)
-                .fogColor(FOG_COLOR)
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                //.backgroundMusic(Musics.createGameMusic())
-                .build()).build();
+                .specialEffects(commonBiomeSpecialEffects().build()).build();
     }
     
     public static Biome whiteForest(BootstapContext<Biome> context) {
@@ -157,7 +148,6 @@ public class ModBiomes {
         defaultAbyssOres(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
 
-        biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, CavePlacements.SCULK_PATCH_DEEP_DARK);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.WHITETREE_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.WHITE_GRASS_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.TALL_WHITE_GRASS_KEY);
@@ -169,16 +159,6 @@ public class ModBiomes {
                 .temperature(0.7f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
-                .specialEffects((new BiomeSpecialEffects.Builder())
-                .waterColor(WATER_COLOR)
-                .waterFogColor(FOG_COLOR)
-                .skyColor(FOG_COLOR)
-                .grassColorOverride(0x147B75)
-                .foliageColorOverride(0x147B63)
-                .fogColor(FOG_COLOR)
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                //.backgroundMusic(Musics.createGameMusic())
-                .build()).build();
+                .specialEffects(commonBiomeSpecialEffects().build()).build();
     }
-
 }

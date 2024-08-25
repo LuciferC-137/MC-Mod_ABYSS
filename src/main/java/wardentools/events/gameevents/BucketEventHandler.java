@@ -25,7 +25,6 @@ public class BucketEventHandler {
             int y = ((int)pos.y()) - (pos.y() < 0 ? 1 : 0);
             int z = ((int)pos.z()) - (pos.z() < 0 ? 1 : 0);
             BlockState state = level.getBlockState(new BlockPos(x, y, z));
-            System.out.println(x + ", " + y + ", " + z);
             if (state.getBlock() == BlockRegistry.LIQUID_CORRUPTION_BLOCK.get()) {
                 event.setCanceled(true);
             }

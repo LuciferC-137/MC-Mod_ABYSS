@@ -23,6 +23,7 @@ import wardentools.fluid.ModFluidTypes;
 import wardentools.items.ItemRegistry;
 import wardentools.items.PaintingsRegistry;
 import wardentools.loot.WardenLootTableModifier;
+import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.features.ModFeatures;
 import wardentools.worldgen.tree.ModFoliagePlacers;
@@ -53,6 +54,7 @@ public class ModMain {
 		FluidRegistry.FLUIDS.register(bus);
 		ModFluidTypes.FLUID_TYPES.register(bus);
 		ModFeatures.FEATURES.register(bus);
+		ParticleRegistry.PARTICLE_TYPES.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
         
         bus.addListener(this::commonSetup);
