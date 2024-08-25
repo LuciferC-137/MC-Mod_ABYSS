@@ -1,4 +1,4 @@
-package wardentools.events;
+package wardentools.events.gameevents;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;

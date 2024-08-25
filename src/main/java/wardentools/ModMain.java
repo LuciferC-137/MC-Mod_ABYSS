@@ -18,13 +18,15 @@ import wardentools.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.entity.ModEntities;
+import wardentools.fluid.FluidRegistry;
+import wardentools.fluid.ModFluidTypes;
 import wardentools.items.ItemRegistry;
 import wardentools.items.PaintingsRegistry;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.sounds.ModSounds;
+import wardentools.worldgen.features.ModFeatures;
 import wardentools.worldgen.tree.ModFoliagePlacers;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
-
 
 
 @Mod(ModMain.MOD_ID)
@@ -48,7 +50,9 @@ public class ModMain {
 		MenuRegistry.MENU_TYPES.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 		ModSounds.SOUND_EVENTS.register(bus);
-
+		FluidRegistry.FLUIDS.register(bus);
+		ModFluidTypes.FLUID_TYPES.register(bus);
+		ModFeatures.FEATURES.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
         
         bus.addListener(this::commonSetup);
@@ -59,22 +63,18 @@ public class ModMain {
 	}
 	
 	private void commonSetup(final FMLCommonSetupEvent event) {
-		//SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD,
-		//		MOD_ID, ModSurfaceRules.makeRules());
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
 		});
 
     }
-	
-		
+
 	private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ItemRegistry.DEEPINGOTS);
         }
 	}
-	
 }
 
 

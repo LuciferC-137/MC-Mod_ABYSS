@@ -141,7 +141,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	        BlockRegistry.DARKTREE_LEAVES.get(),
     	        BlockRegistry.WHITETREE_LEAVES.get(),
     	        BlockRegistry.RADIANCE_CATALYST.get(),
-				BlockRegistry.DEEP_CRISTAL.get()
+				BlockRegistry.DEEP_CRISTAL.get(),
+				BlockRegistry.LIQUID_CORRUPTION_BLOCK.get()
     	);
     	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
     	        .map(RegistryObject::get)

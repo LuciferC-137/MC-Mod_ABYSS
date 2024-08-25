@@ -17,7 +17,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.worldgen.ModConfiguredFeatures;
+import wardentools.fluid.FluidRegistry;
+import wardentools.worldgen.features.ModConfiguredFeatures;
 
 public class BlockRegistry {
 	public static final DeferredRegister<Block> REGISTAR = DeferredRegister.create(ForgeRegistries.BLOCKS, ModMain.MOD_ID);
@@ -366,4 +367,9 @@ public class BlockRegistry {
 	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_DEEP_ORE = REGISTAR.register("abyssalite_deep_ore",
 			() -> new DropExperienceBlock(UniformInt.of(7,10),
 					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(6,9)));
+
+	public static final RegistryObject<LiquidCorruptionBlock> LIQUID_CORRUPTION_BLOCK
+			= REGISTAR.register("liquid_corruption_block",
+				() -> new LiquidCorruptionBlock(FluidRegistry.SOURCE_LIQUID_CORRUPTION,
+						BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA).speedFactor(0.5f)));
 }

@@ -18,12 +18,12 @@
     "water_fog_color": 2844
   },
   "features": [
-    [],
+    [
+      "wardentools:liquid_corruption_lake"
+    ],
     [],
     [
-      "minecraft:amethyst_geode",
-      "minecraft:sculk_patch_deep_dark",
-      "minecraft:sculk_vein"
+      "minecraft:amethyst_geode"
     ],
     [],
     [],
@@ -34,7 +34,10 @@
       "wardentools:diamond_ore",
       "wardentools:deep_ore"
     ],
-    [],
+    [
+      "minecraft:sculk_patch_deep_dark",
+      "minecraft:sculk_vein"
+    ],
     [],
     [
       "minecraft:brown_mushroom_normal",

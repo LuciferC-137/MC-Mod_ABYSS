@@ -1,4 +1,4 @@
-package wardentools.events;
+package wardentools.events.gameevents;
 
 import com.mojang.blaze3d.platform.Window;
 

@@ -1,4 +1,4 @@
-package wardentools.worldgen;
+package wardentools.worldgen.features;
 
 
 
@@ -16,7 +16,6 @@ import net.minecraft.world.level.levelgen.placement.*;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 
-import java.time.InstantSource;
 import java.util.List;
 
 public class ModPlacedFeatures {
@@ -33,7 +32,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> LAPIS_ORE_KEY = registerKey("lapis_ore");
 	public static final ResourceKey<PlacedFeature> DIAMOND_ORE_KEY = registerKey("diamond_ore");
 	public static final ResourceKey<PlacedFeature> DEEP_ORE_KEY = registerKey("deep_ore");
-	public static final ResourceKey<PlacedFeature> VOID_LAKE = registerKey("void_lake");
+	public static final ResourceKey<PlacedFeature> LIQUID_CORRUPTION_LAKE_KEY = registerKey("liquid_corruption_lake");
 	
 	
 	public static void bootstrap(BootstapContext<PlacedFeature> context) {
@@ -98,8 +97,7 @@ public class ModPlacedFeatures {
         				PlacementUtils.HEIGHTMAP
         				));
 
-		register(
-				context,
+		register(context,
 				COAL_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.COAL_ORE),
 				List.of(
@@ -111,8 +109,7 @@ public class ModPlacedFeatures {
 				)
 		);
 
-		register(
-				context,
+		register(context,
 				LAPIS_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.LAPIS_ORE),
 				List.of(
@@ -124,8 +121,7 @@ public class ModPlacedFeatures {
 				)
 		);
 
-		register(
-				context,
+		register(context,
 				DIAMOND_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.DIAMOND_ORE),
 				List.of(
@@ -137,8 +133,7 @@ public class ModPlacedFeatures {
 				)
 		);
 
-		register(
-				context,
+		register(context,
 				DEEP_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.DEEP_ORE),
 				List.of(
@@ -149,6 +144,12 @@ public class ModPlacedFeatures {
 						BiomeFilter.biome()
 				)
 		);
+
+		register(context, LIQUID_CORRUPTION_LAKE_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.LIQUID_CORRUPTION_FLOOR),
+				List.of(
+						CountPlacement.of(1)
+				));
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {

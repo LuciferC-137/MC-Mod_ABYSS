@@ -3,7 +3,6 @@ package wardentools.worldgen.biome;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
-import net.minecraft.data.worldgen.Carvers;
 import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -15,10 +14,9 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
-import wardentools.worldgen.ModPlacedFeatures;
+import wardentools.worldgen.features.ModPlacedFeatures;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
 
 public class ModBiomes {
@@ -39,10 +37,9 @@ public class ModBiomes {
     }
 
     public static void globalAbyssGeneration(BiomeGenerationSettings.Builder builder) {
-        //BiomeDefaultFeatures.addDefaultCarversAndLakes(builder);
-        //BiomeDefaultFeatures.addDefaultUndergroundVariety(builder);
         BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
         BiomeDefaultFeatures.addDefaultMushrooms(builder);
+        builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, ModPlacedFeatures.LIQUID_CORRUPTION_LAKE_KEY);
     }
     
     public static void defaultAbyssCaves(BiomeGenerationSettings.Builder builder) {
@@ -57,8 +54,8 @@ public class ModBiomes {
     }
 
     public static void defaultAbyssSculk(BiomeGenerationSettings.Builder builder){
-        builder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, CavePlacements.SCULK_PATCH_DEEP_DARK);
-        builder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, CavePlacements.SCULK_VEIN);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_PATCH_DEEP_DARK);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_VEIN);
     }
 
     public static Biome deepForest(BootstapContext<Biome> context) {

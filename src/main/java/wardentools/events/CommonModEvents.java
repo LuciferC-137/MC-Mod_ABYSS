@@ -21,7 +21,8 @@ public class CommonModEvents {
 	
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {PacketHandler.register();});
+		event.enqueueWork(() -> {PacketHandler.register();});
+
     }
     
     @SubscribeEvent

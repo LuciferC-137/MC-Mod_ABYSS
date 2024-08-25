@@ -1,4 +1,4 @@
-package wardentools.events;
+package wardentools.events.gameevents;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -4,6 +4,7 @@ package wardentools.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import wardentools.ModMain;
@@ -31,6 +32,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             .add(BlockRegistry.ABYSSALITE_BRICKS_SLAB.get())
             .add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get());
 
+		this.tag(BlockTags.FEATURES_CANNOT_REPLACE)
+			.add(BlockRegistry.LIQUID_CORRUPTION_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
         	.add(BlockRegistry.DEEP_CRISTAL.get())

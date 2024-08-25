@@ -3,13 +3,13 @@ package wardentools.datagen;
 
 import net.minecraft.core.registries.Registries;
 import wardentools.worldgen.CustomNoiseSettings;
-import wardentools.worldgen.ModConfiguredFeatures;
+import wardentools.worldgen.features.ModConfiguredFeatures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import wardentools.ModMain;
-import wardentools.worldgen.ModPlacedFeatures;
+import wardentools.worldgen.features.ModPlacedFeatures;
 import wardentools.worldgen.biome.ModBiomes;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
 import wardentools.worldgen.dimension.ModDimensions;

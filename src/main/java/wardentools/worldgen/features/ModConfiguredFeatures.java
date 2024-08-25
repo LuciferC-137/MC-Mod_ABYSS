@@ -1,6 +1,5 @@
-package wardentools.worldgen;
+package wardentools.worldgen.features;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
@@ -43,6 +42,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LAPIS_ORE = registerKey("lapis_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DIAMOND_ORE = registerKey("diamond_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEP_ORE = registerKey("deep_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> LIQUID_CORRUPTION_FLOOR = registerKey("liquid_corruption_floor");
 	
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -97,6 +97,9 @@ public class ModConfiguredFeatures {
 				oreGeneration(5, 0.0F,
 						BlockRegistry.ABYSSALITE_DEEP_ORE.get()));
 
+		register(context, LIQUID_CORRUPTION_FLOOR, ModFeatures.REPLACE_AIR_BELOW_Y.get(),
+					new NoneFeatureConfiguration());
+
     }
 	
 	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int p_195204_) {
@@ -133,8 +136,8 @@ public class ModConfiguredFeatures {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ModMain.MOD_ID, name));
     }
 
-    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void
-    register(BootstapContext<ConfiguredFeature<?, ?>> context,
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(
+			BootstapContext<ConfiguredFeature<?, ?>> context,
         ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
         	context.register(key, new ConfiguredFeature<>(feature, configuration));
 	}
