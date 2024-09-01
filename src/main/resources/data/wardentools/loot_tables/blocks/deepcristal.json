@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "wardentools:deep_cristal",
+          "name": "wardentools:deepcristal",
           "conditions": [
             {
               "condition": "minecraft:match_tool",

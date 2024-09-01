@@ -20,6 +20,7 @@
 	"item.wardentools.pure_vessel": "Réceptacle pure",
 	"item.wardentools.protector_heart": "Coeur de Protecteur",
 	"item.wardentools.dying_protector_heart": "Coeur de Protecteur mourrant",
+	"item.wardentools.deep_fragment": "Fragment des abîmes",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -33,7 +34,7 @@
 	"block.wardentools.abyssalite_diamond_ore": "Minerais de diamant d'Abyssalite",
 	"block.wardentools.abyssalite_deep_ore": "Minerais des profondeurs d'Abyssalite",
 
-	"block.wardentools.deepblock": "Bloc des abîmes",
+	"block.wardentools.deepblock": "Block des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",
 	"block.wardentools.pale_shard": "Eclat pâle",
 	"block.wardentools.radiance_catalyst": "Catalyseur de Radiance",
