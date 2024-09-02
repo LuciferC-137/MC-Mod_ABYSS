@@ -10,6 +10,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
@@ -33,6 +34,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> DIAMOND_ORE_KEY = registerKey("diamond_ore");
 	public static final ResourceKey<PlacedFeature> DEEP_ORE_KEY = registerKey("deep_ore");
 	public static final ResourceKey<PlacedFeature> LIQUID_CORRUPTION_LAKE_KEY = registerKey("liquid_corruption_lake");
+	public static final ResourceKey<PlacedFeature> SHARP_ROCK_KEY = registerKey("sharp_rock");
 	
 	
 	public static void bootstrap(BootstapContext<PlacedFeature> context) {
@@ -150,6 +152,16 @@ public class ModPlacedFeatures {
 				List.of(
 						CountPlacement.of(1)
 				));
+
+		register(context, SHARP_ROCK_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.SHARP_ROCK),
+				List.of(
+						CountPlacement.of(UniformInt.of(2, 4)),
+						InSquarePlacement.spread(),
+						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+						BiomeFilter.biome()
+				)
+		);
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {

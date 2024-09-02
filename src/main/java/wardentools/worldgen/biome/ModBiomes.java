@@ -121,6 +121,8 @@ public class ModBiomes {
         defaultAbyssOres(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
 
+        biomeBuilder.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.SHARP_ROCK_KEY);
+
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
                 .downfall(0.8f)

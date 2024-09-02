@@ -1,4 +1,4 @@
-package wardentools.worldgen.features;
+package wardentools.worldgen.features.custom;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;

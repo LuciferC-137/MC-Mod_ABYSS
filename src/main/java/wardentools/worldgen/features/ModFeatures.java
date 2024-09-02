@@ -6,6 +6,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
+import wardentools.worldgen.features.custom.ReplaceAirBelowYFeature;
+import wardentools.worldgen.features.custom.SharpRock;
 
 public class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES
@@ -14,4 +16,8 @@ public class ModFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> REPLACE_AIR_BELOW_Y
             = FEATURES.register("replace_air_below_y",
                 () -> new ReplaceAirBelowYFeature(NoneFeatureConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> SHARP_ROCK
+            = FEATURES.register("sharp_rock",
+                () -> new SharpRock(NoneFeatureConfiguration.CODEC));
 }

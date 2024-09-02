@@ -43,6 +43,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DIAMOND_ORE = registerKey("diamond_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEP_ORE = registerKey("deep_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIQUID_CORRUPTION_FLOOR = registerKey("liquid_corruption_floor");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> SHARP_ROCK = registerKey("sharp_rock");
 	
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -99,6 +100,8 @@ public class ModConfiguredFeatures {
 
 		register(context, LIQUID_CORRUPTION_FLOOR, ModFeatures.REPLACE_AIR_BELOW_Y.get(),
 					new NoneFeatureConfiguration());
+
+		register(context, SHARP_ROCK, ModFeatures.SHARP_ROCK.get(), new NoneFeatureConfiguration());
 
     }
 	

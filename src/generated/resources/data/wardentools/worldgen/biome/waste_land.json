@@ -32,7 +32,9 @@
       "minecraft:amethyst_geode"
     ],
     [],
-    [],
+    [
+      "wardentools:sharp_rock"
+    ],
     [],
     [
       "wardentools:coal_ore",

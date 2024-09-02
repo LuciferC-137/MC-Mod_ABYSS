@@ -60,12 +60,18 @@ public class ModSurfaceRules {
         		DEEPSLATE
         		);
 
+		// Waste Land surface
+		SurfaceRules.RuleSource wasteLandSurface = SurfaceRules.sequence(
+				bedrock_floor,
+				gravestoneUnderground,
+				DEEPSLATE
+		);
+
         //Make abyss generation in each abyss biome
         SurfaceRules.RuleSource abyssGeneration = SurfaceRules.sequence(
         		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.DEEP_FOREST), abyssSurface),
-        		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WASTE_LAND), abyssSurface),
+        		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WASTE_LAND), wasteLandSurface),
         		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WHITE_FOREST), abyssSurface)
-        		//Add here other abyss biomes
         		);
 
         return SurfaceRules.sequence(
