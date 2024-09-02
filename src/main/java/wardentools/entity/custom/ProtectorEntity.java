@@ -39,11 +39,12 @@ public class ProtectorEntity extends AbstractGolem {
 	private static final int attackDurationTick = 10;
 	private static final int earTickleDuration = 20;
 	public static final int invokerRadius = 20;
+	public static final int dispawnCoolDown = 30;
 	private int earTickleAnimation = 0;
+	private static final EntityDataAccessor<Integer> dispawnTick =
+			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> attackAnimationTick =
             SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> isTargeting =
-			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.BOOLEAN);
 	public final AnimationState attackAnimationState = new AnimationState();
 	public final AnimationState earTickle = new AnimationState();
 	public BlockPos invokerPos;
@@ -75,11 +76,11 @@ public class ProtectorEntity extends AbstractGolem {
 				.add(Attributes.FOLLOW_RANGE, 30D)
 				.add(Attributes.ATTACK_DAMAGE, 30.0D);
 	}
-	
+
 	@Override
 	public void tick() {
 		if (this.invokerPos==null) {
-			this.invokerPos = this.getInvokerOrDispawn();
+			this.invokerPos = this.getInvoker();
 		}
 		
 		if (this.getAttackTick() > 0) {
@@ -106,20 +107,18 @@ public class ProtectorEntity extends AbstractGolem {
 	public void setAttackTick(int tick) {
 		this.entityData.set(attackAnimationTick, tick);
 	}
-	
-	public boolean getIsTargeting() {
-		return this.entityData.get(isTargeting);
-	}
-	
-	public void setIsTargeting(boolean targetExists) {
-		this.entityData.set(isTargeting, targetExists);
-	}
+
+	public int getDispawnTick() {return this.entityData.get(dispawnTick);}
+
+	public void setDispawnTick(int tick) {this.entityData.set(dispawnTick, tick);}
+
+
 	
 	@Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(attackAnimationTick, 0);
-        this.entityData.define(isTargeting, false);
+		this.entityData.define(dispawnTick, 0);
     }
 	
 	@Override
@@ -133,6 +132,16 @@ public class ProtectorEntity extends AbstractGolem {
 	
 	private float getAttackDamage() {
 	      return (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+	}
+
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (this.invokerPos != null){
+			ProtectorInvokerBlockEntity invoker =
+					(ProtectorInvokerBlockEntity)this.level().getBlockEntity(this.invokerPos);
+			invoker.saveHealth(this);
+		}
+		return super.hurt(source, amount);
 	}
 	
 	@Override
@@ -181,7 +190,6 @@ public class ProtectorEntity extends AbstractGolem {
         
         @Override
         public void start() {
-        	((ProtectorEntity)this.mob).setIsTargeting(true);
             this.mob.setTarget(this.target);
             super.start();
          }
@@ -193,7 +201,6 @@ public class ProtectorEntity extends AbstractGolem {
         
         @Override
         public void stop() {
-        	((ProtectorEntity)this.mob).setIsTargeting(false);
             this.mob.setTarget((LivingEntity)null);
             this.targetMob = null;
          }
@@ -201,15 +208,18 @@ public class ProtectorEntity extends AbstractGolem {
     
     private void checkInvoker() {
     	if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity) {
-    		if (((ProtectorInvokerBlockEntity)this.level().getBlockEntity(this.invokerPos)).isProtectorValid()){
-    			return;
+    		if (((ProtectorInvokerBlockEntity)this.level().getBlockEntity(this.invokerPos)).isProtectorValid(this)){
+    			this.setDispawnTick(0);
+				return;
     		}
     	}
-    	this.remove(Entity.RemovalReason.DISCARDED);
-    	return;
+		this.setDispawnTick(this.getDispawnTick() + 1);
+		if (this.getDispawnTick() >= dispawnCoolDown) {
+			this.remove(Entity.RemovalReason.DISCARDED);
+		}
     }
     
-    private BlockPos getInvokerOrDispawn() {
+    private BlockPos getInvoker() {
         int lookRadius = ProtectorInvokerBlock.radiusForProtectorSpawn + 1;
         Level level = this.level();
         BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
@@ -224,7 +234,6 @@ public class ProtectorEntity extends AbstractGolem {
                 }
             }
         }
-        this.remove(Entity.RemovalReason.DISCARDED);
         return this.blockPosition();
     }
 }

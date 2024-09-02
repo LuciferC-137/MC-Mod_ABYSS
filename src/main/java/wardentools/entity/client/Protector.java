@@ -70,7 +70,7 @@ public class Protector extends HierarchicalModel<ProtectorEntity> {
 	public void setupAnim(ProtectorEntity entity, float limbSwing,
 			float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		if (!entity.getIsTargeting()) {
+		if (!entity.isSprinting()) {
 			animateWalk(ProtectorAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
 		} else {
 			animateWalk(ProtectorAnimation.running, limbSwing, limbSwingAmount, 1f, 2.5f);
