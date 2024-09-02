@@ -30,7 +30,12 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
             .add(BlockRegistry.ABYSSALITE_BRICKS.get())
             .add(BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get())
             .add(BlockRegistry.ABYSSALITE_BRICKS_SLAB.get())
-            .add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get());
+            .add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get())
+			.add(BlockRegistry.PALE_SHARD.get())
+			.add(BlockRegistry.CITRINE_BLOCK.get())
+			.add(BlockRegistry.CITRINE.get())
+			.add(BlockRegistry.ECHO_BLOCK.get())
+			.add(BlockRegistry.ECHO_CRISTAL.get());
 
 		this.tag(BlockTags.FEATURES_CANNOT_REPLACE)
 			.add(BlockRegistry.LIQUID_CORRUPTION_BLOCK.get());
@@ -38,7 +43,14 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
         	.add(BlockRegistry.DEEP_CRISTAL.get())
         	.add(BlockRegistry.DEEPBLOCK.get())
-        	.add(BlockRegistry.PALE_SHARD.get());
+        	.add(BlockRegistry.PALE_SHARD.get())
+			.add(BlockRegistry.PALE_CRISTAL_BLOCK.get());
+
+		this.tag(BlockTags.NEEDS_IRON_TOOL)
+			.add(BlockRegistry.CITRINE.get())
+			.add(BlockRegistry.CITRINE_BLOCK.get())
+			.add(BlockRegistry.ECHO_CRISTAL.get())
+			.add(BlockRegistry.ECHO_BLOCK.get());
         
         
         this.tag(BlockTags.LOGS_THAT_BURN)

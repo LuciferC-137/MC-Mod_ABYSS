@@ -372,4 +372,39 @@ public class BlockRegistry {
 			= REGISTAR.register("liquid_corruption_block",
 				() -> new LiquidCorruptionBlock(FluidRegistry.SOURCE_LIQUID_CORRUPTION,
 						BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA).speedFactor(0.5f)));
+
+	public static final RegistryObject<Block> PALE_CRISTAL_BLOCK
+			= REGISTAR.register("pale_cristal_block",
+				() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+						.strength(4,7)
+						.requiresCorrectToolForDrops()
+						.lightLevel((state) -> 8)));
+
+	public static final RegistryObject<Block> CITRINE
+			= REGISTAR.register("citrine",
+				() -> new CristalBlock(9.0F, 4.0F,
+						BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+						.requiresCorrectToolForDrops()
+						.strength(3, 6)));
+
+	public static final RegistryObject<Block> CITRINE_BLOCK
+			= REGISTAR.register("citrine_block",
+				() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+					.strength(3, 6)
+					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 8)));
+
+	public static final RegistryObject<Block> ECHO_CRISTAL
+			= REGISTAR.register("echo_cristal",
+			() -> new CristalBlock(10.0F, 5.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+							.requiresCorrectToolForDrops()
+							.strength(3, 6)));
+
+	public static final RegistryObject<Block> ECHO_BLOCK
+			= REGISTAR.register("echo_block",
+				() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+					.strength(3, 6)
+					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 3)));
 }

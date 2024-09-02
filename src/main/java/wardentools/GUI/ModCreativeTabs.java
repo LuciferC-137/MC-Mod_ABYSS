@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -30,13 +31,21 @@ public class ModCreativeTabs {
 						event.accept(ItemRegistry.ABYSSALITE_LAPIS_ORE.get());
 						event.accept(ItemRegistry.ABYSSALITE_DIAMOND_ORE.get());
 						event.accept(ItemRegistry.ABYSSALITE_DEEP_ORE.get());
-                    	
-                    	event.accept(ItemRegistry.DEEPINGOTS.get());
-                    	event.accept(ItemRegistry.DEEPCRISTAL.get());
+
+
 						event.accept(ItemRegistry.DEEP_FRAGMENT.get());
+						event.accept(ItemRegistry.DEEPCRISTAL.get());
+						event.accept(ItemRegistry.DEEPINGOTS.get());
+						event.accept(ItemRegistry.DEEPBLOCK.get());
+						event.accept(ItemRegistry.PALE_FRAGMENT.get());
                     	event.accept(ItemRegistry.PALE_SHARD.get());
-                    	event.accept(ItemRegistry.PALE_FRAGMENT.get());
-                    	event.accept(ItemRegistry.DEEPBLOCK.get());
+						event.accept(ItemRegistry.PALE_CRISTAL_BLOCK.get());
+						event.accept(ItemRegistry.CITRINE_FRAGMENT.get());
+						event.accept(ItemRegistry.CITRINE.get());
+						event.accept(ItemRegistry.CITRINE_BLOCK.get());
+						event.accept(Items.ECHO_SHARD);
+						event.accept(ItemRegistry.ECHO_CRISTAL.get());
+						event.accept(ItemRegistry.ECHO_BLOCK.get());
 
                     	event.accept(ArmorRegistry.DEEPCRISTAL_HELMET.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get());

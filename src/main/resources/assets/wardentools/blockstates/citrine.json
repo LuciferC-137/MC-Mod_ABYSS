@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "wardentools:block/citrine",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "wardentools:block/citrine",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "wardentools:block/citrine",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "wardentools:block/citrine",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "wardentools:block/citrine"
+    },
+    "facing=west": {
+      "model": "wardentools:block/citrine",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

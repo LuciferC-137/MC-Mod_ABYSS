@@ -21,6 +21,7 @@
 	"item.wardentools.protector_heart": "Coeur de Protecteur",
 	"item.wardentools.dying_protector_heart": "Coeur de Protecteur mourrant",
 	"item.wardentools.deep_fragment": "Fragment des abîmes",
+	"item.wardentools.citrine_fragment": "Fragment de Citrine",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -33,6 +34,11 @@
 	"block.wardentools.abyssalite_lapis_ore": "Minerais de Lapis-Lazuli d'Abyssalite",
 	"block.wardentools.abyssalite_diamond_ore": "Minerais de diamant d'Abyssalite",
 	"block.wardentools.abyssalite_deep_ore": "Minerais des profondeurs d'Abyssalite",
+	"block.wardentools.pale_cristal_block": "Block de cristal pâle",
+	"block.wardentools.citrine": "Citrine",
+	"block.wardentools.citrine_block": "Block de Citrine",
+	"block.wardentools.echo_cristal": "Cristal des Echos",
+	"block.wardentools.echo_block": "Block des Echos",
 
 	"block.wardentools.deepblock": "Block des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",

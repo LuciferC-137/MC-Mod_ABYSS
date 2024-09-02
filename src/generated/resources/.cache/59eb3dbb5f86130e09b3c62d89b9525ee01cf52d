@@ -1,4 +1,4 @@
-// 1.20.4	2024-08-18T21:45:52.2667353	Loot Tables
+// 1.20.4	2024-09-02T22:24:32.7260479	Loot Tables
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_tables/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_tables/blocks/abyssalite_bricks.json
 31280d85caa9e63972007b215cf991cffc5c8b82 data/wardentools/loot_tables/blocks/abyssalite_bricks_slab.json
@@ -10,6 +10,7 @@ b66ff6c98de9bbfd26c02965fecb04b47232ad5e data/wardentools/loot_tables/blocks/aby
 ef86edc0075f9f98f96fd5d53a4528b8df6dbc53 data/wardentools/loot_tables/blocks/abyssalite_lapis_ore.json
 ceadaab47e544470a41a80d2a829f016dcfe6359 data/wardentools/loot_tables/blocks/blue_bush.json
 a5fe808bd30e20d796123dcb9ee5ade4750fb538 data/wardentools/loot_tables/blocks/chiseled_abyssalite.json
+2282072c79e53600a7c0f4cdadb5241a83491926 data/wardentools/loot_tables/blocks/citrine_block.json
 a0dfa254fe37c45cbc839db6194952a4ccfc2d9c data/wardentools/loot_tables/blocks/cracked_abyssalite_bricks.json
 cd3afcd604acda173c23bfbfc1381b05dbe7bb16 data/wardentools/loot_tables/blocks/darkdirt.json
 389f559700304e07f380d250e3ab3cfbf609406b data/wardentools/loot_tables/blocks/darkgrass_block.json
@@ -28,6 +29,8 @@ a6477c1450db15e892ab553a8f6b5ae10392ad23 data/wardentools/loot_tables/blocks/dar
 8cb49bb2d0ac34bd229511c6622875337a46f2e3 data/wardentools/loot_tables/blocks/dark_grass.json
 66e25b925be6b45808743ef06b66893a64fe761f data/wardentools/loot_tables/blocks/deepblock.json
 2f0caaa4337f1c08c215901667bb465de1efccdf data/wardentools/loot_tables/blocks/deepflower.json
+9cb5e842af35b7c819b6f784f174b5fb3a070746 data/wardentools/loot_tables/blocks/echo_block.json
+30fe1819688af2069f4c3c20a846a864912006f3 data/wardentools/loot_tables/blocks/pale_cristal_block.json
 87e89397e3a01064632604a362d115e2bac331c5 data/wardentools/loot_tables/blocks/potted_white_torchflower.json
 9e0f54a8c1eabbf43c22f5a5abaebb4a145a0df0 data/wardentools/loot_tables/blocks/protector_invoker.json
 22c5562d49c153eef742057e576bbd90d943acd0 data/wardentools/loot_tables/blocks/stripped_darktree_log.json

@@ -21,9 +21,7 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
-import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import wardentools.ModMain;
-import wardentools.worldgen.CustomChunkGenerator;
 import wardentools.worldgen.CustomNoiseSettings;
 import wardentools.worldgen.biome.ModBiomes;
 
@@ -60,7 +58,7 @@ public class ModDimensions {
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
-		CustomChunkGenerator chunkGenerator = new CustomChunkGenerator(
+        NoiseBasedChunkGenerator chunkGenerator = new NoiseBasedChunkGenerator(
                 MultiNoiseBiomeSource.createFromList(
                         new Climate.ParameterList<>(List.of(
                         		// Temperature(0,1), Humidity(0,1), Continentalness(0,1),

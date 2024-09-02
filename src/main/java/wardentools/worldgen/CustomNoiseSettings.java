@@ -232,8 +232,8 @@ public class CustomNoiseSettings {
     }
 
     protected static enum VeinType {
-        COPPER(Blocks.COPPER_ORE.defaultBlockState(), Blocks.RAW_COPPER_BLOCK.defaultBlockState(),
-                Blocks.GRANITE.defaultBlockState(), 0, 50),
+        //COPPER(Blocks.COPPER_ORE.defaultBlockState(), Blocks.RAW_COPPER_BLOCK.defaultBlockState(),
+        //        Blocks.GRANITE.defaultBlockState(), 0, 50),
         IRON(Blocks.DEEPSLATE_IRON_ORE.defaultBlockState(), Blocks.RAW_IRON_BLOCK.defaultBlockState(),
                 Blocks.TUFF.defaultBlockState(), -60, -8);
 

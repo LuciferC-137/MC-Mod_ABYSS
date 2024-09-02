@@ -65,6 +65,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.PROTECTOR_HEART);
         simpleItem(ItemRegistry.DYING_PROTECTOR_HEART);
         simpleItem(ItemRegistry.DEEP_FRAGMENT);
+        simpleItem(ItemRegistry.CITRINE_FRAGMENT);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
@@ -81,8 +82,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.TALL_DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.PROTECTOR_INVOKER);
+        blockItemWithItemModel(BlockRegistry.CITRINE);
+        blockItemWithItemModel(BlockRegistry.ECHO_CRISTAL);
         
-        //Blocks that did not created their own item model in the blockstate generator
+        //Blocks that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/darktree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_DARKTREE_WOOD.getId().getPath(),

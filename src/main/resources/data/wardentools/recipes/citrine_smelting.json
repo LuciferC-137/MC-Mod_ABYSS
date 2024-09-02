@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "group": "ingredients",
+  "ingredient": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "result": "wardentools:citrine_fragment",
+  "experience": 0.0,
+  "cookingtime": 50
+}

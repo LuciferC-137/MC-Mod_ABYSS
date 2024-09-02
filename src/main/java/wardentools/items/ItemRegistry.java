@@ -362,10 +362,39 @@ public class ItemRegistry {
 	public static final RegistryObject<BlockItem> ABYSSALITE_DIAMOND_ORE =
 			REGISTAR.register("abyssalite_diamond_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get(),
-							new Item.Properties()));
+							new Item.Properties().fireResistant()));
 
 	public static final RegistryObject<BlockItem> ABYSSALITE_DEEP_ORE =
 			REGISTAR.register("abyssalite_deep_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> PALE_CRISTAL_BLOCK =
+			REGISTAR.register("pale_cristal_block",
+					() -> new BlockItem(BlockRegistry.PALE_CRISTAL_BLOCK.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CITRINE_FRAGMENT =
+			REGISTAR.register("citrine_fragment",
+					() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> CITRINE =
+			REGISTAR.register("citrine",
+					() -> new BlockItem(BlockRegistry.CITRINE.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> CITRINE_BLOCK =
+			REGISTAR.register("citrine_block",
+					() -> new BlockItem(BlockRegistry.CITRINE_BLOCK.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> ECHO_CRISTAL =
+			REGISTAR.register("echo_cristal",
+					() -> new BlockItem(BlockRegistry.ECHO_CRISTAL.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> ECHO_BLOCK =
+			REGISTAR.register("echo_block",
+					() -> new BlockItem(BlockRegistry.ECHO_BLOCK.get(),
 							new Item.Properties().fireResistant()));
 }

@@ -21,6 +21,7 @@
 	"item.wardentools.protector_heart": "Protector heart",
 	"item.wardentools.dying_protector_heart": "Dying Protector heart",
 	"item.wardentools.deep_fragment": "Deep Fragment",
+	"item.wardentools.citrine_fragment": "Citrine Fragment",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
@@ -33,6 +34,11 @@
 	"block.wardentools.abyssalite_lapis_ore": "Abyssalite Lapis-Lazuli Ore",
 	"block.wardentools.abyssalite_diamond_ore": "Abyssalite Diamond Ore",
 	"block.wardentools.abyssalite_deep_ore": "Abyssalite Deep Ore",
+	"block.wardentools.pale_cristal_block": "Pale Cristal Block",
+	"block.wardentools.citrine": "Citrine",
+	"block.wardentools.citrine_block": "Citrine Block",
+	"block.wardentools.echo_cristal": "Echo Cristal",
+	"block.wardentools.echo_block": "Echo Block",
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
 	"block.wardentools.protector_invoker": "Protector Invoker",
