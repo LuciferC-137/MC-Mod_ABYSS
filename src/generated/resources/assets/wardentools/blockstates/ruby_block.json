@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "wardentools:block/ruby_block"
+    }
+  }
+}

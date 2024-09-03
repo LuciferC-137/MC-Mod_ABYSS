@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "EEE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:ruby_fragment"
+    }
+  },
+  "result": {
+    "item": "wardentools:ruby_block"
+  }
+}

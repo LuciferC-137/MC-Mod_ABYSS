@@ -397,4 +397,32 @@ public class ItemRegistry {
 			REGISTAR.register("echo_block",
 					() -> new BlockItem(BlockRegistry.ECHO_BLOCK.get(),
 							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> RUBY_FRAGMENT =
+			REGISTAR.register("ruby_fragment",
+					() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> RUBY =
+			REGISTAR.register("ruby",
+					() -> new BlockItem(BlockRegistry.RUBY.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> RUBY_BLOCK =
+			REGISTAR.register("ruby_block",
+					() -> new BlockItem(BlockRegistry.RUBY_BLOCK.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> MALCHITE_FRAGMENT =
+			REGISTAR.register("malachite_fragment",
+					() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> MALCHITE =
+			REGISTAR.register("malachite",
+				() -> new BlockItem(BlockRegistry.MALACHITE.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> MALCHITE_BLOCK =
+			REGISTAR.register("malachite_block",
+					() -> new BlockItem(BlockRegistry.MALACHITE_BLOCK.get(),
+							new Item.Properties().fireResistant()));
 }

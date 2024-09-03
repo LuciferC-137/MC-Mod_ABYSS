@@ -22,6 +22,8 @@
 	"item.wardentools.dying_protector_heart": "Dying Protector heart",
 	"item.wardentools.deep_fragment": "Deep Fragment",
 	"item.wardentools.citrine_fragment": "Citrine Fragment",
+	"item.wardentools.ruby_fragment": "Ruby Fragment",
+	"item.wardentools.malachite_fragment": "Malachite Fragment",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
@@ -39,6 +41,10 @@
 	"block.wardentools.citrine_block": "Citrine Block",
 	"block.wardentools.echo_cristal": "Echo Cristal",
 	"block.wardentools.echo_block": "Echo Block",
+	"block.wardentools.ruby": "Ruby",
+	"block.wardentools.ruby_block": "Ruby Block",
+	"block.wardentools.malachite": "Malachite",
+	"block.wardentools.malachite_block": "Malachite Block",
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
 	"block.wardentools.protector_invoker": "Protector Invoker",

@@ -8,6 +8,8 @@ import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.worldgen.features.custom.ReplaceAirBelowYFeature;
 import wardentools.worldgen.features.custom.SharpRock;
+import wardentools.worldgen.features.custom.cristals.CristalFormation;
+import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 
 public class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES
@@ -20,4 +22,8 @@ public class ModFeatures {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> SHARP_ROCK
             = FEATURES.register("sharp_rock",
                 () -> new SharpRock(NoneFeatureConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<CristalFormationConfiguration>> CRISTAL_FORMATION
+            = FEATURES.register("cristal_formation",
+                () -> new CristalFormation(CristalFormationConfiguration.CODEC));
 }

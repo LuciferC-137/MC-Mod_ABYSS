@@ -22,6 +22,8 @@
 	"item.wardentools.dying_protector_heart": "Coeur de Protecteur mourrant",
 	"item.wardentools.deep_fragment": "Fragment des abîmes",
 	"item.wardentools.citrine_fragment": "Fragment de Citrine",
+	"item.wardentools.ruby_fragment": "Fragment de Rubis",
+	"item.wardentools.malachite_fragment": "Fragment de Malachite",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -39,6 +41,10 @@
 	"block.wardentools.citrine_block": "Block de Citrine",
 	"block.wardentools.echo_cristal": "Cristal des Echos",
 	"block.wardentools.echo_block": "Block des Echos",
+	"block.wardentools.ruby": "Rubis",
+	"block.wardentools.ruby_block": "Block de Rubis",
+	"block.wardentools.malachite": "Malachite",
+	"block.wardentools.malachite_block": "Block de Malachite",
 
 	"block.wardentools.deepblock": "Block des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",

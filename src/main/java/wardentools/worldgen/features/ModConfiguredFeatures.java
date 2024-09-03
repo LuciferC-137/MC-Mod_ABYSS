@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTes
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
 import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;
@@ -44,7 +45,12 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEP_ORE = registerKey("deep_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIQUID_CORRUPTION_FLOOR = registerKey("liquid_corruption_floor");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SHARP_ROCK = registerKey("sharp_rock");
-	
+	public static final ResourceKey<ConfiguredFeature<?, ?>> MALACHITE_CRISTAL = registerKey("malachite_cristal");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> RUBY_CRISTAL = registerKey("ruby_cristal");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> CITRINE_CRISTAL = registerKey("citrine_cristal");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> ECHO_CRISTAL = registerKey("echo_cristal");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> PALE_CRISTAL = registerKey("pale_cristal");
+
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 		
     	register(context, DARKTREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -102,6 +108,31 @@ public class ModConfiguredFeatures {
 					new NoneFeatureConfiguration());
 
 		register(context, SHARP_ROCK, ModFeatures.SHARP_ROCK.get(), new NoneFeatureConfiguration());
+
+		register(context, MALACHITE_CRISTAL, ModFeatures.CRISTAL_FORMATION.get(),
+				new CristalFormationConfiguration(12, 3, 5,
+						BlockRegistry.MALACHITE_BLOCK.get().defaultBlockState(),
+						BlockRegistry.MALACHITE.get().defaultBlockState()));
+
+		register(context, RUBY_CRISTAL, ModFeatures.CRISTAL_FORMATION.get(),
+				new CristalFormationConfiguration(9, 4, 7,
+						BlockRegistry.RUBY_BLOCK.get().defaultBlockState(),
+						BlockRegistry.RUBY.get().defaultBlockState()));
+
+		register(context, CITRINE_CRISTAL, ModFeatures.CRISTAL_FORMATION.get(),
+				new CristalFormationConfiguration(15, 5, 4,
+						BlockRegistry.CITRINE_BLOCK.get().defaultBlockState(),
+						BlockRegistry.CITRINE.get().defaultBlockState()));
+
+		register(context, ECHO_CRISTAL, ModFeatures.CRISTAL_FORMATION.get(),
+				new CristalFormationConfiguration(12, 6, 4,
+						BlockRegistry.ECHO_BLOCK.get().defaultBlockState(),
+						BlockRegistry.ECHO_CRISTAL.get().defaultBlockState()));
+
+		register(context, PALE_CRISTAL, ModFeatures.CRISTAL_FORMATION.get(),
+				new CristalFormationConfiguration(13, 5, 10,
+						BlockRegistry.PALE_CRISTAL_BLOCK.get().defaultBlockState(),
+						BlockRegistry.PALE_SHARD.get().defaultBlockState()));
 
     }
 	

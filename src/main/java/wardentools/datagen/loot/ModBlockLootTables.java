@@ -44,6 +44,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.addDropSelf(BlockRegistry.PALE_CRISTAL_BLOCK);
 		this.addDropSelf(BlockRegistry.CITRINE_BLOCK);
 		this.addDropSelf(BlockRegistry.ECHO_BLOCK);
+		this.addDropSelf(BlockRegistry.RUBY_BLOCK);
+		this.addDropSelf(BlockRegistry.MALACHITE_BLOCK);
     	
     	this.addDropSelf(BlockRegistry.DARKTREE_LOG);
     	this.addDropSelf(BlockRegistry.DARKTREE_PLANKS);
@@ -147,7 +149,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				BlockRegistry.DEEP_CRISTAL.get(),
 				BlockRegistry.LIQUID_CORRUPTION_BLOCK.get(),
 				BlockRegistry.CITRINE.get(),
-				BlockRegistry.ECHO_CRISTAL.get()
+				BlockRegistry.ECHO_CRISTAL.get(),
+				BlockRegistry.RUBY.get(),
+				BlockRegistry.MALACHITE.get()
     	);
     	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
     	        .map(RegistryObject::get)

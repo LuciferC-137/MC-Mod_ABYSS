@@ -1,0 +1,89 @@
+{
+  "carvers": {
+    "air": "wardentools:abyss_cave"
+  },
+  "downfall": 0.8,
+  "effects": {
+    "fog_color": 2844,
+    "foliage_color": 1342307,
+    "grass_color": 1342325,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    },
+    "particle": {
+      "options": {
+        "type": "wardentools:abyss_ambient"
+      },
+      "probability": 0.02
+    },
+    "sky_color": 2844,
+    "water_color": 674907,
+    "water_fog_color": 2844
+  },
+  "features": [
+    [
+      "wardentools:liquid_corruption_lake"
+    ],
+    [],
+    [
+      "minecraft:amethyst_geode"
+    ],
+    [],
+    [],
+    [],
+    [
+      "wardentools:coal_ore",
+      "wardentools:lapis_ore",
+      "wardentools:diamond_ore",
+      "wardentools:deep_ore"
+    ],
+    [
+      "wardentools:malachite_cristal_key",
+      "wardentools:citrine_cristal_key",
+      "wardentools:ruby_cristal_key",
+      "wardentools:echo_cristal_key",
+      "wardentools:pale_cristal_key"
+    ],
+    [],
+    [
+      "minecraft:brown_mushroom_normal",
+      "minecraft:red_mushroom_normal",
+      "minecraft:lush_caves_ceiling_vegetation",
+      "minecraft:cave_vines",
+      "minecraft:lush_caves_clay",
+      "minecraft:lush_caves_vegetation",
+      "minecraft:rooted_azalea_tree",
+      "minecraft:spore_blossom",
+      "minecraft:classic_vines_cave_feature"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "wardentools:deeplurker",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 5
+      },
+      {
+        "type": "minecraft:allay",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.2
+}

@@ -46,6 +46,12 @@ public class ModCreativeTabs {
 						event.accept(Items.ECHO_SHARD);
 						event.accept(ItemRegistry.ECHO_CRISTAL.get());
 						event.accept(ItemRegistry.ECHO_BLOCK.get());
+						event.accept(ItemRegistry.RUBY_FRAGMENT.get());
+						event.accept(ItemRegistry.RUBY.get());
+						event.accept(ItemRegistry.RUBY_BLOCK.get());
+						event.accept(ItemRegistry.MALCHITE_FRAGMENT.get());
+						event.accept(ItemRegistry.MALCHITE.get());
+						event.accept(ItemRegistry.MALCHITE_BLOCK.get());
 
                     	event.accept(ArmorRegistry.DEEPCRISTAL_HELMET.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get());

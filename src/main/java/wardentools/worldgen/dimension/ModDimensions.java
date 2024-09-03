@@ -62,13 +62,15 @@ public class ModDimensions {
                 MultiNoiseBiomeSource.createFromList(
                         new Climate.ParameterList<>(List.of(
                         		// Temperature(0,1), Humidity(0,1), Continentalness(0,1),
-                        		//Erosion(0,1), Depth(-1,1), Weirdness(0,1), Offset (0,1)
+                        		// Erosion(0,1), Depth(-1,1), Weirdness(0,1), Offset (0,1)
                         		Pair.of(Climate.parameters(0.5F, 0.6F, 0.3F, 0.5F, 0.0F, 0.3F, 0.0F),
                                         biomeRegistry.getOrThrow(ModBiomes.DEEP_FOREST)),
                                 Pair.of(Climate.parameters(0.9F, 0.2F, 0.7F, 0.2F, 0.0F, 0.5F, 0.0F),
                                         biomeRegistry.getOrThrow(ModBiomes.WASTE_LAND)),
                                 Pair.of(Climate.parameters(0.3F, 0.6F, 0.5F, 0.8F, 0.0F, 0.8F, 0.0F),
-                                        biomeRegistry.getOrThrow(ModBiomes.WHITE_FOREST))
+                                        biomeRegistry.getOrThrow(ModBiomes.WHITE_FOREST)),
+                                Pair.of(Climate.parameters(0.4F, 0.4F, 0.8F, 0.2F, 1.0F, 0.4F, 0.0F),
+                                        biomeRegistry.getOrThrow(ModBiomes.CRISTAL_CAVE))
                         ))),
                 noiseGenSettings.getOrThrow(CustomNoiseSettings.ABYSS_NOISE));
         

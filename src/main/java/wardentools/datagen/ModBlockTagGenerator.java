@@ -35,7 +35,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.CITRINE_BLOCK.get())
 			.add(BlockRegistry.CITRINE.get())
 			.add(BlockRegistry.ECHO_BLOCK.get())
-			.add(BlockRegistry.ECHO_CRISTAL.get());
+			.add(BlockRegistry.ECHO_CRISTAL.get())
+			.add(BlockRegistry.RUBY_BLOCK.get())
+			.add(BlockRegistry.RUBY.get())
+			.add(BlockRegistry.MALACHITE_BLOCK.get())
+			.add(BlockRegistry.MALACHITE.get());
 
 		this.tag(BlockTags.FEATURES_CANNOT_REPLACE)
 			.add(BlockRegistry.LIQUID_CORRUPTION_BLOCK.get());
@@ -50,7 +54,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.CITRINE.get())
 			.add(BlockRegistry.CITRINE_BLOCK.get())
 			.add(BlockRegistry.ECHO_CRISTAL.get())
-			.add(BlockRegistry.ECHO_BLOCK.get());
+			.add(BlockRegistry.ECHO_BLOCK.get())
+			.add(BlockRegistry.RUBY_BLOCK.get())
+			.add(BlockRegistry.RUBY.get())
+			.add(BlockRegistry.MALACHITE_BLOCK.get())
+			.add(BlockRegistry.MALACHITE.get());
         
         
         this.tag(BlockTags.LOGS_THAT_BURN)

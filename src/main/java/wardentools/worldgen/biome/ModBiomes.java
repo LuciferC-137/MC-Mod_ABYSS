@@ -26,11 +26,14 @@ public class ModBiomes {
             new ResourceLocation(ModMain.MOD_ID, "waste_land"));
 	public static final ResourceKey<Biome> WHITE_FOREST = ResourceKey.create(Registries.BIOME,
             new ResourceLocation(ModMain.MOD_ID, "white_forest"));
+    public static final ResourceKey<Biome> CRISTAL_CAVE = ResourceKey.create(Registries.BIOME,
+            new ResourceLocation(ModMain.MOD_ID, "cristal_cave"));
 
     public static void bootstrap(BootstapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));
         context.register(WASTE_LAND, wasteLand(context));
         context.register(WHITE_FOREST, whiteForest(context));
+        context.register(CRISTAL_CAVE, cristalCave(context));
     }
 
     public static void globalAbyssGeneration(BiomeGenerationSettings.Builder builder) {
@@ -159,6 +162,46 @@ public class ModBiomes {
                 .hasPrecipitation(false)
                 .downfall(0.8f)
                 .temperature(0.7f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects(commonBiomeSpecialEffects().build()).build();
+    }
+
+    public static Biome cristalCave(BootstapContext<Biome> context) {
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        spawnBuilder.addSpawn(MobCategory.CREATURE,
+                new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 5, 1, 4));
+        // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
+        spawnBuilder.addSpawn(MobCategory.CREATURE,
+                new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
+        spawnBuilder.creatureGenerationProbability(0.1F);
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(
+                        context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        globalAbyssGeneration(biomeBuilder);
+        defaultAbyssOres(biomeBuilder);
+        defaultAbyssCaves(biomeBuilder);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.MALACHITE_CRISTAL_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.CITRINE_CRISTAL_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.RUBY_CRISTAL_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.ECHO_CRISTAL_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.PALE_CRISTAL_KEY);
+
+        BiomeDefaultFeatures.addLushCavesVegetationFeatures(biomeBuilder);
+
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(false)
+                .downfall(0.8f)
+                .temperature(0.2f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects(commonBiomeSpecialEffects().build()).build();

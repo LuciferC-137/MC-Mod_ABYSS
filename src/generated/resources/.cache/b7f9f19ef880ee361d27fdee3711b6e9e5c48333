@@ -1,4 +1,4 @@
-// 1.20.4	2024-09-02T22:24:32.7195509	Item Models: wardentools
+// 1.20.4	2024-09-03T10:39:36.1316582	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -72,6 +72,8 @@ ac9bf287cd0d7c2f9eee8bea9ef75df5661acbc4 assets/wardentools/models/item/deep_fra
 2a9e549dc648cc8057df5b206cea9d58fd8f403b assets/wardentools/models/item/deep_fruit.json
 3cb6654a7cb7ca4c5c4b425c32def2c69be6161a assets/wardentools/models/item/dying_protector_heart.json
 e132a841ade458e1fba92f9890b565e60eb931b1 assets/wardentools/models/item/echo_cristal.json
+feb0db5a59a7305c0a266a00acf1a05ca4dda78c assets/wardentools/models/item/malachite.json
+fe3b4dd8c8ed0ef2c3c07977353645e1483aec36 assets/wardentools/models/item/malachite_fragment.json
 9cba400d275554731c001c288d69be1be90007a7 assets/wardentools/models/item/pale_fragment.json
 ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_shard.json
 df6103769189e8270bb718f6da221cb40c2044b7 assets/wardentools/models/item/protector_heart.json
@@ -80,6 +82,8 @@ a211e3021be071d858d1d178572b1cc4763e29b1 assets/wardentools/models/item/pure_ess
 41b094b08a051cb8b0541ab8a2d7edfdd2eb1178 assets/wardentools/models/item/pure_vessel.json
 aa0f198d94171a477a56c2fde4dcf0ae195b02f8 assets/wardentools/models/item/radiance_catalyst.json
 79b9b9007d2d61b7abd2b611933b7bd36995bb5d assets/wardentools/models/item/radiant_core.json
+a0e2c082ba9528515dbd1ba4dc641974c0709613 assets/wardentools/models/item/ruby.json
+9fa6f6f8a8707a06140b5840c7b425f2c0fee059 assets/wardentools/models/item/ruby_fragment.json
 7a7d9fd169318dfa32e885c5db7cb5abbbccce3d assets/wardentools/models/item/stripped_darktree_log.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 980a11934130b33d9a8df5e91eaebc563aa907bd assets/wardentools/models/item/stripped_whitetree_log.json

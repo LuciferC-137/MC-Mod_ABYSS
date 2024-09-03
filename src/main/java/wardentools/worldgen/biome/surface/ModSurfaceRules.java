@@ -21,7 +21,7 @@ public class ModSurfaceRules {
     public static SurfaceRules.RuleSource makeRules() {
         SurfaceRules.ConditionSource isAtOrAboveWaterLevel = SurfaceRules.waterBlockCheck(-1, 0);
 
-        // Default grass surface in the overworld
+        // Default grass surface
        SurfaceRules.RuleSource defaultOverWorld = SurfaceRules.sequence(
     		   SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
         		SurfaceRules.ifTrue(isAtOrAboveWaterLevel, GRASS_BLOCK)), DIRT);
@@ -71,7 +71,8 @@ public class ModSurfaceRules {
         SurfaceRules.RuleSource abyssGeneration = SurfaceRules.sequence(
         		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.DEEP_FOREST), abyssSurface),
         		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WASTE_LAND), wasteLandSurface),
-        		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WHITE_FOREST), abyssSurface)
+        		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WHITE_FOREST), abyssSurface),
+				SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CRISTAL_CAVE), abyssSurface)
         		);
 
         return SurfaceRules.sequence(

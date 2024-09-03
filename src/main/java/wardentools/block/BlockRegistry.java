@@ -385,7 +385,8 @@ public class BlockRegistry {
 				() -> new CristalBlock(9.0F, 4.0F,
 						BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 						.requiresCorrectToolForDrops()
-						.strength(3, 6)));
+						.strength(3, 6)
+								.lightLevel((state) -> 8)));
 
 	public static final RegistryObject<Block> CITRINE_BLOCK
 			= REGISTAR.register("citrine_block",
@@ -399,7 +400,8 @@ public class BlockRegistry {
 			() -> new CristalBlock(10.0F, 5.0F,
 					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 							.requiresCorrectToolForDrops()
-							.strength(3, 6)));
+							.strength(3, 6)
+							.lightLevel((state) -> 3)));
 
 	public static final RegistryObject<Block> ECHO_BLOCK
 			= REGISTAR.register("echo_block",
@@ -407,4 +409,34 @@ public class BlockRegistry {
 					.strength(3, 6)
 					.requiresCorrectToolForDrops()
 					.lightLevel((state) -> 3)));
+
+	public static final RegistryObject<Block> RUBY
+			= REGISTAR.register("ruby",
+			() -> new CristalBlock(7.0F, 3.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+							.requiresCorrectToolForDrops()
+							.strength(4, 7)
+							.lightLevel((state) -> 6)));
+
+	public static final RegistryObject<Block> RUBY_BLOCK
+			= REGISTAR.register("ruby_block",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+					.strength(3, 6)
+					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 6)));
+
+	public static final RegistryObject<Block> MALACHITE
+			= REGISTAR.register("malachite",
+			() -> new CristalBlock(7.0F, 3.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+							.requiresCorrectToolForDrops()
+							.strength(4, 7)
+							.lightLevel((state) -> 6)));
+
+	public static final RegistryObject<Block> MALACHITE_BLOCK
+			= REGISTAR.register("malachite_block",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+					.strength(3, 6)
+					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 6)));
 }

@@ -2,6 +2,7 @@ package wardentools.worldgen.features;
 
 
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -12,6 +13,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import wardentools.ModMain;
@@ -35,6 +37,11 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> DEEP_ORE_KEY = registerKey("deep_ore");
 	public static final ResourceKey<PlacedFeature> LIQUID_CORRUPTION_LAKE_KEY = registerKey("liquid_corruption_lake");
 	public static final ResourceKey<PlacedFeature> SHARP_ROCK_KEY = registerKey("sharp_rock");
+	public static final ResourceKey<PlacedFeature> MALACHITE_CRISTAL_KEY = registerKey("malachite_cristal_key");
+	public static final ResourceKey<PlacedFeature> RUBY_CRISTAL_KEY = registerKey("ruby_cristal_key");
+	public static final ResourceKey<PlacedFeature> CITRINE_CRISTAL_KEY = registerKey("citrine_cristal_key");
+	public static final ResourceKey<PlacedFeature> ECHO_CRISTAL_KEY = registerKey("echo_cristal_key");
+	public static final ResourceKey<PlacedFeature> PALE_CRISTAL_KEY = registerKey("pale_cristal_key");
 	
 	
 	public static void bootstrap(BootstapContext<PlacedFeature> context) {
@@ -159,6 +166,61 @@ public class ModPlacedFeatures {
 						CountPlacement.of(UniformInt.of(2, 4)),
 						InSquarePlacement.spread(),
 						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+						BiomeFilter.biome()
+				)
+		);
+
+		register(context, MALACHITE_CRISTAL_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.MALACHITE_CRISTAL),
+				List.of(
+						CountPlacement.of(UniformInt.of(4, 8)),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
+						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+						BiomeFilter.biome()
+				)
+		);
+
+		register(context, RUBY_CRISTAL_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.RUBY_CRISTAL),
+				List.of(
+						CountPlacement.of(UniformInt.of(4, 8)),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
+						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+						BiomeFilter.biome()
+				)
+		);
+
+		register(context, CITRINE_CRISTAL_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.CITRINE_CRISTAL),
+				List.of(
+						CountPlacement.of(UniformInt.of(4, 8)),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
+						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+						BiomeFilter.biome()
+				)
+		);
+
+		register(context, ECHO_CRISTAL_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.ECHO_CRISTAL),
+				List.of(
+						CountPlacement.of(UniformInt.of(4, 8)),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
+						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+						BiomeFilter.biome()
+				)
+		);
+
+		register(context, PALE_CRISTAL_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.PALE_CRISTAL),
+				List.of(
+						CountPlacement.of(UniformInt.of(0, 1)),
+						InSquarePlacement.spread(),
+						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
+						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
 						BiomeFilter.biome()
 				)
 		);

@@ -48,6 +48,8 @@ public class WindWhisper {
 		whispers_en.add("No hope. No light. Only infinite nothingness, watched by aimless wardens.");
 		whispers_en.add("I fly in the sky, I dive into caves, I hurl on the Void, and yet, you are more free than I will ever be.");
 		whispers_en.add("Do you think he could perform the reactivation ritual ?");
+		whispers_en.add("Their was all sort of cristals, each with its own energy. But we tried to harvest the power of the forbidden one.");
+		whispers_en.add("Soon after the incident, the contagion begun to rise from the depths.");
 
 		whispers_fr.add("Tu es perdu ?");
 		whispers_fr.add("Est-ce que tu entends ça ?");
@@ -86,6 +88,8 @@ public class WindWhisper {
 		whispers_fr.add("Pas d'espoir. Pas de lumière. Seulement l'infini Néant, surveillé par des gardiens sans but.");
 		whispers_fr.add("Je vole dans le ciel, je plonge dans les cavernes, je rugis dans le Néant et pourtant, pourtant tu es plus libre que je ne le serai jamais.");
 		whispers_fr.add("Tu pense qu'il pourrait réaliser le rituel de réactivation ?");
+		whispers_fr.add("Il y avait toute sorte de cristaux, chacun avec sa propre énergie. Mais nous avons tenté de récolter le pouvoir de celui qui était interdit.");
+		whispers_fr.add("Après l'incident, la contagion commença à s'élever depuis les profondeurs.");
 	}
 	
 	public WindWhisper(List<String> addWhispers) {

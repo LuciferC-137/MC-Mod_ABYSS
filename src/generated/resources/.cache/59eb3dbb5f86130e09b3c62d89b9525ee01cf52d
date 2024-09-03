@@ -1,4 +1,4 @@
-// 1.20.4	2024-09-02T22:24:32.7260479	Loot Tables
+// 1.20.4	2024-09-03T10:39:36.1472826	Loot Tables
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_tables/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_tables/blocks/abyssalite_bricks.json
 31280d85caa9e63972007b215cf991cffc5c8b82 data/wardentools/loot_tables/blocks/abyssalite_bricks_slab.json
@@ -30,9 +30,11 @@ a6477c1450db15e892ab553a8f6b5ae10392ad23 data/wardentools/loot_tables/blocks/dar
 66e25b925be6b45808743ef06b66893a64fe761f data/wardentools/loot_tables/blocks/deepblock.json
 2f0caaa4337f1c08c215901667bb465de1efccdf data/wardentools/loot_tables/blocks/deepflower.json
 9cb5e842af35b7c819b6f784f174b5fb3a070746 data/wardentools/loot_tables/blocks/echo_block.json
+e000bbb8369c0744f517a29abc68ff12ae9d60f3 data/wardentools/loot_tables/blocks/malachite_block.json
 30fe1819688af2069f4c3c20a846a864912006f3 data/wardentools/loot_tables/blocks/pale_cristal_block.json
 87e89397e3a01064632604a362d115e2bac331c5 data/wardentools/loot_tables/blocks/potted_white_torchflower.json
 9e0f54a8c1eabbf43c22f5a5abaebb4a145a0df0 data/wardentools/loot_tables/blocks/protector_invoker.json
+57a8144524b215b4ebbf694dbc5b0e3e7bb3d9c7 data/wardentools/loot_tables/blocks/ruby_block.json
 22c5562d49c153eef742057e576bbd90d943acd0 data/wardentools/loot_tables/blocks/stripped_darktree_log.json
 d2ebb7754472b3337e9083f43187a35173fe6ff5 data/wardentools/loot_tables/blocks/stripped_darktree_wood.json
 957888082175208144cd83b53a9cbc5f4e7ff47f data/wardentools/loot_tables/blocks/stripped_whitetree_log.json

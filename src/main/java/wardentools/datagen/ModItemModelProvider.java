@@ -66,6 +66,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DYING_PROTECTOR_HEART);
         simpleItem(ItemRegistry.DEEP_FRAGMENT);
         simpleItem(ItemRegistry.CITRINE_FRAGMENT);
+        simpleItem(ItemRegistry.RUBY_FRAGMENT);
+        simpleItem(ItemRegistry.MALCHITE_FRAGMENT);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
@@ -84,6 +86,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.PROTECTOR_INVOKER);
         blockItemWithItemModel(BlockRegistry.CITRINE);
         blockItemWithItemModel(BlockRegistry.ECHO_CRISTAL);
+        blockItemWithItemModel(BlockRegistry.RUBY);
+        blockItemWithItemModel(BlockRegistry.MALACHITE);
         
         //Blocks that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
