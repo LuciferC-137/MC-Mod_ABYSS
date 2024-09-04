@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "wardentools:pale_shard",
+          "name": "wardentools:pale_cristal",
           "conditions": [
             {
               "condition": "minecraft:match_tool",

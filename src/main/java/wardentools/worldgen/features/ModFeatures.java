@@ -10,6 +10,8 @@ import wardentools.worldgen.features.custom.ReplaceAirBelowYFeature;
 import wardentools.worldgen.features.custom.SharpRock;
 import wardentools.worldgen.features.custom.cristals.CristalFormation;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
+import wardentools.worldgen.features.custom.cristals.CristalVein;
+import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
 
 public class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES
@@ -26,4 +28,7 @@ public class ModFeatures {
     public static final RegistryObject<Feature<CristalFormationConfiguration>> CRISTAL_FORMATION
             = FEATURES.register("cristal_formation",
                 () -> new CristalFormation(CristalFormationConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<CristalVeinConfiguration>> CRISTAL_VEIN
+            = FEATURES.register("cristal_vein", () -> new CristalVein(CristalVeinConfiguration.CODEC));
 }

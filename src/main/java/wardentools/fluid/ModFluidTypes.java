@@ -42,6 +42,6 @@ public class ModFluidTypes {
     private static RegistryObject<FluidType> register(String name, FluidType.Properties properties) {
         return FLUID_TYPES.register(name,
                 () -> new BaseFluidType(LIQUID_CORRUPTION_STILL_RL, LIQUID_CORRUPTION_FLOWING_RL, LIQUID_CORRUPTION_OVERLAY_RL,
-                0xA1085b61, new Vector3f(18f / 255f, 52f / 255f, 56f / 255f), properties));
+                0xA1085b61, new Vector3f(4f / 255f, 34f / 255f, 36f / 255f), properties));
     }
 }

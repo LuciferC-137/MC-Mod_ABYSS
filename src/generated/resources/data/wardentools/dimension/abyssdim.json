@@ -45,12 +45,12 @@
           "biome": "wardentools:cristal_cave",
           "parameters": {
             "continentalness": 0.8,
-            "depth": 1.0,
-            "erosion": 0.2,
-            "humidity": 0.4,
+            "depth": 0.6,
+            "erosion": 0.1,
+            "humidity": 0.8,
             "offset": 0.0,
-            "temperature": 0.4,
-            "weirdness": 0.4
+            "temperature": 0.1,
+            "weirdness": 0.9
           }
         }
       ]

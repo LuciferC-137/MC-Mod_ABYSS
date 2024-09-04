@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cross",
   "render_type": "minecraft:cutout",
   "textures": {
-    "cross": "wardentools:block/pale_shard"
+    "cross": "wardentools:block/radiance_cristal"
   }
 }

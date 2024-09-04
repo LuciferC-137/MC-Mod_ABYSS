@@ -6,8 +6,8 @@
       "count": {
         "type": "minecraft:uniform",
         "value": {
-          "max_inclusive": 1,
-          "min_inclusive": 0
+          "max_inclusive": 7,
+          "min_inclusive": 3
         }
       }
     },
@@ -36,6 +36,16 @@
       "max_steps": 12,
       "target_condition": {
         "type": "minecraft:solid"
+      }
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:not",
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "wardentools:cristal_block"
+        }
       }
     },
     {

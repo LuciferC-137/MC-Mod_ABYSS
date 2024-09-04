@@ -30,7 +30,9 @@ public class SharpRock  extends Feature<NoneFeatureConfiguration> {
             int x = (int)(xoffset * (float)y);
             int z = (int)(zoffset * (float)y);
             float radius = (float)base_radius * (float)(length - y) / (float)(length);
-            circle(context, worldGenLevel, origin.offset(x, y, z), radius);
+            if (radius > 0.8){
+                circle(context, worldGenLevel, origin.offset(x, y, z), radius);
+            }
         }
         return false;
     }

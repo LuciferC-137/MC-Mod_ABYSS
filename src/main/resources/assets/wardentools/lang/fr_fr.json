@@ -24,6 +24,7 @@
 	"item.wardentools.citrine_fragment": "Fragment de Citrine",
 	"item.wardentools.ruby_fragment": "Fragment de Rubis",
 	"item.wardentools.malachite_fragment": "Fragment de Malachite",
+	"item.wardentools.pale_shard": "Eclat pâle",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -36,6 +37,7 @@
 	"block.wardentools.abyssalite_lapis_ore": "Minerais de Lapis-Lazuli d'Abyssalite",
 	"block.wardentools.abyssalite_diamond_ore": "Minerais de diamant d'Abyssalite",
 	"block.wardentools.abyssalite_deep_ore": "Minerais des profondeurs d'Abyssalite",
+	"block.wardentools.pale_cristal": "Cristal pâle",
 	"block.wardentools.pale_cristal_block": "Block de cristal pâle",
 	"block.wardentools.citrine": "Citrine",
 	"block.wardentools.citrine_block": "Block de Citrine",
@@ -48,7 +50,7 @@
 
 	"block.wardentools.deepblock": "Block des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",
-	"block.wardentools.pale_shard": "Eclat pâle",
+	"block.wardentools.radiance_cristal": "Cristal Radiant",
 	"block.wardentools.radiance_catalyst": "Catalyseur de Radiance",
 	"block.wardentools.protector_invoker": "Invocateur de Protecteur",
 	

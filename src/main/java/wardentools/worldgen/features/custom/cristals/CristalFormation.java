@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.phys.Vec3;
+import wardentools.tags.ModTags;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,9 @@ public class CristalFormation extends Feature<CristalFormationConfiguration>  {
 
     @Override
     public boolean place(FeaturePlaceContext<CristalFormationConfiguration> context) {
+        if (context.level().getBlockState(context.origin()).is(ModTags.Blocks.CRISTAL_BLOCK)){
+            return false;
+        }
         Vec3 direction = findAttachDirection(context.level(), context.origin());
         float length_multiplier = context.level().getRandom().nextFloat() / 2f + 0.5f;
         float length = (float)freeSpace(context, direction) * length_multiplier;

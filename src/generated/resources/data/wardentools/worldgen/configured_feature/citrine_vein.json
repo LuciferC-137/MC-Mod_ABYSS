@@ -1,0 +1,18 @@
+{
+  "type": "wardentools:cristal_vein",
+  "config": {
+    "cristal_block": {
+      "Name": "wardentools:citrine_block"
+    },
+    "cristal_bud": {
+      "Name": "wardentools:citrine",
+      "Properties": {
+        "facing": "up",
+        "waterlogged": "false"
+      }
+    },
+    "cristal_bud_probability": 4,
+    "max_length": 5,
+    "spread_factor": 2
+  }
+}

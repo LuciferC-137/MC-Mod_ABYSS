@@ -5,7 +5,7 @@
       "Name": "wardentools:pale_cristal_block"
     },
     "cristal_bud": {
-      "Name": "wardentools:pale_shard",
+      "Name": "wardentools:pale_cristal",
       "Properties": {
         "facing": "up",
         "waterlogged": "false"

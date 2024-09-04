@@ -7,10 +7,10 @@
   ],
   "key": {
     "E": {
-      "item": "wardentools:pale_fragment"
+      "item": "wardentools:pale_shard"
     }
   },
   "result": {
-    "item": "wardentools:pale_shard"
+    "item": "wardentools:pale_cristal"
   }
 }

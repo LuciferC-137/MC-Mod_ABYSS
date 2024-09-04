@@ -54,7 +54,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.WARDEN_HEART);
         simpleItem(ItemRegistry.DEEP_FRUIT);
         simpleItem(ItemRegistry.WIND_WHISPERER);
-        simpleItem(ItemRegistry.PALE_FRAGMENT);
+        simpleItem(ItemRegistry.RADIANCE_FRAGMENT);
         simpleItem(ItemRegistry.CORRUPTED_ESSENCE);
         simpleItem(ItemRegistry.CORRUPTED_VESSEL);
         simpleItem(ItemRegistry.DARK_STICK);
@@ -68,10 +68,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.CITRINE_FRAGMENT);
         simpleItem(ItemRegistry.RUBY_FRAGMENT);
         simpleItem(ItemRegistry.MALCHITE_FRAGMENT);
+        simpleItem(ItemRegistry.PALE_SHARD);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
-        blockItemWithItemModel(BlockRegistry.PALE_SHARD);
+        blockItemWithItemModel(BlockRegistry.RADIANCE_CRISTAL);
         blockItemWithItemModel(BlockRegistry.DARKTREE_SAPLING);
         blockItemWithItemModel(BlockRegistry.DARKTREE_DOOR);
         blockItemWithItemModel(BlockRegistry.WHITETREE_SAPLING);
@@ -88,6 +89,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.ECHO_CRISTAL);
         blockItemWithItemModel(BlockRegistry.RUBY);
         blockItemWithItemModel(BlockRegistry.MALACHITE);
+        blockItemWithItemModel(BlockRegistry.PALE_CRISTAL);
         
         //Blocks that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),

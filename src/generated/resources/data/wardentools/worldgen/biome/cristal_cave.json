@@ -5,8 +5,8 @@
   "downfall": 0.8,
   "effects": {
     "fog_color": 2844,
-    "foliage_color": 1342307,
-    "grass_color": 1342325,
+    "foliage_color": 5745514,
+    "grass_color": 5745514,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2.0,
@@ -45,7 +45,20 @@
       "wardentools:citrine_cristal_key",
       "wardentools:ruby_cristal_key",
       "wardentools:echo_cristal_key",
-      "wardentools:pale_cristal_key"
+      "wardentools:pale_cristal_key",
+      "wardentools:amethyst_cristal_key",
+      "wardentools:malachite_cristal_dw_key",
+      "wardentools:citrine_cristal_dw_key",
+      "wardentools:ruby_cristal_dw_key",
+      "wardentools:echo_cristal_dw_key",
+      "wardentools:pale_cristal_dw_key",
+      "wardentools:amethyst_cristal_dw_key",
+      "wardentools:malachite_vein",
+      "wardentools:ruby_vein",
+      "wardentools:citrine_vein",
+      "wardentools:echo_vein",
+      "wardentools:pale_vein",
+      "wardentools:amethyst_vein"
     ],
     [],
     [

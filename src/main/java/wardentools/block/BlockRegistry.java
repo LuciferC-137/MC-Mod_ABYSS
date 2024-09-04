@@ -38,7 +38,7 @@ public class BlockRegistry {
 					.strength(30.0F, 900.0F)
 					));
 	
-	public static final RegistryObject<Block> PALE_SHARD = REGISTAR.register("pale_shard",
+	public static final RegistryObject<Block> RADIANCE_CRISTAL = REGISTAR.register("radiance_cristal",
 			() -> new CristalBlock(10.0F, 5.0F, BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 					.requiresCorrectToolForDrops()
 					.lightLevel((state) -> 11)
@@ -372,6 +372,14 @@ public class BlockRegistry {
 			= REGISTAR.register("liquid_corruption_block",
 				() -> new LiquidCorruptionBlock(FluidRegistry.SOURCE_LIQUID_CORRUPTION,
 						BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA).speedFactor(0.5f)));
+
+	public static final RegistryObject<Block> PALE_CRISTAL
+			= REGISTAR.register("pale_cristal",
+			() -> new CristalBlock(11.0F, 4.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+							.requiresCorrectToolForDrops()
+							.strength(3, 6)
+							.lightLevel((state) -> 8)));
 
 	public static final RegistryObject<Block> PALE_CRISTAL_BLOCK
 			= REGISTAR.register("pale_cristal_block",

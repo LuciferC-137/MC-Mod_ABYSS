@@ -36,40 +36,6 @@ public class ModBiomes {
         context.register(CRISTAL_CAVE, cristalCave(context));
     }
 
-    public static void globalAbyssGeneration(BiomeGenerationSettings.Builder builder) {
-        BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
-        BiomeDefaultFeatures.addDefaultMushrooms(builder);
-        builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, ModPlacedFeatures.LIQUID_CORRUPTION_LAKE_KEY);
-    }
-    
-    public static void defaultAbyssCaves(BiomeGenerationSettings.Builder builder) {
-    	builder.addCarver(GenerationStep.Carving.AIR, ModConfiguredCarver.ABYSS_CAVE);
-    }
-
-    public static void defaultAbyssOres(BiomeGenerationSettings.Builder builder){
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.COAL_ORE_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.LAPIS_ORE_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DIAMOND_ORE_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_ORE_KEY);
-    }
-
-    public static void defaultAbyssSculk(BiomeGenerationSettings.Builder builder){
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_PATCH_DEEP_DARK);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_VEIN);
-    }
-
-    public static BiomeSpecialEffects.Builder commonBiomeSpecialEffects(){
-        return new BiomeSpecialEffects.Builder()
-                .waterColor(WATER_COLOR)
-                .waterFogColor(FOG_COLOR)
-                .skyColor(FOG_COLOR)
-                .grassColorOverride(0x147B75)
-                .foliageColorOverride(0x147B63)
-                .fogColor(FOG_COLOR)
-                .ambientParticle(new AmbientParticleSettings(ParticleRegistry.ABYSS_AMBIENT.get(), 0.02F))
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS);
-    }
-
     public static Biome deepForest(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
@@ -185,16 +151,7 @@ public class ModBiomes {
         defaultAbyssOres(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
 
-        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.MALACHITE_CRISTAL_KEY);
-        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.CITRINE_CRISTAL_KEY);
-        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.RUBY_CRISTAL_KEY);
-        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.ECHO_CRISTAL_KEY);
-        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.PALE_CRISTAL_KEY);
+        cristalOnCaveWalls(biomeBuilder);
 
         BiomeDefaultFeatures.addLushCavesVegetationFeatures(biomeBuilder);
 
@@ -204,6 +161,81 @@ public class ModBiomes {
                 .temperature(0.2f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
-                .specialEffects(commonBiomeSpecialEffects().build()).build();
+                .specialEffects(commonBiomeSpecialEffects()
+                        .foliageColorOverride(0x57ab6a)
+                        .grassColorOverride(0x57ab6a).build()).build();
+    }
+
+    public static void globalAbyssGeneration(BiomeGenerationSettings.Builder builder) {
+        BiomeDefaultFeatures.addDefaultCrystalFormations(builder);
+        BiomeDefaultFeatures.addDefaultMushrooms(builder);
+        builder.addFeature(GenerationStep.Decoration.RAW_GENERATION, ModPlacedFeatures.LIQUID_CORRUPTION_LAKE_KEY);
+    }
+
+    public static void defaultAbyssCaves(BiomeGenerationSettings.Builder builder) {
+        builder.addCarver(GenerationStep.Carving.AIR, ModConfiguredCarver.ABYSS_CAVE);
+    }
+
+    public static void defaultAbyssOres(BiomeGenerationSettings.Builder builder){
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.COAL_ORE_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.LAPIS_ORE_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DIAMOND_ORE_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_ORE_KEY);
+    }
+
+    public static void defaultAbyssSculk(BiomeGenerationSettings.Builder builder){
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_PATCH_DEEP_DARK);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_VEIN);
+    }
+
+    public static BiomeSpecialEffects.Builder commonBiomeSpecialEffects(){
+        return new BiomeSpecialEffects.Builder()
+                .waterColor(WATER_COLOR)
+                .waterFogColor(FOG_COLOR)
+                .skyColor(FOG_COLOR)
+                .grassColorOverride(0x147B75)
+                .foliageColorOverride(0x147B63)
+                .fogColor(FOG_COLOR)
+                .ambientParticle(new AmbientParticleSettings(ParticleRegistry.ABYSS_AMBIENT.get(), 0.02F))
+                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS);
+    }
+
+    public static void cristalOnCaveWalls(BiomeGenerationSettings.Builder builder){
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.MALACHITE_CRISTAL_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.CITRINE_CRISTAL_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.RUBY_CRISTAL_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.ECHO_CRISTAL_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.PALE_CRISTAL_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.AMETHYST_CRISTAL_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.MALACHITE_CRISTAL_DW_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.CITRINE_CRISTAL_DW_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.RUBY_CRISTAL_DW_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.ECHO_CRISTAL_DW_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.PALE_CRISTAL_DW_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.AMETHYST_CRISTAL_DW_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.MALACHITE_VEIN_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.RUBY_VEIN_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.CITRINE_VEIN_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.ECHO_VEIN_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.PALE_CRISTAL_VEIN_KEY);
+        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.AMETHYST_VEIN_KEY);
     }
 }

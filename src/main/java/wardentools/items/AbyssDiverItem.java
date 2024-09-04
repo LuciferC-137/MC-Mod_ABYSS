@@ -1,6 +1,7 @@
 package wardentools.items;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import wardentools.tags.ModTags;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
@@ -29,7 +31,7 @@ public class AbyssDiverItem extends Item {
         BlockPos clickedPos = context.getClickedPos();
         BlockState clickedBlockState = level.getBlockState(clickedPos);
 
-        if (clickedBlockState.getBlock() == Blocks.SCULK) {
+        if (clickedBlockState.is(ModTags.Blocks.ABYSS_TELEPORTABLE)) {
         	context.getItemInHand().hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
         	if (player.level() instanceof ServerLevel serverlevel) {
                 MinecraftServer minecraftserver = serverlevel.getServer();
@@ -55,7 +57,7 @@ public class AbyssDiverItem extends Item {
 	
 	@Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.getItem() == ItemRegistry.PALE_FRAGMENT.get();
+        return repair.getItem() == ItemRegistry.RADIANCE_FRAGMENT.get();
     }
 
 }

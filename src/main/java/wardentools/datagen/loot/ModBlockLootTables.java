@@ -142,7 +142,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 	@Override
     protected Iterable<Block> getKnownBlocks() {
     	Set<Block> blocksToIgnore = Set.of(
-    	        BlockRegistry.PALE_SHARD.get(),
+    	        BlockRegistry.RADIANCE_CRISTAL.get(),
     	        BlockRegistry.DARKTREE_LEAVES.get(),
     	        BlockRegistry.WHITETREE_LEAVES.get(),
     	        BlockRegistry.RADIANCE_CATALYST.get(),
@@ -151,7 +151,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				BlockRegistry.CITRINE.get(),
 				BlockRegistry.ECHO_CRISTAL.get(),
 				BlockRegistry.RUBY.get(),
-				BlockRegistry.MALACHITE.get()
+				BlockRegistry.MALACHITE.get(),
+				BlockRegistry.PALE_CRISTAL.get()
     	);
     	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
     	        .map(RegistryObject::get)

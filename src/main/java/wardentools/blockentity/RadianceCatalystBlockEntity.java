@@ -231,9 +231,9 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	public int getBurnTime(@NotNull ItemStack stack) {
-		if (stack.is(ItemRegistry.PALE_FRAGMENT.get())) {
+		if (stack.is(ItemRegistry.RADIANCE_FRAGMENT.get())) {
 			return 51;
-		} else if (stack.is(ItemRegistry.PALE_SHARD.get())) {
+		} else if (stack.is(ItemRegistry.RADIANCE_CRISTAL.get())) {
 			return 251;
 		}
 		return 0;

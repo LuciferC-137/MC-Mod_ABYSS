@@ -15,7 +15,7 @@ public class PaleShardSlot extends SlotItemHandler {
 	
 	@Override
 	public boolean mayPlace(@NotNull ItemStack stack) {
-		return stack.is(ItemRegistry.PALE_FRAGMENT.get()) || stack.is(ItemRegistry.PALE_SHARD.get());
+		return stack.is(ItemRegistry.RADIANCE_CRISTAL.get()) || stack.is(ItemRegistry.RADIANCE_FRAGMENT.get());
 	}
 
 }

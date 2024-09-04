@@ -39,17 +39,17 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final RegistryObject<Item> PALE_FRAGMENT =
-			REGISTAR.register("pale_fragment", 
+	public static final RegistryObject<Item> RADIANCE_FRAGMENT =
+			REGISTAR.register("radiance_fragment",
 			() -> new Item(new Item.Properties()
 					.stacksTo(64)
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
 					));
 	
-	public static final RegistryObject<BlockItem> PALE_SHARD = 
-			REGISTAR.register("pale_shard",
-			() -> new BlockItem(BlockRegistry.PALE_SHARD.get(), new Item.Properties()
+	public static final RegistryObject<BlockItem> RADIANCE_CRISTAL =
+			REGISTAR.register("radiance_cristal",
+			() -> new BlockItem(BlockRegistry.RADIANCE_CRISTAL.get(), new Item.Properties()
 					.stacksTo(64)
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
@@ -347,7 +347,7 @@ public class ItemRegistry {
 
 	public static final RegistryObject<Item> DEEP_FRAGMENT =
 			REGISTAR.register("deep_fragment",
-					() -> new Item(new Item.Properties()));
+					() -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).fireResistant()));
 
 	public static final RegistryObject<BlockItem> ABYSSALITE_COAL_ORE =
 			REGISTAR.register("abyssalite_coal_ore",
@@ -367,6 +367,15 @@ public class ItemRegistry {
 	public static final RegistryObject<BlockItem> ABYSSALITE_DEEP_ORE =
 			REGISTAR.register("abyssalite_deep_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> PALE_SHARD =
+			REGISTAR.register("pale_shard",
+					() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<BlockItem> PALE_CRISTAL =
+			REGISTAR.register("pale_cristal",
+					() -> new BlockItem(BlockRegistry.PALE_CRISTAL.get(),
 							new Item.Properties().fireResistant()));
 
 	public static final RegistryObject<BlockItem> PALE_CRISTAL_BLOCK =

@@ -20,6 +20,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
+import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
 import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;
@@ -50,6 +51,13 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> CITRINE_CRISTAL = registerKey("citrine_cristal");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ECHO_CRISTAL = registerKey("echo_cristal");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> PALE_CRISTAL = registerKey("pale_cristal");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> AMETHYST_CRISTAL = registerKey("amethyst_cristal");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> MALACHITE_VEIN = registerKey("malachite_vein");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> RUBY_VEIN = registerKey("ruby_vein");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> CITRINE_VEIN = registerKey("citrine_vein");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> ECHO_VEIN = registerKey("echo_vein");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> PALE_CRISTAL_VEIN = registerKey("pale_cristal_vein");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> AMETHYST_VEIN = registerKey("amethyst_vein");
 
 	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -132,7 +140,42 @@ public class ModConfiguredFeatures {
 		register(context, PALE_CRISTAL, ModFeatures.CRISTAL_FORMATION.get(),
 				new CristalFormationConfiguration(13, 5, 10,
 						BlockRegistry.PALE_CRISTAL_BLOCK.get().defaultBlockState(),
-						BlockRegistry.PALE_SHARD.get().defaultBlockState()));
+						BlockRegistry.PALE_CRISTAL.get().defaultBlockState()));
+
+		register(context, AMETHYST_CRISTAL, ModFeatures.CRISTAL_FORMATION.get(),
+				new CristalFormationConfiguration(13, 5, 10,
+						Blocks.AMETHYST_BLOCK.defaultBlockState(),
+						Blocks.LARGE_AMETHYST_BUD.defaultBlockState()));
+
+		register(context, MALACHITE_VEIN, ModFeatures.CRISTAL_VEIN.get(),
+				new CristalVeinConfiguration(5, 2, 4,
+						BlockRegistry.MALACHITE_BLOCK.get().defaultBlockState(),
+						BlockRegistry.MALACHITE.get().defaultBlockState()));
+
+		register(context, RUBY_VEIN, ModFeatures.CRISTAL_VEIN.get(),
+				new CristalVeinConfiguration(5, 2, 4,
+						BlockRegistry.RUBY_BLOCK.get().defaultBlockState(),
+						BlockRegistry.RUBY.get().defaultBlockState()));
+
+		register(context, CITRINE_VEIN, ModFeatures.CRISTAL_VEIN.get(),
+				new CristalVeinConfiguration(5, 2, 4,
+						BlockRegistry.CITRINE_BLOCK.get().defaultBlockState(),
+						BlockRegistry.CITRINE.get().defaultBlockState()));
+
+		register(context, ECHO_VEIN, ModFeatures.CRISTAL_VEIN.get(),
+				new CristalVeinConfiguration(5, 2, 4,
+						BlockRegistry.ECHO_BLOCK.get().defaultBlockState(),
+						BlockRegistry.ECHO_CRISTAL.get().defaultBlockState()));
+
+		register(context, PALE_CRISTAL_VEIN, ModFeatures.CRISTAL_VEIN.get(),
+				new CristalVeinConfiguration(5, 2, 4,
+						BlockRegistry.PALE_CRISTAL_BLOCK.get().defaultBlockState(),
+						BlockRegistry.PALE_CRISTAL.get().defaultBlockState()));
+
+		register(context, AMETHYST_VEIN, ModFeatures.CRISTAL_VEIN.get(),
+				new CristalVeinConfiguration(5, 2, 4,
+						Blocks.AMETHYST_BLOCK.defaultBlockState(),
+						Blocks.LARGE_AMETHYST_BUD.defaultBlockState()));
 
     }
 	

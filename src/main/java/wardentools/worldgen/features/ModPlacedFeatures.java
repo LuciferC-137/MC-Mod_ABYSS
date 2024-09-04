@@ -12,12 +12,14 @@ import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.tags.ModTags;
 
 import java.util.List;
 
@@ -42,8 +44,21 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> CITRINE_CRISTAL_KEY = registerKey("citrine_cristal_key");
 	public static final ResourceKey<PlacedFeature> ECHO_CRISTAL_KEY = registerKey("echo_cristal_key");
 	public static final ResourceKey<PlacedFeature> PALE_CRISTAL_KEY = registerKey("pale_cristal_key");
-	
-	
+	public static final ResourceKey<PlacedFeature> AMETHYST_CRISTAL_KEY = registerKey("amethyst_cristal_key");
+	public static final ResourceKey<PlacedFeature> MALACHITE_CRISTAL_DW_KEY = registerKey("malachite_cristal_dw_key");
+	public static final ResourceKey<PlacedFeature> RUBY_CRISTAL_DW_KEY = registerKey("ruby_cristal_dw_key");
+	public static final ResourceKey<PlacedFeature> CITRINE_CRISTAL_DW_KEY = registerKey("citrine_cristal_dw_key");
+	public static final ResourceKey<PlacedFeature> ECHO_CRISTAL_DW_KEY = registerKey("echo_cristal_dw_key");
+	public static final ResourceKey<PlacedFeature> PALE_CRISTAL_DW_KEY = registerKey("pale_cristal_dw_key");
+	public static final ResourceKey<PlacedFeature> AMETHYST_CRISTAL_DW_KEY = registerKey("amethyst_cristal_dw_key");
+	public static final ResourceKey<PlacedFeature> MALACHITE_VEIN_KEY = registerKey("malachite_vein");
+	public static final ResourceKey<PlacedFeature> RUBY_VEIN_KEY = registerKey("ruby_vein");
+	public static final ResourceKey<PlacedFeature> CITRINE_VEIN_KEY = registerKey("citrine_vein");
+	public static final ResourceKey<PlacedFeature> ECHO_VEIN_KEY = registerKey("echo_vein");
+	public static final ResourceKey<PlacedFeature> PALE_CRISTAL_VEIN_KEY = registerKey("pale_vein");
+	public static final ResourceKey<PlacedFeature> AMETHYST_VEIN_KEY = registerKey("amethyst_vein");
+
+
 	public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
@@ -156,9 +171,7 @@ public class ModPlacedFeatures {
 
 		register(context, LIQUID_CORRUPTION_LAKE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.LIQUID_CORRUPTION_FLOOR),
-				List.of(
-						CountPlacement.of(1)
-				));
+				List.of(CountPlacement.of(1)));
 
 		register(context, SHARP_ROCK_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.SHARP_ROCK),
@@ -167,63 +180,79 @@ public class ModPlacedFeatures {
 						InSquarePlacement.spread(),
 						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
 						BiomeFilter.biome()
-				)
-		);
+				));
 
 		register(context, MALACHITE_CRISTAL_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.MALACHITE_CRISTAL),
-				List.of(
-						CountPlacement.of(UniformInt.of(4, 8)),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
-						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
-						BiomeFilter.biome()
-				)
-		);
+				onCaveWallUp(4, 8));
 
 		register(context, RUBY_CRISTAL_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.RUBY_CRISTAL),
-				List.of(
-						CountPlacement.of(UniformInt.of(4, 8)),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
-						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
-						BiomeFilter.biome()
-				)
-		);
+				onCaveWallUp(4, 8));
 
 		register(context, CITRINE_CRISTAL_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.CITRINE_CRISTAL),
-				List.of(
-						CountPlacement.of(UniformInt.of(4, 8)),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
-						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
-						BiomeFilter.biome()
-				)
-		);
+				onCaveWallUp(4, 8));
 
 		register(context, ECHO_CRISTAL_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.ECHO_CRISTAL),
-				List.of(
-						CountPlacement.of(UniformInt.of(4, 8)),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
-						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
-						BiomeFilter.biome()
-				)
-		);
+				onCaveWallUp(4, 8));
 
 		register(context, PALE_CRISTAL_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.PALE_CRISTAL),
-				List.of(
-						CountPlacement.of(UniformInt.of(0, 1)),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
-						EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
-						BiomeFilter.biome()
-				)
-		);
+				onCaveWallUp(3, 7));
+
+		register(context, AMETHYST_CRISTAL_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.AMETHYST_CRISTAL),
+				onCaveWallUp(5, 9));
+
+		register(context, MALACHITE_CRISTAL_DW_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.MALACHITE_CRISTAL),
+				onCaveWallDown(4, 8));
+
+		register(context, RUBY_CRISTAL_DW_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.RUBY_CRISTAL),
+				onCaveWallDown(4, 8));
+
+		register(context, CITRINE_CRISTAL_DW_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.CITRINE_CRISTAL),
+				onCaveWallDown(4, 8));
+
+		register(context, ECHO_CRISTAL_DW_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.ECHO_CRISTAL),
+				onCaveWallDown(4, 8));
+
+		register(context, PALE_CRISTAL_DW_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.PALE_CRISTAL),
+				onCaveWallDown(3, 7));
+
+		register(context, AMETHYST_CRISTAL_DW_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.AMETHYST_CRISTAL),
+				onCaveWallDown(5, 9));
+
+		register(context, MALACHITE_VEIN_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.MALACHITE_VEIN),
+				onCaveWallDown(3, 5));
+
+		register(context, RUBY_VEIN_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.RUBY_VEIN),
+				onCaveWallDown(3, 5));
+
+		register(context, CITRINE_VEIN_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.CITRINE_VEIN),
+				onCaveWallDown(3, 5));
+
+		register(context, ECHO_VEIN_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.ECHO_VEIN),
+				onCaveWallDown(3, 5));
+
+		register(context, PALE_CRISTAL_VEIN_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.PALE_CRISTAL_VEIN),
+				onCaveWallDown(3, 5));
+
+		register(context, AMETHYST_VEIN_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.AMETHYST_VEIN),
+				onCaveWallDown(3, 5));
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {
@@ -234,4 +263,32 @@ public class ModPlacedFeatures {
                                  List<PlacementModifier> modifiers) {
         context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
     }
+
+	private static List<PlacementModifier> onCaveWallUp(int minPerChunk, int maxPerChunk){
+		return List.of(
+				CountPlacement.of(UniformInt.of(minPerChunk, maxPerChunk)),
+				InSquarePlacement.spread(),
+				HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
+				EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(),
+						BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+				BlockPredicateFilter.forPredicate(BlockPredicate.not(
+						BlockPredicate.matchesTag(ModTags.Blocks.CRISTAL_BLOCK))),
+				BiomeFilter.biome()
+		);
+	}
+
+	private static List<PlacementModifier> onCaveWallDown(int minPerChunk, int maxPerChunk){
+		return List.of(
+				CountPlacement.of(UniformInt.of(minPerChunk, maxPerChunk)),
+				InSquarePlacement.spread(),
+				HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
+				EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(),
+						BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+				BlockPredicateFilter.forPredicate(BlockPredicate.not(
+						BlockPredicate.matchesTag(ModTags.Blocks.CRISTAL_BLOCK))),
+				BiomeFilter.biome()
+		);
+	}
+
+
 }

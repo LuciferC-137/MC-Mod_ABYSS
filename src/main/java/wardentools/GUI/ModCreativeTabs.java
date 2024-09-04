@@ -32,14 +32,12 @@ public class ModCreativeTabs {
 						event.accept(ItemRegistry.ABYSSALITE_DIAMOND_ORE.get());
 						event.accept(ItemRegistry.ABYSSALITE_DEEP_ORE.get());
 
-
 						event.accept(ItemRegistry.DEEP_FRAGMENT.get());
 						event.accept(ItemRegistry.DEEPCRISTAL.get());
 						event.accept(ItemRegistry.DEEPINGOTS.get());
 						event.accept(ItemRegistry.DEEPBLOCK.get());
-						event.accept(ItemRegistry.PALE_FRAGMENT.get());
-                    	event.accept(ItemRegistry.PALE_SHARD.get());
-						event.accept(ItemRegistry.PALE_CRISTAL_BLOCK.get());
+						event.accept(ItemRegistry.RADIANCE_FRAGMENT.get());
+                    	event.accept(ItemRegistry.RADIANCE_CRISTAL.get());
 						event.accept(ItemRegistry.CITRINE_FRAGMENT.get());
 						event.accept(ItemRegistry.CITRINE.get());
 						event.accept(ItemRegistry.CITRINE_BLOCK.get());
@@ -52,6 +50,9 @@ public class ModCreativeTabs {
 						event.accept(ItemRegistry.MALCHITE_FRAGMENT.get());
 						event.accept(ItemRegistry.MALCHITE.get());
 						event.accept(ItemRegistry.MALCHITE_BLOCK.get());
+						event.accept(ItemRegistry.PALE_SHARD.get());
+						event.accept(ItemRegistry.PALE_CRISTAL.get());
+						event.accept(ItemRegistry.PALE_CRISTAL_BLOCK.get());
 
                     	event.accept(ArmorRegistry.DEEPCRISTAL_HELMET.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get());
