@@ -110,5 +110,7 @@
 	"container.wardentools.radiance_catalyst_block": "Cataliseur de Radiance",
 	
 	"sounds.wardentools.contagion_incarnation_crawl": "L'Incarnation de la Contagion rampe",
-	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle"
+	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle",
+
+	"effect.wardentools.corrupted": "Corrompu"
 }

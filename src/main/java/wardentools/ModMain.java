@@ -17,6 +17,7 @@ import wardentools.GUI.ModCreativeTabs;
 import wardentools.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
+import wardentools.effect.ModEffects;
 import wardentools.entity.ModEntities;
 import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.ModFluidTypes;
@@ -55,6 +56,7 @@ public class ModMain {
 		ModFluidTypes.FLUID_TYPES.register(bus);
 		ModFeatures.FEATURES.register(bus);
 		ParticleRegistry.PARTICLE_TYPES.register(bus);
+		ModEffects.MOB_EFFECTS.register(bus);
         MinecraftForge.EVENT_BUS.register(this);
         
         bus.addListener(this::commonSetup);
@@ -63,7 +65,7 @@ public class ModMain {
         MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);
         
 	}
-	
+
 	private void commonSetup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),

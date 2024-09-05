@@ -1,4 +1,4 @@
-package wardentools.effects;
+package wardentools.misc;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;

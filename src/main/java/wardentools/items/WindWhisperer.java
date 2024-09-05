@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.util.RandomSource;
 import net.minecraftforge.common.MinecraftForge;
-import wardentools.effects.WindWhisper;
+import wardentools.misc.WindWhisper;
 import wardentools.worldgen.dimension.ModDimensions;
 
 //@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)

@@ -110,5 +110,7 @@
 	"container.wardentools.radiance_catalyst_block": "Radiance Catalyst",
 	
 	"sounds.wardentools.contagion_incarnation_crawl": "Contagion Incarnation Crawling",
-	"sounds.wardentools.contagion_incarnation_scream": "Contagion Incarnation Screams"
+	"sounds.wardentools.contagion_incarnation_scream": "Contagion Incarnation Screams",
+
+	"effect.wardentools.corrupted": "Corrupted"
 }

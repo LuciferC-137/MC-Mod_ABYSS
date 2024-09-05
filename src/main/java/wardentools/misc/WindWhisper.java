@@ -1,4 +1,4 @@
-package wardentools.effects;
+package wardentools.misc;
 
 import java.util.ArrayList;
 import java.util.List;
