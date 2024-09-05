@@ -112,5 +112,14 @@
 	"sounds.wardentools.contagion_incarnation_crawl": "L'Incarnation de la Contagion rampe",
 	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle",
 
-	"effect.wardentools.corrupted": "Corrompu"
+	"effect.wardentools.corrupted": "Corrompu",
+
+	"advancements.wardentools.root.title": "Venu de l'Abyss",
+	"advancements.wardentools.root.description": "Ceci n'est pas de ce monde.",
+	"advancements.wardentools.corruptedheart.title": "Coeur corrumpu",
+	"advancements.wardentools.corruptedheart.description": "Il a l'air triste... et en colère...",
+	"advancements.wardentools.theabyss.title": "Plonger dans l'Abyss",
+	"advancements.wardentools.theabyss.description": "Est-ce que tu viens vraiment de te jeter dans le Néant?!",
+	"advancements.wardentools.abyssdiver.title": "Voyage rapide inter-dimensionel",
+	"advancements.wardentools.abyssdiver.description": "Construit ton billet de retour vers la surface."
 }

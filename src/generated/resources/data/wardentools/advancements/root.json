@@ -1,0 +1,34 @@
+{
+  "criteria": {
+    "has_sculk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:sculk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "wardentools:textures/gui/advancements/backgrounds/sculk.png",
+    "description": {
+      "translate": "advancements.wardentools.root.description"
+    },
+    "icon": {
+      "item": "minecraft:sculk"
+    },
+    "title": {
+      "translate": "advancements.wardentools.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_sculk"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

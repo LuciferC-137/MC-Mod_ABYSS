@@ -1,0 +1,35 @@
+{
+  "parent": "wardentools:root",
+  "criteria": {
+    "has_warden_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:warden_heart"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.corruptedheart.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "item": "wardentools:warden_heart"
+    },
+    "title": {
+      "translate": "advancements.wardentools.corruptedheart.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_warden_heart"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

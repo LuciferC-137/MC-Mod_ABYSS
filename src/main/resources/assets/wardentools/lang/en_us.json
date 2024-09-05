@@ -112,5 +112,14 @@
 	"sounds.wardentools.contagion_incarnation_crawl": "Contagion Incarnation Crawling",
 	"sounds.wardentools.contagion_incarnation_scream": "Contagion Incarnation Screams",
 
-	"effect.wardentools.corrupted": "Corrupted"
+	"effect.wardentools.corrupted": "Corrupted",
+
+	"advancements.wardentools.root.title": "From the abyss",
+	"advancements.wardentools.root.description": "This isn't from this world.",
+	"advancements.wardentools.corruptedheart.title": "Corrupted Heart",
+	"advancements.wardentools.corruptedheart.description": "It looks sad... and angry...",
+	"advancements.wardentools.theabyss.title": "Into the Abyss",
+	"advancements.wardentools.theabyss.description": "Did you really just jumped into the Void?!",
+	"advancements.wardentools.abyssdiver.title": "Inter-dimensional fast travel",
+	"advancements.wardentools.abyssdiver.description": "Build your ticket back to the surface."
 }
