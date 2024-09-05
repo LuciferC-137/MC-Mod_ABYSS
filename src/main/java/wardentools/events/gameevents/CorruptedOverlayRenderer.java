@@ -38,11 +38,13 @@ public class CorruptedOverlayRenderer {
                }
                int duration = effectInstance.getDuration();
                int totalDuration = effectTotalDurations.getOrDefault(player.getUUID(), duration);
+
+               // This condition allows to display the overlay when the game reloads.
                if (!effectTotalDurations.containsKey(player.getUUID())){
                    totalDuration = duration * 100;
                }
 
-               int elapsedDuration = totalDuration - duration;
+               int elapsedDuration = Math.max(totalDuration - duration, 0);
                float alpha = Math.min( (float)elapsedDuration / blurDurationTick * 0.05f, 1.0f);
                float color_intensity = elapsedDuration > blurDurationTick ?
                        Math.abs((float)Math.sin((duration - blurDurationTick) * glitterPulsation)) : 1f;
@@ -71,8 +73,14 @@ public class CorruptedOverlayRenderer {
             LivingEntity entity = event.getEntity();
             if (entity instanceof Player) {
                 Player player = (Player) entity;
-                if (!effectTotalDurations.containsKey(player.getUUID())) {
+                if (!effectTotalDurations.containsKey(player.getUUID())
+                        || !player.hasEffect(ModEffects.CORRUPTED.get())) {
                     effectTotalDurations.put(player.getUUID(), event.getEffectInstance().getDuration());
+                } else {
+                    int totalDuration = event.getEffectInstance().getDuration() +
+                            effectTotalDurations.get(player.getUUID())
+                            - player.getEffect(ModEffects.CORRUPTED.get()).getDuration();
+                    effectTotalDurations.put(player.getUUID(), totalDuration);
                 }
             }
         }
@@ -82,8 +90,19 @@ public class CorruptedOverlayRenderer {
     public static void onEffectRemoved(MobEffectEvent.Remove event) {
         if (event.getEffectInstance().getEffect() == ModEffects.CORRUPTED.get()) {
             LivingEntity entity = event.getEntity();
-            if (entity instanceof Player) {
-                Player player = (Player) entity;
+            if (entity instanceof Player player) {
+                if (effectTotalDurations.containsKey(player.getUUID())) {
+                    effectTotalDurations.remove(player.getUUID());
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEffectExpired(MobEffectEvent.Expired event) {
+        if (event.getEffectInstance().getEffect() == ModEffects.CORRUPTED.get()) {
+            LivingEntity entity = event.getEntity();
+            if (entity instanceof Player player) {
                 if (effectTotalDurations.containsKey(player.getUUID())) {
                     effectTotalDurations.remove(player.getUUID());
                 }

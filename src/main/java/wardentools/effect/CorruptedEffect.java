@@ -22,7 +22,7 @@ public class CorruptedEffect extends MobEffect {
                 .getHolderOrThrow(DamageTypes.MAGIC);
 
         entity.hurt(new DamageSource(magicDamageTypeHolder, null, entity, null),
-                1 + amplifier > 0 ? 1:0);
+                1 + amplifier );
         super.applyEffectTick(entity, amplifier);
     }
 
