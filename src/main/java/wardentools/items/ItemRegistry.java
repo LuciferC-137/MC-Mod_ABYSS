@@ -421,16 +421,16 @@ public class ItemRegistry {
 					() -> new BlockItem(BlockRegistry.RUBY_BLOCK.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final RegistryObject<Item> MALCHITE_FRAGMENT =
+	public static final RegistryObject<Item> MALACHITE_FRAGMENT =
 			REGISTAR.register("malachite_fragment",
 					() -> new Item(new Item.Properties().fireResistant()));
 
-	public static final RegistryObject<BlockItem> MALCHITE =
+	public static final RegistryObject<BlockItem> MALACHITE =
 			REGISTAR.register("malachite",
 				() -> new BlockItem(BlockRegistry.MALACHITE.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final RegistryObject<BlockItem> MALCHITE_BLOCK =
+	public static final RegistryObject<BlockItem> MALACHITE_BLOCK =
 			REGISTAR.register("malachite_block",
 					() -> new BlockItem(BlockRegistry.MALACHITE_BLOCK.get(),
 							new Item.Properties().fireResistant()));

@@ -1,5 +1,5 @@
 {
-  "parent": "wardentools:root",
+  "parent": "wardentools:abyss",
   "criteria": {
     "to_the_abyss": {
       "conditions": {

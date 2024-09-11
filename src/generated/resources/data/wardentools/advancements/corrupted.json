@@ -1,0 +1,30 @@
+{
+  "parent": "wardentools:deepcristal",
+  "criteria": {
+    "corrupted": {
+      "conditions": {
+        "effects": {
+          "wardentools:corrupted": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.corrupted.description"
+    },
+    "icon": {
+      "item": "wardentools:corrupted_essence"
+    },
+    "title": {
+      "translate": "advancements.wardentools.corrupted.title"
+    }
+  },
+  "requirements": [
+    [
+      "corrupted"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

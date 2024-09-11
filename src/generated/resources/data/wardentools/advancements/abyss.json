@@ -1,12 +1,11 @@
 {
-  "parent": "wardentools:abyss",
   "criteria": {
-    "has_warden_heart": {
+    "has_sculk": {
       "conditions": {
         "items": [
           {
             "items": [
-              "wardentools:warden_heart"
+              "minecraft:sculk"
             ]
           }
         ]
@@ -15,20 +14,20 @@
     }
   },
   "display": {
+    "background": "wardentools:textures/gui/advancements/backgrounds/sculk.png",
     "description": {
-      "translate": "advancements.wardentools.corruptedheart.description"
+      "translate": "advancements.wardentools.abyss.description"
     },
-    "frame": "goal",
     "icon": {
-      "item": "wardentools:warden_heart"
+      "item": "minecraft:sculk"
     },
     "title": {
-      "translate": "advancements.wardentools.corruptedheart.title"
+      "translate": "advancements.wardentools.abyss.title"
     }
   },
   "requirements": [
     [
-      "has_warden_heart"
+      "has_sculk"
     ]
   ],
   "sends_telemetry_event": true

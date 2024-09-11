@@ -1,11 +1,12 @@
 {
+  "parent": "wardentools:the_abyss",
   "criteria": {
-    "has_sculk": {
+    "deepcristal": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:sculk"
+              "wardentools:deepcristal"
             ]
           }
         ]
@@ -14,20 +15,19 @@
     }
   },
   "display": {
-    "background": "wardentools:textures/gui/advancements/backgrounds/sculk.png",
     "description": {
-      "translate": "advancements.wardentools.root.description"
+      "translate": "advancements.wardentools.deepcristal.description"
     },
     "icon": {
-      "item": "minecraft:sculk"
+      "item": "wardentools:deepcristal"
     },
     "title": {
-      "translate": "advancements.wardentools.root.title"
+      "translate": "advancements.wardentools.deepcristal.title"
     }
   },
   "requirements": [
     [
-      "has_sculk"
+      "deepcristal"
     ]
   ],
   "sends_telemetry_event": true

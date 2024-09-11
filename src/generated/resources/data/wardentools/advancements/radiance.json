@@ -1,12 +1,12 @@
 {
-  "parent": "wardentools:abyss",
+  "parent": "wardentools:the_abyss",
   "criteria": {
-    "has_warden_heart": {
+    "radiance": {
       "conditions": {
         "items": [
           {
             "items": [
-              "wardentools:warden_heart"
+              "wardentools:radiance_fragment"
             ]
           }
         ]
@@ -16,19 +16,18 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.wardentools.corruptedheart.description"
+      "translate": "advancements.wardentools.radiance.description"
     },
-    "frame": "goal",
     "icon": {
-      "item": "wardentools:warden_heart"
+      "item": "wardentools:radiance_fragment"
     },
     "title": {
-      "translate": "advancements.wardentools.corruptedheart.title"
+      "translate": "advancements.wardentools.radiance.title"
     }
   },
   "requirements": [
     [
-      "has_warden_heart"
+      "radiance"
     ]
   ],
   "sends_telemetry_event": true

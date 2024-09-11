@@ -1,4 +1,4 @@
-package wardentools.datagen;
+package wardentools.datagen.loot;
 
 
 import net.minecraft.data.PackOutput;

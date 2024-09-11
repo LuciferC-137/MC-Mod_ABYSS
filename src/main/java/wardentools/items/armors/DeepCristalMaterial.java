@@ -1,4 +1,4 @@
-package wardentools.armors;
+package wardentools.items.armors;
 
 import java.util.function.Supplier;
 

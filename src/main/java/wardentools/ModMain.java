@@ -14,7 +14,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import wardentools.GUI.MenuRegistry;
 import wardentools.GUI.ModCreativeTabs;
-import wardentools.armors.ArmorRegistry;
+import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.effect.ModEffects;

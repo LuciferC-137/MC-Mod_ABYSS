@@ -1,4 +1,4 @@
-package wardentools.armors;
+package wardentools.items.armors;
 
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;

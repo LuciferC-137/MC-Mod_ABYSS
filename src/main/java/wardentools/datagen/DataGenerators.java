@@ -10,6 +10,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wardentools.ModMain;
 import wardentools.datagen.advancement.ModAdvancementProvider;
+import wardentools.datagen.loot.ModGlobalLootModifiersProvider;
+import wardentools.datagen.loot.ModLootTableProvider;
 
 import java.util.concurrent.CompletableFuture;
 

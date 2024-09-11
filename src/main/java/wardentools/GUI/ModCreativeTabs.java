@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.armors.ArmorRegistry;
+import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.ItemRegistry;
 
 public class ModCreativeTabs {
@@ -47,9 +47,9 @@ public class ModCreativeTabs {
 						event.accept(ItemRegistry.RUBY_FRAGMENT.get());
 						event.accept(ItemRegistry.RUBY.get());
 						event.accept(ItemRegistry.RUBY_BLOCK.get());
-						event.accept(ItemRegistry.MALCHITE_FRAGMENT.get());
-						event.accept(ItemRegistry.MALCHITE.get());
-						event.accept(ItemRegistry.MALCHITE_BLOCK.get());
+						event.accept(ItemRegistry.MALACHITE_FRAGMENT.get());
+						event.accept(ItemRegistry.MALACHITE.get());
+						event.accept(ItemRegistry.MALACHITE_BLOCK.get());
 						event.accept(ItemRegistry.PALE_SHARD.get());
 						event.accept(ItemRegistry.PALE_CRISTAL.get());
 						event.accept(ItemRegistry.PALE_CRISTAL_BLOCK.get());

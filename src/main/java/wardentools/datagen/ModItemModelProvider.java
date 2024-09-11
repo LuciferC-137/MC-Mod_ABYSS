@@ -16,7 +16,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.armors.ArmorRegistry;
+import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 
@@ -67,7 +67,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DEEP_FRAGMENT);
         simpleItem(ItemRegistry.CITRINE_FRAGMENT);
         simpleItem(ItemRegistry.RUBY_FRAGMENT);
-        simpleItem(ItemRegistry.MALCHITE_FRAGMENT);
+        simpleItem(ItemRegistry.MALACHITE_FRAGMENT);
         simpleItem(ItemRegistry.PALE_SHARD);
         
         //Blocks that use their item model when in hand rather than the block model

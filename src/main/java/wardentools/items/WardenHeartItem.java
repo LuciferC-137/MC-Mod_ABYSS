@@ -15,7 +15,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wardentools.ModMain;
-import wardentools.armors.DeepCristalMaterial;
+import wardentools.items.armors.DeepCristalMaterial;
 import wardentools.misc.WardenLaserAttack;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;

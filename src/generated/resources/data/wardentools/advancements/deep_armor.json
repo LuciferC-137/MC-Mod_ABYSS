@@ -1,0 +1,51 @@
+{
+  "parent": "wardentools:deepcristal",
+  "criteria": {
+    "deep_armor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:deepcristal_helmet"
+            ]
+          },
+          {
+            "items": [
+              "wardentools:deepcristal_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "wardentools:deepcristal_leggings"
+            ]
+          },
+          {
+            "items": [
+              "wardentools:deepcristal_boots"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.deep_armor.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "item": "wardentools:deepcristal_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.wardentools.deep_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "deep_armor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
