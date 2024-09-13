@@ -35,7 +35,6 @@ import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 public class ModMain {
 	public static final String MOD_ID = "wardentools";
 	public static final String MODNAME = "ABYSS";
-	public static final Logger LOGGER = LogUtils.getLogger();
 	public static final String VERSION = "0.0.1";
 	
 	public ModMain() {
@@ -60,7 +59,6 @@ public class ModMain {
         MinecraftForge.EVENT_BUS.register(this);
         
         bus.addListener(this::commonSetup);
-        bus.addListener(this::addCreative);
         
         MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);
         
@@ -73,12 +71,6 @@ public class ModMain {
 		});
 
     }
-
-	private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ItemRegistry.DEEPINGOTS);
-        }
-	}
 }
 
 

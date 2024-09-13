@@ -38,6 +38,7 @@ public class ModCreativeTabs {
 						event.accept(ItemRegistry.DEEPBLOCK.get());
 						event.accept(ItemRegistry.RADIANCE_FRAGMENT.get());
                     	event.accept(ItemRegistry.RADIANCE_CRISTAL.get());
+						event.accept(ItemRegistry.RADIANCE_INGOTS.get());
 						event.accept(ItemRegistry.CITRINE_FRAGMENT.get());
 						event.accept(ItemRegistry.CITRINE.get());
 						event.accept(ItemRegistry.CITRINE_BLOCK.get());
@@ -58,6 +59,10 @@ public class ModCreativeTabs {
                         event.accept(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get());
                         event.accept(ArmorRegistry.DEEPCRISTAL_BOOTS.get());
+						event.accept(ArmorRegistry.RADIANCE_CRISTAL_HELMET.get());
+						event.accept(ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get());
+						event.accept(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS.get());
+						event.accept(ArmorRegistry.RADIANCE_CRISTAL_BOOTS.get());
                         
                         event.accept(ItemRegistry.DARKTREE_LOG.get());
                     	event.accept(ItemRegistry.DARKTREE_WOOD.get());

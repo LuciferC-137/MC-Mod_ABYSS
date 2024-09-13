@@ -48,6 +48,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ArmorRegistry.DEEPCRISTAL_CHESTPLATE);
         trimmedArmorItem(ArmorRegistry.DEEPCRISTAL_LEGGINGS);
         trimmedArmorItem(ArmorRegistry.DEEPCRISTAL_BOOTS);
+        trimmedArmorItem(ArmorRegistry.RADIANCE_CRISTAL_HELMET);
+        trimmedArmorItem(ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE);
+        trimmedArmorItem(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS);
+        trimmedArmorItem(ArmorRegistry.RADIANCE_CRISTAL_BOOTS);
         
         //Simple Item
         simpleItem(ItemRegistry.DEEPINGOTS);
@@ -69,6 +73,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.RUBY_FRAGMENT);
         simpleItem(ItemRegistry.MALACHITE_FRAGMENT);
         simpleItem(ItemRegistry.PALE_SHARD);
+        simpleItem(ItemRegistry.RADIANCE_INGOTS);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);

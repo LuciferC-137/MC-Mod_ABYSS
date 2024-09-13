@@ -25,6 +25,11 @@
 	"item.wardentools.ruby_fragment": "Ruby Fragment",
 	"item.wardentools.malachite_fragment": "Malachite Fragment",
 	"item.wardentools.pale_shard": "Pale Shard",
+	"item.wardentools.radiance_ingots": "Radiance Ingots",
+	"item.wardentools.radiance_cristal_helmet": "Radiant Helmet",
+	"item.wardentools.radiance_cristal_chestplate": "Radiant Chestplate",
+	"item.wardentools.radiance_cristal_leggings": "Radiant Leggings",
+	"item.wardentools.radiance_cristal_boots": "Radiant Boots",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",

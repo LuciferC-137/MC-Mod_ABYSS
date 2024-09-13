@@ -434,4 +434,11 @@ public class ItemRegistry {
 			REGISTAR.register("malachite_block",
 					() -> new BlockItem(BlockRegistry.MALACHITE_BLOCK.get(),
 							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> RADIANCE_INGOTS =
+			REGISTAR.register("radiance_ingots",
+					() -> new Item(new Item.Properties()
+							.rarity(Rarity.UNCOMMON)
+							.fireResistant()
+					));
 }

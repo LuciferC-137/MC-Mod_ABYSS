@@ -28,7 +28,11 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 				ArmorRegistry.DEEPCRISTAL_HELMET.get(),
 				ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get(),
 				ArmorRegistry.DEEPCRISTAL_LEGGINGS.get(),
-				ArmorRegistry.DEEPCRISTAL_BOOTS.get());
+				ArmorRegistry.DEEPCRISTAL_BOOTS.get(),
+				ArmorRegistry.RADIANCE_CRISTAL_HELMET.get(),
+				ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get(),
+				ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS.get(),
+				ArmorRegistry.RADIANCE_CRISTAL_BOOTS.get());
 		
 		this.tag(ItemTags.LOGS_THAT_BURN)
 	        .add(BlockRegistry.DARKTREE_LOG.get().asItem())

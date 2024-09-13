@@ -31,5 +31,27 @@ public class ArmorRegistry {
 			()->new ArmorItem(DeepCristalMaterial.DEEPCRISTAL, ArmorItem.Type.BOOTS, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()));
+
+
+	public static final RegistryObject<Item> RADIANCE_CRISTAL_HELMET =
+			REGISTAR.register("radiance_cristal_helmet",
+					()->new ArmorItem(RadianceCristalMaterial.RADIANCE_CRISTAL_MATERIAL, ArmorItem.Type.HELMET, new Item.Properties()
+							.rarity(Rarity.UNCOMMON)
+							.fireResistant()));
+	public static final RegistryObject<Item> RADIANCE_CRISTAL_CHESTPLATE =
+			REGISTAR.register("radiance_cristal_chestplate",
+					()->new ArmorItem(RadianceCristalMaterial.RADIANCE_CRISTAL_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+							.rarity(Rarity.UNCOMMON)
+							.fireResistant()));
+	public static final RegistryObject<Item> RADIANCE_CRISTAL_LEGGINGS =
+			REGISTAR.register("radiance_cristal_leggings",
+					()->new ArmorItem(RadianceCristalMaterial.RADIANCE_CRISTAL_MATERIAL, ArmorItem.Type.LEGGINGS, new Item.Properties()
+							.rarity(Rarity.UNCOMMON)
+							.fireResistant()));
+	public static final RegistryObject<Item> RADIANCE_CRISTAL_BOOTS =
+			REGISTAR.register("radiance_cristal_boots",
+					()->new ArmorItem(RadianceCristalMaterial.RADIANCE_CRISTAL_MATERIAL, ArmorItem.Type.BOOTS, new Item.Properties()
+							.rarity(Rarity.UNCOMMON)
+							.fireResistant()));
 	
 }
