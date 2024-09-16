@@ -30,6 +30,7 @@
 	"item.wardentools.radiance_cristal_chestplate": "Radiant Chestplate",
 	"item.wardentools.radiance_cristal_leggings": "Radiant Leggings",
 	"item.wardentools.radiance_cristal_boots": "Radiant Boots",
+	"item.wardentools.temper_spawn_egg": "Temper spawn egg",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
@@ -106,6 +107,7 @@
 	"entity.wardentools.pale_wanderer": "Pale Wanderer",
 	"entity.wardentools.protector": "Protector",
 	"entity.wardentools.contagion_incarnation": "Contagion Incarnation",
+	"entity.wardentools.temper": "Temper",
 	
 	"creativetab.abyss_tab": "Abyss",
 	

@@ -441,4 +441,9 @@ public class ItemRegistry {
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()
 					));
+
+	public static final RegistryObject<ForgeSpawnEggItem> TEMPER_EGG =
+			REGISTAR.register("temper_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
+							0x72c8cc, new Item.Properties()));
 }
