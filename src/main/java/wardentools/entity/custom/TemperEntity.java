@@ -49,7 +49,7 @@ public class TemperEntity extends PathfinderMob {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new FollowInvokerGoal(this, 2D));
+		this.goalSelector.addGoal(1, new FollowInvokerGoal(this, 4D));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 2D));
 		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 4f));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));

@@ -18,7 +18,7 @@ public class ArmorRegistry {
 					.fireResistant()));
 	public static final RegistryObject<Item> DEEPCRISTAL_CHESTPLATE =
 			REGISTAR.register("deepcristal_chestplate",
-			()->new ArmorItem(DeepCristalMaterial.DEEPCRISTAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+			()->new ModArmorItem(DeepCristalMaterial.DEEPCRISTAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()));
 	public static final RegistryObject<Item> DEEPCRISTAL_LEGGINGS =
@@ -40,7 +40,7 @@ public class ArmorRegistry {
 							.fireResistant()));
 	public static final RegistryObject<Item> RADIANCE_CRISTAL_CHESTPLATE =
 			REGISTAR.register("radiance_cristal_chestplate",
-					()->new ArmorItem(RadianceCristalMaterial.RADIANCE_CRISTAL_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+					()->new ModArmorItem(RadianceCristalMaterial.RADIANCE_CRISTAL_MATERIAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()));
 	public static final RegistryObject<Item> RADIANCE_CRISTAL_LEGGINGS =
