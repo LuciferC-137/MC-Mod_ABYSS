@@ -1,11 +1,17 @@
 package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,11 +20,21 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
@@ -29,47 +45,54 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import wardentools.effect.ModEffects;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.Temper;
 import wardentools.items.ItemRegistry;
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.UUID;
 
-public class TemperEntity extends PathfinderMob {
+public class TemperEntity extends TamableAnimal implements NeutralMob {
 	public final AnimationState idleAnimationState = new AnimationState();
 	private Player invoker = null;
+	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME
+			= SynchedEntityData.defineId(TemperEntity.class, EntityDataSerializers.INT);
+	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+	@Nullable
+	private UUID persistentAngerTarget;
 
-	public TemperEntity(EntityType<? extends PathfinderMob> entity, Level level) {
+	public TemperEntity(EntityType<? extends TamableAnimal> entity, Level level) {
 		super(entity, level);
 		this.moveControl = new FlyingMoveControl(this, 20, true);
-		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.DIAMOND_SWORD));
+		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+		this.setTame(false);
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new FollowInvokerGoal(this, 4D));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 2D));
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 4.0D, true));
+		this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 4.0D,
+				12.0F, 1.0F, true));
 		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 4f));
-		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 2.0D));
+		this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+		this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
+		this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
+		this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
 	}
 	
 	public static AttributeSupplier.Builder createAttribute(){
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 20.0D)
-				.add(Attributes.FLYING_SPEED, 0.1D)
-				.add(Attributes.MOVEMENT_SPEED, 0.1D)
-				.add(Attributes.ATTACK_DAMAGE, 2.0D)
-				.add(Attributes.FOLLOW_RANGE, 48.0D)
-				.add(Attributes.ATTACK_DAMAGE, 2.0D);
-	}
-
-	@Override
-	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		// TESTING METHOD
-		this.setPlayerInvoker(player);
-		return InteractionResult.SUCCESS;
+				.add(Attributes.FLYING_SPEED, 0.2D)
+				.add(Attributes.MOVEMENT_SPEED, 0.2D)
+				.add(Attributes.ATTACK_DAMAGE, 4.0D)
+				.add(Attributes.FOLLOW_RANGE, 48.0D);
 	}
 
 	@Override
@@ -78,7 +101,15 @@ public class TemperEntity extends PathfinderMob {
 			this.idleAnimationState.animateWhen(
 					!isInWaterOrBubble() && !this.walkAnimation.isMoving(), this.tickCount);
 		}
+		dispawnIfOwnerNotRadianceBringer();
 		super.tick();
+	}
+
+	private void dispawnIfOwnerNotRadianceBringer(){
+		if (this.getOwner() == null) {return;}
+		if (this.getOwner().getEffect(ModEffects.RADIANCE_BRINGER.get()) == null){
+			this.remove(RemovalReason.DISCARDED);
+		}
 	}
 	
 	@Override
@@ -103,7 +134,7 @@ public class TemperEntity extends PathfinderMob {
 	}
 
 	@Override
-	public ItemStack getItemInHand(InteractionHand hand) {
+	public @NotNull ItemStack getItemInHand(@NotNull InteractionHand hand) {
 		if (hand == InteractionHand.MAIN_HAND) {
 			return this.getItemBySlot(EquipmentSlot.MAINHAND);
 		} else {
@@ -111,8 +142,24 @@ public class TemperEntity extends PathfinderMob {
 		}
 	}
 
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+	}
+
+	public void addAdditionalSaveData(@NotNull CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		this.addPersistentAngerSaveData(tag);
+	}
+
+	public void readAdditionalSaveData(@NotNull CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		this.readPersistentAngerSaveData(this.level(), tag);
+	}
+
 	public void setPlayerInvoker(Player player){
 		this.invoker = player;
+		this.tame(player);
 	}
 
 	public Player getPlayerInvoker(){
@@ -129,9 +176,22 @@ public class TemperEntity extends PathfinderMob {
 		return dimensions.height * 0.6F;
 	}
 
+	@Override
+	public boolean canBeLeashed(Player player) {
+		return false;
+	}
 
 	@Override
-	public boolean checkSpawnRules(LevelAccessor p_21686_, MobSpawnType p_21687_) {
+	public boolean isOrderedToSit() {
+		return false;
+	}
+
+	@Override
+	public void setOrderedToSit(boolean sit) {
+	}
+
+	@Override
+	public boolean checkSpawnRules(LevelAccessor level, MobSpawnType type) {
     	return true;
     }
 	
@@ -139,9 +199,7 @@ public class TemperEntity extends PathfinderMob {
                                    MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return level.getBlockState(pos).isAir();
     }
-	@Override
-	protected void dropEquipment() { return;}
-    	
+
 	@Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
     }
@@ -166,48 +224,65 @@ public class TemperEntity extends PathfinderMob {
 
     @Override
     public void playSound(SoundEvent soundIn, float volume, float pitch) {
+		super.playSound(soundIn, volume, pitch);
     }
     @Override
     public void playAmbientSound() {
     }
 
-	private class FollowInvokerGoal extends Goal{
-		public static final int HORIZONTAL_SCAN_RANGE = 8;
-		public static final int VERTICAL_SCAN_RANGE = 4;
-		public static final int DONT_FOLLOW_IF_CLOSER_THAN = 3;
-		private final TemperEntity temper;
-		@Nullable
-		private final double speedModifier;
-		private int timeToRecalcPath;
+	@Override
+	public @org.jetbrains.annotations.Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level,
+																			@NotNull AgeableMob mob) {
+		return null;
+	}
 
-		public FollowInvokerGoal(TemperEntity temper, double speedModifier) {
-			this.temper = temper;
-			this.speedModifier = speedModifier;
-		}
 
-		public boolean canUse() {
-			return this.temper.getPlayerInvoker() != null;
-		}
 
-		public boolean canContinueToUse() {
-			return this.temper.getPlayerInvoker() != null;
-		}
+	@Override
+	public int getRemainingPersistentAngerTime() {
+		return 0;
+	}
 
-		public void start() {
-			this.timeToRecalcPath = 0;
-		}
+	@Override
+	public void setRemainingPersistentAngerTime(int p_30404_) {
+		this.entityData.set(DATA_REMAINING_ANGER_TIME, p_30404_);
+	}
 
-		public void stop() {
-			return;
-		}
+	@Nullable
+	public UUID getPersistentAngerTarget() {
+		return this.persistentAngerTarget;
+	}
 
-		public void tick() {
-			if (this.temper.getPlayerInvoker() != null){
-				if (--this.timeToRecalcPath <= 0) {
-					this.timeToRecalcPath = this.adjustedTickDelay(10);
-					this.temper.getNavigation().moveTo(this.temper.getPlayerInvoker(), this.speedModifier);
-				}
+	@Override
+	public void setPersistentAngerTarget(@Nullable UUID uuid) {
+		this.persistentAngerTarget = uuid;
+	}
+
+	@Override
+	public void startPersistentAngerTimer() {
+		this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
+	}
+
+	public boolean wantsToAttack(LivingEntity target, LivingEntity owner) {
+		if (!(target instanceof Creeper) && !(target instanceof Ghast)) {
+			if (target instanceof Wolf) {
+				Wolf wolf = (Wolf)target;
+				return !wolf.isTame() || wolf.getOwner() != owner;
+			} else if (target instanceof TemperEntity){
+				TemperEntity temperTarget = (TemperEntity)target;
+				return !temperTarget.isTame() || temperTarget.getOwner() != owner;
+			}else if (target instanceof Player
+					&& owner instanceof Player
+					&& !((Player)owner).canHarmPlayer((Player)target)) {
+				return false;
+			} else if (target instanceof AbstractHorse && ((AbstractHorse)target).isTamed()) {
+				return false;
+			} else {
+				return !(target instanceof TamableAnimal) || !((TamableAnimal)target).isTame();
 			}
+		} else {
+			return false;
 		}
 	}
+
 }

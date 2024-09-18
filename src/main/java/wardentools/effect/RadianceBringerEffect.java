@@ -22,6 +22,8 @@ public class RadianceBringerEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
+        System.out.println("TickCount: " + entity.tickCount);
+        if (!(entity.tickCount%(400 / (amplifier + 1))==1)) {return;} // Triggers every 20s, divided by the amplifier
         if (!(entity instanceof Player)){return;}
         if (countMyTemper(entity.level(), (Player)entity) >= MAX_NUMBER_OF_TEMPER){return;}
         TemperEntity temper = ModEntities.TEMPER.get().create(entity.level());
@@ -67,6 +69,6 @@ public class RadianceBringerEffect extends MobEffect {
 
     @Override
     public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-        return duration%(400/(amplifier+1))==1;
+        return true;
     }
 }
