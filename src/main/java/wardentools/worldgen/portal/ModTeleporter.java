@@ -46,34 +46,33 @@ public class ModTeleporter implements ITeleporter {
 	}
 
 	private BlockPos findValidSpawn(ServerLevel level, BlockPos targetPos){
+		int maxTries = 300;
 		if (!findAncientCity){
 			BlockPos destinationPos = targetPos;
 			int tries = 0;
 			while ((level.getBlockState(destinationPos).getBlock() != Blocks.AIR) &&
 					!level.getBlockState(destinationPos).canBeReplaced(Fluids.WATER) &&
 					(level.getBlockState(destinationPos.above()).getBlock() != Blocks.AIR) &&
-					!level.getBlockState(destinationPos.above()).canBeReplaced(Fluids.WATER) && (tries < 25)) {
+					!level.getBlockState(destinationPos.above()).canBeReplaced(Fluids.WATER) && (tries < maxTries)) {
 				destinationPos = destinationPos.above(2);
 				tries++;
 			}
-			return destinationPos;
+			return tries==maxTries ? targetPos : destinationPos;
 		} else {
 			BlockPos destinationPos = new BlockPos(targetPos.getX(), -60, targetPos.getZ());
 			int tries = 0;
-			while (!(level.getBlockState(destinationPos.above(tries)).is(Blocks.REINFORCED_DEEPSLATE)) && (tries<400)){
+			while (!(level.getBlockState(destinationPos.above(tries)).is(Blocks.REINFORCED_DEEPSLATE))
+					&& (tries < maxTries)){
 				tries++;
 			}
-			return inFrontOfAncientPortal(level, destinationPos.above(tries + 1));
+			return tries==maxTries ? targetPos
+					: inFrontOfAncientPortal(level, destinationPos.above(tries + 1));
 		}
 	}
 
 	private BlockPos inFrontOfAncientPortal(ServerLevel level, BlockPos targetPos){
-		int inFrontOrBehind = level.getRandom().nextBoolean() ? -1 : 1;
-		if (level.getBlockState(targetPos.offset(1, 0, 0))
-				.is(Blocks.REINFORCED_DEEPSLATE)){
-			return targetPos.offset(0, -1, inFrontOrBehind);
-		} else {
-			return targetPos.offset(inFrontOrBehind, -1, 0);
-		}
+		int random1 = level.getRandom().nextBoolean() ? -1 : 1;
+		int random2 = level.getRandom().nextBoolean() ? -1 : 1;
+		return targetPos.offset(random1, -1, random2);
 	}
 }

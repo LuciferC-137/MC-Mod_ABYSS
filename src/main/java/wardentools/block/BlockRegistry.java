@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -450,5 +451,9 @@ public class BlockRegistry {
 
 	public static final RegistryObject<AbyssPortalBlock> ABYSS_PORTAL_BLOCK
 			= REGISTAR.register("abyss_portal",
-			() -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_PORTAL)));
+			() -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
+					.noCollission()
+					.pushReaction(PushReaction.BLOCK)
+					.lightLevel((state) -> 10)
+					.strength(-1.0F, 3600000.0F)));
 }
