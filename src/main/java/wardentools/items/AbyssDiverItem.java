@@ -44,9 +44,9 @@ public class AbyssDiverItem extends Item {
                 ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
                 if (portalDimension != null && !player.isPassenger()) {
                     if(resourcekey == ModDimensions.ABYSS_LEVEL_KEY) {
-                        player.changeDimension(portalDimension, new ModTeleporter(pPos, true));
+                        player.changeDimension(portalDimension, new ModTeleporter(pPos));
                     } else {
-                        player.changeDimension(portalDimension, new ModTeleporter(pPos, false));
+                        player.changeDimension(portalDimension, new ModTeleporter(pPos));
                     }
                 }
             }

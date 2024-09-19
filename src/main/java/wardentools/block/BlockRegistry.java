@@ -447,4 +447,8 @@ public class BlockRegistry {
 					.strength(3, 6)
 					.requiresCorrectToolForDrops()
 					.lightLevel((state) -> 6)));
+
+	public static final RegistryObject<AbyssPortalBlock> ABYSS_PORTAL_BLOCK
+			= REGISTAR.register("abyss_portal",
+			() -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHER_PORTAL)));
 }

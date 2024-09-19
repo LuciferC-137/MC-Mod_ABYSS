@@ -7,45 +7,73 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
+import org.jetbrains.annotations.Nullable;
 
 public class ModTeleporter implements ITeleporter {
-	
-	    public static BlockPos thisPos = BlockPos.ZERO;
-	    public static boolean insideDimension = true;
+	private final BlockPos targetPos;
+	private boolean findAncientCity = false;
 
-	    public ModTeleporter(BlockPos pos, boolean insideDim) {
-	        thisPos = pos;
-	        insideDimension = insideDim;
-	    }
+	public ModTeleporter(BlockPos pos) {
+		this.targetPos = pos;
+	}
 
-	    @Override
-	    public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destinationWorld,
-	                              float yaw, Function<Boolean, Entity> repositionEntity) {
-	        entity = repositionEntity.apply(false);
-	        BlockPos destinationPos = thisPos;
-	        
-		    int y = 61;
-	
-		    if (!insideDimension) {
-		        y = thisPos.getY();
-		    }
-	
-		    destinationPos = new BlockPos(thisPos.getX(), y, thisPos.getZ());
-	
-		    int tries = 0;
-		    while ((destinationWorld.getBlockState(destinationPos).getBlock() != Blocks.AIR) &&
-		                !destinationWorld.getBlockState(destinationPos).canBeReplaced(Fluids.WATER) &&
-		                (destinationWorld.getBlockState(destinationPos.above()).getBlock()  != Blocks.AIR) &&
-		                !destinationWorld.getBlockState(destinationPos.above()).canBeReplaced(Fluids.WATER) && (tries < 25)) {
-		        destinationPos = destinationPos.above(2);
-		        tries++;
-	        }
+	public ModTeleporter(BlockPos pos, boolean findAncientCity){
+		this.targetPos = pos;
+		this.findAncientCity = findAncientCity;
+	}
 
-	        entity.setPos(destinationPos.getX(), destinationPos.getY(), destinationPos.getZ());
+	@Override
+	public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destinationWorld,
+							  float yaw, Function<Boolean, Entity> repositionEntity) {
+		entity = repositionEntity.apply(false);
 
-	        return entity;
-	    }
-	    
+		BlockPos destinationPos = findValidSpawn(destinationWorld, this.targetPos);
+		entity.setPos(destinationPos.getX(), destinationPos.getY(), destinationPos.getZ());
+		return entity;
+	}
 
+	@Override
+	public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
+											  Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+		BlockPos destination = findValidSpawn(destWorld, this.targetPos);
+		return destination == null ? ITeleporter.super.getPortalInfo(entity, destWorld, defaultPortalInfo) :
+				new PortalInfo(new Vec3(
+						destination.getX() + 0.5D, destination.getY(), destination.getZ() + 0.5D),
+						entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
+	}
+
+	private BlockPos findValidSpawn(ServerLevel level, BlockPos targetPos){
+		if (!findAncientCity){
+			BlockPos destinationPos = targetPos;
+			int tries = 0;
+			while ((level.getBlockState(destinationPos).getBlock() != Blocks.AIR) &&
+					!level.getBlockState(destinationPos).canBeReplaced(Fluids.WATER) &&
+					(level.getBlockState(destinationPos.above()).getBlock() != Blocks.AIR) &&
+					!level.getBlockState(destinationPos.above()).canBeReplaced(Fluids.WATER) && (tries < 25)) {
+				destinationPos = destinationPos.above(2);
+				tries++;
+			}
+			return destinationPos;
+		} else {
+			BlockPos destinationPos = new BlockPos(targetPos.getX(), -60, targetPos.getZ());
+			int tries = 0;
+			while (!(level.getBlockState(destinationPos.above(tries)).is(Blocks.REINFORCED_DEEPSLATE)) && (tries<400)){
+				tries++;
+			}
+			return inFrontOfAncientPortal(level, destinationPos.above(tries + 1));
+		}
+	}
+
+	private BlockPos inFrontOfAncientPortal(ServerLevel level, BlockPos targetPos){
+		int inFrontOrBehind = level.getRandom().nextBoolean() ? -1 : 1;
+		if (level.getBlockState(targetPos.offset(1, 0, 0))
+				.is(Blocks.REINFORCED_DEEPSLATE)){
+			return targetPos.offset(0, -1, inFrontOrBehind);
+		} else {
+			return targetPos.offset(inFrontOrBehind, -1, 0);
+		}
+	}
 }
