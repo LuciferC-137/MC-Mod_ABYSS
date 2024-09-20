@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
+import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 import wardentools.worldgen.features.custom.ReplaceAirBelowYFeature;
 import wardentools.worldgen.features.custom.SharpRock;
 import wardentools.worldgen.features.custom.cristals.CristalFormation;
@@ -31,4 +32,7 @@ public class ModFeatures {
 
     public static final RegistryObject<Feature<CristalVeinConfiguration>> CRISTAL_VEIN
             = FEATURES.register("cristal_vein", () -> new CristalVein(CristalVeinConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> ABYSS_PORTAL
+            = FEATURES.register("abyss_portal", () -> new PlaceAbyssPortal(NoneFeatureConfiguration.CODEC));
 }

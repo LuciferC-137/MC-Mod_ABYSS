@@ -100,7 +100,7 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
             }
         }
     }
-  
+
     public boolean isValidNeighbor(LevelReader level, BlockPos pos){
         return level.getBlockState(pos).is(Blocks.REINFORCED_DEEPSLATE)
                 || level.getBlockState(pos).is(BlockRegistry.ABYSS_PORTAL_BLOCK.get());
