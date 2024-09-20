@@ -120,6 +120,7 @@ public class ModCreativeTabs {
                     	event.accept(ItemRegistry.CORRUPTED_VESSEL.get());
                     	event.accept(ItemRegistry.WIND_WHISPERER.get());
                     	event.accept(ItemRegistry.ABYSS_DIVER.get());
+						event.accept(ItemRegistry.RADIANT_STAFF.get());
                     	                    	
                     	event.accept(ItemRegistry.RADIANCE_CATALYST.get());
                     	event.accept(ItemRegistry.PURE_ESSENCE.get());

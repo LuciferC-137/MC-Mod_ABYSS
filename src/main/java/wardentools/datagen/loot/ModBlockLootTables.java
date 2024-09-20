@@ -152,7 +152,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				BlockRegistry.ECHO_CRISTAL.get(),
 				BlockRegistry.RUBY.get(),
 				BlockRegistry.MALACHITE.get(),
-				BlockRegistry.PALE_CRISTAL.get()
+				BlockRegistry.PALE_CRISTAL.get(),
+				BlockRegistry.ABYSS_PORTAL_BLOCK.get()
     	);
     	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
     	        .map(RegistryObject::get)

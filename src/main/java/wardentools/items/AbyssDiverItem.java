@@ -1,7 +1,6 @@
 package wardentools.items;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -11,8 +10,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import wardentools.tags.ModTags;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
@@ -24,9 +23,10 @@ public class AbyssDiverItem extends Item {
 	}
 		
 	@Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         Player player = context.getPlayer();
+        if (player==null) {return InteractionResult.PASS;}
         BlockPos pPos = player.getOnPos();
         BlockPos clickedPos = context.getClickedPos();
         BlockState clickedBlockState = level.getBlockState(clickedPos);
@@ -44,9 +44,9 @@ public class AbyssDiverItem extends Item {
                 ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
                 if (portalDimension != null && !player.isPassenger()) {
                     if(resourcekey == ModDimensions.ABYSS_LEVEL_KEY) {
-                        player.changeDimension(portalDimension, new ModTeleporter(pPos, true));
+                        player.changeDimension(portalDimension, new ModTeleporter(pPos));
                     } else {
-                        player.changeDimension(portalDimension, new ModTeleporter(pPos, false));
+                        player.changeDimension(portalDimension, new ModTeleporter(pPos));
                     }
                 }
             }
@@ -56,8 +56,8 @@ public class AbyssDiverItem extends Item {
     }
 	
 	@Override
-    public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-        return repair.getItem() == ItemRegistry.RADIANCE_FRAGMENT.get();
+    public boolean isValidRepairItem(@NotNull ItemStack toRepair, ItemStack repair) {
+        return repair.getItem() == ItemRegistry.DEEP_FRAGMENT.get();
     }
 
 }

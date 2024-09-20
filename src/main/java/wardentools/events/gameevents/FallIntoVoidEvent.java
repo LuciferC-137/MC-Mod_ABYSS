@@ -28,7 +28,7 @@ public class FallIntoVoidEvent {
 	                	event.getEntity().setPos(event.getEntity().blockPosition().getX(),
 	                			250, event.getEntity().blockPosition().getX());
 	                    event.getEntity().changeDimension(portalDimension,
-	                    		new ModTeleporter(event.getEntity().blockPosition(), false));
+	                    		new ModTeleporter(event.getEntity().blockPosition()));
 	               }
 	            }
 	        }

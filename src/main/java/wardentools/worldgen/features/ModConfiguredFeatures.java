@@ -176,7 +176,6 @@ public class ModConfiguredFeatures {
 				new CristalVeinConfiguration(5, 2, 4,
 						Blocks.AMETHYST_BLOCK.defaultBlockState(),
 						Blocks.LARGE_AMETHYST_BUD.defaultBlockState()));
-
     }
 	
 	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int p_195204_) {

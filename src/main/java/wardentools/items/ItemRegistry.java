@@ -446,4 +446,12 @@ public class ItemRegistry {
 			REGISTAR.register("temper_spawn_egg",
 					() -> new ForgeSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
 							0x72c8cc, new Item.Properties()));
+
+	public static final RegistryObject<RadiantStaffItem> RADIANT_STAFF =
+			REGISTAR.register("radiant_staff",
+					() -> new RadiantStaffItem(new Item.Properties()
+							.stacksTo(1)
+							.rarity(Rarity.RARE)
+							.defaultDurability(20)
+							.fireResistant()));
 }
