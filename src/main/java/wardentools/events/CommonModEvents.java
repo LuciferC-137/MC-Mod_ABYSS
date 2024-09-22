@@ -1,6 +1,7 @@
 package wardentools.events;
 
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -9,7 +10,9 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import wardentools.GUI.title.CustomMainMenuScreen;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
@@ -25,6 +28,13 @@ public class CommonModEvents {
 		event.enqueueWork(() -> {PacketHandler.register();});
 
     }
+
+	@SubscribeEvent
+	public static void onClientSetup(FMLClientSetupEvent event) {
+		RenderSystem.recordRenderCall(() -> {
+			Minecraft.getInstance().setScreen(new CustomMainMenuScreen(Minecraft.getInstance()));
+		});
+	}
     
     @SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
