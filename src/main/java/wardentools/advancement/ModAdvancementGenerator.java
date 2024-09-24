@@ -1,4 +1,4 @@
-package wardentools.datagen.advancement;
+package wardentools.advancement;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
@@ -10,7 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.advancement.criteria.AbyssPortalCriteria;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.effect.ModEffects;
 import wardentools.entity.ModEntities;
@@ -21,7 +23,9 @@ import java.util.function.Consumer;
 
 public class ModAdvancementGenerator implements ForgeAdvancementProvider.AdvancementGenerator {
     @Override
-    public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> saver, ExistingFileHelper existingFileHelper) {
+    public void generate(HolderLookup.@NotNull Provider registries,
+                         @NotNull Consumer<AdvancementHolder> saver,
+                         @NotNull ExistingFileHelper existingFileHelper) {
         AdvancementHolder abyss = Advancement.Builder.advancement()
                 .display(
                         Items.SCULK, // Picture displayed
@@ -89,7 +93,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         AdvancementHolder theAbyss = Advancement.Builder.advancement()
                 .parent(abyss)
                 .display(
-                        ItemRegistry.ECHO_CRISTAL.get(),
+                        ItemRegistry.DARK_GRASS.get(),
                         Component.translatable("advancements.wardentools.theabyss.title"),
                         Component.translatable("advancements.wardentools.theabyss.description"),
                         null,
@@ -258,5 +262,20 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
                                 MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.get())))
                 .save(saver, new ResourceLocation(ModMain.MOD_ID, "corrupted"));
+
+        AdvancementHolder escape = Advancement.Builder.advancement()
+                .parent(abyssdiver)
+                .display(
+                        ItemRegistry.RADIANT_STAFF.get(),
+                        Component.translatable("advancements.wardentools.escape.title"),
+                        Component.translatable("advancements.wardentools.escape.description"),
+                        null,
+                        AdvancementType.CHALLENGE,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("escape", AbyssPortalCriteria.TriggerInstance.openPortal())
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "escape"));
     }
 }

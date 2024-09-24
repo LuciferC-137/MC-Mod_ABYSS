@@ -1,4 +1,4 @@
-package wardentools.datagen.advancement;
+package wardentools.advancement;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

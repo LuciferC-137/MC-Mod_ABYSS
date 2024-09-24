@@ -1,0 +1,27 @@
+{
+  "parent": "wardentools:abyssdiver",
+  "criteria": {
+    "escape": {
+      "trigger": "wardentools:abyss_portal_used"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.escape.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "item": "wardentools:radiant_staff",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.wardentools.escape.title"
+    }
+  },
+  "requirements": [
+    [
+      "escape"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

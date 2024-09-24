@@ -14,6 +14,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import wardentools.GUI.title.CustomMainMenuScreen;
 import wardentools.ModMain;
+import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
 import wardentools.network.PacketHandler;
@@ -26,7 +27,7 @@ public class CommonModEvents {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {PacketHandler.register();});
-
+		ModCriteriaTriggers.init();
     }
 
 	@SubscribeEvent

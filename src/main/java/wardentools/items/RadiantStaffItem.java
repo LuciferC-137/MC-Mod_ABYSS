@@ -2,6 +2,7 @@ package wardentools.items;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.jetbrains.annotations.NotNull;
+import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 
 public class RadiantStaffItem extends Item {
@@ -37,8 +39,10 @@ public class RadiantStaffItem extends Item {
                 ConfiguredFeature<?, ?> portal
                         = new ConfiguredFeature<>(new PlaceAbyssPortal(NoneFeatureConfiguration.CODEC),
                         new NoneFeatureConfiguration());
-                portal.place(serverLevel, serverLevel.getChunkSource().getGenerator(), serverLevel.random, abovePos);
-            }
+                portal.place(serverLevel, serverLevel.getChunkSource().getGenerator(),
+                        serverLevel.random, abovePos);
+                ModCriteriaTriggers.ABYSS_PORTAL_OPEN.trigger((ServerPlayer)player);
+                }
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
