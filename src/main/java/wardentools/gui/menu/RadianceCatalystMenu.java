@@ -1,4 +1,4 @@
-package wardentools.GUI.menu;
+package wardentools.gui.menu;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,8 +11,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
-import wardentools.GUI.MenuRegistry;
-import wardentools.GUI.menu.slot.PaleShardSlot;
+import wardentools.gui.MenuRegistry;
+import wardentools.gui.menu.slot.PaleShardSlot;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 

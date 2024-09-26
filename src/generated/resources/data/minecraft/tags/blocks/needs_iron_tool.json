@@ -7,6 +7,8 @@
     "wardentools:ruby_block",
     "wardentools:ruby",
     "wardentools:malachite_block",
-    "wardentools:malachite"
+    "wardentools:malachite",
+    "wardentools:pale_cristal_block",
+    "wardentools:pale_cristal"
   ]
 }

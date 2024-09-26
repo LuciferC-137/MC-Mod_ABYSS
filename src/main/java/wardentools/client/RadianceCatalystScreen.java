@@ -8,7 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import wardentools.ModMain;
-import wardentools.GUI.menu.RadianceCatalystMenu;
+import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 
 public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCatalystMenu> {

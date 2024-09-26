@@ -4,7 +4,6 @@ package wardentools.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -39,7 +38,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.ECHO_BLOCK.get())
 			.add(BlockRegistry.ECHO_CRISTAL.get())
 			.add(BlockRegistry.DEEP_CRISTAL.get())
-			.add(BlockRegistry.DEEPBLOCK.get());
+			.add(BlockRegistry.DEEPBLOCK.get())
+			.add(BlockRegistry.SOLID_CORRUPTION.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .add(BlockRegistry.DEEP_CRISTAL.get())
@@ -59,7 +59,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.RUBY_BLOCK.get())
 			.add(BlockRegistry.RUBY.get())
 			.add(BlockRegistry.MALACHITE_BLOCK.get())
-			.add(BlockRegistry.MALACHITE.get());
+			.add(BlockRegistry.MALACHITE.get())
+			.add(BlockRegistry.SOLID_CORRUPTION.get());
 
 		this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
 			.add(BlockRegistry.ABYSSALITE.get());
@@ -78,7 +79,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         	.add(BlockRegistry.DEEP_CRISTAL.get())
         	.add(BlockRegistry.DEEPBLOCK.get())
         	.add(BlockRegistry.RADIANCE_CRISTAL.get())
-			.add(BlockRegistry.PALE_CRISTAL_BLOCK.get());
+			.add(BlockRegistry.SOLID_CORRUPTION.get());
 
 		this.tag(BlockTags.NEEDS_IRON_TOOL)
 			.add(BlockRegistry.CITRINE.get())
@@ -88,7 +89,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.RUBY_BLOCK.get())
 			.add(BlockRegistry.RUBY.get())
 			.add(BlockRegistry.MALACHITE_BLOCK.get())
-			.add(BlockRegistry.MALACHITE.get());
+			.add(BlockRegistry.MALACHITE.get())
+			.add(BlockRegistry.PALE_CRISTAL_BLOCK.get())
+			.add(BlockRegistry.PALE_CRISTAL.get());
         
         
         this.tag(BlockTags.LOGS_THAT_BURN)

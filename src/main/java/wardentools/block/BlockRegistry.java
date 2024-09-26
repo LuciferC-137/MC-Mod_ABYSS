@@ -455,5 +455,11 @@ public class BlockRegistry {
 					.noCollission()
 					.pushReaction(PushReaction.BLOCK)
 					.lightLevel((state) -> 10)
-					.strength(-1.0F, 3600000.0F)));
+					.strength(-1.0F, 1.0F)));
+
+	public static final RegistryObject<Block> SOLID_CORRUPTION
+			= REGISTAR.register("solid_corruption",
+			() -> new SolidCorruptionBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
+					.lightLevel((state) -> 3)
+					.randomTicks()));
 }

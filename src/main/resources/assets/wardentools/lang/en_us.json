@@ -54,6 +54,7 @@
 	"block.wardentools.ruby_block": "Ruby Block",
 	"block.wardentools.malachite": "Malachite",
 	"block.wardentools.malachite_block": "Malachite Block",
+	"block.wardentools.solid_corruption": "Solid Corruption",
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
 	"block.wardentools.protector_invoker": "Protector Invoker",
@@ -110,8 +111,14 @@
 	"entity.wardentools.contagion_incarnation": "Contagion Incarnation",
 	"entity.wardentools.temper": "Temper",
 	
-	"creativetab.abyss_tab": "Abyss",
-	
+	"creativetab.all": "Abyss",
+	"creativetab.blocks": "Blocks",
+	"creativetab.vegetation": "Vegetation",
+	"creativetab.tools": "Tools",
+	"creativetab.crystals": "Crystals",
+	"creativetab.misc": "Miscellaneous",
+	"creativetab.egg": "Eggs",
+
 	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "Corrupted material",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",
@@ -153,5 +160,7 @@
 	"advancements.wardentools.incarnation.title": "The Corruption withdraws!",
 	"advancements.wardentools.incarnation.description": "You defeated the incarnation.",
 	"advancements.wardentools.escape.title": "The gate of salvation.",
-	"advancements.wardentools.escape.description": "A safe way to escape darkness."
+	"advancements.wardentools.escape.description": "A safe way to escape darkness.",
+	"advancements.wardentools.radiant_armor.title": "A warrior of light.",
+	"advancements.wardentools.radiant_armor.description": "Go purge this world."
 }

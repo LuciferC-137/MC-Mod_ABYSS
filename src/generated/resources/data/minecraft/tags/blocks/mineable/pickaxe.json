@@ -17,6 +17,7 @@
     "wardentools:ruby_block",
     "wardentools:ruby",
     "wardentools:malachite_block",
-    "wardentools:malachite"
+    "wardentools:malachite",
+    "wardentools:solid_corruption"
   ]
 }

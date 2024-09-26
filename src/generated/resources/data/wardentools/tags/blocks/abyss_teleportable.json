@@ -7,6 +7,7 @@
     "wardentools:echo_block",
     "wardentools:echo_cristal",
     "wardentools:deepcristal",
-    "wardentools:deepblock"
+    "wardentools:deepblock",
+    "wardentools:solid_corruption"
   ]
 }

@@ -1,4 +1,4 @@
-// 1.20.4	2024-09-03T10:39:36.1472826	Block States: wardentools
+// 1.20.4	2024-09-25T15:49:38.5050578	Block States: wardentools
 e13affcbe97c9dfb74eb9ea1a4999a2bedff956a assets/wardentools/blockstates/abyssalite.json
 b425e63003bae000aba1c701094ea69cac5aa91e assets/wardentools/blockstates/abyssalite_bricks.json
 0750ca742d3670ccab6c78ff057f7450c8b382d8 assets/wardentools/blockstates/abyssalite_bricks_slab.json
@@ -33,6 +33,7 @@ bc91fa967a572bd2f351e567e865a9e211646bbc assets/wardentools/blockstates/malachit
 4c3401f29c289157ee7310f3939c52ef225cd2d5 assets/wardentools/blockstates/pale_cristal_block.json
 1a61632702ad702d78c90d3245e2103963ebfc03 assets/wardentools/blockstates/potted_white_torchflower.json
 afdd0e9fc7935700a5f1a646d497904dac55cdb2 assets/wardentools/blockstates/ruby_block.json
+99e4dfcff3263e27c1badd1ac17f3dc702e4f645 assets/wardentools/blockstates/solid_corruption.json
 a2aa2f359f25278ebf8429a8104c9da9981236ed assets/wardentools/blockstates/stripped_darktree_log.json
 0f2523273c4ce21426bbaa3a735a153bffea1608 assets/wardentools/blockstates/stripped_darktree_wood.json
 cd5fdb5199928d02d848477f596ff4e0f39904e3 assets/wardentools/blockstates/stripped_whitetree_log.json
@@ -110,6 +111,7 @@ dc063f0649c1a0bef063c5bbc41a8c152d92e651 assets/wardentools/models/block/echo_bl
 1b6c16756b4b9e570810cb53284dc91ae70f1577 assets/wardentools/models/block/pale_cristal_block.json
 bbf38487fda97a974cdd74f6e4793a03ea217d1e assets/wardentools/models/block/potted_white_torchflower.json
 341c2b45623df7bbaa45cf93cd33f6fd6cf281a6 assets/wardentools/models/block/ruby_block.json
+190b3a9cfdad6508a98c73e2df37e6ebd199365b assets/wardentools/models/block/solid_corruption.json
 9cd47817e5d088260fe6cb0d94a0ec974284701d assets/wardentools/models/block/stripped_darktree_log.json
 aae9eb1fd9e748d40d6878219c105ebf5fecadad assets/wardentools/models/block/stripped_darktree_log_horizontal.json
 522c393683ffab98ec990cf368c7589a5fa2df8e assets/wardentools/models/block/stripped_darktree_wood.json
@@ -169,6 +171,7 @@ fe3bf584d2758c8d82b1c363efaf13dd1adcc049 assets/wardentools/models/item/malachit
 8b9e72b78e16a4b0f7906e376145a094ac83207f assets/wardentools/models/item/pale_cristal_block.json
 805a5b55f77396fdb34d9224de784ab878beacf4 assets/wardentools/models/item/potted_white_torchflower.json
 f1b35378863a0d5b7d71e5840d8f3b16221736bf assets/wardentools/models/item/ruby_block.json
+bbde0be99555938fa5e3fd9971c34b84c28175b4 assets/wardentools/models/item/solid_corruption.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped_whitetree_wood.json
 4b375f1ce4729047f07fd1ca8e18d73af5e6d44f assets/wardentools/models/item/whitetree_leaves.json

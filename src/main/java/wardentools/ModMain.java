@@ -1,20 +1,15 @@
 package wardentools;
 
-import org.slf4j.Logger;
-import com.mojang.logging.LogUtils;
 
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import wardentools.GUI.MenuRegistry;
-import wardentools.GUI.ModCreativeTabs;
-import wardentools.advancement.ModCriteriaTriggers;
+import wardentools.gui.MenuRegistry;
+import wardentools.gui.ModCreativeTabs;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
@@ -50,17 +45,16 @@ public class ModMain {
 		ModFoliagePlacers.FOLIAGE_PLACERS.register(bus);
 		ModEntities.ENTITY_TYPES.register(bus);
 		MenuRegistry.MENU_TYPES.register(bus);
-		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 		ModSounds.SOUND_EVENTS.register(bus);
 		FluidRegistry.FLUIDS.register(bus);
 		ModFluidTypes.FLUID_TYPES.register(bus);
 		ModFeatures.FEATURES.register(bus);
 		ParticleRegistry.PARTICLE_TYPES.register(bus);
 		ModEffects.MOB_EFFECTS.register(bus);
-        MinecraftForge.EVENT_BUS.register(this);
-        
+		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
+
+		MinecraftForge.EVENT_BUS.register(this);
         bus.addListener(this::commonSetup);
-        
         MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);
         
 	}

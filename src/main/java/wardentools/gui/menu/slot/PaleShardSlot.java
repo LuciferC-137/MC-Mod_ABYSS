@@ -1,4 +1,4 @@
-package wardentools.GUI.menu.slot;
+package wardentools.gui.menu.slot;
 
 import org.jetbrains.annotations.NotNull;
 

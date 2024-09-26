@@ -12,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import wardentools.GUI.title.CustomMainMenuScreen;
+import wardentools.gui.title.CustomMainMenuScreen;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.entity.ModEntities;

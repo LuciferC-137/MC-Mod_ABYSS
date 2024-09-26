@@ -1,4 +1,4 @@
-package wardentools.GUI.title;
+package wardentools.gui.title;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

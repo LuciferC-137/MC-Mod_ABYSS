@@ -1,10 +1,10 @@
 {
-  "parent": "wardentools:deepcristal",
+  "parent": "wardentools:radiance_catalyst",
   "criteria": {
-    "deep_armor": {
+    "radiant_armor": {
       "conditions": {
         "effects": {
-          "wardentools:corruption_vessel": {}
+          "wardentools:radiance_bringer": {}
         }
       },
       "trigger": "minecraft:effects_changed"
@@ -12,20 +12,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.wardentools.deep_armor.description"
+      "translate": "advancements.wardentools.radiant_armor.description"
     },
     "frame": "goal",
     "icon": {
-      "item": "wardentools:deepcristal_chestplate",
+      "item": "wardentools:radiance_cristal_chestplate",
       "nbt": "{Damage:0}"
     },
     "title": {
-      "translate": "advancements.wardentools.deep_armor.title"
+      "translate": "advancements.wardentools.radiant_armor.title"
     }
   },
   "requirements": [
     [
-      "deep_armor"
+      "radiant_armor"
     ]
   ],
   "sends_telemetry_event": true

@@ -1,4 +1,4 @@
-package wardentools.GUI;
+package wardentools.gui;
 
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -6,7 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.GUI.menu.RadianceCatalystMenu;
+import wardentools.gui.menu.RadianceCatalystMenu;
 
 public class MenuRegistry {
 	public static final DeferredRegister<MenuType<?>> MENU_TYPES =

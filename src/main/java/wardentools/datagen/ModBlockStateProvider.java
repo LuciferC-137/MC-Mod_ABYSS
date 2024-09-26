@@ -32,6 +32,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.ECHO_BLOCK);
         registerBlockWithItem(BlockRegistry.RUBY_BLOCK);
         registerBlockWithItem(BlockRegistry.MALACHITE_BLOCK);
+        registerBlockWithItem(BlockRegistry.SOLID_CORRUPTION);
 
         // Registering ores blocks with item models
         registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_COAL_ORE);

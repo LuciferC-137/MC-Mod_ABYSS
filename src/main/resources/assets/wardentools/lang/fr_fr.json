@@ -10,7 +10,6 @@
 	"item.wardentools.deep_fruit": "Fruit des abîmes",
 	"item.wardentools.abyss_diver": "Éclaireur de l'Abysse",
 	"item.wardentools.wind_whisperer": "Chuchoteur de Vent",
-	"item.wardentools.pale_fragment": "Fragment pâle",
 	"item.wardentools.dark_stick": "Bâton sombre",
 	"item.wardentools.corrupted_essence": "Essence corrompue",
 	"item.wardentools.corrupted_vessel": "Réceptacle corrompu",
@@ -54,6 +53,7 @@
 	"block.wardentools.ruby_block": "Block de Rubis",
 	"block.wardentools.malachite": "Malachite",
 	"block.wardentools.malachite_block": "Block de Malachite",
+	"block.wardentools.solid_corruption": "Corruption solide",
 
 	"block.wardentools.deepblock": "Block des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",
@@ -109,8 +109,14 @@
 	"entity.wardentools.protector": "Protecteur",
 	"entity.wardentools.contagion_incarnation": "Incarnation de la Contagion",
 	"entity.wardentools.temper": "Temper",
-	
-	"creativetab.abyss_tab": "Abyss",
+
+	"creativetab.all": "Abyss",
+	"creativetab.blocks": "Blocks",
+	"creativetab.vegetation": "Végétation",
+	"creativetab.tools": "Outils",
+	"creativetab.crystals": "Cristals",
+	"creativetab.misc": "Divers",
+	"creativetab.egg": "Oeufs",
 	
 	"gui.wardentools.radiance_catalyst_screen": "Cataliseur de Radiance",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "matière corrompue",
@@ -153,5 +159,7 @@
 	"advancements.wardentools.incarnation.title": "La Corruption se retire!",
 	"advancements.wardentools.incarnation.description": "L'incarnation a été vaincue.",
 	"advancements.wardentools.escape.title": "Les portes de la salvation",
-	"advancements.wardentools.escape.description": "Un moyen sûr d'échapper aux ténèbres"
+	"advancements.wardentools.escape.description": "Un moyen sûr d'échapper aux ténèbres",
+	"advancements.wardentools.radiant_armor.title": "Un guerrier de lumière.",
+	"advancements.wardentools.radiant_armor.description": "Va et purge ce monde."
 }

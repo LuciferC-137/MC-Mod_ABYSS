@@ -160,6 +160,23 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RADIANCE_CATALYST.get()))
                 .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiance_catalyst"));
 
+        AdvancementHolder radiantArmor = Advancement.Builder.advancement()
+                .parent(radianceCatalyst)
+                .display(
+                        ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get(),
+                        Component.translatable("advancements.wardentools.radiant_armor.title"),
+                        Component.translatable("advancements.wardentools.radiant_armor.description"),
+                        null,
+                        AdvancementType.GOAL,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("radiant_armor",
+                        EffectsChangedTrigger.TriggerInstance.hasEffects(
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.get())))
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiant_armor"));
+
         AdvancementHolder protectorInvoker = Advancement.Builder.advancement()
                 .parent(radiance)
                 .display(
@@ -222,11 +239,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         false
                 )
                 .addCriterion("deep_armor",
-                        InventoryChangeTrigger.TriggerInstance.hasItems(
-                                ArmorRegistry.DEEPCRISTAL_HELMET.get(),
-                                ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get(),
-                                ArmorRegistry.DEEPCRISTAL_LEGGINGS.get(),
-                                ArmorRegistry.DEEPCRISTAL_BOOTS.get()))
+                        EffectsChangedTrigger.TriggerInstance.hasEffects(
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.get())))
                 .save(saver, new ResourceLocation(ModMain.MOD_ID, "deep_armor"));
 
         AdvancementHolder incarnation = Advancement.Builder.advancement()
