@@ -8,8 +8,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import wardentools.particle.ParticleRegistry;
 
 
 public class ParticleRadianceCatalystPurifying {
@@ -33,8 +33,7 @@ public class ParticleRadianceCatalystPurifying {
     	context.setPacketHandled(true);
     }
 
-    @SuppressWarnings("resource")
-	private static void handlePacket(ParticleRadianceCatalystPurifying msg) {
+    private static void handlePacket(ParticleRadianceCatalystPurifying msg) {
     	BlockPos pos = msg.pos;
         try (ClientLevel level = Minecraft.getInstance().level) {
 			if (level != null) {
@@ -46,7 +45,7 @@ public class ParticleRadianceCatalystPurifying {
 		            double offsetX = (level.random.nextDouble() - 0.5) * 0.2;
 		            double offsetY = (level.random.nextDouble() - 0.5) * 0.2;
 		            double offsetZ = (level.random.nextDouble() - 0.5) * 0.2;
-		            level.addParticle(ParticleTypes.SQUID_INK, true,
+		            level.addParticle(ParticleRegistry.CORRUPTION.get(), true,
 		            		x, y, z, offsetX, offsetY, offsetZ);
 		        }
 		        level.playLocalSound(x, y, z, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F, false);

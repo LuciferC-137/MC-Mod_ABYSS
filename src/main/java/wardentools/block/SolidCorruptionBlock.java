@@ -23,6 +23,7 @@ public class SolidCorruptionBlock extends Block {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (noLiquidNeighbor(level, blockPos)) {

@@ -19,7 +19,7 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
 import wardentools.network.PacketHandler;
 import wardentools.particle.ParticleRegistry;
-import wardentools.particle.custom.AbyssAmbient;
+import wardentools.particle.custom.*;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonModEvents {
@@ -79,5 +79,13 @@ public class CommonModEvents {
 	public static void registerParticles(RegisterParticleProvidersEvent event) {
 		Minecraft.getInstance().particleEngine.register(ParticleRegistry.ABYSS_AMBIENT.get(),
 				AbyssAmbient.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.CORRUPTION.get(),
+				Corruption.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.ABYSS_PORTAL.get(),
+				AbyssPortal.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.RADIANCE.get(),
+				Radiance.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.BLACK_CORRUPTION.get(),
+				BlackCorruption.Provider::new);
 	}
 }

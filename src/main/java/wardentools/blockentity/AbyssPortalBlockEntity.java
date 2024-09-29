@@ -18,6 +18,7 @@ public class AbyssPortalBlockEntity extends BlockEntity {
     }
 
     public boolean shouldRenderFace(Direction direction) {
+        if (this.level == null) return false;
         return Block.shouldRenderFace(this.getBlockState(), this.level,
                 this.getBlockPos(), direction, this.getBlockPos().relative(direction));
     }

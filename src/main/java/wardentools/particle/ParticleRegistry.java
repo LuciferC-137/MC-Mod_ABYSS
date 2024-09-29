@@ -13,5 +13,13 @@ public class ParticleRegistry {
 
     public static final RegistryObject<SimpleParticleType> ABYSS_AMBIENT =
             PARTICLE_TYPES.register("abyss_ambient", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> CORRUPTION =
+            PARTICLE_TYPES.register("corruption", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> ABYSS_PORTAL =
+            PARTICLE_TYPES.register("abyss_portal", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> RADIANCE =
+            PARTICLE_TYPES.register("radiance", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> BLACK_CORRUPTION =
+            PARTICLE_TYPES.register("black_corruption", () -> new SimpleParticleType(true));
 
 }

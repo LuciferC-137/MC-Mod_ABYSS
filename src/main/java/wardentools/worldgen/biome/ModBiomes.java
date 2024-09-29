@@ -196,7 +196,7 @@ public class ModBiomes {
                 .grassColorOverride(0x147B75)
                 .foliageColorOverride(0x147B63)
                 .fogColor(FOG_COLOR)
-                .ambientParticle(new AmbientParticleSettings(ParticleRegistry.ABYSS_AMBIENT.get(), 0.02F))
+                .ambientParticle(new AmbientParticleSettings(ParticleRegistry.ABYSS_AMBIENT.get(), 0.0025F))
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS);
     }
 

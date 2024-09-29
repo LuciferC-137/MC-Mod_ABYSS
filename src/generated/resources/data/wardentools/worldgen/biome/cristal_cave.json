@@ -17,7 +17,7 @@
       "options": {
         "type": "wardentools:abyss_ambient"
       },
-      "probability": 0.02
+      "probability": 0.0025
     },
     "sky_color": 2844,
     "water_color": 674907,

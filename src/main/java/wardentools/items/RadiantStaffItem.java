@@ -15,6 +15,8 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.jetbrains.annotations.NotNull;
 import wardentools.advancement.ModCriteriaTriggers;
+import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceExplosion;
 import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 
 public class RadiantStaffItem extends Item {
@@ -22,8 +24,8 @@ public class RadiantStaffItem extends Item {
 	public RadiantStaffItem(Properties prop) {
 		super(prop);
 	}
-		
-	@Override
+
+    @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         Player player = context.getPlayer();
@@ -32,18 +34,22 @@ public class RadiantStaffItem extends Item {
         BlockState clickedBlockState = level.getBlockState(clickedPos);
 
         if (clickedBlockState.is(Blocks.REINFORCED_DEEPSLATE)) {
-            context.getItemInHand()
-                    .hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
             BlockPos abovePos = clickedPos.above();
+            if (!level.getBlockState(abovePos).isAir()) return InteractionResult.FAIL;
             if (level instanceof ServerLevel serverLevel) {
                 ConfiguredFeature<?, ?> portal
                         = new ConfiguredFeature<>(new PlaceAbyssPortal(NoneFeatureConfiguration.CODEC),
                         new NoneFeatureConfiguration());
-                portal.place(serverLevel, serverLevel.getChunkSource().getGenerator(),
-                        serverLevel.random, abovePos);
-                ModCriteriaTriggers.ABYSS_PORTAL_OPEN.trigger((ServerPlayer)player);
+                if (portal.place(serverLevel, serverLevel.getChunkSource().getGenerator(),
+                        serverLevel.random, abovePos)){
+                    ModCriteriaTriggers.ABYSS_PORTAL_OPEN.trigger((ServerPlayer)player);
+                    PacketHandler.sendToAllClient(new ParticleRadianceExplosion(context.getClickLocation()));
+                    context.getItemInHand()
+                            .hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
+                    return InteractionResult.SUCCESS;
                 }
-            return InteractionResult.SUCCESS;
+            }
+            return InteractionResult.FAIL;
         }
         return InteractionResult.PASS;
     }
@@ -52,7 +58,6 @@ public class RadiantStaffItem extends Item {
     public boolean isValidRepairItem(@NotNull ItemStack toRepair, ItemStack repair) {
         return repair.getItem() == ItemRegistry.RADIANCE_FRAGMENT.get();
     }
-
 }
 
 

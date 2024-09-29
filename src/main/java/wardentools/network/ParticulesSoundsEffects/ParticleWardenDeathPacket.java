@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import wardentools.particle.ParticleRegistry;
 
 
 public class ParticleWardenDeathPacket {
@@ -31,8 +32,7 @@ public class ParticleWardenDeathPacket {
     	context.setPacketHandled(true);
     }
 
-    @SuppressWarnings("resource")
-	private static void handlePacket(ParticleWardenDeathPacket msg) {
+    private static void handlePacket(ParticleWardenDeathPacket msg) {
     	BlockPos pos = msg.pos;
         try (ClientLevel level = Minecraft.getInstance().level) {
 			if (level != null) {
@@ -51,9 +51,10 @@ public class ParticleWardenDeathPacket {
 				for (int i=0; i<100; i++) {
 			    	double offsetX = (level.random.nextDouble() - 0.5) * 0.7;
 			        double offsetZ = (level.random.nextDouble() - 0.5) * 0.7;
-			    	offsetX = (level.random.nextDouble() - 0.5) * 1.0;
-			        offsetZ = (level.random.nextDouble() - 0.5) * 1.0;
-			        level.addParticle(ParticleTypes.END_ROD, false, x, y+1, z, offsetX, 0, offsetZ);
+			    	offsetX = (level.random.nextDouble() - 0.5);
+			        offsetZ = (level.random.nextDouble() - 0.5);
+			        level.addParticle(ParticleRegistry.CORRUPTION.get(), false,
+							x, y+1, z, offsetX, 0, offsetZ);
 				}
 			}
 		} catch (IOException e) {

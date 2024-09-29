@@ -1,10 +1,10 @@
-// 1.20.4	2024-09-04T21:22:29.2350809	Registries
+// 1.20.4	2024-09-28T07:51:27.0314644	Registries
 cd53d11755a53b3f0b2795a7bc6e8a1703b1bb16 data/wardentools/dimension/abyssdim.json
 78abca31c24b948721b9b9f97a002c98b1cb0365 data/wardentools/dimension_type/abyssdim_type.json
-24e75f21ca554263b2440483899cafa180159516 data/wardentools/worldgen/biome/cristal_cave.json
-bf2ac8b180d8e3c7cac13d4c9f20d6e852f4435d data/wardentools/worldgen/biome/deep_forest.json
-ebf5a0dbe869c653f72d732634a4b81fa3c26021 data/wardentools/worldgen/biome/waste_land.json
-525ecf1fa31757eacb2a6d3f40f4da29b9e98a6a data/wardentools/worldgen/biome/white_forest.json
+02212232d272c25219298f9ea0af331811351659 data/wardentools/worldgen/biome/cristal_cave.json
+05f73e398084c0fb625df39a16ac90b8ce5a9e92 data/wardentools/worldgen/biome/deep_forest.json
+ab73485e780479e86a7ac78be4cb44e671448a86 data/wardentools/worldgen/biome/waste_land.json
+c0c43ee69dffe6a8466b31ec9e540f69cb1b1e38 data/wardentools/worldgen/biome/white_forest.json
 25b73ca10a908c5bc9516599063eb1f5f118774f data/wardentools/worldgen/configured_carver/abyss_cave.json
 60aeab287f904ae02c66322770a64694cd564a71 data/wardentools/worldgen/configured_feature/amethyst_cristal.json
 2a7e7da41353cb8b908cb594c1ae20734eeb4fa1 data/wardentools/worldgen/configured_feature/amethyst_vein.json

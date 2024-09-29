@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import wardentools.blockentity.RadianceCatalystBlockEntity;
 
 
 public class ParticleRadianceCatalystCharged {
@@ -27,14 +28,12 @@ public class ParticleRadianceCatalystCharged {
         buffer.writeBlockPos(this.pos);
     }
 
-   
     public void handle(CustomPayloadEvent.Context context) {
     	context.enqueueWork(() -> handlePacket(this));
     	context.setPacketHandled(true);
     }
 
-    @SuppressWarnings("resource")
-	private static void handlePacket(ParticleRadianceCatalystCharged msg) {
+    private static void handlePacket(ParticleRadianceCatalystCharged msg) {
     	BlockPos pos = msg.pos;
         try (ClientLevel level = Minecraft.getInstance().level) {
 			if (level != null) {
@@ -46,7 +45,7 @@ public class ParticleRadianceCatalystCharged {
 		            double offsetX = (level.random.nextDouble() - 0.5) * 0.2;
 		            double offsetY = (level.random.nextDouble() - 0.5) * 0.2;
 		            double offsetZ = (level.random.nextDouble() - 0.5) * 0.2;
-		            level.addParticle(ParticleTypes.END_ROD, true,
+		            level.addParticle(RadianceCatalystBlockEntity.PARTICLE, true,
 		            		x, y, z, offsetX, offsetY, offsetZ);
 		        }
 		        level.playLocalSound(x, y, z, SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 1.0F, 1.0F, false);

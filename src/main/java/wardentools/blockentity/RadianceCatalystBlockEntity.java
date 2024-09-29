@@ -1,5 +1,8 @@
 package wardentools.blockentity;
 
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,8 +35,11 @@ import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharging;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystPurifying;
+import wardentools.particle.ParticleRegistry;
+
 
 public class RadianceCatalystBlockEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
+	public static final ParticleOptions PARTICLE = ParticleRegistry.RADIANCE.get(); //Used by the packets
 	private static final Component TITLE =
 			Component.translatable("container." + ModMain.MOD_ID + ".radiance_catalyst_block");
 	private final ItemStackHandler inventory = new ItemStackHandler(3) {

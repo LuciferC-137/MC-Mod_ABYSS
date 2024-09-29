@@ -2,10 +2,14 @@ package wardentools.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.*;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -19,6 +23,7 @@ import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.AbyssPortalBlockEntity;
+import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 import wardentools.worldgen.structure.ModStructures;
@@ -42,6 +47,37 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
         return ItemStack.EMPTY;
     }
 
+    @Override
+    public void animateTick(@NotNull BlockState state, @NotNull Level level,
+                            @NotNull BlockPos pos, RandomSource random) {
+        if (random.nextInt(100) == 0) {
+            level.playLocalSound((double)pos.getX() + 0.5D,
+                    (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D,
+                    SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS,
+                    0.5F, random.nextFloat() * 0.4F + 0.8F, false);
+        }
+
+        for(int i = 0; i < 4; ++i) {
+            double d0 = (double)pos.getX() + random.nextDouble();
+            double d1 = (double)pos.getY() + random.nextDouble();
+            double d2 = (double)pos.getZ() + random.nextDouble();
+            double d3 = ((double)random.nextFloat() - 0.5D) * 0.5D;
+            double d4 = ((double)random.nextFloat() - 0.5D) * 0.5D;
+            double d5 = ((double)random.nextFloat() - 0.5D) * 0.5D;
+            int j = random.nextInt(2) * 2 - 1;
+            if (!level.getBlockState(pos.west()).is(this)
+                    && !level.getBlockState(pos.east()).is(this)) {
+                d0 = (double)pos.getX() + 0.5D + 0.25D * (double)j;
+                d3 = (double)(random.nextFloat() * 2.0F * (float)j);
+            } else {
+                d2 = (double)pos.getZ() + 0.5D + 0.25D * (double)j;
+                d5 = (double)(random.nextFloat() * 2.0F * (float)j);
+            }
+
+            level.addParticle(ParticleRegistry.ABYSS_PORTAL.get(), d0, d1, d2, d3, d4, d5);
+        }
+
+    }
 
     @Override
     public void entityInside(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
