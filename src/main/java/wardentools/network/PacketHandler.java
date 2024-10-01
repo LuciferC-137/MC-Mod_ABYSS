@@ -56,6 +56,11 @@ public class PacketHandler {
 				.decoder(ParticleContagionImplosion::new)
 				.consumerMainThread(ParticleContagionImplosion::handle)
 				.add();
+		INSTANCE.messageBuilder(ParticleRadianceImplosion.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ParticleRadianceImplosion::encode)
+				.decoder(ParticleRadianceImplosion::new)
+				.consumerMainThread(ParticleRadianceImplosion::handle)
+				.add();
     }
 
     public static void sendToServer(Object msg) {

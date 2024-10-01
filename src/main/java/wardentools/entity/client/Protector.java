@@ -45,8 +45,8 @@ public class Protector extends HierarchicalModel<ProtectorEntity> {
 		PartDefinition FULL = partdefinition.addOrReplaceChild("FULL", CubeListBuilder.create(), PartPose.offset(0.0F, 1.0F, 0.0F));
 		PartDefinition BODY = FULL.addOrReplaceChild("BODY", CubeListBuilder.create(), PartPose.offset(0.0F, 11.0F, 0.0F));
 		PartDefinition HEAD = BODY.addOrReplaceChild("HEAD", CubeListBuilder.create().texOffs(0, 32).addBox(-8.0F, -16.0F, -5.0F, 16.0F, 16.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -21.0F, 0.0F));
-		PartDefinition EAR_L = HEAD.addOrReplaceChild("EAR_L", CubeListBuilder.create().texOffs(59, 6).addBox(8.0F, -52.0F, 0.0F, 10.0F, 10.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 33.0F, 0.0F));
-		PartDefinition EAR_R = HEAD.addOrReplaceChild("EAR_R", CubeListBuilder.create().texOffs(58, 37).addBox(-18.0F, -52.0F, 0.0F, 10.0F, 10.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 33.0F, 0.0F));
+		PartDefinition EAR_L = HEAD.addOrReplaceChild("EAR_L", CubeListBuilder.create().texOffs(59, 6).addBox(0.0F, -7.0F, 0.0F, 10.0F, 10.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(8.0F, -12.0F, 0.0F));
+		PartDefinition EAR_R = HEAD.addOrReplaceChild("EAR_R", CubeListBuilder.create().texOffs(58, 37).addBox(-10.0F, -7.0F, 0.0F, 10.0F, 10.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(-8.0F, -12.0F, 0.0F));
 		PartDefinition TORSO = BODY.addOrReplaceChild("TORSO", CubeListBuilder.create().texOffs(0, 0).addBox(-9.0F, 0.0F, -5.0F, 18.0F, 21.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -21.0F, 0.0F));
 		PartDefinition ARM_L = TORSO.addOrReplaceChild("ARM_L", CubeListBuilder.create().texOffs(44, 50).addBox(0.0F, -3.0F, -4.0F, 8.0F, 28.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(9.0F, 4.0F, 0.0F));
 		PartDefinition ARM_R = TORSO.addOrReplaceChild("ARM_R", CubeListBuilder.create().texOffs(0, 58).addBox(-8.0F, -3.0F, -4.0F, 8.0F, 28.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offset(-9.0F, 4.0F, 0.0F));
@@ -72,21 +72,18 @@ public class Protector extends HierarchicalModel<ProtectorEntity> {
 	public void setupAnim(ProtectorEntity entity, float limbSwing,
 			float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		if (!(entity.isSpawning()) || entity.isDispawning()){
+		if (!(entity.isSpawning()) || entity.isDispawning()) {
 			if (!entity.isSprinting()) {
 				animateWalk(ProtectorAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
 			} else {
 				animateWalk(ProtectorAnimation.running, limbSwing, limbSwingAmount, 1f, 2.5f);
 			}
+			animate(entity.earTickle, ProtectorAnimation.earsTickle, ageInTicks);
 			animate(entity.attackAnimationState, ProtectorAnimation.hit, ageInTicks);
-			//animate(entity.earTickle, ProtectorAnimation.earsTickle, ageInTicks);
-			parts.HEAD().xRot = parts.HEAD().xRot + headPitch * ((float)Math.PI / 180F);
-			parts.HEAD().yRot = parts.HEAD().yRot + netHeadYaw * ((float)Math.PI / 180F);
-		} else if (entity.isSpawning()) {
-			animate(entity.spawning, ProtectorAnimation.spawn, ageInTicks);
-		} else if (entity.isDispawning()) {
-			// TODO
+			parts.HEAD().xRot = parts.HEAD().xRot + headPitch * ((float) Math.PI / 180F);
+			parts.HEAD().yRot = parts.HEAD().yRot + netHeadYaw * ((float) Math.PI / 180F);
 		}
-
+		animate(entity.spawning, ProtectorAnimation.spawn, ageInTicks);
+		animate(entity.dispawning, ProtectorAnimation.dispawn, ageInTicks);
 	}
 }

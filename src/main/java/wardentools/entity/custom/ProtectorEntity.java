@@ -8,9 +8,11 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -32,34 +34,38 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
-import wardentools.block.BlockRegistry;
-import wardentools.block.ProtectorInvokerBlock;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import net.minecraft.world.entity.animal.AbstractGolem;
+import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceImplosion;
 
 public class ProtectorEntity extends AbstractGolem {
+	public int protectorDeathTime = 0;
 	private static final int attackDurationTick = 10;
-	private static final int earTickleDuration = 20;
 	public static final int invokerRadius = 20;
-	public static final int dispawnCoolDown = 40;
+	public static final int dispawnCoolDown = 60;
 	public static final int spawnCoolDown = 25;
-	private int earTickleAnimation = 0;
+	public static final int earTickleDuration = 20;
 	private static final EntityDataAccessor<Integer> dispawnTick =
 			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> spawnTick =
 			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> attackAnimationTick =
             SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> earTick =
+			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
 	public final AnimationState attackAnimationState = new AnimationState();
-	public final AnimationState earTickle = new AnimationState();
 	public final AnimationState spawning = new AnimationState();
+	public final AnimationState dispawning = new AnimationState();
+	public final AnimationState earTickle = new AnimationState();
 	public BlockPos invokerPos;
 	public static final double MAX_HEALTH = 550;
+	public static final int DEATH_DURATION = dispawnCoolDown;
 	
 	public ProtectorEntity(EntityType<? extends AbstractGolem> entity, Level level) {
 		super(entity, level);
-		this.earTickleAnimation = 0;
 		this.invokerPos = null;
 	}
 	
@@ -86,27 +92,31 @@ public class ProtectorEntity extends AbstractGolem {
 
 	@Override
 	public void tick() {
-		if (this.invokerPos!=null) {
-			this.checkInvoker();
-		}
 		if (this.getAttackTick() > 0) {
 	         this.setAttackTick(this.getAttackTick() - 1);
 	    }
 		if (this.getSpawnTick() > 0){
 			this.setSpawnTick(this.getSpawnTick() - 1);
 		}
-		if (this.earTickleAnimation > 0) {
-			this.earTickleAnimation-=1;
+		if (this.getEarTick() == 0){
+			if (random.nextInt( 200) == 0 && !this.isEarTickling()){
+				this.setEarTick(earTickleDuration);
+			}
 		}
-		if (random.nextInt(200)==1) {
-			this.earTickleAnimation = earTickleDuration;
+		if (this.isEarTickling()){
+			this.setEarTick(this.getEarTick() - 1);
 		}
 		if (level().isClientSide()) {
 			this.attackAnimationState.animateWhen(this.getAttackTick() > 0, this.tickCount);
-			this.earTickle.animateWhen(this.earTickleAnimation > 0, this.tickCount);
-			this.spawning.animateWhen(this.getSpawnTick() > 0, this.tickCount);
+			this.earTickle.animateWhen(this.isEarTickling(), this.tickCount);
+			this.spawning.animateWhen(this.isSpawning(), this.tickCount);
+			this.dispawning.animateWhen(this.isDispawning(), this.tickCount);
 		}
+		this.dispawnTick();
 		super.tick();
+		if (this.isDispawning() || this.isSpawning()) {
+			this.setDeltaMovement(0, 0, 0);
+		}
 	}
 	
 	public int getAttackTick() {
@@ -125,19 +135,101 @@ public class ProtectorEntity extends AbstractGolem {
 
 	public void setDispawnTick(int tick) {this.entityData.set(dispawnTick, tick);}
 
+	public int getEarTick() {return this.entityData.get(earTick);}
+
+	public void setEarTick(int tick) {this.entityData.set(earTick, tick);}
+
+	public boolean isEarTickling() {return this.getEarTick() > 0;}
+
 	public boolean isSpawning() {return this.getSpawnTick() > 0;}
 
 	public boolean isDispawning() {return this.getDispawnTick() > 0;}
 
 	public void makeSpawnAnimation() {this.setSpawnTick(spawnCoolDown);}
 
-	
+	private void dispawnTick(){
+		if (this.invokerPos!=null) {
+			if (!this.checkInvoker()) {
+				if (this.getDispawnTick() == 0) {
+					this.setDispawnTick(dispawnCoolDown);
+				}
+			} else if (!this.isDeadOrDying()){
+				this.setDispawnTick(0);
+			}
+		}
+		if (this.isDeadOrDying() && this.getDispawnTick() == 0){
+			this.setDispawnTick(dispawnCoolDown);
+		}
+		if (this.isDispawning()){
+			this.setDispawnTick(this.getDispawnTick() - 1);
+			if (this.getDispawnTick() == 0){
+				this.deathParticleEffect();
+				this.remove(Entity.RemovalReason.DISCARDED);
+			}
+		}
+	}
+
+	private boolean checkInvoker() {
+		if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker) {
+			if (invoker.isProtectorValid(this)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void setInvokerPos(@NotNull BlockPos pos){
+		this.invokerPos = pos;
+	}
+
+	private void deathParticleEffect() {
+		PacketHandler.sendToAllClient(new ParticleRadianceImplosion(this.getPosition(1f)
+				.add(0, 1f, 0)));
+	}
+
+	@Override
+	protected void tickDeath() {
+		++this.protectorDeathTime;
+		if (this.protectorDeathTime >= DEATH_DURATION
+				&& !this.level().isClientSide() && !this.isRemoved()) {
+			this.level().broadcastEntityEvent(this, (byte)60);
+			this.remove(Entity.RemovalReason.KILLED);
+		}
+	}
+
+	@Override
+	public void die(@NotNull DamageSource source) {
+		if (net.minecraftforge.common.ForgeHooks.onLivingDeath(this, source)) return;
+		if (!this.isRemoved() && !this.dead) {
+			Entity entity = source.getEntity();
+			LivingEntity livingentity = this.getKillCredit();
+			if (this.deathScore >= 0 && livingentity != null) {
+				livingentity.awardKillScore(this, this.deathScore, source);
+			}
+			if (this.isSleeping()) {
+				this.stopSleeping();
+			}
+			this.dead = true;
+			this.getCombatTracker().recheckStatus();
+			Level level = this.level();
+			if (level instanceof ServerLevel serverlevel) {
+				if (entity == null || entity.killedEntity(serverlevel, this)) {
+					this.gameEvent(GameEvent.ENTITY_DIE);
+					this.dropAllDeathLoot(source);
+					this.createWitherRose(livingentity);
+				}
+				this.level().broadcastEntityEvent(this, (byte)3);
+			}
+		}
+	}
+
 	@Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(attackAnimationTick, 0);
 		this.entityData.define(dispawnTick, 0);
 		this.entityData.define(spawnTick, 0);
+		this.entityData.define(earTick, 0);
     }
 	
 	@Override
@@ -224,24 +316,6 @@ public class ProtectorEntity extends AbstractGolem {
             MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return true;
     }
-    
-    private void checkInvoker() {
-    	if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity) {
-    		if (((ProtectorInvokerBlockEntity) Objects.requireNonNull(this.level().getBlockEntity(this.invokerPos)))
-					.isProtectorValid(this)){
-    			this.setDispawnTick(0);
-				return;
-    		}
-    	}
-		this.setDispawnTick(this.getDispawnTick() + 1);
-		if (this.getDispawnTick() >= dispawnCoolDown) {
-			this.remove(Entity.RemovalReason.DISCARDED);
-		}
-    }
-
-	public void setInvokerPos(@NotNull BlockPos pos){
-		this.invokerPos = pos;
-	}
 
 }
 

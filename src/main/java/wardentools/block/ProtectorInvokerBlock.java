@@ -97,13 +97,14 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 							spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);
 				protec.setHealth(invoker.heartItem().readHealth(invoker.heartStack()));
 				protec.setInvokerPos(pos);
-				level.addFreshEntity(protec);
 				if (invoker.heartItem() != null) {
 					invoker.heartItem().setProtector(invoker.heartStack(), protec);
 				}
 				protec.makeSpawnAnimation();
 				Vec3 particleSource = spawnPos.above().getCenter();
 				PacketHandler.sendToAllClient(new ParticleRadianceExplosion(particleSource));
+				level.addFreshEntity(protec);
+				invoker.protectorSuccessfullyInvoked = true;
 			}
 		}
 	}

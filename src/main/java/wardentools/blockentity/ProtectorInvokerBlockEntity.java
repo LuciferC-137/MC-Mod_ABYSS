@@ -24,6 +24,7 @@ import wardentools.items.ItemRegistry;
 import wardentools.items.ProtectorHeartItem;
 
 public class ProtectorInvokerBlockEntity extends BlockEntity implements TickableBlockEntity {
+	public boolean protectorSuccessfullyInvoked = false;
 	
 	private final ItemStackHandler inventory = new ItemStackHandler(1) {
 		@Override
@@ -96,6 +97,9 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
 			this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
 		}
+		if (wardentoolsData.contains("protectorSuccessfullyInvoked")){
+			this.protectorSuccessfullyInvoked = wardentoolsData.getBoolean("protectorSuccessfullyInvoked");
+		}
 	}
 	
 	@Override
@@ -103,6 +107,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		super.saveAdditional(nbt);
 		var wardentoolsData = new CompoundTag();
 		wardentoolsData.put("Inventory", this.inventory.serializeNBT());
+		wardentoolsData.putBoolean("protectorSuccessfullyInvoked", this.protectorSuccessfullyInvoked);
 		nbt.put(ModMain.MOD_ID, wardentoolsData);
 	}
 	
