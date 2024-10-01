@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.ProtectorAnimation;
 import wardentools.entity.custom.ProtectorEntity;
@@ -57,12 +58,13 @@ public class Protector extends HierarchicalModel<ProtectorEntity> {
 	private record ModelParts(ModelPart FULL, ModelPart BODY, ModelPart HEAD, ModelPart TORSO, ModelPart ARM_R, ModelPart ARM_L, ModelPart LEG_R, ModelPart LEG_L, ModelPart EAR_R, ModelPart EAR_L) {}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
+							   int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		this.parts.FULL().render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override
-	public ModelPart root() {
+	public @NotNull ModelPart root() {
 		return this.parts.FULL();
 	}
 
@@ -70,15 +72,21 @@ public class Protector extends HierarchicalModel<ProtectorEntity> {
 	public void setupAnim(ProtectorEntity entity, float limbSwing,
 			float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		if (!entity.isSprinting()) {
-			animateWalk(ProtectorAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
-		} else {
-			animateWalk(ProtectorAnimation.running, limbSwing, limbSwingAmount, 1f, 2.5f);
+		if (!(entity.isSpawning()) || entity.isDispawning()){
+			if (!entity.isSprinting()) {
+				animateWalk(ProtectorAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
+			} else {
+				animateWalk(ProtectorAnimation.running, limbSwing, limbSwingAmount, 1f, 2.5f);
+			}
+			animate(entity.attackAnimationState, ProtectorAnimation.hit, ageInTicks);
+			//animate(entity.earTickle, ProtectorAnimation.earsTickle, ageInTicks);
+			parts.HEAD().xRot = parts.HEAD().xRot + headPitch * ((float)Math.PI / 180F);
+			parts.HEAD().yRot = parts.HEAD().yRot + netHeadYaw * ((float)Math.PI / 180F);
+		} else if (entity.isSpawning()) {
+			animate(entity.spawning, ProtectorAnimation.spawn, ageInTicks);
+		} else if (entity.isDispawning()) {
+			// TODO
 		}
-		animate(entity.attackAnimationState, ProtectorAnimation.hit, ageInTicks);
-		//animate(entity.earTickle, ProtectorAnimation.earsTickle, ageInTicks);
-		
-		parts.HEAD().xRot = parts.HEAD().xRot + headPitch * ((float)Math.PI / 180F);
-        parts.HEAD().yRot = parts.HEAD().yRot + netHeadYaw * ((float)Math.PI / 180F);
+
 	}
 }

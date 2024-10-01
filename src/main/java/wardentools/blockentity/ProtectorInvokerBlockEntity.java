@@ -30,6 +30,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		protected void onContentsChanged(int slot) {
 			super.onContentsChanged(slot);
 			ProtectorInvokerBlockEntity.this.setChanged();
+			if (level == null) return;
 			if (!level.isClientSide) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
             }
@@ -48,6 +49,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 			((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
 					.saveHealth(this.inventory.getStackInSlot(0), protector);
 			this.setChanged();
+			if (level == null) return;
 			if (!level.isClientSide) {
 				level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
 			}
@@ -74,7 +76,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	@Override
-	public CompoundTag getUpdateTag() {
+	public @NotNull CompoundTag getUpdateTag() {
 		CompoundTag nbt = super.getUpdateTag();
 		saveAdditional(nbt);
 		return nbt;
@@ -87,7 +89,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	@Override
-	public void load(CompoundTag nbt) {
+	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
 		var wardentoolsData = nbt.getCompound(ModMain.MOD_ID);
 		if (wardentoolsData.isEmpty()) return;
@@ -97,7 +99,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
+	protected void saveAdditional(@NotNull CompoundTag nbt) {
 		super.saveAdditional(nbt);
 		var wardentoolsData = new CompoundTag();
 		wardentoolsData.put("Inventory", this.inventory.serializeNBT());
@@ -116,18 +118,28 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		if (!this.inventory.getStackInSlot(0).isEmpty()) {
 			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
 					.getProtectorID(this.inventory.getStackInSlot(0)) == protector.getId()){
-				System.out.println("Item Id: " + ((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
-						.getProtectorID(this.inventory.getStackInSlot(0)) + " protector Id: " + protector.getId());
 				return true;
 			}
 			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
 					.getProtectorUUID(this.inventory.getStackInSlot(0)).equals(protector.getUUID())) {
-				((ProtectorHeartItem)(this.inventory.getStackInSlot(0).getItem())).setProtector(
+				heartItem().setProtector(
 						this.inventory.getStackInSlot(0), protector);
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public ProtectorHeartItem heartItem() {
+		if (this.inventory.getStackInSlot(0).isEmpty()) return null;
+		if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return null;
+		return (ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem();
+	}
+
+	public ItemStack heartStack() {
+		if (this.inventory.getStackInSlot(0).isEmpty()) return null;
+		if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return null;
+		return this.inventory.getStackInSlot(0);
 	}
 	
 	public String healthText() {
