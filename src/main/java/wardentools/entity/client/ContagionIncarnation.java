@@ -1,15 +1,6 @@
 package wardentools.entity.client;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-
-import org.joml.Vector3f;
-
-import java.util.ArrayList;
-
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.PoseStack.Pose;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.HierarchicalModel;

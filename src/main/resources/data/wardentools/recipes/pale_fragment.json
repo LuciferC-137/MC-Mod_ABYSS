@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wardentools:pale_cristal_block"
+    }
+  ],
+  "result": {
+    "item": "wardentools:pale_shard",
+    "count": 9
+  }
+}

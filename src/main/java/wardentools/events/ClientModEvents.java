@@ -14,6 +14,7 @@ import wardentools.entity.custom.ModChestBoatEntity;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
+
 	@SubscribeEvent
 	public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(ModEntities.DEEPLURKER.get(), DeepLurkerRenderer::new);
@@ -24,6 +25,7 @@ public class ClientModEvents {
 				context -> new ModBoatRenderer(context, false));
 		event.registerEntityRenderer(ModEntities.MOD_CHEST_BOAT.get(),
 				context -> new ModBoatRenderer(context, true));
+		event.registerEntityRenderer(ModEntities.TEMPER.get(), TemperRenderer::new);
 	}
 
 	
@@ -33,10 +35,10 @@ public class ClientModEvents {
 		event.registerLayerDefinition(PaleWanderer.LAYER_LOCATION, PaleWanderer::createBodyLayer);
 		event.registerLayerDefinition(Protector.LAYER_LOCATION, Protector::createBodyLayer);
 		event.registerLayerDefinition(ContagionIncarnation.LAYER_LOCATION, ContagionIncarnation::createBodyLayer);
-
 		event.registerLayerDefinition(ModBoatEntity.DARKTREE_BOAT_LAYER, BoatModel::createBodyModel);
 		event.registerLayerDefinition(ModChestBoatEntity.DARKTREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
 		event.registerLayerDefinition(ModBoatEntity.WHITETREE_BOAT_LAYER, BoatModel::createBodyModel);
 		event.registerLayerDefinition(ModChestBoatEntity.WHITETREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+		event.registerLayerDefinition(Temper.LAYER_LOCATION, Temper::createBodyLayer);
 	}
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "EEE",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:malachite_fragment"
+    }
+  },
+  "result": {
+    "item": "wardentools:malachite_block"
+  }
+}

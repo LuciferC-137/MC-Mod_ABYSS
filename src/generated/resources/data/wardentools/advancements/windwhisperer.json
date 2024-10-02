@@ -1,0 +1,35 @@
+{
+  "parent": "wardentools:corrupted_heart",
+  "criteria": {
+    "windwhisperer": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:wind_whisperer"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.windwhisperer.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "item": "wardentools:wind_whisperer"
+    },
+    "title": {
+      "translate": "advancements.wardentools.windwhisperer.title"
+    }
+  },
+  "requirements": [
+    [
+      "windwhisperer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

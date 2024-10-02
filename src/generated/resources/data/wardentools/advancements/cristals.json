@@ -1,0 +1,59 @@
+{
+  "parent": "wardentools:the_abyss",
+  "criteria": {
+    "cristals": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:echo_block"
+            ]
+          },
+          {
+            "items": [
+              "wardentools:pale_cristal_block"
+            ]
+          },
+          {
+            "items": [
+              "wardentools:ruby_block"
+            ]
+          },
+          {
+            "items": [
+              "wardentools:citrine_block"
+            ]
+          },
+          {
+            "items": [
+              "wardentools:malachite_block"
+            ]
+          },
+          {
+            "items": [
+              "minecraft:amethyst_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.cristals.description"
+    },
+    "icon": {
+      "item": "wardentools:citrine_fragment"
+    },
+    "title": {
+      "translate": "advancements.wardentools.cristals.title"
+    }
+  },
+  "requirements": [
+    [
+      "cristals"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,18 @@
+{
+  "type": "wardentools:cristal_formation",
+  "config": {
+    "cristal_block": {
+      "Name": "wardentools:malachite_block"
+    },
+    "cristal_bud": {
+      "Name": "wardentools:malachite",
+      "Properties": {
+        "facing": "up",
+        "waterlogged": "false"
+      }
+    },
+    "cristal_bud_rarity": 5,
+    "length_to_radius_ratio": 3.0,
+    "max_length": 12
+  }
+}

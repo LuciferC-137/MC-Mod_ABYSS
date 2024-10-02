@@ -1,0 +1,18 @@
+{
+  "type": "wardentools:cristal_formation",
+  "config": {
+    "cristal_block": {
+      "Name": "wardentools:pale_cristal_block"
+    },
+    "cristal_bud": {
+      "Name": "wardentools:pale_cristal",
+      "Properties": {
+        "facing": "up",
+        "waterlogged": "false"
+      }
+    },
+    "cristal_bud_rarity": 10,
+    "length_to_radius_ratio": 5.0,
+    "max_length": 13
+  }
+}

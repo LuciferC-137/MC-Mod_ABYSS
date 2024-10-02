@@ -21,4 +21,9 @@ public class BlockEntityRegistry {
 					() -> BlockEntityType.Builder.of(ProtectorInvokerBlockEntity::new,
 							BlockRegistry.PROTECTOR_INVOKER.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<AbyssPortalBlockEntity>> ABYSS_PORTAL_BLOCK_ENTITY =
+			BLOCK_ENTITIES.register("abyss_portal_block_entity",
+					() -> BlockEntityType.Builder.of(AbyssPortalBlockEntity::new,
+							BlockRegistry.ABYSS_PORTAL_BLOCK.get()).build(null));
+
 }

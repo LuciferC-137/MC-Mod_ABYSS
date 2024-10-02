@@ -1,0 +1,18 @@
+{
+  "type": "wardentools:cristal_formation",
+  "config": {
+    "cristal_block": {
+      "Name": "minecraft:amethyst_block"
+    },
+    "cristal_bud": {
+      "Name": "minecraft:large_amethyst_bud",
+      "Properties": {
+        "facing": "up",
+        "waterlogged": "false"
+      }
+    },
+    "cristal_bud_rarity": 10,
+    "length_to_radius_ratio": 5.0,
+    "max_length": 13
+  }
+}

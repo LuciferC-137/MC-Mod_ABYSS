@@ -1,0 +1,37 @@
+{
+  "parent": "wardentools:protector_invoker",
+  "criteria": {
+    "protector": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "wardentools:protector"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:summoned_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.protector.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "item": "wardentools:protector_heart"
+    },
+    "title": {
+      "translate": "advancements.wardentools.protector.title"
+    }
+  },
+  "requirements": [
+    [
+      "protector"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

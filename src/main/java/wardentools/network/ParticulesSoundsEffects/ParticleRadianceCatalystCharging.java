@@ -8,8 +8,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraftforge.event.network.CustomPayloadEvent;
+import wardentools.blockentity.RadianceCatalystBlockEntity;
 
 
 public class ParticleRadianceCatalystCharging {
@@ -34,8 +34,7 @@ public class ParticleRadianceCatalystCharging {
     	context.setPacketHandled(true);
     }
 
-    @SuppressWarnings("resource")
-	private static void handlePacket(ParticleRadianceCatalystCharging msg) {
+    private static void handlePacket(ParticleRadianceCatalystCharging msg) {
     	BlockPos pos = msg.pos;
         try (ClientLevel level = Minecraft.getInstance().level) {
 			if (level != null) {
@@ -46,7 +45,7 @@ public class ParticleRadianceCatalystCharging {
 		        double offsetX = (level.random.nextDouble() - 0.5) * 2.0;
 		        double offsetY = (level.random.nextDouble() - 0.5) * 2.0;
 		        double offsetZ = (level.random.nextDouble() - 0.5) * 2.0;
-		        level.addParticle(ParticleTypes.END_ROD, true,
+		        level.addParticle(RadianceCatalystBlockEntity.PARTICLE, true,
 		            	x+offsetX, y+offsetY, z+offsetZ,
 		            	-offsetX/speedReduction, -offsetY/speedReduction, -offsetZ/speedReduction);
 		        if (level.random.nextInt(20)==1) {

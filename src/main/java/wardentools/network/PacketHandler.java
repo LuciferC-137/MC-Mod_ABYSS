@@ -8,11 +8,7 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
 import net.minecraftforge.network.PacketDistributor;
 import wardentools.ModMain;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharging;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystPurifying;
-import wardentools.network.ParticulesSoundsEffects.ParticleWardenDeathPacket;
-import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;
+import wardentools.network.ParticulesSoundsEffects.*;
 
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -26,10 +22,10 @@ public class PacketHandler {
 
     public static void register() {
         INSTANCE.messageBuilder(ParticleWardenDeathPacket.class, NetworkDirection.PLAY_TO_CLIENT)
-        	.encoder(ParticleWardenDeathPacket::encode)
-        	.decoder(ParticleWardenDeathPacket::new)
-        	.consumerMainThread(ParticleWardenDeathPacket::handle)
-        	.add();
+				.encoder(ParticleWardenDeathPacket::encode)
+				.decoder(ParticleWardenDeathPacket::new)
+				.consumerMainThread(ParticleWardenDeathPacket::handle)
+				.add();
         INSTANCE.messageBuilder(WardenLaserParticleAndSoundPacket.class, NetworkDirection.PLAY_TO_CLIENT)
         		.encoder(WardenLaserParticleAndSoundPacket::encode)
         		.decoder(WardenLaserParticleAndSoundPacket::new)
@@ -41,15 +37,30 @@ public class PacketHandler {
         		.consumerMainThread(ParticleRadianceCatalystCharged::handle)
         		.add();
         INSTANCE.messageBuilder(ParticleRadianceCatalystPurifying.class, NetworkDirection.PLAY_TO_CLIENT)
-		.encoder(ParticleRadianceCatalystPurifying::encode)
-		.decoder(ParticleRadianceCatalystPurifying::new)
-		.consumerMainThread(ParticleRadianceCatalystPurifying::handle)
-		.add();
+				.encoder(ParticleRadianceCatalystPurifying::encode)
+				.decoder(ParticleRadianceCatalystPurifying::new)
+				.consumerMainThread(ParticleRadianceCatalystPurifying::handle)
+				.add();
         INSTANCE.messageBuilder(ParticleRadianceCatalystCharging.class, NetworkDirection.PLAY_TO_CLIENT)
-		.encoder(ParticleRadianceCatalystCharging::encode)
-		.decoder(ParticleRadianceCatalystCharging::new)
-		.consumerMainThread(ParticleRadianceCatalystCharging::handle)
-		.add();
+				.encoder(ParticleRadianceCatalystCharging::encode)
+				.decoder(ParticleRadianceCatalystCharging::new)
+				.consumerMainThread(ParticleRadianceCatalystCharging::handle)
+				.add();
+		INSTANCE.messageBuilder(ParticleRadianceExplosion.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ParticleRadianceExplosion::encode)
+				.decoder(ParticleRadianceExplosion::new)
+				.consumerMainThread(ParticleRadianceExplosion::handle)
+				.add();
+		INSTANCE.messageBuilder(ParticleContagionImplosion.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ParticleContagionImplosion::encode)
+				.decoder(ParticleContagionImplosion::new)
+				.consumerMainThread(ParticleContagionImplosion::handle)
+				.add();
+		INSTANCE.messageBuilder(ParticleRadianceImplosion.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ParticleRadianceImplosion::encode)
+				.decoder(ParticleRadianceImplosion::new)
+				.consumerMainThread(ParticleRadianceImplosion::handle)
+				.add();
     }
 
     public static void sendToServer(Object msg) {

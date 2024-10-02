@@ -19,16 +19,19 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 import wardentools.ModMain;
 import wardentools.blockentity.util.TickableBlockEntity;
+import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ProtectorHeartItem;
 
 public class ProtectorInvokerBlockEntity extends BlockEntity implements TickableBlockEntity {
+	public boolean protectorSuccessfullyInvoked = false;
 	
 	private final ItemStackHandler inventory = new ItemStackHandler(1) {
 		@Override
 		protected void onContentsChanged(int slot) {
 			super.onContentsChanged(slot);
 			ProtectorInvokerBlockEntity.this.setChanged();
+			if (level == null) return;
 			if (!level.isClientSide) {
                 level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
             }
@@ -40,18 +43,19 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		super(BlockEntityRegistry.PROTECTOR_INVOKER_BLOCK_ENTITY.get(), pos, state);
 	}
 
-	@Override
-	public void tick() {
+
+	public void saveHealth(ProtectorEntity protector){
 		if (!this.inventory.getStackInSlot(0).isEmpty()
 				&& this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) {
 			((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
-				.saveHealth(level, this.inventory.getStackInSlot(0));
+					.saveHealth(this.inventory.getStackInSlot(0), protector);
 			this.setChanged();
+			if (level == null) return;
 			if (!level.isClientSide) {
-                level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
-            }
-			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem()).readHealth(
-					this.inventory.getStackInSlot(0))<=0.0f) {
+				level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
+			}
+			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
+					.readHealth(this.inventory.getStackInSlot(0))<=0.0f) {
 				this.inventory.getStackInSlot(0).shrink(1);
 				this.inventory.setStackInSlot(0, new ItemStack(ItemRegistry.DYING_PROTECTOR_HEART.get()));
 			}
@@ -73,7 +77,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	@Override
-	public CompoundTag getUpdateTag() {
+	public @NotNull CompoundTag getUpdateTag() {
 		CompoundTag nbt = super.getUpdateTag();
 		saveAdditional(nbt);
 		return nbt;
@@ -86,20 +90,24 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	@Override
-	public void load(CompoundTag nbt) {
+	public void load(@NotNull CompoundTag nbt) {
 		super.load(nbt);
 		var wardentoolsData = nbt.getCompound(ModMain.MOD_ID);
 		if (wardentoolsData.isEmpty()) return;
 		if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
 			this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
 		}
+		if (wardentoolsData.contains("protectorSuccessfullyInvoked")){
+			this.protectorSuccessfullyInvoked = wardentoolsData.getBoolean("protectorSuccessfullyInvoked");
+		}
 	}
 	
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
+	protected void saveAdditional(@NotNull CompoundTag nbt) {
 		super.saveAdditional(nbt);
 		var wardentoolsData = new CompoundTag();
 		wardentoolsData.put("Inventory", this.inventory.serializeNBT());
+		wardentoolsData.putBoolean("protectorSuccessfullyInvoked", this.protectorSuccessfullyInvoked);
 		nbt.put(ModMain.MOD_ID, wardentoolsData);
 	}
 	
@@ -111,11 +119,32 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
         return this.inventoryOptional;
     }
 	
-	public boolean isProtectorValid() {
-		if (this.inventory.getStackInSlot(0)!=null) {
-			return !this.inventory.getStackInSlot(0).isEmpty();
+	public boolean isProtectorValid(ProtectorEntity protector) {
+		if (!this.inventory.getStackInSlot(0).isEmpty()) {
+			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
+					.getProtectorID(this.inventory.getStackInSlot(0)) == protector.getId()){
+				return true;
+			}
+			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
+					.getProtectorUUID(this.inventory.getStackInSlot(0)).equals(protector.getUUID())) {
+				heartItem().setProtector(
+						this.inventory.getStackInSlot(0), protector);
+				return true;
+			}
 		}
 		return false;
+	}
+
+	public ProtectorHeartItem heartItem() {
+		if (this.inventory.getStackInSlot(0).isEmpty()) return null;
+		if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return null;
+		return (ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem();
+	}
+
+	public ItemStack heartStack() {
+		if (this.inventory.getStackInSlot(0).isEmpty()) return null;
+		if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return null;
+		return this.inventory.getStackInSlot(0);
 	}
 	
 	public String healthText() {
@@ -126,5 +155,10 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 			return "--/--";
 		}
 		
+	}
+
+	@Override
+	public void tick() {
+
 	}
 }

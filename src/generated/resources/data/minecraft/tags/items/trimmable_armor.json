@@ -3,6 +3,10 @@
     "wardentools:deepcristal_helmet",
     "wardentools:deepcristal_chestplate",
     "wardentools:deepcristal_leggings",
-    "wardentools:deepcristal_boots"
+    "wardentools:deepcristal_boots",
+    "wardentools:radiance_cristal_helmet",
+    "wardentools:radiance_cristal_chestplate",
+    "wardentools:radiance_cristal_leggings",
+    "wardentools:radiance_cristal_boots"
   ]
 }

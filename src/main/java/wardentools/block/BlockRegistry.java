@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -12,11 +13,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.worldgen.ModConfiguredFeatures;
+import wardentools.fluid.FluidRegistry;
+import wardentools.worldgen.features.ModConfiguredFeatures;
 
 public class BlockRegistry {
 	public static final DeferredRegister<Block> REGISTAR = DeferredRegister.create(ForgeRegistries.BLOCKS, ModMain.MOD_ID);
@@ -36,8 +39,9 @@ public class BlockRegistry {
 					.strength(30.0F, 900.0F)
 					));
 	
-	public static final RegistryObject<Block> PALE_SHARD = REGISTAR.register("pale_shard",
-			() -> new CristalBlock(10.0F, 5.0F, BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+	public static final RegistryObject<Block> RADIANCE_CRISTAL = REGISTAR.register("radiance_cristal",
+			() -> new RadianceCristalBlock(10.0F, 5.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 					.requiresCorrectToolForDrops()
 					.lightLevel((state) -> 11)
 					.strength(20.0F, 700.0F)));
@@ -328,15 +332,135 @@ public class BlockRegistry {
 					 .lightLevel((state) -> 10)));
 	
 	public static final RegistryObject<Block> ABYSSALITE = REGISTAR.register("abyssalite",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(4,7)
 					));
 	
 	public static final RegistryObject<Block> CHISELED_ABYSSALITE = REGISTAR.register("chiseled_abyssalite",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(4,7)));
 	
 	public static final RegistryObject<Block> ABYSSALITE_BRICKS = REGISTAR.register("abyssalite_bricks",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(4,7)));
 	
 	public static final RegistryObject<Block> CRACKED_ABYSSALITE_BRICKS = REGISTAR.register("cracked_abyssalite_bricks",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)));
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(4,7)));
+	
+	public static final RegistryObject<Block> ABYSSALITE_BRICKS_STAIRS = REGISTAR.register("abyssalite_bricks_stair",
+            () -> new StairBlock(Blocks.BLACKSTONE_STAIRS.defaultBlockState(),
+            		BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_STAIRS).strength(4,7)));
+	
+	public static final RegistryObject<Block> ABYSSALITE_BRICKS_SLAB = REGISTAR.register("abyssalite_bricks_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_SLAB).strength(4,7)));
+	
+	public static final RegistryObject<Block> ABYSSALITE_BRICKS_WALL = REGISTAR.register("abyssalite_bricks_wall",
+			() -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_WALL).strength(4,7)));
+
+	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_COAL_ORE = REGISTAR.register("abyssalite_coal_ore",
+			() -> new DropExperienceBlock(UniformInt.of(1, 3),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(5,8)));
+
+	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_LAPIS_ORE = REGISTAR.register("abyssalite_lapis_ore",
+			() -> new DropExperienceBlock(UniformInt.of(3,6),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(5,8)));
+
+	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_DIAMOND_ORE = REGISTAR.register("abyssalite_diamond_ore",
+			() -> new DropExperienceBlock(UniformInt.of(4,8),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(5,8)));
+
+	public static final RegistryObject<DropExperienceBlock> ABYSSALITE_DEEP_ORE = REGISTAR.register("abyssalite_deep_ore",
+			() -> new DropExperienceBlock(UniformInt.of(7,10),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(6,9)));
+
+	public static final RegistryObject<LiquidCorruptionBlock> LIQUID_CORRUPTION_BLOCK
+			= REGISTAR.register("liquid_corruption_block",
+				() -> new LiquidCorruptionBlock(FluidRegistry.SOURCE_LIQUID_CORRUPTION,
+						BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA).speedFactor(0.5f)));
+
+	public static final RegistryObject<Block> PALE_CRISTAL
+			= REGISTAR.register("pale_cristal",
+			() -> new CristalBlock(11.0F, 4.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+							.requiresCorrectToolForDrops()
+							.strength(3, 6)
+							.lightLevel((state) -> 8)));
+
+	public static final RegistryObject<Block> PALE_CRISTAL_BLOCK
+			= REGISTAR.register("pale_cristal_block",
+				() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+						.strength(4,7)
+						.requiresCorrectToolForDrops()
+						.lightLevel((state) -> 8)));
+
+	public static final RegistryObject<Block> CITRINE
+			= REGISTAR.register("citrine",
+				() -> new CristalBlock(9.0F, 4.0F,
+						BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+						.requiresCorrectToolForDrops()
+						.strength(3, 6)
+								.lightLevel((state) -> 8)));
+
+	public static final RegistryObject<Block> CITRINE_BLOCK
+			= REGISTAR.register("citrine_block",
+				() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+					.strength(3, 6)
+					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 8)));
+
+	public static final RegistryObject<Block> ECHO_CRISTAL
+			= REGISTAR.register("echo_cristal",
+			() -> new CristalBlock(10.0F, 5.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+							.requiresCorrectToolForDrops()
+							.strength(3, 6)
+							.lightLevel((state) -> 3)));
+
+	public static final RegistryObject<Block> ECHO_BLOCK
+			= REGISTAR.register("echo_block",
+				() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+					.strength(3, 6)
+					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 3)));
+
+	public static final RegistryObject<Block> RUBY
+			= REGISTAR.register("ruby",
+			() -> new CristalBlock(7.0F, 3.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+							.requiresCorrectToolForDrops()
+							.strength(4, 7)
+							.lightLevel((state) -> 6)));
+
+	public static final RegistryObject<Block> RUBY_BLOCK
+			= REGISTAR.register("ruby_block",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+					.strength(3, 6)
+					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 6)));
+
+	public static final RegistryObject<Block> MALACHITE
+			= REGISTAR.register("malachite",
+			() -> new CristalBlock(7.0F, 3.0F,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+							.requiresCorrectToolForDrops()
+							.strength(4, 7)
+							.lightLevel((state) -> 6)));
+
+	public static final RegistryObject<Block> MALACHITE_BLOCK
+			= REGISTAR.register("malachite_block",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
+					.strength(3, 6)
+					.requiresCorrectToolForDrops()
+					.lightLevel((state) -> 6)));
+
+	public static final RegistryObject<AbyssPortalBlock> ABYSS_PORTAL_BLOCK
+			= REGISTAR.register("abyss_portal",
+			() -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
+					.noCollission()
+					.pushReaction(PushReaction.BLOCK)
+					.lightLevel((state) -> 10)
+					.strength(-1.0F, 1.0F)));
+
+	public static final RegistryObject<Block> SOLID_CORRUPTION
+			= REGISTAR.register("solid_corruption",
+			() -> new SolidCorruptionBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
+					.lightLevel((state) -> 3)
+					.randomTicks()));
 }

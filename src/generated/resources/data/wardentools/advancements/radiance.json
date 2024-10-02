@@ -1,0 +1,34 @@
+{
+  "parent": "wardentools:the_abyss",
+  "criteria": {
+    "radiance": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:radiance_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.radiance.description"
+    },
+    "icon": {
+      "item": "wardentools:radiance_fragment"
+    },
+    "title": {
+      "translate": "advancements.wardentools.radiance.title"
+    }
+  },
+  "requirements": [
+    [
+      "radiance"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -22,6 +22,7 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import wardentools.ModMain;
+import wardentools.worldgen.CustomNoiseSettings;
 import wardentools.worldgen.biome.ModBiomes;
 
 
@@ -39,7 +40,7 @@ public class ModDimensions {
                 false, // hasSkylight
                 false, // hasCeiling
                 false, // ultraWarm
-                true, // natural
+                false, // natural
                 1.0, // coordinateScale
                 false, // bedWorks
                 false, // respawnAnchorWorks
@@ -57,22 +58,24 @@ public class ModDimensions {
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
-		NoiseBasedChunkGenerator noiseBasedChunkGenerator = new NoiseBasedChunkGenerator(
+        NoiseBasedChunkGenerator chunkGenerator = new NoiseBasedChunkGenerator(
                 MultiNoiseBiomeSource.createFromList(
                         new Climate.ParameterList<>(List.of(
                         		// Temperature(0,1), Humidity(0,1), Continentalness(0,1),
-                        		//Erosion(0,1), Depth(-1,1), Weirdness(0,1), Offset (0,1)
+                        		// Erosion(0,1), Depth(-1,1), Weirdness(0,1), Offset (0,1)
                         		Pair.of(Climate.parameters(0.5F, 0.6F, 0.3F, 0.5F, 0.0F, 0.3F, 0.0F),
                                         biomeRegistry.getOrThrow(ModBiomes.DEEP_FOREST)),
                                 Pair.of(Climate.parameters(0.9F, 0.2F, 0.7F, 0.2F, 0.0F, 0.5F, 0.0F),
                                         biomeRegistry.getOrThrow(ModBiomes.WASTE_LAND)),
                                 Pair.of(Climate.parameters(0.3F, 0.6F, 0.5F, 0.8F, 0.0F, 0.8F, 0.0F),
-                                        biomeRegistry.getOrThrow(ModBiomes.WHITE_FOREST))
+                                        biomeRegistry.getOrThrow(ModBiomes.WHITE_FOREST)),
+                                Pair.of(Climate.parameters(0.1F, 0.8F, 0.8F, 0.1F, 0.6F, 0.9F, 0.0F),
+                                        biomeRegistry.getOrThrow(ModBiomes.CRISTAL_CAVE))
                         ))),
-                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.OVERWORLD));
+                noiseGenSettings.getOrThrow(CustomNoiseSettings.ABYSS_NOISE));
         
         //put here the selected preset
-        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimensions.ABYSS_DIM_TYPE), noiseBasedChunkGenerator);
+        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimensions.ABYSS_DIM_TYPE), chunkGenerator);
 
         context.register(ABYSS_KEY, stem);
     }    

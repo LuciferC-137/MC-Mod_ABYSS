@@ -1,5 +1,8 @@
 package wardentools.blockentity;
 
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +27,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 import wardentools.ModMain;
-import wardentools.GUI.menu.RadianceCatalystMenu;
+import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.util.CustomEnergyStorage;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.items.ItemRegistry;
@@ -32,8 +35,11 @@ import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharging;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystPurifying;
+import wardentools.particle.ParticleRegistry;
+
 
 public class RadianceCatalystBlockEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
+	public static final ParticleOptions PARTICLE = ParticleRegistry.RADIANCE.get(); //Used by the packets
 	private static final Component TITLE =
 			Component.translatable("container." + ModMain.MOD_ID + ".radiance_catalyst_block");
 	private final ItemStackHandler inventory = new ItemStackHandler(3) {
@@ -231,9 +237,9 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	public int getBurnTime(@NotNull ItemStack stack) {
-		if (stack.is(ItemRegistry.PALE_FRAGMENT.get())) {
+		if (stack.is(ItemRegistry.RADIANCE_FRAGMENT.get())) {
 			return 51;
-		} else if (stack.is(ItemRegistry.PALE_SHARD.get())) {
+		} else if (stack.is(ItemRegistry.RADIANCE_CRISTAL.get())) {
 			return 251;
 		}
 		return 0;

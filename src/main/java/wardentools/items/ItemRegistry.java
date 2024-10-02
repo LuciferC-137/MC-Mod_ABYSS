@@ -26,14 +26,14 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final RegistryObject<BlockItem> DEEPBLOCK =
+	public static final RegistryObject<Item> DEEPBLOCK =
 			REGISTAR.register("deepblock",
 			() -> new BlockItem(BlockRegistry.DEEPBLOCK.get(), new Item.Properties()
 					.rarity(Rarity.RARE)
 					.fireResistant()
 					));
 	
-	public static final RegistryObject<BlockItem> DEEPCRISTAL =
+	public static final RegistryObject<Item> DEEPCRISTAL =
 			REGISTAR.register("deepcristal",
 			() -> new BlockItem(BlockRegistry.DEEP_CRISTAL.get(), new Item.Properties()
 					.stacksTo(64)
@@ -41,17 +41,17 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final RegistryObject<Item> PALE_FRAGMENT =
-			REGISTAR.register("pale_fragment", 
+	public static final RegistryObject<Item> RADIANCE_FRAGMENT =
+			REGISTAR.register("radiance_fragment",
 			() -> new Item(new Item.Properties()
 					.stacksTo(64)
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
 					));
 	
-	public static final RegistryObject<BlockItem> PALE_SHARD = 
-			REGISTAR.register("pale_shard",
-			() -> new BlockItem(BlockRegistry.PALE_SHARD.get(), new Item.Properties()
+	public static final RegistryObject<Item> RADIANCE_CRISTAL =
+			REGISTAR.register("radiance_cristal",
+			() -> new BlockItem(BlockRegistry.RADIANCE_CRISTAL.get(), new Item.Properties()
 					.stacksTo(64)
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
@@ -133,7 +133,7 @@ public class ItemRegistry {
 			REGISTAR.register("darkdirt",
 			() -> new BlockItem(BlockRegistry.DARKDIRT.get(), new Item.Properties()));
 	
-	public static final RegistryObject<ForgeSpawnEggItem> DEEPLURKER_EGG =
+	public static final RegistryObject<Item> DEEPLURKER_EGG =
 			REGISTAR.register("deeplurker_spawn_egg",
 			() -> new ForgeSpawnEggItem(ModEntities.DEEPLURKER, 0x005693,
 					0x00ebff, new Item.Properties()));
@@ -252,7 +252,7 @@ public class ItemRegistry {
 					.stacksTo(64)
 					));
 	
-	public static final RegistryObject<ForgeSpawnEggItem> PALEWANDERER_EGG =
+	public static final RegistryObject<Item> PALEWANDERER_EGG =
 			REGISTAR.register("pale_wanderer_spawn_egg",
 			() -> new ForgeSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
 					0x00ebff, new Item.Properties()));
@@ -269,7 +269,7 @@ public class ItemRegistry {
 			REGISTAR.register("white_torchflower",
 			() -> new BlockItem(BlockRegistry.WHITE_TORCHFLOWER.get(), new Item.Properties()));
 	
-	public static final RegistryObject<RadianceCatalystItem> RADIANCE_CATALYST =
+	public static final RegistryObject<Item> RADIANCE_CATALYST =
 			REGISTAR.register("radiance_catalyst",
 			() -> new RadianceCatalystItem(BlockRegistry.RADIANCE_CATALYST.get(),
 					new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
@@ -306,7 +306,7 @@ public class ItemRegistry {
 			REGISTAR.register("dark_grass",
 			() -> new BlockItem(BlockRegistry.DARK_GRASS.get(), new Item.Properties()));
 	
-	public static final RegistryObject<BlockItem> PROTECTOR_INVOKER =
+	public static final RegistryObject<Item> PROTECTOR_INVOKER =
 			REGISTAR.register("protector_invoker",
 			() -> new BlockItem(BlockRegistry.PROTECTOR_INVOKER.get(),
 					new Item.Properties().rarity(Rarity.EPIC)));
@@ -315,22 +315,22 @@ public class ItemRegistry {
 			REGISTAR.register("dying_protector_heart",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
-	public static final RegistryObject<BlockItem> ABYSSALITE =
+	public static final RegistryObject<Item> ABYSSALITE =
 			REGISTAR.register("abyssalite",
 			() -> new BlockItem(BlockRegistry.ABYSSALITE.get(),
 					new Item.Properties()));
 	
-	public static final RegistryObject<BlockItem> CHISELED_ABYSSALITE =
+	public static final RegistryObject<Item> CHISELED_ABYSSALITE =
 			REGISTAR.register("chiseled_abyssalite",
 			() -> new BlockItem(BlockRegistry.CHISELED_ABYSSALITE.get(),
 					new Item.Properties()));
 	
-	public static final RegistryObject<BlockItem> ABYSSALITE_BRICKS =
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS =
 			REGISTAR.register("abyssalite_bricks",
 			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS.get(),
 					new Item.Properties()));
 	
-	public static final RegistryObject<BlockItem> CRACKED_ABYSSALITE_BRICKS =
+	public static final RegistryObject<Item> CRACKED_ABYSSALITE_BRICKS =
 			REGISTAR.register("cracked_abyssalite_bricks",
 			() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
 					new Item.Properties()));
@@ -354,4 +354,132 @@ public class ItemRegistry {
 			REGISTAR.register("whitetree_chest_boat",
 					() -> new ModBoatItem(true, ModBoatEntity.Type.WHITETREE,
 							new Item.Properties().stacksTo(1)));
+	
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_STAIRS =
+			REGISTAR.register("abyssalite_bricks_stair",
+			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_SLAB =
+			REGISTAR.register("abyssalite_bricks_slab",
+			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_SLAB.get(), new Item.Properties()));
+	
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_WALL =
+			REGISTAR.register("abyssalite_bricks_wall",
+			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_WALL.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> DEEP_FRAGMENT =
+			REGISTAR.register("deep_fragment",
+					() -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).fireResistant()));
+
+	public static final RegistryObject<Item> ABYSSALITE_COAL_ORE =
+			REGISTAR.register("abyssalite_coal_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_COAL_ORE.get(),
+							new Item.Properties()));
+
+	public static final RegistryObject<Item> ABYSSALITE_LAPIS_ORE =
+			REGISTAR.register("abyssalite_lapis_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_LAPIS_ORE.get(),
+							new Item.Properties()));
+
+	public static final RegistryObject<Item> ABYSSALITE_DIAMOND_ORE =
+			REGISTAR.register("abyssalite_diamond_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> ABYSSALITE_DEEP_ORE =
+			REGISTAR.register("abyssalite_deep_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> PALE_SHARD =
+			REGISTAR.register("pale_shard",
+					() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> PALE_CRISTAL =
+			REGISTAR.register("pale_cristal",
+					() -> new BlockItem(BlockRegistry.PALE_CRISTAL.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> PALE_CRISTAL_BLOCK =
+			REGISTAR.register("pale_cristal_block",
+					() -> new BlockItem(BlockRegistry.PALE_CRISTAL_BLOCK.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CITRINE_FRAGMENT =
+			REGISTAR.register("citrine_fragment",
+					() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CITRINE =
+			REGISTAR.register("citrine",
+					() -> new BlockItem(BlockRegistry.CITRINE.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> CITRINE_BLOCK =
+			REGISTAR.register("citrine_block",
+					() -> new BlockItem(BlockRegistry.CITRINE_BLOCK.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> ECHO_CRISTAL =
+			REGISTAR.register("echo_cristal",
+					() -> new BlockItem(BlockRegistry.ECHO_CRISTAL.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> ECHO_BLOCK =
+			REGISTAR.register("echo_block",
+					() -> new BlockItem(BlockRegistry.ECHO_BLOCK.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> RUBY_FRAGMENT =
+			REGISTAR.register("ruby_fragment",
+					() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> RUBY =
+			REGISTAR.register("ruby",
+					() -> new BlockItem(BlockRegistry.RUBY.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> RUBY_BLOCK =
+			REGISTAR.register("ruby_block",
+					() -> new BlockItem(BlockRegistry.RUBY_BLOCK.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> MALACHITE_FRAGMENT =
+			REGISTAR.register("malachite_fragment",
+					() -> new Item(new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> MALACHITE =
+			REGISTAR.register("malachite",
+				() -> new BlockItem(BlockRegistry.MALACHITE.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> MALACHITE_BLOCK =
+			REGISTAR.register("malachite_block",
+					() -> new BlockItem(BlockRegistry.MALACHITE_BLOCK.get(),
+							new Item.Properties().fireResistant()));
+
+	public static final RegistryObject<Item> RADIANCE_INGOTS =
+			REGISTAR.register("radiance_ingots",
+					() -> new Item(new Item.Properties()
+							.rarity(Rarity.UNCOMMON)
+							.fireResistant()
+					));
+
+	public static final RegistryObject<Item> TEMPER_EGG =
+			REGISTAR.register("temper_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
+							0x72c8cc, new Item.Properties()));
+
+	public static final RegistryObject<Item> RADIANT_STAFF =
+			REGISTAR.register("radiant_staff",
+					() -> new RadiantStaffItem(new Item.Properties()
+							.stacksTo(1)
+							.rarity(Rarity.RARE)
+							.defaultDurability(20)
+							.fireResistant()));
+
+	public static final RegistryObject<Item> SOLID_CORRUPTION =
+			REGISTAR.register("solid_corruption",
+					() -> new BlockItem(BlockRegistry.SOLID_CORRUPTION.get(), new Item.Properties()
+							.rarity(Rarity.UNCOMMON)
+							.fireResistant()));
 }

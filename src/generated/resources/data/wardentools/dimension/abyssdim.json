@@ -40,9 +40,21 @@
             "temperature": 0.3,
             "weirdness": 0.8
           }
+        },
+        {
+          "biome": "wardentools:cristal_cave",
+          "parameters": {
+            "continentalness": 0.8,
+            "depth": 0.6,
+            "erosion": 0.1,
+            "humidity": 0.8,
+            "offset": 0.0,
+            "temperature": 0.1,
+            "weirdness": 0.9
+          }
         }
       ]
     },
-    "settings": "minecraft:overworld"
+    "settings": "wardentools:abyss_noise"
   }
 }

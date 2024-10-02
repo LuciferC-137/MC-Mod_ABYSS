@@ -1,0 +1,18 @@
+{
+  "type": "wardentools:cristal_vein",
+  "config": {
+    "cristal_block": {
+      "Name": "wardentools:echo_block"
+    },
+    "cristal_bud": {
+      "Name": "wardentools:echo_cristal",
+      "Properties": {
+        "facing": "up",
+        "waterlogged": "false"
+      }
+    },
+    "cristal_bud_probability": 4,
+    "max_length": 5,
+    "spread_factor": 2
+  }
+}

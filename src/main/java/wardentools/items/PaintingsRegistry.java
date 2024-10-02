@@ -11,6 +11,12 @@ public class PaintingsRegistry {
     	= DeferredRegister.create(ForgeRegistries.PAINTING_VARIANTS, ModMain.MOD_ID);
 
     public static final RegistryObject<PaintingVariant> QUITE_LIFE = PAINTINGS.register("quiet_life",
-            () -> new PaintingVariant(32, 32)); 
+            () -> new PaintingVariant(32, 32));
+
+    public static final RegistryObject<PaintingVariant> INCARNATION = PAINTINGS.register("incarnation",
+            () -> new PaintingVariant(16, 16));
+
+    public static final RegistryObject<PaintingVariant> ABYSS = PAINTINGS.register("abyss",
+            () -> new PaintingVariant(32, 16));
 
 }

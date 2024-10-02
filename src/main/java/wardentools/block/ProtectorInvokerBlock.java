@@ -1,5 +1,7 @@
 package wardentools.block;
 
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +26,8 @@ import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
-import wardentools.items.ProtectorHeartItem;
+import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceExplosion;
 
 public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	public static final int radiusForProtectorSpawn = 5;
@@ -34,76 +37,95 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+	public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
 		return BlockEntityRegistry.PROTECTOR_INVOKER_BLOCK_ENTITY.get().create(pos, state);
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 	}
 	
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
-			BlockEntityType<T> type){
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state,
+																  @NotNull BlockEntityType<T> type){
 		return level.isClientSide() ? null : (level0, pos0, state0, blockEntity)
 				-> ((ProtectorInvokerBlockEntity)blockEntity).tick();
 	}
 	
 	@Override
-	public @NotNull InteractionResult use(BlockState state, Level level, BlockPos pos,
-			Player player, InteractionHand interactionHand, BlockHitResult result) {
+	@SuppressWarnings("deprecation")
+	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
+										  @NotNull Player player, @NotNull InteractionHand interactionHand,
+										  @NotNull BlockHitResult result) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
-		if (!(blockEntity instanceof ProtectorInvokerBlockEntity)) {
+		if (!(blockEntity instanceof ProtectorInvokerBlockEntity invoker)) {
 			return InteractionResult.PASS;
 		}
-		if (InteractionHand.MAIN_HAND != interactionHand) {
+        if (InteractionHand.MAIN_HAND != interactionHand) {
 			return InteractionResult.FAIL;
 		}
 		ItemStack heldItem = player.getItemInHand(interactionHand);
 		if (heldItem.is(ItemRegistry.PROTECTOR_HEART.get())
-				&&((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
-			((ProtectorInvokerBlockEntity)blockEntity).getInventory()
-				.setStackInSlot(0, heldItem.copy());
+				&& invoker.getInventory().getStackInSlot(0).isEmpty()) {
+			invoker.getInventory().setStackInSlot(0, heldItem.copy());
 			heldItem.shrink(1);
-			
-			if (!level.isClientSide()) {
-	            BlockPos spawnPos = findSpawnPosition(level, pos);
-	            if (spawnPos != null) {
-	                ProtectorEntity protec = ModEntities.PROTECTOR.get().create(level);
-	                if (protec != null) {
-	                    protec.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
-	                    		spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);
-	                    protec.setHealth(((ProtectorHeartItem)((ProtectorInvokerBlockEntity)blockEntity).getInventory()
-	                						.getStackInSlot(0).getItem()).readHealth(((ProtectorInvokerBlockEntity)blockEntity)
-	                								.getInventory().getStackInSlot(0)));
-	                    level.addFreshEntity(protec);
-	                }
-	                if (((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0)
-	                		.is(ItemRegistry.PROTECTOR_HEART.get())) {
-	                	((ProtectorHeartItem)((ProtectorInvokerBlockEntity)blockEntity).getInventory()
-	                			.getStackInSlot(0).getItem()).setProtector(((ProtectorInvokerBlockEntity)blockEntity)
-	                					.getInventory().getStackInSlot(0), protec);
-                    }
-	            }
-	        }
+			if (protectorWithThisInvokerExists(level, invoker)) {
+				return InteractionResult.SUCCESS;
+			}
+			trySpawnNewProtector(level, pos, invoker);
 			return InteractionResult.SUCCESS;
 
-		} else if (heldItem.isEmpty()&&
-				!((ProtectorInvokerBlockEntity)blockEntity).getInventory().getStackInSlot(0).isEmpty()) {
-			player.setItemInHand(interactionHand, ((ProtectorInvokerBlockEntity)blockEntity).getInventory()
-					.getStackInSlot(0).copy());
-			((ProtectorInvokerBlockEntity)blockEntity).getInventory()
-				.getStackInSlot(0).shrink(1);
+		} else if (heldItem.isEmpty() && !invoker.getInventory().getStackInSlot(0).isEmpty()) {
+			player.setItemInHand(interactionHand, invoker.getInventory().getStackInSlot(0).copy());
+			invoker.getInventory().getStackInSlot(0).shrink(1);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;
 	}
+
+	private void trySpawnNewProtector(Level level,
+									  BlockPos pos,
+									  ProtectorInvokerBlockEntity invoker){
+		if (level.isClientSide()) return;
+		BlockPos spawnPos = findSpawnPosition(level, pos);
+		if (spawnPos != null) {
+			ProtectorEntity protec = ModEntities.PROTECTOR.get().create(level);
+			if (protec != null) {
+				protec.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
+							spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);
+				protec.setHealth(invoker.heartItem().readHealth(invoker.heartStack()));
+				protec.setInvokerPos(pos);
+				if (invoker.heartItem() != null) {
+					invoker.heartItem().setProtector(invoker.heartStack(), protec);
+				}
+				protec.makeSpawnAnimation();
+				Vec3 particleSource = spawnPos.above().getCenter();
+				PacketHandler.sendToAllClient(new ParticleRadianceExplosion(particleSource));
+				level.addFreshEntity(protec);
+				invoker.protectorSuccessfullyInvoked = true;
+			}
+		}
+	}
+
+	public boolean protectorWithThisInvokerExists(Level level, ProtectorInvokerBlockEntity invoker) {
+		AABB searchBox = new AABB(invoker.getBlockPos()).inflate(100);
+		return level.getEntitiesOfClass(ProtectorEntity.class, searchBox)
+				.stream()
+				.anyMatch(protector -> compareBlockPos(invoker.getBlockPos(), protector));
+	}
+
+	private static boolean compareBlockPos(BlockPos pos1, ProtectorEntity protector){
+		if (protector.invokerPos == null) return false;
+		BlockPos pos2 = protector.invokerPos;
+		return pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY() && pos1.getZ() == pos2.getZ();
+	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(@NotNull BlockState state, Level level,
+						 @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {
 		if (!level.isClientSide()) {
 			BlockEntity be = level.getBlockEntity(pos);
 			if (be instanceof ProtectorInvokerBlockEntity blockEntity) {
@@ -124,28 +146,42 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	    for (int r = 1; r <= radiusForProtectorSpawn; r++) {
             for (int dx = -r; dx <= r; dx++) {
                 for (int dz = -r; dz <= r; dz++) {
-                    if (Math.abs(dx) == r || Math.abs(dz) == r) {
-                    	BlockPos pos = invokerPos.offset(dx, 0, dz);
-    	                if (isSpaceAvailable(level, pos)) {
-    	                    return pos;
-    	                }
-                    }
+					for (int dy = -2; dy <= 2; dy++) {
+						if (Math.abs(dx) == r || Math.abs(dz) == r) {
+							BlockPos pos = invokerPos.offset(dx, dy, dz);
+							if (isSpaceAvailable(level, pos)) {
+								return pos;
+							}
+						}
+					}
                 }
             }
         }
 	    return null;
 	}
-	
-	private boolean isSpaceAvailable(Level level, BlockPos pos) {
-	    for (int x = 0; x < 2; x++) {
-	        for (int y = 0; y < 3; y++) {
-	            BlockPos checkPos = pos.offset(x, y, 0);
-	            if (!level.getBlockState(checkPos).isAir()) {
-	                return false;
-	            }
-	        }
-	    }
-	    return true;
-	}
 
+	@SuppressWarnings("deprecation")
+	private boolean isSpaceAvailable(Level level, BlockPos pos) {
+		// Looks for a 3x3 solid platform
+		for (int x = -1; x <= 1; x++) {
+			for (int z = -1; z <= 1; z++) {
+				BlockPos checkPos = pos.offset(x, -1, z);
+				if (!level.getBlockState(checkPos).isSolid()) {
+					return false;
+				}
+			}
+		}
+		// Checks the space above is free
+		for (int x = -1; x <= 1; x++) {
+			for (int y = 0; y < 3; y++) {
+				for (int z = -1; z <= 1; z++) {
+					BlockPos checkPos = pos.offset(x, y, z);
+					if (!level.getBlockState(checkPos).isAir()) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 }

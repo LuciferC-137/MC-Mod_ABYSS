@@ -1,0 +1,18 @@
+{
+  "type": "wardentools:cristal_formation",
+  "config": {
+    "cristal_block": {
+      "Name": "wardentools:ruby_block"
+    },
+    "cristal_bud": {
+      "Name": "wardentools:ruby",
+      "Properties": {
+        "facing": "up",
+        "waterlogged": "false"
+      }
+    },
+    "cristal_bud_rarity": 7,
+    "length_to_radius_ratio": 4.0,
+    "max_length": 9
+  }
+}

@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.util.RandomSource;
 import net.minecraftforge.common.MinecraftForge;
-import wardentools.effects.WindWhisper;
+import wardentools.misc.WindWhisper;
 import wardentools.worldgen.dimension.ModDimensions;
 
 //@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -27,30 +27,7 @@ public class WindWhisperer extends Item {
 	    this.rand = RandomSource.create();
 	    MinecraftForge.EVENT_BUS.register(this);
 	}
-	
-	//@SuppressWarnings("resource")
-	//@SubscribeEvent
-    //public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-	//	this.currentPlayer = event.player;
-    //    if (event.phase == TickEvent.Phase.END) {
-    //        if (event.player.level().isClientSide) {
-    //            if (isInHotbar(event.player) && isInAbyss(event.player)) {
-    //                if (this.rand.nextInt(10000) == 1) {
-    //                	Minecraft minecraft = Minecraft.getInstance();
-    //                    LanguageManager languageManager = minecraft.getLanguageManager();
-    //                    String currentLanguage = languageManager.getSelected();
-    //                    if ("fr_fr".equals(currentLanguage)) {
-    //                        sendMessage(event.player, "<Vent> " + this.windWhisper.getWhisperFr());
-    //                    }
-    //                    else {
-    //                        sendMessage(event.player, "<Wind> " + this.windWhisper.getWhisperEn());
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-	
+
 	@Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, level, entity, slot, selected);

@@ -3,9 +3,11 @@ package wardentools.entity.custom;
 import java.util.EnumSet;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -30,28 +32,38 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import wardentools.block.BlockRegistry;
-import wardentools.block.ProtectorInvokerBlock;
+import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import net.minecraft.world.entity.animal.AbstractGolem;
+import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.ParticleRadianceImplosion;
 
 public class ProtectorEntity extends AbstractGolem {
+	public int protectorDeathTime = 0;
 	private static final int attackDurationTick = 10;
-	private static final int earTickleDuration = 20;
 	public static final int invokerRadius = 20;
-	private int earTickleAnimation = 0;
+	public static final int dispawnCoolDown = 60;
+	public static final int spawnCoolDown = 25;
+	public static final int earTickleDuration = 20;
+	private static final EntityDataAccessor<Integer> dispawnTick =
+			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> spawnTick =
+			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> attackAnimationTick =
             SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> isTargeting =
-			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> earTick =
+			SynchedEntityData.defineId(ProtectorEntity.class, EntityDataSerializers.INT);
 	public final AnimationState attackAnimationState = new AnimationState();
+	public final AnimationState spawning = new AnimationState();
+	public final AnimationState dispawning = new AnimationState();
 	public final AnimationState earTickle = new AnimationState();
 	public BlockPos invokerPos;
 	public static final double MAX_HEALTH = 550;
+	public static final int DEATH_DURATION = dispawnCoolDown;
 	
 	public ProtectorEntity(EntityType<? extends AbstractGolem> entity, Level level) {
 		super(entity, level);
-		this.earTickleAnimation = 0;
 		this.invokerPos = null;
 	}
 	
@@ -65,7 +77,7 @@ public class ProtectorEntity extends AbstractGolem {
 		
 		this.targetSelector.addGoal(0, new ChooseMonsterTargetGoal(this, true));
 	}
-	
+
 	public static AttributeSupplier.Builder createAttribute(){
 		return Animal.createLivingAttributes()
 				.add(Attributes.MAX_HEALTH, MAX_HEALTH)
@@ -75,28 +87,34 @@ public class ProtectorEntity extends AbstractGolem {
 				.add(Attributes.FOLLOW_RANGE, 30D)
 				.add(Attributes.ATTACK_DAMAGE, 30.0D);
 	}
-	
+
 	@Override
 	public void tick() {
-		if (this.invokerPos==null) {
-			this.invokerPos = this.getInvokerOrDispawn();
-		}
-		
 		if (this.getAttackTick() > 0) {
-	         this.setAttackTick(this.getAttackTick() - 1);;
+	         this.setAttackTick(this.getAttackTick() - 1);
 	    }
-		if (this.earTickleAnimation > 0) {
-			this.earTickleAnimation-=1;
+		if (this.getSpawnTick() > 0){
+			this.setSpawnTick(this.getSpawnTick() - 1);
 		}
-		if (random.nextInt(200)==1) {
-			this.earTickleAnimation = earTickleDuration;
+		if (this.getEarTick() == 0){
+			if (random.nextInt( 200) == 0 && !this.isEarTickling()){
+				this.setEarTick(earTickleDuration);
+			}
+		}
+		if (this.isEarTickling()){
+			this.setEarTick(this.getEarTick() - 1);
 		}
 		if (level().isClientSide()) {
 			this.attackAnimationState.animateWhen(this.getAttackTick() > 0, this.tickCount);
-			this.earTickle.animateWhen(this.earTickleAnimation > 0, this.tickCount);
+			this.earTickle.animateWhen(this.isEarTickling(), this.tickCount);
+			this.spawning.animateWhen(this.isSpawning(), this.tickCount);
+			this.dispawning.animateWhen(this.isDispawning(), this.tickCount);
 		}
-		this.checkInvoker();
+		this.dispawnTick();
 		super.tick();
+		if (this.isDispawning() || this.isSpawning()) {
+			this.setDeltaMovement(0, 0, 0);
+		}
 	}
 	
 	public int getAttackTick() {
@@ -106,33 +124,155 @@ public class ProtectorEntity extends AbstractGolem {
 	public void setAttackTick(int tick) {
 		this.entityData.set(attackAnimationTick, tick);
 	}
-	
-	public boolean getIsTargeting() {
-		return this.entityData.get(isTargeting);
+
+	public int getSpawnTick() {return this.entityData.get(spawnTick);}
+
+	public void setSpawnTick(int tick) {this.entityData.set(spawnTick, tick);}
+
+	public int getDispawnTick() {return this.entityData.get(dispawnTick);}
+
+	public void setDispawnTick(int tick) {this.entityData.set(dispawnTick, tick);}
+
+	public int getEarTick() {return this.entityData.get(earTick);}
+
+	public void setEarTick(int tick) {this.entityData.set(earTick, tick);}
+
+	public boolean isEarTickling() {return this.getEarTick() > 0;}
+
+	public boolean isSpawning() {return this.getSpawnTick() > 0;}
+
+	public boolean isDispawning() {return this.getDispawnTick() > 0;}
+
+	public void makeSpawnAnimation() {this.setSpawnTick(spawnCoolDown);}
+
+	private void dispawnTick(){
+		if (this.invokerPos!=null) {
+			if (!this.checkInvoker()) {
+				if (this.getDispawnTick() == 0) {
+					this.setDispawnTick(dispawnCoolDown);
+				}
+			} else if (!this.isDeadOrDying()){
+				this.setDispawnTick(0);
+			}
+		}
+		if (this.isDeadOrDying() && this.getDispawnTick() == 0){
+			this.setDispawnTick(dispawnCoolDown);
+		}
+		if (this.isDispawning()){
+			this.setDispawnTick(this.getDispawnTick() - 1);
+			if (this.getDispawnTick() == 0){
+				this.deathParticleEffect();
+				this.remove(Entity.RemovalReason.DISCARDED);
+			}
+		}
 	}
-	
-	public void setIsTargeting(boolean targetExists) {
-		this.entityData.set(isTargeting, targetExists);
+
+	private boolean checkInvoker() {
+		if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker) {
+            return invoker.isProtectorValid(this);
+		}
+		return false;
 	}
-	
+
+	public void setInvokerPos(@NotNull BlockPos pos){
+		this.invokerPos = pos;
+	}
+
+	private void deathParticleEffect() {
+		PacketHandler.sendToAllClient(new ParticleRadianceImplosion(this.getPosition(1f)
+				.add(0, 1f, 0)));
+	}
+
+	@Override
+	protected void tickDeath() {
+		++this.protectorDeathTime;
+		if (this.protectorDeathTime >= DEATH_DURATION
+				&& !this.level().isClientSide() && !this.isRemoved()) {
+			this.level().broadcastEntityEvent(this, (byte)60);
+			this.remove(Entity.RemovalReason.KILLED);
+		}
+	}
+
+	@Override
+	public void die(@NotNull DamageSource source) {
+		if (net.minecraftforge.common.ForgeHooks.onLivingDeath(this, source)) return;
+		if (!this.isRemoved() && !this.dead) {
+			Entity entity = source.getEntity();
+			LivingEntity livingentity = this.getKillCredit();
+			if (this.deathScore >= 0 && livingentity != null) {
+				livingentity.awardKillScore(this, this.deathScore, source);
+			}
+			if (this.isSleeping()) {
+				this.stopSleeping();
+			}
+			this.dead = true;
+			this.getCombatTracker().recheckStatus();
+			Level level = this.level();
+			if (level instanceof ServerLevel serverlevel) {
+				if (entity == null || entity.killedEntity(serverlevel, this)) {
+					this.gameEvent(GameEvent.ENTITY_DIE);
+					this.dropAllDeathLoot(source);
+					this.createWitherRose(livingentity);
+				}
+				this.level().broadcastEntityEvent(this, (byte)3);
+			}
+		}
+	}
+
 	@Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(attackAnimationTick, 0);
-        this.entityData.define(isTargeting, false);
+		this.entityData.define(dispawnTick, 0);
+		this.entityData.define(spawnTick, 0);
+		this.entityData.define(earTick, 0);
     }
 	
 	@Override
-	public boolean canAttackType(EntityType<?> entity) {
+	public boolean canAttackType(@NotNull EntityType<?> entity) {
 	      if (entity == EntityType.PLAYER) {
 	         return false;
 	      } else {
 	         return super.canAttackType(entity);
 	      }
 	}
-	
+
+	@Override
+	public void addAdditionalSaveData(@NotNull CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+		if (this.invokerPos != null) {
+			compound.putInt("InvokerPosX", this.invokerPos.getX());
+			compound.putInt("InvokerPosY", this.invokerPos.getY());
+			compound.putInt("InvokerPosZ", this.invokerPos.getZ());
+		}
+	}
+
+	@Override
+	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+		if (compound.contains("InvokerPosX")
+				&& compound.contains("InvokerPosY")
+				&& compound.contains("InvokerPosZ")) {
+			int x = compound.getInt("InvokerPosX");
+			int y = compound.getInt("InvokerPosY");
+			int z = compound.getInt("InvokerPosZ");
+			this.invokerPos = new BlockPos(x, y, z);
+		}
+	}
+
 	private float getAttackDamage() {
 	      return (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+	}
+
+	@Override
+	public boolean hurt(@NotNull DamageSource source, float amount) {
+		if (this.invokerPos != null){
+			ProtectorInvokerBlockEntity invoker =
+					(ProtectorInvokerBlockEntity)this.level().getBlockEntity(this.invokerPos);
+			if (invoker == null) return false;
+			invoker.saveHealth(this);
+		}
+		return super.hurt(source, amount);
 	}
 	
 	@Override
@@ -143,9 +283,8 @@ public class ProtectorEntity extends AbstractGolem {
 	    boolean flag = target.hurt(this.damageSources().mobAttack(this), f1);
 	    if (flag) {
 	       double d2;
-	       if (target instanceof LivingEntity) {
-	          LivingEntity livingentity = (LivingEntity)target;
-	          d2 = livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+	       if (target instanceof LivingEntity livingentity) {
+               d2 = livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
 	       } else {
 	          d2 = 0.0D;
 	       }
@@ -160,12 +299,12 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 	
 	@Override
-    public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
+    public boolean causeFallDamage(float fallDistance, float damageMultiplier, @NotNull DamageSource source) {
         return false;
     }
 	
 	@Override
-	public boolean checkSpawnRules(LevelAccessor p_21686_, MobSpawnType p_21687_) {
+	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull MobSpawnType spawnType) {
     	return true;
     }
 	
@@ -173,61 +312,21 @@ public class ProtectorEntity extends AbstractGolem {
             MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return true;
     }
-    
-    private static class ChooseMonsterTargetGoal extends NearestAttackableTargetGoal<Monster> {
-        public ChooseMonsterTargetGoal(Mob mob, boolean mustSee) {
-            super(mob, Monster.class, mustSee);
-        }
-        
-        @Override
-        public void start() {
-        	((ProtectorEntity)this.mob).setIsTargeting(true);
-            this.mob.setTarget(this.target);
-            super.start();
-         }
 
-        @Override
-        protected double getFollowDistance() {
-            return this.mob.getAttributeValue(Attributes.FOLLOW_RANGE);
-        }
-        
-        @Override
-        public void stop() {
-        	((ProtectorEntity)this.mob).setIsTargeting(false);
-            this.mob.setTarget((LivingEntity)null);
-            this.targetMob = null;
-         }
-    }
-    
-    private void checkInvoker() {
-    	if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity) {
-    		if (((ProtectorInvokerBlockEntity)this.level().getBlockEntity(this.invokerPos)).isProtectorValid()){
-    			return;
-    		}
-    	}
-    	this.remove(Entity.RemovalReason.DISCARDED);
-    	return;
-    }
-    
-    private BlockPos getInvokerOrDispawn() {
-        int lookRadius = ProtectorInvokerBlock.radiusForProtectorSpawn + 1;
-        Level level = this.level();
-        BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-        
-        for (int x = -lookRadius; x <= lookRadius; x++) {
-            for (int y = -lookRadius; y <= lookRadius; y++) {
-                for (int z = -lookRadius; z <= lookRadius; z++) {
-                    mutablePos.set(this.blockPosition()).move(x, y, z);
-                    if (level.getBlockState(mutablePos).is(BlockRegistry.PROTECTOR_INVOKER.get())) {
-                        return mutablePos.immutable();
-                    }
-                }
-            }
-        }
-        this.remove(Entity.RemovalReason.DISCARDED);
-        return this.blockPosition();
-    }
 }
+
+class ChooseMonsterTargetGoal extends NearestAttackableTargetGoal<Monster> {
+	public ChooseMonsterTargetGoal(Mob mob, boolean mustSee) {
+		super(mob, Monster.class, mustSee);
+	}
+
+	@Override
+	public void start() {
+		this.mob.setTarget(this.target);
+		super.start();
+	}
+}
+
 
 class RerturnToInvoker extends Goal {
     private final ProtectorEntity entity;
@@ -243,7 +342,8 @@ class RerturnToInvoker extends Goal {
     }
     
     public boolean canUse() {
-        return !this.entity.invokerPos.closerThan(this.entity.blockPosition(), ProtectorEntity.invokerRadius);
+        return this.entity.invokerPos != null
+				&& !this.entity.invokerPos.closerThan(this.entity.blockPosition(), ProtectorEntity.invokerRadius);
     }
 
     @Override
@@ -254,7 +354,8 @@ class RerturnToInvoker extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return !this.entity.invokerPos.closerThan(this.entity.blockPosition(), goCloserThan);
+        return this.entity.invokerPos != null
+				&& !this.entity.invokerPos.closerThan(this.entity.blockPosition(), goCloserThan);
     }
 
     @Override

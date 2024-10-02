@@ -29,7 +29,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import org.jetbrains.annotations.NotNull;
 import wardentools.sounds.ModSounds;
+
+import java.util.Objects;
 
 public class ContagionIncarnationEntity extends Monster implements Enemy {
 	protected static final float DEFAULT_EYE_HEIGHT = 4.8F;
@@ -47,7 +50,7 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
 
 	public ContagionIncarnationEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
-		this.bossEvent = new ServerBossEvent(this.getDisplayName(),
+		this.bossEvent = new ServerBossEvent(Objects.requireNonNull(this.getDisplayName()),
 				ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.PROGRESS);
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
 	}
@@ -73,13 +76,13 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
 	}
 
 	@Override
-    public void startSeenByPlayer(ServerPlayer player) {
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossEvent.addPlayer(player);
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossEvent.removePlayer(player);
     }
@@ -91,13 +94,13 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
     }
 
     @Override
-    public void remove(RemovalReason reason) {
+    public void remove(@NotNull RemovalReason reason) {
         super.remove(reason);
         this.bossEvent.removeAllPlayers();
     }
 	
 	@Override
-    public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
+    public boolean causeFallDamage(float fallDistance, float damageMultiplier, @NotNull DamageSource source) {
         return false;
     }
 	
@@ -118,7 +121,7 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
 			this.ambient.animateWhen(!this.walkAnimation.isMoving() && !this.isDeadOrDying(), this.tickCount);
 			this.sprint.animateWhen(this.isSprinting(), this.tickCount);
 			this.headAmbient.animateWhen(!this.getLookControl().isLookingAtTarget()
-					&& !this.isSprinting() && !this.isDeadOrDying(), this.tickCount);
+					&& !this.isSprinting(), this.tickCount);
 		}
 		super.tick();
 	}
@@ -129,7 +132,7 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
     }
 	
 	@Override
-	public boolean checkSpawnRules(LevelAccessor p_21686_, MobSpawnType p_21687_) {
+	public boolean checkSpawnRules(@NotNull LevelAccessor p_21686_, @NotNull MobSpawnType p_21687_) {
     	return true;
     }
 	
@@ -138,9 +141,8 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
         return ModSounds.CONTAGION_INCARNATION_AMBIENT.get();
     }
 
-    @SuppressWarnings("resource")
 	@Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
     	if (level().random.nextInt(CHANCE_OF_SCREAM_ON_HIT)==0) {
     		return ModSounds.CONTAGION_INCARNATION_SCREAM.get();
     	}
@@ -151,7 +153,7 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
     	 return ModSounds.CONTAGION_INCARNATION_DEATH.get();
     }
     @Override
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
+    protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
         this.playSound(ModSounds.CONTAGION_INCARNATION_CRAWL.get(), 1.0F, 1.0F);
     }
     
@@ -169,41 +171,35 @@ public class ContagionIncarnationEntity extends Monster implements Enemy {
            this.remove(Entity.RemovalReason.KILLED);
         }
      }
-    
-    @SuppressWarnings("resource")
+
 	@Override
-    public void die(DamageSource p_21014_) {
-        if (net.minecraftforge.common.ForgeHooks.onLivingDeath(this, p_21014_)) return;
+    public void die(@NotNull DamageSource source) {
+        if (net.minecraftforge.common.ForgeHooks.onLivingDeath(this, source)) return;
         if (!this.isRemoved() && !this.dead) {
-           Entity entity = p_21014_.getEntity();
+           Entity entity = source.getEntity();
            LivingEntity livingentity = this.getKillCredit();
            if (this.deathScore >= 0 && livingentity != null) {
-              livingentity.awardKillScore(this, this.deathScore, p_21014_);
+              livingentity.awardKillScore(this, this.deathScore, source);
            }
 
            if (this.isSleeping()) {
               this.stopSleeping();
            }
 
-           if (!this.level().isClientSide && this.hasCustomName()) {
-           }
-
            this.dead = true;
            this.getCombatTracker().recheckStatus();
            Level level = this.level();
-           if (level instanceof ServerLevel) {
-              ServerLevel serverlevel = (ServerLevel)level;
-              if (entity == null || entity.killedEntity(serverlevel, this)) {
+           if (level instanceof ServerLevel serverlevel) {
+               if (entity == null || entity.killedEntity(serverlevel, this)) {
                  this.gameEvent(GameEvent.ENTITY_DIE);
-                 this.dropAllDeathLoot(p_21014_);
+                 this.dropAllDeathLoot(source);
                  this.createWitherRose(livingentity);
               }
               this.level().broadcastEntityEvent(this, (byte)3);
            }
         }
      }
-    
-    @SuppressWarnings("resource")
+
 	@Override
     public void spawnAnim() {
         if (this.level().isClientSide) {

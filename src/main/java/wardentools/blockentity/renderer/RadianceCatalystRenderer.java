@@ -13,25 +13,24 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 import wardentools.client.model.RadianceCatalystInterior;
 
 public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCatalystBlockEntity> {
-	private static final double rotationSpeed = 3.0;
-	private boolean isPurifying;
-	private static final RadianceCatalystInterior model =
+	private static final float rotationSpeed = 1.5f;
+    private static final RadianceCatalystInterior model =
 			new RadianceCatalystInterior(RadianceCatalystInterior.createBodyLayer().bakeRoot());
 	
 	public RadianceCatalystRenderer(BlockEntityRendererProvider.Context ctx) {
 	}
 	
 	@Override
-    public void render(RadianceCatalystBlockEntity blockEntity, float partialTick, PoseStack poseStack,
-                       MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        if (blockEntity == null) return;
-        
-        this.isPurifying = blockEntity.getPurifyingTime() > 0;
+    public void render(@NotNull RadianceCatalystBlockEntity blockEntity,
+                       float partialTick, @NotNull PoseStack poseStack,
+                       @NotNull MultiBufferSource buffer, int packedLight, int packedOverlay) {
+        boolean isPurifying = blockEntity.getPurifyingTime() > 0;
 
         Level level = blockEntity.getLevel();
         if (level == null) return;
@@ -42,19 +41,18 @@ public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCat
         poseStack.scale(1.0F, 1.0F, 1.0F);
 
         double relativeGameTime = level.getGameTime() + partialTick;
-        if (!this.isPurifying) {
-        	float rotation = (float) (relativeGameTime * rotationSpeed);
+        if (!isPurifying) {
+        	float rotation = ((float)relativeGameTime) * rotationSpeed;
         	poseStack.mulPose(Axis.XP.rotationDegrees(rotation));
             poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
             poseStack.mulPose(Axis.ZP.rotationDegrees(rotation));
         } else {
         	float rotation = (float) (relativeGameTime);
-        	float rotationRate = 1.0f + (float) ((float)blockEntity.getPurifyingTime()
+        	float rotationRate = 1.0f + ((float)blockEntity.getPurifyingTime()
         			/(float)RadianceCatalystBlockEntity.purifyTime * 3.0f);
         	poseStack.scale(0.8F, 0.8F, 0.8F);
         	poseStack.mulPose(Axis.YP.rotationDegrees(rotation * rotationRate));
         }
-        
 
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entitySolid(
         		new ResourceLocation(ModMain.MOD_ID, "textures/models/radiance_catalyst_interior.png")));

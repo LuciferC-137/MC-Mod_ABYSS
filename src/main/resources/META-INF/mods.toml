@@ -26,10 +26,3 @@ showAsResourcePack=false
   versionRange="${minecraft_version_range}"
   ordering="NONE"
   side="BOTH"
-
-[[dependencies.wardentools]]
-  modId="terrablender"
-  mandatory=true
-  versionRange="${terrablender_version_range}"
-  ordering="NONE"
-  side="BOTH"

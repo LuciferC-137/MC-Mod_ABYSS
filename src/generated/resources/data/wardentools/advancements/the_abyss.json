@@ -1,0 +1,28 @@
+{
+  "parent": "wardentools:abyss",
+  "criteria": {
+    "to_the_abyss": {
+      "conditions": {
+        "to": "wardentools:abyssdim"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.theabyss.description"
+    },
+    "icon": {
+      "item": "wardentools:dark_grass"
+    },
+    "title": {
+      "translate": "advancements.wardentools.theabyss.title"
+    }
+  },
+  "requirements": [
+    [
+      "to_the_abyss"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,27 +1,30 @@
 package wardentools.events;
 
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import wardentools.ModMain;
+import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.entity.ModEntities;
-import wardentools.entity.custom.ContagionIncarnationEntity;
-import wardentools.entity.custom.DeepLurkerEntity;
-import wardentools.entity.custom.PaleWandererEntity;
-import wardentools.entity.custom.ProtectorEntity;
+import wardentools.entity.custom.*;
 import wardentools.network.PacketHandler;
+import wardentools.particle.ParticleRegistry;
+import wardentools.particle.custom.*;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonModEvents {
 	
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {PacketHandler.register();});
+		event.enqueueWork(PacketHandler::register);
+		ModCriteriaTriggers.init();
     }
     
     @SubscribeEvent
@@ -30,13 +33,14 @@ public class CommonModEvents {
 		event.put(ModEntities.PALE_WANDERER.get(), PaleWandererEntity.createAttribute().build());
 		event.put(ModEntities.PROTECTOR.get(), ProtectorEntity.createAttribute().build());
 		event.put(ModEntities.CONTAGION_INCARNATION.get(), ContagionIncarnationEntity.createAttribute().build());
+		event.put(ModEntities.TEMPER.get(), TemperEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
     public static void registerSpawnPlacement(SpawnPlacementRegisterEvent event) {
     	event.register(ModEntities.DEEPLURKER.get(),
     			SpawnPlacements.Type.ON_GROUND,
-    			Heightmap.Types.WORLD_SURFACE,
+    			Heightmap.Types.MOTION_BLOCKING,
     			DeepLurkerEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.PALE_WANDERER.get(),
@@ -46,13 +50,33 @@ public class CommonModEvents {
     			SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.PROTECTOR.get(),
     			SpawnPlacements.Type.ON_GROUND,
-    			Heightmap.Types.WORLD_SURFACE,
+				Heightmap.Types.MOTION_BLOCKING,
     			ProtectorEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.CONTAGION_INCARNATION.get(),
     			SpawnPlacements.Type.ON_GROUND,
-    			Heightmap.Types.WORLD_SURFACE,
+				Heightmap.Types.MOTION_BLOCKING,
     			ContagionIncarnationEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.TEMPER.get(),
+				SpawnPlacements.Type.NO_RESTRICTIONS,
+				Heightmap.Types.MOTION_BLOCKING,
+				TemperEntity::canSpawn,
+				SpawnPlacementRegisterEvent.Operation.OR);
     }
+
+	@SubscribeEvent
+	@SuppressWarnings("deprecation")
+	public static void registerParticles(RegisterParticleProvidersEvent event) {
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.ABYSS_AMBIENT.get(),
+				AbyssAmbient.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.CORRUPTION.get(),
+				Corruption.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.ABYSS_PORTAL.get(),
+				AbyssPortal.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.RADIANCE.get(),
+				Radiance.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.BLACK_CORRUPTION.get(),
+				BlackCorruption.Provider::new);
+	}
 }

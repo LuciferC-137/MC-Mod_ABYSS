@@ -1,0 +1,34 @@
+{
+  "parent": "wardentools:radiance",
+  "criteria": {
+    "protector_invoker": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:protector_invoker"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.protector_invoker.description"
+    },
+    "icon": {
+      "item": "wardentools:protector_invoker"
+    },
+    "title": {
+      "translate": "advancements.wardentools.protector_invoker.title"
+    }
+  },
+  "requirements": [
+    [
+      "protector_invoker"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

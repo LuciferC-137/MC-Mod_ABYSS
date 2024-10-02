@@ -7,8 +7,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
-import wardentools.GUI.MenuRegistry;
+import wardentools.gui.MenuRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
+import wardentools.blockentity.renderer.AbyssPortalBlockRenderer;
 import wardentools.blockentity.renderer.ProtectorInvokerRenderer;
 import wardentools.blockentity.renderer.RadianceCatalystRenderer;
 import wardentools.client.RadianceCatalystScreen;
@@ -29,6 +30,8 @@ public class ClientModHandler {
 				RadianceCatalystRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.PROTECTOR_INVOKER_BLOCK_ENTITY.get(),
 				ProtectorInvokerRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.ABYSS_PORTAL_BLOCK_ENTITY.get(),
+				AbyssPortalBlockRenderer::new);
 	}
 
 }

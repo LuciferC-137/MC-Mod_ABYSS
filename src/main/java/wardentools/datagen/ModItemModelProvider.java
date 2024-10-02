@@ -16,7 +16,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.armors.ArmorRegistry;
+import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 
@@ -48,13 +48,17 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(ArmorRegistry.DEEPCRISTAL_CHESTPLATE);
         trimmedArmorItem(ArmorRegistry.DEEPCRISTAL_LEGGINGS);
         trimmedArmorItem(ArmorRegistry.DEEPCRISTAL_BOOTS);
+        trimmedArmorItem(ArmorRegistry.RADIANCE_CRISTAL_HELMET);
+        trimmedArmorItem(ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE);
+        trimmedArmorItem(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS);
+        trimmedArmorItem(ArmorRegistry.RADIANCE_CRISTAL_BOOTS);
         
         //Simple Item
         simpleItem(ItemRegistry.DEEPINGOTS);
         simpleItem(ItemRegistry.WARDEN_HEART);
         simpleItem(ItemRegistry.DEEP_FRUIT);
         simpleItem(ItemRegistry.WIND_WHISPERER);
-        simpleItem(ItemRegistry.PALE_FRAGMENT);
+        simpleItem(ItemRegistry.RADIANCE_FRAGMENT);
         simpleItem(ItemRegistry.CORRUPTED_ESSENCE);
         simpleItem(ItemRegistry.CORRUPTED_VESSEL);
         simpleItem(ItemRegistry.DARK_STICK);
@@ -68,10 +72,16 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DARKTREE_CHEST_BOAT);
         simpleItem(ItemRegistry.WHITETREE_BOAT);
         simpleItem(ItemRegistry.WHITETREE_CHEST_BOAT);
+        simpleItem(ItemRegistry.DEEP_FRAGMENT);
+        simpleItem(ItemRegistry.CITRINE_FRAGMENT);
+        simpleItem(ItemRegistry.RUBY_FRAGMENT);
+        simpleItem(ItemRegistry.MALACHITE_FRAGMENT);
+        simpleItem(ItemRegistry.PALE_SHARD);
+        simpleItem(ItemRegistry.RADIANCE_INGOTS);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
-        blockItemWithItemModel(BlockRegistry.PALE_SHARD);
+        blockItemWithItemModel(BlockRegistry.RADIANCE_CRISTAL);
         blockItemWithItemModel(BlockRegistry.DARKTREE_SAPLING);
         blockItemWithItemModel(BlockRegistry.DARKTREE_DOOR);
         blockItemWithItemModel(BlockRegistry.WHITETREE_SAPLING);
@@ -84,8 +94,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.TALL_DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.PROTECTOR_INVOKER);
+        blockItemWithItemModel(BlockRegistry.CITRINE);
+        blockItemWithItemModel(BlockRegistry.ECHO_CRISTAL);
+        blockItemWithItemModel(BlockRegistry.RUBY);
+        blockItemWithItemModel(BlockRegistry.MALACHITE);
+        blockItemWithItemModel(BlockRegistry.PALE_CRISTAL);
         
-        //Blocks that did not created their own item model in the blockstate generator
+        //Blocks that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/darktree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_DARKTREE_WOOD.getId().getPath(),
@@ -119,12 +134,16 @@ public class ModItemModelProvider extends ItemModelProvider {
         		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_pressure_plate"));
         withExistingParent(BlockRegistry.WHITETREE_FENCE_GATE.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_fence_gate"));
+
         withExistingParent(BlockRegistry.RADIANCE_CATALYST.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/radiance_catalyst"));
         withExistingParent(BlockRegistry.CHISELED_ABYSSALITE.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/chiseled_abyssalite"));
-        
-        
+        withExistingParent(BlockRegistry.ABYSSALITE_BRICKS_STAIRS.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks_stair"));
+        withExistingParent(BlockRegistry.ABYSSALITE_BRICKS_SLAB.getId().getPath(),
+        		new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks_slab"));
+
         //Blocks that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);
         buttonItem(BlockRegistry.DARKTREE_BUTTON, BlockRegistry.DARKTREE_PLANKS);
@@ -132,6 +151,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         fenceItem(BlockRegistry.WHITETREE_FENCE, BlockRegistry.WHITETREE_PLANKS);
         buttonItem(BlockRegistry.WHITETREE_BUTTON, BlockRegistry.WHITETREE_PLANKS);
         trapdoorItem(BlockRegistry.WHITETREE_TRAPDOOR);
+        wallItem(BlockRegistry.ABYSSALITE_BRICKS_WALL, BlockRegistry.ABYSSALITE_BRICKS);
         
     }
     
@@ -161,6 +181,11 @@ public class ModItemModelProvider extends ItemModelProvider {
     public void buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
                 .texture("texture",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+    }
+    
+    public void wallItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
     
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {

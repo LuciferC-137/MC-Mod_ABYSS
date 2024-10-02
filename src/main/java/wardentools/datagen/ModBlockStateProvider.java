@@ -27,6 +27,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.ABYSSALITE);
         registerBlockWithItem(BlockRegistry.ABYSSALITE_BRICKS);
         registerBlockWithItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
+        registerBlockWithItem(BlockRegistry.PALE_CRISTAL_BLOCK);
+        registerBlockWithItem(BlockRegistry.CITRINE_BLOCK);
+        registerBlockWithItem(BlockRegistry.ECHO_BLOCK);
+        registerBlockWithItem(BlockRegistry.RUBY_BLOCK);
+        registerBlockWithItem(BlockRegistry.MALACHITE_BLOCK);
+        registerBlockWithItem(BlockRegistry.SOLID_CORRUPTION);
+
+        // Registering ores blocks with item models
+        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_COAL_ORE);
+        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_LAPIS_ORE);
+        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_DIAMOND_ORE);
+        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_DEEP_ORE);
 
         // Registering specific block models
         registerLeavesBlock(BlockRegistry.DARKTREE_LEAVES);
@@ -91,6 +103,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.WHITETREE_TRAPDOOR.get()),
         		modLoc("block/whitetree_trap_door"), true, "cutout");
         
+        stairsBlock(((StairBlock)BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get()),
+        		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
+        slabBlock(((SlabBlock)BlockRegistry.ABYSSALITE_BRICKS_SLAB.get()),
+        		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()),
+        		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
+        wallBlock(((WallBlock)BlockRegistry.ABYSSALITE_BRICKS_WALL.get()),
+        		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
+        
     }
 
     private void registerCrossCutoutBlock(RegistryObject<Block> blockRegistryObject) {
@@ -108,6 +128,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
     
 
     private void registerBlockWithItem(RegistryObject<Block> blockRegistryObject) {
+        simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
+    }
+
+    private void registerDropExperienceBlockWithItem(
+            RegistryObject<DropExperienceBlock> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
     
