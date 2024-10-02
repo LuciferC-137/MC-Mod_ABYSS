@@ -1,7 +1,6 @@
 package wardentools.entity.custom;
 
 import java.util.EnumSet;
-import java.util.Objects;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +11,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -171,9 +169,7 @@ public class ProtectorEntity extends AbstractGolem {
 
 	private boolean checkInvoker() {
 		if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker) {
-			if (invoker.isProtectorValid(this)){
-				return true;
-			}
+            return invoker.isProtectorValid(this);
 		}
 		return false;
 	}

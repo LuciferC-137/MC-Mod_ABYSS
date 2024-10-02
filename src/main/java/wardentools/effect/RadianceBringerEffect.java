@@ -13,7 +13,7 @@ import wardentools.entity.custom.TemperEntity;
 import java.util.List;
 
 public class RadianceBringerEffect extends MobEffect {
-    private static final float RADIUS_FOR_SPAWN = 3f;
+    private static final int RADIUS_FOR_SPAWN = 3;
     private static final int MAX_NUMBER_OF_TEMPER = 3;
 
     protected RadianceBringerEffect(MobEffectCategory category, int color) {
@@ -22,13 +22,13 @@ public class RadianceBringerEffect extends MobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-        if (!(entity.tickCount%(400 / (amplifier + 1))==1)) {return;} // Triggers every 20s, divided by the amplifier
-        if (!(entity instanceof Player)){return;}
-        if (countMyTemper(entity.level(), (Player)entity) >= MAX_NUMBER_OF_TEMPER){return;}
+        if (!(entity.tickCount%(200 / (amplifier + 1))==0)) return;
+        if (!(entity instanceof Player)) return;
+        if (countMyTemper(entity.level(), (Player)entity) >= MAX_NUMBER_OF_TEMPER) return;
         TemperEntity temper = ModEntities.TEMPER.get().create(entity.level());
-        if (temper==null) { return;}
+        if (temper==null) return;
         BlockPos spawnPos = findSpawnPosition(entity.level(), entity.getOnPos());
-        if (spawnPos == null) {return;}
+        if (spawnPos == null) return;
         temper.moveTo(spawnPos.getX() + 0.5f, spawnPos.getY() + 0.5f,
                 spawnPos.getZ() + 0.5f);
         temper.setPlayerInvoker((Player)entity);
@@ -53,7 +53,7 @@ public class RadianceBringerEffect extends MobEffect {
     }
 
     private int countMyTemper(Level level, Player player) {
-        if (player == null) {return 0;}
+        if (player == null) return 0;
         List<TemperEntity> entities = level.getEntitiesOfClass(TemperEntity.class,
                 new AABB(player.getX() - 30, player.getY() - 30, player.getZ() - 30,
                         player.getX() + 30, player.getY() + 30, player.getZ() + 30));

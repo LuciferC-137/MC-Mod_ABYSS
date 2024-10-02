@@ -1,4 +1,4 @@
-// Made with Blockbench 4.10.4
+// Made with Blockbench 4.11.1
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
@@ -17,13 +17,13 @@ public class Temper<T extends Entity> extends EntityModel<T> {
 
 	public Temper(ModelPart root) {
 		this.FULL = root.getChild("FULL");
-		this.HEAD = root.getChild("HEAD");
-		this.BODY = root.getChild("BODY");
-		this.TORSO = root.getChild("TORSO");
-		this.WING_R = root.getChild("WING_R");
-		this.ARM_L = root.getChild("ARM_L");
-		this.ARM_R = root.getChild("ARM_R");
-		this.WING_L = root.getChild("WING_L");
+		this.HEAD = this.FULL.getChild("HEAD");
+		this.BODY = this.FULL.getChild("BODY");
+		this.TORSO = this.BODY.getChild("TORSO");
+		this.WING_R = this.BODY.getChild("WING_R");
+		this.ARM_L = this.BODY.getChild("ARM_L");
+		this.ARM_R = this.BODY.getChild("ARM_R");
+		this.WING_L = this.BODY.getChild("WING_L");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -43,9 +43,9 @@ public class Temper<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition wing_r_r1 = WING_R.addOrReplaceChild("wing_r_r1", CubeListBuilder.create().texOffs(16, 14).addBox(0.0F, -0.5F, 0.0F, 0.0F, 5.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.3491F, -0.4363F, 0.0F));
 
-		PartDefinition ARM_L = BODY.addOrReplaceChild("ARM_L", CubeListBuilder.create(), PartPose.offset(2.0F, -7.75F, 0.0F));
+		PartDefinition ARM_L = BODY.addOrReplaceChild("ARM_L", CubeListBuilder.create(), PartPose.offset(2.0F, -7.75F, 1.0F));
 
-		PartDefinition arm_l_r1 = ARM_L.addOrReplaceChild("arm_l_r1", CubeListBuilder.create().texOffs(23, 0).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, -0.25F, 1.0F, 0.0F, 0.0F, -0.2618F));
+		PartDefinition arm_l_r1 = ARM_L.addOrReplaceChild("arm_l_r1", CubeListBuilder.create().texOffs(23, 0).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, -0.25F, 0.0F, 0.0F, 0.0F, -0.2618F));
 
 		PartDefinition ARM_R = BODY.addOrReplaceChild("ARM_R", CubeListBuilder.create(), PartPose.offset(-1.0F, -7.75F, 1.0F));
 
