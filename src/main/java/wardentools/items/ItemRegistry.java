@@ -482,4 +482,19 @@ public class ItemRegistry {
 					() -> new BlockItem(BlockRegistry.SOLID_CORRUPTION.get(), new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()));
+
+	public static final RegistryObject<Item> PARASYTE_EGG =
+			REGISTAR.register("parasyte_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.PARASYTE, 0x319473,
+							0x30ab9c, new Item.Properties()));
+
+	public static final RegistryObject<Item> PROTECTOR_EGG =
+			REGISTAR.register("protector_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.PROTECTOR, 0xbad3d4,
+							0x3bedf5, new Item.Properties()));
+
+	public static final RegistryObject<Item> CONTAGION_INCARNATION_EGG =
+			REGISTAR.register("contagion_incarnation_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
+							0xbdbd8a, new Item.Properties()));
 }

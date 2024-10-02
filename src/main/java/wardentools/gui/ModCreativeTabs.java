@@ -123,6 +123,9 @@ public class ModCreativeTabs {
         addItemToTag("egg", ItemRegistry.DEEPLURKER_EGG);
         addItemToTag("egg", ItemRegistry.PALEWANDERER_EGG);
         addItemToTag("egg", ItemRegistry.TEMPER_EGG);
+        addItemToTag("egg", ItemRegistry.PARASYTE_EGG);
+        addItemToTag("egg", ItemRegistry.PROTECTOR_EGG);
+        addItemToTag("egg", ItemRegistry.CONTAGION_INCARNATION_EGG);
 
         addItemToTag("corrupted", ItemRegistry.WARDEN_HEART);
         addItemToTag("corrupted", ItemRegistry.CORRUPTED_ESSENCE);

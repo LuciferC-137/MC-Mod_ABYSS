@@ -1,4 +1,4 @@
-{ 
+{
 	"item.wardentools.deepcristal_helmet": "Casque des abîmes",
 	"item.wardentools.deepcristal_chestplate": "Plastron des abîmes",
 	"item.wardentools.deepcristal_leggings": "Jambières des abîmes",
@@ -24,6 +24,7 @@
 	"item.wardentools.ruby_fragment": "Fragment de Rubis",
 	"item.wardentools.malachite_fragment": "Fragment de Malachite",
 	"item.wardentools.pale_shard": "Eclat pâle",
+	"item.wardentools.radiance_fragment": "Fragment de Radiance",
 	"item.wardentools.radiance_ingots": "Lingot de Radiance",
 	"item.wardentools.radiance_cristal_helmet": "Casque Radiant",
 	"item.wardentools.radiance_cristal_chestplate": "Plastron Radiant",
@@ -31,7 +32,14 @@
 	"item.wardentools.radiance_cristal_boots": "Bottes Radiantes",
 	"item.wardentools.temper_spawn_egg": "Oeuf d'apparition de Temper",
 	"item.wardentools.radiant_staff": "Sceptre Radiant",
-	
+	"item.wardentools.parasyte_spawn_egg": "Oeuf d'apparition de Parasyte",
+	"item.wardentools.protector_spawn_egg": "Oeuf d'apparition de Protecteur",
+	"item.wardentools.contagion_incarnation_spawn_egg": "Oeuf d'apparition de l'Incarnation de la Contagion",
+	"item.wardentools.darktree_boat": "Bateau en sombrarbre",
+	"item.wardentools.darktree_chest_boat": "Bateau avec coffre en sombrarbre",
+	"item.wardentools.whitetree_boat": "Bateau en blancharbre",
+	"item.wardentools.whitetree_chest_boat": "Bateau avec coffre en blancharbre",
+
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
 	"block.wardentools.abyssalite_bricks": "Briques d'Abyssalite",
@@ -60,7 +68,7 @@
 	"block.wardentools.radiance_cristal": "Cristal Radiant",
 	"block.wardentools.radiance_catalyst": "Catalyseur de Radiance",
 	"block.wardentools.protector_invoker": "Invocateur de Protecteur",
-	
+
 	"block.wardentools.darktree_log": "Bûche de sombrarbre",
 	"block.wardentools.darktree_leaves": "Feuilles de sombrarbre",
 	"block.wardentools.stripped_darktree_log": "Bûche de sombrarbre écorcée",
@@ -79,9 +87,6 @@
 	"block.wardentools.darktree_door": "Porte en sombrarbre",
 	"block.wardentools.darktree_trapdoor": "Trappe en sombrarbre",
 
-	"item.wardentools.darktree_boat": "Bateau en sombrarbre",
-	"item.wardentools.darktree_chest_boat": "Bateau avec coffre en sombrarbre",
-	
 	"block.wardentools.whitetree_log": "Bûche de Blancharbre",
 	"block.wardentools.whitetree_wood": "Bois de Blancharbre",
 	"block.wardentools.stripped_whitetree_log": "Bûche de Blancharbre écorcée",
@@ -97,16 +102,16 @@
 	"block.wardentools.whitetree_fence_gate": "Portillon en Blancharbre",
 	"block.wardentools.whitetree_door": "Porte en Blancharbre",
 	"block.wardentools.whitetree_trapdoor": "Trappe en Blancharbre",
-	
+
 	"block.wardentools.white_grass": "Herbe blanche",
 	"block.wardentools.tall_white_grass": "Herbes hautes blanches",
 	"block.wardentools.white_torchflower": "Torche-fleur blanche",
-	
+
 	"block.wardentools.blue_bush": "Buisson bleu",
 	"block.wardentools.tall_dark_grass": "Herbes hautes sombres",
 	"block.wardentools.dark_grass": "Herbe sombre",
 	"block.wardentools.deepflower": "Fleur des abîmes",
-	
+
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",
 	"entity.wardentools.protector": "Protecteur",
@@ -123,12 +128,12 @@
 	"creativetab.crystals": "Cristals",
 	"creativetab.misc": "Divers",
 	"creativetab.egg": "Oeufs",
-	
+
 	"gui.wardentools.radiance_catalyst_screen": "Cataliseur de Radiance",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "matière corrompue",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "matière purifiée",
 	"container.wardentools.radiance_catalyst_block": "Cataliseur de Radiance",
-	
+
 	"sounds.wardentools.contagion_incarnation_crawl": "L'Incarnation de la Contagion rampe",
 	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle",
 

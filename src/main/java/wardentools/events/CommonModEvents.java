@@ -34,6 +34,7 @@ public class CommonModEvents {
 		event.put(ModEntities.PROTECTOR.get(), ProtectorEntity.createAttribute().build());
 		event.put(ModEntities.CONTAGION_INCARNATION.get(), ContagionIncarnationEntity.createAttribute().build());
 		event.put(ModEntities.TEMPER.get(), TemperEntity.createAttribute().build());
+		event.put(ModEntities.PARASYTE.get(), ParasyteEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
@@ -62,6 +63,11 @@ public class CommonModEvents {
 				SpawnPlacements.Type.NO_RESTRICTIONS,
 				Heightmap.Types.MOTION_BLOCKING,
 				TemperEntity::canSpawn,
+				SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.PARASYTE.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING,
+				ParasyteEntity::canSpawn,
 				SpawnPlacementRegisterEvent.Operation.OR);
     }
 
