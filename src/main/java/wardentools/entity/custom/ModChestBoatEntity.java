@@ -11,16 +11,19 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.items.ItemRegistry;
 
 public class ModChestBoatEntity extends ChestBoat {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE =
-            SynchedEntityData.defineId(Boat.class, EntityDataSerializers.INT);
+            SynchedEntityData.defineId(ModChestBoatEntity.class, EntityDataSerializers.INT);
 
     public static final ModelLayerLocation DARKTREE_CHEST_BOAT_LAYER = new ModelLayerLocation(
             new ResourceLocation(ModMain.MOD_ID, "chest_boat/darktree"), "main");
+    public static final ModelLayerLocation WHITETREE_CHEST_BOAT_LAYER = new ModelLayerLocation(
+            new ResourceLocation(ModMain.MOD_ID, "chest_boat/whitetree"), "main");
 
     public ModChestBoatEntity(EntityType<? extends ChestBoat> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -35,10 +38,13 @@ public class ModChestBoatEntity extends ChestBoat {
     }
 
     @Override
-    public Item getDropItem() {
+    public @NotNull Item getDropItem() {
         switch (getModVariant()) {
             case DARKTREE -> {
                 return ItemRegistry.DARKTREE_CHEST_BOAT.get();
+            }
+            case WHITETREE -> {
+                return ItemRegistry.WHITETREE_CHEST_BOAT.get();
             }
         }
         return super.getDropItem();

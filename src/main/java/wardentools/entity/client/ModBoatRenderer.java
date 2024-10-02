@@ -25,7 +25,9 @@ public class ModBoatRenderer extends BoatRenderer {
     public ModBoatRenderer(EntityRendererProvider.Context pContext, boolean pChestBoat) {
         super(pContext, pChestBoat);
         this.boatResources = Stream.of(ModBoatEntity.Type.values()).collect(ImmutableMap.toImmutableMap(type -> type,
-                type -> Pair.of(new ResourceLocation(ModMain.MOD_ID, getTextureLocation(type, pChestBoat)), this.createBoatModel(pContext, type, pChestBoat))));
+                type -> Pair.of(new ResourceLocation(ModMain.MOD_ID,
+                        getTextureLocation(type, pChestBoat)),
+                        this.createBoatModel(pContext, type, pChestBoat))));
     }
 
     private static String getTextureLocation(ModBoatEntity.Type pType, boolean pChestBoat) {
@@ -33,7 +35,8 @@ public class ModBoatRenderer extends BoatRenderer {
                 + ".png" : "textures/entity/boat/" + pType.getName() + ".png";
     }
 
-    private ListModel<Boat> createBoatModel(EntityRendererProvider.Context pContext, ModBoatEntity.Type pType, boolean pChestBoat) {
+    private ListModel<Boat> createBoatModel(EntityRendererProvider.Context pContext,
+                                            ModBoatEntity.Type pType, boolean pChestBoat) {
         ModelLayerLocation modellayerlocation =
                 pChestBoat ? ModBoatRenderer.createChestBoatModelName(pType)
                         : ModBoatRenderer.createBoatModelName(pType);

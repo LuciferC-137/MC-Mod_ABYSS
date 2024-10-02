@@ -337,9 +337,21 @@ public class ItemRegistry {
 
 	public static final RegistryObject<Item> DARKTREE_BOAT =
 			REGISTAR.register("darktree_boat",
-			() -> new ModBoatItem(false, ModBoatEntity.Type.DARKTREE, new Item.Properties().stacksTo(1)));
+			() -> new ModBoatItem(false, ModBoatEntity.Type.DARKTREE,
+					new Item.Properties().stacksTo(1)));
 
 	public static final RegistryObject<Item> DARKTREE_CHEST_BOAT =
 			REGISTAR.register("darktree_chest_boat",
-			() -> new ModBoatItem(true, ModBoatEntity.Type.DARKTREE, new Item.Properties().stacksTo(1)));
+			() -> new ModBoatItem(true, ModBoatEntity.Type.DARKTREE,
+					new Item.Properties().stacksTo(1)));
+
+	public static final RegistryObject<Item> WHITETREE_BOAT =
+			REGISTAR.register("whitetree_boat",
+					() -> new ModBoatItem(false, ModBoatEntity.Type.WHITETREE,
+							new Item.Properties().stacksTo(1)));
+
+	public static final RegistryObject<Item> WHITETREE_CHEST_BOAT =
+			REGISTAR.register("whitetree_chest_boat",
+					() -> new ModBoatItem(true, ModBoatEntity.Type.WHITETREE,
+							new Item.Properties().stacksTo(1)));
 }

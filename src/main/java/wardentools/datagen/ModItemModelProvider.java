@@ -66,6 +66,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DYING_PROTECTOR_HEART);
         simpleItem(ItemRegistry.DARKTREE_BOAT);
         simpleItem(ItemRegistry.DARKTREE_CHEST_BOAT);
+        simpleItem(ItemRegistry.WHITETREE_BOAT);
+        simpleItem(ItemRegistry.WHITETREE_CHEST_BOAT);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);

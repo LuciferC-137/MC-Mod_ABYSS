@@ -24,9 +24,11 @@ import java.util.function.IntFunction;
 public class ModBoatEntity extends Boat {
     public static final ModelLayerLocation DARKTREE_BOAT_LAYER = new ModelLayerLocation(
             new ResourceLocation(ModMain.MOD_ID, "boat/darktree"), "main");
+    public static final ModelLayerLocation WHITETREE_BOAT_LAYER = new ModelLayerLocation(
+            new ResourceLocation(ModMain.MOD_ID, "boat/whitetree"), "main");
 
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE
-            = SynchedEntityData.defineId(Boat.class, EntityDataSerializers.INT);
+            = SynchedEntityData.defineId(ModBoatEntity.class, EntityDataSerializers.INT);
 
     public ModBoatEntity(EntityType<? extends Boat> p_38290_, Level p_38291_) {
         super(p_38290_, p_38291_);
@@ -44,6 +46,7 @@ public class ModBoatEntity extends Boat {
     public @NotNull Item getDropItem() {
         return switch (getModVariant()) {
             case DARKTREE -> ItemRegistry.DARKTREE_BOAT.get();
+            case WHITETREE -> ItemRegistry.WHITETREE_BOAT.get();
         };
     }
 
@@ -69,20 +72,25 @@ public class ModBoatEntity extends Boat {
             this.setVariant(Type.byName(pCompound.getString("Type")));
         }
     }
-    public static enum Type implements StringRepresentable {
-        DARKTREE(BlockRegistry.DARKTREE_PLANKS.get(), "darktree");
+
+    @SuppressWarnings("deprecation")
+    public enum Type implements StringRepresentable {
+        DARKTREE(BlockRegistry.DARKTREE_PLANKS.get(), "darktree"),
+        WHITETREE(BlockRegistry.WHITETREE_PLANKS.get(), "whitetree");
 
         private final String name;
         private final Block planks;
-        public static final StringRepresentable.EnumCodec<ModBoatEntity.Type> CODEC = StringRepresentable.fromEnum(ModBoatEntity.Type::values);
-        private static final IntFunction<ModBoatEntity.Type> BY_ID = ByIdMap.continuous(Enum::ordinal, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
+        public static final StringRepresentable.EnumCodec<ModBoatEntity.Type> CODEC
+                = StringRepresentable.fromEnum(ModBoatEntity.Type::values);
+        private static final IntFunction<ModBoatEntity.Type> BY_ID
+                = ByIdMap.continuous(Enum::ordinal, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
 
-        private Type(Block p_38427_, String p_38428_) {
-            this.name = p_38428_;
-            this.planks = p_38427_;
+        Type(Block block, String name) {
+            this.name = name;
+            this.planks = block;
         }
 
-        public String getSerializedName() {
+        public @NotNull String getSerializedName() {
             return this.name;
         }
 
@@ -98,12 +106,12 @@ public class ModBoatEntity extends Boat {
             return this.name;
         }
 
-        public static ModBoatEntity.Type byId(int p_38431_) {
-            return (ModBoatEntity.Type)BY_ID.apply(p_38431_);
+        public static ModBoatEntity.Type byId(int id) {
+            return BY_ID.apply(id);
         }
 
-        public static ModBoatEntity.Type byName(String p_38433_) {
-            return (ModBoatEntity.Type)CODEC.byName(p_38433_, DARKTREE);
+        public static ModBoatEntity.Type byName(String name) {
+            return CODEC.byName(name, DARKTREE);
         }
     }
 
