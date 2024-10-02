@@ -111,12 +111,9 @@
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",
 	"entity.wardentools.protector": "Protecteur",
 	"entity.wardentools.contagion_incarnation": "Incarnation de la Contagion",
-<<<<<<< HEAD
 	"entity.wardentools.darktree_boat": "Bateau en sombrarbre",
 	"entity.wardentools.darktree_chest_boat": "Bateau avec coffre en sombrarbre",
-	
 	"creativetab.abyss_tab": "Abyss",
-=======
 	"entity.wardentools.temper": "Temper",
 
 	"creativetab.all": "Abyss",
@@ -126,7 +123,6 @@
 	"creativetab.crystals": "Cristals",
 	"creativetab.misc": "Divers",
 	"creativetab.egg": "Oeufs",
->>>>>>> main
 	
 	"gui.wardentools.radiance_catalyst_screen": "Cataliseur de Radiance",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "matière corrompue",

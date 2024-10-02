@@ -112,12 +112,9 @@
 	"entity.wardentools.pale_wanderer": "Pale Wanderer",
 	"entity.wardentools.protector": "Protector",
 	"entity.wardentools.contagion_incarnation": "Contagion Incarnation",
-<<<<<<< HEAD
 	"entity.wardentools.darktree_boat": "Darktree Boat",
 	"entity.wardentools.darktree_chest_boat": "Darktree Chest Boat",
-=======
 	"entity.wardentools.temper": "Temper",
->>>>>>> main
 	
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",
