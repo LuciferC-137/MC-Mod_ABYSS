@@ -11,6 +11,8 @@ import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
+import wardentools.entity.custom.ModBoatEntity;
+import wardentools.entity.custom.ModChestBoatEntity;
 
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
@@ -332,6 +334,26 @@ public class ItemRegistry {
 			REGISTAR.register("cracked_abyssalite_bricks",
 			() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
 					new Item.Properties()));
+
+	public static final RegistryObject<Item> DARKTREE_BOAT =
+			REGISTAR.register("darktree_boat",
+			() -> new ModBoatItem(false, ModBoatEntity.Type.DARKTREE,
+					new Item.Properties().stacksTo(1)));
+
+	public static final RegistryObject<Item> DARKTREE_CHEST_BOAT =
+			REGISTAR.register("darktree_chest_boat",
+			() -> new ModBoatItem(true, ModBoatEntity.Type.DARKTREE,
+					new Item.Properties().stacksTo(1)));
+
+	public static final RegistryObject<Item> WHITETREE_BOAT =
+			REGISTAR.register("whitetree_boat",
+					() -> new ModBoatItem(false, ModBoatEntity.Type.WHITETREE,
+							new Item.Properties().stacksTo(1)));
+
+	public static final RegistryObject<Item> WHITETREE_CHEST_BOAT =
+			REGISTAR.register("whitetree_chest_boat",
+					() -> new ModBoatItem(true, ModBoatEntity.Type.WHITETREE,
+							new Item.Properties().stacksTo(1)));
 	
 	public static final RegistryObject<Item> ABYSSALITE_BRICKS_STAIRS =
 			REGISTAR.register("abyssalite_bricks_stair",

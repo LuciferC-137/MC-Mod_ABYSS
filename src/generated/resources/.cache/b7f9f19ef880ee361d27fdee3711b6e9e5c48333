@@ -1,14 +1,20 @@
+<<<<<<< HEAD
+// 1.20.4	2024-10-02T11:10:08.3557784	Item Models: wardentools
+=======
 // 1.20.4	2024-09-13T22:38:13.1378372	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
+>>>>>>> main
 953870e2f0fd3ec8c1e95656a9f7e457d7ec61ca assets/wardentools/models/item/blue_bush.json
 2386ecb76616df62ada50922746a42f34a611cac assets/wardentools/models/item/chiseled_abyssalite.json
 4631782b9c4658326e513c27e1ea44415e569569 assets/wardentools/models/item/citrine.json
 edbe676badc11d415ea7c976e6120f23f3659962 assets/wardentools/models/item/citrine_fragment.json
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
+2db4f823d6a343d8a598793326fe6a661a1dae18 assets/wardentools/models/item/darktree_boat.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
+56691d71f6e26ed48bcd0dc29d2ef80ac9fffc15 assets/wardentools/models/item/darktree_chest_boat.json
 2ff2920242f212bb929d1e90c3067d261230dab1 assets/wardentools/models/item/darktree_door.json
 3354bf96093acd396295256292028c0a8676e6c7 assets/wardentools/models/item/darktree_fence.json
 177c0163bab52f7c11f49d214085cdc5971b8fea assets/wardentools/models/item/darktree_fence_gate.json
@@ -138,7 +144,9 @@ f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped
 0a97dffdd3ad150e8f5754c8e5a285b8d9424e24 assets/wardentools/models/item/tall_dark_grass.json
 6c32364d24d94cdf7cf4110c71b0502f0f641a6e assets/wardentools/models/item/tall_white_grass.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json
+d863dfe62fd973049057e6058c98b2308aded761 assets/wardentools/models/item/whitetree_boat.json
 e61691d51da15842832df57a056926f39474d0ff assets/wardentools/models/item/whitetree_button.json
+317f6e8472ef449b055bc0323670e03d70aae084 assets/wardentools/models/item/whitetree_chest_boat.json
 a057571a70512821efc095109a514129a88c13f2 assets/wardentools/models/item/whitetree_door.json
 da924dfe5d44e7a6114ef758202f6f631099f651 assets/wardentools/models/item/whitetree_fence.json
 7ea9428e0e7ec5aa74deaa457589fe09d2dcd8b7 assets/wardentools/models/item/whitetree_fence_gate.json

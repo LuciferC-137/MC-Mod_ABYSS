@@ -79,6 +79,9 @@
 	"block.wardentools.darktree_fence_gate": "Darktree Fence Gate",
 	"block.wardentools.darktree_door": "Darktree Door",
 	"block.wardentools.darktree_trapdoor": "Darktree Trap Door",
+
+	"item.wardentools.darktree_boat": "Darktree Boat",
+	"item.wardentools.darktree_chest_boat": "Darktree Chest Boat",
 	
 	"block.wardentools.whitetree_log": "Whitetree Log",
 	"block.wardentools.whitetree_wood": "Whitetree Wood",
@@ -109,7 +112,12 @@
 	"entity.wardentools.pale_wanderer": "Pale Wanderer",
 	"entity.wardentools.protector": "Protector",
 	"entity.wardentools.contagion_incarnation": "Contagion Incarnation",
+<<<<<<< HEAD
+	"entity.wardentools.darktree_boat": "Darktree Boat",
+	"entity.wardentools.darktree_chest_boat": "Darktree Chest Boat",
+=======
 	"entity.wardentools.temper": "Temper",
+>>>>>>> main
 	
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",

@@ -40,7 +40,12 @@ public class ModEntities {
 					.sized(4f, 4f)
 					.build(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation").toString())
 					);
-
+	public static final RegistryObject<EntityType<ModBoatEntity>> MOD_BOAT =
+			ENTITY_TYPES.register("mod_boat", () -> EntityType.Builder.<ModBoatEntity>of(ModBoatEntity::new, MobCategory.MISC)
+					.sized(1.375f, 0.5625f).build("mod_boat"));
+	public static final RegistryObject<EntityType<ModChestBoatEntity>> MOD_CHEST_BOAT =
+			ENTITY_TYPES.register("mod_chest_boat", () -> EntityType.Builder.<ModChestBoatEntity>of(ModChestBoatEntity::new, MobCategory.MISC)
+					.sized(1.375f, 0.5625f).build("mod_chest_boat"));
 	public static final RegistryObject<EntityType<TemperEntity>> TEMPER =
 			ENTITY_TYPES.register("temper",
 					()->EntityType.Builder.of(TemperEntity::new, MobCategory.MISC)

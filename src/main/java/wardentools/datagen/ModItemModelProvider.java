@@ -68,6 +68,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.PURE_VESSEL);
         simpleItem(ItemRegistry.PROTECTOR_HEART);
         simpleItem(ItemRegistry.DYING_PROTECTOR_HEART);
+        simpleItem(ItemRegistry.DARKTREE_BOAT);
+        simpleItem(ItemRegistry.DARKTREE_CHEST_BOAT);
+        simpleItem(ItemRegistry.WHITETREE_BOAT);
+        simpleItem(ItemRegistry.WHITETREE_CHEST_BOAT);
         simpleItem(ItemRegistry.DEEP_FRAGMENT);
         simpleItem(ItemRegistry.CITRINE_FRAGMENT);
         simpleItem(ItemRegistry.RUBY_FRAGMENT);

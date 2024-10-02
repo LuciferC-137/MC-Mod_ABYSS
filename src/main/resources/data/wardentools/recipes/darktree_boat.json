@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "E E",
+    "EEE"
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:darktree_planks"
+    }
+  },
+  "result": {
+    "item": "wardentools:darktree_boat"
+  }
+}
