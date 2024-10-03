@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "wardentools:block/dysfunctionning_catalyst_top",
+    "side": "wardentools:block/dysfunctionning_catalyst_side",
+    "top": "wardentools:block/dysfunctionning_catalyst_top"
+  }
+}

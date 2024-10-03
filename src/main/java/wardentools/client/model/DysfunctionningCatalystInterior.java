@@ -2,21 +2,17 @@ package wardentools.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import org.jetbrains.annotations.NotNull;
 
-public class RadianceCatalystInterior extends Model {
+public class DysfunctionningCatalystInterior extends Model {
     private final ModelPart root;
 
-    public RadianceCatalystInterior(ModelPart parts) {
+    public DysfunctionningCatalystInterior(ModelPart parts) {
         super(RenderType::entitySolid);
         this.root = parts;
     }
@@ -24,10 +20,15 @@ public class RadianceCatalystInterior extends Model {
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild("cube",
-            CubeListBuilder.create().texOffs(0, 0)
-                .addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F),
-            PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition FULL = partdefinition.addOrReplaceChild("FULL", CubeListBuilder.create()
+                .texOffs(0, 0).addBox(-1.75F, -2.25F, -1.5F, 3.0F, 3.0F, 3.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 6).addBox(-2.25F, -0.75F, -1.75F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(8, 6).addBox(-1.0F, -0.25F, 0.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 10).addBox(-1.5F, -2.5F, -2.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(8, 10).addBox(0.0F, -0.75F, -1.75F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(12, 0).addBox(-0.5F, -3.0F, 0.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, 0.0F, 0.0F));
+
         return LayerDefinition.create(meshdefinition, 32, 32);
     }
 

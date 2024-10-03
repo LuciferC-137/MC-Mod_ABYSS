@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.BlockGetter;
@@ -463,4 +464,10 @@ public class BlockRegistry {
 			() -> new SolidCorruptionBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
 					.lightLevel((state) -> 3)
 					.randomTicks()));
+
+	public static final RegistryObject<Block> DYSFUNCTIONNING_CATALYST
+			= REGISTAR.register("dysfunctionning_catalyst",
+			() -> new DysfunctionningCatalystBlock(BlockBehaviour.Properties
+					.ofFullCopy(BlockRegistry.RADIANCE_CATALYST.get())
+					.lightLevel((state) -> 3)));
 }

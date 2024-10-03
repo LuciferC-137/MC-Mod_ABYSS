@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
+import wardentools.blockentity.renderer.DysfunctionningCatalystRenderer;
 import wardentools.gui.MenuRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.renderer.AbyssPortalBlockRenderer;
@@ -32,6 +33,8 @@ public class ClientModHandler {
 				ProtectorInvokerRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.ABYSS_PORTAL_BLOCK_ENTITY.get(),
 				AbyssPortalBlockRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.DYSFUNCTIONNING_CATALYST_BLOCK_ENTITY.get(),
+				DysfunctionningCatalystRenderer::new);
 	}
 
 }

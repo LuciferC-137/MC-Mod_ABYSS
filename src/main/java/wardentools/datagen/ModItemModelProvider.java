@@ -143,6 +143,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         		new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks_stair"));
         withExistingParent(BlockRegistry.ABYSSALITE_BRICKS_SLAB.getId().getPath(),
         		new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks_slab"));
+        withExistingParent(BlockRegistry.DYSFUNCTIONNING_CATALYST.getId().getPath(),
+                new ResourceLocation(ModMain.MOD_ID, "block/dysfunctionning_catalyst"));
 
         //Blocks that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);

@@ -132,6 +132,7 @@ public class ModCreativeTabs {
         addItemToTag("corrupted", ItemRegistry.CORRUPTED_VESSEL);
         addItemToTag("corrupted", ItemRegistry.WIND_WHISPERER);
         addItemToTag("corrupted", ItemRegistry.SOLID_CORRUPTION);
+        addItemToTag("corrupted", ItemRegistry.DYSFUNCTIONNING_CATALYST);
 
         addItemToTag("radiant", ItemRegistry.RADIANCE_CATALYST);
         addItemToTag("radiant", ItemRegistry.PURE_ESSENCE);

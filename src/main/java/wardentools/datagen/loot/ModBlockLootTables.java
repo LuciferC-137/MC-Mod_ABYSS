@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCon
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 
@@ -141,7 +142,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 	}
 
 	@Override
-    protected Iterable<Block> getKnownBlocks() {
+    protected @NotNull Iterable<Block> getKnownBlocks() {
     	Set<Block> blocksToIgnore = Set.of(
     	        BlockRegistry.RADIANCE_CRISTAL.get(),
     	        BlockRegistry.DARKTREE_LEAVES.get(),
@@ -154,7 +155,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				BlockRegistry.RUBY.get(),
 				BlockRegistry.MALACHITE.get(),
 				BlockRegistry.PALE_CRISTAL.get(),
-				BlockRegistry.ABYSS_PORTAL_BLOCK.get()
+				BlockRegistry.ABYSS_PORTAL_BLOCK.get(),
+				BlockRegistry.DYSFUNCTIONNING_CATALYST.get()
     	);
     	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
     	        .map(RegistryObject::get)

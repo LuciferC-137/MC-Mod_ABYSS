@@ -497,4 +497,9 @@ public class ItemRegistry {
 			REGISTAR.register("contagion_incarnation_spawn_egg",
 					() -> new ForgeSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
 							0xbdbd8a, new Item.Properties()));
+
+	public static final RegistryObject<Item> DYSFUNCTIONNING_CATALYST =
+			REGISTAR.register("dysfunctionning_catalyst",
+					() -> new BlockItem(BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),
+							new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 }

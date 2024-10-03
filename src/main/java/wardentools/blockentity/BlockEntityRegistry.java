@@ -26,4 +26,9 @@ public class BlockEntityRegistry {
 					() -> BlockEntityType.Builder.of(AbyssPortalBlockEntity::new,
 							BlockRegistry.ABYSS_PORTAL_BLOCK.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<DysfunctionningCatalystBlockEntity>>
+			DYSFUNCTIONNING_CATALYST_BLOCK_ENTITY = BLOCK_ENTITIES.register("dysfunctionning_catalyst_block_entity",
+			() -> BlockEntityType.Builder.of(DysfunctionningCatalystBlockEntity::new,
+					BlockRegistry.DYSFUNCTIONNING_CATALYST.get()).build(null));
+
 }
