@@ -230,6 +230,7 @@ public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
         float speedFactor = Math.min(Mth.abs((float)speed) * 37f, 1.5f); // the factor 37f is empirical and depends on the max speed of the entity.
         animate(noctilure.standing, NoctilureAnimation.standing, ageInTicks);
         animate(noctilure.walking, NoctilureAnimation.walking, ageInTicks * speedFactor);
+        animate(noctilure.flying, NoctilureAnimation.fly, ageInTicks);
 
 	}
 }

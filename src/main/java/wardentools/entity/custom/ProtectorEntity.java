@@ -1,7 +1,5 @@
 package wardentools.entity.custom;
 
-import java.util.EnumSet;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -15,19 +13,15 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -36,6 +30,8 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import net.minecraft.world.entity.animal.AbstractGolem;
+import wardentools.entity.utils.goal.ChooseMonsterTargetGoal;
+import wardentools.entity.utils.goal.ReturnToInvokerGoal;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceImplosion;
 
@@ -70,7 +66,7 @@ public class ProtectorEntity extends AbstractGolem {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 3.0D, true));
 	    this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 3.0D, 32.0F));
-	    this.goalSelector.addGoal(3, new RerturnToInvoker(this, 1.0D, true));
+	    this.goalSelector.addGoal(3, new ReturnToInvokerGoal(this, 1.0D, true));
 		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 4f));
 		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
@@ -312,68 +308,6 @@ public class ProtectorEntity extends AbstractGolem {
             MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return true;
     }
-
-}
-
-class ChooseMonsterTargetGoal extends NearestAttackableTargetGoal<Monster> {
-	public ChooseMonsterTargetGoal(Mob mob, boolean mustSee) {
-		super(mob, Monster.class, mustSee);
-	}
-
-	@Override
-	public void start() {
-		this.mob.setTarget(this.target);
-		super.start();
-	}
-}
-
-
-class RerturnToInvoker extends Goal {
-    private final ProtectorEntity entity;
-    private final double speedModifier;
-    private final boolean canTeleport;
-    private static final int goCloserThan = 5;
-
-    public RerturnToInvoker(ProtectorEntity entity, double speedModifier, boolean canTeleport) {
-        this.entity = entity;
-        this.speedModifier = speedModifier;
-        this.canTeleport = canTeleport;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-    }
-    
-    public boolean canUse() {
-        return this.entity.invokerPos != null
-				&& !this.entity.invokerPos.closerThan(this.entity.blockPosition(), ProtectorEntity.invokerRadius);
-    }
-
-    @Override
-    public void start() {
-    	this.entity.getNavigation().moveTo(this.entity.invokerPos.getX(),
-    			this.entity.invokerPos.getY(), this.entity.invokerPos.getZ(), this.speedModifier);
-    }
-
-    @Override
-    public boolean canContinueToUse() {
-        return this.entity.invokerPos != null
-				&& !this.entity.invokerPos.closerThan(this.entity.blockPosition(), goCloserThan);
-    }
-
-    @Override
-    public void tick() {
-    	if (canTeleport && !this.entity.invokerPos.closerThan(this.entity.blockPosition(), 100)) {
-    		this.entity.teleportTo(this.entity.invokerPos.getX() + 1,
-    			this.entity.invokerPos.getY(), this.entity.invokerPos.getZ() + 1);
-    	}
-    	this.entity.getNavigation().moveTo(this.entity.invokerPos.getX(),
-    			this.entity.invokerPos.getY(), this.entity.invokerPos.getZ(), this.speedModifier);
-        super.tick();
-    }
-    
-    @Override
-    public void stop() {
-        this.entity.getNavigation().stop();
-    }
-
 
 }
 

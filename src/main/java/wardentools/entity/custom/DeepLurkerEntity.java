@@ -1,8 +1,5 @@
 package wardentools.entity.custom;
 
-import java.util.EnumSet;
-import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -15,14 +12,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.FollowParentGoal;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -31,7 +26,6 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -39,9 +33,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
-import wardentools.block.BlockRegistry;
+import org.jetbrains.annotations.NotNull;
 import wardentools.entity.ModEntities;
+import wardentools.entity.utils.goal.AvoidWardenAndClimbTreeGoal;
+import wardentools.entity.utils.goal.ClimbGoal;
 import wardentools.items.ItemRegistry;
 
 public class DeepLurkerEntity extends Animal {
@@ -86,18 +81,19 @@ public class DeepLurkerEntity extends Animal {
 		if (level().isClientSide()) {
 			this.scaredAnimationState.animateWhen(this.isScared(), this.tickCount);
 			this.calmAnimationState.animateWhen(
-					!isInWaterOrBubble() && !this.walkAnimation.isMoving() && !this.isScared(), this.tickCount);
+					!isInWaterOrBubble()
+                            && !this.walkAnimation.isMoving() && !this.isScared(), this.tickCount);
 		}
 		super.tick();
 	}
 	
 	@Override
-    public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
+    public boolean causeFallDamage(float fallDistance, float damageMultiplier, @NotNull DamageSource source) {
         return false;
     }
 
 	@Override
-	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob mob) {
+	public AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob mob) {
 		return ModEntities.DEEPLURKER.get().create(level);
 	}
 	
@@ -107,8 +103,9 @@ public class DeepLurkerEntity extends Animal {
 	}
 
 	@Override
-	protected PathNavigation createNavigation(Level level) {
-	      return new WallClimberNavigation(this, level);
+	protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
+
+        return new WallClimberNavigation(this, level);
 	}
 	
 	@Override
@@ -135,14 +132,14 @@ public class DeepLurkerEntity extends Animal {
     }
     
     @Override
-	public boolean checkSpawnRules(LevelAccessor p_21686_, MobSpawnType p_21687_) {
+	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull MobSpawnType type) {
     	return true;
     }
 	
     public static boolean canSpawn(EntityType<DeepLurkerEntity> entityType, ServerLevelAccessor level,
             MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-    	boolean canSpawn = level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
-		return canSpawn;// Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
+        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
+        // Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
     }
     
     @Override
@@ -151,14 +148,14 @@ public class DeepLurkerEntity extends Animal {
      }
          
 	@Override
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
+    protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
     }
     @Override
     protected SoundEvent getAmbientSound() {
         return null;
     }
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
         return null;
     }
     @Override
@@ -167,148 +164,9 @@ public class DeepLurkerEntity extends Animal {
     }
     
     @Override
-    public void playSound(SoundEvent soundIn, float volume, float pitch) {
+    public void playSound(@NotNull SoundEvent soundIn, float volume, float pitch) {
     }
     @Override
     public void playAmbientSound() {  
-    }
-}
-
-class ClimbGoal extends Goal {
-    private final DeepLurkerEntity entity;
-
-    public ClimbGoal(DeepLurkerEntity entity) {
-        this.entity = entity;
-        this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
-    }
-    
-    @Override
-    public void start() {
-        this.entity.setClimbing(true);
-    }
-
-    @Override
-    public void stop() {
-        this.entity.setClimbing(false);
-    }
-
-    @Override
-    public boolean canUse() {
-        return this.entity.horizontalCollision &&
-        		this.entity.level().getBlockState(this.entity.blockPosition().above()).isAir();
-    }
-
-    @Override
-    public void tick() {
-        if (this.entity.horizontalCollision) {
-            this.entity.setDeltaMovement(this.entity.getDeltaMovement().multiply(1.0D, 0.2D, 1.0D));
-            if (this.entity.level().getBlockState(this.entity.blockPosition().above()).isAir()) {
-                this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, 0.2D, 0.0D));
-            }
-        }
-    }
-    
-}
-
-
-class AvoidWardenAndClimbTreeGoal extends Goal {
-    private final DeepLurkerEntity entity;
-    private final double speedModifier;
-    private final double climbSpeedModifier;
-    private LivingEntity target;
-    private BlockPos targetTreePos;
-    private static final int scaredRadius = 20;
-
-    public AvoidWardenAndClimbTreeGoal(DeepLurkerEntity entity, double speedModifier, double climbSpeedModifier) {
-        this.entity = entity;
-        this.speedModifier = speedModifier;
-        this.climbSpeedModifier = climbSpeedModifier;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
-    }
-    
-    public boolean canUse() {
-        List<Warden> wardens = entity.level().getEntitiesOfClass(Warden.class,
-        		entity.getBoundingBox().inflate(scaredRadius));
-        if (!wardens.isEmpty()) {
-            this.target = wardens.get(0);
-            BlockPos startPos = entity.blockPosition();
-            BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-            int y = startPos.getY();
-            for (int r = 1; r <= scaredRadius; r++) {
-                for (int dx = -r; dx <= r; dx++) {
-                    for (int dz = -r; dz <= r; dz++) {
-                        if (Math.abs(dx) == r || Math.abs(dz) == r) {
-                            mutableBlockPos.set(startPos.getX() + dx, y, startPos.getZ() + dz);
-                            if (entity.level().getBlockState(mutableBlockPos).getBlock()
-                            		== BlockRegistry.DARKTREE_LOG.get()) {
-                                this.targetTreePos = mutableBlockPos.immutable();
-                                this.targetTreePos = this.getTargetOnTree();
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void start() {
-        if (this.targetTreePos != null) {
-            this.entity.getNavigation().moveTo(targetTreePos.getX(), targetTreePos.getY(), targetTreePos.getZ(), this.speedModifier);
-        }
-    }
-
-    @Override
-    public boolean canContinueToUse() {
-        return this.target != null && this.target.isAlive() &&
-                this.entity.distanceTo(this.target) < scaredRadius &&
-                this.entity.level().getBlockState(targetTreePos).getBlock() == BlockRegistry.DARKTREE_LOG.get();
-    }
-
-    @Override
-    public void stop() {
-        this.target = null;
-        this.targetTreePos = null;
-        this.entity.setClimbing(false);
-        this.entity.setNoGravity(false);
-        this.entity.setScared(false);
-    }
-
-    @Override
-    public void tick() {
-        if (this.target != null && this.entity.horizontalCollision && !isAtTopOfTree()) {
-            this.entity.setClimbing(true);
-            this.entity.getNavigation().moveTo(this.targetTreePos.getX(),
-            		this.targetTreePos.getY(), this.targetTreePos.getZ(), this.climbSpeedModifier);
-            this.entity.setDeltaMovement(this.entity.getDeltaMovement()
-            		.add(0.0D, 0.2D, 0.0D));
-        }
-
-        else if (isAtTopOfTree()) {
-        	this.entity.getLookControl().setLookAt(this.target);
-        	this.entity.setDeltaMovement(Vec3.ZERO);;
-            this.entity.getNavigation().stop();
-            this.entity.setNoGravity(true);
-            this.entity.setScared(true);
-        }
-    }
-
-    private boolean isAtTopOfTree() {
-        BlockPos pos = this.entity.blockPosition();
-        return this.entity.level().getBlockState(pos.above()).getBlock() == BlockRegistry.DARKTREE_LEAVES.get()
-        		|| this.entity.level().getBlockState(pos.above()).getBlock() == BlockRegistry.DARKTREE_LOG.get();
-    }
-
-    private BlockPos getTargetOnTree() {
-        if (targetTreePos != null) {
-            int i = 0;
-            while (!this.entity.level().getBlockState(targetTreePos.above(i)).isAir() && i < 20) {
-                i += 1;
-            }
-            return targetTreePos.above(i);
-        }
-        return null;
     }
 }
