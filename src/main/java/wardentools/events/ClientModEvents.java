@@ -27,6 +27,7 @@ public class ClientModEvents {
 				context -> new ModBoatRenderer(context, true));
 		event.registerEntityRenderer(ModEntities.TEMPER.get(), TemperRenderer::new);
 		event.registerEntityRenderer(ModEntities.PARASYTE.get(), ParasyteRenderer::new);
+		event.registerEntityRenderer(ModEntities.NOCTILURE.get(), NoctilureRenderer::new);
 	}
 
 	
@@ -42,5 +43,6 @@ public class ClientModEvents {
 		event.registerLayerDefinition(ModChestBoatEntity.WHITETREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
 		event.registerLayerDefinition(Temper.LAYER_LOCATION, Temper::createBodyLayer);
 		event.registerLayerDefinition(Parasyte.LAYER_LOCATION, Parasyte::createBodyLayer);
+		event.registerLayerDefinition(Noctilure.LAYER_LOCATION, Noctilure::createBodyLayer);
 	}
 }

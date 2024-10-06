@@ -6,21 +6,27 @@
 		]
 	},
 	"contagion_incarnation_crawl": {
-			"subtitles": "sounds.wardentools.contagion_incarnation_crawl",
-			"sounds": [
-				"wardentools:contagion_incarnation_crawl"
-			]
-		},
+		"subtitles": "sounds.wardentools.contagion_incarnation_crawl",
+		"sounds": [
+			"wardentools:contagion_incarnation_crawl"
+		]
+	},
 	"contagion_incarnation_ambient":{
-			"subtitles": "sounds.wardentools.contagion_incarnation_ambient",
-			"sounds": [
-				"wardentools:contagion_incarnation_ambient"
-			]
+		"subtitles": "sounds.wardentools.contagion_incarnation_ambient",
+		"sounds": [
+			"wardentools:contagion_incarnation_ambient"
+		]
 	},
 	"contagion_incarnation_death":{
-				"subtitles": "sounds.wardentools.contagion_incarnation_death",
-				"sounds": [
-					"wardentools:contagion_incarnation_death"
-				]
-		}
+		"subtitles": "sounds.wardentools.contagion_incarnation_death",
+		"sounds": [
+			"wardentools:contagion_incarnation_death"
+		]
+	},
+	"deep_forest": {
+		"subtitles": "sounds.wardentools.deep_forest",
+		"sounds": [
+			"wardentools:deep_forest"
+		]
+	}
 }

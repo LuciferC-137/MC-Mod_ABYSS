@@ -39,6 +39,7 @@
 	"item.wardentools.darktree_chest_boat": "Bateau avec coffre en sombrarbre",
 	"item.wardentools.whitetree_boat": "Bateau en blancharbre",
 	"item.wardentools.whitetree_chest_boat": "Bateau avec coffre en blancharbre",
+	"item.wardentools.noctilure_spawn_egg": "Oeuf d'apparition de Noctilure",
 
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -137,6 +138,7 @@
 
 	"sounds.wardentools.contagion_incarnation_crawl": "L'Incarnation de la Contagion rampe",
 	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle",
+	"sounds.wardentools.deep_forest": "Musique de la forêt noire",
 
 	"effect.wardentools.corrupted": "Corrompu",
 	"effect.wardentools.corruption_vessel": "Receptacle de Corruption",

@@ -39,6 +39,7 @@
 	"item.wardentools.darktree_chest_boat": "Darktree Chest Boat",
 	"item.wardentools.whitetree_boat": "Whitetree Boat",
 	"item.wardentools.whitetree_chest_boat": "Whitetree Chest Boat",
+	"item.wardentools.noctilure_spawn_egg": "Noctilure spawn egg",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
@@ -136,6 +137,7 @@
 	
 	"sounds.wardentools.contagion_incarnation_crawl": "Contagion Incarnation Crawling",
 	"sounds.wardentools.contagion_incarnation_scream": "Contagion Incarnation Screams",
+	"sounds.wardentools.deep_forest": "Dark Forest music playing",
 
 	"effect.wardentools.corrupted": "Corrupted",
 	"effect.wardentools.corruption_vessel": "Corruption Vessel",

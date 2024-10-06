@@ -259,7 +259,7 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
     }
 
 	@Override
-	public @org.jetbrains.annotations.Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level,
+	public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level,
 																			@NotNull AgeableMob mob) {
 		return null;
 	}

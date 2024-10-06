@@ -498,6 +498,11 @@ public class ItemRegistry {
 					() -> new ForgeSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
 							0xbdbd8a, new Item.Properties()));
 
+	public static final RegistryObject<Item> NOCTILURE_EGG =
+			REGISTAR.register("noctilure_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.NOCTILURE, 0x08155c, 0xcad4fc,
+							new Item.Properties()));
+
 	public static final RegistryObject<Item> DYSFUNCTIONNING_CATALYST =
 			REGISTAR.register("dysfunctionning_catalyst",
 					() -> new BlockItem(BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),

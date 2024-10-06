@@ -1,75 +1,44 @@
-[02oct.2024 18:39:04.359] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forge_userdev_data, --assetIndex, 12, --assetsDir, C:\Users\maxos\.gradle\caches\forge_gradle\assets, --gameDir, ., --mod, wardentools, --all, --output, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources, --existing, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\main\resources, --mixin.config, wardentools.json]
-[02oct.2024 18:39:04.362] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 17.0.11+9
-[02oct.2024 18:39:04.364] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.1.2 starting: java version 17.0.11 by Eclipse Adoptium; OS Windows 10 arch amd64 version 10.0
-[02oct.2024 18:39:04.528] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_data
-[02oct.2024 18:39:04.720] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=jar:file:///C:/Users/maxos/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar!/ Service=ModLauncher Env=UNKNOWN
-[02oct.2024 18:39:06.474] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
-[02oct.2024 18:39:08.784] [main/ERROR] [mixin/]: Mixin config wardentools.json does not specify "minVersion" property
-[02oct.2024 18:39:08.801] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_data' with arguments [--gameDir, ., --assetsDir, C:\Users\maxos\.gradle\caches\forge_gradle\assets, --assetIndex, 12, --mod, wardentools, --all, --output, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources, --existing, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\main\resources]
-[02oct.2024 18:39:09.022] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
-[02oct.2024 18:39:21.033] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 49.0.50, for MC 1.20.4 with MCP 20231207.112700
-[02oct.2024 18:39:21.037] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v49.0.50 Initialized
-[02oct.2024 18:39:21.469] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Opening jdk.naming.dns/com.sun.jndi.dns to java.naming
-[02oct.2024 18:39:23.631] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [wardentools]
-[02oct.2024 18:39:23.833] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/maxos/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.4-49.0.50_mapped_official_1.20.4/forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar%230!/assets/.mcassetsroot' uses unexpected schema
-[02oct.2024 18:39:23.833] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/maxos/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.4-49.0.50_mapped_official_1.20.4/forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar%230!/data/.mcassetsroot' uses unexpected schema
-[02oct.2024 18:39:24.173] [main/WARN] [net.minecraft.data.HashCache/]: Failed to parse cache D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources\.cache\b7f9f19ef880ee361d27fdee3711b6e9e5c48333, discarding
-java.lang.IllegalStateException: Missing cache file header
-	at net.minecraft.data.HashCache$ProviderCache.load(HashCache.java:193) ~[forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar:?]
-	at net.minecraft.data.HashCache.readCache(HashCache.java:72) ~[forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar:?]
-	at net.minecraft.data.HashCache.<init>(HashCache.java:59) ~[forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar:?]
-	at net.minecraft.data.DataGenerator.run(DataGenerator.java:34) ~[forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar:?]
-	at net.minecraftforge.data.event.GatherDataEvent$DataGeneratorConfig.lambda$runAll$2(GatherDataEvent.java:111) ~[forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar:?]
-	at cpw.mods.modlauncher.api.LamdbaExceptionUtils.lambda$rethrowConsumer$0(LamdbaExceptionUtils.java:21) ~[modlauncher-10.1.2.jar:10.1.2]
-	at java.util.LinkedHashMap$LinkedValues.forEach(LinkedHashMap.java:647) ~[?:?]
-	at net.minecraftforge.data.event.GatherDataEvent$DataGeneratorConfig.runAll(GatherDataEvent.java:107) ~[forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar:?]
-	at net.minecraftforge.data.loading.DatagenModLoader.begin(DatagenModLoader.java:79) ~[forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar:?]
-	at net.minecraft.data.Main.main(Main.java:103) ~[forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
-	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
-	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
-	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.runTarget(CommonLaunchHandler.java:91) ~[fmlloader-1.20.4-49.0.50.jar:?]
-	at net.minecraftforge.fml.loading.targets.CommonLaunchHandler.lambda$makeService$0(CommonLaunchHandler.java:75) ~[fmlloader-1.20.4-49.0.50.jar:?]
-	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) ~[modlauncher-10.1.2.jar:?]
-	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:74) ~[modlauncher-10.1.2.jar:?]
-	at cpw.mods.modlauncher.Launcher.run(Launcher.java:114) ~[modlauncher-10.1.2.jar:?]
-	at cpw.mods.modlauncher.Launcher.main(Launcher.java:73) ~[modlauncher-10.1.2.jar:?]
-	at cpw.mods.modlauncher.BootstrapEntry.main(BootstrapEntry.java:17) ~[modlauncher-10.1.2.jar:?]
-	at net.minecraftforge.bootstrap.Bootstrap.moduleMain(Bootstrap.java:188) ~[bootstrap-2.1.0.jar!/:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
-	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
-	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
-	at java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
-	at net.minecraftforge.bootstrap.Bootstrap.bootstrapMain(Bootstrap.java:133) ~[bootstrap-2.1.0.jar!/:?]
-	at net.minecraftforge.bootstrap.Bootstrap.start(Bootstrap.java:53) ~[bootstrap-2.1.0.jar!/:?]
-	at net.minecraftforge.bootstrap.ForgeBootstrap.main(ForgeBootstrap.java:19) ~[bootstrap-2.1.0.jar!/:?]
-[02oct.2024 18:39:24.191] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[02oct.2024 18:39:24.344] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 151 ms
-[02oct.2024 18:39:24.345] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id wardentools
-[02oct.2024 18:39:24.821] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id wardentools finished after 476 ms
-[02oct.2024 18:39:24.822] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id wardentools
-[02oct.2024 18:39:24.826] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id wardentools finished after 3 ms
-[02oct.2024 18:39:24.826] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : wardentools
-[02oct.2024 18:39:24.842] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : wardentools finished after 15 ms
-[02oct.2024 18:39:24.843] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
-[02oct.2024 18:39:24.890] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:liquid_corruption_lake in biome wardentools:waste_land is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.024] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:liquid_corruption_lake in biome wardentools:deep_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.028] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:deepflower in biome wardentools:deep_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.029] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:blue_bush in biome wardentools:deep_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.030] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:tall_dark_grass in biome wardentools:deep_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.031] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:dark_grass in biome wardentools:deep_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.062] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:liquid_corruption_lake in biome wardentools:cristal_cave is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.350] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:liquid_corruption_lake in biome wardentools:white_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.351] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:white_grass in biome wardentools:white_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.352] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:tall_white_grass in biome wardentools:white_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.352] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:white_torchflower in biome wardentools:white_forest is missing BiomeFilter.biome()
-[02oct.2024 18:39:25.447] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 604 ms
-[02oct.2024 18:39:25.448] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: wardentools
-[02oct.2024 18:39:26.135] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: wardentools finished after 686 ms
-[02oct.2024 18:39:26.135] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: wardentools
-[02oct.2024 18:39:26.416] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: wardentools finished after 280 ms
-[02oct.2024 18:39:26.416] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Advancements
-[02oct.2024 18:39:26.658] [main/INFO] [net.minecraft.data.DataGenerator/]: Advancements finished after 241 ms
-[02oct.2024 18:39:26.658] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 2466 ms
-[02oct.2024 18:39:26.678] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 499, old count: 344, new count: 500, removed stale: 0, written: 159
+[04oct.2024 19:00:58.499] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forge_userdev_data, --assetIndex, 12, --assetsDir, C:\Users\maxos\.gradle\caches\forge_gradle\assets, --gameDir, ., --mod, wardentools, --all, --output, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources, --existing, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\main\resources, --mixin.config, wardentools.json]
+[04oct.2024 19:00:58.502] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 17.0.11+9
+[04oct.2024 19:00:58.504] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.1.2 starting: java version 17.0.11 by Eclipse Adoptium; OS Windows 10 arch amd64 version 10.0
+[04oct.2024 19:00:58.770] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forge_userdev_data
+[04oct.2024 19:00:58.935] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=jar:file:///C:/Users/maxos/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar!/ Service=ModLauncher Env=UNKNOWN
+[04oct.2024 19:01:00.441] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: No dependencies to load found. Skipping!
+[04oct.2024 19:01:02.137] [main/ERROR] [mixin/]: Mixin config wardentools.json does not specify "minVersion" property
+[04oct.2024 19:01:02.154] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forge_userdev_data' with arguments [--gameDir, ., --assetsDir, C:\Users\maxos\.gradle\caches\forge_gradle\assets, --assetIndex, 12, --mod, wardentools, --all, --output, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\generated\resources, --existing, D:\Document\Perso\MinecraftCode\forge-1.20.4-49.0.50-mdk\src\main\resources]
+[04oct.2024 19:01:02.347] [main/WARN] [mixin/]: Mixin environment was unable to detect the current side, sided mixins will not be applied
+[04oct.2024 19:01:12.205] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 49.0.50, for MC 1.20.4 with MCP 20231207.112700
+[04oct.2024 19:01:12.210] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v49.0.50 Initialized
+[04oct.2024 19:01:12.340] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Opening jdk.naming.dns/com.sun.jndi.dns to java.naming
+[04oct.2024 19:01:13.164] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [wardentools]
+[04oct.2024 19:01:13.278] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/maxos/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.4-49.0.50_mapped_official_1.20.4/forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar%230!/assets/.mcassetsroot' uses unexpected schema
+[04oct.2024 19:01:13.279] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/maxos/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.4-49.0.50_mapped_official_1.20.4/forge-1.20.4-49.0.50_mapped_official_1.20.4-recomp.jar%230!/data/.mcassetsroot' uses unexpected schema
+[04oct.2024 19:01:13.908] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[04oct.2024 19:01:14.193] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 284 ms
+[04oct.2024 19:01:14.193] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id wardentools
+[04oct.2024 19:01:14.379] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id wardentools finished after 185 ms
+[04oct.2024 19:01:14.380] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id wardentools
+[04oct.2024 19:01:14.383] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id wardentools finished after 2 ms
+[04oct.2024 19:01:14.383] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Global Loot Modifiers : wardentools
+[04oct.2024 19:01:14.390] [main/INFO] [net.minecraft.data.DataGenerator/]: Global Loot Modifiers : wardentools finished after 6 ms
+[04oct.2024 19:01:14.390] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Registries
+[04oct.2024 19:01:14.573] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:liquid_corruption_lake in biome wardentools:deep_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.577] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:deepflower in biome wardentools:deep_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.578] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:blue_bush in biome wardentools:deep_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.578] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:tall_dark_grass in biome wardentools:deep_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.579] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:dark_grass in biome wardentools:deep_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.649] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:liquid_corruption_lake in biome wardentools:white_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.650] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:white_grass in biome wardentools:white_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.651] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:tall_white_grass in biome wardentools:white_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.651] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:white_torchflower in biome wardentools:white_forest is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.691] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:liquid_corruption_lake in biome wardentools:cristal_cave is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.728] [Worker-Main-1/ERROR] [net.minecraft.Util/]: Placed feature wardentools:liquid_corruption_lake in biome wardentools:waste_land is missing BiomeFilter.biome()
+[04oct.2024 19:01:14.810] [main/INFO] [net.minecraft.data.DataGenerator/]: Registries finished after 420 ms
+[04oct.2024 19:01:14.811] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: wardentools
+[04oct.2024 19:01:15.276] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: wardentools finished after 465 ms
+[04oct.2024 19:01:15.277] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: wardentools
+[04oct.2024 19:01:15.438] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: wardentools finished after 161 ms
+[04oct.2024 19:01:15.439] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Advancements
+[04oct.2024 19:01:15.686] [main/INFO] [net.minecraft.data.DataGenerator/]: Advancements finished after 247 ms
+[04oct.2024 19:01:15.687] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 1779 ms
+[04oct.2024 19:01:15.709] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 499, old count: 503, new count: 500, removed stale: 0, written: 0

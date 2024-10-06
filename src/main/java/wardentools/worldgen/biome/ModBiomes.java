@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.particle.ParticleRegistry;
+import wardentools.sounds.ModMusics;
 import wardentools.worldgen.features.ModPlacedFeatures;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
 
@@ -196,6 +197,7 @@ public class ModBiomes {
                 .grassColorOverride(0x147B75)
                 .foliageColorOverride(0x147B63)
                 .fogColor(FOG_COLOR)
+                .backgroundMusic(ModMusics.DEEP_FOREST)
                 .ambientParticle(new AmbientParticleSettings(ParticleRegistry.ABYSS_AMBIENT.get(), 0.0025F))
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS);
     }

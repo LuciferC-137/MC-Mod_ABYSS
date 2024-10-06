@@ -20,6 +20,8 @@ public class ModSounds {
 			registerSoundEvents("contagion_incarnation_ambient");
 	public static final RegistryObject<SoundEvent> CONTAGION_INCARNATION_DEATH =
 			registerSoundEvents("contagion_incarnation_death");
+	public static final RegistryObject<SoundEvent> DEEP_FOREST =
+			registerSoundEvents("deep_forest");
 	
 	
 	

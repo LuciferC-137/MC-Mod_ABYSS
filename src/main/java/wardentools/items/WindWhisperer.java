@@ -11,15 +11,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.util.RandomSource;
 import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.NotNull;
 import wardentools.misc.WindWhisper;
 import wardentools.worldgen.dimension.ModDimensions;
 
-//@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class WindWhisperer extends Item {
 	
 	private Player currentPlayer;
-    private WindWhisper windWhisper;
-    private RandomSource rand;
+    private final WindWhisper windWhisper;
+    private final RandomSource rand;
 
 	public WindWhisperer(Properties prop) {
 		super(prop);
@@ -29,7 +29,13 @@ public class WindWhisperer extends Item {
 	}
 
 	@Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level,
+							  @NotNull Entity entity, int slot, boolean selected) {
+		if (entity instanceof Player player){
+			this.currentPlayer = player;
+		} else {
+			this.currentPlayer = null;
+		}
         super.inventoryTick(stack, level, entity, slot, selected);
         if (entity instanceof Player player) {
 	        if (player.level().isClientSide()) {
@@ -44,7 +50,7 @@ public class WindWhisperer extends Item {
 	                    else {
 	                        sendMessage(player, "<Wind> " + this.windWhisper.getWhisperEn());
 	                    }
-	                }
+					}
 	            }
 	        }
         }
@@ -72,7 +78,7 @@ public class WindWhisperer extends Item {
     }
     
     @Override
-    public boolean isFoil(ItemStack itemStack) {
+    public boolean isFoil(@NotNull ItemStack itemStack) {
         return currentPlayer != null && isInHotbar(this.currentPlayer) && isInAbyss(this.currentPlayer);
     }
 }
