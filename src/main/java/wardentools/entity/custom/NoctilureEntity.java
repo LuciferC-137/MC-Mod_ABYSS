@@ -34,14 +34,24 @@ import org.jetbrains.annotations.Nullable;
 import wardentools.entity.ModEntities;
 import wardentools.entity.utils.CustomFlyingPathNavigation;
 import wardentools.entity.utils.NoctilureFlyingMoveControl;
+import wardentools.entity.utils.goal.LandGoal;
 import wardentools.entity.utils.goal.RandomFlyGoal;
+import wardentools.entity.utils.goal.TakeOffGoal;
 
 import java.util.UUID;
 
 public class NoctilureEntity extends TamableAnimal implements NeutralMob {
+	private static final int CHANCE_TO_LAND = 200;
+	private static final int CHANCE_TO_TAKE_OFF = 200;
 	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> TARGETED_HEIGHT_ON_TAKE_OFF
+			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> IS_FLYING
+			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> WANTS_TO_LAND
+			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> WANTS_TO_TAKE_OFF
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 	public final AnimationState standing = new AnimationState();
@@ -49,6 +59,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	public final AnimationState flying = new AnimationState();
 	protected PathNavigation flyingNavigation;
 	protected NoctilureFlyingMoveControl flyingMoveControl;
+	protected MoveControl groundMoveControl;
 	public Vec3 moveTargetPoint = Vec3.ZERO;
 	public BlockPos anchorPoint = BlockPos.ZERO;
 	@Nullable
@@ -57,15 +68,18 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	public NoctilureEntity(EntityType<? extends TamableAnimal> entity, Level level) {
 		super(entity, level);
 		this.flyingNavigation = new CustomFlyingPathNavigation(this, level);
-		this.flyingMoveControl = new NoctilureFlyingMoveControl(this, 0.4f);
+		this.flyingMoveControl = new NoctilureFlyingMoveControl(this);
+		this.groundMoveControl = new MoveControl(this);
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
 		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
-		this.goalSelector.addGoal(3, new RandomFlyGoal(this));
-		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(3, new LandGoal(this));
+		this.goalSelector.addGoal(4, new TakeOffGoal(this));
+		this.goalSelector.addGoal(5, new RandomFlyGoal(this));
+		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -84,29 +98,52 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 			this.standing.animateWhen(!this.walkAnimation.isMoving() && !this.getIsFlying(), this.tickCount);
 			this.walking.animateWhen(this.walkAnimation.isMoving() && !this.getIsFlying(), this.tickCount);
 			this.flying.animateWhen(this.getIsFlying(), this.tickCount);
+		} else { // If this logic is not handled on the server side, some animation de-synchronisation can happen
+			if (this.getIsFlying()){
+				// Landing at a random time if no other action is performed
+				if (!this.getWantsToLand() && !this.getWantsToTakeOff()
+						&& this.getRandom().nextInt(CHANCE_TO_LAND) == 0) {
+					this.setWantsToLand(true);
+				}
+				// Condition to land if the ground is reached by chance
+				if (this.onGround() && !this.getWantsToTakeOff() && !this.getWantsToLand()){
+					this.land();
+				}
+			} else {
+				// Taking off at a random time if no other action is performed
+				if (!this.getWantsToTakeOff() && !this.getWantsToLand()
+						&& this.getRandom().nextInt(CHANCE_TO_TAKE_OFF) == 0){
+					this.takeOff();
+				}
+			}
 		}
 		super.tick();
 	}
 
-	@Override
-	public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-		if (this.getIsFlying()){
-			this.land();
-			return InteractionResult.SUCCESS;
-		} else {
-			this.takeOff();
-			return InteractionResult.SUCCESS;
-		}
-	}
-
 	public void takeOff() {
+		// To call at the beginning of the taking off
+		this.setWantsToTakeOff(true);
 		this.setIsFlying(true);
 		this.setNoGravity(true);
+		this.updateMoveControl();
+		this.setTargetedHeightOnTakeOff(this.getRandom().nextInt(10, 30));
 	}
 
 	public void land() {
+		// To call at the end of the landing
+		this.setWantsToLand(false);
 		this.setIsFlying(false);
 		this.setNoGravity(false);
+		this.updateMoveControl();
+	}
+
+	public double getHeightAboveGround() {
+        BlockPos groundPos = this.blockPosition();
+		while (groundPos.getY() > this.level().getMinBuildHeight()
+				&& this.level().getBlockState(groundPos).isAir()) {
+			groundPos = groundPos.below();
+		}
+		return this.getY() - groundPos.getY();
 	}
 
 	@Override
@@ -125,8 +162,20 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		if (entity instanceof Mob mob) {
 			return mob.getMoveControl();
 		} else {
-			return this.moveControl;
+			return this.getIsFlying() ? this.flyingMoveControl : this.groundMoveControl;
 		}
+	}
+
+	@Override
+	public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+		System.out.println("Wants to Take Off: " + this.getWantsToTakeOff());
+		System.out.println("Wants to Land: " + this.getWantsToLand());
+		System.out.println("Height to Ground: " + this.getHeightAboveGround());
+		return InteractionResult.SUCCESS;
+	}
+
+	public void updateMoveControl() {
+		this.moveControl = this.getMoveControl();
 	}
 
     public static boolean canSpawn(EntityType<NoctilureEntity> entityType, ServerLevelAccessor level,
@@ -160,13 +209,11 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 				if (this.onGround()) {
 					f = this.level().getBlockState(ground).getFriction(this.level(), ground, this) * 0.91F;
 				}
-
 				float f1 = 0.16277137F / (f * f * f);
 				f = 0.91F;
 				if (this.onGround()) {
 					f = this.level().getBlockState(ground).getFriction(this.level(), ground, this) * 0.91F;
 				}
-
 				this.moveRelative(this.onGround() ? 0.1F * f1 : 0.02F, vec3);
 				this.move(MoverType.SELF, this.getDeltaMovement());
 				this.setDeltaMovement(this.getDeltaMovement().scale((double)f));
@@ -179,7 +226,10 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+		this.entityData.define(TARGETED_HEIGHT_ON_TAKE_OFF, 0);
 		this.entityData.define(IS_FLYING, false);
+		this.entityData.define(WANTS_TO_LAND, false);
+		this.entityData.define(WANTS_TO_TAKE_OFF, false);
 	}
 
 	@Override
@@ -187,6 +237,8 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		super.addAdditionalSaveData(tag);
 		this.addPersistentAngerSaveData(tag);
 		tag.putBoolean("is_flying", this.getIsFlying());
+		tag.putBoolean("wants_to_land", this.getWantsToLand());
+		tag.putBoolean("wants_to_take_off", this.getWantsToTakeOff());
 	}
 
 	@Override
@@ -194,13 +246,25 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		super.readAdditionalSaveData(tag);
 		this.readPersistentAngerSaveData(this.level(), tag);
 		this.setIsFlying(tag.getBoolean("is_flying"));
+		this.setWantsToLand(tag.getBoolean("wants_to_land"));
+		this.setWantsToTakeOff(tag.getBoolean("wants_to_take_off"));
 	}
 
-	public boolean getIsFlying() {
-		return this.entityData.get(IS_FLYING);
-	}
+	public int getTargetHeightOnTakeOff() {return this.entityData.get(TARGETED_HEIGHT_ON_TAKE_OFF);}
+
+	public void setTargetedHeightOnTakeOff(int height) {this.entityData.set(TARGETED_HEIGHT_ON_TAKE_OFF, height);}
+
+	public boolean getIsFlying() {return this.entityData.get(IS_FLYING);}
 
 	public void setIsFlying(boolean flying) {this.entityData.set(IS_FLYING, flying);}
+
+	public boolean getWantsToLand() {return this.entityData.get(WANTS_TO_LAND);}
+
+	public void setWantsToLand(boolean land) {this.entityData.set(WANTS_TO_LAND, land);}
+
+	public boolean getWantsToTakeOff() {return this.entityData.get(WANTS_TO_TAKE_OFF);}
+
+	public void setWantsToTakeOff(boolean takeOff) {this.entityData.set(WANTS_TO_TAKE_OFF, takeOff);}
 
 	@Override
 	public int getRemainingPersistentAngerTime() {return this.entityData.get(DATA_REMAINING_ANGER_TIME);}

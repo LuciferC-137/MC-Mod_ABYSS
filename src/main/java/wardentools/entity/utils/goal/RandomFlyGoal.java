@@ -8,6 +8,7 @@ import wardentools.entity.custom.NoctilureEntity;
 
 public class RandomFlyGoal extends Goal {
     private final NoctilureEntity noctilure;
+    private static final int minHeightInFly = 3;
     private float angle;
     private float distance;
     private float height;
@@ -20,7 +21,7 @@ public class RandomFlyGoal extends Goal {
     @Override
     public void start() {
         this.distance = 5.0F + this.noctilure.getRandom().nextFloat() * 10.0F;
-        this.height = -4.0F + this.noctilure.getRandom().nextFloat() * 9.0F;
+        this.height = this.noctilure.getTargetHeightOnTakeOff();
         this.clockwise = this.noctilure.getRandom().nextBoolean() ? 1.0F : -1.0F;
         this.selectNext();
     }
@@ -31,14 +32,14 @@ public class RandomFlyGoal extends Goal {
         }
         this.angle += this.clockwise * 15.0F * ((float)Math.PI / 180F);
         this.noctilure.moveTargetPoint = Vec3.atLowerCornerOf(this.noctilure.anchorPoint)
-                .add((double)(this.distance * Mth.cos(this.angle)), (double)(-4.0F + this.height),
+                .add((double)(this.distance * Mth.cos(this.angle)), (double)(this.height),
                         (double)(this.distance * Mth.sin(this.angle)));
     }
 
     @Override
     public void tick() {
         if (this.noctilure.getRandom().nextInt(this.adjustedTickDelay(350)) == 0) {
-            this.height = -4.0F + this.noctilure.getRandom().nextFloat() * 9.0F;
+            this.height = (this.noctilure.getRandom().nextFloat() - 0.5F ) * 3.0F;
         }
         if (this.noctilure.getRandom().nextInt(this.adjustedTickDelay(250)) == 0) {
             ++this.distance;
@@ -54,12 +55,18 @@ public class RandomFlyGoal extends Goal {
         if (this.touchingTarget()) {
             this.selectNext();
         }
-        if (this.noctilure.moveTargetPoint.y < this.noctilure.getY() 
-                && !this.noctilure.level().isEmptyBlock(this.noctilure.blockPosition().below(1))) {
-            this.height = Math.max(1.0F, this.height);
+
+        if (this.noctilure.getHeightAboveGround() < minHeightInFly) {
+            this.height = Math.max(this.height, 5.0F);
             this.selectNext();
         }
-        if (this.noctilure.moveTargetPoint.y > this.noctilure.getY() 
+
+        if (this.noctilure.moveTargetPoint.y < this.noctilure.getY()
+                && !this.noctilure.level().isEmptyBlock(this.noctilure.blockPosition().below(1))) {
+            this.height = Math.max(2.0F, this.height);
+            this.selectNext();
+        }
+        if (this.noctilure.moveTargetPoint.y > this.noctilure.getY()
                 && !this.noctilure.level().isEmptyBlock(this.noctilure.blockPosition().above(1))) {
             this.height = Math.min(-1.0F, this.height);
             this.selectNext();

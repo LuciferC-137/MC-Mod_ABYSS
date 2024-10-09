@@ -6,13 +6,12 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.entity.custom.NoctilureEntity;
 
 public class NoctilureFlyingMoveControl extends MoveControl {
-    private float speed;
+    private float speed = 0.1f;
     private final NoctilureEntity noctilure;
 
-    public NoctilureFlyingMoveControl(NoctilureEntity mob, float speed) {
+    public NoctilureFlyingMoveControl(NoctilureEntity mob) {
         super(mob);
         this.noctilure = mob;
-        this.speed = speed;
     }
 
     public void tick() {
@@ -20,7 +19,6 @@ public class NoctilureFlyingMoveControl extends MoveControl {
             this.noctilure.setYRot(this.noctilure.getYRot() + 180.0F);
             this.speed = 0.1F;
         }
-
         double d0 = this.noctilure.moveTargetPoint.x - this.noctilure.getX();
         double d1 = this.noctilure.moveTargetPoint.y - this.noctilure.getY();
         double d2 = this.noctilure.moveTargetPoint.z - this.noctilure.getZ();
@@ -52,6 +50,5 @@ public class NoctilureFlyingMoveControl extends MoveControl {
             Vec3 vec3 = this.noctilure.getDeltaMovement();
             this.noctilure.setDeltaMovement(vec3.add((new Vec3(d6, d8, d7)).subtract(vec3).scale(0.2D)));
         }
-
     }
 }
