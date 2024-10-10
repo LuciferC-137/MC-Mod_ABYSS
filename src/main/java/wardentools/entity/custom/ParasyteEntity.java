@@ -42,7 +42,8 @@ public class ParasyteEntity extends Monster {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MAX_HEALTH, 8.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.25D)
-				.add(Attributes.ATTACK_DAMAGE, 1.0D);
+				.add(Attributes.ATTACK_DAMAGE, 1.0D)
+				.add(Attributes.FLYING_SPEED, 0.01D);
 	}
 
 	@Override

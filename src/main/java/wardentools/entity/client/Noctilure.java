@@ -231,6 +231,7 @@ public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
         animate(noctilure.standing, NoctilureAnimation.standing, ageInTicks);
         animate(noctilure.walking, NoctilureAnimation.walking, ageInTicks * speedFactor);
         animate(noctilure.flying, NoctilureAnimation.fly, ageInTicks);
+        animate(noctilure.landing, NoctilureAnimation.landing, ageInTicks);
 
 	}
 }

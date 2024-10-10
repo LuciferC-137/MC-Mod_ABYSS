@@ -5,7 +5,6 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.entity.custom.NoctilureEntity;
 
 public class TakeOffGoal extends Goal {
-    private static final double maxAscendSpeed = 2.;
     private final NoctilureEntity noctilure;
 
     public TakeOffGoal(NoctilureEntity noctilure){
@@ -15,37 +14,36 @@ public class TakeOffGoal extends Goal {
     @Override
     public void start() {
         System.out.println("Taking off...");
-        this.noctilure.setDeltaMovement(this.noctilure.getDeltaMovement().add(0, 0.5, 0));
     }
 
     @Override
     public boolean canUse() {
-        return this.noctilure.getIsFlying() && this.noctilure.getWantsToTakeOff();
+        return this.noctilure.getWantsToTakeOff();
     }
 
     @Override
     public void tick() {
-        if (this.noctilure.getDeltaMovement().y() < maxAscendSpeed) {
-            this.directionOverride();
+        this.directionOverride();
+        if (this.noctilure.getHeightAboveGround() >= this.noctilure.getTargetHeightOnTakeOff()) {
+            this.noctilure.setWantsToTakeOff(false);
         }
     }
 
     @Override
     public boolean canContinueToUse() {
-        return this.noctilure.getIsFlying()
-                && this.noctilure.getHeightAboveGround() < this.noctilure.getTargetHeightOnTakeOff();
+        return this.noctilure.getWantsToTakeOff();
     }
 
     private void directionOverride(){
         this.noctilure.setDeltaMovement(new Vec3(
                 this.noctilure.getDeltaMovement().x(),
-                0.5,
+                NoctilureEntity.FLYING_SPEED,
                 this.noctilure.getDeltaMovement().z()));
     }
 
     @Override
     public void stop() {
-        this.noctilure.setWantsToTakeOff(false);
+        this.noctilure.setDeltaMovement(Vec3.ZERO);
         super.stop();
         System.out.println("Take off complete.");
     }

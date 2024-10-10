@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.effect.ModEffects;
 
 public class SolidCorruptionBlock extends Block {
-    private static final int AVERAGE_FREEZE_DURATION = 10;
 
     public SolidCorruptionBlock(Properties properties) {
         super(properties);

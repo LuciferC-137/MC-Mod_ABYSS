@@ -1,6 +1,5 @@
 package wardentools.entity.utils.goal;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
@@ -8,7 +7,7 @@ import wardentools.entity.custom.NoctilureEntity;
 
 public class RandomFlyGoal extends Goal {
     private final NoctilureEntity noctilure;
-    private static final int minHeightInFly = 3;
+    private static final int minHeightInFly = 4;
     private float angle;
     private float distance;
     private float height;
@@ -21,65 +20,32 @@ public class RandomFlyGoal extends Goal {
     @Override
     public void start() {
         this.distance = 5.0F + this.noctilure.getRandom().nextFloat() * 10.0F;
-        this.height = this.noctilure.getTargetHeightOnTakeOff();
+        this.height = (float)this.noctilure.getY();
         this.clockwise = this.noctilure.getRandom().nextBoolean() ? 1.0F : -1.0F;
-        this.selectNext();
-    }
-
-    private void selectNext() {
-        if (BlockPos.ZERO.equals(this.noctilure.anchorPoint)) {
-            this.noctilure.anchorPoint = this.noctilure.blockPosition();
-        }
-        this.angle += this.clockwise * 15.0F * ((float)Math.PI / 180F);
-        this.noctilure.moveTargetPoint = Vec3.atLowerCornerOf(this.noctilure.anchorPoint)
-                .add((double)(this.distance * Mth.cos(this.angle)), (double)(this.height),
-                        (double)(this.distance * Mth.sin(this.angle)));
     }
 
     @Override
     public void tick() {
-        if (this.noctilure.getRandom().nextInt(this.adjustedTickDelay(350)) == 0) {
-            this.height = (this.noctilure.getRandom().nextFloat() - 0.5F ) * 3.0F;
-        }
-        if (this.noctilure.getRandom().nextInt(this.adjustedTickDelay(250)) == 0) {
-            ++this.distance;
-            if (this.distance > 15.0F) {
-                this.distance = 5.0F;
-                this.clockwise = -this.clockwise;
-            }
-        }
-        if (this.noctilure.getRandom().nextInt(this.adjustedTickDelay(450)) == 0) {
-            this.angle = this.noctilure.getRandom().nextFloat() * 2.0F * (float)Math.PI;
-            this.selectNext();
-        }
-        if (this.touchingTarget()) {
-            this.selectNext();
-        }
+        this.angle += this.clockwise * 0.1F;
+        double x = this.noctilure.getX() + this.distance * Mth.cos(this.angle);
+        double z = this.noctilure.getZ() + this.distance * Mth.sin(this.angle);
+        double y = this.height;
+        this.noctilure.setDeltaMovement(new Vec3(x - this.noctilure.getX(),
+                y - this.noctilure.getY(),
+                z - this.noctilure.getZ()).normalize().scale(0.1));
+        this.noctilure.setYRot((float)(Mth.atan2(z - this.noctilure.getZ(),
+                x - this.noctilure.getX()) * (180F / Math.PI)) - 90.0F);
+        this.noctilure.yBodyRot = this.noctilure.getYRot();
 
-        if (this.noctilure.getHeightAboveGround() < minHeightInFly) {
-            this.height = Math.max(this.height, 5.0F);
-            this.selectNext();
-        }
-
-        if (this.noctilure.moveTargetPoint.y < this.noctilure.getY()
-                && !this.noctilure.level().isEmptyBlock(this.noctilure.blockPosition().below(1))) {
-            this.height = Math.max(2.0F, this.height);
-            this.selectNext();
-        }
-        if (this.noctilure.moveTargetPoint.y > this.noctilure.getY()
-                && !this.noctilure.level().isEmptyBlock(this.noctilure.blockPosition().above(1))) {
-            this.height = Math.min(-1.0F, this.height);
-            this.selectNext();
-        }
-    }
-
-    protected boolean touchingTarget() {
-        return this.noctilure.moveTargetPoint.distanceToSqr(this.noctilure.getX(),
-                this.noctilure.getY(), this.noctilure.getZ()) < 4.0D;
     }
 
     @Override
     public boolean canUse() {
-        return noctilure.getIsFlying();
+        return noctilure.getIsFlying() && !this.noctilure.getWantsToTakeOff() && !this.noctilure.getWantsToLand();
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
     }
 }

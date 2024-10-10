@@ -41,8 +41,10 @@ import wardentools.entity.utils.goal.TakeOffGoal;
 import java.util.UUID;
 
 public class NoctilureEntity extends TamableAnimal implements NeutralMob {
+	public static final float FLYING_SPEED = 0.1f;
 	private static final int CHANCE_TO_LAND = 200;
 	private static final int CHANCE_TO_TAKE_OFF = 200;
+	private static final int LANDING_ANIMATION_DURATION = 30;
 	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> TARGETED_HEIGHT_ON_TAKE_OFF
@@ -53,14 +55,17 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> WANTS_TO_TAKE_OFF
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> landingTick
+			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
 	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 	public final AnimationState standing = new AnimationState();
 	public final AnimationState walking = new AnimationState();
 	public final AnimationState flying = new AnimationState();
+	public final AnimationState landing = new AnimationState();
 	protected PathNavigation flyingNavigation;
 	protected NoctilureFlyingMoveControl flyingMoveControl;
 	protected MoveControl groundMoveControl;
-	public Vec3 moveTargetPoint = Vec3.ZERO;
+	public Vec3 moveTargetPoint = null;
 	public BlockPos anchorPoint = BlockPos.ZERO;
 	@Nullable
 	private UUID persistentAngerTarget;
@@ -89,15 +94,19 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 20.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.2D)
-				.add(Attributes.ATTACK_DAMAGE, 1.0D);
+				.add(Attributes.ATTACK_DAMAGE, 1.0D)
+				.add(Attributes.FLYING_SPEED, 0.1D);
 	}
 
 	@Override
 	public void tick() {
 		if (this.level().isClientSide){
-			this.standing.animateWhen(!this.walkAnimation.isMoving() && !this.getIsFlying(), this.tickCount);
-			this.walking.animateWhen(this.walkAnimation.isMoving() && !this.getIsFlying(), this.tickCount);
+			this.standing.animateWhen(!this.walkAnimation.isMoving()
+					&& !this.getIsFlying() && this.getLandingTick() == 0, this.tickCount);
+			this.walking.animateWhen(this.walkAnimation.isMoving()
+					&& !this.getIsFlying() && this.getLandingTick() == 0, this.tickCount);
 			this.flying.animateWhen(this.getIsFlying(), this.tickCount);
+			this.landing.animateWhen(this.getLandingTick() > 0, this.tickCount);
 		} else { // If this logic is not handled on the server side, some animation de-synchronisation can happen
 			if (this.getIsFlying()){
 				// Landing at a random time if no other action is performed
@@ -117,6 +126,9 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 				}
 			}
 		}
+		if (this.getLandingTick() > 0) {
+			this.setLandingTick(this.getLandingTick() - 1);
+		}
 		super.tick();
 	}
 
@@ -131,6 +143,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 
 	public void land() {
 		// To call at the end of the landing
+		this.setLandingTick(LANDING_ANIMATION_DURATION);
 		this.setWantsToLand(false);
 		this.setIsFlying(false);
 		this.setNoGravity(false);
@@ -170,7 +183,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
 		System.out.println("Wants to Take Off: " + this.getWantsToTakeOff());
 		System.out.println("Wants to Land: " + this.getWantsToLand());
-		System.out.println("Height to Ground: " + this.getHeightAboveGround());
+		System.out.println("moveTarget: " + this.moveTargetPoint);
 		return InteractionResult.SUCCESS;
 	}
 
@@ -187,7 +200,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	public void travel(@NotNull Vec3 vec3) {
 		if (this.getIsFlying()){
 			this.flyingTravel(vec3);
-		} else{
+		} else {
 			super.travel(vec3);
 		}
 	}
@@ -230,6 +243,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		this.entityData.define(IS_FLYING, false);
 		this.entityData.define(WANTS_TO_LAND, false);
 		this.entityData.define(WANTS_TO_TAKE_OFF, false);
+		this.entityData.define(landingTick, 0);
 	}
 
 	@Override
@@ -239,6 +253,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		tag.putBoolean("is_flying", this.getIsFlying());
 		tag.putBoolean("wants_to_land", this.getWantsToLand());
 		tag.putBoolean("wants_to_take_off", this.getWantsToTakeOff());
+		tag.putInt("landing_tick", this.getLandingTick());
 	}
 
 	@Override
@@ -248,6 +263,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		this.setIsFlying(tag.getBoolean("is_flying"));
 		this.setWantsToLand(tag.getBoolean("wants_to_land"));
 		this.setWantsToTakeOff(tag.getBoolean("wants_to_take_off"));
+		this.setLandingTick(tag.getInt("landing_tick"));
 	}
 
 	public int getTargetHeightOnTakeOff() {return this.entityData.get(TARGETED_HEIGHT_ON_TAKE_OFF);}
@@ -265,6 +281,10 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	public boolean getWantsToTakeOff() {return this.entityData.get(WANTS_TO_TAKE_OFF);}
 
 	public void setWantsToTakeOff(boolean takeOff) {this.entityData.set(WANTS_TO_TAKE_OFF, takeOff);}
+
+	public int getLandingTick() {return this.entityData.get(landingTick);}
+
+	public void setLandingTick(int tick) {this.entityData.set(landingTick, tick);}
 
 	@Override
 	public int getRemainingPersistentAngerTime() {return this.entityData.get(DATA_REMAINING_ANGER_TIME);}
