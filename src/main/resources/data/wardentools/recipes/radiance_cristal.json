@@ -1,19 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "PPP",
-    "PEP",
-    "PPP"
+    " E ",
+    "EEE",
+    " E "
   ],
   "key": {
     "E": {
-      "item": "wardentools:white_seed"
-    },
-    "P": { 
       "item": "wardentools:radiance_fragment"
     }
   },
   "result": {
-    "item": "wardentools:radiant_core"
+    "item": "wardentools:radiance_cristal"
   }
 }

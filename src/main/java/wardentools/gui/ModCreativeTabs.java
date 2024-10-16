@@ -30,6 +30,7 @@ public class ModCreativeTabs {
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_BRICKS);
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_BRICKS_STAIRS);
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_BRICKS_SLAB);
+        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_BRICKS_WALL);
         addItemToTag("abyssalite", ItemRegistry.CRACKED_ABYSSALITE_BRICKS);
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_COAL_ORE);
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_LAPIS_ORE);
@@ -72,7 +73,7 @@ public class ModCreativeTabs {
         addItemToTag("darktree", ItemRegistry.DARKTREE_LOG);
         addItemToTag("darktree", ItemRegistry.DARKTREE_WOOD);
         addItemToTag("darktree", ItemRegistry.STRIPPED_DARKTREE_LOG);
-        addItemToTag("darktree", ItemRegistry.STRIPPED_WHITETREE_WOOD);
+        addItemToTag("darktree", ItemRegistry.STRIPPED_DARKTREE_WOOD);
         addItemToTag("darktree", ItemRegistry.DARKTREE_PLANKS);
         addItemToTag("darktree", ItemRegistry.DARKTREE_LEAVES);
         addItemToTag("darktree", ItemRegistry.DEEP_FRUIT);
@@ -97,7 +98,7 @@ public class ModCreativeTabs {
         addItemToTag("whitetree", ItemRegistry.WHITETREE_LOG);
         addItemToTag("whitetree", ItemRegistry.WHITETREE_WOOD);
         addItemToTag("whitetree", ItemRegistry.STRIPPED_WHITETREE_LOG);
-        addItemToTag("whitetree", ItemRegistry.STRIPPED_DARKTREE_WOOD);
+        addItemToTag("whitetree", ItemRegistry.STRIPPED_WHITETREE_WOOD);
         addItemToTag("whitetree", ItemRegistry.WHITETREE_LEAVES);
         addItemToTag("whitetree", ItemRegistry.WHITE_SEED);
         addItemToTag("whitetree", ItemRegistry.WHITETREE_SAPLING);

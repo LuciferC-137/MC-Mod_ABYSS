@@ -26,7 +26,7 @@ public class WindWhisper {
 		whispers_en.add("How long have you been sneaking in the dark ?");
 		whispers_en.add("Death is only another form of silence.");
 		whispers_en.add("You really became a good listener.");
-		whispers_en.add("How about jumping in the Void ?");
+		whispers_en.add("What about jumping in the Void ?");
 		whispers_en.add("There is no limits.");
 		whispers_en.add("You are free from the light here. Come and rest among the shadows.");
 		whispers_en.add("There used to be people here. Only I can remember.");
@@ -48,7 +48,7 @@ public class WindWhisper {
 		whispers_en.add("No hope. No light. Only infinite nothingness, watched by aimless wardens.");
 		whispers_en.add("I fly in the sky, I dive into caves, I hurl on the Void, and yet, you are more free than I will ever be.");
 		whispers_en.add("Do you think he could perform the reactivation ritual ?");
-		whispers_en.add("Their was all sort of cristals, each with its own energy. But we tried to harvest the power of the forbidden one.");
+		whispers_en.add("There was all sort of crystals, each with its own energy. But we tried to harvest the power of the forbidden one.");
 		whispers_en.add("Soon after the incident, the contagion begun to rise from the depths.");
 
 		whispers_fr.add("Tu es perdu ?");

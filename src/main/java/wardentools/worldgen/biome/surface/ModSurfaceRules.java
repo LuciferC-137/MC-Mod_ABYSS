@@ -42,13 +42,13 @@ public class ModSurfaceRules {
     		)
        );
        
-       // Default Gravestone underground
-       SurfaceRules.RuleSource gravestoneUnderground =
+       // Default Abyssalite underground
+       SurfaceRules.RuleSource abyssaliteUnderground =
 	       SurfaceRules.sequence(
 	    		   SurfaceRules.ifTrue(
 	    				   SurfaceRules.not(SurfaceRules.yStartCheck(VerticalAnchor.aboveBottom(56), 0)), GRAVESTONE),
 	    		   SurfaceRules.ifTrue(
-		    		   SurfaceRules.verticalGradient("wardentools:gravestone",
+		    		   SurfaceRules.verticalGradient("wardentools:abyssalite",
 		    				   VerticalAnchor.aboveBottom(56), VerticalAnchor.aboveBottom(64)),
 		    		   GRAVESTONE));
 
@@ -56,14 +56,14 @@ public class ModSurfaceRules {
         SurfaceRules.RuleSource abyssSurface = SurfaceRules.sequence(
         		bedrock_floor,
         		darkgrassSurface,
-        		gravestoneUnderground,
+        		abyssaliteUnderground,
         		DEEPSLATE
         		);
 
 		// Waste Land surface
 		SurfaceRules.RuleSource wasteLandSurface = SurfaceRules.sequence(
 				bedrock_floor,
-				gravestoneUnderground,
+				abyssaliteUnderground,
 				DEEPSLATE
 		);
 

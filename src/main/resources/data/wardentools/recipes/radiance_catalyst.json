@@ -1,19 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "PPP",
+    "GPG",
     "PEP",
-    "PPP"
+    "GPG"
   ],
   "key": {
     "E": {
-      "item": "wardentools:white_seed"
+      "item": "wardentools:radiant_core"
     },
-    "P": { 
-      "item": "wardentools:pale_fragment"
-    }
+    "P": {
+      "item": "minecraft:iron_ingot"
+    },
+	"G": {
+	  "item": "minecraft:glass"
+	}
   },
   "result": {
-    "item": "wardentools:radiant_core"
+    "item": "wardentools:radiance_catalyst"
   }
 }

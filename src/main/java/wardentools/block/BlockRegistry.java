@@ -95,32 +95,40 @@ public class BlockRegistry {
 	
 	public static final RegistryObject<Block> DARKTREE_STAIR = REGISTAR.register("darktree_stair",
             () -> new StairBlock(Blocks.OAK_STAIRS.defaultBlockState(),
-            		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)));
+            		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)
+							.lightLevel((state) -> LIGHT_DARK_TREE)));
 	
 	public static final RegistryObject<Block> DARKTREE_SLAB = REGISTAR.register("darktree_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)));
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)
+					.lightLevel((state) -> LIGHT_DARK_TREE)));
 	
 	public static final RegistryObject<Block> DARKTREE_BUTTON = REGISTAR.register("darktree_button",
             () -> new ButtonBlock(BlockSetType.OAK, 10,
             		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+							.lightLevel((state) -> LIGHT_DARK_TREE)
             		));
 	
 	public static final RegistryObject<Block> DARKTREE_PRESSURE_PLATE = REGISTAR.register("darktree_pressure_plate",
             () -> new PressurePlateBlock(BlockSetType.OAK,
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)
+							.lightLevel((state) -> LIGHT_DARK_TREE)));
 	
 	public static final RegistryObject<Block> DARKTREE_FENCE = REGISTAR.register("darktree_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)));
+            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)
+					.lightLevel((state) -> LIGHT_DARK_TREE)));
 	
 	public static final RegistryObject<Block> DARKTREE_FENCE_GATE = REGISTAR.register("darktree_fence_gate",
-            () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)));
+            () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)
+					.lightLevel((state) -> LIGHT_DARK_TREE)));
 	
 	public static final RegistryObject<Block> DARKTREE_DOOR = REGISTAR.register("darktree_door",
             () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)
+					.lightLevel((state) -> LIGHT_DARK_TREE)
             		.noOcclusion()));
 	
 	public static final RegistryObject<Block> DARKTREE_TRAPDOOR = REGISTAR.register("darktree_trapdoor",
             () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)
+					.lightLevel((state) -> LIGHT_DARK_TREE)
             		.noOcclusion()));
 	
  
@@ -150,7 +158,7 @@ public class BlockRegistry {
 					Optional.of(ModConfiguredFeatures.DARKTREE_KEY),
 					Optional.of(ModConfiguredFeatures.DARKTREE_KEY)),
 					BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
-					.lightLevel((state) -> 11)
+					.lightLevel((state) -> LIGHT_DARK_TREE)
 			));
 	
 	
@@ -221,7 +229,7 @@ public class BlockRegistry {
 	public static final RegistryObject<Block> WHITETREE_PLANKS = REGISTAR.register("whitetree_planks", 
 		    () -> new Block(BlockBehaviour.Properties
 		    		.ofFullCopy(Blocks.OAK_PLANKS)
-		    		.lightLevel((state) -> LIGHT_DARK_TREE)) {
+		    		.lightLevel((state) -> LIGHT_WHITE_TREE)) {
 		    	
 		    	@Override
 		    	public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
@@ -241,32 +249,41 @@ public class BlockRegistry {
 	
 	public static final RegistryObject<Block> WHITETREE_STAIR = REGISTAR.register("whitetree_stair",
             () -> new StairBlock(Blocks.OAK_STAIRS.defaultBlockState(),
-            		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)));
+            		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)
+							.lightLevel((state) -> LIGHT_WHITE_TREE)));
 	
 	public static final RegistryObject<Block> WHITETREE_SLAB = REGISTAR.register("whitetree_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)));
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)
+					.lightLevel((state) -> LIGHT_WHITE_TREE)));
 	
 	public static final RegistryObject<Block> WHITETREE_BUTTON = REGISTAR.register("whitetree_button",
             () -> new ButtonBlock(BlockSetType.OAK, 10,
             		BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+							.lightLevel((state) -> LIGHT_WHITE_TREE)
             		));
 	
 	public static final RegistryObject<Block> WHITETREE_PRESSURE_PLATE = REGISTAR.register("whitetree_pressure_plate",
             () -> new PressurePlateBlock(BlockSetType.OAK,
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.AMETHYST)));
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)
+							.lightLevel((state) -> LIGHT_WHITE_TREE)));
 	
 	public static final RegistryObject<Block> WHITETREE_FENCE = REGISTAR.register("whitetree_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)));
+            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)
+					.lightLevel((state) -> LIGHT_WHITE_TREE)));
 	
 	public static final RegistryObject<Block> WHITETREE_FENCE_GATE = REGISTAR.register("whitetree_fence_gate",
-            () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)));
+            () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)
+					.lightLevel((state) -> LIGHT_WHITE_TREE)));
 	
 	public static final RegistryObject<Block> WHITETREE_DOOR = REGISTAR.register("whitetree_door",
             () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)
+					.lightLevel((state) -> LIGHT_WHITE_TREE)
             		.noOcclusion()));
 	
 	public static final RegistryObject<Block> WHITETREE_TRAPDOOR = REGISTAR.register("whitetree_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)
+            () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties
+					.ofFullCopy(Blocks.OAK_TRAPDOOR)
+					.lightLevel((state) -> LIGHT_WHITE_TREE)
             		.noOcclusion()));
 	
 	public static final RegistryObject<Block> TALL_WHITE_GRASS = REGISTAR.register("tall_white_grass",
