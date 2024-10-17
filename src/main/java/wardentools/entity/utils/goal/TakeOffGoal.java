@@ -6,6 +6,7 @@ import wardentools.entity.custom.NoctilureEntity;
 
 public class TakeOffGoal extends Goal {
     private final NoctilureEntity noctilure;
+    private Vec3 targetOnTakeOff;
 
     public TakeOffGoal(NoctilureEntity noctilure){
         this.noctilure = noctilure;
@@ -13,7 +14,11 @@ public class TakeOffGoal extends Goal {
 
     @Override
     public void start() {
-        System.out.println("Taking off...");
+        targetOnTakeOff = new Vec3(this.noctilure.getX(),
+                this.noctilure.getTargetHeightOnTakeOff() + this.noctilure.getY(),
+                this.noctilure.getZ());
+        this.noctilure.getNavigation().moveTo(targetOnTakeOff.x, targetOnTakeOff.y,
+                targetOnTakeOff.z, NoctilureEntity.FLYING_SPEED);
     }
 
     @Override
@@ -23,9 +28,11 @@ public class TakeOffGoal extends Goal {
 
     @Override
     public void tick() {
-        this.directionOverride();
-        if (this.noctilure.getHeightAboveGround() >= this.noctilure.getTargetHeightOnTakeOff()) {
+        if (this.noctilure.getNavigation().isDone()){
             this.noctilure.setWantsToTakeOff(false);
+        }
+        if (this.targetOnTakeOff == null){ // Reset if the game has been reloaded
+            this.start();
         }
     }
 
@@ -34,17 +41,8 @@ public class TakeOffGoal extends Goal {
         return this.noctilure.getWantsToTakeOff();
     }
 
-    private void directionOverride(){
-        this.noctilure.setDeltaMovement(new Vec3(
-                this.noctilure.getDeltaMovement().x(),
-                NoctilureEntity.FLYING_SPEED,
-                this.noctilure.getDeltaMovement().z()));
-    }
-
     @Override
     public void stop() {
-        this.noctilure.setDeltaMovement(Vec3.ZERO);
         super.stop();
-        System.out.println("Take off complete.");
     }
 }

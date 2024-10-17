@@ -9,6 +9,7 @@ public class LandGoal extends Goal {
     private static final float heightToSuccessLanding = 2.5f;
     private static final int maxLandingRange = 100;
     private final NoctilureEntity noctilure;
+    private Vec3 targetOnLanding;
 
     public LandGoal(NoctilureEntity noctilure){
         this.noctilure = noctilure;
@@ -16,7 +17,6 @@ public class LandGoal extends Goal {
 
     @Override
     public void start() {
-        System.out.println("Beginning landing...");
         this.setLandingTargetOrCancel();
     }
 
@@ -28,25 +28,27 @@ public class LandGoal extends Goal {
     @Override
     public void tick() {
         if (this.noctilure.getHeightAboveGround() <= heightToSuccessLanding){
-            this.finalizeLanding();
+            this.noctilure.land();
+        }
+        if (this.targetOnLanding == null){ // Reset if the game has been reloaded
+            this.setLandingTargetOrCancel();
         }
     }
 
     private void setLandingTargetOrCancel() {
         BlockPos landingTarget = findValidGround();
         if (landingTarget != null) {
-            this.noctilure.moveTargetPoint = new Vec3(landingTarget.getX(),
-                    landingTarget.getY(), landingTarget.getZ());
-            System.out.println("landing point set to :" + landingTarget.toShortString());
+            this.targetOnLanding = landingTarget.getCenter().add(0, -0.5, 0);
+            if (!this.noctilure.getNavigation().moveTo(targetOnLanding.x, targetOnLanding.y,
+                    targetOnLanding.z, NoctilureEntity.FLYING_SPEED)){
+                this.noctilure.setWantsToLand(false);
+            }
         } else {
             this.noctilure.setWantsToLand(false);
-            System.out.println("No valid ground found, landing canceled.");
         }
     }
 
     private BlockPos findValidGround() {
-        int directionX = this.noctilure.getRandom().nextInt(-1, 1);
-        int directionZ = this.noctilure.getRandom().nextInt(-1, 1);
         BlockPos entityPos = this.noctilure.blockPosition();
         int i = 0;
         while (i<maxLandingRange
@@ -54,11 +56,6 @@ public class LandGoal extends Goal {
             i += 1;
         }
         return i == maxLandingRange ? null : entityPos.offset(0, -i, 0);
-    }
-
-    private void finalizeLanding() {
-        this.noctilure.land();
-        System.out.println("Landing complete.");
     }
 
     @Override
@@ -69,6 +66,5 @@ public class LandGoal extends Goal {
     @Override
     public void stop() {
         super.stop();
-        this.noctilure.moveTargetPoint = null;
     }
 }

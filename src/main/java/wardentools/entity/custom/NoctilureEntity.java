@@ -22,6 +22,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -41,7 +42,7 @@ import wardentools.entity.utils.goal.TakeOffGoal;
 import java.util.UUID;
 
 public class NoctilureEntity extends TamableAnimal implements NeutralMob {
-	public static final float FLYING_SPEED = 0.1f;
+	public static final float FLYING_SPEED = 0.2f;
 	private static final int CHANCE_TO_LAND = 200;
 	private static final int CHANCE_TO_TAKE_OFF = 200;
 	private static final int LANDING_ANIMATION_DURATION = 30;
@@ -62,17 +63,17 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	public final AnimationState walking = new AnimationState();
 	public final AnimationState flying = new AnimationState();
 	public final AnimationState landing = new AnimationState();
-	protected PathNavigation flyingNavigation;
+	protected CustomFlyingPathNavigation flyingNavigation;
+	protected PathNavigation groundNavigation;
 	protected NoctilureFlyingMoveControl flyingMoveControl;
 	protected MoveControl groundMoveControl;
-	public Vec3 moveTargetPoint = null;
-	public BlockPos anchorPoint = BlockPos.ZERO;
 	@Nullable
 	private UUID persistentAngerTarget;
 
 	public NoctilureEntity(EntityType<? extends TamableAnimal> entity, Level level) {
 		super(entity, level);
 		this.flyingNavigation = new CustomFlyingPathNavigation(this, level);
+		this.groundNavigation = new GroundPathNavigation(this, level);
 		this.flyingMoveControl = new NoctilureFlyingMoveControl(this);
 		this.groundMoveControl = new MoveControl(this);
 	}
@@ -137,7 +138,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		this.setWantsToTakeOff(true);
 		this.setIsFlying(true);
 		this.setNoGravity(true);
-		this.updateMoveControl();
+		this.updateMovementLogic();
 		this.setTargetedHeightOnTakeOff(this.getRandom().nextInt(10, 30));
 	}
 
@@ -147,7 +148,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		this.setWantsToLand(false);
 		this.setIsFlying(false);
 		this.setNoGravity(false);
-		this.updateMoveControl();
+		this.updateMovementLogic();
 	}
 
 	public double getHeightAboveGround() {
@@ -183,12 +184,20 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
 		System.out.println("Wants to Take Off: " + this.getWantsToTakeOff());
 		System.out.println("Wants to Land: " + this.getWantsToLand());
-		System.out.println("moveTarget: " + this.moveTargetPoint);
 		return InteractionResult.SUCCESS;
 	}
 
 	public void updateMoveControl() {
 		this.moveControl = this.getMoveControl();
+	}
+
+	public void updateNavigation() {
+		this.navigation = this.getNavigation();
+	}
+
+	public void updateMovementLogic() {
+		this.updateMoveControl();
+		this.updateNavigation();
 	}
 
     public static boolean canSpawn(EntityType<NoctilureEntity> entityType, ServerLevelAccessor level,

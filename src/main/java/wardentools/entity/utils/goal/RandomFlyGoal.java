@@ -7,11 +7,11 @@ import wardentools.entity.custom.NoctilureEntity;
 
 public class RandomFlyGoal extends Goal {
     private final NoctilureEntity noctilure;
-    private static final int minHeightInFly = 4;
     private float angle;
     private float distance;
     private float height;
     private float clockwise;
+    private float circleWidness;
 
     public RandomFlyGoal(NoctilureEntity noctilure){
         this.noctilure = noctilure;
@@ -19,14 +19,15 @@ public class RandomFlyGoal extends Goal {
 
     @Override
     public void start() {
-        this.distance = 5.0F + this.noctilure.getRandom().nextFloat() * 10.0F;
+        this.distance = 300.0F + this.noctilure.getRandom().nextFloat() * 100.0F;
         this.height = (float)this.noctilure.getY();
         this.clockwise = this.noctilure.getRandom().nextBoolean() ? 1.0F : -1.0F;
+        this.circleWidness =  0.01F + this.noctilure.getRandom().nextFloat() * 0.02F;
     }
 
     @Override
     public void tick() {
-        this.angle += this.clockwise * 0.1F;
+        this.angle += this.clockwise * this.circleWidness;
         double x = this.noctilure.getX() + this.distance * Mth.cos(this.angle);
         double z = this.noctilure.getZ() + this.distance * Mth.sin(this.angle);
         double y = this.height;

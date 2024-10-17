@@ -14,27 +14,17 @@ public class NoctilureFlyingMoveControl extends MoveControl {
         this.noctilure = mob;
     }
 
-    public void tick(){
-        if (this.noctilure.horizontalCollision) {
-            this.noctilure.setYRot(this.noctilure.getYRot() + 180.0F);
-        }
-        if (this.noctilure.moveTargetPoint != null) {
-            double dx = this.noctilure.moveTargetPoint.x - this.noctilure.getX();
-            double dy = this.noctilure.moveTargetPoint.y - this.noctilure.getY();
-            double dz = this.noctilure.moveTargetPoint.z - this.noctilure.getZ();
-            double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-            if (distance < this.noctilure.getBoundingBox().getSize()) {
-                this.noctilure.moveTargetPoint = null;
-            } else {
-                this.noctilure.setDeltaMovement(new Vec3(
-                        dx / distance * NoctilureEntity.FLYING_SPEED,
-                        dy / distance * NoctilureEntity.FLYING_SPEED,
-                        dz / distance * NoctilureEntity.FLYING_SPEED
-                ));
-                this.noctilure.setYRot((float)(Mth.atan2(dz, dx) * (180F / Math.PI)) - 90.0F);
-                this.noctilure.yBodyRot = this.noctilure.getYRot();
-            }
+    public void tick() {
+        if (this.hasWanted()) {
+            this.operation = MoveControl.Operation.WAIT;
+            double dx = this.getWantedX() - this.noctilure.getX();
+            double dy = this.getWantedY() - this.noctilure.getY();
+            double dz = this.getWantedZ() - this.noctilure.getZ();
+            this.noctilure.setDeltaMovement(new Vec3(dx, dy, dz)
+                    .normalize().scale(NoctilureEntity.FLYING_SPEED));
+            float newYRot = (float)(Mth.atan2(dz, dx) * (180F / Math.PI)) - 90.0F;
+            this.noctilure.yBodyRot = this.noctilure.getYRot();
+            this.noctilure.setYRot(this.rotlerp(this.noctilure.getYRot(), newYRot, 90.0F));
         }
     }
 }
