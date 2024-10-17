@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
@@ -486,4 +487,10 @@ public class BlockRegistry {
 			() -> new DysfunctionningCatalystBlock(BlockBehaviour.Properties
 					.ofFullCopy(BlockRegistry.RADIANCE_CATALYST.get())
 					.lightLevel((state) -> 3)));
+
+	public static final RegistryObject<Block> BLACK_LANTERN = REGISTAR.register("black_lantern",
+			() -> new BlackLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN)
+					.lightLevel((state) -> state.getValue(BlockStateProperties.LIT) ? 15 : 5)
+					.strength(3.5F, 10F)
+					.requiresCorrectToolForDrops().randomTicks()));
 }

@@ -60,7 +60,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.RUBY.get())
 			.add(BlockRegistry.MALACHITE_BLOCK.get())
 			.add(BlockRegistry.MALACHITE.get())
-			.add(BlockRegistry.SOLID_CORRUPTION.get());
+			.add(BlockRegistry.SOLID_CORRUPTION.get())
+			.add(BlockRegistry.BLACK_LANTERN.get());
 
 		this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
 			.add(BlockRegistry.ABYSSALITE.get());
@@ -91,8 +92,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.MALACHITE_BLOCK.get())
 			.add(BlockRegistry.MALACHITE.get())
 			.add(BlockRegistry.PALE_CRISTAL_BLOCK.get())
-			.add(BlockRegistry.PALE_CRISTAL.get());
-        
+			.add(BlockRegistry.PALE_CRISTAL.get())
+			.add(BlockRegistry.BLACK_LANTERN.get());
         
         this.tag(BlockTags.LOGS_THAT_BURN)
 	        .add(BlockRegistry.DARKTREE_LOG.get())

@@ -1,4 +1,4 @@
-// 1.20.4	2024-10-04T18:50:42.640377	Registries
+// 1.20.4	2024-10-17T19:36:22.4149185	Registries
 cd53d11755a53b3f0b2795a7bc6e8a1703b1bb16 data/wardentools/dimension/abyssdim.json
 78abca31c24b948721b9b9f97a002c98b1cb0365 data/wardentools/dimension_type/abyssdim_type.json
 70bcf9861d9406b332a394fe196d1517db826c0b data/wardentools/worldgen/biome/cristal_cave.json
@@ -33,7 +33,7 @@ bbe900267515dd644ff7227d7066fd1cb14e84e1 data/wardentools/worldgen/configured_fe
 9289acf39603d1e155e5b201ac654f3dd9656728 data/wardentools/worldgen/configured_feature/whitetree.json
 10d0732fd81c5467dd7ffb1c3c33410056a18688 data/wardentools/worldgen/configured_feature/white_grass.json
 1f7f36a8fc26302d20acc749097e3d90762afa8b data/wardentools/worldgen/configured_feature/white_torchflower.json
-a6d6511747bf6eccad5b4f24213479868ce44eb1 data/wardentools/worldgen/noise_settings/abyss_noise.json
+3ba507ef1772ada3fd2122c3d5d9285ac9faaaf0 data/wardentools/worldgen/noise_settings/abyss_noise.json
 4f37a01bd2f7b6c66e08136c7687ee0f95a74a73 data/wardentools/worldgen/placed_feature/amethyst_cristal_dw_key.json
 5940a0151eb28221bb72a688daa18e22c46fa9f0 data/wardentools/worldgen/placed_feature/amethyst_cristal_key.json
 27e8424f0ec561f9eaeafa47635e7631bcf01983 data/wardentools/worldgen/placed_feature/amethyst_vein.json

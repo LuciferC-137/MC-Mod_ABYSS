@@ -152,6 +152,8 @@ public class ModCreativeTabs {
         addItemToTag("sculk", Items.SCULK_SHRIEKER);
         addItemToTag("sculk", Items.SCULK_VEIN);
 
+        addItemToTag("building", ItemRegistry.BLACK_LANTERN);
+
         addAllItemsFromRegistry();
     }
 
@@ -172,6 +174,7 @@ public class ModCreativeTabs {
                         getItemsByTag("dirt").forEach(item -> event.accept(item.get()));
                         getItemsByTag("abyssalite").forEach(item -> event.accept(item.get()));
                         getItemsByTag("sculk").forEach(item -> event.accept(item.get()));
+                        getItemsByTag("building").forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> VEGETATION

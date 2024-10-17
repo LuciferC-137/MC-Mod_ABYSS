@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "wardentools:block/black_lantern_lit_top",
+    "side": "wardentools:block/black_lantern_lit",
+    "top": "wardentools:block/black_lantern_lit_top"
+  }
+}

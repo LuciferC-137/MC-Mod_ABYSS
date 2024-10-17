@@ -512,7 +512,7 @@
                         "false_at_and_above": {
                           "above_bottom": 64
                         },
-                        "random_name": "wardentools:gravestone",
+                        "random_name": "wardentools:abyssalite",
                         "true_at_and_below": {
                           "above_bottom": 56
                         }
@@ -598,7 +598,7 @@
                         "false_at_and_above": {
                           "above_bottom": 64
                         },
-                        "random_name": "wardentools:gravestone",
+                        "random_name": "wardentools:abyssalite",
                         "true_at_and_below": {
                           "above_bottom": 56
                         }
@@ -752,7 +752,7 @@
                         "false_at_and_above": {
                           "above_bottom": 64
                         },
-                        "random_name": "wardentools:gravestone",
+                        "random_name": "wardentools:abyssalite",
                         "true_at_and_below": {
                           "above_bottom": 56
                         }
@@ -906,7 +906,7 @@
                         "false_at_and_above": {
                           "above_bottom": 64
                         },
-                        "random_name": "wardentools:gravestone",
+                        "random_name": "wardentools:abyssalite",
                         "true_at_and_below": {
                           "above_bottom": 56
                         }

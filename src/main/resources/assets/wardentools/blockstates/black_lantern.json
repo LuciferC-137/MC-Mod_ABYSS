@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=true": {
+      "model": "wardentools:block/black_lantern_lit"
+    },
+    "lit=false": {
+      "model": "wardentools:block/black_lantern"
+    }
+  }
+}

@@ -507,4 +507,9 @@ public class ItemRegistry {
 			REGISTAR.register("dysfunctionning_catalyst",
 					() -> new BlockItem(BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),
 							new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
+
+	public static final RegistryObject<Item> BLACK_LANTERN =
+			REGISTAR.register("black_lantern",
+					() -> new BlockItem(BlockRegistry.BLACK_LANTERN.get(),
+							new Item.Properties().rarity(Rarity.UNCOMMON)));
 }
