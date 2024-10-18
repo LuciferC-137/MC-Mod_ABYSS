@@ -488,7 +488,8 @@ public class BlockRegistry {
 					.ofFullCopy(BlockRegistry.RADIANCE_CATALYST.get())
 					.lightLevel((state) -> 3)));
 
-	public static final RegistryObject<Block> BLACK_LANTERN = REGISTAR.register("black_lantern",
+	public static final RegistryObject<Block> BLACK_LANTERN
+			= REGISTAR.register("black_lantern",
 			() -> new BlackLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN)
 					.lightLevel((state) -> state.getValue(BlockStateProperties.LIT) ? 15 : 5)
 					.strength(3.5F, 10F)
