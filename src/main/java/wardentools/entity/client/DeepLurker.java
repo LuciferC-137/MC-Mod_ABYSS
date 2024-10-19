@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.DeepLurkerAnimation;
 import wardentools.entity.custom.DeepLurkerEntity;
@@ -68,14 +69,15 @@ public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
+                               int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.parts.FULL().render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
     private record ModelParts(ModelPart FULL,ModelPart LOW_BODY, ModelPart ARM_R, ModelPart foreArmR, ModelPart ARM_L, ModelPart foreArmL, ModelPart LegR, ModelPart LegL, ModelPart HEAD, ModelPart earL, ModelPart earR, ModelPart earR_r1, ModelPart body) {}
 
 	@Override
-	public ModelPart root() {
+	public @NotNull ModelPart root() {
 		return this.parts.FULL();
 	}
 	

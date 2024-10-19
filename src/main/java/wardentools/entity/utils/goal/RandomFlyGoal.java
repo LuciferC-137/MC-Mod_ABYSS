@@ -19,7 +19,7 @@ public class RandomFlyGoal extends Goal {
 
     @Override
     public void start() {
-        this.distance = 300.0F + this.noctilure.getRandom().nextFloat() * 100.0F;
+        this.distance = 100.0F + this.noctilure.getRandom().nextFloat() * 10.0F;
         this.height = (float)this.noctilure.getY();
         this.clockwise = this.noctilure.getRandom().nextBoolean() ? 1.0F : -1.0F;
         this.circleWidness =  0.01F + this.noctilure.getRandom().nextFloat() * 0.02F;
@@ -33,7 +33,8 @@ public class RandomFlyGoal extends Goal {
         double y = this.height;
         this.noctilure.setDeltaMovement(new Vec3(x - this.noctilure.getX(),
                 y - this.noctilure.getY(),
-                z - this.noctilure.getZ()).normalize().scale(0.1));
+                z - this.noctilure.getZ()).normalize()
+                .scale(NoctilureEntity.FLYING_SPEED * 0.8f));
         this.noctilure.setYRot((float)(Mth.atan2(z - this.noctilure.getZ(),
                 x - this.noctilure.getX()) * (180F / Math.PI)) - 90.0F);
         this.noctilure.yBodyRot = this.noctilure.getYRot();

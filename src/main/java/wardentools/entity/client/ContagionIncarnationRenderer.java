@@ -1,5 +1,6 @@
 package wardentools.entity.client;
 
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -26,13 +27,13 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(ContagionIncarnationEntity pEntity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull ContagionIncarnationEntity pEntity) {
 		return CONTAGION_INCARNATION_TEXTURE;
 	}
 	
 	@Override
 	public void render(ContagionIncarnationEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
-						MultiBufferSource pBuffer, int pPackedLight) {
+					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {
 
 		pMatrixStack.scale(2f, 2f, 2f);
 		int blockLight = (pPackedLight >> 4) & 0xF;
@@ -92,7 +93,7 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 	   }
 
 	   private static void vertex4(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
-		   consumer.vertex(matrix, 0.0F, f1, 1.0F * f2).color(0, 55, 70, 0).endVertex();
+		   consumer.vertex(matrix, 0.0F, f1, f2).color(0, 55, 70, 0).endVertex();
 	   }
 
 }

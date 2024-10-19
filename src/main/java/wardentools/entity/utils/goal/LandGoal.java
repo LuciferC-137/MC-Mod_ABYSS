@@ -6,7 +6,7 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.entity.custom.NoctilureEntity;
 
 public class LandGoal extends Goal {
-    private static final float heightToSuccessLanding = 2.5f;
+    private static final float heightToSuccessLanding = 3f;
     private static final int maxLandingRange = 100;
     private final NoctilureEntity noctilure;
     private Vec3 targetOnLanding;

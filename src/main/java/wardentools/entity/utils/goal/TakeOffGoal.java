@@ -1,5 +1,6 @@
 package wardentools.entity.utils.goal;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
 import wardentools.entity.custom.NoctilureEntity;
@@ -14,11 +15,7 @@ public class TakeOffGoal extends Goal {
 
     @Override
     public void start() {
-        targetOnTakeOff = new Vec3(this.noctilure.getX(),
-                this.noctilure.getTargetHeightOnTakeOff() + this.noctilure.getY(),
-                this.noctilure.getZ());
-        this.noctilure.getNavigation().moveTo(targetOnTakeOff.x, targetOnTakeOff.y,
-                targetOnTakeOff.z, NoctilureEntity.FLYING_SPEED);
+        this.setTakeOffTargetOrCancel();
     }
 
     @Override
@@ -34,6 +31,36 @@ public class TakeOffGoal extends Goal {
         if (this.targetOnTakeOff == null){ // Reset if the game has been reloaded
             this.start();
         }
+    }
+
+    private void setTakeOffTargetOrCancel() {
+        this.targetOnTakeOff = findValidTakeOffPosition();
+        if (this.targetOnTakeOff == null){
+            this.noctilure.setWantsToTakeOff(false);
+            return;
+        }
+        if (!this.noctilure.getNavigation().moveTo(targetOnTakeOff.x, targetOnTakeOff.y,
+                targetOnTakeOff.z, NoctilureEntity.FLYING_SPEED)){
+            this.noctilure.setWantsToTakeOff(false);
+        }
+    }
+
+    private Vec3 findValidTakeOffPosition() {
+        BlockPos entityPos = this.noctilure.blockPosition();
+        int maxRange = 10; // Define the range within which to find a valid position
+        int minRange = 5; // Define the minimum range to find a valid position
+        for (int dx = -maxRange; dx <= maxRange; dx++) {
+            for (int dz = -maxRange; dz <= maxRange; dz++) {
+                if (dx * dx + dz * dz < minRange * minRange) {
+                    BlockPos checkPos = entityPos.offset(dx, 0, dz);
+                    if (this.noctilure.level().getBlockState(checkPos).isAir()) {
+                        return new Vec3(checkPos.getX(), this.noctilure.getTargetHeightOnTakeOff()
+                                + this.noctilure.getY(), checkPos.getZ());
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     @Override

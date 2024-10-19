@@ -17,6 +17,8 @@ import wardentools.entity.custom.NoctilureEntity;
 public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
 			= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "noctilure"), "main");
+    private static final int WING_ANGLE_MAX_COUNT_ON_FALL = 50;
+    private int wingAngleCount = 0;
     private final ModelPart ROOT;
     private final ModelPart FULL;
 	private final ModelPart BODYWINGS;
@@ -227,11 +229,29 @@ public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
 						  float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
         double speed = noctilure.getDeltaMovement().horizontalDistance();
-        float speedFactor = Math.min(Mth.abs((float)speed) * 37f, 1.5f); // the factor 37f is empirical and depends on the max speed of the entity.
+        float speedFactor = Math.min(Mth.abs((float)speed) * 37f, 1.5f); // the factor 37f is empirical
         animate(noctilure.standing, NoctilureAnimation.standing, ageInTicks);
         animate(noctilure.walking, NoctilureAnimation.walking, ageInTicks * speedFactor);
         animate(noctilure.flying, NoctilureAnimation.fly, ageInTicks);
         animate(noctilure.landing, NoctilureAnimation.landing, ageInTicks);
+        animate(noctilure.idleFlying, NoctilureAnimation.idleFly, ageInTicks);
+        animate(noctilure.idleFlyToFly, NoctilureAnimation.idleFlyToFly, ageInTicks);
+        this.animateWingsOnFall(noctilure);
 
 	}
+
+    private void animateWingsOnFall(NoctilureEntity noctilure) {
+        if (!noctilure.getIsFlying() && noctilure.getDeltaMovement().y() < -0.1) {
+            System.out.println("Falling");
+            if (this.wingAngleCount < WING_ANGLE_MAX_COUNT_ON_FALL) {
+                this.wingAngleCount += 1;
+            }
+            this.WING_L.setRotation(this.WING_L.xRot,
+                    this.WING_L.yRot + this.wingAngleCount * (float)Math.PI / 180f, this.WING_L.zRot);
+            this.WING_R.setRotation(this.WING_R.xRot,
+                    this.WING_R.yRot - this.wingAngleCount * (float)Math.PI / 180f, this.WING_R.zRot);
+        } else {
+            this.wingAngleCount = 0;
+        }
+    }
 }
