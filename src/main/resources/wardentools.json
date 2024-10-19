@@ -3,6 +3,7 @@
   "package": "wardentools.mixin",
   "mixins": [
     "LevelRendererMixin",
-    "LogoRendererMixin"
+    "LogoRendererMixin",
+    "LocalPlayerMixin"
   ]
 }

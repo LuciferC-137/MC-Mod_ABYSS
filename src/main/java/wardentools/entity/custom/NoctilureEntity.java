@@ -1,12 +1,16 @@
 package wardentools.entity.custom;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -24,14 +28,18 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import wardentools.entity.ModEntities;
 import wardentools.entity.utils.CustomFlyingPathNavigation;
 import wardentools.entity.utils.NoctilureFlyingMoveControl;
@@ -41,7 +49,7 @@ import wardentools.entity.utils.goal.TakeOffGoal;
 
 import java.util.UUID;
 
-public class NoctilureEntity extends TamableAnimal implements NeutralMob {
+public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity {
 	public static final float FLYING_SPEED = 0.2f;
 	private static final int CHANCE_TO_LAND = 200;
 	private static final int CHANCE_TO_TAKE_OFF = 200;
@@ -67,10 +75,13 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 	protected PathNavigation groundNavigation;
 	protected NoctilureFlyingMoveControl flyingMoveControl;
 	protected MoveControl groundMoveControl;
+	protected float playerJumpPendingScale;
 	@Nullable
 	private UUID persistentAngerTarget;
+	@Nullable
+	private UUID owner;
 
-	public NoctilureEntity(EntityType<? extends TamableAnimal> entity, Level level) {
+	public NoctilureEntity(EntityType<? extends Animal> entity, Level level) {
 		super(entity, level);
 		this.flyingNavigation = new CustomFlyingPathNavigation(this, level);
 		this.groundNavigation = new GroundPathNavigation(this, level);
@@ -108,7 +119,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 					&& !this.getIsFlying() && this.getLandingTick() == 0, this.tickCount);
 			this.flying.animateWhen(this.getIsFlying(), this.tickCount);
 			this.landing.animateWhen(this.getLandingTick() > 0, this.tickCount);
-		} else { // If this logic is not handled on the server side, some animation de-synchronisation can happen
+		} else if (!this.isVehicle()) {
 			if (this.getIsFlying()){
 				// Landing at a random time if no other action is performed
 				if (!this.getWantsToLand() && !this.getWantsToTakeOff()
@@ -182,9 +193,21 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 
 	@Override
 	public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-		System.out.println("Wants to Take Off: " + this.getWantsToTakeOff());
-		System.out.println("Wants to Land: " + this.getWantsToLand());
-		return InteractionResult.SUCCESS;
+		if (!this.isVehicle()){
+			if (this.isTamed() && player.getUUID().equals(this.getOwnerUUID())){
+				if (!this.level().isClientSide){
+					player.startRiding(this);
+				}
+				return InteractionResult.SUCCESS;
+			}
+		}
+		if (!this.isTamed()){
+			if (!this.level().isClientSide){
+				this.setOwnerUUID(player.getUUID());
+			}
+			return InteractionResult.SUCCESS;
+		}
+		return InteractionResult.PASS;
 	}
 
 	public void updateMoveControl() {
@@ -206,39 +229,47 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
     }
 
 	@Override
-	public void travel(@NotNull Vec3 vec3) {
-		if (this.getIsFlying()){
-			this.flyingTravel(vec3);
+	public void travel(@NotNull Vec3 travelVector) {
+		if (this.isVehicle() && this.getControllingPassenger() instanceof Player player) {
+			this.setYRot(player.getYRot());
+			this.yRotO = this.getYRot();
+			this.setXRot(player.getXRot() * 0.5F);
+			this.setRot(this.getYRot(), this.getXRot());
+			this.yBodyRot = this.getYRot();
+			this.yHeadRot = this.yBodyRot;
+			if (this.getIsFlying() && Minecraft.getInstance().options.keyUp.isDown()){
+				this.flyingTravel(player.getViewVector(1f));
+			} else if (!this.getIsFlying()) {
+				float forward = player.zza;
+				float strafe = player.xxa;
+				this.moveRelative(0.1F, new Vec3(strafe, travelVector.y, forward));
+				this.move(MoverType.SELF, this.getDeltaMovement());
+				this.setDeltaMovement(this.getDeltaMovement().scale(0.91F));
+				super.travel(travelVector);
+			} else {
+				this.flyingTravel(travelVector);
+			}
+		} else if (this.getIsFlying()){
+			this.flyingTravel(travelVector);
 		} else {
-			super.travel(vec3);
+			super.travel(travelVector);
 		}
 	}
 
-	public void flyingTravel(Vec3 vec3) {
-		// Copied from FlyingMob
+	public void flyingTravel(Vec3 travelVector) {
 		if (this.isControlledByLocalInstance()) {
 			if (this.isInWater()) {
-				this.moveRelative(0.02F, vec3);
+				this.setDeltaMovement(travelVector);
 				this.move(MoverType.SELF, this.getDeltaMovement());
-				this.setDeltaMovement(this.getDeltaMovement().scale((double)0.8F));
+				this.setDeltaMovement(this.getDeltaMovement().scale(0.8D));
 			} else if (this.isInLava()) {
-				this.moveRelative(0.02F, vec3);
+				this.setDeltaMovement(travelVector);
 				this.move(MoverType.SELF, this.getDeltaMovement());
 				this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
 			} else {
-				BlockPos ground = getBlockPosBelowThatAffectsMyMovement();
-				float f = 0.91F;
-				if (this.onGround()) {
-					f = this.level().getBlockState(ground).getFriction(this.level(), ground, this) * 0.91F;
-				}
-				float f1 = 0.16277137F / (f * f * f);
-				f = 0.91F;
-				if (this.onGround()) {
-					f = this.level().getBlockState(ground).getFriction(this.level(), ground, this) * 0.91F;
-				}
-				this.moveRelative(this.onGround() ? 0.1F * f1 : 0.02F, vec3);
+				this.setDeltaMovement(travelVector);
 				this.move(MoverType.SELF, this.getDeltaMovement());
-				this.setDeltaMovement(this.getDeltaMovement().scale((double)f));
+				this.setDeltaMovement(this.getDeltaMovement().scale(0.8D));
 			}
 		}
 		this.calculateEntityAnimation(false);
@@ -263,6 +294,9 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		tag.putBoolean("wants_to_land", this.getWantsToLand());
 		tag.putBoolean("wants_to_take_off", this.getWantsToTakeOff());
 		tag.putInt("landing_tick", this.getLandingTick());
+		if (this.getOwnerUUID() != null){
+			tag.putUUID("owner", this.getOwnerUUID());
+		}
 	}
 
 	@Override
@@ -273,6 +307,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 		this.setWantsToLand(tag.getBoolean("wants_to_land"));
 		this.setWantsToTakeOff(tag.getBoolean("wants_to_take_off"));
 		this.setLandingTick(tag.getInt("landing_tick"));
+		if (tag.hasUUID("owner")){this.setOwnerUUID(tag.getUUID("owner"));}
 	}
 
 	public int getTargetHeightOnTakeOff() {return this.entityData.get(TARGETED_HEIGHT_ON_TAKE_OFF);}
@@ -358,5 +393,108 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob {
 
 	@Override
 	protected void checkFallDamage(double v, boolean b, @NotNull BlockState state, @NotNull BlockPos pos) {
+	}
+
+	@Override
+	public @Nullable UUID getOwnerUUID() {return this.owner;}
+
+	public void setOwnerUUID(@javax.annotation.Nullable UUID p_30587_) {
+		this.owner = p_30587_;
+	}
+
+	public boolean isTamed() {
+		return this.getOwnerUUID() != null;
+	}
+
+	public void onPlayerJump(Player player) {
+		if (this.getIsFlying()){
+			this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
+		} else {
+			this.takeOff();
+		}
+	}
+
+	@Override
+	public boolean isPushable() {
+		return !this.isVehicle();
+	}
+
+	@Override
+	protected void positionRider(@NotNull Entity rider, Entity.@NotNull MoveFunction moveFunction) {
+		super.positionRider(rider, moveFunction);
+		if (rider instanceof LivingEntity) {
+			((LivingEntity)rider).yBodyRot = this.yBodyRot;
+		}
+	}
+
+	@Override
+	@Nullable
+	public LivingEntity getControllingPassenger() {
+		Entity entity = this.getFirstPassenger();
+		if (entity instanceof Player) {return (Player)entity;}
+		return super.getControllingPassenger();
+	}
+
+	@Nullable
+	private Vec3 getDismountLocationInDirection(Vec3 pos, LivingEntity passenger) {
+		double d0 = this.getX() + pos.x;
+		double d1 = this.getBoundingBox().minY;
+		double d2 = this.getZ() + pos.z;
+		BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+
+		for(Pose pose : passenger.getDismountPoses()) {
+			blockpos$mutableblockpos.set(d0, d1, d2);
+			double d3 = this.getBoundingBox().maxY + 0.75D;
+
+			while(true) {
+				double d4 = this.level().getBlockFloorHeight(blockpos$mutableblockpos);
+				if ((double)blockpos$mutableblockpos.getY() + d4 > d3) {
+					break;
+				}
+				if (DismountHelper.isBlockFloorValid(d4)) {
+					AABB aabb = passenger.getLocalBoundsForPose(pose);
+					Vec3 vec3 = new Vec3(d0, (double)blockpos$mutableblockpos.getY() + d4, d2);
+					if (DismountHelper.canDismountTo(this.level(), passenger, aabb.move(vec3))) {
+						passenger.setPose(pose);
+						return vec3;
+					}
+				}
+				blockpos$mutableblockpos.move(Direction.UP);
+				if (!((double)blockpos$mutableblockpos.getY() < d3)) {
+					break;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public @NotNull Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
+		Vec3 vec3 = getCollisionHorizontalEscapeVector((double)this.getBbWidth(),
+				(double)passenger.getBbWidth(),
+				this.getYRot() + (passenger.getMainArm() == HumanoidArm.RIGHT ? 90.0F : -90.0F));
+		Vec3 vec31 = this.getDismountLocationInDirection(vec3, passenger);
+		if (vec31 != null) {
+			return vec31;
+		} else {
+			Vec3 vec32 = getCollisionHorizontalEscapeVector((double)this.getBbWidth(),
+					(double)passenger.getBbWidth(),
+					this.getYRot() + (passenger.getMainArm() == HumanoidArm.LEFT ? 90.0F : -90.0F));
+			Vec3 vec33 = this.getDismountLocationInDirection(vec32, passenger);
+			return vec33 != null ? vec33 : this.position();
+		}
+	}
+
+	@Override
+	protected @NotNull Vector3f getPassengerAttachmentPoint(@NotNull Entity passenger,
+															@NotNull EntityDimensions dimensions,
+															float offset) {
+		return new Vector3f(0.0F,
+				this.getPassengersRidingOffsetY(dimensions, offset) + 0.15F  * offset,
+				-0.7F * offset);
+	}
+
+	protected float getPassengersRidingOffsetY(EntityDimensions dimensions, float offset) {
+		return dimensions.height + (this.isBaby() ? 0.125F : -0.15625F) * offset;
 	}
 }
