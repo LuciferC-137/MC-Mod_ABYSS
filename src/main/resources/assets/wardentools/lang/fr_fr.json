@@ -40,6 +40,8 @@
 	"item.wardentools.whitetree_boat": "Bateau en blancharbre",
 	"item.wardentools.whitetree_chest_boat": "Bateau avec coffre en blancharbre",
 	"item.wardentools.noctilure_spawn_egg": "Oeuf d'apparition de Noctilure",
+	"item.wardentools.blue_glow_berries": "Baies Luisantes bleues",
+	"item.wardentools.noctilure_treat": "Friandise de Noctilure",
 
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -121,8 +123,9 @@
 	"entity.wardentools.contagion_incarnation": "Incarnation de la Contagion",
 	"entity.wardentools.darktree_boat": "Bateau en sombrarbre",
 	"entity.wardentools.darktree_chest_boat": "Bateau avec coffre en sombrarbre",
-	"creativetab.abyss_tab": "Abyss",
 	"entity.wardentools.temper": "Temper",
+	"entity.wardentools.parasyte": "Parasyte",
+	"entity.wardentools.noctilure": "Noctilure",
 
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",
@@ -131,6 +134,10 @@
 	"creativetab.crystals": "Cristals",
 	"creativetab.misc": "Divers",
 	"creativetab.egg": "Oeufs",
+	"creativetab.darktree": "Sombrabre",
+	"creativetab.whitetree": "Blancharbre",
+	"creativetab.abyss_tab": "Abyss",
+
 
 	"gui.wardentools.radiance_catalyst_screen": "Cataliseur de Radiance",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "matière corrompue",

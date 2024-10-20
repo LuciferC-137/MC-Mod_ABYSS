@@ -72,10 +72,10 @@
         "type": "wardentools:deeplurker",
         "maxCount": 4,
         "minCount": 1,
-        "weight": 100
+        "weight": 10
       },
       {
-        "type": "minecraft:allay",
+        "type": "wardentools:noctilure",
         "maxCount": 1,
         "minCount": 1,
         "weight": 1

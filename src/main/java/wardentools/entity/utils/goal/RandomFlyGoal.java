@@ -27,6 +27,16 @@ public class RandomFlyGoal extends Goal {
 
     @Override
     public void tick() {
+        if (this.noctilure.horizontalCollision) {
+            this.noctilure.setYRot(this.noctilure.getYRot() + 180.0F);
+            this.noctilure.yBodyRot = this.noctilure.getYRot();
+            this.noctilure.setDeltaMovement(this.noctilure.getDeltaMovement()
+                    .add(0.0D, 0.5D, 0.0D));
+            this.clockwise = -this.clockwise;
+        }
+        if (this.noctilure.getRandom().nextInt(1000) == 0) {
+            this.start();
+        }
         this.angle += this.clockwise * this.circleWidness;
         double x = this.noctilure.getX() + this.distance * Mth.cos(this.angle);
         double z = this.noctilure.getZ() + this.distance * Mth.sin(this.angle);

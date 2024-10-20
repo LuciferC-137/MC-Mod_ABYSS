@@ -6,6 +6,8 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.entity.custom.NoctilureEntity;
 
 public class TakeOffGoal extends Goal {
+    private static final int maxTickCount = 2000;
+    private int tickCount = 0;
     private final NoctilureEntity noctilure;
     private Vec3 targetOnTakeOff;
 
@@ -15,6 +17,7 @@ public class TakeOffGoal extends Goal {
 
     @Override
     public void start() {
+        this.tickCount = 0;
         this.setTakeOffTargetOrCancel();
     }
 
@@ -25,6 +28,7 @@ public class TakeOffGoal extends Goal {
 
     @Override
     public void tick() {
+        this.tickCount += 1;
         if (this.noctilure.getNavigation().isDone()){
             this.noctilure.setWantsToTakeOff(false);
         }
@@ -65,11 +69,12 @@ public class TakeOffGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return this.noctilure.getWantsToTakeOff();
+        return this.noctilure.getWantsToTakeOff() && this.tickCount < maxTickCount;
     }
 
     @Override
     public void stop() {
+        this.tickCount = 0;
         super.stop();
     }
 }

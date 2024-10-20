@@ -95,7 +95,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.add(BlockRegistry.WHITE_GRASS.get(),
     			block -> createShearsOnlyDrop(BlockRegistry.WHITE_GRASS.get()));
     	this.add(BlockRegistry.BLUE_BUSH.get(),
-    			block -> createShearsOnlyDrop(BlockRegistry.BLUE_BUSH.get()));
+			block -> createShearsOnlyDrop(BlockRegistry.BLUE_BUSH.get())
+				.withPool(LootPool.lootPool()
+					.setRolls(ConstantValue.exactly(1))
+					.add(LootItem.lootTableItem(ItemRegistry.BLUE_GLOW_BERRIES.get())
+						.when(LootItemRandomChanceCondition.randomChance(0.2f)))));
     	this.add(BlockRegistry.DEEPFLOWER.get(),
                 block -> createDoubleBlockSingleItemDrop(ItemRegistry.DEEPFLOWER));
     	this.add(BlockRegistry.TALL_DARK_GRASS.get(),

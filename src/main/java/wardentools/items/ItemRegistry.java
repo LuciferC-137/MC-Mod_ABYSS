@@ -12,7 +12,8 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ModBoatEntity;
-import wardentools.entity.custom.ModChestBoatEntity;
+
+import java.rmi.registry.Registry;
 
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
@@ -512,4 +513,13 @@ public class ItemRegistry {
 			REGISTAR.register("black_lantern",
 					() -> new BlockItem(BlockRegistry.BLACK_LANTERN.get(),
 							new Item.Properties().rarity(Rarity.UNCOMMON)));
+
+	public static final RegistryObject<Item> BLUE_GLOW_BERRIES =
+			REGISTAR.register("blue_glow_berries",
+					() -> new Item(new Item.Properties()
+							.food(ModFoods.GLOW_BERRY_PROPERTIES)));
+
+	public static final RegistryObject<Item> NOCTILURE_TREAT =
+			REGISTAR.register("noctilure_treat",
+					() -> new Item(new Item.Properties()));
 }

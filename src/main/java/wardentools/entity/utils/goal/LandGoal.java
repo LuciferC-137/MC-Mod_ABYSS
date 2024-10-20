@@ -6,6 +6,8 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.entity.custom.NoctilureEntity;
 
 public class LandGoal extends Goal {
+    private int tickCount = 0;
+    private static final int maxTickCount = 2000;
     private static final float heightToSuccessLanding = 3f;
     private static final int maxLandingRange = 100;
     private final NoctilureEntity noctilure;
@@ -17,6 +19,7 @@ public class LandGoal extends Goal {
 
     @Override
     public void start() {
+        this.tickCount = 0;
         this.setLandingTargetOrCancel();
     }
 
@@ -27,6 +30,7 @@ public class LandGoal extends Goal {
 
     @Override
     public void tick() {
+        this.tickCount += 1;
         if (this.noctilure.getHeightAboveGround() <= heightToSuccessLanding){
             this.noctilure.land();
         }
@@ -60,11 +64,12 @@ public class LandGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return this.noctilure.getWantsToLand();
+        return this.noctilure.getWantsToLand() && this.tickCount < maxTickCount;
     }
 
     @Override
     public void stop() {
+        this.tickCount = 0;
         super.stop();
     }
 }

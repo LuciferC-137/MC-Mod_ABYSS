@@ -88,9 +88,9 @@ public class Noctilure<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r3 = FOREWING_R.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(31, 23).addBox(-16.0F, -0.5F, -0.5F, 16.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, -0.25F, 0.0F, 0.5236F, 0.0F));
 
-		PartDefinition cube_r4 = FOREWING_R.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(39, 80).addBox(-16.0F, 0.0F, -0.5F, 15.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, -0.25F, 0.75F, -0.0175F, 0.5236F, 0.0F));
+		PartDefinition cube_r4 = FOREWING_R.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(26, 18).addBox(-16.0F, 0.0F, -0.5F, 15.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.25F, 0.75F, 0.0175F, 0.5236F, 0.0F));
 
-		PartDefinition cube_r5 = FOREWING_R.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(26, 18).addBox(-16.0F, 0.0F, -0.5F, 15.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.25F, 0.75F, 0.0175F, 0.5236F, 0.0F));
+		PartDefinition cube_r5 = FOREWING_R.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(39, 80).addBox(-16.0F, 0.0F, -0.5F, 15.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, -0.25F, 0.75F, -0.0175F, 0.5236F, 0.0F));
 
 		PartDefinition ENDFEATHERS_R = FOREWING_R.addOrReplaceChild("ENDFEATHERS_R", CubeListBuilder.create(), PartPose.offset(-12.0F, 0.0F, 9.25F));
 

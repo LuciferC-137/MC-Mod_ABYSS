@@ -94,6 +94,8 @@ public class ModCreativeTabs {
         addItemToTag("dark_vegetal", ItemRegistry.DEEPFLOWER);
         addItemToTag("dark_vegetal", ItemRegistry.TALL_DARK_GRASS);
         addItemToTag("dark_vegetal", ItemRegistry.DARK_GRASS);
+        addItemToTag("dark_vegetal", ItemRegistry.BLUE_GLOW_BERRIES);
+        addItemToTag("dark_vegetal", ItemRegistry.NOCTILURE_TREAT);
 
         addItemToTag("whitetree", ItemRegistry.WHITETREE_LOG);
         addItemToTag("whitetree", ItemRegistry.WHITETREE_WOOD);
@@ -160,7 +162,7 @@ public class ModCreativeTabs {
     // Creating the tabs here
     public static final RegistryObject<CreativeModeTab> ALL
             = CREATIVE_MODE_TABS.register("all",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DEEPCRISTAL.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DARKGRASS_BLOCK.get()))
                     .title(Component.translatable("creativetab.all"))
                     .displayItems((pParameters, event) -> {
                         ALL_ITEMS.forEach(item -> event.accept(item.get()));
@@ -168,7 +170,7 @@ public class ModCreativeTabs {
 
     public static final RegistryObject<CreativeModeTab> BLOCKS
             = CREATIVE_MODE_TABS.register("blocks",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DARKGRASS_BLOCK.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.ABYSSALITE.get()))
                     .title(Component.translatable("creativetab.blocks"))
                     .displayItems((pParameters, event) -> {
                         getItemsByTag("dirt").forEach(item -> event.accept(item.get()));
@@ -179,13 +181,27 @@ public class ModCreativeTabs {
 
     public static final RegistryObject<CreativeModeTab> VEGETATION
             = CREATIVE_MODE_TABS.register("vegetation",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DARKTREE_SAPLING.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.BLUE_GLOW_BERRIES.get()))
                     .title(Component.translatable("creativetab.vegetation"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("whitetree").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("darktree").forEach(item -> event.accept(item.get()));
                         getItemsByTag("dark_vegetal").forEach(item -> event.accept(item.get()));
                         getItemsByTag("white_vegetal").forEach(item -> event.accept(item.get()));
+                    }).build());
+
+    public static final RegistryObject<CreativeModeTab> DARKTREE
+            = CREATIVE_MODE_TABS.register("darktree",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DARKTREE_LOG.get()))
+                    .title(Component.translatable("creativetab.darktree"))
+                    .displayItems((pParameters, event) -> {
+                        getItemsByTag("darktree").forEach(item -> event.accept(item.get()));
+                    }).build());
+
+    public static final RegistryObject<CreativeModeTab> WHITETREE
+            = CREATIVE_MODE_TABS.register("whitetree",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.WHITETREE_LOG.get()))
+                    .title(Component.translatable("creativetab.whitetree"))
+                    .displayItems((pParameters, event) -> {
+                        getItemsByTag("whitetree").forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> TOOLS
@@ -246,13 +262,9 @@ public class ModCreativeTabs {
                 try {
                     @SuppressWarnings("unchecked")
                     RegistryObject<Item> registryObject = (RegistryObject<Item>) field.get(null);
-                    if (registryObject.isPresent()) {
-                        addItemToAll(registryObject);
-                    } else {
-                        System.out.println("RegistryObject not present for: " + field.getName());
-                    }
+                    addItemToAll(registryObject);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    System.out.println("Error while adding all items to creative tabs");
                 }
             }
         }

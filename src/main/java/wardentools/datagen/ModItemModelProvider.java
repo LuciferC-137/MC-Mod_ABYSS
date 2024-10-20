@@ -23,7 +23,8 @@ import wardentools.items.ItemRegistry;
 import java.util.LinkedHashMap;
 
 public class ModItemModelProvider extends ItemModelProvider {
-    private static LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials = new LinkedHashMap<>();
+    private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials
+            = new LinkedHashMap<>();
     static {
         trimMaterials.put(TrimMaterials.QUARTZ, 0.1F);
         trimMaterials.put(TrimMaterials.IRON, 0.2F);
@@ -78,6 +79,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.MALACHITE_FRAGMENT);
         simpleItem(ItemRegistry.PALE_SHARD);
         simpleItem(ItemRegistry.RADIANCE_INGOTS);
+        simpleItem(ItemRegistry.BLUE_GLOW_BERRIES);
+        simpleItem(ItemRegistry.NOCTILURE_TREAT);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);

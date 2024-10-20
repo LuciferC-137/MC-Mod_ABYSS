@@ -56,9 +56,10 @@ public class ModEntities {
 					() -> EntityType.Builder.of(ParasyteEntity::new, MobCategory.MONSTER)
 					.sized(0.4f, 0.3f)
 					.build(new ResourceLocation(ModMain.MOD_ID, "parasyte").toString()));
+
 	public static final RegistryObject<EntityType<NoctilureEntity>> NOCTILURE =
 			ENTITY_TYPES.register("noctilure",
-					() -> EntityType.Builder.of(NoctilureEntity::new, MobCategory.MISC)
+					() -> EntityType.Builder.of(NoctilureEntity::new, MobCategory.CREATURE)
 							.sized(2f, 1f)
 							.build(new ResourceLocation(ModMain.MOD_ID, "noctilure").toString()));
 	

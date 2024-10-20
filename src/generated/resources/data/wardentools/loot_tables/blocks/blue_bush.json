@@ -20,6 +20,22 @@
         }
       ],
       "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "chance": 0.2,
+              "condition": "minecraft:random_chance"
+            }
+          ],
+          "name": "wardentools:blue_glow_berries"
+        }
+      ],
+      "rolls": 1.0
     }
   ],
   "random_sequence": "wardentools:blocks/blue_bush"

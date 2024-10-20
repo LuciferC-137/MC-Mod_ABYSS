@@ -41,10 +41,12 @@ public class ModBiomes {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 100, 1, 4));
+        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(),
+                        10, 1, 4));
         // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
+                new MobSpawnSettings.SpawnerData(ModEntities.NOCTILURE.get(),
+                        1, 1, 1));
         spawnBuilder.creatureGenerationProbability(0.2F);
 
         BiomeGenerationSettings.Builder biomeBuilder =
@@ -75,10 +77,12 @@ public class ModBiomes {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(), 5, 1, 4));
+        		new MobSpawnSettings.SpawnerData(ModEntities.DEEPLURKER.get(),
+                        1, 1, 4));
         // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
+                new MobSpawnSettings.SpawnerData(ModEntities.NOCTILURE.get(),
+                        5, 1, 1));
         spawnBuilder.creatureGenerationProbability(0.1F);
 
         BiomeGenerationSettings.Builder biomeBuilder =
@@ -107,9 +111,14 @@ public class ModBiomes {
         
         // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY, 1, 1, 1));
+        		new MobSpawnSettings.SpawnerData(EntityType.ALLAY,
+                        10, 1, 1));
         spawnBuilder.addSpawn(MobCategory.CREATURE,
-        		new MobSpawnSettings.SpawnerData(ModEntities.PALE_WANDERER.get(), 4, 1, 1));
+        		new MobSpawnSettings.SpawnerData(ModEntities.PALE_WANDERER.get(),
+                        40, 1, 1));
+        spawnBuilder.addSpawn(MobCategory.CREATURE,
+                new MobSpawnSettings.SpawnerData(ModEntities.NOCTILURE.get(),
+                        1, 1, 1));
         spawnBuilder.creatureGenerationProbability(0.3F);
 
         BiomeGenerationSettings.Builder biomeBuilder =

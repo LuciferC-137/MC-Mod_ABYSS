@@ -40,6 +40,8 @@
 	"item.wardentools.whitetree_boat": "Whitetree Boat",
 	"item.wardentools.whitetree_chest_boat": "Whitetree Chest Boat",
 	"item.wardentools.noctilure_spawn_egg": "Noctilure spawn egg",
+	"item.wardentools.blue_glow_berries": "Blue Glow Berries",
+	"item.wardentools.noctilure_treat": "Noctilure Treat",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
@@ -122,6 +124,8 @@
 	"entity.wardentools.darktree_boat": "Darktree Boat",
 	"entity.wardentools.darktree_chest_boat": "Darktree Chest Boat",
 	"entity.wardentools.temper": "Temper",
+	"entity.wardentools.parasyte": "Parasyte",
+	"entity.wardentools.noctilure": "Noctilure",
 	
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",
@@ -130,6 +134,8 @@
 	"creativetab.crystals": "Crystals",
 	"creativetab.misc": "Miscellaneous",
 	"creativetab.egg": "Eggs",
+	"creativetab.darktree": "Darktree",
+	"creativetab.whitetree": "Whitetree",
 
 	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "Corrupted material",

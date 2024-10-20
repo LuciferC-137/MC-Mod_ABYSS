@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -20,14 +21,11 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.level.Level;
@@ -45,15 +43,19 @@ import wardentools.entity.utils.NoctilureFlyingMoveControl;
 import wardentools.entity.utils.goal.LandGoal;
 import wardentools.entity.utils.goal.RandomFlyGoal;
 import wardentools.entity.utils.goal.TakeOffGoal;
+import wardentools.items.ItemRegistry;
 
+import java.util.Optional;
 import java.util.UUID;
 
-public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity {
+public class NoctilureEntity extends TamableAnimal implements NeutralMob, OwnableEntity {
 	public static final float FLYING_SPEED = 0.2f;
 	private static final int CHANCE_TO_LAND = 200;
 	private static final int CHANCE_TO_TAKE_OFF = 200;
 	private static final int LANDING_ANIMATION_DURATION = 30;
 	private static final int IDLE_FLY_TO_FLY_DURATION = 15;
+	private static final float FLYING_INERTIA = 0.8f;
+	public static final int MAX_SPRINT_ENERGY = 2000; // In tenth of a tick
 	private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> TARGETED_HEIGHT_ON_TAKE_OFF
@@ -70,6 +72,12 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> idleFlyToFlyTick
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> flightSprinting
+			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> sprintEnergy
+			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Optional<UUID>> OWNER_UUID
+			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 	public final AnimationState standing = new AnimationState();
 	public final AnimationState walking = new AnimationState();
@@ -81,12 +89,12 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 	protected PathNavigation groundNavigation;
 	protected NoctilureFlyingMoveControl flyingMoveControl;
 	protected MoveControl groundMoveControl;
+	private Vec3 previousMovement = Vec3.ZERO;
+	private boolean energyWasZero = false;
 	@Nullable
 	private UUID persistentAngerTarget;
-	@Nullable
-	private UUID owner;
 
-	public NoctilureEntity(EntityType<? extends Animal> entity, Level level) {
+	public NoctilureEntity(EntityType<? extends TamableAnimal> entity, Level level) {
 		super(entity, level);
 		this.flyingNavigation = new CustomFlyingPathNavigation(this, level);
 		this.groundNavigation = new GroundPathNavigation(this, level);
@@ -101,17 +109,24 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 		this.goalSelector.addGoal(3, new LandGoal(this));
 		this.goalSelector.addGoal(4, new TakeOffGoal(this));
 		this.goalSelector.addGoal(5, new RandomFlyGoal(this));
-		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
+			@Override
+			public boolean canUse() {
+				return !NoctilureEntity.this.getIsFlying() && super.canUse();
+			}
+		});
+		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 4f));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+		this.targetSelector.addGoal(2, new OwnerHurtByTargetGoal(this));
 	}
 
 	public static AttributeSupplier.Builder createAttribute(){
 		return Mob.createMobAttributes()
 				.add(Attributes.MAX_HEALTH, 30.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.2D)
-				.add(Attributes.ATTACK_DAMAGE, 1.0D)
+				.add(Attributes.ATTACK_DAMAGE, 2.0D)
 				.add(Attributes.FLYING_SPEED, 0.1D);
 	}
 
@@ -170,8 +185,38 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 					this.land();
 				}
 			}
+			if (this.getIsFlying()) {
+				if (Minecraft.getInstance().options.keySprint.isDown()) {
+					if (Minecraft.getInstance().options.keyUp.isDown()) this.lowerEnergy(10);
+					if (this.energyWasZero) this.setFlightSprinting(this.getSprintEnergy() > 10);
+					else this.setFlightSprinting(this.getSprintEnergy() > 0);
+				} else {
+					this.setFlightSprinting(false);
+				}
+				if (this.getSprintEnergy() < MAX_SPRINT_ENERGY) {
+					if (!Minecraft.getInstance().options.keyUp.isDown()) {
+						increaseEnergy(2);
+					} else if (!Minecraft.getInstance().options.keySprint.isDown()) {
+						increaseEnergy(1);
+					}
+				}
+			} else if (this.getSprintEnergy() < MAX_SPRINT_ENERGY) {
+				increaseEnergy(20);
+			}
 		}
 		super.tick();
+	}
+
+	public void increaseEnergy(int energy) {
+		int newEnergy = Math.min(this.getSprintEnergy() + energy, MAX_SPRINT_ENERGY);
+		this.setSprintEnergy(newEnergy);
+		if (this.getSprintEnergy() >= 10) this.energyWasZero = false;
+	}
+
+	public void lowerEnergy(int energy) {
+		int newEnergy = Math.max(this.getSprintEnergy() - energy, 0);
+		this.setSprintEnergy(newEnergy);
+		if (this.getSprintEnergy() <= 0) this.energyWasZero = true;
 	}
 
 	public void takeOff() {
@@ -232,13 +277,23 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 				return InteractionResult.SUCCESS;
 			}
 		}
-		if (!this.isTamed()){
-			if (!this.level().isClientSide){
-				this.setOwnerUUID(player.getUUID());
-			}
+		if (!this.isTamed() && player.getItemInHand(InteractionHand.MAIN_HAND)
+				.is(ItemRegistry.NOCTILURE_TREAT.get())){
+			this.tryToTame(player);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.PASS;
+	}
+
+	public void tryToTame(Player player) {
+		player.getItemInHand(InteractionHand.MAIN_HAND).shrink(1);
+		if (!this.level().isClientSide) {
+			if (this.level().random.nextInt(0, 4) == 0) {
+				this.tame(player);
+				this.setOwnerUUID(player.getUUID());
+			}
+		}
+		this.spawnTamingParticles(this.isTamed());
 	}
 
 	public void updateMoveControl() {
@@ -256,7 +311,7 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 
     public static boolean canSpawn(EntityType<NoctilureEntity> entityType, ServerLevelAccessor level,
                                    MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		return level.getBlockState(pos).isAir();
+		return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
     }
 
 	@Override
@@ -269,7 +324,8 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 			this.yBodyRot = this.getYRot();
 			this.yHeadRot = this.yBodyRot;
 			if (this.getIsFlying() && Minecraft.getInstance().options.keyUp.isDown()){
-				this.flyingTravel(player.getViewVector(1f));
+				this.flyingTravel(player.getViewVector(1f).scale(
+						this.getFlightSprinting() ? 1.1f : 0.5f));
 			} else if (!this.getIsFlying()) {
 				float forward = player.zza;
 				float strafe = player.xxa;
@@ -289,19 +345,18 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 
 	public void flyingTravel(Vec3 travelVector) {
 		if (this.isControlledByLocalInstance() && this.isVehicle()) {
-			if (this.isInWater()) {
-				this.setDeltaMovement(travelVector);
-				this.move(MoverType.SELF, this.getDeltaMovement());
-				this.setDeltaMovement(this.getDeltaMovement().scale(0.8D));
-			} else if (this.isInLava()) {
-				this.setDeltaMovement(travelVector);
-				this.move(MoverType.SELF, this.getDeltaMovement());
-				this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
+			double scale;
+			if (this.isInWater()){
+				scale = 0.3D;
 			} else {
-				this.setDeltaMovement(travelVector);
-				this.move(MoverType.SELF, this.getDeltaMovement());
-				this.setDeltaMovement(this.getDeltaMovement().scale(0.8D));
+				scale = this.isInLava() ? 0.1D : 0.8D;
 			}
+			Vec3 desiredMovement = travelVector.scale(1f - FLYING_INERTIA)
+					.add(this.previousMovement.scale(FLYING_INERTIA));
+			this.previousMovement = desiredMovement;
+			this.setDeltaMovement(desiredMovement);
+			this.move(MoverType.SELF, this.getDeltaMovement());
+			this.setDeltaMovement(this.getDeltaMovement().scale(scale));
 		} else {
 			this.flyingAutoTravel(travelVector);
 		}
@@ -348,6 +403,9 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 		this.entityData.define(landingTick, 0);
 		this.entityData.define(idleFlyToFlyTick, 0);
 		this.entityData.define(was_idle_flying, false);
+		this.entityData.define(flightSprinting, false);
+		this.entityData.define(sprintEnergy, MAX_SPRINT_ENERGY);
+		this.entityData.define(OWNER_UUID, Optional.empty());
 	}
 
 	@Override
@@ -359,6 +417,7 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 		tag.putBoolean("wants_to_take_off", this.getWantsToTakeOff());
 		tag.putInt("landing_tick", this.getLandingTick());
 		tag.putBoolean("was_idle_flying", this.getWasIdleFlying());
+		tag.putInt("sprint_energy", this.getSprintEnergy());
 		if (this.getOwnerUUID() != null){
 			tag.putUUID("owner", this.getOwnerUUID());
 		}
@@ -373,6 +432,7 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 		this.setWantsToTakeOff(tag.getBoolean("wants_to_take_off"));
 		this.setLandingTick(tag.getInt("landing_tick"));
 		this.setWasIdleFlying(tag.getBoolean("was_idle_flying"));
+		this.setSprintEnergy(tag.getInt("sprint_energy"));
 		if (tag.hasUUID("owner")){this.setOwnerUUID(tag.getUUID("owner"));}
 	}
 
@@ -404,6 +464,14 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 
 	public void setWasIdleFlying(boolean wasIdleFlying) {this.entityData.set(was_idle_flying, wasIdleFlying);}
 
+	public boolean getFlightSprinting() {return this.entityData.get(flightSprinting);}
+
+	public void setFlightSprinting(boolean sprinting) {this.entityData.set(flightSprinting, sprinting);}
+
+	public int getSprintEnergy() {return this.entityData.get(sprintEnergy);}
+
+	public void setSprintEnergy(int energy) {this.entityData.set(sprintEnergy, energy);}
+
 	@Override
 	public int getRemainingPersistentAngerTime() {return this.entityData.get(DATA_REMAINING_ANGER_TIME);}
 
@@ -418,7 +486,7 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 	}
 
 	@Override
-	public void setPersistentAngerTarget(@javax.annotation.Nullable UUID uuid) {
+	public void setPersistentAngerTarget(@Nullable UUID uuid) {
 		this.persistentAngerTarget = uuid;
 	}
 
@@ -470,10 +538,13 @@ public class NoctilureEntity extends Animal implements NeutralMob, OwnableEntity
 	}
 
 	@Override
-	public @Nullable UUID getOwnerUUID() {return this.owner;}
+	public @Nullable UUID getOwnerUUID() {
+		if (this.entityData.get(OWNER_UUID).isPresent()) return this.entityData.get(OWNER_UUID).get();
+		else return null;
+	}
 
-	public void setOwnerUUID(@javax.annotation.Nullable UUID p_30587_) {
-		this.owner = p_30587_;
+	public void setOwnerUUID(@Nullable UUID uuid) {
+		this.entityData.set(OWNER_UUID, Optional.ofNullable(uuid));
 	}
 
 	public boolean isTamed() {

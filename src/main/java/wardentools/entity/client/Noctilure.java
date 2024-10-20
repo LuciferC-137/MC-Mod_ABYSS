@@ -91,8 +91,8 @@ public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
         PartDefinition cube_r2 = WING_R.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, 0.0F, -1.0F, 22.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-21.0F, 0.25F, 0.0F, 0.0175F, 0.0F, 0.0F));
         PartDefinition FOREWING_R = WING_R.addOrReplaceChild("FOREWING_R", CubeListBuilder.create(), PartPose.offset(-21.5F, 0.0F, -0.25F));
         PartDefinition cube_r3 = FOREWING_R.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(31, 23).addBox(-16.0F, -0.5F, -0.5F, 16.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.0F, -0.25F, 0.0F, 0.5236F, 0.0F));
-        PartDefinition cube_r4 = FOREWING_R.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(39, 80).addBox(-16.0F, 0.0F, -0.5F, 15.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, -0.25F, 0.75F, -0.0175F, 0.5236F, 0.0F));
-        PartDefinition cube_r5 = FOREWING_R.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(26, 18).addBox(-16.0F, 0.0F, -0.5F, 15.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.25F, 0.75F, 0.0175F, 0.5236F, 0.0F));
+        PartDefinition cube_r4 = FOREWING_R.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(26, 18).addBox(-16.0F, 0.0F, -0.5F, 15.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, 0.25F, 0.75F, 0.0175F, 0.5236F, 0.0F));
+        PartDefinition cube_r5 = FOREWING_R.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(39, 80).addBox(-16.0F, 0.0F, -0.5F, 15.0F, 0.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.5F, -0.25F, 0.75F, -0.0175F, 0.5236F, 0.0F));
         PartDefinition ENDFEATHERS_R = FOREWING_R.addOrReplaceChild("ENDFEATHERS_R", CubeListBuilder.create(), PartPose.offset(-12.0F, 0.0F, 9.25F));
         PartDefinition cube_r6 = ENDFEATHERS_R.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(4, 56).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 0.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.0F, 0.0F, 0.0F, 0.0F, -0.9599F, 0.0F));
         PartDefinition cube_r7 = ENDFEATHERS_R.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(45, 47).addBox(-0.5F, 0.0F, -1.0F, 1.0F, 0.0F, 9.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.0F, 0.0F, 0.0F, 0.0F, -0.7418F, 0.0F));
@@ -232,17 +232,18 @@ public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
         float speedFactor = Math.min(Mth.abs((float)speed) * 37f, 1.5f); // the factor 37f is empirical
         animate(noctilure.standing, NoctilureAnimation.standing, ageInTicks);
         animate(noctilure.walking, NoctilureAnimation.walking, ageInTicks * speedFactor);
-        animate(noctilure.flying, NoctilureAnimation.fly, ageInTicks);
+        animate(noctilure.flying, NoctilureAnimation.fly, ageInTicks
+                * (noctilure.getFlightSprinting() ? 3f : 1f) );
         animate(noctilure.landing, NoctilureAnimation.landing, ageInTicks);
         animate(noctilure.idleFlying, NoctilureAnimation.idleFly, ageInTicks);
         animate(noctilure.idleFlyToFly, NoctilureAnimation.idleFlyToFly, ageInTicks);
         this.animateWingsOnFall(noctilure);
+        this.animateNeckToLookAt(netHeadYaw, headPitch);
 
 	}
 
     private void animateWingsOnFall(NoctilureEntity noctilure) {
         if (!noctilure.getIsFlying() && noctilure.getDeltaMovement().y() < -0.1) {
-            System.out.println("Falling");
             if (this.wingAngleCount < WING_ANGLE_MAX_COUNT_ON_FALL) {
                 this.wingAngleCount += 1;
             }
@@ -253,5 +254,14 @@ public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
         } else {
             this.wingAngleCount = 0;
         }
+    }
+
+    private void animateNeckToLookAt(float yaw, float pitch) {
+        this.NECK_1.xRot = this.NECK_1.xRot + pitch * ((float) Math.PI / 180F) / 3f;
+        this.NECK_1.yRot = this.NECK_1.yRot + yaw * ((float) Math.PI / 180F) / 3f;
+        this.NECK_2.xRot = this.NECK_2.xRot + pitch * ((float) Math.PI / 180F) / 3f;
+        this.NECK_2.yRot = this.NECK_2.yRot + yaw * ((float) Math.PI / 180F) / 3f;
+        this.HEAD.xRot = this.HEAD.xRot + pitch * ((float) Math.PI / 180F) / 3f;
+        this.HEAD.yRot = this.HEAD.yRot + yaw * ((float) Math.PI / 180F) / 3f;
     }
 }

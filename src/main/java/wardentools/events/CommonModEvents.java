@@ -72,7 +72,7 @@ public class CommonModEvents {
 				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.NOCTILURE.get(),
 				SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.WORLD_SURFACE_WG,
+				Heightmap.Types.WORLD_SURFACE,
 				NoctilureEntity::canSpawn,
 				SpawnPlacementRegisterEvent.Operation.OR);
     }
