@@ -36,6 +36,7 @@ public class CommonModEvents {
 		event.put(ModEntities.TEMPER.get(), TemperEntity.createAttribute().build());
 		event.put(ModEntities.PARASYTE.get(), ParasyteEntity.createAttribute().build());
 		event.put(ModEntities.NOCTILURE.get(), NoctilureEntity.createAttribute().build());
+		event.put(ModEntities.SHADOW.get(), ShadowEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
@@ -74,6 +75,11 @@ public class CommonModEvents {
 				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.WORLD_SURFACE,
 				NoctilureEntity::canSpawn,
+				SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.SHADOW.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING,
+				ShadowEntity::canSpawn,
 				SpawnPlacementRegisterEvent.Operation.OR);
     }
 
