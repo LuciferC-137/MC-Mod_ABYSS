@@ -13,8 +13,6 @@ import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ModBoatEntity;
 
-import java.rmi.registry.Registry;
-
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
 	
@@ -522,4 +520,19 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> NOCTILURE_TREAT =
 			REGISTAR.register("noctilure_treat",
 					() -> new Item(new Item.Properties()));
+
+	public static final RegistryObject<Item> CRACKED_ABYSSALITE_BRICKS_SLAB =
+			REGISTAR.register("cracked_abyssalite_bricks_slab",
+					() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get(),
+							new Item.Properties()));
+
+	public static final RegistryObject<Item> CRACKED_ABYSSALITE_BRICKS_STAIR =
+			REGISTAR.register("cracked_abyssalite_bricks_stair",
+					() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.get(),
+							new Item.Properties()));
+
+	public static final RegistryObject<Item> CRACKED_ABYSSALITE_BRICKS_WALL =
+			REGISTAR.register("cracked_abyssalite_bricks_wall",
+					() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get(),
+							new Item.Properties()));
 }

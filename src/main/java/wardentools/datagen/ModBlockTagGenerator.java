@@ -7,6 +7,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 
@@ -21,7 +22,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider pProvider) {
+    protected void addTags(HolderLookup.@NotNull Provider pProvider) {
 		this.tag(ModTags.Blocks.CRISTAL_BLOCK)
 			.add(BlockRegistry.ECHO_BLOCK.get())
 			.add(BlockRegistry.PALE_CRISTAL_BLOCK.get())
@@ -61,7 +62,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.MALACHITE_BLOCK.get())
 			.add(BlockRegistry.MALACHITE.get())
 			.add(BlockRegistry.SOLID_CORRUPTION.get())
-			.add(BlockRegistry.BLACK_LANTERN.get());
+			.add(BlockRegistry.BLACK_LANTERN.get())
+			.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get())
+			.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.get())
+			.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get());
 
 		this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
 			.add(BlockRegistry.ABYSSALITE.get());
@@ -122,7 +126,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.WHITETREE_FENCE_GATE.get());
 		
 		this.tag(BlockTags.WALLS)
-			.add(BlockRegistry.ABYSSALITE_BRICKS_WALL.get());
+			.add(BlockRegistry.ABYSSALITE_BRICKS_WALL.get())
+			.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get());
 		
 		this.tag(BlockTags.ANIMALS_SPAWNABLE_ON)
 			.add(BlockRegistry.DARKGRASS_BLOCK.get())

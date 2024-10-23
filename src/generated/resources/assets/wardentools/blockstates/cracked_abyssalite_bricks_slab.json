@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "wardentools:block/cracked_abyssalite_bricks_slab"
+    },
+    "type=double": {
+      "model": "wardentools:block/cracked_abyssalite_bricks"
+    },
+    "type=top": {
+      "model": "wardentools:block/cracked_abyssalite_bricks_slab_top"
+    }
+  }
+}

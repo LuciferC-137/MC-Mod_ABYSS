@@ -19,6 +19,9 @@
     "wardentools:malachite_block",
     "wardentools:malachite",
     "wardentools:solid_corruption",
-    "wardentools:black_lantern"
+    "wardentools:black_lantern",
+    "wardentools:cracked_abyssalite_bricks_slab",
+    "wardentools:cracked_abyssalite_bricks_stair",
+    "wardentools:cracked_abyssalite_bricks_wall"
   ]
 }

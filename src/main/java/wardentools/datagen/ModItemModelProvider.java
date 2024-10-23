@@ -150,6 +150,10 @@ public class ModItemModelProvider extends ItemModelProvider {
                 new ResourceLocation(ModMain.MOD_ID, "block/dysfunctionning_catalyst"));
         withExistingParent(BlockRegistry.BLACK_LANTERN.getId().getPath(),
                 new ResourceLocation(ModMain.MOD_ID, "block/black_lantern"));
+        withExistingParent(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.getId().getPath(),
+                new ResourceLocation(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_stair"));
+        withExistingParent(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.getId().getPath(),
+                new ResourceLocation(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_slab"));
 
         //Blocks that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);
@@ -159,6 +163,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         buttonItem(BlockRegistry.WHITETREE_BUTTON, BlockRegistry.WHITETREE_PLANKS);
         trapdoorItem(BlockRegistry.WHITETREE_TRAPDOOR);
         wallItem(BlockRegistry.ABYSSALITE_BRICKS_WALL, BlockRegistry.ABYSSALITE_BRICKS);
+        wallItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL, BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
         
     }
     

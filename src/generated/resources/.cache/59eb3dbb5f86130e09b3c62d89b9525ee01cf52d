@@ -1,4 +1,4 @@
-// 1.20.4	2024-10-20T14:59:41.4347335	Loot Tables
+// 1.20.4	2024-10-23T13:27:38.4256902	Loot Tables
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_tables/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_tables/blocks/abyssalite_bricks.json
 31280d85caa9e63972007b215cf991cffc5c8b82 data/wardentools/loot_tables/blocks/abyssalite_bricks_slab.json
@@ -13,6 +13,9 @@ cea7718d32e8dcdf196612b9d2cfd47148e4b6c5 data/wardentools/loot_tables/blocks/blu
 a5fe808bd30e20d796123dcb9ee5ade4750fb538 data/wardentools/loot_tables/blocks/chiseled_abyssalite.json
 2282072c79e53600a7c0f4cdadb5241a83491926 data/wardentools/loot_tables/blocks/citrine_block.json
 a0dfa254fe37c45cbc839db6194952a4ccfc2d9c data/wardentools/loot_tables/blocks/cracked_abyssalite_bricks.json
+2e3cc96b63a4702c3ba37a4ddfb649e715cc5972 data/wardentools/loot_tables/blocks/cracked_abyssalite_bricks_slab.json
+47f5a52a4e43cb1ce358fb30a98c018c8efdf4ca data/wardentools/loot_tables/blocks/cracked_abyssalite_bricks_stair.json
+12d43bc509ad1c375d4631a7398d3511c80eda94 data/wardentools/loot_tables/blocks/cracked_abyssalite_bricks_wall.json
 cd3afcd604acda173c23bfbfc1381b05dbe7bb16 data/wardentools/loot_tables/blocks/darkdirt.json
 389f559700304e07f380d250e3ab3cfbf609406b data/wardentools/loot_tables/blocks/darkgrass_block.json
 05a6e49c435dc40acf7731ef3d51fa13f66df208 data/wardentools/loot_tables/blocks/darktree_button.json

@@ -110,6 +110,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
         		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
         wallBlock(((WallBlock)BlockRegistry.ABYSSALITE_BRICKS_WALL.get()),
         		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
+        stairsBlock(((StairBlock)BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.get()),
+        		blockTexture(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get()));
+        slabBlock(((SlabBlock)BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get()),
+        		blockTexture(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get()),
+        		blockTexture(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get()));
+        wallBlock(((WallBlock)BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get()),
+                blockTexture(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get()));
         
     }
 

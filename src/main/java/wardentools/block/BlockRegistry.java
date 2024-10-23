@@ -494,4 +494,19 @@ public class BlockRegistry {
 					.lightLevel((state) -> state.getValue(BlockStateProperties.LIT) ? 15 : 5)
 					.strength(3.5F, 10F)
 					.requiresCorrectToolForDrops().randomTicks()));
+
+	public static final RegistryObject<Block> CRACKED_ABYSSALITE_BRICKS_STAIR
+			= REGISTAR.register("cracked_abyssalite_bricks_stair",
+			() -> new StairBlock(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get().defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_STAIRS).strength(4,7)));
+
+	public static final RegistryObject<Block> CRACKED_ABYSSALITE_BRICKS_SLAB
+			= REGISTAR.register("cracked_abyssalite_bricks_slab",
+			() -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_SLAB)
+					.strength(4,7)));
+
+	public static final RegistryObject<Block> CRACKED_ABYSSALITE_BRICKS_WALL
+			= REGISTAR.register("cracked_abyssalite_bricks_wall",
+			() -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_WALL)
+					.strength(4,7)));
 }

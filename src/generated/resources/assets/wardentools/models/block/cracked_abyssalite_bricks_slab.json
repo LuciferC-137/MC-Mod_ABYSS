@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "wardentools:block/cracked_abyssalite_bricks",
+    "side": "wardentools:block/cracked_abyssalite_bricks",
+    "top": "wardentools:block/cracked_abyssalite_bricks"
+  }
+}
