@@ -50,7 +50,6 @@ public class Shadow extends HierarchicalModel<ShadowEntity> {
 		return LayerDefinition.create(meshdefinition, 64, 64);
 	}
 
-
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
 							   int packedLight, int packedOverlay,
@@ -72,8 +71,16 @@ public class Shadow extends HierarchicalModel<ShadowEntity> {
 	public void setupAnim(@NotNull ShadowEntity entity, float limbSwing,
 						  float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		if (entity.getRenderToBufferFunction() != null) {
-			this.renderToBufferFunction = entity.getRenderToBufferFunction();
+		if (entity.getSetUpAnimFunction() != null){
+			entity.getSetUpAnimFunction().setupAnim(entity.getDeadEntity(), limbSwing, limbSwingAmount,
+					ageInTicks, netHeadYaw, headPitch);
 		}
+		this.renderToBufferFunction = entity.getRenderToBufferFunction(); // Synced the renderer with the entity
+	}
+
+	@Override
+	public void prepareMobModel(@NotNull ShadowEntity shadow, float p_102615_,
+								float p_102616_, float p_102617_) {
+		super.prepareMobModel(shadow, p_102615_, p_102616_, p_102617_);
 	}
 }

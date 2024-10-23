@@ -31,6 +31,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.utils.RenderToBufferFunction;
+import wardentools.entity.utils.SetUpAnimFunction;
+import wardentools.entity.utils.getBobFunction;
+
+import java.lang.reflect.Method;
 
 public class ShadowEntity extends Monster {
 	private static final EntityDataAccessor<Integer> DEAD_ENTITY_ID
@@ -86,6 +90,44 @@ public class ShadowEntity extends Monster {
 				.getRenderer(this.deadEntity);
 		if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
 			return livingRenderer.getModel()::renderToBuffer;
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends LivingEntity> SetUpAnimFunction<T> getSetUpAnimFunction() {
+		if (this.deadEntity == null) return null;
+		T deadEntityCasted = (T) this.deadEntity;
+		EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
+				.getRenderer(deadEntityCasted);
+		if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+			return ((LivingEntityRenderer<T, ?>)livingRenderer).getModel()::setupAnim;
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends LivingEntity> getBobFunction<T> getGetBobFunction() {
+		if (this.deadEntity == null) return null;
+		T deadEntityCasted = (T) this.deadEntity;
+		EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
+				.getRenderer(deadEntityCasted);
+		if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+			try {
+				Method getBobMethod = LivingEntityRenderer.class
+						.getDeclaredMethod("getBob", LivingEntity.class, float.class);
+				getBobMethod.setAccessible(true);
+				return (getBobFunction<T>) (entity, partialTicks) -> {
+					try {
+						return (float) getBobMethod.invoke(livingRenderer, entity, partialTicks);
+					} catch (Exception e) {
+						System.out.println("Error invoking getBob method");
+						return 0.0f;
+					}
+				};
+			} catch (NoSuchMethodException e) {
+				System.out.println("Error invoking getBob method: NoSuchMethodException");
+			}
 		}
 		return null;
 	}
