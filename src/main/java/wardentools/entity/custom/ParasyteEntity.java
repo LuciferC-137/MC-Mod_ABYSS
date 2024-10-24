@@ -19,8 +19,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import wardentools.entity.interfaces.CorruptionMonster;
 
-public class ParasyteEntity extends Monster {
+public class ParasyteEntity extends CorruptionMonster {
 	public final AnimationState idleAnimation = new AnimationState();
 
 	public ParasyteEntity(EntityType<? extends Monster> entity, Level level) {

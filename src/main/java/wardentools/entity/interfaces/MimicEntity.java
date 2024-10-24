@@ -20,7 +20,7 @@ import wardentools.entity.utils.getBobFunction;
 
 import java.lang.reflect.Method;
 
-public class MimicEntity extends Monster {
+public class MimicEntity extends CorruptionMonster {
     private LivingEntity mimicEntity = null;
     private static final EntityDataAccessor<Integer> MIMIC_ENTITY_ID
             = SynchedEntityData.defineId(MimicEntity.class, EntityDataSerializers.INT);
@@ -128,7 +128,7 @@ public class MimicEntity extends Monster {
                 getBobMethod.setAccessible(true);
                 return (getBobFunction<T>) (entity, partialTicks) -> {
                     try {
-                        return (float) getBobMethod.invoke(livingRenderer, entity, partialTicks);
+                        return (float)getBobMethod.invoke(livingRenderer, entity, partialTicks);
                     } catch (Exception e) {
                         System.out.println("Error invoking getBob method");
                         return 0.0f;
@@ -156,7 +156,7 @@ public class MimicEntity extends Monster {
                     try {
                         scaleMethod.invoke(livingRenderer, entity, poseStack, v);
                     } catch (Exception e) {
-                        System.out.println("Error invoking scale method method");
+                        System.out.println("Error invoking scale method");
                     }
                 };
             } catch (NoSuchMethodException e) {

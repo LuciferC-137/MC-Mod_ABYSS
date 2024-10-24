@@ -35,7 +35,7 @@ public class ModMain {
 	
 	public ModMain() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		
+
 		ArmorRegistry.REGISTAR.register(bus);
 		ItemRegistry.REGISTAR.register(bus);
 		BlockRegistry.REGISTAR.register(bus);

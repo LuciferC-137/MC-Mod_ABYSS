@@ -30,11 +30,12 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.NotNull;
+import wardentools.entity.interfaces.CorruptionMonster;
 import wardentools.sounds.ModSounds;
 
 import java.util.Objects;
 
-public class ContagionIncarnationEntity extends Monster implements Enemy {
+public class ContagionIncarnationEntity extends CorruptionMonster implements Enemy {
 	protected static final float DEFAULT_EYE_HEIGHT = 4.8F;
 	public static final double MOV_SPEED = 0.2D;
 	private final ServerBossEvent bossEvent;
