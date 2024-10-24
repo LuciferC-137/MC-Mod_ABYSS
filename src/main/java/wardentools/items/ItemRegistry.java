@@ -522,4 +522,9 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> NOCTILURE_TREAT =
 			REGISTAR.register("noctilure_treat",
 					() -> new Item(new Item.Properties()));
+
+	public static final RegistryObject<Item> SHADOW_EGG =
+			REGISTAR.register("shadow_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
+							new Item.Properties()));
 }

@@ -1,8 +1,5 @@
 package wardentools.entity.custom;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -10,11 +7,13 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -29,17 +28,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
-import wardentools.entity.utils.RenderToBufferFunction;
-import wardentools.entity.utils.SetUpAnimFunction;
-import wardentools.entity.utils.getBobFunction;
+import wardentools.entity.interfaces.MimicEntity;
 
-import java.lang.reflect.Method;
-
-public class ShadowEntity extends Monster {
-	private static final EntityDataAccessor<Integer> DEAD_ENTITY_ID
-			= SynchedEntityData.defineId(ShadowEntity.class, EntityDataSerializers.INT);
-	private LivingEntity deadEntity;
+public class ShadowEntity extends MimicEntity {
+	public final AnimationState idleAnimation = new AnimationState();
+	public final AnimationState stasisAnimation = new AnimationState();
+	public final AnimationState walkAnim = new AnimationState();
+	public final AnimationState walkToIdleAnimation = new AnimationState();
+	private static final int WALK_TO_IDLE_TICKS = 5;
+	private static final EntityDataAccessor<Boolean> IS_STASIS =
+			SynchedEntityData.defineId(ShadowEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> walkToIdleTicks =
+			SynchedEntityData.defineId(ShadowEntity.class, EntityDataSerializers.INT);
 
 	public ShadowEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
@@ -50,7 +52,12 @@ public class ShadowEntity extends Monster {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
+			@Override
+			public boolean canUse() {
+				return !isStasis() && super.canUse();
+			}
+		});
 
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -59,7 +66,7 @@ public class ShadowEntity extends Monster {
 	public static AttributeSupplier.Builder createAttribute(){
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MAX_HEALTH, 20.0D)
-				.add(Attributes.MOVEMENT_SPEED, 0.25D)
+				.add(Attributes.MOVEMENT_SPEED, 0.1D)
 				.add(Attributes.ATTACK_DAMAGE, 4.0D)
 				.add(Attributes.FLYING_SPEED, 0.01D);
 	}
@@ -67,110 +74,95 @@ public class ShadowEntity extends Monster {
 	@Override
 	public void tick() {
 		super.tick();
-		if (this.level().isClientSide) {
-			int id = this.entityData.get(DEAD_ENTITY_ID);
-			if (id != -1) {
-				Entity entity = this.level().getEntity(id);
-				if (entity instanceof LivingEntity) {
-					this.deadEntity = (LivingEntity) entity;
-				}
-			}
+		if (this.getWalkToIdleTicks() > 0) this.setWalkToIdleTicks(this.getWalkToIdleTicks() - 1);
+		if (this.isAlmostIdle() && this.getDeltaMovement().lengthSqr() > 0
+				&& this.getWalkToIdleTicks() == 0 && !this.isStasis()) {
+			this.setWalkToIdleTicks(WALK_TO_IDLE_TICKS);
 		}
+		if (this.level().isClientSide){
+			this.walkToIdleAnimation.animateWhen(this.getWalkToIdleTicks() > 0, this.tickCount);
+			this.walkAnim.animateWhen(!this.isAlmostIdle()
+					&& this.getWalkToIdleTicks() <= 0 && !this.isStasis(), this.tickCount);
+			this.idleAnimation.animateWhen(this.isAlmostIdle() && this.getWalkToIdleTicks() <= 0
+					&& !this.isStasis(), this.tickCount);
+			this.stasisAnimation.animateWhen(this.isStasis(), this.tickCount);
+		}
+		if (this.isStasis()) {
+			this.doStasisTick();
+		} else {
+			this.setNoGravity(false);
+		}
+	}
+
+	private void doStasisTick() {
+		this.setNoGravity(true);
+		if (this.getHeightAboveGround() < 3D) {
+			this.setDeltaMovement(0, 0.015, 0);
+		} else {
+			this.setDeltaMovement(0D,
+					Math.cos((double)this.tickCount * 0.02D) * 0.02D,
+					0D);
+		}
+		this.setDeltaMovement(this.getDeltaMovement().scale(0.9));
+	}
+
+	public double getHeightAboveGround() {
+		BlockPos groundPos = this.blockPosition();
+		while (groundPos.getY() > this.level().getMinBuildHeight()
+				&& this.level().getBlockState(groundPos).isAir()) {
+			groundPos = groundPos.below();
+		}
+		return this.getY() - groundPos.getY();
 	}
 
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(DEAD_ENTITY_ID, -1);
-	}
-
-	public RenderToBufferFunction getRenderToBufferFunction() {
-		if (this.deadEntity == null) return null;
-		EntityRenderer<? super LivingEntity> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-				.getRenderer(this.deadEntity);
-		if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-			return livingRenderer.getModel()::renderToBuffer;
-		}
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <T extends LivingEntity> SetUpAnimFunction<T> getSetUpAnimFunction() {
-		if (this.deadEntity == null) return null;
-		T deadEntityCasted = (T) this.deadEntity;
-		EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-				.getRenderer(deadEntityCasted);
-		if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-			return ((LivingEntityRenderer<T, ?>)livingRenderer).getModel()::setupAnim;
-		}
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	public <T extends LivingEntity> getBobFunction<T> getGetBobFunction() {
-		if (this.deadEntity == null) return null;
-		T deadEntityCasted = (T) this.deadEntity;
-		EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-				.getRenderer(deadEntityCasted);
-		if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-			try {
-				Method getBobMethod = LivingEntityRenderer.class
-						.getDeclaredMethod("getBob", LivingEntity.class, float.class);
-				getBobMethod.setAccessible(true);
-				return (getBobFunction<T>) (entity, partialTicks) -> {
-					try {
-						return (float) getBobMethod.invoke(livingRenderer, entity, partialTicks);
-					} catch (Exception e) {
-						System.out.println("Error invoking getBob method");
-						return 0.0f;
-					}
-				};
-			} catch (NoSuchMethodException e) {
-				System.out.println("Error invoking getBob method: NoSuchMethodException");
-			}
-		}
-		return null;
-	}
-
-	public LivingEntity getDeadEntity() {return deadEntity;}
-
-	public void setDeadEntity(LivingEntity deadEntity) {
-		this.deadEntity = deadEntity;
-		this.entityData.set(DEAD_ENTITY_ID, deadEntity.getId());
+		this.entityData.define(IS_STASIS, false);
+		this.entityData.define(walkToIdleTicks, 0);
 	}
 
 	@Override
 	public void addAdditionalSaveData(@NotNull CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
-		if (this.deadEntity != null) {
-			tag.putInt("DeadEntityId", this.deadEntity.getId());
-		}
+		tag.putBoolean("isStasis", this.isStasis());
+		tag.putInt("walkToIdleTicks", this.getWalkToIdleTicks());
 	}
 
 	@Override
 	public void readAdditionalSaveData(@NotNull CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
-		if (tag.contains("DeadEntityId")) {
-			int id = tag.getInt("DeadEntityId");
-			this.entityData.set(DEAD_ENTITY_ID, id);
-		}
+		this.setStasis(tag.getBoolean("isStasis"));
+		this.setWalkToIdleTicks(tag.getInt("walkToIdleTicks"));
 	}
 
-	private void readDeadEntity(@NotNull CompoundTag tag){
-		if (tag.contains("deadEntity")) {
-			Entity entity = EntityType.loadEntityRecursive(tag.getCompound("deadEntity"),
-					this.level(), (deadEntity) -> {
-						deadEntity.setPos(this.getX(), this.getY(), this.getZ());
-						return deadEntity;
-					});
-			if (entity instanceof LivingEntity living) this.deadEntity = living;
-		}
+	@Override
+	protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
+		this.setStasis(!this.isStasis());
+		return InteractionResult.SUCCESS;
 	}
+
+	public boolean isStasis() {return this.entityData.get(IS_STASIS);}
+
+	public void setStasis(boolean stasis) {this.entityData.set(IS_STASIS, stasis);}
+
+	public int getWalkToIdleTicks() {return this.entityData.get(walkToIdleTicks);}
+
+	public void setWalkToIdleTicks(int ticks) {this.entityData.set(walkToIdleTicks, ticks);}
 
 	public static boolean canSpawn(EntityType<ShadowEntity> entityType, ServerLevelAccessor level,
 								   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
     }
+
+	private boolean isAlmostIdle() {
+		return this.getDeltaMovement().lengthSqr() < 0.002;
+	}
+
+	@Override
+	public boolean canDrownInFluidType(FluidType type) {
+		return false;
+	}
 
 	@Override
     protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {

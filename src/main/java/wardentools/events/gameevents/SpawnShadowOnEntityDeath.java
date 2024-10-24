@@ -19,7 +19,7 @@ public class SpawnShadowOnEntityDeath {
             ShadowEntity shadow = new ShadowEntity(ModEntities.SHADOW.get(), entity.level());
             shadow.copyPosition(entity);
             shadow.setHealth(shadow.getMaxHealth());
-            if (entity instanceof LivingEntity living) shadow.setDeadEntity(living);
+            if (entity instanceof LivingEntity living) shadow.setMimicEntity(living);
             entity.level().addFreshEntity(shadow);
         }
     }
