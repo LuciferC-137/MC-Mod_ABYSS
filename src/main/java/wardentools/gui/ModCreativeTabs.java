@@ -133,6 +133,7 @@ public class ModCreativeTabs {
         addItemToTag("egg", ItemRegistry.PROTECTOR_EGG);
         addItemToTag("egg", ItemRegistry.CONTAGION_INCARNATION_EGG);
         addItemToTag("egg", ItemRegistry.NOCTILURE_EGG);
+        addItemToTag("egg", ItemRegistry.SHADOW_EGG);
 
         addItemToTag("corrupted", ItemRegistry.WARDEN_HEART);
         addItemToTag("corrupted", ItemRegistry.CORRUPTED_ESSENCE);

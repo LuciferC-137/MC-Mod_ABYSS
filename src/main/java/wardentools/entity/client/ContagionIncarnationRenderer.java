@@ -35,7 +35,6 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 	public void render(ContagionIncarnationEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
 					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {
 
-		pMatrixStack.scale(2f, 2f, 2f);
 		int blockLight = (pPackedLight >> 4) & 0xF;
 		int skyLight = (pPackedLight >> 20) & 0xF;
 		float reductionFactor = ((float)ContagionIncarnationEntity.DEATH_DURATION - (float)pEntity.contagionIncarnationDeathTime)
@@ -96,4 +95,9 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 		   consumer.vertex(matrix, 0.0F, f1, f2).color(0, 55, 70, 0).endVertex();
 	   }
 
+	@Override
+	protected void scale(@NotNull ContagionIncarnationEntity entity, @NotNull PoseStack stack, float v) {
+		stack.scale(2f, 2f, 2f);
+		super.scale(entity, stack, v);
+	}
 }

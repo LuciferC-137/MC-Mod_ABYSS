@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.ProtectorEntity;
 
@@ -18,13 +19,13 @@ public class ProtectorRenderer extends MobRenderer<ProtectorEntity, Protector>{
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(ProtectorEntity pEntity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull ProtectorEntity pEntity) {
 		return PROTECTOR_TEXTURE;
 	}
 	
 	@Override
-	public void render(ProtectorEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
-						MultiBufferSource pBuffer, int pPackedLight) {
+	public void render(@NotNull ProtectorEntity pEntity, float pEntityYaw, float pPartialTicks,
+					   @NotNull PoseStack pMatrixStack, @NotNull MultiBufferSource pBuffer, int pPackedLight) {
 		super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
 	}
 

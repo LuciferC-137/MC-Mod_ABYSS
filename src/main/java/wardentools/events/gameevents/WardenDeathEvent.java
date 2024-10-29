@@ -14,11 +14,8 @@ import wardentools.block.BlockRegistry;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleWardenDeathPacket;
 
-
-
-
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
-public class EntityDeathEvent {
+public class WardenDeathEvent {
 	
 	@SubscribeEvent
 	public static void wardenDeath(LivingDeathEvent event) {

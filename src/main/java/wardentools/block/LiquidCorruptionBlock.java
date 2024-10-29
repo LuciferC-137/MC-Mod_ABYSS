@@ -25,6 +25,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.effect.ModEffects;
+import wardentools.misc.CustomDamageType;
 import wardentools.particle.ParticleRegistry;
 
 public class LiquidCorruptionBlock extends LiquidBlock {
@@ -53,15 +54,15 @@ public class LiquidCorruptionBlock extends LiquidBlock {
                              @NotNull BlockPos blockPos, @NotNull Entity entity) {
         super.entityInside(blockState, level, blockPos, entity);
         if (!entity.level().isClientSide
-                && entity instanceof LivingEntity entity1
-                && entity1.level().getGameTime()%20==1) {
-            entity1.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.get(),
+                && entity instanceof LivingEntity living
+                && living.level().getGameTime()%20==1) {
+            living.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.get(),
                         400, 1, false, false));
-            Holder<DamageType> magicDamageTypeHolder
-                    = entity1.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
-                    .getHolderOrThrow(DamageTypes.MAGIC);
-            entity1.hurt(new DamageSource(magicDamageTypeHolder,
-                    null, entity1, null), 3f);
+            Holder<DamageType> corruptedDamageTypeHolder = living.level().registryAccess()
+                    .registryOrThrow(Registries.DAMAGE_TYPE)
+                    .getHolderOrThrow(CustomDamageType.CORRUPTED_KEY);
+            living.hurt(new DamageSource(corruptedDamageTypeHolder,
+                    null, living, null), 3f);
         }
     }
 

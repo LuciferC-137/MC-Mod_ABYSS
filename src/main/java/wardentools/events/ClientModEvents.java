@@ -28,6 +28,7 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.TEMPER.get(), TemperRenderer::new);
 		event.registerEntityRenderer(ModEntities.PARASYTE.get(), ParasyteRenderer::new);
 		event.registerEntityRenderer(ModEntities.NOCTILURE.get(), NoctilureRenderer::new);
+		event.registerEntityRenderer(ModEntities.SHADOW.get(), ShadowRenderer::new);
 	}
 
 	
@@ -44,5 +45,6 @@ public class ClientModEvents {
 		event.registerLayerDefinition(Temper.LAYER_LOCATION, Temper::createBodyLayer);
 		event.registerLayerDefinition(Parasyte.LAYER_LOCATION, Parasyte::createBodyLayer);
 		event.registerLayerDefinition(Noctilure.LAYER_LOCATION, Noctilure::createBodyLayer);
+		event.registerLayerDefinition(Shadow.LAYER_LOCATION, Shadow::createBodyLayer);
 	}
 }
