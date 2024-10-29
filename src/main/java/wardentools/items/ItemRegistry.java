@@ -535,4 +535,9 @@ public class ItemRegistry {
 			REGISTAR.register("cracked_abyssalite_bricks_wall",
 					() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get(),
 							new Item.Properties()));
+
+	public static final RegistryObject<Item> SHADOW_EGG =
+			REGISTAR.register("shadow_spawn_egg",
+					() -> new ForgeSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
+							new Item.Properties()));
 }
