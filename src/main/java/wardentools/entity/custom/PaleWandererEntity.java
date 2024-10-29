@@ -3,6 +3,7 @@ package wardentools.entity.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -31,8 +32,10 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import wardentools.entity.ModEntities;
 import wardentools.items.ItemRegistry;
+import wardentools.sounds.ModSounds;
 
 public class PaleWandererEntity extends Animal {
 	public final AnimationState calmAnimationState = new AnimationState();
@@ -74,58 +77,41 @@ public class PaleWandererEntity extends Animal {
 	}
 	
 	@Override
-    public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
+    public boolean causeFallDamage(float fallDistance, float damageMultiplier, @NotNull DamageSource source) {
         return false;
     }
 
 	@Override
-	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob mob) {
+	public AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob mob) {
 		return ModEntities.PALE_WANDERER.get().create(level);
 	}
 	
 	@Override
 	public boolean isFood(ItemStack pStack) {
-		return pStack.is(ItemRegistry.DEEP_FRUIT.get());
-	}
-
-	@Override
-	protected PathNavigation createNavigation(Level level) {
-	      return new WallClimberNavigation(this, level);
+		return pStack.is(ItemRegistry.WHITE_SEED.get());
 	}
     
     @Override
-	public boolean checkSpawnRules(LevelAccessor p_21686_, MobSpawnType p_21687_) {
+	public boolean checkSpawnRules(@NotNull LevelAccessor accessor, @NotNull MobSpawnType spawnType) {
     	return true;
     }
 	
     public static boolean canSpawn(EntityType<PaleWandererEntity> entityType, ServerLevelAccessor level,
             MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-    	boolean canSpawn = level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
-		return canSpawn;// Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
+        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);// Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
     }
-    	
-	@Override
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
-    }
+
     @Override
     protected SoundEvent getAmbientSound() {
-        return null;
+        return SoundEvents.FOX_AMBIENT;
     }
+
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return null;
+    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
+        return ModSounds.PALE_WANDERER_HURT.get();
     }
     @Override
     protected SoundEvent getDeathSound() {
-        return null;
-    }
-    @Override
-    public void makeStuckInBlock(BlockState state, Vec3 motionMultiplier) {
-    }
-    @Override
-    public void playSound(SoundEvent soundIn, float volume, float pitch) {
-    }
-    @Override
-    public void playAmbientSound() {  
+        return ModSounds.PALE_WANDERER_DEATH.get();
     }
 }

@@ -1,7 +1,11 @@
 package wardentools.block;
 
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -52,6 +56,14 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 																  @NotNull BlockEntityType<T> type){
 		return level.isClientSide() ? null : (level0, pos0, state0, blockEntity)
 				-> ((ProtectorInvokerBlockEntity)blockEntity).tick();
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world,
+										@NotNull BlockPos pos, @NotNull CollisionContext context) {
+		return Shapes.box(0.2, 0.0, 0.2,
+				0.8, 0.9, 0.8);
 	}
 	
 	@Override

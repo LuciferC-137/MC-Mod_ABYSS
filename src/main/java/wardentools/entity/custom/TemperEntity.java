@@ -233,7 +233,7 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
     }
     @Override
     protected SoundEvent getAmbientSound() {
-        return null;
+        return SoundEvents.ALLAY_AMBIENT_WITHOUT_ITEM;
     }
 
 	@Override
@@ -249,14 +249,6 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 	protected float getSoundVolume() {
 		return 0.4F;
 	}
-
-    @Override
-    public void playSound(@NotNull SoundEvent soundIn, float volume, float pitch) {
-		super.playSound(soundIn, volume, pitch);
-    }
-    @Override
-    public void playAmbientSound() {
-    }
 
 	@Override
 	public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level,

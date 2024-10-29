@@ -14,6 +14,7 @@ import wardentools.blockentity.RadianceCatalystBlockEntity;
 
 
 public class ParticleRadianceCatalystCharged {
+	private static final float SOUND_VOLUME = 0.5F;
     private final BlockPos pos;
 
     public ParticleRadianceCatalystCharged(BlockPos pos) {
@@ -48,7 +49,7 @@ public class ParticleRadianceCatalystCharged {
 		            level.addParticle(RadianceCatalystBlockEntity.PARTICLE, true,
 		            		x, y, z, offsetX, offsetY, offsetZ);
 		        }
-		        level.playLocalSound(x, y, z, SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+		        level.playLocalSound(x, y, z, SoundEvents.BEACON_AMBIENT, SoundSource.BLOCKS, SOUND_VOLUME, 1.0F, false);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

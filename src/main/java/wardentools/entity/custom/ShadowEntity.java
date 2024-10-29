@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -44,6 +45,7 @@ import wardentools.fluid.BaseFluidType;
 import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.LiquidCorruptionFluid;
 import wardentools.fluid.ModFluidTypes;
+import wardentools.sounds.ModSounds;
 
 public class ShadowEntity extends MimicEntity {
 	public final AnimationState idleAnimation = new AnimationState();
@@ -189,29 +191,23 @@ public class ShadowEntity extends MimicEntity {
 
 	@Override
     protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
+		this.playSound(SoundEvents.DROWNED_STEP, this.getSoundVolume(), 1.0F);
     }
     @Override
     protected SoundEvent getAmbientSound() {
-        return null;
+        return ModSounds.SHADOW_AMBIENT.get();
     }
 
 	@Override
 	protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
-		return null;
+		return ModSounds.SHADOW_AMBIENT.get();
 	}
 
 	@Override
-	protected SoundEvent getDeathSound() {return null;}
+	protected SoundEvent getDeathSound() {return ModSounds.SHADOW_DEATH.get();}
 
+	@Override
 	protected float getSoundVolume() {
 		return 0.4F;
 	}
-
-    @Override
-    public void playSound(@NotNull SoundEvent soundIn, float volume, float pitch) {
-		super.playSound(soundIn, volume, pitch);
-    }
-    @Override
-    public void playAmbientSound() {
-    }
 }

@@ -28,5 +28,83 @@
 		"sounds": [
 			"wardentools:deep_forest"
 		]
+	},
+	"noctilure_ambient": {
+		"subtitles": "sounds.wardentools.noctilure_ambient",
+		"sounds": [
+			"wardentools:noctilure_ambient"
+		]
+	},
+	"noctilure_death": {
+		"subtitles": "sounds.wardentools.noctilure_death",
+		"sounds": [
+			"wardentools:noctilure_death"
+		]
+	},
+	"shadow_ambient": {
+		"subtitles": "sounds.wardentools.shadow_ambient",
+		"sounds": [
+			"wardentools:shadow_ambient"
+		]
+	},
+	"shadow_death": {
+		"subtitles": "sounds.wardentools.shadow_death",
+		"sounds": [
+			"wardentools:shadow_death"
+		]
+	},
+	"parasyte_step": {
+		"subtitles": "sounds.wardentools.parasyte_step",
+		"sounds": [
+			"wardentools:parasyte_step"
+		]
+	},
+	"parasyte_death": {
+		"subtitles": "sounds.wardentools.parasyte_death",
+		"sounds": [
+			"wardentools:parasyte_death"
+		]
+	},
+	"parasyte_hurt": {
+		"subtitles": "sounds.wardentools.parasyte_hurt",
+		"sounds": [
+			"wardentools:parasyte_hurt"
+		]
+	},
+	"deeplurker_hurt": {
+		"subtitles": "sounds.wardentools.deeplurker_hurt",
+		"sounds": [
+			"wardentools:deeplurker_hurt"
+		]
+	},
+	"deeplurker_death": {
+		"subtitles": "sounds.wardentools.deeplurker_death",
+		"sounds": [
+			"wardentools:deeplurker_death"
+		]
+	},
+	"pale_wanderer_death": {
+		"subtitles": "sounds.wardentools.pale_wanderer_death",
+		"sounds": [
+			"wardentools:pale_wanderer_death"
+		]
+	},
+	"pale_wanderer_hurt": {
+		"subtitles": "sounds.wardentools.pale_wanderer_hurt",
+		"sounds": [
+			"wardentools:pale_wanderer_hurt"
+		]
+	},
+	"protector_death": {
+		"subtitles": "sounds.wardentools.protector_death",
+		"sounds": [
+			"wardentools:protector_death"
+		]
+	},
+	"protector_ambient": {
+		"subtitles": "sounds.wardentools.protector_ambient",
+		"sounds": [
+			"wardentools:protector_ambient"
+		]
 	}
 }

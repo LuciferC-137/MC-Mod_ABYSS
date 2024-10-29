@@ -6,6 +6,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -34,6 +35,7 @@ import wardentools.entity.utils.goal.ChooseMonsterTargetGoal;
 import wardentools.entity.utils.goal.ReturnToInvokerGoal;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceImplosion;
+import wardentools.sounds.ModSounds;
 
 public class ProtectorEntity extends AbstractGolem {
 	public int protectorDeathTime = 0;
@@ -192,6 +194,10 @@ public class ProtectorEntity extends AbstractGolem {
 	@Override
 	public void die(@NotNull DamageSource source) {
 		if (net.minecraftforge.common.ForgeHooks.onLivingDeath(this, source)) return;
+		if (this.invokerPos != null
+				&& (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker)) {
+			invoker.saveHealth(this);
+		}
 		if (!this.isRemoved() && !this.dead) {
 			Entity entity = source.getEntity();
 			LivingEntity livingentity = this.getKillCredit();
@@ -308,6 +314,23 @@ public class ProtectorEntity extends AbstractGolem {
             MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return true;
     }
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.PROTECTOR_AMBIENT.get();
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
+		return ModSounds.PROTECTOR_AMBIENT.get();
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {return ModSounds.PROTECTOR_DEATH.get();}
+
+	protected float getSoundVolume() {
+		return 0.8F;
+	}
 
 }
 

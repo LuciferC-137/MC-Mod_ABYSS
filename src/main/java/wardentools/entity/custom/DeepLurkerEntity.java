@@ -38,6 +38,7 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.utils.goal.AvoidWardenAndClimbTreeGoal;
 import wardentools.entity.utils.goal.ClimbGoal;
 import wardentools.items.ItemRegistry;
+import wardentools.sounds.ModSounds;
 
 public class DeepLurkerEntity extends Animal {
 	public final AnimationState calmAnimationState = new AnimationState();
@@ -156,17 +157,10 @@ public class DeepLurkerEntity extends Animal {
     }
     @Override
     protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
-        return null;
+		return ModSounds.DEEP_LURKER_HURT.get();
     }
     @Override
     protected SoundEvent getDeathSound() {
-        return null;
-    }
-    
-    @Override
-    public void playSound(@NotNull SoundEvent soundIn, float volume, float pitch) {
-    }
-    @Override
-    public void playAmbientSound() {  
+        return ModSounds.DEEP_LURKER_DEATH.get();
     }
 }

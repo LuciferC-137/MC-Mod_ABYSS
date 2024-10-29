@@ -2,6 +2,7 @@ package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.interfaces.CorruptionMonster;
+import wardentools.sounds.ModSounds;
 
 public class ParasyteEntity extends CorruptionMonster {
 	public final AnimationState idleAnimation = new AnimationState();
@@ -60,6 +62,7 @@ public class ParasyteEntity extends CorruptionMonster {
 
 	@Override
     protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
+		this.playSound(ModSounds.PARASYTE_STEP.get(), this.getSoundVolume(), 1.0F);
     }
     @Override
     protected SoundEvent getAmbientSound() {
@@ -68,21 +71,14 @@ public class ParasyteEntity extends CorruptionMonster {
 
 	@Override
 	protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
-		return null;
+		return ModSounds.PARASYTE_HURT.get();
 	}
 
 	@Override
-	protected SoundEvent getDeathSound() {return null;}
+	protected SoundEvent getDeathSound() {return ModSounds.PARASYTE_DEATH.get();}
 
 	protected float getSoundVolume() {
 		return 0.4F;
 	}
 
-    @Override
-    public void playSound(@NotNull SoundEvent soundIn, float volume, float pitch) {
-		super.playSound(soundIn, volume, pitch);
-    }
-    @Override
-    public void playAmbientSound() {
-    }
 }

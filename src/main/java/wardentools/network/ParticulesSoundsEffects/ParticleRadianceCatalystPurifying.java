@@ -13,6 +13,7 @@ import wardentools.particle.ParticleRegistry;
 
 
 public class ParticleRadianceCatalystPurifying {
+	private static final float SOUND_VOLUME = 0.5F;
     private final BlockPos pos;
 
     public ParticleRadianceCatalystPurifying(BlockPos pos) {
@@ -48,7 +49,7 @@ public class ParticleRadianceCatalystPurifying {
 		            level.addParticle(ParticleRegistry.CORRUPTION.get(), true,
 		            		x, y, z, offsetX, offsetY, offsetZ);
 		        }
-		        level.playLocalSound(x, y, z, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+		        level.playLocalSound(x, y, z, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, SOUND_VOLUME, 1.0F, false);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

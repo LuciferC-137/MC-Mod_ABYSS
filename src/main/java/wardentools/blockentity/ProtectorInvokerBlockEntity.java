@@ -121,6 +121,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	
 	public boolean isProtectorValid(ProtectorEntity protector) {
 		if (!this.inventory.getStackInSlot(0).isEmpty()) {
+			if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return false;
 			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
 					.getProtectorID(this.inventory.getStackInSlot(0)) == protector.getId()){
 				return true;

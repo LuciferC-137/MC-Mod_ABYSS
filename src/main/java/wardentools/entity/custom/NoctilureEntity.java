@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
@@ -44,6 +45,7 @@ import wardentools.entity.utils.goal.LandGoal;
 import wardentools.entity.utils.goal.RandomFlyGoal;
 import wardentools.entity.utils.goal.TakeOffGoal;
 import wardentools.items.ItemRegistry;
+import wardentools.sounds.ModSounds;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -501,34 +503,6 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	@Override
-	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
-	}
-	@Override
-	protected SoundEvent getAmbientSound() {
-		return null;
-	}
-
-	@Override
-	protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
-		return null;
-	}
-
-	@Override
-	protected SoundEvent getDeathSound() {return null;}
-
-	protected float getSoundVolume() {
-		return 0.4F;
-	}
-
-	@Override
-	public void playSound(@NotNull SoundEvent soundIn, float volume, float pitch) {
-		super.playSound(soundIn, volume, pitch);
-	}
-	@Override
-	public void playAmbientSound() {
-	}
-
-	@Override
 	public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob mob) {
 		return ModEntities.NOCTILURE.get().create(level);
 	}
@@ -660,5 +634,27 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 
 	private boolean noSecondaryAnimation() {
 		return this.getLandingTick() == 0 && this.getIdleFlyToFlyTick() == 0;
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.NOCTILURE_AMBIENT.get();
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
+		return ModSounds.NOCTILURE_AMBIENT.get();
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {return ModSounds.NOCTILURE_DEATH.get();}
+
+	@Override
+	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
+		this.playSound(SoundEvents.CHICKEN_STEP, 1.0F, 1.0F);
+	}
+
+	protected float getSoundVolume() {
+		return 0.7F;
 	}
 }
