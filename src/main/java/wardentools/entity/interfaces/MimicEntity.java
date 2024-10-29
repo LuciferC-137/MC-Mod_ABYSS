@@ -9,6 +9,8 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -127,6 +129,7 @@ public class MimicEntity extends CorruptionMonster {
                         .getDeclaredMethod("getBob", LivingEntity.class, float.class);
                 getBobMethod.setAccessible(true);
                 return (getBobFunction<T>) (entity, partialTicks) -> {
+                    if (deadEntityCasted instanceof Chicken || deadEntityCasted instanceof Parrot) return 0.0f;
                     try {
                         return (float)getBobMethod.invoke(livingRenderer, entity, partialTicks);
                     } catch (Exception e) {

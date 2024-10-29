@@ -1,10 +1,13 @@
 package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -23,14 +26,24 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.interfaces.MimicEntity;
+import wardentools.fluid.BaseFluidType;
+import wardentools.fluid.FluidRegistry;
+import wardentools.fluid.LiquidCorruptionFluid;
+import wardentools.fluid.ModFluidTypes;
 
 public class ShadowEntity extends MimicEntity {
 	public final AnimationState idleAnimation = new AnimationState();
@@ -49,18 +62,22 @@ public class ShadowEntity extends MimicEntity {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
-		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
+		this.goalSelector.addGoal(0, new MeleeAttackGoal(this, 3.0D, false){
+			@Override
+			public void start() {
+				super.start();
+				if (this.mob instanceof ShadowEntity shadow) shadow.setStasis(false);
+			}
+		});
+		this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
 			@Override
 			public boolean canUse() {
 				return !isStasis() && super.canUse();
 			}
 		});
-
-		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setAlertOthers());
+		this.targetSelector.addGoal(1,
+				new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 	
 	public static AttributeSupplier.Builder createAttribute(){
@@ -68,7 +85,8 @@ public class ShadowEntity extends MimicEntity {
 				.add(Attributes.MAX_HEALTH, 20.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.1D)
 				.add(Attributes.ATTACK_DAMAGE, 4.0D)
-				.add(Attributes.FLYING_SPEED, 0.01D);
+				.add(Attributes.FLYING_SPEED, 0.01D)
+				.add(Attributes.FOLLOW_RANGE, 20.0D);
 	}
 
 	@Override
@@ -87,11 +105,7 @@ public class ShadowEntity extends MimicEntity {
 					&& !this.isStasis(), this.tickCount);
 			this.stasisAnimation.animateWhen(this.isStasis(), this.tickCount);
 		}
-		if (this.isStasis()) {
-			this.doStasisTick();
-		} else {
-			this.setNoGravity(false);
-		}
+		if (this.isStasis()) this.doStasisTick(); else this.setNoGravity(false);
 	}
 
 	private void doStasisTick() {
@@ -104,6 +118,7 @@ public class ShadowEntity extends MimicEntity {
 					0D);
 		}
 		this.setDeltaMovement(this.getDeltaMovement().scale(0.9));
+		if (this.getTarget() != null) {this.setStasis(false);}
 	}
 
 	public double getHeightAboveGround() {
@@ -113,6 +128,20 @@ public class ShadowEntity extends MimicEntity {
 			groundPos = groundPos.below();
 		}
 		return this.getY() - groundPos.getY();
+	}
+
+	@Override
+	protected boolean isAffectedByFluids() {
+		return false;
+	}
+
+	@Override
+	public boolean canStandOnFluid(@NotNull FluidState fluidState) {
+		if (fluidState.is(FluidRegistry.SOURCE_LIQUID_CORRUPTION.get())
+				|| fluidState.is(FluidRegistry.FLOWING_LIQUID_CORRUPTION.get())) {
+			return true;
+		}
+		return super.canStandOnFluid(fluidState);
 	}
 
 	@Override
@@ -134,12 +163,6 @@ public class ShadowEntity extends MimicEntity {
 		super.readAdditionalSaveData(tag);
 		this.setStasis(tag.getBoolean("isStasis"));
 		this.setWalkToIdleTicks(tag.getInt("walkToIdleTicks"));
-	}
-
-	@Override
-	protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-		this.setStasis(!this.isStasis());
-		return InteractionResult.SUCCESS;
 	}
 
 	public boolean isStasis() {return this.entityData.get(IS_STASIS);}

@@ -25,11 +25,14 @@ public class NoctilureRenderer extends MobRenderer<NoctilureEntity, Noctilure>{
 	@Override
 	public void render(@NotNull NoctilureEntity noctilure, float pEntityYaw, float pPartialTicks,
 					   @NotNull PoseStack pMatrixStack, @NotNull MultiBufferSource pBuffer, int pPackedLight) {
-		pMatrixStack.scale(1.3f, 1.3f, 1.3f);
-		if (noctilure.isBaby()) {
-			pMatrixStack.scale(0.6f, 0.6f, 0.6f);
-		}
 		super.render(noctilure, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
 	}
 
+	@Override
+	protected void scale(@NotNull NoctilureEntity noctilure, @NotNull PoseStack stack, float v) {
+		stack.scale(1.3f, 1.3f, 1.3f);
+		if (noctilure.isBaby()) {
+			stack.scale(0.6f, 0.6f, 0.6f);
+		}
+	}
 }
