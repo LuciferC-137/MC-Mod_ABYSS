@@ -1,0 +1,66 @@
+[
+    {
+        "section": "Minecraft: Dive Into the Abyss",
+        "disciplines": [
+            {
+                "discipline": "Main contributors",
+                "titles": [
+                    {
+                        "title": "Project Lead",
+                        "names": [
+                            "Maxime Bloch"
+                        ]
+                    },
+                    {                     
+                        "title": "Music Composer",
+                        "names": [
+                            "Antoine Bloch"
+                        ]
+                    },
+                    {                     
+                        "title": "Ancient Citadel's Builder",
+                        "names": [
+                            "Arthur Bourmaud"
+                        ]
+                    }
+                ]
+            },
+            {
+                "discipline": "Special thanks",
+                "titles": [
+                    {
+                        "title": "Beta Testers",
+                        "names": [
+                            "Arthur Bourmaud",
+                            "Antoine Cheucle",
+                            "Nathan Clayes"
+                        ]
+                    }
+                ]
+
+            },
+            {   "discipline": "Minecraft Modding",
+                "titles": [
+                    {
+                        "title": "Minecraft Forge",
+                        "names": [
+                            "LexManos"
+                        ]
+                    },
+                    {
+                        "title": "Minecraft Coder Pack",
+                        "names": [
+                            "Searge"
+                        ]
+                    },
+                    {
+                        "title": "Minecraft Team",
+                        "names": [
+                            "Mojang Studios"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

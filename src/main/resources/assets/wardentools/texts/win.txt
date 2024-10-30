@@ -1,0 +1,5 @@
+§3This is the first line of text, the color is indicated at the start of the line.
+
+§2This is the second line. The name of the player is PLAYERNAME.
+
+§3The following text should appear flashing: §f§k§a§b§2.

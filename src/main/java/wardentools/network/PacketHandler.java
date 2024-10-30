@@ -1,6 +1,7 @@
 package wardentools.network;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.ChannelBuilder;
@@ -61,6 +62,16 @@ public class PacketHandler {
 				.decoder(ParticleRadianceImplosion::new)
 				.consumerMainThread(ParticleRadianceImplosion::handle)
 				.add();
+		INSTANCE.messageBuilder(TeleportPlayerTo.class, NetworkDirection.PLAY_TO_SERVER)
+				.encoder(TeleportPlayerTo::encode)
+				.decoder(TeleportPlayerTo::new)
+				.consumerMainThread(TeleportPlayerTo::handle)
+				.add();
+		INSTANCE.messageBuilder(ShowWinScreen.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ShowWinScreen::encode)
+				.decoder(ShowWinScreen::new)
+				.consumerMainThread(ShowWinScreen::handle)
+				.add();
     }
 
     public static void sendToServer(Object msg) {
@@ -70,6 +81,10 @@ public class PacketHandler {
     public static void sendToAllClient(Object msg) {
     	INSTANCE.send(msg, PacketDistributor.ALL.noArg());
     }
+
+	public static void sendToClient(Object msg, ServerPlayer player) {
+		INSTANCE.send(msg, PacketDistributor.PLAYER.with(player));
+	}
     
     
 }
