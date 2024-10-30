@@ -7,12 +7,17 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.items.ItemRegistry;
 
 public enum DeepCristalMaterial implements ArmorMaterial {
-	DEEPCRISTAL("deepcristal",  37, new int[]{3, 6, 8, 3}, 25,
-			SoundEvents.ARMOR_EQUIP_NETHERITE, 1f, 0f, ()->Ingredient.of(ItemRegistry.DEEPINGOTS.get()));
+	DEEPCRISTAL("deepcristal",  37, new int[]{3, 8, 6, 3}, 20,
+			SoundEvents.ARMOR_EQUIP_NETHERITE, 2f, 0f,
+			()->Ingredient.of(ItemRegistry.DEEPINGOTS.get())),
+	RADIANCE_CRISTAL("radiance_cristal",  37, new int[]{3, 8, 6, 3}, 20,
+	SoundEvents.ARMOR_EQUIP_NETHERITE, 2f, 0f,
+			()->Ingredient.of(ItemRegistry.RADIANCE_INGOTS.get()));
 
 	
     private final String name;
@@ -24,10 +29,10 @@ public enum DeepCristalMaterial implements ArmorMaterial {
     private final float knockbackResistance;
     private final Supplier<Ingredient> repairIngredient;
     
-    private static final int[] BASE_DURABILITY = new int[]{11, 16, 16, 11};
+    private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
     
     DeepCristalMaterial(String name, int durability, int[] protection, int enchantability, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
-        this.name = name; //name must start the modid then colon.
+        this.name = name;
         this.durabilityMultiplier = durability;
         this.portectionAmounts = protection;
         this.enchantmentValue = enchantability;
@@ -41,7 +46,7 @@ public enum DeepCristalMaterial implements ArmorMaterial {
 		return BASE_DURABILITY;
 	}
 
-	public String getName() {
+	public @NotNull String getName() {
 		return ModMain.MOD_ID + ":" + this.name;
 	}
 
@@ -79,11 +84,11 @@ public enum DeepCristalMaterial implements ArmorMaterial {
 		return this.portectionAmounts[pType.ordinal()];
 	}
 
-	public SoundEvent getEquipSound() {
+	public @NotNull SoundEvent getEquipSound() {
 		return this.sound;
 	}
 
-	public Ingredient getRepairIngredient() {
+	public @NotNull Ingredient getRepairIngredient() {
 		return this.repairIngredient.get();
 	}   
     
