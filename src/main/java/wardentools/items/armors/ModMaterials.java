@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.items.ItemRegistry;
 
-public enum DeepCristalMaterial implements ArmorMaterial {
+public enum ModMaterials implements ArmorMaterial {
 	DEEPCRISTAL("deepcristal",  37, new int[]{3, 8, 6, 3}, 20,
 			SoundEvents.ARMOR_EQUIP_NETHERITE, 2f, 0f,
 			()->Ingredient.of(ItemRegistry.DEEPINGOTS.get())),
@@ -31,7 +31,7 @@ public enum DeepCristalMaterial implements ArmorMaterial {
     
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
     
-    DeepCristalMaterial(String name, int durability, int[] protection, int enchantability, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
+    ModMaterials(String name, int durability, int[] protection, int enchantability, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
         this.name = name;
         this.durabilityMultiplier = durability;
         this.portectionAmounts = protection;

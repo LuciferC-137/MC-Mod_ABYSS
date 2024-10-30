@@ -15,10 +15,10 @@ public class ModArmorItem extends ArmorItem {
     private static final int EFFECT_TIME = 242;
     private static final Map<ArmorMaterial, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
             (new ImmutableMap.Builder<ArmorMaterial, MobEffectInstance>())
-                    .put(DeepCristalMaterial.DEEPCRISTAL, new MobEffectInstance(ModEffects.CORRUPTION_VESSEL.get(),
+                    .put(ModMaterials.DEEPCRISTAL, new MobEffectInstance(ModEffects.CORRUPTION_VESSEL.get(),
                             EFFECT_TIME, 0,
                             false,false, true))
-                    .put(RadianceCristalMaterial.RADIANCE_CRISTAL_MATERIAL, new MobEffectInstance(ModEffects.RADIANCE_BRINGER.get(),
+                    .put(ModMaterials.RADIANCE_CRISTAL, new MobEffectInstance(ModEffects.RADIANCE_BRINGER.get(),
                             EFFECT_TIME, 0,
                             false,false, true)).build();
 
@@ -48,8 +48,6 @@ public class ModArmorItem extends ArmorItem {
 
     private void addStatusEffectForMaterial(Player player, ArmorMaterial mapArmorMaterial,
                                             MobEffectInstance mapStatusEffect) {
-        boolean hasPlayerEffect = player.hasEffect(mapStatusEffect.getEffect());
-
         if(hasCorrectArmorOn(mapArmorMaterial, player)) {
             player.addEffect(new MobEffectInstance(mapStatusEffect));
         }

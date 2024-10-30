@@ -23,7 +23,6 @@ public class WardenTargetFilter {
                 warden.setTarget(null);
                 warden.setAggressive(false);
                 warden.setLastHurtByMob(null);
-                warden.setAttackTarget(null);
                 makeWardenBurrow(warden);
             }
         }

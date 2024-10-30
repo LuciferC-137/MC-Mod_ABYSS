@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -251,9 +252,42 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 	}
 
 	@Override
-	public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level,
-																			@NotNull AgeableMob mob) {
+	public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob mob) {
 		return null;
+	}
+
+	@Override
+	public boolean canCollideWith(@NotNull Entity entity) {
+		return !(entity instanceof Player) && super.canCollideWith(entity);
+	}
+
+	@Override
+	protected void doPush(@NotNull Entity entity) {
+		if (!(entity instanceof Player)) super.doPush(entity);
+	}
+
+	@Override
+	public void push(@NotNull Entity entity) {
+		if (!(entity instanceof Player)) super.push(entity);
+		else if (!this.isPassengerOfSameVehicle(entity)) {
+			if (!entity.noPhysics && !this.noPhysics) {
+				double d0 = entity.getX() - this.getX();
+				double d1 = entity.getZ() - this.getZ();
+				double d2 = Mth.absMax(d0, d1);
+				if (d2 >= (double)0.01F) {
+					d2 = Math.sqrt(d2);
+					d0 /= d2;
+					d1 /= d2;
+					double d3 = 1.0D / d2;
+					if (d3 > 1.0D) d3 = 1.0D;
+					d0 *= d3;
+					d1 *= d3;
+					d0 *= (double)0.05F;
+					d1 *= (double)0.05F;
+					if (!this.isVehicle() && this.isPushable()) this.push(-d0, 0.0D, -d1);
+				}
+			}
+		}
 	}
 
 	@Override
