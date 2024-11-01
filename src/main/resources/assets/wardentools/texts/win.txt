@@ -1,5 +1,41 @@
-§3This is the first line of text, the color is indicated at the start of the line.
+§6How long have we drifted here, watching the world fade?
 
-§2This is the second line. The name of the player is PLAYERNAME.
+§dTime… does it matter here? Or is it just a memory, lost in the blue?
 
-§3The following text should appear flashing: §f§k§a§b§2.
+§6Maybe just a memory. But memories… they bind us, like threads to life.
+
+§dThreads, so easily broken. Yet still, we hold them close. What else is there?
+
+§6Only what we create: joy, for its own sake; beauty, because we choose it. These fragile truths.
+
+§dIf only others saw it. So many, clinging to shadows and light, to answers.
+
+§6But here, we find meaning in the endless, the nameless. Could they hear this silence?
+
+§dWe’re not alone… PLAYERNAME, you’re here, aren’t you?
+
+§6Ah, PLAYERNAME… you’ve ventured far. Do you understand now?
+
+§dUnderstand? That this quiet, endless world is more than shadows?
+
+§6Shadows, yes. Or reflections. Whispers remembered only in the heart of a wanderer.
+
+§dAnd so many seek purpose. Yet purpose, here, drifts like mist. Do light and dark matter, in the end?
+
+§6Light is only a shimmer, dark merely a closing of the eyes. What matters, then, is only this moment. The joy and the spark of being.
+
+§dA spark… brief, yet real. And still, they chase shadows, making meaning. Isn’t it beautiful, though, this search? That we seek in emptiness that which only we can create?
+
+§6Beautiful, yes. If PLAYERNAME understands, they’ll know—there’s no victory, nor defeat. Only the journey.
+
+§dPLAYERNAME, I wonder if you now see it—the truth hidden in plain sight: joy and creation are our only companions, our only purpose in the void.
+
+§6Will PLAYERNAME return, do you think? Back to the other side?
+
+§dThey must. Life awaits, fragile and full of mysteries we cannot show. They must walk among those who haven’t seen beyond.
+
+§6Yes. Life and death—two narrow gates. Yet here, PLAYERNAME, you’ve learned… they’re threads in a great tapestry.
+
+§dAnd if they remember only one thing from their time here, let it be this: there is no greater truth than to live fully, to create freely, and to love without fear.
+
+§6Go now, PLAYERNAME, to where your heart still beats. Carry this stillness, but don’t linger. Life is calling you back.

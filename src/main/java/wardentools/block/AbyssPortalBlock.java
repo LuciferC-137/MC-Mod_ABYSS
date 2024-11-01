@@ -98,18 +98,14 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
             if (abyssLevel != null) {
                 BlockPos ancientCityPos
                         = findNearestStructure(abyssLevel, ModStructures.SURFACE_ANCIENT_CITY, pos);
-                if (ancientCityPos != null) {
-                    teleportToDimension(entity, ModDimensions.ABYSS_LEVEL_KEY, ancientCityPos);
-                }
+                teleportToDimension(entity, ModDimensions.ABYSS_LEVEL_KEY, ancientCityPos);
             }
         } else if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
             ServerLevel overworldLevel = level.getServer().getLevel(Level.OVERWORLD);
             if (overworldLevel != null) {
                 BlockPos ancientCityPos
                         = findNearestStructure(overworldLevel, BuiltinStructures.ANCIENT_CITY, pos);
-                if (ancientCityPos != null) {
-                    teleportToDimension(entity, Level.OVERWORLD, ancientCityPos);
-                }
+                teleportToDimension(entity, Level.OVERWORLD, ancientCityPos);
             }
         }
     }
@@ -122,7 +118,18 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
         HolderSet<Structure> structureHolderSet = HolderSet.direct(structureHolder);
         var result = level.getChunkSource().getGenerator()
                 .findNearestMapStructure(level, structureHolderSet, pos, 10000, false);
-        return result != null ? result.getFirst() : new BlockPos(0, 0, 0);
+        return result != null ? findSpawnOnPortalFrame(level, result.getFirst())
+                : new BlockPos(0, 0, 0);
+    }
+
+    private BlockPos findSpawnOnPortalFrame(Level level, BlockPos pos) {
+        int i = level.getMinBuildHeight();
+        while (i < level.getMaxBuildHeight()
+                && !level.getBlockState(pos.offset(0, i, 0))
+                    .is(Blocks.REINFORCED_DEEPSLATE)) {
+            i++;
+        }
+        return pos.offset(level.random.nextBoolean() ? -2 : 2, i, level.random.nextBoolean() ? -2 : 2);
     }
 
     private void teleportToDimension(Entity entity, ResourceKey<Level> targetDimension, BlockPos targetPos) {
@@ -161,18 +168,14 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
             if (abyssLevel != null) {
                 BlockPos ancientCityPos
                         = findNearestStructure(abyssLevel, ModStructures.SURFACE_ANCIENT_CITY, pos);
-                if (ancientCityPos != null) {
-                    sendScreenPacket(player, ancientCityPos);
-                }
+                sendScreenPacket(player, ancientCityPos);
             }
         } else if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
             ServerLevel overworldLevel = level.getServer().getLevel(Level.OVERWORLD);
             if (overworldLevel != null) {
                 BlockPos ancientCityPos
                         = findNearestStructure(overworldLevel, BuiltinStructures.ANCIENT_CITY, pos);
-                if (ancientCityPos != null) {
-                    sendScreenPacket(player, ancientCityPos);
-                }
+                sendScreenPacket(player, ancientCityPos);
             }
         }
     }

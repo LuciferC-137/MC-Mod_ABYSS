@@ -25,6 +25,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
+import wardentools.ModMain;
 import wardentools.sounds.ModMusics;
 
 import java.io.BufferedReader;
@@ -39,10 +40,12 @@ public class CustomWinScreen extends Screen {
            = new ResourceLocation("textures/misc/vignette.png");
    private static final String WIN_TXT = "wardentools:texts/win.txt";
    private static final String MOD_CREDITS = "wardentools:texts/mod_credits.json";
+   private static final ResourceLocation MOD_BACKGROUND_LOCATION
+           = new ResourceLocation(ModMain.MOD_ID, "textures/gui/background.png");
    private static final Component SECTION_HEADING
-           = Component.literal("============").withStyle(ChatFormatting.WHITE);
+           = Component.literal("========================").withStyle(ChatFormatting.WHITE);
    private static final String OBFUSCATE_TOKEN
-           = "" + ChatFormatting.WHITE
+           = "" + ChatFormatting.YELLOW
            + ChatFormatting.OBFUSCATED + ChatFormatting.GREEN + ChatFormatting.AQUA;
    private static final float SPEEDUP_FACTOR = 5.0F;
    private static final float SPEEDUP_FACTOR_FAST = 15.0F;
@@ -58,6 +61,8 @@ public class CustomWinScreen extends Screen {
    private final float unmodifiedScrollSpeed;
    private int direction;
    private final LogoRenderer logoRenderer = new LogoRenderer(false);
+   private int musicTickCountDown = 0;
+   private static final int MUSIC_TICK_COUNTDOWN = 80;
 
    public CustomWinScreen(boolean hasPoem, Runnable runnable) {
       super(GameNarrator.NO_TITLE);
@@ -80,8 +85,12 @@ public class CustomWinScreen extends Screen {
          this.minecraft.getMusicManager().tick();
          this.minecraft.getSoundManager().tick(false);
       }
+      if (this.musicTickCountDown == 1 && this.minecraft != null) {
+         this.minecraft.getMusicManager().startPlaying(this.getBackgroundMusic());
+         --this.musicTickCountDown;
+      } else if (this.musicTickCountDown > 0) --this.musicTickCountDown;
       float f = (float)(this.totalScrollLength + this.height + this.height + 24);
-      if (this.scroll > f) this.respawn();
+      if (this.scroll > f) this.changeToChoiceScreen();
    }
 
    public boolean keyPressed(int key, int i, int j) {
@@ -102,9 +111,16 @@ public class CustomWinScreen extends Screen {
       return super.keyReleased(key, i, j);
    }
 
-   public void onClose() {this.respawn();}
+   public void onClose() {this.changeToChoiceScreen();}
 
-   private void respawn() {this.onFinished.run();}
+   private void changeToChoiceScreen() {
+      if (this.minecraft != null) {
+         ChoiceScreen choiseScreen = new ChoiceScreen(this.onFinished);
+         choiseScreen.init(this.minecraft, this.minecraft.getWindow().getGuiScaledWidth(),
+                 this.minecraft.getWindow().getGuiScaledHeight());
+         this.minecraft.setScreen(choiseScreen);
+      }
+   }
 
    protected void init() {
       if (this.lines == null) {
@@ -115,6 +131,7 @@ public class CustomWinScreen extends Screen {
          if (this.poem) this.wrapCreditsIO("texts/postcredits.txt", this::addPoemFile);
          this.totalScrollLength = this.lines.size() * 12;
       }
+      this.musicTickCountDown = MUSIC_TICK_COUNTDOWN;
    }
 
    private void wrapCreditsIO(String name, CreditsReader reader1) {
@@ -257,26 +274,14 @@ public class CustomWinScreen extends Screen {
       float f3 = (float)(this.totalScrollLength + this.height + this.height + 24)
               / this.unmodifiedScrollSpeed;
       float f4 = (f3 - 20.0F - f1) * 0.005F;
-      if (f4 < f2) {
-         f2 = f4;
-      }
-
-      if (f2 > 1.0F) {
-         f2 = 1.0F;
-      }
-
+      if (f4 < f2) f2 = f4;
+      if (f2 > 1.0F)  f2 = 1.0F;
       f2 *= f2;
       f2 = f2 * 96.0F / 255.0F;
       graphics.setColor(f2, f2, f2, 1.0F);
-      graphics.blit(BACKGROUND_LOCATION, 0, 0, 0, 0.0F,
+      graphics.blit(MOD_BACKGROUND_LOCATION, 0, 0, 0, 0.0F,
               f, i, this.height, 64, 64);
       graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-   }
-
-   public void removed() {
-      if (this.minecraft != null) {
-         this.minecraft.getMusicManager().stopPlaying(this.getBackgroundMusic());
-      }
    }
 
    public @NotNull Music getBackgroundMusic() {
