@@ -13,30 +13,30 @@ import wardentools.advancement.ModCriteriaTriggers;
 
 import java.util.Optional;
 
-public class AbyssPortalCriteria extends SimpleCriterionTrigger<AbyssPortalCriteria.TriggerInstance> {
+public class RadianceBringerCriteria extends SimpleCriterionTrigger<RadianceBringerCriteria.TriggerInstance> {
 
     public void trigger(ServerPlayer player) {
         this.trigger(player, instance -> true);
     }
 
     @Override
-    public @NotNull Codec<AbyssPortalCriteria.TriggerInstance> codec() {
-        return AbyssPortalCriteria.TriggerInstance.CODEC;
+    public @NotNull Codec<RadianceBringerCriteria.TriggerInstance> codec() {
+        return RadianceBringerCriteria.TriggerInstance.CODEC;
     }
 
     public static record TriggerInstance(Optional<ContextAwarePredicate> player)
-            implements SimpleCriterionTrigger.SimpleInstance {
-        public static final Codec<AbyssPortalCriteria.TriggerInstance> CODEC
+            implements SimpleInstance {
+        public static final Codec<RadianceBringerCriteria.TriggerInstance> CODEC
                 = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player")
-                            .forGetter(AbyssPortalCriteria.TriggerInstance::player)
-            ).apply(instance, AbyssPortalCriteria.TriggerInstance::new);
+                            .forGetter(RadianceBringerCriteria.TriggerInstance::player)
+            ).apply(instance, RadianceBringerCriteria.TriggerInstance::new);
         });
 
-        public static Criterion<AbyssPortalCriteria.TriggerInstance> openPortal() {
-            return ModCriteriaTriggers.ABYSS_PORTAL_OPEN.createCriterion(
-                    new AbyssPortalCriteria.TriggerInstance(Optional.empty()));
+        public static Criterion<RadianceBringerCriteria.TriggerInstance> choseRadiance() {
+            return ModCriteriaTriggers.RADIANCE_BRINGER.createCriterion(
+                    new RadianceBringerCriteria.TriggerInstance(Optional.empty()));
         }
 
         @Override

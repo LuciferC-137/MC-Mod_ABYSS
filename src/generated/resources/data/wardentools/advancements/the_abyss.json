@@ -13,7 +13,7 @@
       "translate": "advancements.wardentools.theabyss.description"
     },
     "icon": {
-      "item": "wardentools:dark_grass"
+      "item": "wardentools:darkgrass_block"
     },
     "title": {
       "translate": "advancements.wardentools.theabyss.title"

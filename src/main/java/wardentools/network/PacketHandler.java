@@ -72,6 +72,11 @@ public class PacketHandler {
 				.decoder(ShowWinScreen::new)
 				.consumerMainThread(ShowWinScreen::handle)
 				.add();
+		INSTANCE.messageBuilder(SwitchAchievement.class, NetworkDirection.PLAY_TO_SERVER)
+				.encoder(SwitchAchievement::encode)
+				.decoder(SwitchAchievement::new)
+				.consumerMainThread(SwitchAchievement::handle)
+				.add();
     }
 
     public static void sendToServer(Object msg) {

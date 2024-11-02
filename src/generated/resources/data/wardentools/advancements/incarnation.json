@@ -20,7 +20,7 @@
     "description": {
       "translate": "advancements.wardentools.incarnation.description"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "icon": {
       "item": "wardentools:chiseled_abyssalite"
     },

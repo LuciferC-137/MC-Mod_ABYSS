@@ -1,0 +1,26 @@
+{
+  "parent": "wardentools:incarnation",
+  "criteria": {
+    "radiance_bringer": {
+      "trigger": "wardentools:radiance_bringer"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.wardentools.radiance_bringer.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "item": "wardentools:pure_vessel"
+    },
+    "title": {
+      "translate": "advancements.wardentools.radiance_bringer.title"
+    }
+  },
+  "requirements": [
+    [
+      "radiance_bringer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

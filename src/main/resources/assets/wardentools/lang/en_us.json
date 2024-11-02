@@ -199,5 +199,9 @@
 	"advancements.wardentools.escape.title": "The gate of salvation.",
 	"advancements.wardentools.escape.description": "A safe way to escape darkness.",
 	"advancements.wardentools.radiant_armor.title": "A warrior of light.",
-	"advancements.wardentools.radiant_armor.description": "Go purge this world."
+	"advancements.wardentools.radiant_armor.description": "Go purge this world.",
+	"advancements.wardentools.corruption_vessel.title": "The Corruption is within you.",
+	"advancements.wardentools.corruption_vessel.description": "Abandon yourself to the Corruption.",
+	"advancements.wardentools.radiance_bringer.title": "The light of the Radiance.",
+	"advancements.wardentools.radiance_bringer.description": "Chose Light over Darkness."
 }

@@ -13,6 +13,8 @@ import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.advancement.criteria.AbyssPortalCriteria;
+import wardentools.advancement.criteria.CorruptionVesselCriteria;
+import wardentools.advancement.criteria.RadianceBringerCriteria;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.effect.ModEffects;
 import wardentools.entity.ModEntities;
@@ -93,7 +95,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         AdvancementHolder theAbyss = Advancement.Builder.advancement()
                 .parent(abyss)
                 .display(
-                        ItemRegistry.DARK_GRASS.get(),
+                        ItemRegistry.DARKGRASS_BLOCK.get(),
                         Component.translatable("advancements.wardentools.theabyss.title"),
                         Component.translatable("advancements.wardentools.theabyss.description"),
                         null,
@@ -250,7 +252,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         Component.translatable("advancements.wardentools.incarnation.title"),
                         Component.translatable("advancements.wardentools.incarnation.description"),
                         null,
-                        AdvancementType.CHALLENGE,
+                        AdvancementType.GOAL,
                         true,
                         true,
                         false
@@ -259,6 +261,38 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         KilledTrigger.TriggerInstance.playerKilledEntity(
                                 EntityPredicate.Builder.entity().of(ModEntities.CONTAGION_INCARNATION.get())))
                 .save(saver, new ResourceLocation(ModMain.MOD_ID, "incarnation"));
+
+        AdvancementHolder corruption_vessel = Advancement.Builder.advancement()
+                .parent(incarnation)
+                .display(
+                        ItemRegistry.CORRUPTED_VESSEL.get(),
+                        Component.translatable("advancements.wardentools.corruption_vessel.title"),
+                        Component.translatable("advancements.wardentools.corruption_vessel.description"),
+                        null,
+                        AdvancementType.CHALLENGE,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("corruption_vessel",
+                        CorruptionVesselCriteria.TriggerInstance.choseCorruption())
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "corruption_vessel"));
+
+        AdvancementHolder radiance_bringer = Advancement.Builder.advancement()
+                .parent(incarnation)
+                .display(
+                        ItemRegistry.PURE_VESSEL.get(),
+                        Component.translatable("advancements.wardentools.radiance_bringer.title"),
+                        Component.translatable("advancements.wardentools.radiance_bringer.description"),
+                        null,
+                        AdvancementType.CHALLENGE,
+                        true,
+                        true,
+                        false
+                )
+                .addCriterion("radiance_bringer",
+                        RadianceBringerCriteria.TriggerInstance.choseRadiance())
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiance_bringer"));
 
         AdvancementHolder corrupted = Advancement.Builder.advancement()
                 .parent(deepCristal)

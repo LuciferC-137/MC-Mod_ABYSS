@@ -13,6 +13,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.network.PacketHandler;
+import wardentools.network.SwitchAchievement;
 import wardentools.sounds.ModMusics;
 
 import java.util.Random;
@@ -53,9 +55,9 @@ public class ChoiceScreen extends Screen {
       int x2 = (this.width / 2) + spacing;
       int y = this.height / 2 - 10;
       this.contagionButton = Button.builder(Component.literal("Contagion"),
-              (button) -> this.respawn()).bounds(x1, y, BUTTON_WIDTH, BUTTON_HEIGHT).build();
+              (button) -> this.onContagionClicked()).bounds(x1, y, BUTTON_WIDTH, BUTTON_HEIGHT).build();
       this.radianceButton = Button.builder(Component.literal("Radiance"),
-              (button) -> this.respawn()).bounds(x2, y, BUTTON_WIDTH, BUTTON_HEIGHT).build();
+              (button) -> this.onRadianceClicked()).bounds(x2, y, BUTTON_WIDTH, BUTTON_HEIGHT).build();
       this.addRenderableWidget(this.radianceButton);
       this.addRenderableWidget(this.contagionButton);
       this.seed = new Random().nextLong();
@@ -82,6 +84,16 @@ public class ChoiceScreen extends Screen {
    public void onClose() {this.respawn();}
 
    private void respawn() {this.onFinished.run();}
+
+   private void onRadianceClicked() {
+      PacketHandler.sendToServer(new SwitchAchievement(0));
+      this.respawn();
+   }
+
+   private void onContagionClicked() {
+      PacketHandler.sendToServer(new SwitchAchievement(1));
+      this.respawn();
+   }
 
    public void render(@NotNull GuiGraphics graphics, int x, int y, float a) {
       super.render(graphics, x, y, a);

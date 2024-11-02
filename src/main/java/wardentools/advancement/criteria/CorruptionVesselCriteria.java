@@ -13,30 +13,30 @@ import wardentools.advancement.ModCriteriaTriggers;
 
 import java.util.Optional;
 
-public class AbyssPortalCriteria extends SimpleCriterionTrigger<AbyssPortalCriteria.TriggerInstance> {
+public class CorruptionVesselCriteria extends SimpleCriterionTrigger<CorruptionVesselCriteria.TriggerInstance> {
 
     public void trigger(ServerPlayer player) {
         this.trigger(player, instance -> true);
     }
 
     @Override
-    public @NotNull Codec<AbyssPortalCriteria.TriggerInstance> codec() {
-        return AbyssPortalCriteria.TriggerInstance.CODEC;
+    public @NotNull Codec<CorruptionVesselCriteria.TriggerInstance> codec() {
+        return CorruptionVesselCriteria.TriggerInstance.CODEC;
     }
 
     public static record TriggerInstance(Optional<ContextAwarePredicate> player)
-            implements SimpleCriterionTrigger.SimpleInstance {
-        public static final Codec<AbyssPortalCriteria.TriggerInstance> CODEC
+            implements SimpleInstance {
+        public static final Codec<CorruptionVesselCriteria.TriggerInstance> CODEC
                 = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player")
-                            .forGetter(AbyssPortalCriteria.TriggerInstance::player)
-            ).apply(instance, AbyssPortalCriteria.TriggerInstance::new);
+                            .forGetter(CorruptionVesselCriteria.TriggerInstance::player)
+            ).apply(instance, CorruptionVesselCriteria.TriggerInstance::new);
         });
 
-        public static Criterion<AbyssPortalCriteria.TriggerInstance> openPortal() {
-            return ModCriteriaTriggers.ABYSS_PORTAL_OPEN.createCriterion(
-                    new AbyssPortalCriteria.TriggerInstance(Optional.empty()));
+        public static Criterion<CorruptionVesselCriteria.TriggerInstance> choseCorruption() {
+            return ModCriteriaTriggers.CORRUPTION_VESSEL.createCriterion(
+                    new CorruptionVesselCriteria.TriggerInstance(Optional.empty()));
         }
 
         @Override
