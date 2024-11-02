@@ -1,17 +1,26 @@
 package wardentools.items.armors;
 
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import wardentools.ModMain;
 import wardentools.effect.ModEffects;
 
 import java.util.Map;
 
 public class ModArmorItem extends ArmorItem {
+    private static final ResourceLocation CORRUPTION_ADVANCEMENT
+            = new ResourceLocation(ModMain.MOD_ID, "corruption_vessel");
+    private static final ResourceLocation RADIANCE_ADVANCEMENT
+            = new ResourceLocation(ModMain.MOD_ID, "radiance_bringer");
     private static final int EFFECT_TIME = 242;
     private static final Map<ArmorMaterial, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
             (new ImmutableMap.Builder<ArmorMaterial, MobEffectInstance>())
@@ -74,8 +83,27 @@ public class ModArmorItem extends ArmorItem {
         ArmorItem leggings = ((ArmorItem)player.getInventory().getArmor(1).getItem());
         ArmorItem breastplate = ((ArmorItem)player.getInventory().getArmor(2).getItem());
         ArmorItem helmet = ((ArmorItem)player.getInventory().getArmor(3).getItem());
-
-        return helmet.getMaterial() == material && breastplate.getMaterial() == material &&
+        boolean allSameMaterial = helmet.getMaterial() == material
+                && breastplate.getMaterial() == material &&
                 leggings.getMaterial() == material && boots.getMaterial() == material;
+        return allSameMaterial && playerHasAdvancement(breastplate.getMaterial(), player);
+    }
+
+    private boolean playerHasAdvancement(ArmorMaterial material, Player player) {
+        if (!player.level().isClientSide) {
+            ServerPlayer serverPlayer = (ServerPlayer) player;
+            AdvancementHolder advancementHolder = null;
+            if (material == ModMaterials.DEEPCRISTAL) {
+                advancementHolder = serverPlayer.server.getAdvancements().get(CORRUPTION_ADVANCEMENT);
+            } else if (material == ModMaterials.RADIANCE_CRISTAL) {
+                advancementHolder = serverPlayer.server.getAdvancements().get(RADIANCE_ADVANCEMENT);
+            }
+            if (advancementHolder != null) {
+                AdvancementProgress progress = serverPlayer.getAdvancements()
+                        .getOrStartProgress(advancementHolder);
+                return progress.isDone();
+            }
+        }
+        return false;
     }
 }

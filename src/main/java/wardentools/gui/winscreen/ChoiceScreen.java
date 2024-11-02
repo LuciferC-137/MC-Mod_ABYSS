@@ -42,6 +42,8 @@ public class ChoiceScreen extends Screen {
    private static final float MIN_CENTER_FACTOR = 0.3f;
    private static final float SPREAD_FACTOR = 0.02f;
    private long seed = 123456789L;
+   private int fadeInTick = 0;
+   private static final int FADE_IN_DURATION = 80;
 
    public ChoiceScreen(Runnable runnable) {
       super(GameNarrator.NO_TITLE);
@@ -61,9 +63,11 @@ public class ChoiceScreen extends Screen {
       this.addRenderableWidget(this.radianceButton);
       this.addRenderableWidget(this.contagionButton);
       this.seed = new Random().nextLong();
+      this.fadeInTick = FADE_IN_DURATION;
    }
 
    public void tick() {
+      if (fadeInTick > 0) --fadeInTick;
       if (this.minecraft != null) {
          this.minecraft.getMusicManager().tick();
          this.minecraft.getSoundManager().tick(false);
@@ -167,5 +171,10 @@ public class ChoiceScreen extends Screen {
 
    public @NotNull Music getBackgroundMusic() {
       return ModMusics.DEEP_FOREST;
+   }
+
+   @Override
+   public boolean shouldCloseOnEsc() {
+      return false;
    }
 }
