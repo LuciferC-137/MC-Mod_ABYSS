@@ -1,6 +1,6 @@
----------------
+------------------------------
 MINECRAFT: DIVE INTO THE ABYSS
----------------
+------------------------------
 
 
 This mod adds a new dimension revolving around the ancient city ambiance, adding unique lore and

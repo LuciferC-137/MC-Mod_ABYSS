@@ -122,7 +122,7 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
 			this.ambient.animateWhen(!this.walkAnimation.isMoving() && !this.isDeadOrDying(), this.tickCount);
 			this.sprint.animateWhen(this.isSprinting(), this.tickCount);
 			this.headAmbient.animateWhen(!this.getLookControl().isLookingAtTarget()
-					&& !this.isSprinting(), this.tickCount);
+					&& !this.isSprinting() && !this.isDeadOrDying(), this.tickCount);
 		}
 		super.tick();
 	}
