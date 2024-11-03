@@ -1,17 +1,19 @@
 ---------------
-MINECRAFT ABYSS
+MINECRAFT: DIVE INTO THE ABYSS
 ---------------
 
 
-This mod is a small addition to vanilla with a essentially a new dimension "abyss".
-The abyss is completly overwhelmed with sculk and wardens are listening closely.
-The main features are:
-	- New set of armor
-	- New material
-	- New tree
-	- New mob
-	- New structures generating in the abyss
+This mod adds a new dimension revolving around the ancient city ambiance, adding unique lore and
+gameplay mechanics. The new dimension **Abyss** is intended to be reached after the End to offer the player
+a new challenge and a new experience. The Abyss is a dark and mysterious place, filled with ancient ruins
+of a long-gone civilization. The player will have to explore the Abyss to find new resources, new mobs, and
+new structures.
 
+Where does the corruption come from ? What is the Radiance that seems to fight the darkness ?
+
+Will you choose to fight the darkness or to become a part of it ?
+
+For more information on this mod, please refer to the wiki: https://github.com/LuciferC-137/MC-Mod_ABYSS/wiki
 
 
 ------------------

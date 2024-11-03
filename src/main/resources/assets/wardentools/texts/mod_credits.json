@@ -18,8 +18,9 @@
                         ]
                     },
                     {                     
-                        "title": "Ancient Citadel's Builder",
+                        "title": "Structure Build Team",
                         "names": [
+                            "Maxime Bloch",
                             "Arthur Bourmaud"
                         ]
                     }
@@ -31,9 +32,7 @@
                     {
                         "title": "Beta Testers",
                         "names": [
-                            "Arthur Bourmaud",
-                            "Antoine Cheucle",
-                            "Nathan Clayes"
+                            "Arthur Bourmaud"
                         ]
                     }
                 ]
@@ -42,11 +41,18 @@
             {   "discipline": "Minecraft Modding acklowledgements",
                 "titles": [
                     {
-                        "title": "",
+                        "title": "Minecraft Environment",
                         "names": [
                             "Minecraft Forge",
                             "Minecraft Coder Pack",
                             "Minecraft Team: Mojand Studios"
+                        ]
+                    },
+                    {
+                        "title": "Minecraft Community thanks",
+                        "names": [
+                            "TurtyWurty",
+                            "Kaupenjoe"
                         ]
                     }
                 ]
