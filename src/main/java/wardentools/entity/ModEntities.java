@@ -68,6 +68,12 @@ public class ModEntities {
 					() -> EntityType.Builder.of(ShadowEntity::new, MobCategory.MONSTER)
 					.sized(0.6f, 1.8f)
 					.build(new ResourceLocation(ModMain.MOD_ID, "shadow").toString()));
+
+	public static final RegistryObject<EntityType<ContagionIncarnationCorpseEntity>> CONTAGION_INCARNATION_CORPSE =
+			ENTITY_TYPES.register("contagion_incarnation_corpse",
+					()->EntityType.Builder.of(ContagionIncarnationCorpseEntity::new, MobCategory.MISC)
+					.sized(4f, 1.5f)
+					.build(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation_corpse").toString()));
 	
 	public static void register(IEventBus eventBus) {
 		ENTITY_TYPES.register(eventBus);

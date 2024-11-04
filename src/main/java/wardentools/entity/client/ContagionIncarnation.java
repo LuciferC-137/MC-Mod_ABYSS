@@ -15,6 +15,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.ContagionIncarnationAnimation;
 import wardentools.entity.custom.ContagionIncarnationEntity;
@@ -839,19 +840,19 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	}
 
 	@Override
-	public ModelPart root() {
+	public @NotNull ModelPart root() {
 		return this.FULL;
 	}
 
 	@Override
-	public void setupAnim(ContagionIncarnationEntity entity, float limbSwing,
-			float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setupAnim(@NotNull ContagionIncarnationEntity entity, float limbSwing,
+						  float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
 		
 		if (this.oldPos == null) {
 			this.oldPos = entity.position();
 		}
-		this.animateTail(entity.yBodyRot, oldPos, entity.position());
+		if (!entity.isDeadOrDying()) this.animateTail(entity.yBodyRot, oldPos, entity.position());
 		this.oldPos = entity.position();
 		if (!entity.isInWaterOrBubble() && !entity.isSprinting()) {
 			animateWalk(ContagionIncarnationAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
@@ -874,7 +875,7 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	}
 	
 	private void animateTail(float bodyRot, Vec3 oldPos, Vec3 newPos) {
-		// This call makes the tail to lie on the ground.
+		// This call makes the tail lie on the ground.
 		this.tailLie();
 		// This call makes the tail fold and unfold according to the speed of the entity and its rotation.
 		this.tailFolding(bodyRot, oldPos, newPos);

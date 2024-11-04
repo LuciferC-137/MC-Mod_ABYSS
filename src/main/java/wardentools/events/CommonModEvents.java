@@ -37,6 +37,8 @@ public class CommonModEvents {
 		event.put(ModEntities.PARASYTE.get(), ParasyteEntity.createAttribute().build());
 		event.put(ModEntities.NOCTILURE.get(), NoctilureEntity.createAttribute().build());
 		event.put(ModEntities.SHADOW.get(), ShadowEntity.createAttribute().build());
+		event.put(ModEntities.CONTAGION_INCARNATION_CORPSE.get(),
+				ContagionIncarnationCorpseEntity.createAttribute().build());
 	}
     
     @SubscribeEvent

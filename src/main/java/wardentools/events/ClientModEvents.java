@@ -29,6 +29,8 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.PARASYTE.get(), ParasyteRenderer::new);
 		event.registerEntityRenderer(ModEntities.NOCTILURE.get(), NoctilureRenderer::new);
 		event.registerEntityRenderer(ModEntities.SHADOW.get(), ShadowRenderer::new);
+		event.registerEntityRenderer(ModEntities.CONTAGION_INCARNATION_CORPSE.get(),
+				ContagionIncarnationCorpseRenderer::new);
 	}
 
 	
@@ -46,5 +48,7 @@ public class ClientModEvents {
 		event.registerLayerDefinition(Parasyte.LAYER_LOCATION, Parasyte::createBodyLayer);
 		event.registerLayerDefinition(Noctilure.LAYER_LOCATION, Noctilure::createBodyLayer);
 		event.registerLayerDefinition(Shadow.LAYER_LOCATION, Shadow::createBodyLayer);
+		event.registerLayerDefinition(ContagionIncarnationCorpse.LAYER_LOCATION,
+				ContagionIncarnationCorpse::createBodyLayer);
 	}
 }

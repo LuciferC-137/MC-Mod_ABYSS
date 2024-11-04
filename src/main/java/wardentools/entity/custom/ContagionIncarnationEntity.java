@@ -30,6 +30,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.NotNull;
+import wardentools.entity.ModEntities;
 import wardentools.entity.interfaces.CorruptionMonster;
 import wardentools.sounds.ModSounds;
 
@@ -170,6 +171,7 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
         		&& !this.level().isClientSide() && !this.isRemoved()) {
            this.level().broadcastEntityEvent(this, (byte)60);
            this.remove(Entity.RemovalReason.KILLED);
+           this.createCorpse();
         }
      }
 
@@ -182,11 +184,7 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
            if (this.deathScore >= 0 && livingentity != null) {
               livingentity.awardKillScore(this, this.deathScore, source);
            }
-
-           if (this.isSleeping()) {
-              this.stopSleeping();
-           }
-
+           if (this.isSleeping()) this.stopSleeping();
            this.dead = true;
            this.getCombatTracker().recheckStatus();
            Level level = this.level();
@@ -195,11 +193,23 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
                  this.gameEvent(GameEvent.ENTITY_DIE);
                  this.dropAllDeathLoot(source);
                  this.createWitherRose(livingentity);
-              }
-              this.level().broadcastEntityEvent(this, (byte)3);
+               }
+               this.level().broadcastEntityEvent(this, (byte)3);
            }
         }
-     }
+    }
+
+    private void createCorpse() {
+        ContagionIncarnationCorpseEntity corpse
+                = new ContagionIncarnationCorpseEntity(
+                        ModEntities.CONTAGION_INCARNATION_CORPSE.get(), this.level());
+        corpse.setPos(this.getX(), this.getY(), this.getZ());
+        corpse.setYRot(this.getYRot());
+        corpse.setYHeadRot(this.getYHeadRot());
+        corpse.setYBodyRot(this.yBodyRot);
+        corpse.setHealth(corpse.getMaxHealth());
+        this.level().addFreshEntity(corpse);
+    }
 
 	@Override
     public void spawnAnim() {
@@ -214,7 +224,6 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
         } else {
            this.level().broadcastEntityEvent(this, (byte)20);
         }
-
      }   
 
 }
