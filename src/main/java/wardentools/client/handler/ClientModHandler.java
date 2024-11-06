@@ -13,6 +13,7 @@ import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.renderer.AbyssPortalBlockRenderer;
 import wardentools.blockentity.renderer.ProtectorInvokerRenderer;
 import wardentools.blockentity.renderer.RadianceCatalystRenderer;
+import wardentools.blockentity.renderer.ContagionIncarnationSkullRenderer;
 import wardentools.client.RadianceCatalystScreen;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -35,6 +36,8 @@ public class ClientModHandler {
 				AbyssPortalBlockRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.DYSFUNCTIONNING_CATALYST_BLOCK_ENTITY.get(),
 				DysfunctionningCatalystRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.CONTAGION_INCARNATION_SKULL_BLOCK_ENTITY.get(),
+				ContagionIncarnationSkullRenderer::new);
 	}
 
 }

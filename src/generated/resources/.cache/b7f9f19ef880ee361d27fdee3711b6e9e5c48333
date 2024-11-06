@@ -1,4 +1,4 @@
-// 1.20.4	2024-10-23T13:27:38.4207047	Item Models: wardentools
+// 1.20.4	2024-11-06T18:13:36.0971118	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -8,6 +8,7 @@ a538888f5e66213ed3e668f9a6fd61cc12d7ae92 assets/wardentools/models/item/blue_glo
 2386ecb76616df62ada50922746a42f34a611cac assets/wardentools/models/item/chiseled_abyssalite.json
 4631782b9c4658326e513c27e1ea44415e569569 assets/wardentools/models/item/citrine.json
 edbe676badc11d415ea7c976e6120f23f3659962 assets/wardentools/models/item/citrine_fragment.json
+95abdbf158395f7710b42b91d17047c64d7750c3 assets/wardentools/models/item/contagion_incarnation_skull.json
 d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupted_essence.json
 85a960b58708abc5db1c304db956ca01ad709434 assets/wardentools/models/item/corrupted_vessel.json
 e4a0e27e1f0fd8c69938bacd2b75669152662985 assets/wardentools/models/item/cracked_abyssalite_bricks_slab.json

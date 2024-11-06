@@ -540,4 +540,9 @@ public class ItemRegistry {
 			REGISTAR.register("shadow_spawn_egg",
 					() -> new ForgeSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
 							new Item.Properties()));
+	
+	public static final RegistryObject<Item> CONTAGION_INCARNATION_SKULL =
+			REGISTAR.register("contagion_incarnation_skull",
+					() -> new BlockItem(BlockRegistry.CONTAGION_INCARNATION_SKULL.get(),
+							new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
 }

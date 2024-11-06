@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
+import wardentools.items.ItemRegistry;
 
 import java.util.function.Predicate;
 
@@ -138,12 +139,11 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
     }
 
     private void brokenByPlayer(DamageSource damageSource) {
-        /*
-        ItemStack itemstack = new ItemStack(Items.ARMOR_STAND);
+        ItemStack itemstack = new ItemStack(ItemRegistry.CONTAGION_INCARNATION_SKULL.get());
         if (this.hasCustomName()) {
             itemstack.setHoverName(this.getCustomName());
         }
-        Block.popResource(this.level(), this.blockPosition(), itemstack);*/
+        Block.popResource(this.level(), this.blockPosition(), itemstack);
         this.brokenByAnything(damageSource);
     }
 

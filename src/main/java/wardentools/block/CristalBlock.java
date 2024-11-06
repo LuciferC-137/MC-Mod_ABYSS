@@ -32,12 +32,12 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class CristalBlock extends Block implements SimpleWaterloggedBlock {
-	public static final MapCodec<CristalBlock> CODEC = RecordCodecBuilder.mapCodec((p_313213_) -> {
-	      return p_313213_.group(Codec.FLOAT.fieldOf("height").forGetter((p_313043_) -> {
-	         return p_313043_.height;
-	      }), Codec.FLOAT.fieldOf("aabb_offset").forGetter((p_310115_) -> {
-	         return p_310115_.aabbOffset;
-	      }), propertiesCodec()).apply(p_313213_, CristalBlock::new);
+	public static final MapCodec<CristalBlock> CODEC = RecordCodecBuilder.mapCodec((blockInstance) -> {
+	      return blockInstance.group(Codec.FLOAT.fieldOf("height").forGetter((block) -> {
+	         return block.height;
+	      }), Codec.FLOAT.fieldOf("aabb_offset").forGetter((block) -> {
+	         return block.aabbOffset;
+	      }), propertiesCodec()).apply(blockInstance, CristalBlock::new);
 	   });
 	
 	

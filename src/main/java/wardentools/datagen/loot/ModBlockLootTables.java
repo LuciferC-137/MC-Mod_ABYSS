@@ -42,7 +42,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.ABYSSALITE_BRICKS_SLAB);
     	this.addDropSelf(BlockRegistry.ABYSSALITE_BRICKS_WALL);
     	this.addDropSelf(BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
-		this.addDropSelf(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB);
 		this.addDropSelf(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR);
 		this.addDropSelf(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL);
 		this.addDropSelf(BlockRegistry.PALE_CRISTAL_BLOCK);
@@ -81,6 +80,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     	this.dropSelf(BlockRegistry.PROTECTOR_INVOKER.get());
 		this.dropSelf(BlockRegistry.BLACK_LANTERN.get());
+		this.dropSelf(BlockRegistry.CONTAGION_INCARNATION_SKULL.get());
 
 		// Planks derivatives special drops
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
@@ -91,6 +91,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     			block -> createSlabItemTable(BlockRegistry.WHITETREE_SLAB.get()));
     	this.add(BlockRegistry.WHITETREE_DOOR.get(), 
     			block -> createDoorTable(BlockRegistry.WHITETREE_DOOR.get()));
+		this.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get(),
+				block -> createSlabItemTable(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get()));
 
 		// Vegetation drop
     	this.add(BlockRegistry.TALL_WHITE_GRASS.get(),

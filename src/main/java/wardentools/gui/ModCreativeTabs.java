@@ -160,6 +160,8 @@ public class ModCreativeTabs {
 
         addItemToTag("building", ItemRegistry.BLACK_LANTERN);
 
+        addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
+
         addAllItemsFromRegistry();
     }
 
@@ -233,6 +235,7 @@ public class ModCreativeTabs {
                     .displayItems((pParameters, event) -> {
                         getItemsByTag("corrupted").forEach(item -> event.accept(item.get()));
                         getItemsByTag("radiant").forEach(item -> event.accept(item.get()));
+                        getItemsByTag("misc").forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> EGG

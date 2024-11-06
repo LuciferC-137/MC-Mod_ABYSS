@@ -102,6 +102,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.RUBY);
         blockItemWithItemModel(BlockRegistry.MALACHITE);
         blockItemWithItemModel(BlockRegistry.PALE_CRISTAL);
+        blockItemWithItemModel(BlockRegistry.CONTAGION_INCARNATION_SKULL);
         
         //Blocks that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),

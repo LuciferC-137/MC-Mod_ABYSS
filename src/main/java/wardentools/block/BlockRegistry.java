@@ -509,4 +509,9 @@ public class BlockRegistry {
 			= REGISTAR.register("cracked_abyssalite_bricks_wall",
 			() -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_WALL)
 					.strength(4,7)));
+
+	public static final RegistryObject<Block> CONTAGION_INCARNATION_SKULL
+			= REGISTAR.register("contagion_incarnation_skull",
+			() -> new ContagionIncarnationSkullBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SKELETON_SKULL)
+					.strength(4.0F, 7.0F).noOcclusion()));
 }

@@ -1,0 +1,23 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "wardentools:block/contagion_incarnation_skull",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "wardentools:block/contagion_incarnation_skull",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "wardentools:block/contagion_incarnation_skull",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "wardentools:block/contagion_incarnation_skull",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

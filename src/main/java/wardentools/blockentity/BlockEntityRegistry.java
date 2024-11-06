@@ -27,8 +27,15 @@ public class BlockEntityRegistry {
 							BlockRegistry.ABYSS_PORTAL_BLOCK.get()).build(null));
 
 	public static final RegistryObject<BlockEntityType<DysfunctionningCatalystBlockEntity>>
-			DYSFUNCTIONNING_CATALYST_BLOCK_ENTITY = BLOCK_ENTITIES.register("dysfunctionning_catalyst_block_entity",
+			DYSFUNCTIONNING_CATALYST_BLOCK_ENTITY = BLOCK_ENTITIES
+			.register("dysfunctionning_catalyst_block_entity",
 			() -> BlockEntityType.Builder.of(DysfunctionningCatalystBlockEntity::new,
 					BlockRegistry.DYSFUNCTIONNING_CATALYST.get()).build(null));
+
+	public static final RegistryObject<BlockEntityType<ContagionIncarnationSkullBlockEntity>>
+			CONTAGION_INCARNATION_SKULL_BLOCK_ENTITY = BLOCK_ENTITIES
+			.register("contagion_incarnation_skull_block_entity",
+			() -> BlockEntityType.Builder.of(ContagionIncarnationSkullBlockEntity::new,
+					BlockRegistry.CONTAGION_INCARNATION_SKULL.get()).build(null));
 
 }
