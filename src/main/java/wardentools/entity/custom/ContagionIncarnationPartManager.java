@@ -144,7 +144,6 @@ public class ContagionIncarnationPartManager extends CorruptionMonster implement
 	@Override
 	public void tick() {
 		if (!level().isClientSide) {
-            this.setYRot(this.getYRot() + 1f);
             if (this.oldPos == null) {
                 this.oldPos = this.position();
             }
@@ -217,7 +216,7 @@ public class ContagionIncarnationPartManager extends CorruptionMonster implement
             length_factor = 1f
                     - Math.max((Mth.abs((
                             this.getSection_12_rotY() + this.getSection_13_rotY() + this.getSection_14_rotY())
-                    / rad)%360f)/60f, 0f);
+                    / rad) % 360f) / 60f, 0f);
             length_factor = (length_factor + 3f) / 4f;
         }
         this.tickPart(this.tail3,
@@ -322,7 +321,7 @@ public class ContagionIncarnationPartManager extends CorruptionMonster implement
     }
 
     public boolean hurt(ContagionIncarnationPart part, DamageSource source, float damage) {
-        if (!this.isDeadOrDying() || source.getMsgId().equals("corrupted")) {
+        if (this.isDeadOrDying() || source.getMsgId().equals("corrupted")) {
             return false;
         } else {
             if (source.getEntity() instanceof Player || source.getEntity() instanceof ProtectorEntity) {
