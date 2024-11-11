@@ -4,13 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -29,21 +26,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.ModEntities;
-import wardentools.entity.interfaces.CorruptionMonster;
 import wardentools.sounds.ModSounds;
 
 import java.util.Objects;
 
-public class ContagionIncarnationEntity extends CorruptionMonster implements Enemy {
-	protected static final float DEFAULT_EYE_HEIGHT = 4.8F;
+public class ContagionIncarnationEntity extends ContagionIncarnationPartManager implements Enemy {
 	public static final double MOV_SPEED = 0.2D;
 	private final ServerBossEvent bossEvent;
 	public static final int CHANCE_OF_SCREAM_ON_HIT = 4;
 	public static final int DEATH_DURATION = 200;
 	public int contagionIncarnationDeathTime = 0;
-	public static final int SWING_DURATION = 10;
 	public final AnimationState dyingAnimationState = new AnimationState();
 	public final AnimationState ambient = new AnimationState();
 	public final AnimationState idleAmbient = new AnimationState();
@@ -62,8 +57,7 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 2D));
 		this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 4f));
-		this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
-		
+
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	    this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
@@ -112,7 +106,7 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
     }
 	
 	protected float getMaxHeadRotationRelativeToBody() {
-	      return 220F;
+	      return 120F;
     }
 	
 	@Override
@@ -127,13 +121,29 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
 		}
 		super.tick();
 	}
-	
-	public static boolean canSpawn(EntityType<ContagionIncarnationEntity> entityType, ServerLevelAccessor level,
-            MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+    }
+
+    @Override
+    public boolean isInWall() {
+        return super.isInWall();
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+    }
+
+    public static boolean canSpawn(EntityType<ContagionIncarnationEntity> entityType, ServerLevelAccessor level,
+                                   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
     	return true;
     }
-	
-	@Override
+
+
+    @Override
 	public boolean checkSpawnRules(@NotNull LevelAccessor p_21686_, @NotNull MobSpawnType p_21687_) {
     	return true;
     }
@@ -224,6 +234,6 @@ public class ContagionIncarnationEntity extends CorruptionMonster implements Ene
         } else {
            this.level().broadcastEntityEvent(this, (byte)20);
         }
-     }   
+    }
 
 }

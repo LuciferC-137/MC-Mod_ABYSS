@@ -77,6 +77,7 @@ public class PacketHandler {
 				.decoder(SwitchAchievement::new)
 				.consumerMainThread(SwitchAchievement::handle)
 				.add();
+
     }
 
     public static void sendToServer(Object msg) {

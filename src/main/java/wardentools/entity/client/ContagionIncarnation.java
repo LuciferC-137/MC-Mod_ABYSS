@@ -19,19 +19,13 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.ContagionIncarnationAnimation;
 import wardentools.entity.custom.ContagionIncarnationEntity;
+import wardentools.entity.custom.ContagionIncarnationPart;
 
 @SuppressWarnings("unused")
 public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnationEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
 		= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation"), "main");
 	private static final float rad = (float)Math.PI / 180f;
-	private Vec3 oldPos = null;
-	private float refAngleTail = 0f;
-	private float TAIL_LIE_INCLINATION = 2f;
-	private static final float UNFOLD_TAIL_MULTIPLICATOR = 0.5f;
-	private static final float TAIL_LENGTH = 90f;
-	private float traveledLength = 0f;
-	
 	private final ModelPart FULL;
 	private final ModelPart TAIL;
 	private final ModelPart SECTION_6;
@@ -147,20 +141,6 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	private final Section section_3;
 	private final Section section_4;
 	private final Section section_5;
-	private final Section section_6;
-	private final Section section_7;
-	private final Section section_8;
-	private final Section section_9;
-	private final Section section_10;
-	private final Section section_11;
-	private final Section section_12;
-	private final Section section_13;
-	private final Section section_14;
-	private final Section section_15;
-	private final Section section_16;
-	private final Section section_17;
-	private final Section section_18;
-	private final Section end;
 
 	public ContagionIncarnation(ModelPart root) {
 		this.FULL = root.getChild("FULL");
@@ -272,32 +252,13 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 		this.FOREHEAD = HEAD.getChild("FOREHEAD");
 		this.MANE = FOREHEAD.getChild("MANE");
 		this.FIXED_JAW = HEAD.getChild("FIXED_JAW");
-		
-		// Sections objects for rotations initialization
-		// TAIL
-		this.end = new Section(5f, END, null);
-		this.section_18 = new Section(5f, SECTION_18, end);
-		this.section_17 = new Section(6f, SECTION_17, section_18);
-		this.section_16 = new Section(6f, SECTION_16, section_17);
-		this.section_15 = new Section(6f, SECTION_15, section_16);
-		this.section_14 = new Section(6f, SECTION_14, section_15);
-		this.section_13 = new Section(6f, SECTION_13, section_14);
-		this.section_12 = new Section(6f, SECTION_12, section_13);
-		this.section_11 = new Section(6f, SECTION_11, section_12);
-		this.section_10 = new Section(6f, SECTION_10, section_11);
-		this.section_9 = new Section(6f, SECTION_9, section_10);
-		this.section_8 = new Section(13f, SECTION_8, section_9);
-		this.section_7 = new Section(13f, SECTION_7, section_8);
-		this.section_6 = new Section(8f, SECTION_6, section_7);
-		
-		// NECK
+		// Sections init for rotation chain handling.
 		this.head = new Section(10f, HEAD, null);
 		this.section_1 = new Section(4f, SECTION_1, head);
 		this.section_2 = new Section(4f, SECTION_2, section_1);
 		this.section_3 = new Section(4f, SECTION_3, section_2);
 		this.section_4 = new Section(4f, SECTION_4, section_3);
 		this.section_5 = new Section(4f, SECTION_5, section_4);
-		
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -834,8 +795,9 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	}
 	
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight,
-			int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
+							   int packedLight, int packedOverlay,
+							   float red, float green, float blue, float alpha) {
 		this.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
@@ -848,24 +810,18 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	public void setupAnim(@NotNull ContagionIncarnationEntity entity, float limbSwing,
 						  float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		
-		if (this.oldPos == null) {
-			this.oldPos = entity.position();
-		}
-		if (!entity.isDeadOrDying()) this.animateTail(entity.yBodyRot, oldPos, entity.position());
-		this.oldPos = entity.position();
 		if (!entity.isInWaterOrBubble() && !entity.isSprinting()) {
 			animateWalk(ContagionIncarnationAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
 		} else {
 			animateWalk(ContagionIncarnationAnimation.crawling, limbSwing, limbSwingAmount, 1f, 2.5f);
 		}
-		
 		animate(entity.dyingAnimationState, ContagionIncarnationAnimation.death, ageInTicks);
 		animate(entity.idleAmbient, ContagionIncarnationAnimation.arm_ambient, ageInTicks);
 		animate(entity.headAmbient, ContagionIncarnationAnimation.mane_and_head_ambient, ageInTicks);
 		animate(entity.ambient, ContagionIncarnationAnimation.leg_spasm, ageInTicks);
 		animate(entity.ambient, ContagionIncarnationAnimation.breathing, ageInTicks);
 		this.animateLookAt(entity, netHeadYaw, headPitch);
+		this.animateTail(entity);
 	}
 	
 	private void animateLookAt(ContagionIncarnationEntity entity, float yaw, float pitch) {
@@ -873,45 +829,39 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 		float pYaw = yaw / 6f;
 		this.head.homogeneousRotation(pYaw, pPitch);
 	}
-	
-	private void animateTail(float bodyRot, Vec3 oldPos, Vec3 newPos) {
-		// This call makes the tail lie on the ground.
-		this.tailLie();
-		// This call makes the tail fold and unfold according to the speed of the entity and its rotation.
-		this.tailFolding(bodyRot, oldPos, newPos);
-	}
-	
-	private void tailFolding(float bodyRot, Vec3 oldPos, Vec3 newPos) {
-		float speed = (float)Math.sqrt((newPos.x - oldPos.x) * (newPos.x - oldPos.x)
-                + (newPos.z - oldPos.z) * (newPos.z - oldPos.z));
-		this.traveledLength += speed  * UNFOLD_TAIL_MULTIPLICATOR;
-		if (this.traveledLength >= TAIL_LENGTH) {
-			this.traveledLength = 0f;
-		}
-		float speedCompensationFactor = (TAIL_LENGTH - this.traveledLength) / TAIL_LENGTH;
-		this.refAngleTail = this.section_7.compensateRotation(bodyRot, this.refAngleTail);
-		if (speed > 0) {
-			this.refAngleTail = this.refAngleTail * speedCompensationFactor
-					+ bodyRot * (1f - speedCompensationFactor);
-		}
-	}
-	
-	private void tailLie() {
-		this.section_8.rotateX(-2.5f);
-		this.section_9.rotateX(-7.5f);
-		this.section_10.rotateX(-5f);
-		this.section_11.rotateX(10f);
-		this.section_12.rotateX(2.5f);
-		this.section_13.rotateX(2.5f);
-		this.section_14.rotateX(-2.5f);
-		this.section_15.rotateX(-2.5f);
-		this.section_16.rotateX(2.5f);
-		this.section_17.rotateX(0f);
-		this.section_18.rotateX(-5f);
-		this.end.rotateX(7.5f);
+
+	private void animateTail(ContagionIncarnationEntity entity) {
+		this.SECTION_6.xRot = entity.getSection_6_rotX();
+		this.SECTION_6.yRot = entity.getSection_6_rotY();
+		this.SECTION_7.xRot = entity.getSection_7_rotX();
+		this.SECTION_7.yRot = entity.getSection_7_rotY();
+		this.SECTION_8.xRot = entity.getSection_8_rotX();
+		this.SECTION_8.yRot = entity.getSection_8_rotY();
+		this.SECTION_9.xRot = entity.getSection_9_rotX();
+		this.SECTION_9.yRot = entity.getSection_9_rotY();
+		this.SECTION_10.xRot = entity.getSection_10_rotX();
+		this.SECTION_10.yRot = entity.getSection_10_rotY();
+		this.SECTION_11.xRot = entity.getSection_11_rotX();
+		this.SECTION_11.yRot = entity.getSection_11_rotY();
+		this.SECTION_12.xRot = entity.getSection_12_rotX();
+		this.SECTION_12.yRot = entity.getSection_12_rotY();
+		this.SECTION_13.xRot = entity.getSection_13_rotX();
+		this.SECTION_13.yRot = entity.getSection_13_rotY();
+		this.SECTION_14.xRot = entity.getSection_14_rotX();
+		this.SECTION_14.yRot = entity.getSection_14_rotY();
+		this.SECTION_15.xRot = entity.getSection_15_rotX();
+		this.SECTION_15.yRot = entity.getSection_15_rotY();
+		this.SECTION_16.xRot = entity.getSection_16_rotX();
+		this.SECTION_16.yRot = entity.getSection_16_rotY();
+		this.SECTION_17.xRot = entity.getSection_17_rotX();
+		this.SECTION_17.yRot = entity.getSection_17_rotY();
+		this.SECTION_18.xRot = entity.getSection_18_rotX();
+		this.SECTION_18.yRot = entity.getSection_18_rotY();
+		this.END.xRot = entity.getEnd_rotX();
+		this.END.yRot = entity.getEnd_rotY();
 	}
 
-	private class Section {
+	private static class Section {
 		private static final float MAX_ANGLE = 20F;
 		private static final float UNFOLDING_SPEED = 0.3f;
 		private static final float REFOLDING_SPEED = 0.1f;
@@ -919,32 +869,12 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 		private final ModelPart section;
 		private final Section nextSection;
 		private float rotYOld = 0f;
-		
+
 		public Section(float length, ModelPart section, Section nextSection) {
 			this.length = length;
 			this.section = section;
 			this.nextSection = nextSection;
 			this.rotYOld = this.getRotationY();
-		}
-		
-		public float compensateRotation(float previousPartRot, float refAngleTail) {
-			// This function is specifically designed to mimic the behaviour of something drag on the ground when
-			// its attachement point rotates or moves.
-			float rotDiff = previousPartRot - refAngleTail;
-			float rotToDo = - rotDiff;
-			if (Math.abs(rotDiff) < MAX_ANGLE) {
-				this.absoluteRotateY(rotToDo);
-			} else {
-				rotToDo = - MAX_ANGLE * Mth.sign(rotDiff);
-				this.absoluteRotateY(rotToDo);
-				if (this.nextSection!=null) {
-						return this.nextSection.compensateRotation(previousPartRot + rotToDo, refAngleTail);
-					
-				} else {
-					return previousPartRot + rotToDo;
-				}
-			}
-			return refAngleTail;
 		}
 
 		public void homogeneousRotation(float yaw, float pitch) {
@@ -981,4 +911,5 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 			this.section.yRot = this.section.yRot + angle * rad;
 		}
 	}
+
 }

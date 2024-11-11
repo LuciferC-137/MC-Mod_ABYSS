@@ -37,7 +37,7 @@ public class ModEntities {
 	public static final RegistryObject<EntityType<ContagionIncarnationEntity>> CONTAGION_INCARNATION =
 			ENTITY_TYPES.register("contagion_incarnation",
 					()->EntityType.Builder.of(ContagionIncarnationEntity::new, MobCategory.MONSTER)
-					.sized(4f, 4f)
+					.sized(3f, 2f)
 					.build(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation").toString())
 					);
 	public static final RegistryObject<EntityType<ModBoatEntity>> MOD_BOAT =

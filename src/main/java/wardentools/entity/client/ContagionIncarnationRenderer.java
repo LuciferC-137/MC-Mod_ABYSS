@@ -34,7 +34,8 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 	}
 	
 	@Override
-	public void render(ContagionIncarnationEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
+	public void render(ContagionIncarnationEntity pEntity, float pEntityYaw, float pPartialTicks,
+					   @NotNull PoseStack pMatrixStack,
 					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {
 
 		int blockLight = (pPackedLight >> 4) & 0xF;
