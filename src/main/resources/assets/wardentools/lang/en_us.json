@@ -148,6 +148,7 @@
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "Corrupted material",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",
 	"container.wardentools.radiance_catalyst_block": "Radiance Catalyst",
+	"container.wardentools.dysfunctionning_catalyst": "Dysfunctionning Catalyst",
 	
 	"sounds.wardentools.contagion_incarnation_crawl": "Contagion Incarnation Crawling",
 	"sounds.wardentools.contagion_incarnation_scream": "Contagion Incarnation Screams",

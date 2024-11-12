@@ -146,10 +146,11 @@
 	"creativetab.abyss_tab": "Abyss",
 
 
-	"gui.wardentools.radiance_catalyst_screen": "Cataliseur de Radiance",
+	"gui.wardentools.radiance_catalyst_screen": "Catalyseur de Radiance",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "matière corrompue",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "matière purifiée",
-	"container.wardentools.radiance_catalyst_block": "Cataliseur de Radiance",
+	"container.wardentools.radiance_catalyst_block": "Catalyseur de Radiance",
+	"container.wardentools.dysfunctionning_catalyst": "Catalyseur Dysfonctionnant",
 
 	"sounds.wardentools.contagion_incarnation_crawl": "L'Incarnation de la Contagion rampe",
 	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle",

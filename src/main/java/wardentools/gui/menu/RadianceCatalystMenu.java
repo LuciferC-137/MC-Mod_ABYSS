@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.SlotItemHandler;
 import wardentools.gui.MenuRegistry;
-import wardentools.gui.menu.slot.PaleShardSlot;
+import wardentools.gui.menu.slot.RadianceFragmentSlot;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 
@@ -49,7 +49,7 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 
 	private void createBlockEntityInventory(RadianceCatalystBlockEntity be) {
 		be.getInventoryOptional().ifPresent(inventory -> {
-			addSlot(new PaleShardSlot(inventory, 0, 44, 36));
+			addSlot(new RadianceFragmentSlot(inventory, 0, 44, 36));
 			addSlot(new SlotItemHandler(inventory, 1, 111, 19));
 			addSlot(new SlotItemHandler(inventory, 2, 111, 54));
 		});

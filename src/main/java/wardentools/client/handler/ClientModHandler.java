@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
 import wardentools.blockentity.renderer.DysfunctionningCatalystRenderer;
+import wardentools.client.DysfunctionningCatalystScreen;
 import wardentools.gui.MenuRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.renderer.AbyssPortalBlockRenderer;
@@ -22,7 +23,10 @@ public class ClientModHandler {
 	@SubscribeEvent
 	public static void clientSetUp(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
-			MenuScreens.register(MenuRegistry.RADIANCE_CATALYST_MENU.get(), RadianceCatalystScreen::new);
+			MenuScreens.register(MenuRegistry.RADIANCE_CATALYST_MENU.get(),
+					RadianceCatalystScreen::new);
+			MenuScreens.register(MenuRegistry.DYSFUNCTIONNING_CATALYST_MENU.get(),
+					DysfunctionningCatalystScreen::new);
 		});
 	}
 	

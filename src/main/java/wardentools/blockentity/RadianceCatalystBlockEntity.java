@@ -205,7 +205,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 	
 	@Override
-	public CompoundTag getUpdateTag() {
+	public @NotNull CompoundTag getUpdateTag() {
 		CompoundTag nbt = super.getUpdateTag();
 		saveAdditional(nbt);
 		return nbt;
