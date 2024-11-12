@@ -74,7 +74,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     };
     public static final int MAX_PROGRESSION = 28;
     public static final int MAX_TOTAL = 72;
-    public static final int MAX_EYE = 10;
+    public static final int MAX_EYE = 40;
     private static final int UPDATE_INTERVAL = 5;
     private int citrine = 0;
     private int amethyst = 0;
@@ -186,21 +186,21 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                     this.echo_shard -= 1;
                     this.sendUpdate();
                 }
-                boolean flag = (this.citrine == MAX_PROGRESSION && this.amethyst == MAX_PROGRESSION
-                        && this.pale_shard == MAX_PROGRESSION && this.ruby == MAX_PROGRESSION
-                        && this.malachite == MAX_PROGRESSION && this.echo_shard == MAX_PROGRESSION);
-                if (flag && this.total_charge < MAX_TOTAL) {
-                    this.total_charge++;
-                } else if (this.total_charge > 0 && !flag) {
-                    this.total_charge--;
-                }
-                if (total_charge == MAX_TOTAL && this.eye_progression < MAX_EYE) {
-                    this.eye_progression ++;
-                } else if (eye_progression > 0 && total_charge < MAX_TOTAL) {
-                    this.eye_progression --;
-                }
             } else {
                 this.next_check--;
+            }
+            boolean flag = (this.citrine == MAX_PROGRESSION && this.amethyst == MAX_PROGRESSION
+                    && this.pale_shard == MAX_PROGRESSION && this.ruby == MAX_PROGRESSION
+                    && this.malachite == MAX_PROGRESSION && this.echo_shard == MAX_PROGRESSION);
+            if (flag && this.total_charge < MAX_TOTAL) {
+                this.total_charge++;
+            } else if (this.total_charge > 0 && !flag) {
+                this.total_charge--;
+            }
+            if (total_charge == MAX_TOTAL && this.eye_progression < MAX_EYE) {
+                this.eye_progression ++;
+            } else if (eye_progression > 0 && total_charge < MAX_TOTAL) {
+                this.eye_progression --;
             }
         }
     }
