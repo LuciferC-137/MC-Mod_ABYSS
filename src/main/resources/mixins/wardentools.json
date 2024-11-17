@@ -1,4 +1,5 @@
 {
+  "minVersion": "0.8.5",
   "package": "wardentools.mixin",
   "mixins": [
     "LevelRendererMixin",

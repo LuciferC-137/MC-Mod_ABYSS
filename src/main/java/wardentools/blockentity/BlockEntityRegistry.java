@@ -38,4 +38,10 @@ public class BlockEntityRegistry {
 			() -> BlockEntityType.Builder.of(ContagionIncarnationSkullBlockEntity::new,
 					BlockRegistry.CONTAGION_INCARNATION_SKULL.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<BlackLanternBlockEntity>>
+			BLACK_LANTERN_BLOCK_ENTITY = BLOCK_ENTITIES
+			.register("black_lantern_block_entity",
+			() -> BlockEntityType.Builder.of(BlackLanternBlockEntity::new,
+					BlockRegistry.BLACK_LANTERN.get()).build(null));
+
 }

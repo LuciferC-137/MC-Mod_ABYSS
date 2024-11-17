@@ -493,7 +493,7 @@ public class BlockRegistry {
 			() -> new BlackLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN)
 					.lightLevel((state) -> state.getValue(BlockStateProperties.LIT) ? 15 : 5)
 					.strength(3.5F, 10F)
-					.requiresCorrectToolForDrops().randomTicks()));
+					.randomTicks()));
 
 	public static final RegistryObject<Block> CRACKED_ABYSSALITE_BRICKS_STAIR
 			= REGISTAR.register("cracked_abyssalite_bricks_stair",
