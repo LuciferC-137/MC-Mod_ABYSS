@@ -514,4 +514,9 @@ public class BlockRegistry {
 			= REGISTAR.register("contagion_incarnation_skull",
 			() -> new ContagionIncarnationSkullBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SKELETON_SKULL)
 					.strength(4.0F, 7.0F).noOcclusion()));
+
+	public static final RegistryObject<Block> REINFORCED_GLASS
+			= REGISTAR.register("reinforced_glass",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+					.strength(3.0F, 6.0F).noOcclusion()));
 }

@@ -34,6 +34,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.MALACHITE_BLOCK);
         registerBlockWithItem(BlockRegistry.SOLID_CORRUPTION);
 
+        // Register simple transparent blocks with item model
+        registerTranslucentBlock(BlockRegistry.REINFORCED_GLASS);
+
         // Registering ores blocks with item models
         registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_COAL_ORE);
         registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_LAPIS_ORE);
@@ -124,6 +127,20 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlock(blockRegistryObject.get(),
                 models().cross(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
                         blockTexture(blockRegistryObject.get())).renderType("cutout"));
+    }
+
+    private void registerCutoutBlock(RegistryObject<Block> blockRegistryObject) {
+        simpleBlock(blockRegistryObject.get(),
+                models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                        blockTexture(blockRegistryObject.get())).renderType("cutout"));
+        simpleBlockItem(blockRegistryObject.get(), models().getExistingFile(blockTexture(blockRegistryObject.get())));
+    }
+
+    private void registerTranslucentBlock(RegistryObject<Block> blockRegistryObject) {
+        simpleBlock(blockRegistryObject.get(),
+                models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                        blockTexture(blockRegistryObject.get())).renderType("translucent"));
+        simpleBlockItem(blockRegistryObject.get(), models().getExistingFile(blockTexture(blockRegistryObject.get())));
     }
 
     private void registerLeavesBlock(RegistryObject<Block> blockRegistryObject) {

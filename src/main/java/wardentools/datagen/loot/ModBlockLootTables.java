@@ -126,6 +126,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		// Special drop
 		this.add(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(),
 				createPotFlowerItemTable(BlockRegistry.WHITE_TORCHFLOWER.get()));
+		this.add(BlockRegistry.REINFORCED_GLASS.get(),
+				createSilkTouchDispatchTable(BlockRegistry.REINFORCED_GLASS.get(),
+						LootItem.lootTableItem(Items.AIR)));
     }
 
     private void addDropSelf(RegistryObject<Block> block) {
