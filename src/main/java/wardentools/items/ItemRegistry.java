@@ -13,6 +13,8 @@ import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ModBoatEntity;
 
+import java.rmi.registry.Registry;
+
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
 	
@@ -545,4 +547,9 @@ public class ItemRegistry {
 			REGISTAR.register("contagion_incarnation_skull",
 					() -> new BlockItem(BlockRegistry.CONTAGION_INCARNATION_SKULL.get(),
 							new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
+
+	public static final RegistryObject<Item> REINFORCED_GLASS =
+			REGISTAR.register("reinforced_glass",
+					() -> new BlockItem(BlockRegistry.REINFORCED_GLASS.get(),
+							new Item.Properties().rarity(Rarity.UNCOMMON).fireResistant()));
 }

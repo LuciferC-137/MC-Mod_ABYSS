@@ -159,6 +159,7 @@ public class ModCreativeTabs {
         addItemToTag("sculk", Items.SCULK_VEIN);
 
         addItemToTag("building", ItemRegistry.BLACK_LANTERN);
+        addItemToTag("building", ItemRegistry.REINFORCED_GLASS);
 
         addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
 
