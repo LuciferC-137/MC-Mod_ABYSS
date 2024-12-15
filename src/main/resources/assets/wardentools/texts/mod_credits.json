@@ -38,14 +38,20 @@
                 ]
 
             },
-            {   "discipline": "Minecraft Modding acklowledgements",
+            {   "discipline": "Minecraft Modding acknowledgements",
                 "titles": [
                     {
                         "title": "Minecraft Environment",
                         "names": [
                             "Minecraft Forge",
                             "Minecraft Coder Pack",
-                            "Minecraft Team: Mojand Studios"
+                            "Minecraft Team: Mojang Studios"
+                        ]
+                    },
+                    {
+                        "title": "Other Mods inspiration",
+                        "names": [
+                            "Huge Structure Blocks"
                         ]
                     },
                     {

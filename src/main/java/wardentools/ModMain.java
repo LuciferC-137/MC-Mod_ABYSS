@@ -32,6 +32,8 @@ public class ModMain {
 	public static final String MOD_ID = "wardentools";
 	public static final String MODNAME = "ABYSS";
 	public static final String VERSION = "0.0.1";
+
+	public static final int NEW_STRUCTURE_SIZE = 512;
 	
 	public ModMain() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
