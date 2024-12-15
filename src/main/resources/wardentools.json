@@ -5,6 +5,9 @@
   "mixins": [
     "LevelRendererMixin",
     "LogoRendererMixin",
-    "LocalPlayerMixin"
+    "LocalPlayerMixin",
+    "structure.ClientUpdateStructureBlockUnlimit",
+    "structure.JigsawPlacementUnlimit",
+    "structure.JigsawStructureUnlimit"
   ]
 }
