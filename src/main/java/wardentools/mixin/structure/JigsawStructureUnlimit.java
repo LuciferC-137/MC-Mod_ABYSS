@@ -20,6 +20,11 @@ import wardentools.ModMain;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/*
+ Inspired from the mod Huge Structure Block
+ https://github.com/SamB440/huge-structure-blocks/tree/neoforge/1.20?tab=readme-ov-file#huge-structure-blocks
+*/
+
 @Mixin(JigsawStructure.class)
 public abstract class JigsawStructureUnlimit {
 

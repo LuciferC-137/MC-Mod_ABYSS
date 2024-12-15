@@ -6,6 +6,11 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import wardentools.ModMain;
 
+/*
+ Inspired from the mod Huge Structure Block
+ https://github.com/SamB440/huge-structure-blocks/tree/neoforge/1.20?tab=readme-ov-file#huge-structure-blocks
+*/
+
 @Mixin(value = JigsawPlacement.class, priority = 999)
 public class JigsawPlacementUnlimit {
 
