@@ -1,20 +1,11 @@
 {
-  "name": "wardentools:ancient_citadel/bridge_pool",
+  "name": "wardentools:ancient_citadel/cross_pool",
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
-        "location": "wardentools:ancient_citadel/corridor",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 4,
-      "element": {
-        "location": "wardentools:ancient_citadel/bridge",
+        "location": "wardentools:ancient_citadel/cross",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -23,7 +14,16 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/collapsed_bridge",
+        "location": "wardentools:ancient_citadel/crystal_ring",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:ancient_citadel/tesseract",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
