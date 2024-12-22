@@ -1,47 +1,11 @@
 {
-  "name": "wardentools:ancient_citadel/locus_pool",
-  "fallback": "minecraft:empty",
+  "name": "wardentools:ancient_citadel/hall_pool",
+  "fallback": "wardentools:ancient_citadel/hall_pool",
   "elements": [
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/cross",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 3,
-      "element": {
-        "location": "wardentools:ancient_citadel/cross3",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 4,
-      "element": {
-        "location": "wardentools:ancient_citadel/cross2left",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 4,
-      "element": {
-        "location": "wardentools:ancient_citadel/cross2right",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 2,
-      "element": {
-        "location": "wardentools:ancient_citadel/tesseract",
+        "location": "wardentools:ancient_citadel/hall/hall_curiosity_crystal_cage",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -50,7 +14,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/librairy",
+        "location": "wardentools:ancient_citadel/hall/hall_curiosity_lectern",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -59,16 +23,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/crystal_ring",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 2,
-      "element": {
-        "location": "wardentools:ancient_citadel/hothouse_plant/hothouse_plant",
+        "location": "wardentools:ancient_citadel/hall/hall_curiosity_sculk_shrine",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -77,7 +32,43 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/hall/hall_of_glass",
+        "location": "wardentools:ancient_citadel/hall/hall_curiosity_tree",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:ancient_citadel/hall/hall_curiosity_citrine",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:ancient_citadel/hall/hall_curiosity_malachite",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:ancient_citadel/hall/hall_curiosity_ruby",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:ancient_citadel/hall/hall_curiosity_amethyst",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
