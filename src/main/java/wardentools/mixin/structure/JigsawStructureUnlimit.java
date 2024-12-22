@@ -11,6 +11,8 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasBinding;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,6 +29,8 @@ import java.util.List;
 
 @Mixin(JigsawStructure.class)
 public abstract class JigsawStructureUnlimit {
+    @Unique
+    private static final Logger logger = LogManager.getLogger(JigsawStructureUnlimit.class);
 
     @Shadow
     @Final
@@ -63,13 +67,13 @@ public abstract class JigsawStructureUnlimit {
             ).codec();
 
             codecField.set(null, newCodec);
-            System.out.println("Successfully updated CODEC field!");
+            logger.info("Mixin successfully modified JigsawStructure.CODEC for bigger structures.");
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to update CODEC field", e);
+            logger.error("Failed to update CODEC field", e);
         }
     }
 
+    @Unique
     @SuppressWarnings("unchecked")
     private static <T> T getPrivateField(Object instance, String fieldName) {
         try {
@@ -77,7 +81,6 @@ public abstract class JigsawStructureUnlimit {
             field.setAccessible(true);
             return (T) field.get(instance);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
             throw new RuntimeException("Failed to access field: " + fieldName, e);
         }
     }
@@ -93,7 +96,7 @@ public abstract class JigsawStructureUnlimit {
                 return DataResult.error(() -> "maxDistanceFromCenter is too large: " + maxDistanceFromCenter);
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error("Failed to verify maxDistanceFromCenter: {}", e.getMessage(), e);
             return DataResult.error(() -> "Failed to verify maxDistanceFromCenter: " + e.getMessage());
         }
         return DataResult.success(structure);

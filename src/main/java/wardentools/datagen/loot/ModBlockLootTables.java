@@ -79,7 +79,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
 
     	this.dropSelf(BlockRegistry.PROTECTOR_INVOKER.get());
-		this.dropSelf(BlockRegistry.BLACK_LANTERN.get());
 		this.dropSelf(BlockRegistry.CONTAGION_INCARNATION_SKULL.get());
 
 		// Planks derivatives special drops
@@ -126,9 +125,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		// Special drop
 		this.add(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(),
 				createPotFlowerItemTable(BlockRegistry.WHITE_TORCHFLOWER.get()));
+		this.add(BlockRegistry.BLACK_LANTERN.get(),
+				block -> createBlackLanternItemDrop(BlockRegistry.BLACK_LANTERN));
 		this.add(BlockRegistry.REINFORCED_GLASS.get(),
-				createSilkTouchDispatchTable(BlockRegistry.REINFORCED_GLASS.get(),
-						LootItem.lootTableItem(Items.AIR)));
+				block -> createReinforcedGlassItemDrop(BlockRegistry.REINFORCED_GLASS));
     }
 
     private void addDropSelf(RegistryObject<Block> block) {
@@ -144,6 +144,65 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(item.get())
                                 .when(LootItemRandomChanceCondition.randomChance(0.5f))));
     }
+
+	private LootTable.Builder createBlackLanternItemDrop(RegistryObject<Block> block) {
+		return LootTable.lootTable()
+				.withPool(
+						LootPool.lootPool()
+								.setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(block.get()).when(HAS_SILK_TOUCH))
+				)
+				.withPool(
+						LootPool.lootPool()
+								.setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ItemRegistry.PALE_SHARD.get())
+										.apply(SetItemCountFunction.setCount(
+												UniformGenerator.between(1, 3)))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.when(HAS_NO_SILK_TOUCH)
+								))
+				.withPool(
+						LootPool.lootPool()
+								.setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(Items.ECHO_SHARD)
+										.apply(SetItemCountFunction.setCount(
+												UniformGenerator.between(1, 3)))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
+								.when(HAS_NO_SILK_TOUCH)
+				);
+	}
+
+	private LootTable.Builder createReinforcedGlassItemDrop(RegistryObject<Block> block) {
+		return LootTable.lootTable()
+				.withPool(
+						LootPool.lootPool()
+								.setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(block.get()).when(HAS_SILK_TOUCH))
+				)
+				.withPool(
+						LootPool.lootPool()
+								.setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ItemRegistry.PALE_SHARD.get())
+										.apply(SetItemCountFunction.setCount(
+												UniformGenerator.between(0, 2)))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.when(HAS_NO_SILK_TOUCH))
+								.add(LootItem.lootTableItem(Items.ECHO_SHARD)
+										.apply(SetItemCountFunction.setCount(
+												UniformGenerator.between(0, 2)))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.when(HAS_NO_SILK_TOUCH)
+								))
+				.withPool(
+						LootPool.lootPool()
+								.setRolls(UniformGenerator.between(0, 1))
+								.add(LootItem.lootTableItem(Items.IRON_NUGGET)
+										.apply(SetItemCountFunction.setCount(
+												UniformGenerator.between(0, 3)))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
+								.when(HAS_NO_SILK_TOUCH)
+				);
+	}
 
 	protected LootTable.Builder createNumberBasedOreDrop(Block block, ItemLike drop , float min, float max) {
 		return createSilkTouchDispatchTable(block,

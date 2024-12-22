@@ -44,7 +44,7 @@ public class BlackLanternBlockEntity extends BlockEntity implements TickableBloc
         }
     }
 
-    private void switchState(@NotNull BlockState blockState, @NotNull ServerLevel level,
+    public void switchState(@NotNull BlockState blockState, @NotNull ServerLevel level,
                              @NotNull BlockPos blockPos) {
         if (!blockState.getValue(BlackLanternBlock.LIT)) {
             level.setBlockAndUpdate(blockPos, blockState.setValue(BlackLanternBlock.LIT, true));

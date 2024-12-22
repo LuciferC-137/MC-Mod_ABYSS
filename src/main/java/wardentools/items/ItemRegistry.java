@@ -512,7 +512,7 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> BLACK_LANTERN =
 			REGISTAR.register("black_lantern",
 					() -> new BlockItem(BlockRegistry.BLACK_LANTERN.get(),
-							new Item.Properties().rarity(Rarity.UNCOMMON)));
+							new Item.Properties()));
 
 	public static final RegistryObject<Item> BLUE_GLOW_BERRIES =
 			REGISTAR.register("blue_glow_berries",
@@ -551,5 +551,5 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> REINFORCED_GLASS =
 			REGISTAR.register("reinforced_glass",
 					() -> new BlockItem(BlockRegistry.REINFORCED_GLASS.get(),
-							new Item.Properties().rarity(Rarity.UNCOMMON).fireResistant()));
+							new Item.Properties().fireResistant()));
 }

@@ -1,4 +1,4 @@
-// 1.20.4	2024-12-12T13:46:52.3885046	Loot Tables
+// 1.20.4	2024-12-22T12:53:51.2478443	Loot Tables
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_tables/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_tables/blocks/abyssalite_bricks.json
 31280d85caa9e63972007b215cf991cffc5c8b82 data/wardentools/loot_tables/blocks/abyssalite_bricks_slab.json
@@ -8,7 +8,7 @@
 b66ff6c98de9bbfd26c02965fecb04b47232ad5e data/wardentools/loot_tables/blocks/abyssalite_deep_ore.json
 28ed7a9403a17cc736308d50e544dc3c794b344a data/wardentools/loot_tables/blocks/abyssalite_diamond_ore.json
 ef86edc0075f9f98f96fd5d53a4528b8df6dbc53 data/wardentools/loot_tables/blocks/abyssalite_lapis_ore.json
-eefc7ba82076c61f122300cc3856f6f448bde436 data/wardentools/loot_tables/blocks/black_lantern.json
+e3a8c8b6663553afa935277177901e5da3fba41c data/wardentools/loot_tables/blocks/black_lantern.json
 cea7718d32e8dcdf196612b9d2cfd47148e4b6c5 data/wardentools/loot_tables/blocks/blue_bush.json
 a5fe808bd30e20d796123dcb9ee5ade4750fb538 data/wardentools/loot_tables/blocks/chiseled_abyssalite.json
 2282072c79e53600a7c0f4cdadb5241a83491926 data/wardentools/loot_tables/blocks/citrine_block.json
@@ -39,7 +39,7 @@ e000bbb8369c0744f517a29abc68ff12ae9d60f3 data/wardentools/loot_tables/blocks/mal
 30fe1819688af2069f4c3c20a846a864912006f3 data/wardentools/loot_tables/blocks/pale_cristal_block.json
 87e89397e3a01064632604a362d115e2bac331c5 data/wardentools/loot_tables/blocks/potted_white_torchflower.json
 9e0f54a8c1eabbf43c22f5a5abaebb4a145a0df0 data/wardentools/loot_tables/blocks/protector_invoker.json
-0f0ec93515a1f22c67122cf27525757130e9a1f1 data/wardentools/loot_tables/blocks/reinforced_glass.json
+7b279f089dc36475253b3bbbeedad48f2cd7792c data/wardentools/loot_tables/blocks/reinforced_glass.json
 57a8144524b215b4ebbf694dbc5b0e3e7bb3d9c7 data/wardentools/loot_tables/blocks/ruby_block.json
 fd2ac5aa4f74327ae0ad0118372ca4a824bafcba data/wardentools/loot_tables/blocks/solid_corruption.json
 22c5562d49c153eef742057e576bbd90d943acd0 data/wardentools/loot_tables/blocks/stripped_darktree_log.json
