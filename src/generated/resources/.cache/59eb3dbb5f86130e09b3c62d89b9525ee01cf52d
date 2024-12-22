@@ -1,4 +1,4 @@
-// 1.20.4	2024-12-22T12:53:51.2478443	Loot Tables
+// 1.20.4	2024-12-22T14:35:29.3752906	Loot Tables
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_tables/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_tables/blocks/abyssalite_bricks.json
 31280d85caa9e63972007b215cf991cffc5c8b82 data/wardentools/loot_tables/blocks/abyssalite_bricks_slab.json
@@ -62,3 +62,4 @@ e97f4a5e8c44d9e73a7f6803ca687a31c435c91d data/wardentools/loot_tables/blocks/whi
 2f6f06e30a5b4ed62eb9893d2f2421f61b08b17d data/wardentools/loot_tables/blocks/whitetree_wood.json
 e40f758592c80218618b832d5df7dd1835327a45 data/wardentools/loot_tables/blocks/white_grass.json
 51f30eea15653359410c5be9ece438d299c74d15 data/wardentools/loot_tables/blocks/white_torchflower.json
+d247d2d64602e757939d58a35831db5fe1419b55 data/wardentools/loot_tables/blocks/wind_whisperer.json

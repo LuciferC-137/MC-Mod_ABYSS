@@ -4,6 +4,7 @@ package wardentools.items;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -157,7 +158,7 @@ public class ItemRegistry {
 	
 	public static final RegistryObject<Item> WIND_WHISPERER = 
 			REGISTAR.register("wind_whisperer",
-			() -> new WindWhisperer(new Item.Properties()
+			() -> new WindWhispererItem(BlockRegistry.WIND_WHISPERER.get(), new Item.Properties()
 					.stacksTo(1)
 					.rarity(Rarity.RARE)
 					.fireResistant()

@@ -50,6 +50,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.addDropSelf(BlockRegistry.RUBY_BLOCK);
 		this.addDropSelf(BlockRegistry.MALACHITE_BLOCK);
 		this.addDropSelf(BlockRegistry.SOLID_CORRUPTION);
+		this.addDropSelf(BlockRegistry.WIND_WHISPERER);
     	
     	this.addDropSelf(BlockRegistry.DARKTREE_LOG);
     	this.addDropSelf(BlockRegistry.DARKTREE_PLANKS);

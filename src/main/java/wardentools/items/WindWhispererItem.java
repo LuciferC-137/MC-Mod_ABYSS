@@ -6,23 +6,25 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
 import wardentools.misc.WindWhisper;
 import wardentools.worldgen.dimension.ModDimensions;
 
-public class WindWhisperer extends Item {
+public class WindWhispererItem extends BlockItem {
 	
 	private Player currentPlayer;
     private final WindWhisper windWhisper;
     private final RandomSource rand;
+	private static final int PROB_WHISPER = 5000;
 
-	public WindWhisperer(Properties prop) {
-		super(prop);
+	public WindWhispererItem(Block block, Properties prop) {
+		super(block, prop);
 	    this.windWhisper = new WindWhisper();
 	    this.rand = RandomSource.create();
 	    MinecraftForge.EVENT_BUS.register(this);
@@ -40,7 +42,7 @@ public class WindWhisperer extends Item {
         if (entity instanceof Player player) {
 	        if (player.level().isClientSide()) {
 	            if (isInHotbar(player) && isInAbyss(player)) {
-	                if (this.rand.nextInt(10000) == 1) {
+	                if (this.rand.nextInt(PROB_WHISPER) == 1) {
 	                	Minecraft minecraft = Minecraft.getInstance();
 	                    LanguageManager languageManager = minecraft.getLanguageManager();
 	                    String currentLanguage = languageManager.getSelected();
@@ -60,7 +62,7 @@ public class WindWhisperer extends Item {
 
     private static boolean isInHotbar(Player player) {
         for (int i = 0; i < 9; i++) {
-            if (player.getInventory().getItem(i).getItem() instanceof WindWhisperer) {
+            if (player.getInventory().getItem(i).getItem() instanceof WindWhispererItem) {
                 return true;
             }
         }

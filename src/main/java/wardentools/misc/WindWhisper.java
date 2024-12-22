@@ -15,11 +15,11 @@ public class WindWhisper {
 		whispers_en.add("Do you hear this ?");
 		whispers_en.add("After all, you might have gotten too deep...");
 		whispers_en.add("It is so quiet...");
-		whispers_en.add("Even the wind here listen to you.");
+		whispers_en.add("Even the wind here listens to you.");
 		whispers_en.add("If you listen very carefully, you might be able to hear the whispers of the Void.");
 		whispers_en.add("It is hidding in the space between two silences...");
 		whispers_en.add("Have you fallen here by chance ?");
-		whispers_en.add("Where are you from ? Ave you ever seen the light ?");
+		whispers_en.add("Where are you from ? Have you ever seen the light ?");
 		whispers_en.add("There is an End to everything. But you have fallen here right before reaching it...");
 		whispers_en.add("Are you dreaming ?");
 		whispers_en.add("Would you really listen to the wind ?");
@@ -50,6 +50,11 @@ public class WindWhisper {
 		whispers_en.add("Do you think he could perform the reactivation ritual ?");
 		whispers_en.add("There was all sort of crystals, each with its own energy. But we tried to harvest the power of the forbidden one.");
 		whispers_en.add("Soon after the incident, the contagion begun to rise from the depths.");
+		whispers_en.add("They thought they could control it. They thought they could be safe in their underground Citadel.");
+		whispers_en.add("Crystals were growing everywhere. They were beautiful, but they were also dangerous.");
+		whispers_en.add("Entire cities would run thanks to the energy of the crystals.");
+		whispers_en.add("They began to worship the corrupted crystals. They began to worship the Void.");
+		whispers_en.add("Once the corruption took over, they created a Beast from it. An Incarnation of destruction.");
 
 		whispers_fr.add("Tu es perdu ?");
 		whispers_fr.add("Est-ce que tu entends ça ?");
@@ -90,6 +95,12 @@ public class WindWhisper {
 		whispers_fr.add("Tu pense qu'il pourrait réaliser le rituel de réactivation ?");
 		whispers_fr.add("Il y avait toute sorte de cristaux, chacun avec sa propre énergie. Mais nous avons tenté de récolter le pouvoir de celui qui était interdit.");
 		whispers_fr.add("Après l'incident, la contagion commença à s'élever depuis les profondeurs.");
+		whispers_fr.add("Ils pensaient pouvoir la contrôler. Ils pensaient être en sécurité dans leur Citadelle souterraine.");
+		whispers_fr.add("Les cristaux poussaient partout. Ils étaient beaux, mais ils étaient aussi dangereux.");
+		whispers_fr.add("Des villes entières fonctionnaient grâce à l'énergie des cristaux.");
+		whispers_fr.add("Ils commencèrent à adorer les cristaux corrompus. Ils commencèrent à adorer le Néant.");
+		whispers_fr.add("Une fois que la corruption prit le dessus, ils forgèrent une Bête avec. Une Incarnation de la destruction.");
+
 	}
 	
 	public WindWhisper(List<String> addWhispers) {

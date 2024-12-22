@@ -519,4 +519,12 @@ public class BlockRegistry {
 			= REGISTAR.register("reinforced_glass",
 			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
 					.strength(3.0F, 6.0F).noOcclusion()));
+
+	public static final RegistryObject<Block> WIND_WHISPERER
+			= REGISTAR.register("wind_whisperer",
+			() -> new WindWhispererBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEACON)
+					.strength(2.0F, 3.0F)
+					.noOcclusion()
+					.randomTicks()
+					.lightLevel((state) -> 10)));
 }

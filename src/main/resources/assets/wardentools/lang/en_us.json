@@ -9,7 +9,6 @@
 	"item.wardentools.pale_wanderer_spawn_egg": "Pale Wanderer spawn egg",
 	"item.wardentools.deep_fruit": "Deep Fruit",
 	"item.wardentools.abyss_diver": "Abyss Diver",
-	"item.wardentools.wind_whisperer": "Wind Whisperer",
 	"item.wardentools.radiance_fragment": "Radiance Fragment",
 	"item.wardentools.dark_stick": "Dark stick",
 	"item.wardentools.corrupted_essence": "Corrupted essence",
@@ -73,6 +72,7 @@
 	"block.wardentools.black_lantern": "Black Lantern",
 	"block.wardentools.contagion_incarnation_skull": "Contagion Incarnation Skull",
 	"block.wardentools.reinforced_glass": "Reinforced Glass",
+	"block.wardentools.wind_whisperer": "Wind Whisperer",
 	
 	"block.wardentools.radiance_catalyst": "Radiance Catalyst",
 	"block.wardentools.protector_invoker": "Protector Invoker",

@@ -9,7 +9,6 @@
 	"item.wardentools.pale_wanderer_spawn_egg": "Oeuf d'apparition de Vagabond pâle",
 	"item.wardentools.deep_fruit": "Fruit des abîmes",
 	"item.wardentools.abyss_diver": "Éclaireur de l'Abyss",
-	"item.wardentools.wind_whisperer": "Chuchoteur de Vent",
 	"item.wardentools.dark_stick": "Bâton sombre",
 	"item.wardentools.corrupted_essence": "Essence corrompue",
 	"item.wardentools.corrupted_vessel": "Réceptacle corrompu",
@@ -73,6 +72,7 @@
 	"block.wardentools.cracked_abyssalite_bricks_wall": "Mur en briques d'Abyssalite craquelées",
 	"block.wardentools.contagion_incarnation_skull": "Crâne d'Incarnation de la Contagion",
 	"block.wardentools.reinforced_glass": "Verre renforcé",
+	"block.wardentools.wind_whisperer": "Chuchoteur de Vent",
 
 	"block.wardentools.deepblock": "Block des abîmes",
 	"block.wardentools.deepcristal": "Cristal des abîmes",
@@ -133,7 +133,7 @@
 	"entity.wardentools.parasyte": "Parasyte",
 	"entity.wardentools.noctilure": "Noctilure",
 	"entity.wardentools.shadow": "Ombre",
-	"entity.wardentools.contagion_incarnation_corpse": "Contagion Incarnation Corpse",
+	"entity.wardentools.contagion_incarnation_corpse": "Cadavre de l'Incarnation de la Contagion",
 
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",
