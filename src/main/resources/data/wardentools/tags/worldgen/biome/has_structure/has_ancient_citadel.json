@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "wardentools:deep_forest",
-    "wardentools:waste_land"
+    "wardentools:waste_land",
+    "wardentools:white_forest",
+    "wardentools:cristal_cave"
   ]
 }

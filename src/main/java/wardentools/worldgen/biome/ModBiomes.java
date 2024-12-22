@@ -20,6 +20,8 @@ import wardentools.worldgen.carvers.ModConfiguredCarver;
 public class ModBiomes {
 	private static final int FOG_COLOR = 0x000b1c;
 	private static final int WATER_COLOR = 0x0a4c5b;
+    private static final GenerationStep.Decoration CRYSTAL_STEP = GenerationStep.Decoration.LOCAL_MODIFICATIONS;
+    private static final GenerationStep.Decoration SCULK_STEP = GenerationStep.Decoration.UNDERGROUND_DECORATION;
 	
 	public static final ResourceKey<Biome> DEEP_FOREST = ResourceKey.create(Registries.BIOME,
             new ResourceLocation(ModMain.MOD_ID, "deep_forest"));
@@ -194,8 +196,8 @@ public class ModBiomes {
     }
 
     public static void defaultAbyssSculk(BiomeGenerationSettings.Builder builder){
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_PATCH_DEEP_DARK);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, CavePlacements.SCULK_VEIN);
+        builder.addFeature(SCULK_STEP, CavePlacements.SCULK_PATCH_DEEP_DARK);
+        builder.addFeature(SCULK_STEP, CavePlacements.SCULK_VEIN);
     }
 
     public static BiomeSpecialEffects.Builder commonBiomeSpecialEffects(){
@@ -212,41 +214,40 @@ public class ModBiomes {
     }
 
     public static void cristalOnCaveWalls(BiomeGenerationSettings.Builder builder){
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.MALACHITE_CRISTAL_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.CITRINE_CRISTAL_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.RUBY_CRISTAL_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.ECHO_CRISTAL_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.PALE_CRISTAL_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.AMETHYST_CRISTAL_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.MALACHITE_CRISTAL_DW_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.CITRINE_CRISTAL_DW_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.RUBY_CRISTAL_DW_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.ECHO_CRISTAL_DW_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.PALE_CRISTAL_DW_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.AMETHYST_CRISTAL_DW_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.MALACHITE_VEIN_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.RUBY_VEIN_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.CITRINE_VEIN_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.ECHO_VEIN_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.PALE_CRISTAL_VEIN_KEY);
-        builder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
-                ModPlacedFeatures.AMETHYST_VEIN_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.MALACHITE_CRISTAL_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.CITRINE_CRISTAL_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.RUBY_CRISTAL_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.ECHO_CRISTAL_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.PALE_CRISTAL_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.AMETHYST_CRISTAL_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.MALACHITE_CRISTAL_DW_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.CITRINE_CRISTAL_DW_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.RUBY_CRISTAL_DW_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.ECHO_CRISTAL_DW_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.PALE_CRISTAL_DW_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.AMETHYST_CRISTAL_DW_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.MALACHITE_VEIN_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.RUBY_VEIN_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.CITRINE_VEIN_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.ECHO_VEIN_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.PALE_CRISTAL_VEIN_KEY);
+        builder.addFeature(CRYSTAL_STEP, ModPlacedFeatures.AMETHYST_VEIN_KEY);
     }
 }
+
+/*
+    =============
+    STEP REMINDER
+    =============
+ * raw_generation
+ * lakes
+ * local_modifications
+ * underground_structures
+ * surface_structures
+ * strongholds
+ * underground_ores
+ * underground_decoration
+ * fluid_springs
+ * vegetal_decoration
+ * top_layer_modification
+*/
