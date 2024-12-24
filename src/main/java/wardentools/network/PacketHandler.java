@@ -77,6 +77,11 @@ public class PacketHandler {
 				.decoder(SwitchAchievement::new)
 				.consumerMainThread(SwitchAchievement::handle)
 				.add();
+		INSTANCE.messageBuilder(ParticleContagionExplosion.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ParticleContagionExplosion::encode)
+				.decoder(ParticleContagionExplosion::new)
+				.consumerMainThread(ParticleContagionExplosion::handle)
+				.add();
 
     }
 

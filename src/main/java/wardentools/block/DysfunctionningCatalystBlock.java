@@ -79,5 +79,5 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 			}
 		}
 		super.onRemove(state, level, pos, newState, isMoving);
-	}	
+	}
 }

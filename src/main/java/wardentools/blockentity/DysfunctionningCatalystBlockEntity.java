@@ -23,9 +23,14 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.ModMain;
+import wardentools.block.BlockRegistry;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
 import wardentools.items.ItemRegistry;
+import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.ParticleContagionExplosion;
+
+import java.util.List;
 
 public class DysfunctionningCatalystBlockEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
     private final ItemStackHandler inventory = new ItemStackHandler(6) {
@@ -130,7 +135,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     public void tick() {
         if (this.level != null && !this.level.isClientSide) {
             sendUpdate();
-            if (this.next_check <= 0) {
+            if (this.next_check <= 0 && this.total_charge != MAX_TOTAL) {
                 this.next_check = UPDATE_INTERVAL;
                 if (this.inventory.getStackInSlot(0).is(ItemRegistry.CITRINE_FRAGMENT.get())
                         && this.citrine < MAX_PROGRESSION) {
@@ -189,18 +194,18 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
             } else {
                 this.next_check--;
             }
-            boolean flag = (this.citrine == MAX_PROGRESSION && this.amethyst == MAX_PROGRESSION
-                    && this.pale_shard == MAX_PROGRESSION && this.ruby == MAX_PROGRESSION
-                    && this.malachite == MAX_PROGRESSION && this.echo_shard == MAX_PROGRESSION);
-            if (flag && this.total_charge < MAX_TOTAL) {
+            if (this.crystalsFullyCharged() && this.total_charge < MAX_TOTAL) {
                 this.total_charge++;
-            } else if (this.total_charge > 0 && !flag) {
+                if (this.readyToSummon()) {
+                    this.doSummoning();
+                }
+            } else if (this.total_charge > 0 && !this.crystalsFullyCharged() && this.total_charge < MAX_TOTAL) {
                 this.total_charge--;
             }
             if (total_charge == MAX_TOTAL && this.eye_progression < MAX_EYE) {
                 this.eye_progression ++;
             } else if (eye_progression > 0 && total_charge < MAX_TOTAL) {
-                this.eye_progression --;
+                this.eye_progression --; // this should normally never happen.
             }
         }
     }
@@ -241,6 +246,148 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         if (this.level != null) {
             this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
+    }
+
+    public boolean crystalsFullyCharged() {
+        return (this.citrine == MAX_PROGRESSION && this.amethyst == MAX_PROGRESSION
+                && this.pale_shard == MAX_PROGRESSION && this.ruby == MAX_PROGRESSION
+                && this.malachite == MAX_PROGRESSION && this.echo_shard == MAX_PROGRESSION);
+    }
+
+    public boolean isChargingCrystals() {
+        return ( (this.inventory.getStackInSlot(0).is(ItemRegistry.CITRINE_FRAGMENT.get())
+                  && this.citrine < MAX_PROGRESSION)
+                || (this.inventory.getStackInSlot(1).is(Items.AMETHYST_SHARD)
+                    && this.amethyst < MAX_PROGRESSION)
+                || (this.inventory.getStackInSlot(2).is(ItemRegistry.PALE_SHARD.get())
+                    && this.pale_shard < MAX_PROGRESSION)
+                || (this.inventory.getStackInSlot(3).is(ItemRegistry.RUBY_FRAGMENT.get())
+                    && this.ruby < MAX_PROGRESSION)
+                || (this.inventory.getStackInSlot(4).is(ItemRegistry.MALACHITE_FRAGMENT.get())
+                    && this.malachite < MAX_PROGRESSION)
+                || (this.inventory.getStackInSlot(5).is(Items.ECHO_SHARD)
+                    && this.echo_shard < MAX_PROGRESSION));
+    }
+
+    public boolean isChargingTotal() {
+        return (this.total_charge < MAX_TOTAL && this.crystalsFullyCharged());
+    }
+
+    public boolean readyToSummon() {
+        return (this.total_charge == MAX_TOTAL);
+    }
+
+    public boolean isFightActive() {
+        return this.total_charge == MAX_TOTAL;
+    }
+
+    public void doSummoning() {
+        this.replaceLiquidCorruptionBlock();
+        this.hugeParticleExplosion();
+    }
+
+    public void replaceLiquidCorruptionBlock() {
+        if (this.level != null) {
+            for (BlockPos pos : getFountainBelowPositions()) {
+                this.level.setBlockAndUpdate(pos, BlockRegistry.LIQUID_CORRUPTION_BLOCK.get().defaultBlockState());
+            }
+        }
+    }
+
+    public void hugeParticleExplosion() {
+        PacketHandler.sendToAllClient(new ParticleContagionExplosion(
+                this.worldPosition.getCenter(), 1f, 2f, 800));
+    }
+
+    public List<BlockPos> getFountainBelowPositions() {
+        return List.of(
+                this.worldPosition.offset(0, -12, 0),
+                this.worldPosition.offset(1,-12,0),
+                this.worldPosition.offset(0,-12,1),
+                this.worldPosition.offset(1,-12,1),
+                this.worldPosition.offset(2, -12, 0),
+                this.worldPosition.offset(2,-12,1),
+                this.worldPosition.offset(2,-12,2),
+                this.worldPosition.offset(1, -12, 2),
+                this.worldPosition.offset(0, -12, 2),
+                this.worldPosition.offset(3, -12, 0),
+                this.worldPosition.offset(3,-12,1),
+                this.worldPosition.offset(3,-12,2),
+                this.worldPosition.offset(3, -12, 3),
+                this.worldPosition.offset(2,-12,3),
+                this.worldPosition.offset(1,-12,3),
+                this.worldPosition.offset(0, -12, 3),
+                this.worldPosition.offset(4,-12,0),
+                this.worldPosition.offset(4,-12,1),
+                this.worldPosition.offset(4, -12, 2),
+                this.worldPosition.offset(1,-12,0),
+                this.worldPosition.offset(0,-12,1),
+                this.worldPosition.offset(1,-12,1),
+                this.worldPosition.offset(2, -12, 0),
+                this.worldPosition.offset(2,-12,1),
+                this.worldPosition.offset(2,-12,2),
+                this.worldPosition.offset(1, -12, 2),
+                this.worldPosition.offset(3, -12, 0),
+                this.worldPosition.offset(3,-12,1),
+                this.worldPosition.offset(3,-12,2),
+                this.worldPosition.offset(3, -12, 3),
+                this.worldPosition.offset(2,-12,3),
+                this.worldPosition.offset(1,-12,3),
+                this.worldPosition.offset(0, -12, 3),
+                this.worldPosition.offset(4,-12,0),
+                this.worldPosition.offset(4,-12,1),
+                this.worldPosition.offset(4, -12, 2),
+                this.worldPosition.offset(2, -12, 4),
+                this.worldPosition.offset(1, -12, 4),
+                this.worldPosition.offset(0, -12, 4),
+                this.worldPosition.offset(-1,-12,0),
+                this.worldPosition.offset(0,-12,-1),
+                this.worldPosition.offset(-1,-12,-1),
+                this.worldPosition.offset(-2, -12, 0),
+                this.worldPosition.offset(-2,-12,-1),
+                this.worldPosition.offset(-2,-12,-2),
+                this.worldPosition.offset(-1, -12, -2),
+                this.worldPosition.offset(0, -12, -2),
+                this.worldPosition.offset(-3, -12, 0),
+                this.worldPosition.offset(-3,-12,-1),
+                this.worldPosition.offset(-3,-12,-2),
+                this.worldPosition.offset(-3, -12, -3),
+                this.worldPosition.offset(-2,-12,-3),
+                this.worldPosition.offset(-1,-12,-3),
+                this.worldPosition.offset(0, -12, -3),
+                this.worldPosition.offset(-4,-12,0),
+                this.worldPosition.offset(-4,-12,-1),
+                this.worldPosition.offset(-4, -12, -2),
+                this.worldPosition.offset(-2, -12, -4),
+                this.worldPosition.offset(-1, -12, -4),
+                this.worldPosition.offset(0, -12, -4),
+                this.worldPosition.offset(-1,-12,1),
+                this.worldPosition.offset(-2,-12,1),
+                this.worldPosition.offset(-2,-12,2),
+                this.worldPosition.offset(-1, -12, 2),
+                this.worldPosition.offset(-3,-12,1),
+                this.worldPosition.offset(-3,-12,2),
+                this.worldPosition.offset(-3, -12, 3),
+                this.worldPosition.offset(-2,-12,3),
+                this.worldPosition.offset(-1,-12,3),
+                this.worldPosition.offset(-4,-12,1),
+                this.worldPosition.offset(-4, -12, 2),
+                this.worldPosition.offset(-2, -12, 4),
+                this.worldPosition.offset(-1, -12, 4),
+                this.worldPosition.offset(1,-12,-1),
+                this.worldPosition.offset(2,-12,-1),
+                this.worldPosition.offset(2,-12,-2),
+                this.worldPosition.offset(1, -12, -2),
+                this.worldPosition.offset(3,-12,-1),
+                this.worldPosition.offset(3,-12,-2),
+                this.worldPosition.offset(3, -12, -3),
+                this.worldPosition.offset(2,-12,-3),
+                this.worldPosition.offset(1,-12,-3),
+                this.worldPosition.offset(4,-12,-1),
+                this.worldPosition.offset(4, -12, -2),
+                this.worldPosition.offset(2, -12, -4),
+                this.worldPosition.offset(1, -12, -4)
+        );
     }
 
     @Override
