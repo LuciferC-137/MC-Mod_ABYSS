@@ -35,18 +35,7 @@
     ],
     [],
     [
-      "minecraft:amethyst_geode"
-    ],
-    [],
-    [],
-    [],
-    [
-      "wardentools:coal_ore",
-      "wardentools:lapis_ore",
-      "wardentools:diamond_ore",
-      "wardentools:deep_ore"
-    ],
-    [
+      "minecraft:amethyst_geode",
       "wardentools:malachite_cristal_key",
       "wardentools:citrine_cristal_key",
       "wardentools:ruby_cristal_key",
@@ -66,6 +55,16 @@
       "wardentools:pale_vein",
       "wardentools:amethyst_vein"
     ],
+    [],
+    [],
+    [],
+    [
+      "wardentools:coal_ore",
+      "wardentools:lapis_ore",
+      "wardentools:diamond_ore",
+      "wardentools:deep_ore"
+    ],
+    [],
     [],
     [
       "minecraft:brown_mushroom_normal",
