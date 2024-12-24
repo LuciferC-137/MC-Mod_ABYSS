@@ -651,7 +651,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 
 	@Override
 	protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
-		this.playSound(SoundEvents.CHICKEN_STEP, 1.0F, 1.0F);
+
 	}
 
 	protected float getSoundVolume() {

@@ -164,14 +164,14 @@ public class BlockRegistry {
 	
 	
 	public static final RegistryObject<Block> DARKGRASS_BLOCK = REGISTAR.register("darkgrass_block",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
+			() -> new DarkGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
 					.strength(0.9F)
-					.sound(SoundType.GRASS)
+					.sound(SoundType.GRASS).randomTicks()
 					));
 	
 	public static final RegistryObject<Block> DARKDIRT = REGISTAR.register("darkdirt",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
-					.strength(0.8F)));
+			() -> new DarkDirtBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
+					.strength(0.8F).randomTicks()));
 	
 	public static final RegistryObject<Block> WHITETREE_LOG = REGISTAR.register("whitetree_log", 
 		    () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
