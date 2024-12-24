@@ -1,38 +1,47 @@
 {
   "name": "wardentools:ancient_citadel/bridge_pool",
-  "fallback": "minecraft:empty",
+  "fallback": "wardentools:ancient_citadel/collapsed_end_pool",
   "elements": [
     {
-      "weight": 4,
+      "weight": 6,
       "element": {
-        "location": "wardentools:ancient_citadel/corridor",
+        "location": "wardentools:ancient_citadel/bridge/corridor",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/broken_corridor",
+        "location": "wardentools:ancient_citadel/bridge/broken_corridor",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     },
     {
-      "weight": 3,
+      "weight": 6,
       "element": {
-        "location": "wardentools:ancient_citadel/bridge",
+        "location": "wardentools:ancient_citadel/bridge/short_bridge",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/collapsed_bridge",
+        "location": "wardentools:ancient_citadel/bridge/bridge",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:ancient_citadel/bridge/collapsed_bridge",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

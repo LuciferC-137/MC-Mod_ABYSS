@@ -1,11 +1,20 @@
 {
   "name": "wardentools:ancient_citadel/rich_bridge_pool",
-  "fallback": "minecraft:empty",
+  "fallback": "wardentools:ancient_citadel/collapsed_end_pool",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/rich_bridge",
+        "location": "wardentools:ancient_citadel/bridge/rich_bridge",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "wardentools:ancient_citadel/bridge/rich_short_bridge",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

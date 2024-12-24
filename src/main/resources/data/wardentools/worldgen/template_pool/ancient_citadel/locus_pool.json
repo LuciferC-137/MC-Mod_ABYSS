@@ -1,11 +1,11 @@
 {
   "name": "wardentools:ancient_citadel/locus_pool",
-  "fallback": "minecraft:empty",
+  "fallback": "wardentools:ancient_citadel/collapsed_end_pool",
   "elements": [
     {
       "weight": 2,
       "element": {
-        "location": "wardentools:ancient_citadel/cross",
+        "location": "wardentools:ancient_citadel/cross/cross",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -14,7 +14,7 @@
     {
       "weight": 3,
       "element": {
-        "location": "wardentools:ancient_citadel/cross3",
+        "location": "wardentools:ancient_citadel/cross/cross3",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -23,7 +23,7 @@
     {
       "weight": 4,
       "element": {
-        "location": "wardentools:ancient_citadel/cross2left",
+        "location": "wardentools:ancient_citadel/cross/cross2left",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -32,7 +32,7 @@
     {
       "weight": 4,
       "element": {
-        "location": "wardentools:ancient_citadel/cross2right",
+        "location": "wardentools:ancient_citadel/cross/cross2right",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
