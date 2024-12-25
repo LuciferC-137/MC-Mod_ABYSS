@@ -10,15 +10,33 @@ import wardentools.particle.ParticleRegistry;
 import java.io.IOException;
 
 public class ParticleContagionImplosion {
-    private static final double SPEED = 0.5D;
-    private static final double RADIUS = 5.0D;
     private final Vec3 source;
+    private float speed = 0.5f;
+    private float radius = 5.0f;
+    private int particleNumber = 100;
 
     public ParticleContagionImplosion(Vec3 source) {this.source = source;}
 
-    public ParticleContagionImplosion(FriendlyByteBuf buffer) {this.source = buffer.readVec3();}
+    public ParticleContagionImplosion(Vec3 source, float speed, float radius, int particleNumber) {
+        this.source = source;
+        this.speed = speed;
+        this.radius = radius;
+        this.particleNumber = particleNumber;
+    }
 
-    public void encode(FriendlyByteBuf buffer) {buffer.writeVec3(this.source);}
+    public ParticleContagionImplosion(FriendlyByteBuf buffer) {
+        this.source = buffer.readVec3();
+        this.speed = buffer.readFloat();
+        this.radius = buffer.readFloat();
+        this.particleNumber = buffer.readInt();
+    }
+
+    public void encode(FriendlyByteBuf buffer) {
+        buffer.writeVec3(this.source);
+        buffer.writeFloat(this.speed);
+        buffer.writeFloat(this.radius);
+        buffer.writeInt(this.particleNumber);
+    }
 
     public void handle(CustomPayloadEvent.Context context) {
         context.enqueueWork(() -> handlePacket(this));
@@ -29,12 +47,12 @@ public class ParticleContagionImplosion {
         Vec3 source = msg.source;
         try (ClientLevel level = Minecraft.getInstance().level) {
             if (level != null) {
-                for (int i = 0; i < 100; i++) {
-                    double offsetX = (level.random.nextDouble() - 0.5) * RADIUS;
-                    double offsetY = (level.random.nextDouble() - 0.5) * RADIUS;
-                    double offsetZ = (level.random.nextDouble() - 0.5) * RADIUS;
+                for (int i = 0; i < msg.particleNumber; i++) {
+                    double offsetX = (level.random.nextDouble() - 0.5) * msg.radius;
+                    double offsetY = (level.random.nextDouble() - 0.5) * msg.radius;
+                    double offsetZ = (level.random.nextDouble() - 0.5) * msg.radius;
                     double norm = Math.sqrt(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ);
-                    double speed = SPEED / norm;
+                    double speed = msg.speed / norm;
                     level.addParticle(ParticleRegistry.CORRUPTION.get(),
                             source.x + offsetX,
                             source.y + offsetY,

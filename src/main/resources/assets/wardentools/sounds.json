@@ -106,5 +106,11 @@
 		"sounds": [
 			"wardentools:protector_ambient"
 		]
+	},
+	"ancient_laboratory_gate_closing": {
+		"subtitles": "sounds.wardentools.ancient_laboratory_gate_closing",
+		"sounds": [
+			"wardentools:ancient_laboratory_gate_closing"
+		]
 	}
 }

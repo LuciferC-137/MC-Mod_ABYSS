@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
@@ -28,7 +29,9 @@ import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
 import wardentools.items.ItemRegistry;
 import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.AncientLaboratoryGateSound;
 import wardentools.network.ParticulesSoundsEffects.ParticleContagionExplosion;
+import wardentools.particle.ParticleRegistry;
 
 import java.util.List;
 
@@ -90,6 +93,12 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     private int  total_charge = 0;
     private int eye_progression = 0;
     private int next_check = 0;
+
+    private static final int FENCE_INTERVAL = 50;
+    private static final int MAX_FENCE = 5;
+    private int schedule_fence = 0;
+    private int fence_level = 0;
+
 
     protected DysfunctionningCatalystBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -207,6 +216,88 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
             } else if (eye_progression > 0 && total_charge < MAX_TOTAL) {
                 this.eye_progression --; // this should normally never happen.
             }
+
+            // Fence placement Logic
+            if (this.schedule_fence > 0 && this.fence_level < MAX_FENCE) {
+                this.schedule_fence--;
+                if (this.schedule_fence == 0) {
+                    this.placeFence();
+                    this.fence_level++;
+                    if (this.fence_level < MAX_FENCE) this.schedule_fence = FENCE_INTERVAL;
+                }
+            }
+        }
+    }
+
+    public void clientTick() {
+        handleParticleEffects();
+    }
+
+    private void placeFence() {
+        if (this.level != null) {
+            List<BlockPos> fencePos = this.getFencePosForLevel();
+            if (fencePos != null) {
+                for (BlockPos pos : this.getFenceSoundPos()) {
+                    this.sendGateClosingSoundEffectToClient(pos.getCenter());
+                }
+                for (BlockPos pos : fencePos) {
+                    this.level.setBlockAndUpdate(pos, BlockRegistry.DARKTREE_FENCE.get().defaultBlockState());
+                }
+            }
+        }
+    }
+
+    private void sendGateClosingSoundEffectToClient(Vec3 source) {
+        PacketHandler.sendToAllClient(new AncientLaboratoryGateSound(source));
+    }
+
+    private void handleParticleEffects() {
+        if (this.isChargingCrystals()) {
+            this.particleLevitation(10, 0.2f, 5f,
+                    -13f, 5f);
+        }
+        if (this.isChargingTotal()) {
+            this.particleImplosion(10, 0.4f, 15f);
+        }
+        if (this.isFightActive()) {
+            this.particleLevitation(100, 0.05f, 19f,
+                    -13f, 5f);
+        }
+    }
+
+    private void particleImplosion(int particleNumber, float speedMultiplier, float radius) {
+        if (this.level == null || !this.level.isClientSide) return;
+        Vec3 source = this.worldPosition.getCenter();
+        for (int i = 0; i < particleNumber; i++) {
+            double offsetX = (this.level.random.nextDouble() - 0.5) * radius;
+            double offsetY = (this.level.random.nextDouble() - 0.5) * radius;
+            double offsetZ = (this.level.random.nextDouble() - 0.5) * radius;
+            double norm = Math.sqrt(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ);
+            double speed = speedMultiplier / norm;
+            this.level.addParticle(ParticleRegistry.CORRUPTION.get(),
+                    source.x + offsetX,
+                    source.y + offsetY,
+                    source.z + offsetZ,
+                    -offsetX * speed, -offsetY * speed, -offsetZ * speed);
+        }
+    }
+
+    private void particleLevitation(int particleNumber, float speedMultiplier, float radius,
+                                    float yMinParticleSpawn, float yMaxParticleSpawn) {
+        if (this.level == null || !this.level.isClientSide) return;
+        Vec3 source = this.worldPosition.getCenter();
+        for (int i = 0; i < particleNumber; i++) {
+            float x =  (this.level.random.nextFloat() * 2 - 1f) * radius;
+            float y = (this.level.random.nextFloat()
+                    * (yMaxParticleSpawn - yMinParticleSpawn) + yMinParticleSpawn);
+            float z = (this.level.random.nextFloat() * 2 - 1f) * radius;
+            this.level.addParticle(ParticleRegistry.CORRUPTION.get(),
+                    source.x + x,
+                    source.y + y,
+                    source.z + z,
+                    0,
+                    speedMultiplier,
+                    0);
         }
     }
 
@@ -284,6 +375,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     public void doSummoning() {
         this.replaceLiquidCorruptionBlock();
         this.hugeParticleExplosion();
+        this.schedule_fence = FENCE_INTERVAL;
     }
 
     public void replaceLiquidCorruptionBlock() {
@@ -297,6 +389,58 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     public void hugeParticleExplosion() {
         PacketHandler.sendToAllClient(new ParticleContagionExplosion(
                 this.worldPosition.getCenter(), 1f, 2f, 800));
+    }
+
+    public List<BlockPos> getFenceSoundPos() {
+        return List.of(
+                this.worldPosition.offset(19, -9, 0),
+                this.worldPosition.offset(0, -9, 19),
+                this.worldPosition.offset(-19, -9, 0),
+                this.worldPosition.offset(0, -9, -19)
+        );
+    }
+
+    public @Nullable List<BlockPos> getFencePosForLevel() {
+        if (this.fence_level == 0) {
+            return List.of(
+                this.worldPosition.offset(19, -8, 0),
+                this.worldPosition.offset(19, -8, 1),
+                this.worldPosition.offset(19, -8, -1),
+                this.worldPosition.offset(0, -8, 19),
+                this.worldPosition.offset(1, -8, 19),
+                this.worldPosition.offset(-1, -8, 19),
+                this.worldPosition.offset(-19, -8, 0),
+                this.worldPosition.offset(-19, -8, 1),
+                this.worldPosition.offset(-19, -8, -1),
+                this.worldPosition.offset(0, -8, -19),
+                this.worldPosition.offset(1, -8, -19),
+                this.worldPosition.offset(-1, -8, -19)
+            );
+        } else if (this.fence_level >= 1 && this.fence_level <= MAX_FENCE) {
+            return List.of(
+                    this.worldPosition.offset(19, -8 - fence_level, 0),
+                    this.worldPosition.offset(19, -8 - fence_level, 1),
+                    this.worldPosition.offset(19, -8 - fence_level, -1),
+                    this.worldPosition.offset(0, -8 - fence_level, 19),
+                    this.worldPosition.offset(1, -8 - fence_level, 19),
+                    this.worldPosition.offset(-1, -8 - fence_level, 19),
+                    this.worldPosition.offset(-19, -8 - fence_level, 0),
+                    this.worldPosition.offset(-19, -8 - fence_level, 1),
+                    this.worldPosition.offset(-19, -8 - fence_level, -1),
+                    this.worldPosition.offset(0, -8 - fence_level, -19),
+                    this.worldPosition.offset(1, -8 - fence_level, -19),
+                    this.worldPosition.offset(-1, -8 - fence_level, -19),
+                    this.worldPosition.offset(19, -8 - fence_level, 2),
+                    this.worldPosition.offset(19, -8 - fence_level, -2),
+                    this.worldPosition.offset(2, -8 - fence_level, 19),
+                    this.worldPosition.offset(-2, -8 - fence_level, 19),
+                    this.worldPosition.offset(-19, -8 - fence_level, 2),
+                    this.worldPosition.offset(-19, -8 - fence_level, -2),
+                    this.worldPosition.offset(2, -8 - fence_level, -19),
+                    this.worldPosition.offset(-2, -8 - fence_level, -19)
+            );
+        }
+        return null;
     }
 
     public List<BlockPos> getFountainBelowPositions() {

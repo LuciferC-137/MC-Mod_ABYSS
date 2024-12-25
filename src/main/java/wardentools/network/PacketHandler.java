@@ -82,8 +82,13 @@ public class PacketHandler {
 				.decoder(ParticleContagionExplosion::new)
 				.consumerMainThread(ParticleContagionExplosion::handle)
 				.add();
+		INSTANCE.messageBuilder(AncientLaboratoryGateSound.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(AncientLaboratoryGateSound::encode)
+				.decoder(AncientLaboratoryGateSound::new)
+				.consumerMainThread(AncientLaboratoryGateSound::handle)
+				.add();
 
-    }
+	}
 
     public static void sendToServer(Object msg) {
     	INSTANCE.send(msg, PacketDistributor.SERVER.noArg());

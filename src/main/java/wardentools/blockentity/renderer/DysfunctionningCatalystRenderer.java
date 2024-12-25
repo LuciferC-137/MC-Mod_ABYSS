@@ -25,10 +25,6 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
     private static final float speedAmplifier = 10.0f;
     private static final float scaleAmplifier = 1.6f;
     private static final float particleSpawnRadius = 2f;
-    private static final float particleSpawnRadiusOnCharging = 5f;
-    private static final float particleSpawnRadiusOnFightActive = 14f;
-    private static final float yMinParticleSpawn = -13f;
-    private static final float yMaxParticleSpawn = 5f;
     private static final DysfunctionningCatalystInterior model =
 			new DysfunctionningCatalystInterior(DysfunctionningCatalystInterior.createBodyLayer().bakeRoot());
     private static final ResourceLocation INTERIOR_TEXTURE
@@ -47,9 +43,6 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
 
         renderInterior(blockEntity.getBlockPos(), poseStack, level, partialTick, buffer, packedOverlay);
         addParticle(level, blockEntity);
-        if (blockEntity.isChargingCrystals())renderParticleWhenChargingCrystals(level, blockEntity);
-        if (blockEntity.isChargingTotal()) renderParticleWhenChargingTotal(level, blockEntity);
-        if (blockEntity.isFightActive()) renderParticleWhenFightActive(level, blockEntity);
     }
 
     private static void addParticle(Level level, DysfunctionningCatalystBlockEntity blockEntity){
@@ -100,56 +93,5 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
                 packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
 
         poseStack.popPose();
-    }
-
-    private static void renderParticleWhenChargingCrystals(Level level, DysfunctionningCatalystBlockEntity blockEntity){
-        for (int i = 0; i < 20; i++) {
-            Vec3 center = blockEntity.getBlockPos().getCenter();
-            float x =  (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadiusOnCharging;
-            float y = (level.getRandom().nextFloat()
-                    * (yMaxParticleSpawn - yMinParticleSpawn) + yMinParticleSpawn);
-            float z = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadiusOnCharging;
-            level.addParticle(ParticleRegistry.CORRUPTION.get(),
-                    (float)center.x + x,
-                    (float)center.y + y,
-                    (float)center.z + z,
-                    0,
-                    0.2,
-                    0);
-        }
-    }
-
-    private static void renderParticleWhenFightActive(Level level, DysfunctionningCatalystBlockEntity blockEntity){
-        for (int i = 0; i < 100; i++) {
-            Vec3 center = blockEntity.getBlockPos().getCenter();
-            float x =  (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadiusOnFightActive;
-            float y = (level.getRandom().nextFloat()
-                    * (yMaxParticleSpawn - yMinParticleSpawn) + yMinParticleSpawn);
-            float z = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadiusOnFightActive;
-            level.addParticle(ParticleRegistry.CORRUPTION.get(),
-                    (float)center.x + x,
-                    (float)center.y + y,
-                    (float)center.z + z,
-                    0,
-                    0.05,
-                    0);
-        }
-    }
-
-    private static void renderParticleWhenChargingTotal(Level level, DysfunctionningCatalystBlockEntity blockEntity){
-        for (int i = 0; i < 20; i++){
-            Vec3 center = blockEntity.getBlockPos().getCenter();
-            float x =  (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius * 5;
-            float y = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius * 5;
-            float z = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius * 5;
-            float norm = Mth.sqrt(x*x + y*y + z*z) / 0.9f;
-            level.addParticle(ParticleRegistry.CORRUPTION.get(),
-                    (float)center.x + x,
-                    (float)center.y + y,
-                    (float)center.z + z,
-                    -x / norm,
-                    -y / norm,
-                    -z / norm);
-        }
     }
 }

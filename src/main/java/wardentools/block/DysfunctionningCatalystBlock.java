@@ -2,6 +2,7 @@ package wardentools.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -58,8 +59,9 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state,
 																  @NotNull BlockEntityType<T> type){
-		return level.isClientSide() ? null : (level0, pos0, state0, blockEntity)
-				-> ((DysfunctionningCatalystBlockEntity)blockEntity).tick();
+		return level.isClientSide() ?
+			(level0, pos0, state0, blockEntity) -> ((DysfunctionningCatalystBlockEntity)blockEntity).clientTick() :
+			(level0, pos0, state0, blockEntity) -> ((DysfunctionningCatalystBlockEntity)blockEntity).tick();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -79,5 +81,14 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 			}
 		}
 		super.onRemove(state, level, pos, newState, isMoving);
+	}
+
+	@Override
+	public void animateTick(@NotNull BlockState state, @NotNull Level level,
+							@NotNull BlockPos pos, @NotNull RandomSource random) {
+		BlockEntity blockEntity = level.getBlockEntity(pos);
+		if (blockEntity instanceof DysfunctionningCatalystBlockEntity catalyst) {
+			catalyst.clientTick();
+		}
 	}
 }
