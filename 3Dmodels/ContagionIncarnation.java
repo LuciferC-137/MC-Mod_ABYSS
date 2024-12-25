@@ -1,4 +1,4 @@
-// Made with Blockbench 4.10.4
+// Made with Blockbench 4.11.2
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
@@ -118,114 +118,114 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 	public ContagionIncarnation(ModelPart root) {
 		this.FULL = root.getChild("FULL");
-		this.TAIL = root.getChild("TAIL");
-		this.SECTION_6 = root.getChild("SECTION_6");
-		this.SUBSECTION_6_1 = root.getChild("SUBSECTION_6_1");
-		this.SECTION_7 = root.getChild("SECTION_7");
-		this.SUBSECTION_7_1 = root.getChild("SUBSECTION_7_1");
-		this.SUBSECTION_7_2 = root.getChild("SUBSECTION_7_2");
-		this.LEG_LEFT_3 = root.getChild("LEG_LEFT_3");
-		this.BASE_L_3 = root.getChild("BASE_L_3");
-		this.FORELEG_L_3 = root.getChild("FORELEG_L_3");
-		this.FEET_L_3 = root.getChild("FEET_L_3");
-		this.LEG_RIGHT_3 = root.getChild("LEG_RIGHT_3");
-		this.BASE_R_3 = root.getChild("BASE_R_3");
-		this.FORELEG_R_3 = root.getChild("FORELEG_R_3");
-		this.FEET_R_3 = root.getChild("FEET_R_3");
-		this.SECTION_8 = root.getChild("SECTION_8");
-		this.SUBSECTION_8_1 = root.getChild("SUBSECTION_8_1");
-		this.SUBSECTION_8_2 = root.getChild("SUBSECTION_8_2");
-		this.LEG_LEFT_4 = root.getChild("LEG_LEFT_4");
-		this.BASE_L_4 = root.getChild("BASE_L_4");
-		this.FORELEG_L_4 = root.getChild("FORELEG_L_4");
-		this.FEET_L_4 = root.getChild("FEET_L_4");
-		this.LEG_RIGHT_4 = root.getChild("LEG_RIGHT_4");
-		this.BASE_R_4 = root.getChild("BASE_R_4");
-		this.FORELEG_R_4 = root.getChild("FORELEG_R_4");
-		this.FEET_R_4 = root.getChild("FEET_R_4");
-		this.SECTION_9 = root.getChild("SECTION_9");
-		this.SUBSECTION_9_1 = root.getChild("SUBSECTION_9_1");
-		this.SECTION_10 = root.getChild("SECTION_10");
-		this.SUBSECTION_10_1 = root.getChild("SUBSECTION_10_1");
-		this.SECTION_11 = root.getChild("SECTION_11");
-		this.SUBSECTION_11_1 = root.getChild("SUBSECTION_11_1");
-		this.SECTION_12 = root.getChild("SECTION_12");
-		this.SUBSECTION_12_1 = root.getChild("SUBSECTION_12_1");
-		this.SECTION_13 = root.getChild("SECTION_13");
-		this.SUBSECTION_13_1 = root.getChild("SUBSECTION_13_1");
-		this.SECTION_14 = root.getChild("SECTION_14");
-		this.SUBSECTION_14_1 = root.getChild("SUBSECTION_14_1");
-		this.SECTION_15 = root.getChild("SECTION_15");
-		this.SUBSECTION_15_1 = root.getChild("SUBSECTION_15_1");
-		this.SECTION_16 = root.getChild("SECTION_16");
-		this.SUBSECTION_16_1 = root.getChild("SUBSECTION_16_1");
-		this.SECTION_17 = root.getChild("SECTION_17");
-		this.SUBSECTION_17_1 = root.getChild("SUBSECTION_17_1");
-		this.SECTION_18 = root.getChild("SECTION_18");
-		this.SUBSECTION_18_1 = root.getChild("SUBSECTION_18_1");
-		this.END = root.getChild("END");
-		this.FRONT_BODY = root.getChild("FRONT_BODY");
-		this.TORSO = root.getChild("TORSO");
-		this.BELLY = root.getChild("BELLY");
-		this.ARM_RIGHT = root.getChild("ARM_RIGHT");
-		this.ARMBASE_R = root.getChild("ARMBASE_R");
-		this.FOREARM_R = root.getChild("FOREARM_R");
-		this.HAND_R = root.getChild("HAND_R");
-		this.FINGER_R_4 = root.getChild("FINGER_R_4");
-		this.FOREFINGER_R_4 = root.getChild("FOREFINGER_R_4");
-		this.FINGER_R_3 = root.getChild("FINGER_R_3");
-		this.FOREFINGER_R_3 = root.getChild("FOREFINGER_R_3");
-		this.FINGER_R_2 = root.getChild("FINGER_R_2");
-		this.FOREFINGER_R_2 = root.getChild("FOREFINGER_R_2");
-		this.FINGER_R_1 = root.getChild("FINGER_R_1");
-		this.FOREFINGER_R_1 = root.getChild("FOREFINGER_R_1");
-		this.TORSO_BOUND_R = root.getChild("TORSO_BOUND_R");
-		this.LEG_LEFT_1 = root.getChild("LEG_LEFT_1");
-		this.BASE_L_1 = root.getChild("BASE_L_1");
-		this.FORELEG_L_1 = root.getChild("FORELEG_L_1");
-		this.FEET_L_1 = root.getChild("FEET_L_1");
-		this.LEG_RIGHT_1 = root.getChild("LEG_RIGHT_1");
-		this.BASE_R_1 = root.getChild("BASE_R_1");
-		this.FORELEG_R_1 = root.getChild("FORELEG_R_1");
-		this.FEET_R_1 = root.getChild("FEET_R_1");
-		this.LEG_RIGHT_2 = root.getChild("LEG_RIGHT_2");
-		this.FORELEG_R_2 = root.getChild("FORELEG_R_2");
-		this.FEET_R_2 = root.getChild("FEET_R_2");
-		this.BASE_R_2 = root.getChild("BASE_R_2");
-		this.LEG_LEFT_2 = root.getChild("LEG_LEFT_2");
-		this.FORELEG_L_2 = root.getChild("FORELEG_L_2");
-		this.FEET_L_2 = root.getChild("FEET_L_2");
-		this.BASE_L_2 = root.getChild("BASE_L_2");
-		this.ARM_LEFT = root.getChild("ARM_LEFT");
-		this.ARMBASE_L = root.getChild("ARMBASE_L");
-		this.FOREARM_L = root.getChild("FOREARM_L");
-		this.HAND_L = root.getChild("HAND_L");
-		this.FINGER_L_4 = root.getChild("FINGER_L_4");
-		this.FOREFINGER_L_4 = root.getChild("FOREFINGER_L_4");
-		this.FINGER_L_3 = root.getChild("FINGER_L_3");
-		this.FOREFINGER_L_3 = root.getChild("FOREFINGER_L_3");
-		this.FINGER_L_2 = root.getChild("FINGER_L_2");
-		this.FOREFINGER_L_2 = root.getChild("FOREFINGER_L_2");
-		this.FINGER_L_1 = root.getChild("FINGER_L_1");
-		this.FOREFINGER_L_1 = root.getChild("FOREFINGER_L_1");
-		this.TORSO_BOUND_L = root.getChild("TORSO_BOUND_L");
-		this.CHESTPLATE = root.getChild("CHESTPLATE");
-		this.UPPER = root.getChild("UPPER");
-		this.SECTION_5 = root.getChild("SECTION_5");
-		this.SUBSECTION_5_1 = root.getChild("SUBSECTION_5_1");
-		this.SECTION_4 = root.getChild("SECTION_4");
-		this.SUBSECTION_4_1 = root.getChild("SUBSECTION_4_1");
-		this.SECTION_3 = root.getChild("SECTION_3");
-		this.SUBSECTION_3_1 = root.getChild("SUBSECTION_3_1");
-		this.SECTION_2 = root.getChild("SECTION_2");
-		this.SUBSECTION_2_1 = root.getChild("SUBSECTION_2_1");
-		this.SECTION_1 = root.getChild("SECTION_1");
-		this.SUBSECTION_1_1 = root.getChild("SUBSECTION_1_1");
-		this.HEAD = root.getChild("HEAD");
-		this.JAW = root.getChild("JAW");
-		this.FOREHEAD = root.getChild("FOREHEAD");
-		this.MANE = root.getChild("MANE");
-		this.FIXED_JAW = root.getChild("FIXED_JAW");
+		this.TAIL = this.FULL.getChild("TAIL");
+		this.SECTION_6 = this.TAIL.getChild("SECTION_6");
+		this.SUBSECTION_6_1 = this.SECTION_6.getChild("SUBSECTION_6_1");
+		this.SECTION_7 = this.SECTION_6.getChild("SECTION_7");
+		this.SUBSECTION_7_1 = this.SECTION_7.getChild("SUBSECTION_7_1");
+		this.SUBSECTION_7_2 = this.SECTION_7.getChild("SUBSECTION_7_2");
+		this.LEG_LEFT_3 = this.SECTION_7.getChild("LEG_LEFT_3");
+		this.BASE_L_3 = this.LEG_LEFT_3.getChild("BASE_L_3");
+		this.FORELEG_L_3 = this.LEG_LEFT_3.getChild("FORELEG_L_3");
+		this.FEET_L_3 = this.FORELEG_L_3.getChild("FEET_L_3");
+		this.LEG_RIGHT_3 = this.SECTION_7.getChild("LEG_RIGHT_3");
+		this.BASE_R_3 = this.LEG_RIGHT_3.getChild("BASE_R_3");
+		this.FORELEG_R_3 = this.LEG_RIGHT_3.getChild("FORELEG_R_3");
+		this.FEET_R_3 = this.FORELEG_R_3.getChild("FEET_R_3");
+		this.SECTION_8 = this.SECTION_7.getChild("SECTION_8");
+		this.SUBSECTION_8_1 = this.SECTION_8.getChild("SUBSECTION_8_1");
+		this.SUBSECTION_8_2 = this.SECTION_8.getChild("SUBSECTION_8_2");
+		this.LEG_LEFT_4 = this.SECTION_8.getChild("LEG_LEFT_4");
+		this.BASE_L_4 = this.LEG_LEFT_4.getChild("BASE_L_4");
+		this.FORELEG_L_4 = this.LEG_LEFT_4.getChild("FORELEG_L_4");
+		this.FEET_L_4 = this.FORELEG_L_4.getChild("FEET_L_4");
+		this.LEG_RIGHT_4 = this.SECTION_8.getChild("LEG_RIGHT_4");
+		this.BASE_R_4 = this.LEG_RIGHT_4.getChild("BASE_R_4");
+		this.FORELEG_R_4 = this.LEG_RIGHT_4.getChild("FORELEG_R_4");
+		this.FEET_R_4 = this.FORELEG_R_4.getChild("FEET_R_4");
+		this.SECTION_9 = this.SECTION_8.getChild("SECTION_9");
+		this.SUBSECTION_9_1 = this.SECTION_9.getChild("SUBSECTION_9_1");
+		this.SECTION_10 = this.SECTION_9.getChild("SECTION_10");
+		this.SUBSECTION_10_1 = this.SECTION_10.getChild("SUBSECTION_10_1");
+		this.SECTION_11 = this.SECTION_10.getChild("SECTION_11");
+		this.SUBSECTION_11_1 = this.SECTION_11.getChild("SUBSECTION_11_1");
+		this.SECTION_12 = this.SECTION_11.getChild("SECTION_12");
+		this.SUBSECTION_12_1 = this.SECTION_12.getChild("SUBSECTION_12_1");
+		this.SECTION_13 = this.SECTION_12.getChild("SECTION_13");
+		this.SUBSECTION_13_1 = this.SECTION_13.getChild("SUBSECTION_13_1");
+		this.SECTION_14 = this.SECTION_13.getChild("SECTION_14");
+		this.SUBSECTION_14_1 = this.SECTION_14.getChild("SUBSECTION_14_1");
+		this.SECTION_15 = this.SECTION_14.getChild("SECTION_15");
+		this.SUBSECTION_15_1 = this.SECTION_15.getChild("SUBSECTION_15_1");
+		this.SECTION_16 = this.SECTION_15.getChild("SECTION_16");
+		this.SUBSECTION_16_1 = this.SECTION_16.getChild("SUBSECTION_16_1");
+		this.SECTION_17 = this.SECTION_16.getChild("SECTION_17");
+		this.SUBSECTION_17_1 = this.SECTION_17.getChild("SUBSECTION_17_1");
+		this.SECTION_18 = this.SECTION_17.getChild("SECTION_18");
+		this.SUBSECTION_18_1 = this.SECTION_18.getChild("SUBSECTION_18_1");
+		this.END = this.SECTION_18.getChild("END");
+		this.FRONT_BODY = this.FULL.getChild("FRONT_BODY");
+		this.TORSO = this.FRONT_BODY.getChild("TORSO");
+		this.BELLY = this.TORSO.getChild("BELLY");
+		this.ARM_RIGHT = this.TORSO.getChild("ARM_RIGHT");
+		this.ARMBASE_R = this.ARM_RIGHT.getChild("ARMBASE_R");
+		this.FOREARM_R = this.ARMBASE_R.getChild("FOREARM_R");
+		this.HAND_R = this.FOREARM_R.getChild("HAND_R");
+		this.FINGER_R_4 = this.HAND_R.getChild("FINGER_R_4");
+		this.FOREFINGER_R_4 = this.FINGER_R_4.getChild("FOREFINGER_R_4");
+		this.FINGER_R_3 = this.HAND_R.getChild("FINGER_R_3");
+		this.FOREFINGER_R_3 = this.FINGER_R_3.getChild("FOREFINGER_R_3");
+		this.FINGER_R_2 = this.HAND_R.getChild("FINGER_R_2");
+		this.FOREFINGER_R_2 = this.FINGER_R_2.getChild("FOREFINGER_R_2");
+		this.FINGER_R_1 = this.HAND_R.getChild("FINGER_R_1");
+		this.FOREFINGER_R_1 = this.FINGER_R_1.getChild("FOREFINGER_R_1");
+		this.TORSO_BOUND_R = this.ARM_RIGHT.getChild("TORSO_BOUND_R");
+		this.LEG_LEFT_1 = this.TORSO.getChild("LEG_LEFT_1");
+		this.BASE_L_1 = this.LEG_LEFT_1.getChild("BASE_L_1");
+		this.FORELEG_L_1 = this.LEG_LEFT_1.getChild("FORELEG_L_1");
+		this.FEET_L_1 = this.FORELEG_L_1.getChild("FEET_L_1");
+		this.LEG_RIGHT_1 = this.TORSO.getChild("LEG_RIGHT_1");
+		this.BASE_R_1 = this.LEG_RIGHT_1.getChild("BASE_R_1");
+		this.FORELEG_R_1 = this.LEG_RIGHT_1.getChild("FORELEG_R_1");
+		this.FEET_R_1 = this.FORELEG_R_1.getChild("FEET_R_1");
+		this.LEG_RIGHT_2 = this.TORSO.getChild("LEG_RIGHT_2");
+		this.FORELEG_R_2 = this.LEG_RIGHT_2.getChild("FORELEG_R_2");
+		this.FEET_R_2 = this.FORELEG_R_2.getChild("FEET_R_2");
+		this.BASE_R_2 = this.LEG_RIGHT_2.getChild("BASE_R_2");
+		this.LEG_LEFT_2 = this.TORSO.getChild("LEG_LEFT_2");
+		this.FORELEG_L_2 = this.LEG_LEFT_2.getChild("FORELEG_L_2");
+		this.FEET_L_2 = this.FORELEG_L_2.getChild("FEET_L_2");
+		this.BASE_L_2 = this.LEG_LEFT_2.getChild("BASE_L_2");
+		this.ARM_LEFT = this.TORSO.getChild("ARM_LEFT");
+		this.ARMBASE_L = this.ARM_LEFT.getChild("ARMBASE_L");
+		this.FOREARM_L = this.ARMBASE_L.getChild("FOREARM_L");
+		this.HAND_L = this.FOREARM_L.getChild("HAND_L");
+		this.FINGER_L_4 = this.HAND_L.getChild("FINGER_L_4");
+		this.FOREFINGER_L_4 = this.FINGER_L_4.getChild("FOREFINGER_L_4");
+		this.FINGER_L_3 = this.HAND_L.getChild("FINGER_L_3");
+		this.FOREFINGER_L_3 = this.FINGER_L_3.getChild("FOREFINGER_L_3");
+		this.FINGER_L_2 = this.HAND_L.getChild("FINGER_L_2");
+		this.FOREFINGER_L_2 = this.FINGER_L_2.getChild("FOREFINGER_L_2");
+		this.FINGER_L_1 = this.HAND_L.getChild("FINGER_L_1");
+		this.FOREFINGER_L_1 = this.FINGER_L_1.getChild("FOREFINGER_L_1");
+		this.TORSO_BOUND_L = this.ARM_LEFT.getChild("TORSO_BOUND_L");
+		this.CHESTPLATE = this.TORSO.getChild("CHESTPLATE");
+		this.UPPER = this.FRONT_BODY.getChild("UPPER");
+		this.SECTION_5 = this.UPPER.getChild("SECTION_5");
+		this.SUBSECTION_5_1 = this.SECTION_5.getChild("SUBSECTION_5_1");
+		this.SECTION_4 = this.SECTION_5.getChild("SECTION_4");
+		this.SUBSECTION_4_1 = this.SECTION_4.getChild("SUBSECTION_4_1");
+		this.SECTION_3 = this.SECTION_4.getChild("SECTION_3");
+		this.SUBSECTION_3_1 = this.SECTION_3.getChild("SUBSECTION_3_1");
+		this.SECTION_2 = this.SECTION_3.getChild("SECTION_2");
+		this.SUBSECTION_2_1 = this.SECTION_2.getChild("SUBSECTION_2_1");
+		this.SECTION_1 = this.SECTION_2.getChild("SECTION_1");
+		this.SUBSECTION_1_1 = this.SECTION_1.getChild("SUBSECTION_1_1");
+		this.HEAD = this.SECTION_1.getChild("HEAD");
+		this.JAW = this.HEAD.getChild("JAW");
+		this.FOREHEAD = this.HEAD.getChild("FOREHEAD");
+		this.MANE = this.FOREHEAD.getChild("MANE");
+		this.FIXED_JAW = this.HEAD.getChild("FIXED_JAW");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -722,9 +722,9 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r195 = BELLY.addOrReplaceChild("cube_r195", CubeListBuilder.create().texOffs(131, 134).addBox(-1.5F, -3.0F, -1.0F, 3.0F, 6.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.0F, -6.5F, -5.25F, -0.3054F, -0.3491F, 0.0F));
 
-		PartDefinition ARM_RIGHT = TORSO.addOrReplaceChild("ARM_RIGHT", CubeListBuilder.create(), PartPose.offset(-4.9F, -14.5F, -6.0F));
+		PartDefinition ARM_RIGHT = TORSO.addOrReplaceChild("ARM_RIGHT", CubeListBuilder.create(), PartPose.offset(-4.9F, -14.5F, -3.0F));
 
-		PartDefinition ARMBASE_R = ARM_RIGHT.addOrReplaceChild("ARMBASE_R", CubeListBuilder.create(), PartPose.offset(-0.0938F, 1.4372F, 1.75F));
+		PartDefinition ARMBASE_R = ARM_RIGHT.addOrReplaceChild("ARMBASE_R", CubeListBuilder.create(), PartPose.offset(-0.0938F, 1.4372F, -1.25F));
 
 		PartDefinition cube_r196 = ARMBASE_R.addOrReplaceChild("cube_r196", CubeListBuilder.create().texOffs(128, 71).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.0F, 0.0F, 0.0F, 0.0F, -0.1309F, -0.2182F));
 
@@ -792,7 +792,7 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r218 = FOREFINGER_R_1.addOrReplaceChild("cube_r218", CubeListBuilder.create().texOffs(14, 74).addBox(-0.4116F, -0.3742F, -2.0386F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.4422F, -0.24F, 0.0718F, 0.0F, 0.0F, -0.2182F));
 
-		PartDefinition TORSO_BOUND_R = ARM_RIGHT.addOrReplaceChild("TORSO_BOUND_R", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition TORSO_BOUND_R = ARM_RIGHT.addOrReplaceChild("TORSO_BOUND_R", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -3.0F));
 
 		PartDefinition cube_r219 = TORSO_BOUND_R.addOrReplaceChild("cube_r219", CubeListBuilder.create().texOffs(77, 59).addBox(-1.0F, -0.5F, -1.0F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.7854F, 0.0F, -0.1309F));
 
@@ -906,25 +906,25 @@ public class ContagionIncarnation<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition ARM_LEFT = TORSO.addOrReplaceChild("ARM_LEFT", CubeListBuilder.create(), PartPose.offset(4.9F, -14.5F, -3.0F));
 
-		PartDefinition ARMBASE_L = ARM_LEFT.addOrReplaceChild("ARMBASE_L", CubeListBuilder.create(), PartPose.offset(12.6938F, 3.3372F, -1.55F));
+		PartDefinition ARMBASE_L = ARM_LEFT.addOrReplaceChild("ARMBASE_L", CubeListBuilder.create(), PartPose.offset(0.6938F, 0.3372F, -1.55F));
 
-		PartDefinition cube_r258 = ARMBASE_L.addOrReplaceChild("cube_r258", CubeListBuilder.create().texOffs(134, 43).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.3054F));
+		PartDefinition cube_r258 = ARMBASE_L.addOrReplaceChild("cube_r258", CubeListBuilder.create().texOffs(134, 43).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(12.0F, 3.0F, 0.0F, 0.0F, 0.0F, 0.3054F));
 
-		PartDefinition cube_r259 = ARMBASE_L.addOrReplaceChild("cube_r259", CubeListBuilder.create().texOffs(134, 79).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.4F, 0.0F, 0.0F, 0.0F, 0.1309F));
+		PartDefinition cube_r259 = ARMBASE_L.addOrReplaceChild("cube_r259", CubeListBuilder.create().texOffs(134, 79).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(12.0F, 3.4F, 0.0F, 0.0F, 0.0F, 0.1309F));
 
-		PartDefinition cube_r260 = ARMBASE_L.addOrReplaceChild("cube_r260", CubeListBuilder.create().texOffs(122, 93).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.7F, -0.6F, 0.0F, 0.0F, 0.0F, 0.3054F));
+		PartDefinition cube_r260 = ARMBASE_L.addOrReplaceChild("cube_r260", CubeListBuilder.create().texOffs(122, 93).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(7.3F, 2.4F, 0.0F, 0.0F, 0.0F, 0.3054F));
 
-		PartDefinition cube_r261 = ARMBASE_L.addOrReplaceChild("cube_r261", CubeListBuilder.create().texOffs(64, 0).addBox(-2.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-11.0928F, -1.2808F, 0.05F, 0.0F, 0.0F, -0.0873F));
+		PartDefinition cube_r261 = ARMBASE_L.addOrReplaceChild("cube_r261", CubeListBuilder.create().texOffs(64, 0).addBox(-2.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.9072F, 1.7192F, 0.05F, 0.0F, 0.0F, -0.0873F));
 
-		PartDefinition cube_r262 = ARMBASE_L.addOrReplaceChild("cube_r262", CubeListBuilder.create().texOffs(14, 71).addBox(-3.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.0938F, -2.4372F, 0.05F, 0.0F, 0.0F, 0.3927F));
+		PartDefinition cube_r262 = ARMBASE_L.addOrReplaceChild("cube_r262", CubeListBuilder.create().texOffs(14, 71).addBox(-3.0F, -0.5F, -1.0F, 4.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.9062F, 0.5628F, 0.05F, 0.0F, 0.0F, 0.3927F));
 
-		PartDefinition cube_r263 = ARMBASE_L.addOrReplaceChild("cube_r263", CubeListBuilder.create().texOffs(122, 101).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-4.7F, -1.0F, 0.0F, 0.0F, 0.0F, 0.1309F));
+		PartDefinition cube_r263 = ARMBASE_L.addOrReplaceChild("cube_r263", CubeListBuilder.create().texOffs(122, 101).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(7.3F, 2.0F, 0.0F, 0.0F, 0.0F, 0.1309F));
 
-		PartDefinition cube_r264 = ARMBASE_L.addOrReplaceChild("cube_r264", CubeListBuilder.create().texOffs(130, 39).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.6F, -1.9F, 0.3F, 0.0F, 0.1309F, 0.2182F));
+		PartDefinition cube_r264 = ARMBASE_L.addOrReplaceChild("cube_r264", CubeListBuilder.create().texOffs(130, 39).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.4F, 1.1F, 0.3F, 0.0F, 0.1309F, 0.2182F));
 
-		PartDefinition cube_r265 = ARMBASE_L.addOrReplaceChild("cube_r265", CubeListBuilder.create().texOffs(130, 75).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-9.6F, -1.9F, -0.2F, 0.0F, -0.0873F, 0.2182F));
+		PartDefinition cube_r265 = ARMBASE_L.addOrReplaceChild("cube_r265", CubeListBuilder.create().texOffs(130, 75).addBox(-2.5F, -1.0F, -1.0F, 5.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.4F, 1.1F, -0.2F, 0.0F, -0.0873F, 0.2182F));
 
-		PartDefinition FOREARM_L = ARMBASE_L.addOrReplaceChild("FOREARM_L", CubeListBuilder.create(), PartPose.offset(3.1098F, 0.5454F, -0.0205F));
+		PartDefinition FOREARM_L = ARMBASE_L.addOrReplaceChild("FOREARM_L", CubeListBuilder.create(), PartPose.offset(15.1098F, 3.5454F, -0.0205F));
 
 		PartDefinition cube_r266 = FOREARM_L.addOrReplaceChild("cube_r266", CubeListBuilder.create().texOffs(126, 155).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0792F, 0.3056F, 0.0205F, -0.48F, 0.0F, 0.3054F));
 

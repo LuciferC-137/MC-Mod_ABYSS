@@ -27,8 +27,8 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
     private static final float particleSpawnRadius = 2f;
     private static final float particleSpawnRadiusOnCharging = 5f;
     private static final float particleSpawnRadiusOnFightActive = 14f;
-    private static final float yMinParticleSpawnOnCharging = -13f;
-    private static final float yMaxParticleSpawnOnCharging = 5f;
+    private static final float yMinParticleSpawn = -13f;
+    private static final float yMaxParticleSpawn = 5f;
     private static final DysfunctionningCatalystInterior model =
 			new DysfunctionningCatalystInterior(DysfunctionningCatalystInterior.createBodyLayer().bakeRoot());
     private static final ResourceLocation INTERIOR_TEXTURE
@@ -107,7 +107,7 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
             Vec3 center = blockEntity.getBlockPos().getCenter();
             float x =  (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadiusOnCharging;
             float y = (level.getRandom().nextFloat()
-                    * (yMaxParticleSpawnOnCharging - yMinParticleSpawnOnCharging) + yMinParticleSpawnOnCharging);
+                    * (yMaxParticleSpawn - yMinParticleSpawn) + yMinParticleSpawn);
             float z = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadiusOnCharging;
             level.addParticle(ParticleRegistry.CORRUPTION.get(),
                     (float)center.x + x,
@@ -124,7 +124,7 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
             Vec3 center = blockEntity.getBlockPos().getCenter();
             float x =  (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadiusOnFightActive;
             float y = (level.getRandom().nextFloat()
-                    * (yMaxParticleSpawnOnCharging - yMinParticleSpawnOnCharging) + yMinParticleSpawnOnCharging);
+                    * (yMaxParticleSpawn - yMinParticleSpawn) + yMinParticleSpawn);
             float z = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadiusOnFightActive;
             level.addParticle(ParticleRegistry.CORRUPTION.get(),
                     (float)center.x + x,
