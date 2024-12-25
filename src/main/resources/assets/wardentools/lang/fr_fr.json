@@ -170,6 +170,7 @@
 	"sounds.wardentools.protector_ambient": "Protecteur grogne",
 	"sounds.wardentools.protector_death": "Protecteur meurt",
 	"sounds.wardentools.ancient_laboratory_gate_closing": "Les portes du laboratoire ancien se ferment",
+	"sounds.wardentools.contagion_incarnation_emerge": "L'Incarnation de la Contagion émerge",
 
 	"effect.wardentools.corrupted": "Corrompu",
 	"effect.wardentools.corruption_vessel": "Receptacle de Corruption",

@@ -1,5 +1,8 @@
 package wardentools.entity.client;
 
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -15,6 +18,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import wardentools.ModMain;
+import wardentools.block.BlockRegistry;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.particle.ParticleRegistry;
 
@@ -23,6 +27,10 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 			new ResourceLocation(ModMain.MOD_ID, "textures/entity/contagion_incarnation.png");
 	private static final float HALF_SQRT_3 = (float)(Math.sqrt(3.0D) / 2.0D);
 	private static final float PARTICLE_DEATH_RADIUS = 2f;
+	private static final float PARTICLE_SPAWN_RADIUS = 4f;
+	private static final BlockParticleOption SOLID_CORRUPTION_PARTICLE
+			= new BlockParticleOption(ParticleTypes.BLOCK,
+			BlockRegistry.SOLID_CORRUPTION.get().defaultBlockState());
 
 	public ContagionIncarnationRenderer(EntityRendererProvider.Context context) {
 		super(context, new ContagionIncarnation(context.bakeLayer(ContagionIncarnation.LAYER_LOCATION)), 0.5f);
@@ -37,7 +45,7 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 	public void render(ContagionIncarnationEntity pEntity, float pEntityYaw, float pPartialTicks,
 					   @NotNull PoseStack pMatrixStack,
 					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {
-
+		if (pEntity.getTickSpawn() >= ContagionIncarnationEntity.SPAWN_DURATION - 1) return;// This line prevents the visualization of a wrong first frame of the entity.
 		int blockLight = (pPackedLight >> 4) & 0xF;
 		int skyLight = (pPackedLight >> 20) & 0xF;
 		float reductionFactor = ((float)ContagionIncarnationEntity.DEATH_DURATION - (float)pEntity.contagionIncarnationDeathTime)
@@ -49,6 +57,23 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 		super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, decreasingLight);
 		this.deathLightEffect(pEntity, pPartialTicks, pMatrixStack, pBuffer);
 		this.deathParticleEffect(pEntity);
+		this.spawnParticleEffect(pEntity);
+	}
+
+	private void spawnParticleEffect(ContagionIncarnationEntity entity) {
+		if (entity.getTickSpawn() > ContagionIncarnationEntity.SPAWN_DURATION / 2) {
+			double centerX = entity.getX();
+			double centerY = entity.getY() + entity.getBbHeight() / 2.0;
+			double centerZ = entity.getZ();
+			int particleCount = 30;
+			for (int j = 0; j < particleCount; j++) {
+				double x = centerX + PARTICLE_SPAWN_RADIUS * (entity.getRandom().nextFloat() - 0.5f);
+				double y = centerY + PARTICLE_SPAWN_RADIUS * (entity.getRandom().nextFloat() - 0.5f);
+				double z = centerZ + PARTICLE_SPAWN_RADIUS * (entity.getRandom().nextFloat() - 0.5f);
+				entity.level().addParticle(SOLID_CORRUPTION_PARTICLE, x, y, z,
+						0, 0.1, 0);
+			}
+		}
 	}
 
 	private void deathParticleEffect(ContagionIncarnationEntity entity) {

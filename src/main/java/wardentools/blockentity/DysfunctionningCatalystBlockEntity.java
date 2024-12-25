@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,13 +25,18 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.ModMain;
+import wardentools.block.AbyssPortalBlock;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.util.TickableBlockEntity;
+import wardentools.entity.ModEntities;
+import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
 import wardentools.items.ItemRegistry;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.AncientLaboratoryGateSound;
+import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationEmergeSound;
 import wardentools.network.ParticulesSoundsEffects.ParticleContagionExplosion;
+import wardentools.network.ParticulesSoundsEffects.ParticleDarktreFenceDestroyed;
 import wardentools.particle.ParticleRegistry;
 
 import java.util.List;
@@ -94,10 +100,15 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     private int eye_progression = 0;
     private int next_check = 0;
 
-    private static final int FENCE_INTERVAL = 50;
+    private static final int FENCE_INTERVAL = 35;
     private static final int MAX_FENCE = 5;
     private int schedule_fence = 0;
     private int fence_level = 0;
+
+    private static final int SUMMON_DELAY = 200;
+    private int schedule_summon = 0;
+
+    private boolean isContagionDefeated = false;
 
 
     protected DysfunctionningCatalystBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -123,6 +134,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         this.malachite = wardentoolsData.getInt("Malachite");
         this.echo_shard = wardentoolsData.getInt("EchoShard");
         this.total_charge = wardentoolsData.getInt("TotalCharge");
+        this.isContagionDefeated = wardentoolsData.getBoolean("IsContagionDefeated");
     }
 
     @Override
@@ -137,6 +149,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         wardentoolsData.putInt("Malachite", this.malachite);
         wardentoolsData.putInt("EchoShard", this.echo_shard);
         wardentoolsData.putInt("TotalCharge", this.total_charge);
+        wardentoolsData.putBoolean("IsContagionDefeated", this.isContagionDefeated);
         nbt.put(ModMain.MOD_ID, wardentoolsData);
     }
 
@@ -226,7 +239,29 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                     if (this.fence_level < MAX_FENCE) this.schedule_fence = FENCE_INTERVAL;
                 }
             }
+
+            // Summoning Logic
+            if (this.schedule_summon > 0) {
+                this.schedule_summon--;
+                if (this.schedule_summon == 0) {
+                    this.summonContagionIncarnation();
+                }
+            }
         }
+    }
+
+    private void summonContagionIncarnation() {
+        if (this.level == null) return;
+        this.placeSolidCorruptionBlock();
+        ContagionIncarnationEntity contagionIncarnation
+                = new ContagionIncarnationEntity(ModEntities.CONTAGION_INCARNATION.get(), this.level);
+        contagionIncarnation.setPos(this.worldPosition.below(12)
+                .getCenter().add(0, 0.5, 0));
+        contagionIncarnation.setHealth(contagionIncarnation.getMaxHealth());
+        contagionIncarnation.initiateSpawnAnimation();
+        contagionIncarnation.setCatalystPos(this.worldPosition);
+        this.level.addFreshEntity(contagionIncarnation);
+        PacketHandler.sendToAllClient(new ContagionIncarnationEmergeSound());
     }
 
     public void clientTick() {
@@ -235,7 +270,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
 
     private void placeFence() {
         if (this.level != null) {
-            List<BlockPos> fencePos = this.getFencePosForLevel();
+            List<BlockPos> fencePos = this.getFencePosByLevel(this.fence_level);
             if (fencePos != null) {
                 for (BlockPos pos : this.getFenceSoundPos()) {
                     this.sendGateClosingSoundEffectToClient(pos.getCenter());
@@ -247,17 +282,40 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         }
     }
 
+    private void removeFences() {
+        if (this.level != null) {
+            for (int level = 0; level <= MAX_FENCE; level++) {
+                List<BlockPos> fencePos = this.getFencePosByLevel(level);
+                if (fencePos != null) {
+                    for (BlockPos pos : fencePos) {
+                        if (this.level.getBlockState(pos).getBlock() == BlockRegistry.DARKTREE_FENCE.get()) {
+                            this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                            PacketHandler.sendToAllClient(new ParticleDarktreFenceDestroyed(pos.getCenter()));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void contagionDied() {
+        this.isContagionDefeated = true;
+        this.removeFences();
+        this.placeAbyssPortalBlock();
+    }
+
     private void sendGateClosingSoundEffectToClient(Vec3 source) {
         PacketHandler.sendToAllClient(new AncientLaboratoryGateSound(source));
     }
 
     private void handleParticleEffects() {
+        if (this.isContagionDefeated) return;
         if (this.isChargingCrystals()) {
             this.particleLevitation(10, 0.2f, 5f,
                     -13f, 5f);
         }
         if (this.isChargingTotal()) {
-            this.particleImplosion(10, 0.4f, 15f);
+            this.particleImplosion(10, 0.4f, 20f);
         }
         if (this.isFightActive()) {
             this.particleLevitation(100, 0.05f, 19f,
@@ -373,15 +431,35 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     public void doSummoning() {
-        this.replaceLiquidCorruptionBlock();
         this.hugeParticleExplosion();
         this.schedule_fence = FENCE_INTERVAL;
+        this.schedule_summon = SUMMON_DELAY;
+        this.removeInventory();
     }
 
-    public void replaceLiquidCorruptionBlock() {
+    private void removeInventory() {
+        for (int i = 0; i < this.inventory.getSlots(); i++) {
+            this.inventory.getStackInSlot(i).shrink(1);
+        }
+    }
+
+    public void placeSolidCorruptionBlock() {
         if (this.level != null) {
             for (BlockPos pos : getFountainBelowPositions()) {
-                this.level.setBlockAndUpdate(pos, BlockRegistry.LIQUID_CORRUPTION_BLOCK.get().defaultBlockState());
+                this.level.setBlockAndUpdate(pos, BlockRegistry.SOLID_CORRUPTION.get().defaultBlockState());
+            }
+        }
+    }
+
+    public void placeAbyssPortalBlock() {
+        if (this.level != null) {
+            for (BlockPos pos : getFountainBelowPositions()) {
+                this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+                this.level.setBlockAndUpdate(pos.below(), BlockRegistry.ABYSS_PORTAL_BLOCK.get().defaultBlockState());
+                BlockEntity blockEntity = this.level.getBlockEntity(pos.below());
+                if (blockEntity instanceof AbyssPortalBlockEntity abyssPortalBlockEntity) {
+                    abyssPortalBlockEntity.setShouldShowWinScreen(true);
+                }
             }
         }
     }
@@ -400,8 +478,8 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         );
     }
 
-    public @Nullable List<BlockPos> getFencePosForLevel() {
-        if (this.fence_level == 0) {
+    public @Nullable List<BlockPos> getFencePosByLevel(int level) {
+        if (level == 0) {
             return List.of(
                 this.worldPosition.offset(19, -8, 0),
                 this.worldPosition.offset(19, -8, 1),
@@ -416,28 +494,28 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                 this.worldPosition.offset(1, -8, -19),
                 this.worldPosition.offset(-1, -8, -19)
             );
-        } else if (this.fence_level >= 1 && this.fence_level <= MAX_FENCE) {
+        } else if (level >= 1 && level <= MAX_FENCE) {
             return List.of(
-                    this.worldPosition.offset(19, -8 - fence_level, 0),
-                    this.worldPosition.offset(19, -8 - fence_level, 1),
-                    this.worldPosition.offset(19, -8 - fence_level, -1),
-                    this.worldPosition.offset(0, -8 - fence_level, 19),
-                    this.worldPosition.offset(1, -8 - fence_level, 19),
-                    this.worldPosition.offset(-1, -8 - fence_level, 19),
-                    this.worldPosition.offset(-19, -8 - fence_level, 0),
-                    this.worldPosition.offset(-19, -8 - fence_level, 1),
-                    this.worldPosition.offset(-19, -8 - fence_level, -1),
-                    this.worldPosition.offset(0, -8 - fence_level, -19),
-                    this.worldPosition.offset(1, -8 - fence_level, -19),
-                    this.worldPosition.offset(-1, -8 - fence_level, -19),
-                    this.worldPosition.offset(19, -8 - fence_level, 2),
-                    this.worldPosition.offset(19, -8 - fence_level, -2),
-                    this.worldPosition.offset(2, -8 - fence_level, 19),
-                    this.worldPosition.offset(-2, -8 - fence_level, 19),
-                    this.worldPosition.offset(-19, -8 - fence_level, 2),
-                    this.worldPosition.offset(-19, -8 - fence_level, -2),
-                    this.worldPosition.offset(2, -8 - fence_level, -19),
-                    this.worldPosition.offset(-2, -8 - fence_level, -19)
+                    this.worldPosition.offset(19, -8 - level, 0),
+                    this.worldPosition.offset(19, -8 - level, 1),
+                    this.worldPosition.offset(19, -8 - level, -1),
+                    this.worldPosition.offset(0, -8 - level, 19),
+                    this.worldPosition.offset(1, -8 - level, 19),
+                    this.worldPosition.offset(-1, -8 - level, 19),
+                    this.worldPosition.offset(-19, -8 - level, 0),
+                    this.worldPosition.offset(-19, -8 - level, 1),
+                    this.worldPosition.offset(-19, -8 - level, -1),
+                    this.worldPosition.offset(0, -8 - level, -19),
+                    this.worldPosition.offset(1, -8 - level, -19),
+                    this.worldPosition.offset(-1, -8 - level, -19),
+                    this.worldPosition.offset(19, -8 - level, 2),
+                    this.worldPosition.offset(19, -8 - level, -2),
+                    this.worldPosition.offset(2, -8 - level, 19),
+                    this.worldPosition.offset(-2, -8 - level, 19),
+                    this.worldPosition.offset(-19, -8 - level, 2),
+                    this.worldPosition.offset(-19, -8 - level, -2),
+                    this.worldPosition.offset(2, -8 - level, -19),
+                    this.worldPosition.offset(-2, -8 - level, -19)
             );
         }
         return null;

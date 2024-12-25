@@ -168,6 +168,7 @@
 	"sounds.wardentools.protector_ambient": "Protector ambient sound",
 	"sounds.wardentools.protector_death": "Protector death sound",
 	"sounds.wardentools.ancient_laboratory_gate_closing": "Ancient Laboratory gate closing",
+	"sounds.wardentools.contagion_incarnation_emerge": "Contagion Incarnation emerge",
 
 	"effect.wardentools.corrupted": "Corrupted",
 	"effect.wardentools.corruption_vessel": "Corruption Vessel",

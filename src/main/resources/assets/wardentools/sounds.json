@@ -112,5 +112,11 @@
 		"sounds": [
 			"wardentools:ancient_laboratory_gate_closing"
 		]
+	},
+	"contagion_incarnation_emerge": {
+		"subtitles": "sounds.wardentools.contagion_incarnation_emerge",
+		"sounds": [
+			"wardentools:contagion_incarnation_emerge"
+		]
 	}
 }

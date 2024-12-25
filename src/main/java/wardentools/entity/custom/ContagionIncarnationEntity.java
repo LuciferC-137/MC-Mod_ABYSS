@@ -2,8 +2,13 @@ package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -20,11 +25,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.NotNull;
+import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.sounds.ModSounds;
 
@@ -35,12 +42,19 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 	private final ServerBossEvent bossEvent;
 	public static final int CHANCE_OF_SCREAM_ON_HIT = 4;
 	public static final int DEATH_DURATION = 200;
+    public static final int SPAWN_DURATION = 150;
+    public static final int MOVE_DELAY_DURING_SPAWN = 80;
+    public static final float SPEED_DURING_SPAWN = 0.05F;
 	public int contagionIncarnationDeathTime = 0;
 	public final AnimationState dyingAnimationState = new AnimationState();
 	public final AnimationState ambient = new AnimationState();
 	public final AnimationState idleAmbient = new AnimationState();
 	public final AnimationState sprint = new AnimationState();
 	public final AnimationState headAmbient = new AnimationState();
+    public final AnimationState spawnAnimation = new AnimationState();
+    private static final EntityDataAccessor<Integer> tickSpawn
+            = SynchedEntityData.defineId(ContagionIncarnationEntity.class, EntityDataSerializers.INT);
+    private BlockPos catalystPos = new BlockPos(0, 0, 0);
 
 	public ContagionIncarnationEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
@@ -110,29 +124,78 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 	public void tick() {
 		if (level().isClientSide()) {
 			this.dyingAnimationState.animateWhen(this.contagionIncarnationDeathTime > 0, this.tickCount);
-			this.idleAmbient.animateWhen(!this.isSprinting() && !this.isDeadOrDying(), this.tickCount);
-			this.ambient.animateWhen(!this.walkAnimation.isMoving() && !this.isDeadOrDying(), this.tickCount);
-			this.sprint.animateWhen(this.isSprinting(), this.tickCount);
+			this.idleAmbient.animateWhen(!this.isSprinting() && this.isActive(), this.tickCount);
+			this.ambient.animateWhen(!this.walkAnimation.isMoving() && this.isActive(), this.tickCount);
+			this.sprint.animateWhen(this.isSprinting() && this.isActive(), this.tickCount);
 			this.headAmbient.animateWhen(!this.getLookControl().isLookingAtTarget()
-					&& !this.isSprinting() && !this.isDeadOrDying(), this.tickCount);
-		}
+					&& !this.isSprinting() && this.isActive(), this.tickCount);
+            this.spawnAnimation.animateWhen(this.getTickSpawn() > 0, this.tickCount);
+		} else {
+            if (this.getTickSpawn() > 0) {
+                this.setInvulnerable(true);
+                this.setTickSpawn(this.getTickSpawn() - 1);
+                if (this.getTickSpawn() <= 0) this.setInvulnerable(false);
+                this.handleTailSubParts();
+                if (this.getTickSpawn() <= MOVE_DELAY_DURING_SPAWN
+                        && this.getTickSpawn() >= MOVE_DELAY_DURING_SPAWN / 2) {
+                    this.setDeltaMovement(
+                            this.getYRot()
+                                    * Mth.sin(this.getYRot() * (float)Math.PI / 180.0F)
+                                    * SPEED_DURING_SPAWN,
+                            0, this.getYRot()
+                                    * Mth.cos(this.getYRot() * (float)Math.PI / 180.0F)
+                                    * SPEED_DURING_SPAWN);
+                }
+            }
+        }
 		super.tick();
 	}
 
     @Override
     public void aiStep() {
-        super.aiStep();
+        if (this.getTickSpawn() <= MOVE_DELAY_DURING_SPAWN) {
+            super.aiStep();
+        }
     }
 
-    @Override
-    public boolean isInWall() {
-        return super.isInWall();
+    public void initiateSpawnAnimation() {
+        this.setTickSpawn(SPAWN_DURATION);
+    }
+
+    public boolean isActive() {
+        return this.getTickSpawn() <= 0 && !this.isDeadOrDying();
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(tickSpawn, 0);
     }
+
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt("tickSpawn", this.getTickSpawn());
+        tag.putInt("catalystX", this.catalystPos.getX());
+        tag.putInt("catalystY", this.catalystPos.getY());
+        tag.putInt("catalystZ", this.catalystPos.getZ());
+    }
+
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.setTickSpawn(tag.getInt("tickSpawn"));
+        this.catalystPos = new BlockPos(tag.getInt("catalystX"),
+                tag.getInt("catalystY"), tag.getInt("catalystZ"));
+    }
+
+    public void setCatalystPos(BlockPos pos) {this.catalystPos = pos;}
+
+    public BlockPos getCatalystPos() {return this.catalystPos;}
+
+    public void setTickSpawn(int tickSpawn) {this.entityData.set(ContagionIncarnationEntity.tickSpawn, tickSpawn);}
+
+    public int getTickSpawn() {return this.entityData.get(ContagionIncarnationEntity.tickSpawn);}
 
     public static boolean canSpawn(EntityType<ContagionIncarnationEntity> entityType, ServerLevelAccessor level,
                                    MobSpawnType spawnType, BlockPos pos, RandomSource random) {
@@ -157,10 +220,12 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     	}
     	return null;
     }
+
     @Override
     protected SoundEvent getDeathSound() {
     	 return ModSounds.CONTAGION_INCARNATION_DEATH.get();
     }
+
     @Override
     protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
         this.playSound(ModSounds.CONTAGION_INCARNATION_CRAWL.get(), 1.0F, 1.0F);
@@ -179,6 +244,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
            this.level().broadcastEntityEvent(this, (byte)60);
            this.remove(Entity.RemovalReason.KILLED);
            this.createCorpse();
+           this.informCatalystOfDeath();
         }
      }
 
@@ -218,18 +284,10 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         this.level().addFreshEntity(corpse);
     }
 
-	@Override
-    public void spawnAnim() {
-        if (this.level().isClientSide) {
-           for(int i = 0; i < 20; ++i) {
-              double d0 = this.random.nextGaussian() * 0.02D;
-              double d1 = this.random.nextGaussian() * 0.02D;
-              double d2 = this.random.nextGaussian() * 0.02D;
-              this.level().addParticle(ParticleTypes.POOF, this.getX(1.0D) - d0 * 10.0D,
-            		  this.getRandomY() - d1 * 10.0D, this.getRandomZ(1.0D) - d2 * 10.0D, d0, d1, d2);
-           }
-        } else {
-           this.level().broadcastEntityEvent(this, (byte)20);
+    private void informCatalystOfDeath() {
+        BlockEntity blockEntity = this.level().getBlockEntity(this.catalystPos);
+        if (blockEntity instanceof DysfunctionningCatalystBlockEntity catalyst) {
+            catalyst.contagionDied();
         }
     }
 

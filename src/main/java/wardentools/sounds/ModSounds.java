@@ -51,6 +51,8 @@ public class ModSounds {
 			registerSoundEvents("protector_death");
 	public static final RegistryObject<SoundEvent> ANCIENT_LABORATORY_GATE_CLOSING =
 			registerSoundEvents("ancient_laboratory_gate_closing");
+	public static final RegistryObject<SoundEvent> CONTAGION_INCARNATION_EMERGE =
+			registerSoundEvents("contagion_incarnation_emerge");
 
 
 	

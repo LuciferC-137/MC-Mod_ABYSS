@@ -185,6 +185,10 @@ public class ContagionIncarnationPartManager extends CorruptionMonster implement
     @Override
     public void aiStep() {
         super.aiStep();
+        this.handleTailSubParts();
+    }
+
+    public void handleTailSubParts() {
         this.yBodyRot = this.getYRot();
         for (ContagionIncarnationPart subEntity : this.subEntities) {
             subEntity.xo = subEntity.getX();
@@ -215,7 +219,7 @@ public class ContagionIncarnationPartManager extends CorruptionMonster implement
         if (this.getSection_12_rotY() != 0f) {
             length_factor = 1f
                     - Math.max((Mth.abs((
-                            this.getSection_12_rotY() + this.getSection_13_rotY() + this.getSection_14_rotY())
+                    this.getSection_12_rotY() + this.getSection_13_rotY() + this.getSection_14_rotY())
                     / rad) % 360f) / 60f, 0f);
             length_factor = (length_factor + 3f) / 4f;
         }

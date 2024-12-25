@@ -812,7 +812,7 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 		root().getAllParts().forEach(ModelPart::resetPose);
 		if (!entity.isInWaterOrBubble() && !entity.isSprinting()) {
 			animateWalk(ContagionIncarnationAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
-		} else {
+		} else if (!entity.isInWaterOrBubble()) {
 			animateWalk(ContagionIncarnationAnimation.crawling, limbSwing, limbSwingAmount, 1f, 2.5f);
 		}
 		animate(entity.dyingAnimationState, ContagionIncarnationAnimation.death, ageInTicks);
@@ -820,6 +820,7 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 		animate(entity.headAmbient, ContagionIncarnationAnimation.mane_and_head_ambient, ageInTicks);
 		animate(entity.ambient, ContagionIncarnationAnimation.leg_spasm, ageInTicks);
 		animate(entity.ambient, ContagionIncarnationAnimation.breathing, ageInTicks);
+		animate(entity.spawnAnimation, ContagionIncarnationAnimation.spawning, ageInTicks);
 		this.animateLookAt(entity, netHeadYaw, headPitch);
 		this.animateTail(entity);
 	}

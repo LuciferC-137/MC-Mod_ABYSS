@@ -87,6 +87,16 @@ public class PacketHandler {
 				.decoder(AncientLaboratoryGateSound::new)
 				.consumerMainThread(AncientLaboratoryGateSound::handle)
 				.add();
+		INSTANCE.messageBuilder(ContagionIncarnationEmergeSound.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ContagionIncarnationEmergeSound::encode)
+				.decoder(ContagionIncarnationEmergeSound::new)
+				.consumerMainThread(ContagionIncarnationEmergeSound::handle)
+				.add();
+		INSTANCE.messageBuilder(ParticleDarktreFenceDestroyed.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ParticleDarktreFenceDestroyed::encode)
+				.decoder(ParticleDarktreFenceDestroyed::new)
+				.consumerMainThread(ParticleDarktreFenceDestroyed::handle)
+				.add();
 
 	}
 
