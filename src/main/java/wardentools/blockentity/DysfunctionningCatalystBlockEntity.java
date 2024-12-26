@@ -25,7 +25,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.ModMain;
-import wardentools.block.AbyssPortalBlock;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.entity.ModEntities;

@@ -118,5 +118,11 @@
 		"sounds": [
 			"wardentools:contagion_incarnation_emerge"
 		]
+	},
+	"sonic_strike": {
+		"subtitles": "sounds.wardentools.sonic_strike",
+		"sounds": [
+			"wardentools:sonic_strike"
+		]
 	}
 }

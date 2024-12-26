@@ -1,6 +1,5 @@
 package wardentools.sounds;
 
-import net.minecraft.client.resources.sounds.Sound;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -53,6 +52,8 @@ public class ModSounds {
 			registerSoundEvents("ancient_laboratory_gate_closing");
 	public static final RegistryObject<SoundEvent> CONTAGION_INCARNATION_EMERGE =
 			registerSoundEvents("contagion_incarnation_emerge");
+	public static final RegistryObject<SoundEvent> SONIC_STRIKE =
+			registerSoundEvents("sonic_strike");
 
 
 	

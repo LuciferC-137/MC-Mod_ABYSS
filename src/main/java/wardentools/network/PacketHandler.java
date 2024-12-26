@@ -97,6 +97,16 @@ public class PacketHandler {
 				.decoder(ParticleDarktreFenceDestroyed::new)
 				.consumerMainThread(ParticleDarktreFenceDestroyed::handle)
 				.add();
+		INSTANCE.messageBuilder(ContagionIncarnationSonicStrikeSound.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ContagionIncarnationSonicStrikeSound::encode)
+				.decoder(ContagionIncarnationSonicStrikeSound::new)
+				.consumerMainThread(ContagionIncarnationSonicStrikeSound::handle)
+				.add();
+		INSTANCE.messageBuilder(ContagionIncarnationScream.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ContagionIncarnationScream::encode)
+				.decoder(ContagionIncarnationScream::new)
+				.consumerMainThread(ContagionIncarnationScream::handle)
+				.add();
 
 	}
 

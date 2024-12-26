@@ -9,6 +9,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -33,6 +35,8 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.utils.IncarnationBodyRotationControl;
+import wardentools.entity.utils.goal.IncarnationAttackGoal;
+import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
 import wardentools.sounds.ModSounds;
 
 import java.lang.reflect.Field;
@@ -46,14 +50,29 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public static final int SPAWN_DURATION = 150;
     public static final int MOVE_DELAY_DURING_SPAWN = 80;
     public static final float SPEED_DURING_SPAWN = 0.05F;
+    public static final int SWING_ATTACK_DURATION = 10;
+    public static final int SWING_HIT_TICK = 3;
+    public static final float ATTACK_RANGE = 5f;
+    public static final int AVERAGE_TICK_BETWEEN_SONIC_STRIKES = 1000;
+    public static final int SONIC_STRIKE_DURATION = 100;
+    public static final int SONIC_STRIKE_EFFECT_TICK = 22;
+    public static final int CAN_USE_SONIC_STRIKE_HEALTH_MIN = 500;
 	public int contagionIncarnationDeathTime = 0;
 	public final AnimationState dyingAnimationState = new AnimationState();
 	public final AnimationState ambient = new AnimationState();
 	public final AnimationState idleAmbient = new AnimationState();
 	public final AnimationState sprint = new AnimationState();
-	public final AnimationState headAmbient = new AnimationState();
     public final AnimationState spawnAnimation = new AnimationState();
+    public final AnimationState rightSwing = new AnimationState();
+    public final AnimationState leftSwing = new AnimationState();
+    public final AnimationState sonicStrike = new AnimationState();
     private static final EntityDataAccessor<Integer> tickSpawn
+            = SynchedEntityData.defineId(ContagionIncarnationEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> rightSwingTick
+            = SynchedEntityData.defineId(ContagionIncarnationEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> leftSwingTick
+            = SynchedEntityData.defineId(ContagionIncarnationEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> sonicStrikeTick
             = SynchedEntityData.defineId(ContagionIncarnationEntity.class, EntityDataSerializers.INT);
     private BlockPos catalystPos = new BlockPos(0, 0, 0);
 
@@ -62,31 +81,30 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 		this.bossEvent = new ServerBossEvent(Objects.requireNonNull(this.getDisplayName()),
 				ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.PROGRESS);
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
-        this.xpReward = 100;
-        try {
-            Field field = Mob.class.getDeclaredField("bodyRotationControl");
-            field.setAccessible(true);
-            field.set(this, new IncarnationBodyRotationControl(this));
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        try {
-            Field field = Entity.class.getDeclaredField("eyeHeight");
-            field.setAccessible(true);
-            field.set(this, 4.5F);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        this.xpReward = 200;
+        this.setPersistenceRequired();
+        this.overrideDefaultParameters();
 	}
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 2D));
-        this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 10f));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new IncarnationSonicStrikeAttackGoal(this));
+        this.goalSelector.addGoal(2, new IncarnationAttackGoal(this, 2.0D));
+		this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 2D){
+            @Override
+            public boolean canUse() {
+                return ((ContagionIncarnationEntity)this.mob).getSonicStrikeTick() == 0 && super.canUse();
+            }
+            @Override
+            public boolean canContinueToUse() {
+                return ((ContagionIncarnationEntity)this.mob).getSonicStrikeTick() == 0 && super.canContinueToUse();
+            }
+        });
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 10f));
 
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
-	    this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
 	public static AttributeSupplier.Builder createAttribute(){
@@ -95,7 +113,8 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 	            .add(Attributes.MOVEMENT_SPEED, MOV_SPEED)
 	            .add(Attributes.JUMP_STRENGTH, 3.0D)
 	            .add(Attributes.ATTACK_DAMAGE, 10.0D)
-	            .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F);
+	            .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F)
+                .add(Attributes.FOLLOW_RANGE, 80.0D);
 	}
 
 	@Override
@@ -143,11 +162,32 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 			this.idleAmbient.animateWhen(!this.isSprinting() && this.isActive(), this.tickCount);
 			this.ambient.animateWhen(!this.walkAnimation.isMoving() && this.isActive(), this.tickCount);
 			this.sprint.animateWhen(this.isSprinting() && this.isActive(), this.tickCount);
-			//this.headAmbient.animateWhen(!this.getLookControl().isLookingAtTarget()
-			//		&& !this.isSprinting() && this.isActive(), this.tickCount);
             this.spawnAnimation.animateWhen(this.getTickSpawn() > 0, this.tickCount);
+            this.rightSwing.animateWhen(this.getRightSwingTick() > 0, this.tickCount);
+            this.leftSwing.animateWhen(this.getLeftSwingTick() > 0, this.tickCount);
+            this.sonicStrike.animateWhen(this.getSonicStrikeTick() > 0, this.tickCount);
 		} else {
             this.handleSpawnLogic();
+            if (this.getRightSwingTick() > 0) {
+                this.setRightSwingTick(this.getRightSwingTick() - 1);
+                if (this.getRightSwingTick() == SWING_HIT_TICK) {
+                    this.hurtTargetAtEndOfSwingIfStillInRange();
+                }
+            }
+            if (this.getLeftSwingTick() > 0) {
+                this.setLeftSwingTick(this.getLeftSwingTick() - 1);
+                if (this.getLeftSwingTick() == SWING_HIT_TICK) {
+                    this.hurtTargetAtEndOfSwingIfStillInRange();
+                }
+            }
+            if (this.getSonicStrikeTick() > 0) {
+                this.setSonicStrikeTick(this.getSonicStrikeTick() - 1);
+            }
+            if (this.random.nextInt(AVERAGE_TICK_BETWEEN_SONIC_STRIKES)
+                    == 0 && this.getHealth() <= CAN_USE_SONIC_STRIKE_HEALTH_MIN
+                    && this.getTarget() != null && this.getSonicStrikeTick() == 0) {
+                this.setSonicStrikeTick(SONIC_STRIKE_DURATION);
+            }
         }
 		super.tick();
 	}
@@ -186,10 +226,59 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         return this.getTickSpawn() <= 0 && !this.isDeadOrDying();
     }
 
+    private void hurtTargetAtEndOfSwingIfStillInRange() {
+        if (this.getTarget() != null) {
+            if (this.isWithinMeleeAttackRange(this.getTarget())
+                    && this.getSensing().hasLineOfSight(this.getTarget())) {
+                this.doHurtTarget(this.getTarget());
+            }
+        }
+    }
+
+    public void swingWithClosestHand() {
+        if (this.getTarget() != null) {
+            double dx = this.getTarget().getX() - this.getX();
+            double dz = this.getTarget().getZ() - this.getZ();
+            double angleToTarget = Math.toDegrees(Math.atan2(dz, dx)) - 90;
+            double yaw = this.yBodyRot % 360;
+            double angleDifference = (angleToTarget - yaw + 360) % 360;
+            if (angleDifference > 180) angleDifference -= 360;
+            if (angleDifference > 0) this.swingAttackAnimation(InteractionHand.MAIN_HAND);
+            else this.swingAttackAnimation(InteractionHand.OFF_HAND);
+        }
+    }
+
+    public void swingAttackAnimation(InteractionHand hand) {
+        if (hand == InteractionHand.MAIN_HAND) {
+            this.setRightSwingTick(SWING_ATTACK_DURATION);
+        } else {
+            this.setLeftSwingTick(SWING_ATTACK_DURATION);
+        }
+    }
+
+    public boolean isWithinMeleeAttackRange(@NotNull LivingEntity entity) {
+        return this.distanceTo(entity) <= ATTACK_RANGE && this.isInFront(entity, 45);
+    }
+
+    private boolean isInFront(LivingEntity entity, float degreeMax) {
+        double dx = entity.getX() - this.getX();
+        double dz = entity.getZ() - this.getZ();
+        double angleToTarget = Math.toDegrees(Math.atan2(dz, dx)) - 90;
+        double yaw = this.yBodyRot % 360;
+        double angleDifference = (angleToTarget - yaw + 360) % 360;
+        if (angleDifference > 180) {
+            angleDifference -= 360;
+        }
+        return Math.abs(angleDifference) <= degreeMax;
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(tickSpawn, 0);
+        this.entityData.define(rightSwingTick, 0);
+        this.entityData.define(leftSwingTick, 0);
+        this.entityData.define(sonicStrikeTick, 0);
     }
 
     @Override
@@ -199,6 +288,9 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         tag.putInt("catalystX", this.catalystPos.getX());
         tag.putInt("catalystY", this.catalystPos.getY());
         tag.putInt("catalystZ", this.catalystPos.getZ());
+        tag.putInt("rightSwingTick", this.getRightSwingTick());
+        tag.putInt("leftSwingTick", this.getLeftSwingTick());
+        tag.putInt("sonicStrikeTick", this.getSonicStrikeTick());
     }
 
     @Override
@@ -207,15 +299,21 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         this.setTickSpawn(tag.getInt("tickSpawn"));
         this.catalystPos = new BlockPos(tag.getInt("catalystX"),
                 tag.getInt("catalystY"), tag.getInt("catalystZ"));
+        this.setRightSwingTick(tag.getInt("rightSwingTick"));
+        this.setLeftSwingTick(tag.getInt("leftSwingTick"));
+        this.setSonicStrikeTick(tag.getInt("sonicStrikeTick"));
     }
 
     public void setCatalystPos(BlockPos pos) {this.catalystPos = pos;}
-
     public BlockPos getCatalystPos() {return this.catalystPos;}
-
     public void setTickSpawn(int tickSpawn) {this.entityData.set(ContagionIncarnationEntity.tickSpawn, tickSpawn);}
-
     public int getTickSpawn() {return this.entityData.get(ContagionIncarnationEntity.tickSpawn);}
+    public void setRightSwingTick(int rightSwingTick) {this.entityData.set(ContagionIncarnationEntity.rightSwingTick, rightSwingTick);}
+    public int getRightSwingTick() {return this.entityData.get(ContagionIncarnationEntity.rightSwingTick);}
+    public void setLeftSwingTick(int leftSwingTick) {this.entityData.set(ContagionIncarnationEntity.leftSwingTick, leftSwingTick);}
+    public int getLeftSwingTick() {return this.entityData.get(ContagionIncarnationEntity.leftSwingTick);}
+    public void setSonicStrikeTick(int sonicStrikeTick) {this.entityData.set(ContagionIncarnationEntity.sonicStrikeTick, sonicStrikeTick);}
+    public int getSonicStrikeTick() {return this.entityData.get(ContagionIncarnationEntity.sonicStrikeTick);}
 
     public static boolean canSpawn(EntityType<ContagionIncarnationEntity> entityType, ServerLevelAccessor level,
                                    MobSpawnType spawnType, BlockPos pos, RandomSource random) {
@@ -311,8 +409,37 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         }
     }
 
-    protected boolean canRide(Entity entity) {
+    @Override
+    protected boolean canRide(@NotNull Entity entity) {
         return false;
     }
 
+    private void overrideDefaultParameters() {
+        try {
+            Field field = Mob.class.getDeclaredField("bodyRotationControl");
+            field.setAccessible(true);
+            field.set(this, new IncarnationBodyRotationControl(this));
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        try {
+            Field field = Entity.class.getDeclaredField("eyeHeight");
+            field.setAccessible(true);
+            field.set(this, 4.5F);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double v) {
+        return false;
+    }
+
+    @Override
+    public void checkDespawn() {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
+            this.discard();
+        }
+    }
 }

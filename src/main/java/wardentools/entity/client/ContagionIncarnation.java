@@ -817,11 +817,13 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 		}
 		animate(entity.dyingAnimationState, ContagionIncarnationAnimation.death, ageInTicks);
 		animate(entity.idleAmbient, ContagionIncarnationAnimation.arm_ambient, ageInTicks);
-		animate(entity.headAmbient, ContagionIncarnationAnimation.mane_and_head_ambient, ageInTicks);
 		animate(entity.ambient, ContagionIncarnationAnimation.leg_spasm, ageInTicks);
 		animate(entity.ambient, ContagionIncarnationAnimation.breathing, ageInTicks);
 		animate(entity.spawnAnimation, ContagionIncarnationAnimation.spawning, ageInTicks);
-		this.animateLookAt(entity, netHeadYaw, headPitch);
+		animate(entity.rightSwing, ContagionIncarnationAnimation.arm_right_attack, ageInTicks);
+		animate(entity.leftSwing, ContagionIncarnationAnimation.arm_left_attack, ageInTicks);
+		animate(entity.sonicStrike, ContagionIncarnationAnimation.scream, ageInTicks);
+		if (!entity.sonicStrike.isStarted()) this.animateLookAt(entity, netHeadYaw, headPitch);
 		this.animateTail(entity);
 	}
 	
