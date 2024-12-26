@@ -26,7 +26,7 @@ public class ContagionIncarnationEmergeSound {
         if (level != null) {
             SoundEvent soundEvent = ModSounds.CONTAGION_INCARNATION_EMERGE.get();
             Minecraft.getInstance().getSoundManager().play(
-                    SimpleSoundInstance.forUI(soundEvent, 4.0f, 1.0f)
+                    SimpleSoundInstance.forUI(soundEvent, 1.0f, 1.0f)
             );
         }
     }

@@ -32,7 +32,7 @@ public class AncientLaboratoryGateSound {
         if (level != null) {
             BlockPos pos = new BlockPos((int)source.x(), (int)source.y(), (int)source.z());
             level.playLocalSound(pos, ModSounds.ANCIENT_LABORATORY_GATE_CLOSING.get(), SoundSource.BLOCKS,
-                    3.0f, 1.0f, false);
+                    2.5f, 1.0f, false);
         }
     }
 }

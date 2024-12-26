@@ -69,6 +69,10 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 		// Center
 		this.renderCenterFilling(guiGraphics, this.leftPos + 61, this.topPos + 15,
 				menu.getTotalCharge());
+		if (!menu.getBlockEntity().isContagionDefeated()) this.renderEyes(guiGraphics);
+	}
+
+	private void renderEyes(@NotNull GuiGraphics guiGraphics) {
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F,
 				(float)menu.getEyeProgression()/(float)DysfunctionningCatalystBlockEntity.MAX_EYE);

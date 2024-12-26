@@ -1,7 +1,6 @@
 package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -33,8 +32,10 @@ import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.entity.ModEntities;
+import wardentools.entity.utils.IncarnationBodyRotationControl;
 import wardentools.sounds.ModSounds;
 
+import java.lang.reflect.Field;
 import java.util.Objects;
 
 public class ContagionIncarnationEntity extends ContagionIncarnationPartManager implements Enemy {
@@ -61,13 +62,28 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 		this.bossEvent = new ServerBossEvent(Objects.requireNonNull(this.getDisplayName()),
 				ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.PROGRESS);
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+        this.xpReward = 100;
+        try {
+            Field field = Mob.class.getDeclaredField("bodyRotationControl");
+            field.setAccessible(true);
+            field.set(this, new IncarnationBodyRotationControl(this));
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        try {
+            Field field = Entity.class.getDeclaredField("eyeHeight");
+            field.setAccessible(true);
+            field.set(this, 4.5F);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
 	}
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 2D));
-		this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 4f));
+		this.goalSelector.addGoal(1, new FloatGoal(this));
+		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 2D));
+        this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 10f));
 
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	    this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
@@ -127,29 +143,33 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 			this.idleAmbient.animateWhen(!this.isSprinting() && this.isActive(), this.tickCount);
 			this.ambient.animateWhen(!this.walkAnimation.isMoving() && this.isActive(), this.tickCount);
 			this.sprint.animateWhen(this.isSprinting() && this.isActive(), this.tickCount);
-			this.headAmbient.animateWhen(!this.getLookControl().isLookingAtTarget()
-					&& !this.isSprinting() && this.isActive(), this.tickCount);
+			//this.headAmbient.animateWhen(!this.getLookControl().isLookingAtTarget()
+			//		&& !this.isSprinting() && this.isActive(), this.tickCount);
             this.spawnAnimation.animateWhen(this.getTickSpawn() > 0, this.tickCount);
 		} else {
-            if (this.getTickSpawn() > 0) {
-                this.setInvulnerable(true);
-                this.setTickSpawn(this.getTickSpawn() - 1);
-                if (this.getTickSpawn() <= 0) this.setInvulnerable(false);
-                this.handleTailSubParts();
-                if (this.getTickSpawn() <= MOVE_DELAY_DURING_SPAWN
-                        && this.getTickSpawn() >= MOVE_DELAY_DURING_SPAWN / 2) {
-                    this.setDeltaMovement(
-                            this.getYRot()
-                                    * Mth.sin(this.getYRot() * (float)Math.PI / 180.0F)
-                                    * SPEED_DURING_SPAWN,
-                            0, this.getYRot()
-                                    * Mth.cos(this.getYRot() * (float)Math.PI / 180.0F)
-                                    * SPEED_DURING_SPAWN);
-                }
-            }
+            this.handleSpawnLogic();
         }
 		super.tick();
 	}
+
+    private void handleSpawnLogic() {
+        if (this.getTickSpawn() > 0) {
+            this.setInvulnerable(true);
+            this.setTickSpawn(this.getTickSpawn() - 1);
+            if (this.getTickSpawn() <= 0) this.setInvulnerable(false);
+            this.handleTailSubParts();
+            if (this.getTickSpawn() <= MOVE_DELAY_DURING_SPAWN
+                    && this.getTickSpawn() >= MOVE_DELAY_DURING_SPAWN / 2) {
+                this.setDeltaMovement(
+                        this.getYRot()
+                                * Mth.sin(this.getYRot() * (float)Math.PI / 180.0F)
+                                * SPEED_DURING_SPAWN,
+                        0, this.getYRot()
+                                * Mth.cos(this.getYRot() * (float)Math.PI / 180.0F)
+                                * SPEED_DURING_SPAWN);
+            }
+        }
+    }
 
     @Override
     public void aiStep() {
@@ -289,6 +309,10 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         if (blockEntity instanceof DysfunctionningCatalystBlockEntity catalyst) {
             catalyst.contagionDied();
         }
+    }
+
+    protected boolean canRide(Entity entity) {
+        return false;
     }
 
 }

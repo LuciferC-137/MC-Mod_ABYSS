@@ -99,7 +99,7 @@ public class CustomNoiseSettings {
                 (new OverworldBiomeBuilder()).spawnTarget(),
                 -100,
                 false,
-                true,
+                false,
                 true,
                 false);
     }
@@ -110,9 +110,9 @@ public class CustomNoiseSettings {
         DensityFunction densityfunction
                 = DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_BARRIER), 0.5D);
         DensityFunction densityfunction1
-                = DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS), 0.67D);
+                = DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS), 0.3D);
         DensityFunction densityfunction2
-                = DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_SPREAD), 0.7142857142857143D);
+                = DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_SPREAD), 0.5D);
         DensityFunction densityfunction3 = DensityFunctions.constant(0D);
                 //= DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_LAVA));
         DensityFunction densityfunction4 = getFunction(densFunc, SHIFT_X);

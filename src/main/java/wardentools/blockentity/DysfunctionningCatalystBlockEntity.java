@@ -304,6 +304,10 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         this.placeAbyssPortalBlock();
     }
 
+    public boolean isContagionDefeated() {
+        return this.isContagionDefeated;
+    }
+
     private void sendGateClosingSoundEffectToClient(Vec3 source) {
         PacketHandler.sendToAllClient(new AncientLaboratoryGateSound(source));
     }

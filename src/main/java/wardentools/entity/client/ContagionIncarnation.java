@@ -826,9 +826,7 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	}
 	
 	private void animateLookAt(ContagionIncarnationEntity entity, float yaw, float pitch) {
-		float pPitch = pitch / 6f;
-		float pYaw = yaw / 6f;
-		this.head.homogeneousRotation(pYaw, pPitch);
+		this.section_5.homogeneousRotation(yaw / 6f, pitch / 6f);
 	}
 
 	private void animateTail(ContagionIncarnationEntity entity) {
