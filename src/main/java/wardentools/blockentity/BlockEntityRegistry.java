@@ -44,4 +44,9 @@ public class BlockEntityRegistry {
 			() -> BlockEntityType.Builder.of(BlackLanternBlockEntity::new,
 					BlockRegistry.BLACK_LANTERN.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<SoulSpawnerBlockEntity>> SOUL_SPAWNER_BLOCK_ENTITY =
+			BLOCK_ENTITIES.register("soul_spawner_block_entity",
+					() -> BlockEntityType.Builder.of(SoulSpawnerBlockEntity::new,
+							BlockRegistry.SOUL_SPAWNER.get()).build(null));
+
 }

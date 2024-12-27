@@ -8,6 +8,8 @@
     "wardentools:echo_cristal",
     "wardentools:deepcristal",
     "wardentools:deepblock",
-    "wardentools:solid_corruption"
+    "wardentools:solid_corruption",
+    "wardentools:soul_spawner",
+    "wardentools:wind_whisperer"
   ]
 }

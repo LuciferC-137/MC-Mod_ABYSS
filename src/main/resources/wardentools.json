@@ -8,6 +8,7 @@
     "LocalPlayerMixin",
     "structure.ClientUpdateStructureBlockUnlimit",
     "structure.JigsawPlacementUnlimit",
-    "structure.JigsawStructureUnlimit"
+    "structure.JigsawStructureUnlimit",
+    "WardenTargetMixin"
   ]
 }

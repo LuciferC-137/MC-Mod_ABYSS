@@ -35,6 +35,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.SOLID_CORRUPTION);
 
         // Register simple transparent blocks with item model
+        registerCutoutBlock(BlockRegistry.SOUL_SPAWNER);
         registerTranslucentBlock(BlockRegistry.REINFORCED_GLASS);
 
         // Registering ores blocks with item models

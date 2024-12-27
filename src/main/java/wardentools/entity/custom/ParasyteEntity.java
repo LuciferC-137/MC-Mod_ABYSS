@@ -1,8 +1,10 @@
 package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -14,6 +16,8 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -21,9 +25,12 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.interfaces.CorruptionMonster;
+import wardentools.entity.utils.goal.ClimbParasyteGoal;
 import wardentools.sounds.ModSounds;
 
 public class ParasyteEntity extends CorruptionMonster {
+	private static final EntityDataAccessor<Boolean> CLIMBING =
+			SynchedEntityData.defineId(ParasyteEntity.class, EntityDataSerializers.BOOLEAN);
 	public final AnimationState idleAnimation = new AnimationState();
 
 	public ParasyteEntity(EntityType<? extends Monster> entity, Level level) {
@@ -33,9 +40,9 @@ public class ParasyteEntity extends CorruptionMonster {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(1, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
-		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
-		this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(2, new ClimbParasyteGoal(this));
+		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -50,6 +57,20 @@ public class ParasyteEntity extends CorruptionMonster {
 	}
 
 	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(CLIMBING, false);
+	}
+
+	public boolean isClimbing() {
+		return this.entityData.get(CLIMBING);
+	}
+
+	public void setClimbing(boolean climbing) {
+		this.entityData.set(CLIMBING, climbing);
+	}
+
+	@Override
 	public void tick() {
 		this.idleAnimation.animateWhen(!this.walkAnimation.isMoving(), this.tickCount);
 		super.tick();
@@ -59,6 +80,11 @@ public class ParasyteEntity extends CorruptionMonster {
                                    MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return level.getBlockState(pos).isAir();
     }
+
+	@Override
+	protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
+		return new WallClimberNavigation(this, level);
+	}
 
 	@Override
     protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {

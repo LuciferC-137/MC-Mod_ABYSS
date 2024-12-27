@@ -1,4 +1,4 @@
-// 1.20.4	2024-10-23T13:27:38.4276857	Tags for minecraft:block mod id wardentools
+// 1.20.4	2024-12-27T18:51:21.2918535	Tags for minecraft:block mod id wardentools
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/blocks/ancient_city_replaceable.json
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/blocks/animals_spawnable_on.json
 fe0dfed652c709c1c46de9234483b847471a0111 data/minecraft/tags/blocks/dirt.json
@@ -17,5 +17,5 @@ f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/blocks/overworld_ca
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/blocks/sculk_replaceable.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/blocks/sculk_replaceable_world_gen.json
 e765e739d51d03e31ad9e51980aa927df8fc8168 data/minecraft/tags/blocks/walls.json
-ff22bc5909eb7d05a34fb060df6f0a6f1cfa4dd6 data/wardentools/tags/blocks/abyss_teleportable.json
+b7ddf86f32a045b5df5bdf6feec813425d8b5a94 data/wardentools/tags/blocks/abyss_teleportable.json
 521f8c37ea3a5978811057a14907b0a09a97af9c data/wardentools/tags/blocks/cristal_block.json

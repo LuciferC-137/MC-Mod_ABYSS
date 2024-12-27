@@ -527,4 +527,12 @@ public class BlockRegistry {
 					.noOcclusion()
 					.randomTicks()
 					.lightLevel((state) -> 10)));
+
+	public static final RegistryObject<Block> SOUL_SPAWNER
+			= REGISTAR.register("soul_spawner",
+			() -> new SoulSpawner(BlockBehaviour.Properties.ofFullCopy(Blocks.SPAWNER)
+					.strength(7.0F)
+					.noOcclusion()
+					.randomTicks()
+					.lightLevel((state) -> 2)));
 }

@@ -40,7 +40,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.ECHO_CRISTAL.get())
 			.add(BlockRegistry.DEEP_CRISTAL.get())
 			.add(BlockRegistry.DEEPBLOCK.get())
-			.add(BlockRegistry.SOLID_CORRUPTION.get());
+			.add(BlockRegistry.SOLID_CORRUPTION.get())
+			.add(BlockRegistry.SOUL_SPAWNER.get())
+			.add(BlockRegistry.WIND_WHISPERER.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .add(BlockRegistry.DEEP_CRISTAL.get())

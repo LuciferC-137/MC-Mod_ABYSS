@@ -553,4 +553,9 @@ public class ItemRegistry {
 			REGISTAR.register("reinforced_glass",
 					() -> new BlockItem(BlockRegistry.REINFORCED_GLASS.get(),
 							new Item.Properties().fireResistant()));
+	
+	public static final RegistryObject<Item> SOUL_SPAWNER =
+			REGISTAR.register("soul_spawner",
+					() -> new BlockItem(BlockRegistry.SOUL_SPAWNER.get(),
+							new Item.Properties().rarity(Rarity.EPIC).fireResistant()));
 }

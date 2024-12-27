@@ -229,7 +229,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				BlockRegistry.MALACHITE.get(),
 				BlockRegistry.PALE_CRISTAL.get(),
 				BlockRegistry.ABYSS_PORTAL_BLOCK.get(),
-				BlockRegistry.DYSFUNCTIONNING_CATALYST.get()
+				BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),
+				BlockRegistry.SOUL_SPAWNER.get()
     	);
     	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
     	        .map(RegistryObject::get)

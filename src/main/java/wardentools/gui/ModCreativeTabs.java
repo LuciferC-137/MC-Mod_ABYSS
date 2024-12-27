@@ -162,6 +162,7 @@ public class ModCreativeTabs {
         addItemToTag("building", ItemRegistry.REINFORCED_GLASS);
 
         addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
+        addItemToTag("misc", ItemRegistry.SOUL_SPAWNER);
 
         addAllItemsFromRegistry();
     }

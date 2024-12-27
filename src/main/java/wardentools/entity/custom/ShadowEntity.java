@@ -193,9 +193,10 @@ public class ShadowEntity extends MimicEntity {
     protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
 		this.playSound(SoundEvents.DROWNED_STEP, this.getSoundVolume(), 1.0F);
     }
+	
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.SHADOW_AMBIENT.get();
+        return this.isStasis() ? null : ModSounds.SHADOW_AMBIENT.get();
     }
 
 	@Override
