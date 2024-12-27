@@ -1,11 +1,11 @@
 {
-  "name": "wardentools:ancient_citadel/hothouse_closure_pool",
-  "fallback": "wardentools:ancient_citadel/hothouse_closure_pool",
+  "name": "wardentools:ancient_citadel/soul_spawner",
+  "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/hothouse_plant/hothouse_left",
+        "location": "wardentools:ancient_citadel/soul_spawner/soul_spawner_up",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -14,7 +14,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/hothouse_plant/hothouse_right",
+        "location": "wardentools:ancient_citadel/soul_spawner/soul_spawner_down",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -23,10 +23,19 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:ancient_citadel/hothouse_plant/hothouse_back",
+        "location": "wardentools:ancient_citadel/soul_spawner/soul_spawner_side",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "minecraft:empty",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:empty_pool_element"
       }
     }
   ]

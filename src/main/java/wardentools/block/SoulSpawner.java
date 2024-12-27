@@ -4,8 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -26,6 +24,8 @@ import java.util.List;
 
 public class SoulSpawner extends Block implements EntityBlock {
     private static final int SPAWN_REDUCER = 2;
+    private static final int MAX_SHADOWS = 6;
+    private static final float MAX_SHADOW_CHECK_DISTANCE = 10.0F;
 
     public SoulSpawner(Properties properties) {
         super(properties);
@@ -36,21 +36,15 @@ public class SoulSpawner extends Block implements EntityBlock {
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (level.isClientSide()) return;
-        Player player = level.getNearestPlayer(TargetingConditions.forNonCombat().ignoreLineOfSight().ignoreInvisibilityTesting(),
-                blockPos.getX(), blockPos.getY(), blockPos.getZ());
-        if (player == null) return;
-        if (player.getPosition(1F).closerThan(blockPos.getCenter(), 32)) {
-            if (random.nextInt(SPAWN_REDUCER) == 0) {
-                if (checkForManyShadowsAround(level, blockPos)) return;
-                BlockPos spawnPos = findSpawnPos(level, blockPos);
-                if (spawnPos == null) return;
-                ShadowEntity shadow = new ShadowEntity(ModEntities.SHADOW.get(), level);
-                shadow.setStasis(true);
-                shadow.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
-                        spawnPos.getZ() + 0.5,
-                        0.0F, 0.0F);
-                level.addFreshEntity(shadow);
-            }
+        if (random.nextInt(SPAWN_REDUCER) == 0) {
+            if (checkForManyShadowsAround(level, blockPos)) return;
+            BlockPos spawnPos = findSpawnPos(level, blockPos);
+            if (spawnPos == null) return;
+            ShadowEntity shadow = new ShadowEntity(ModEntities.SHADOW.get(), level);
+            shadow.setStasis(true);
+            shadow.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
+                    spawnPos.getZ() + 0.5, 0.0F, 0.0F);
+            level.addFreshEntityWithPassengers(shadow);
         }
     }
 
@@ -66,7 +60,7 @@ public class SoulSpawner extends Block implements EntityBlock {
         }
         return level.getEntities(soulSpawner.getShadowEntity(),
                 this.getShape(this.defaultBlockState(), level, pos, CollisionContext.empty())
-                        .bounds().move(pos).inflate(10D)).size() > 6;
+                        .bounds().move(pos).inflate(MAX_SHADOW_CHECK_DISTANCE)).size() > MAX_SHADOWS;
     }
 
     private @Nullable BlockPos findSpawnPos(@NotNull Level level, @NotNull BlockPos pos) {

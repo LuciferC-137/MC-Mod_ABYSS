@@ -1,53 +1,52 @@
 package wardentools.entity.custom;
 
+import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Mth;
+import net.minecraft.tags.GameEventTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.ClimbOnTopOfPowderSnowGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.gameevent.*;
+import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 import wardentools.entity.interfaces.MimicEntity;
-import wardentools.fluid.BaseFluidType;
 import wardentools.fluid.FluidRegistry;
-import wardentools.fluid.LiquidCorruptionFluid;
-import wardentools.fluid.ModFluidTypes;
 import wardentools.sounds.ModSounds;
 
-public class ShadowEntity extends MimicEntity {
+import java.util.function.BiConsumer;
+
+public class ShadowEntity extends MimicEntity implements VibrationSystem {
+	private static final Logger LOGGER = LogUtils.getLogger();
 	public final AnimationState idleAnimation = new AnimationState();
 	public final AnimationState stasisAnimation = new AnimationState();
 	public final AnimationState walkAnim = new AnimationState();
@@ -57,18 +56,30 @@ public class ShadowEntity extends MimicEntity {
 			SynchedEntityData.defineId(ShadowEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> walkToIdleTicks =
 			SynchedEntityData.defineId(ShadowEntity.class, EntityDataSerializers.INT);
+	private final VibrationSystem.User vibrationUser;
+	private VibrationSystem.Data vibrationData;
+	private final DynamicGameEventListener<Listener> dynamicGameEventListener;
+	private int outOfStasisTicks = 0;
+	private static final int MAX_OUT_OF_STASIS_TICKS = 6000;
 
 	public ShadowEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
+		this.vibrationUser = new ShadowEntity.ShadowVibrationUser();
+		this.vibrationData = new VibrationSystem.Data();
+		this.dynamicGameEventListener = new DynamicGameEventListener<>(new VibrationSystem.Listener(this));
+
 	}
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new MeleeAttackGoal(this, 3.0D, false){
 			@Override
-			public void start() {
-				super.start();
-				if (this.mob instanceof ShadowEntity shadow) shadow.setStasis(false);
+			public boolean canUse() {
+				return super.canUse() && !((ShadowEntity)this.mob).isStasis();
+			}
+			@Override
+			public boolean canContinueToUse() {
+				return super.canContinueToUse() && !((ShadowEntity)this.mob).isStasis();
 			}
 		});
 		this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
@@ -76,10 +87,13 @@ public class ShadowEntity extends MimicEntity {
 			public boolean canUse() {
 				return !isStasis() && super.canUse();
 			}
+			@Override
+			public boolean canContinueToUse() {
+				return !isStasis() && super.canContinueToUse();
+			}
 		});
 		this.targetSelector.addGoal(0, (new HurtByTargetGoal(this)).setAlertOthers());
-		this.targetSelector.addGoal(1,
-				new NearestAttackableTargetGoal<>(this, Player.class, true));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 	
 	public static AttributeSupplier.Builder createAttribute(){
@@ -94,12 +108,15 @@ public class ShadowEntity extends MimicEntity {
 	@Override
 	public void tick() {
 		super.tick();
+		if (!this.level().isClientSide) {
+			VibrationSystem.Ticker.tick(this.level(), this.vibrationData, this.vibrationUser);
+		}
 		if (this.getWalkToIdleTicks() > 0) this.setWalkToIdleTicks(this.getWalkToIdleTicks() - 1);
 		if (this.isAlmostIdle() && this.getDeltaMovement().lengthSqr() > 0
 				&& this.getWalkToIdleTicks() == 0 && !this.isStasis()) {
 			this.setWalkToIdleTicks(WALK_TO_IDLE_TICKS);
 		}
-		if (this.level().isClientSide){
+		if (this.level().isClientSide) {
 			this.walkToIdleAnimation.animateWhen(this.getWalkToIdleTicks() > 0, this.tickCount);
 			this.walkAnim.animateWhen(!this.isAlmostIdle()
 					&& this.getWalkToIdleTicks() <= 0 && !this.isStasis(), this.tickCount);
@@ -108,6 +125,24 @@ public class ShadowEntity extends MimicEntity {
 			this.stasisAnimation.animateWhen(this.isStasis(), this.tickCount);
 		}
 		if (this.isStasis()) this.doStasisTick(); else this.setNoGravity(false);
+		if (!this.isStasis() && this.getTarget() == null) {
+			outOfStasisTicks++;
+			if (outOfStasisTicks >= MAX_OUT_OF_STASIS_TICKS) {
+				this.setStasis(true);
+				outOfStasisTicks = 0;
+			}
+		} else {
+			outOfStasisTicks = 0;
+		}
+	}
+
+	@Override
+	public void updateDynamicGameEventListener(
+			@NotNull BiConsumer<DynamicGameEventListener<?>, ServerLevel> consumer) {
+		Level level = this.level();
+		if (level instanceof ServerLevel serverlevel) {
+			consumer.accept(this.dynamicGameEventListener, serverlevel);
+		}
 	}
 
 	private void doStasisTick() {
@@ -120,7 +155,6 @@ public class ShadowEntity extends MimicEntity {
 					0D);
 		}
 		this.setDeltaMovement(this.getDeltaMovement().scale(0.9));
-		if (this.getTarget() != null) {this.setStasis(false);}
 	}
 
 	public double getHeightAboveGround() {
@@ -158,6 +192,10 @@ public class ShadowEntity extends MimicEntity {
 		super.addAdditionalSaveData(tag);
 		tag.putBoolean("isStasis", this.isStasis());
 		tag.putInt("walkToIdleTicks", this.getWalkToIdleTicks());
+		VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, this.vibrationData)
+				.resultOrPartial(LOGGER::error).ifPresent((p_219418_) -> {
+			tag.put("listener", p_219418_);
+		});
 	}
 
 	@Override
@@ -165,6 +203,13 @@ public class ShadowEntity extends MimicEntity {
 		super.readAdditionalSaveData(tag);
 		this.setStasis(tag.getBoolean("isStasis"));
 		this.setWalkToIdleTicks(tag.getInt("walkToIdleTicks"));
+		if (tag.contains("listener", 10)) {
+			VibrationSystem.Data.CODEC.parse(
+					new Dynamic<>(NbtOps.INSTANCE, tag.getCompound("listener")))
+					.resultOrPartial(LOGGER::error).ifPresent((data) -> {
+				this.vibrationData = data;
+			});
+		}
 	}
 
 	public boolean isStasis() {return this.entityData.get(IS_STASIS);}
@@ -174,6 +219,16 @@ public class ShadowEntity extends MimicEntity {
 	public int getWalkToIdleTicks() {return this.entityData.get(walkToIdleTicks);}
 
 	public void setWalkToIdleTicks(int ticks) {this.entityData.set(walkToIdleTicks, ticks);}
+
+	@Override
+	public @NotNull Data getVibrationData() {
+		return this.vibrationData;
+	}
+
+	@Override
+	public VibrationSystem.@NotNull User getVibrationUser() {
+		return this.vibrationUser;
+	}
 
 	public static boolean canSpawn(EntityType<ShadowEntity> entityType, ServerLevelAccessor level,
 								   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
@@ -193,7 +248,7 @@ public class ShadowEntity extends MimicEntity {
     protected void playStepSound(@NotNull BlockPos pos, @NotNull BlockState blockIn) {
 		this.playSound(SoundEvents.DROWNED_STEP, this.getSoundVolume(), 1.0F);
     }
-	
+
     @Override
     protected SoundEvent getAmbientSound() {
         return this.isStasis() ? null : ModSounds.SHADOW_AMBIENT.get();
@@ -210,5 +265,53 @@ public class ShadowEntity extends MimicEntity {
 	@Override
 	protected float getSoundVolume() {
 		return 0.4F;
+	}
+
+
+	class ShadowVibrationUser implements VibrationSystem.User {
+		private static final int LISTEN_RADIUS = 16;
+		private final PositionSource positionSource
+				= new EntityPositionSource(ShadowEntity.this, ShadowEntity.this.getEyeHeight());
+
+		@Override
+		public int getListenerRadius() {
+			return LISTEN_RADIUS;
+		}
+
+		@Override
+		public @NotNull PositionSource getPositionSource() {
+			return this.positionSource;
+		}
+
+		@Override
+		public @NotNull TagKey<GameEvent> getListenableEvents() {
+			return GameEventTags.WARDEN_CAN_LISTEN;
+		}
+
+		@Override
+		public boolean canTriggerAvoidVibration() {
+			return ShadowEntity.this.isStasis();
+		}
+
+		@Override
+		public boolean canReceiveVibration(@NotNull ServerLevel level, @NotNull BlockPos pos,
+										   @NotNull GameEvent event, GameEvent.@NotNull Context context) {
+			return ShadowEntity.this.isStasis();
+		}
+
+		@Override
+		public void onReceiveVibration(@NotNull ServerLevel level, @NotNull BlockPos pos,
+									   @NotNull GameEvent event, @Nullable Entity source,
+									   @Nullable Entity projectile, float distance) {
+			if (source instanceof ServerPlayer player && !player.isCreative()) {
+				if (ShadowEntity.this.isStasis()) {
+					ShadowEntity.this.setStasis(false);
+					ShadowEntity.this.playSound(SoundEvents.WARDEN_TENDRIL_CLICKS,
+							5.0F, ShadowEntity.this.getVoicePitch());
+					level.broadcastEntityEvent(ShadowEntity.this, (byte) 61);
+				}
+			}
+		}
+
 	}
 }
