@@ -155,7 +155,6 @@
 
 	"sounds.wardentools.contagion_incarnation_crawl": "L'Incarnation de la Contagion rampe",
 	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle",
-	"sounds.wardentools.deep_forest": "Musique de la forêt des profondeurs",
 	"sounds.wardentools.noctilure_ambient": "Son ambiant de Noctilure",
 	"sounds.wardentools.shadow_ambient": "Son ambiant d'Ombre",
 	"sounds.wardentools.noctilure_death": "Noctilure meurt",
@@ -172,6 +171,10 @@
 	"sounds.wardentools.ancient_laboratory_gate_closing": "Les portes du laboratoire ancien se ferment",
 	"sounds.wardentools.contagion_incarnation_emerge": "L'Incarnation de la Contagion émerge",
 	"sounds.wardentools.sonic_strike": "Frappe sonique de l'Incarnation de la Contagion",
+	"sounds.wardentools.music.deep_forest": "Musique de la forêt profonde",
+	"sounds.wardentools.music.abyss": "Musique de l'abysse",
+	"sounds.wardentools.music.white_forest": "Musique de la forêt blanche",
+	"sounds.wardentools.music.incarnation_theme": "Musique de l'Incarnation de la Contagion",
 
 	"effect.wardentools.corrupted": "Corrompu",
 	"effect.wardentools.corruption_vessel": "Receptacle de Corruption",

@@ -285,7 +285,7 @@ public class CustomWinScreen extends Screen {
    }
 
    public @NotNull Music getBackgroundMusic() {
-      return ModMusics.DEEP_FOREST;
+      return ModMusics.ABYSS_THEME;
    }
 
    @FunctionalInterface

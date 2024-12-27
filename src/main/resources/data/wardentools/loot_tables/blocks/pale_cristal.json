@@ -25,7 +25,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "wardentools:pale_fragment",
+          "name": "wardentools:pale_shard",
           "functions": [
             {
               "function": "minecraft:set_count",

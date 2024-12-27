@@ -72,7 +72,9 @@ public class ModBiomes {
                 .temperature(0.7f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
-                .specialEffects(commonBiomeSpecialEffects().build()).build();
+                .specialEffects(commonBiomeSpecialEffects()
+                        .backgroundMusic(ModMusics.DEEP_FOREST)
+                        .build()).build();
     }
     
     public static Biome wasteLand(BootstapContext<Biome> context) {
@@ -142,7 +144,9 @@ public class ModBiomes {
                 .temperature(0.7f)
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
-                .specialEffects(commonBiomeSpecialEffects().build()).build();
+                .specialEffects(commonBiomeSpecialEffects()
+                        .backgroundMusic(ModMusics.WHITE_FOREST)
+                        .build()).build();
     }
 
     public static Biome cristalCave(BootstapContext<Biome> context) {
@@ -174,6 +178,7 @@ public class ModBiomes {
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects(commonBiomeSpecialEffects()
+                        .backgroundMusic(ModMusics.WHITE_FOREST)
                         .foliageColorOverride(0x57ab6a)
                         .grassColorOverride(0x57ab6a).build()).build();
     }
@@ -208,7 +213,6 @@ public class ModBiomes {
                 .grassColorOverride(0x147B75)
                 .foliageColorOverride(0x147B63)
                 .fogColor(FOG_COLOR)
-                .backgroundMusic(ModMusics.DEEP_FOREST)
                 .ambientParticle(new AmbientParticleSettings(ParticleRegistry.ABYSS_AMBIENT.get(), 0.0025F))
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS);
     }

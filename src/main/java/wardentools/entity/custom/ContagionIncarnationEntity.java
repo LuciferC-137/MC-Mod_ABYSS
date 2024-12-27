@@ -1,5 +1,7 @@
 package wardentools.entity.custom;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -18,7 +20,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -45,6 +46,10 @@ import wardentools.entity.utils.IncarnationBodyRotationControl;
 import wardentools.entity.utils.IncarnationMoveControl;
 import wardentools.entity.utils.goal.IncarnationAttackGoal;
 import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
+import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.StartPlayingIncarnationTheme;
+import wardentools.network.SyncBossEventPacket;
+import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
 
 import java.lang.reflect.Field;
@@ -67,6 +72,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public static final int SONIC_STRIKE_EFFECT_TICK = 22;
     public static final int SONIC_STRIKE_PARTICLE_DURATION = 40;
     public static final int CAN_USE_SONIC_STRIKE_HEALTH_MIN = 500;
+    public static final int MUSIC_DURATION = 2490;
     private static final BlockParticleOption SOLID_CORRUPTION_PARTICLE
             = new BlockParticleOption(ParticleTypes.BLOCK,
             BlockRegistry.SOLID_CORRUPTION.get().defaultBlockState());
@@ -87,9 +93,13 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
             = SynchedEntityData.defineId(ContagionIncarnationEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> sonicStrikeTick
             = SynchedEntityData.defineId(ContagionIncarnationEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> hasBeenSummonedByCatalyst
+            = SynchedEntityData.defineId(ContagionIncarnationEntity.class, EntityDataSerializers.BOOLEAN);
     private BlockPos catalystPos = new BlockPos(0, 0, 0);
     private BlockPos lastSonicStrikePos = new BlockPos(0, 0, 0);
     private int deferredSonicStrikeTick = 0;
+    private int tickSinceLastMusicPlayed = 0;
+    private boolean isClientInBossEvent = false;
 
 	public ContagionIncarnationEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
@@ -100,6 +110,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         this.setPersistenceRequired();
         this.overrideDefaultParameters();
         this.moveControl = new IncarnationMoveControl(this);
+        this.setHasBeenSummonedByCatalyst(false);
 	}
 
 	@Override
@@ -137,12 +148,15 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossEvent.addPlayer(player);
+        PacketHandler.sendToClient(new SyncBossEventPacket(this.getId(), true), player);
+        PacketHandler.sendToClient(new StartPlayingIncarnationTheme(), player);
     }
 
     @Override
     public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossEvent.removePlayer(player);
+        PacketHandler.sendToClient(new SyncBossEventPacket(this.getId(), false), player);
     }
 
     @Override
@@ -174,6 +188,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 	@Override
 	public void tick() {
 		if (level().isClientSide()) {
+            if (this.hasBeenSummonedByCatalyst()) this.clientMusicManager();
 			this.handleAnimationStates();
             this.handleSonicStrikeParticleEffect();
 		} else {
@@ -183,6 +198,16 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         }
 		super.tick();
 	}
+
+    private void clientMusicManager() {
+        if (this.tickSinceLastMusicPlayed >= MUSIC_DURATION) {
+            this.tickSinceLastMusicPlayed = 0;
+            LocalPlayer player = Minecraft.getInstance().player;
+            if (player != null && this.isClientInBossEvent) {
+                Minecraft.getInstance().getMusicManager().startPlaying(ModMusics.INCARNATION_THEME);
+            }
+        } else this.tickSinceLastMusicPlayed++;
+    }
 
     private void handleSonicStrikeParticleEffect() {
         if (this.getSonicStrikeTick() == SONIC_STRIKE_DURATION - 1) {
@@ -345,6 +370,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         this.entityData.define(rightSwingTick, 0);
         this.entityData.define(leftSwingTick, 0);
         this.entityData.define(sonicStrikeTick, 0);
+        this.entityData.define(hasBeenSummonedByCatalyst, false);
     }
 
     @Override
@@ -360,6 +386,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         tag.putInt("lastSonicStrikeX", this.lastSonicStrikePos.getX());
         tag.putInt("lastSonicStrikeY", this.lastSonicStrikePos.getY());
         tag.putInt("lastSonicStrikeZ", this.lastSonicStrikePos.getZ());
+        tag.putBoolean("hasBeenSummonedByCatalyst", this.entityData.get(hasBeenSummonedByCatalyst));
     }
 
     @Override
@@ -373,10 +400,16 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         this.setSonicStrikeTick(tag.getInt("sonicStrikeTick"));
         this.lastSonicStrikePos = new BlockPos(tag.getInt("lastSonicStrikeX"),
                 tag.getInt("lastSonicStrikeY"), tag.getInt("lastSonicStrikeZ"));
+        this.entityData.set(hasBeenSummonedByCatalyst, tag.getBoolean("hasBeenSummonedByCatalyst"));
     }
 
-    public void setCatalystPos(BlockPos pos) {this.catalystPos = pos;}
+    public void setCatalystPos(BlockPos pos) {
+        this.catalystPos = pos;
+        this.setHasBeenSummonedByCatalyst(true);
+    }
     public BlockPos getCatalystPos() {return this.catalystPos;}
+
+
     public void setTickSpawn(int tickSpawn) {this.entityData.set(ContagionIncarnationEntity.tickSpawn, tickSpawn);}
     public int getTickSpawn() {return this.entityData.get(ContagionIncarnationEntity.tickSpawn);}
     public void setRightSwingTick(int rightSwingTick) {this.entityData.set(ContagionIncarnationEntity.rightSwingTick, rightSwingTick);}
@@ -385,6 +418,11 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public int getLeftSwingTick() {return this.entityData.get(ContagionIncarnationEntity.leftSwingTick);}
     public void setSonicStrikeTick(int sonicStrikeTick) {this.entityData.set(ContagionIncarnationEntity.sonicStrikeTick, sonicStrikeTick);}
     public int getSonicStrikeTick() {return this.entityData.get(ContagionIncarnationEntity.sonicStrikeTick);}
+
+    public boolean hasBeenSummonedByCatalyst() {return this.entityData.get(hasBeenSummonedByCatalyst);}
+    private void setHasBeenSummonedByCatalyst(boolean hasBeenSummonedByCatalyst) {this.entityData.set(ContagionIncarnationEntity.hasBeenSummonedByCatalyst, hasBeenSummonedByCatalyst);}
+
+    public void setClientInBossEvent(boolean isClientInBossEvent) {this.isClientInBossEvent = isClientInBossEvent;}
 
     public static boolean canSpawn(EntityType<ContagionIncarnationEntity> entityType, ServerLevelAccessor level,
                                    MobSpawnType spawnType, BlockPos pos, RandomSource random) {

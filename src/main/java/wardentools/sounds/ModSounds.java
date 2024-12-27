@@ -20,8 +20,6 @@ public class ModSounds {
 			registerSoundEvents("contagion_incarnation_ambient");
 	public static final RegistryObject<SoundEvent> CONTAGION_INCARNATION_DEATH =
 			registerSoundEvents("contagion_incarnation_death");
-	public static final RegistryObject<SoundEvent> DEEP_FOREST =
-			registerSoundEvents("deep_forest");
 	public static final RegistryObject<SoundEvent> NOCTILURE_AMBIENT =
 			registerSoundEvents("noctilure_ambient");
 	public static final RegistryObject<SoundEvent> NOCTILURE_DEATH =
@@ -54,6 +52,16 @@ public class ModSounds {
 			registerSoundEvents("contagion_incarnation_emerge");
 	public static final RegistryObject<SoundEvent> SONIC_STRIKE =
 			registerSoundEvents("sonic_strike");
+
+	//Musics
+	public static final RegistryObject<SoundEvent> DEEP_FOREST =
+			registerSoundEvents("deep_forest_music");
+	public static final RegistryObject<SoundEvent> WHITE_FOREST =
+			registerSoundEvents("white_forest_music");
+	public static final RegistryObject<SoundEvent> INCARNATION_THEME =
+			registerSoundEvents("incarnation_theme");
+	public static final RegistryObject<SoundEvent> ABYSS_THEME =
+			registerSoundEvents("abyss_theme");
 
 
 	

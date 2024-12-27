@@ -107,6 +107,16 @@ public class PacketHandler {
 				.decoder(ContagionIncarnationScream::new)
 				.consumerMainThread(ContagionIncarnationScream::handle)
 				.add();
+		INSTANCE.messageBuilder(SyncBossEventPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(SyncBossEventPacket::encode)
+				.decoder(SyncBossEventPacket::new)
+				.consumerMainThread(SyncBossEventPacket::handle)
+				.add();
+		INSTANCE.messageBuilder(StartPlayingIncarnationTheme.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(StartPlayingIncarnationTheme::encode)
+				.decoder(StartPlayingIncarnationTheme::new)
+				.consumerMainThread(StartPlayingIncarnationTheme::handle)
+				.add();
 
 	}
 

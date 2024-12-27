@@ -23,12 +23,6 @@
 			"wardentools:contagion_incarnation_death"
 		]
 	},
-	"deep_forest": {
-		"subtitles": "sounds.wardentools.deep_forest",
-		"sounds": [
-			"wardentools:deep_forest"
-		]
-	},
 	"noctilure_ambient": {
 		"subtitles": "sounds.wardentools.noctilure_ambient",
 		"sounds": [
@@ -123,6 +117,30 @@
 		"subtitles": "sounds.wardentools.sonic_strike",
 		"sounds": [
 			"wardentools:sonic_strike"
+		]
+	},
+	"deep_forest_music": {
+		"subtitles": "sounds.wardentools.music.deep_forest",
+		"sounds": [
+			"wardentools:music/deep_forest"
+		]
+	},
+	"abyss_theme": {
+		"subtitles": "sounds.wardentools.music.abyss",
+		"sounds": [
+			"wardentools:music/abyss"
+		]
+	},
+	"white_forest_music": {
+		"subtitles": "sounds.wardentools.music.white_forest",
+		"sounds": [
+			"wardentools:music/white_forest"
+		]
+	},
+	"incarnation_theme": {
+		"subtitles": "sounds.wardentools.music.incarnation_theme",
+		"sounds": [
+			"wardentools:music/incarnation"
 		]
 	}
 }
