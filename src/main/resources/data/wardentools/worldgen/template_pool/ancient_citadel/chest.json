@@ -1,0 +1,24 @@
+{
+  "name": "wardentools:ancient_citadel/chest",
+  "fallback": "wardentools:ancient_citadel/chest",
+  "elements": [
+    {
+      "weight": 3,
+      "element": {
+        "location": "wardentools:ancient_citadel/chest",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "minecraft:empty",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}

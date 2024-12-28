@@ -12,7 +12,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 2,
       "element": {
         "location": "wardentools:ancient_citadel/cross/cross3",
         "processors": "minecraft:empty",
@@ -21,7 +21,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 3,
       "element": {
         "location": "wardentools:ancient_citadel/cross/cross2left",
         "processors": "minecraft:empty",
@@ -30,7 +30,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 3,
       "element": {
         "location": "wardentools:ancient_citadel/cross/cross2right",
         "processors": "minecraft:empty",
@@ -66,7 +66,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 1,
       "element": {
         "location": "wardentools:ancient_citadel/hothouse_plant/hothouse_plant",
         "processors": "minecraft:empty",
