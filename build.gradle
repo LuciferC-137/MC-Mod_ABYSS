@@ -155,8 +155,12 @@ dependencies {
 
 mixin {
     // MixinGradle Settings
-    add sourceSets.main, 'mixins.wardentools.refmap.json'
-    config 'wardentools.json'
+    add sourceSets.main, 'wardentools.refmap.json'
+    config 'wardentools.mixins.json'
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
