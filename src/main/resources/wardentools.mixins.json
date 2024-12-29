@@ -1,16 +1,14 @@
 {
   "minVersion": "0.8.5",
   "package": "wardentools.mixin",
-  "refmap": "wardentools.refmap.json",
+  "refmap": "wardentools.mixins-refmap.json",
+  "required": true,
   "mixins": [
-    "structure.JigsawPlacementUnlimit",
-    "structure.JigsawStructureUnlimit",
     "WardenTargetMixin"
   ],
   "client": [
     "LevelRendererMixin",
     "LogoRendererMixin",
-    "LocalPlayerMixin",
-    "structure.ClientUpdateStructureBlockUnlimit"
+    "LocalPlayerMixin"
   ]
 }

@@ -93,11 +93,13 @@ minecraft {
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', mod_id
+            arg "-mixin.config=wardentools.mixins.json"
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
+            arg "-mixin.config=wardentools.mixins.json"
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -155,12 +157,14 @@ dependencies {
 
 mixin {
     // MixinGradle Settings
-    add sourceSets.main, 'wardentools.refmap.json'
     config 'wardentools.mixins.json'
-}
-
-jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    sourceSets {
+        main {
+            ext.refMap = "wardentools.mixins-refmap.json"
+        }
+    }
+    debug.verbose = true
+    debug.export = true
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -191,7 +195,11 @@ tasks.named('jar', Jar).configure {
             'Specification-Version'   : '1', // We are version 1 of ourselves
             'Implementation-Title'    : project.name,
             'Implementation-Version'  : project.jar.archiveVersion,
-            'Implementation-Vendor'   : mod_authors
+            'Implementation-Vendor'   : mod_authors,
+
+            "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+            "TweakOrder": 0,
+            "MixinConfigs": "wardentools.mixins.json"
         ])
     }
 

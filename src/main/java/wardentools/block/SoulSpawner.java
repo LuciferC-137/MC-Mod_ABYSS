@@ -49,18 +49,20 @@ public class SoulSpawner extends Block implements EntityBlock {
     }
 
     private boolean checkForManyShadowsAround(@NotNull Level level, @NotNull BlockPos pos) {
-        SoulSpawnerBlockEntity soulSpawner = (SoulSpawnerBlockEntity) level.getBlockEntity(pos);
-        if (soulSpawner == null) return false;
-        if (soulSpawner.getShadowEntity() == null) {
-            ShadowEntity shadowEntity = ModEntities.SHADOW.get().create(level);
-            if (shadowEntity != null) {
-                shadowEntity.moveTo(soulSpawner.getBlockPos(), 0.0F, 0.0F);
-                soulSpawner.setShadowEntity(shadowEntity);
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof SoulSpawnerBlockEntity soulSpawner) {
+            if (soulSpawner.getShadowEntity() == null) {
+                ShadowEntity shadowEntity = ModEntities.SHADOW.get().create(level);
+                if (shadowEntity != null) {
+                    shadowEntity.moveTo(soulSpawner.getBlockPos(), 0.0F, 0.0F);
+                    soulSpawner.setShadowEntity(shadowEntity);
+                }
             }
+            return level.getEntities(soulSpawner.getShadowEntity(),
+                    this.getShape(this.defaultBlockState(), level, pos, CollisionContext.empty())
+                            .bounds().move(pos).inflate(MAX_SHADOW_CHECK_DISTANCE)).size() > MAX_SHADOWS;
         }
-        return level.getEntities(soulSpawner.getShadowEntity(),
-                this.getShape(this.defaultBlockState(), level, pos, CollisionContext.empty())
-                        .bounds().move(pos).inflate(MAX_SHADOW_CHECK_DISTANCE)).size() > MAX_SHADOWS;
+        return false;
     }
 
     private @Nullable BlockPos findSpawnPos(@NotNull Level level, @NotNull BlockPos pos) {

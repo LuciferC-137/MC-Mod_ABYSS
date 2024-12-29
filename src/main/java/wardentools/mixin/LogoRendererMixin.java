@@ -14,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LogoRenderer.class)
 public abstract class LogoRendererMixin {
     @Shadow @Final private boolean keepLogoThroughFade;
-    @Unique private static final float ZOOM = 1.4f;
     @Unique private static final ResourceLocation MINECRAFT_LOGO
             = new ResourceLocation("textures/gui/title/minecraft.png");
     @Unique private static final ResourceLocation MINECRAFT_EDITION
@@ -28,14 +27,9 @@ public abstract class LogoRendererMixin {
     @Unique private static final int EDITION_TEXTURE_WIDTH = 128;
     @Unique private static final int EDITION_TEXTURE_HEIGHT = 16;
 
-    @Inject(method = "renderLogo*", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderLogo(Lnet/minecraft/client/gui/GuiGraphics;IFI)V", at = @At("HEAD"), cancellable = true)
     public void onRenderLogo(GuiGraphics graphics, int width, float fade, int height, CallbackInfo ci) {
-        ci.cancel();
-        renderLogoZoom(graphics, width, fade, height);
-    }
-
-    @Unique
-    private void renderLogoZoom(GuiGraphics graphics, int width, float fade, int height) {
+        float ZOOM = 1.4f;
         graphics.setColor(1.0F, 1.0F, 1.0F, keepLogoThroughFade ? 1.0F : fade);
         int i = width / 2 - 128;
         graphics.blit(MINECRAFT_LOGO,
@@ -51,5 +45,6 @@ public abstract class LogoRendererMixin {
                 EDITION_WIDTH, EDITION_HEIGHT,
                 EDITION_TEXTURE_WIDTH, EDITION_TEXTURE_HEIGHT);
         graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        ci.cancel();
     }
 }
