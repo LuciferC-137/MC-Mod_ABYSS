@@ -106,6 +106,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 		this.bossEvent = new ServerBossEvent(Objects.requireNonNull(this.getDisplayName()),
 				ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.PROGRESS);
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+        this.bossEvent.setPlayBossMusic(false);
         this.xpReward = 200;
         this.setPersistenceRequired();
         this.overrideDefaultParameters();
@@ -205,6 +206,8 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
             LocalPlayer player = Minecraft.getInstance().player;
             if (player != null && this.isClientInBossEvent) {
                 Minecraft.getInstance().getMusicManager().startPlaying(ModMusics.INCARNATION_THEME);
+            } else if (player != null) {
+                Minecraft.getInstance().getMusicManager().stopPlaying();
             }
         } else this.tickSinceLastMusicPlayed++;
     }

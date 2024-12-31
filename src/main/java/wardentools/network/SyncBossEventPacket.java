@@ -33,7 +33,9 @@ public class SyncBossEventPacket {
             if (bossEntity != null) {
                 bossEntity.setClientInBossEvent(isInBossEvent);
             }
-            Minecraft.getInstance().getMusicManager().startPlaying(ModMusics.INCARNATION_THEME);
+            if (!isInBossEvent) {
+                Minecraft.getInstance().getMusicManager().stopPlaying();
+            }
         });
         context.setPacketHandled(true);
     }

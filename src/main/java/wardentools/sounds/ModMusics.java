@@ -9,6 +9,11 @@ import net.minecraft.sounds.SoundEvent;
 
 @SuppressWarnings("deprecation")
 public class ModMusics {
+    public static final int ONE_SECOND = 20;
+    public static final int THIRTY_SECONDS = 600;
+    public static final int TEN_MINUTES = 12000;
+    public static final int TWENTY_MINUTES = 24000;
+    public static final int FIVE_MINUTES = 6000;
     private static final ResourceKey<SoundEvent> DEEP_FOREST_KEY = ResourceKey.create(Registries.SOUND_EVENT,
             ModSounds.DEEP_FOREST.getId());
     private static final ResourceKey<SoundEvent> WHITE_FOREST_KEY = ResourceKey.create(Registries.SOUND_EVENT,
@@ -26,14 +31,15 @@ public class ModMusics {
             = BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(INCARNATION_KEY);
     private static final Holder<SoundEvent> ABYSS_THEME_SOUND
             = BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(ABYSS_KEY);
+
     // Parameters = (SOUND_EVENT, minimum delay before playing again, maximum delay before playing again,
     // replace music)
     public static final Music DEEP_FOREST
-            = new Music(DEEP_FOREST_SOUND, 6000, 24000, true);
+            = new Music(DEEP_FOREST_SOUND, FIVE_MINUTES, TEN_MINUTES, true);
     public static final Music WHITE_FOREST
-            = new Music(WHITE_FOREST_SOUND, 6000, 24000, true);
+            = new Music(WHITE_FOREST_SOUND, FIVE_MINUTES, TEN_MINUTES, true);
     public static final Music INCARNATION_THEME
-            = new Music(INCARNATION_THEME_SOUND, 2520, 2520, true);
+            = new Music(INCARNATION_THEME_SOUND, FIVE_MINUTES, TEN_MINUTES, true);
     public static final Music ABYSS_THEME
-            = new Music(ABYSS_THEME_SOUND, 3420, 3420, true);
+            = new Music(ABYSS_THEME_SOUND, ONE_SECOND, THIRTY_SECONDS / 2, true);
 }

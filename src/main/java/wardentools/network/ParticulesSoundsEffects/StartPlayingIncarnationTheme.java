@@ -23,6 +23,7 @@ public class StartPlayingIncarnationTheme {
     }
 
     private static void handlePacket(StartPlayingIncarnationTheme msg) {
+        Minecraft.getInstance().getMusicManager().stopPlaying();
         Minecraft.getInstance().getMusicManager().startPlaying(ModMusics.INCARNATION_THEME);
     }
 }

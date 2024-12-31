@@ -1,14 +1,9 @@
 package wardentools.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
-import wardentools.block.BlackLanternBlock;
-import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.entity.custom.ShadowEntity;
 
 public class SoulSpawnerBlockEntity extends BlockEntity {
