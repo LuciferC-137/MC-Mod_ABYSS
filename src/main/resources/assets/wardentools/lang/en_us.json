@@ -146,6 +146,8 @@
 	"creativetab.darktree": "Darktree",
 	"creativetab.whitetree": "Whitetree",
 
+	"enchantment.wardentools.stealth": "Stealth",
+
 	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "Corrupted material",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",

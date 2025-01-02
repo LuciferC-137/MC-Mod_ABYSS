@@ -1,17 +1,20 @@
 package wardentools.gui;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.ItemRegistry;
+import wardentools.items.enchantment.EnchantmentRegistry;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -163,6 +166,8 @@ public class ModCreativeTabs {
 
         addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
         addItemToTag("misc", ItemRegistry.SOUL_SPAWNER);
+        //addItemToTag("misc", EnchantedBookItem.createForEnchantment(
+        //        new EnchantmentInstance(EnchantmentRegistry.STEALTH.get(), 1)).getItemHolder());
 
         addAllItemsFromRegistry();
     }

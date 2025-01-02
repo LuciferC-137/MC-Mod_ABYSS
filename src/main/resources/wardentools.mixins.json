@@ -4,7 +4,8 @@
   "refmap": "wardentools.mixins-refmap.json",
   "required": true,
   "mixins": [
-    "WardenTargetMixin"
+    "WardenTargetMixin",
+    "EntityWalkingVibrationMixin"
   ],
   "client": [
     "LevelRendererMixin",
