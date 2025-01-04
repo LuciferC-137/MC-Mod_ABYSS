@@ -85,17 +85,22 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     @Override
     @SuppressWarnings("deprecation")
     public void entityInside(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
-
         if (!level.isClientSide && entity instanceof Player player) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof AbyssPortalBlockEntity abyssPortalBlockEntity) {
                 if (abyssPortalBlockEntity.shouldShowWinScreen()) {
                     this.showWinScreen(player, pos);
                 } else {
+                    if (player.isPassenger()) {
+                        player.stopRiding();
+                    }
                     teleport((ServerLevel)level, pos, player);
                 }
             }
         } else if (!level.isClientSide && entity.canChangeDimensions()) {
+            for (Entity passengers : entity.getPassengers()){
+                teleport((ServerLevel) level, pos, passengers);
+            }
             teleport((ServerLevel) level, pos, entity);
         }
     }

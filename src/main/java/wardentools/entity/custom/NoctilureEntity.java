@@ -10,7 +10,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
@@ -327,11 +326,12 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 			this.yHeadRot = this.yBodyRot;
 			if (this.getIsFlying() && Minecraft.getInstance().options.keyUp.isDown()){
 				this.flyingTravel(player.getViewVector(1f).scale(
-						this.getFlightSprinting() ? 1.1f : 0.5f));
+						this.getFlightSprinting() ? 1.1f : 0.5f).scale(this.isInWater() ? 0.1f : 1f));
 			} else if (!this.getIsFlying()) {
 				float forward = player.zza;
 				float strafe = player.xxa;
-				this.moveRelative(0.1F, new Vec3(strafe, travelVector.y, forward));
+				this.moveRelative(0.1F,
+						new Vec3(strafe, travelVector.y, forward).scale(this.isInWater() ? 0.1f : 1f));
 				this.move(MoverType.SELF, this.getDeltaMovement());
 				this.setDeltaMovement(this.getDeltaMovement().scale(0.91F));
 				super.travel(travelVector);
