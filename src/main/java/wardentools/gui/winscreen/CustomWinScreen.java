@@ -82,7 +82,6 @@ public class CustomWinScreen extends Screen {
 
    public void tick() {
       if (this.minecraft != null) {
-         this.minecraft.getMusicManager().tick();
          this.minecraft.getSoundManager().tick(false);
       }
       if (this.musicTickCountDown == 1 && this.minecraft != null) {
