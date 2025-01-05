@@ -155,6 +155,8 @@ public class ModCreativeTabs {
         addItemToTag("staff", ItemRegistry.ABYSS_DIVER);
         addItemToTag("staff", ItemRegistry.RADIANT_STAFF);
 
+        addItemToTag("weapons", ItemRegistry.ABYSSAL_SCYTHE);
+
         addItemToTag("sculk", Items.SCULK);
         addItemToTag("sculk", Items.SCULK_CATALYST);
         addItemToTag("sculk", Items.SCULK_SENSOR);
@@ -166,8 +168,6 @@ public class ModCreativeTabs {
 
         addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
         addItemToTag("misc", ItemRegistry.SOUL_SPAWNER);
-        //addItemToTag("misc", EnchantedBookItem.createForEnchantment(
-        //        new EnchantmentInstance(EnchantmentRegistry.STEALTH.get(), 1)).getItemHolder());
 
         addAllItemsFromRegistry();
     }
@@ -225,6 +225,7 @@ public class ModCreativeTabs {
                         getItemsByTag("deep_armor").forEach(item -> event.accept(item.get()));
                         getItemsByTag("radiant_armor").forEach(item -> event.accept(item.get()));
                         getItemsByTag("staff").forEach(item -> event.accept(item.get()));
+                        getItemsByTag("weapons").forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> CRYSTALS

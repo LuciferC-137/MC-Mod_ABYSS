@@ -558,4 +558,12 @@ public class ItemRegistry {
 			REGISTAR.register("soul_spawner",
 					() -> new BlockItem(BlockRegistry.SOUL_SPAWNER.get(),
 							new Item.Properties().rarity(Rarity.EPIC).fireResistant()));
+
+	public static final RegistryObject<Item> ABYSSAL_SCYTHE =
+			REGISTAR.register("abyssal_scythe",
+					() -> new ScytheItem(12, -3F, new Item.Properties()
+							.stacksTo(1)
+							.rarity(Rarity.RARE)
+							.defaultDurability(2031)
+							.fireResistant()));
 }
