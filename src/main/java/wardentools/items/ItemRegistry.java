@@ -566,4 +566,12 @@ public class ItemRegistry {
 							.rarity(Rarity.RARE)
 							.defaultDurability(2031)
 							.fireResistant()));
+
+	public static final RegistryObject<Item> RADIANT_SPEAR =
+			REGISTAR.register("radiant_spear",
+					() -> new SpearItem(10, -3F, new Item.Properties()
+							.stacksTo(1)
+							.rarity(Rarity.RARE)
+							.defaultDurability(2031)
+							.fireResistant()));
 }

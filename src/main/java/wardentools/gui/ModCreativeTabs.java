@@ -156,6 +156,7 @@ public class ModCreativeTabs {
         addItemToTag("staff", ItemRegistry.RADIANT_STAFF);
 
         addItemToTag("weapons", ItemRegistry.ABYSSAL_SCYTHE);
+        addItemToTag("weapons", ItemRegistry.RADIANT_SPEAR);
 
         addItemToTag("sculk", Items.SCULK);
         addItemToTag("sculk", Items.SCULK_CATALYST);
