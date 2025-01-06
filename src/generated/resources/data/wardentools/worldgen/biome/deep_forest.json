@@ -15,7 +15,7 @@
       "tick_delay": 6000
     },
     "music": {
-      "max_delay": 24000,
+      "max_delay": 12000,
       "min_delay": 6000,
       "replace_current_music": true,
       "sound": "wardentools:deep_forest_music"

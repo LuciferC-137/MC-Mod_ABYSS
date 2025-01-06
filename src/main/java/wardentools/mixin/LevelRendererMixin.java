@@ -23,6 +23,8 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.FogType;
 import wardentools.ModMain;
+import wardentools.weather.AbyssWeatherEvent;
+import wardentools.weather.AbyssWeatherManager;
 import wardentools.worldgen.dimension.ModDimensions;
 
 @Mixin(LevelRenderer.class)
@@ -33,14 +35,14 @@ public class LevelRendererMixin {
 	@Inject(method = "renderSky", at = @At("HEAD"))
 	private void onRenderSky(PoseStack pose, Matrix4f matrix,
 			float f, Camera cam, boolean bool, Runnable runnable, CallbackInfo ci) {
-		int BRIGHTNESS = 230;
+		int BRIGHTNESS = (int)(230f
+				* (AbyssWeatherEvent.WEATHER_MANAGER.getFogDistance() / AbyssWeatherManager.MAX_FOG_DISTANCE));
 		LevelRenderer levelRenderer = (LevelRenderer) (Object) this;
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
 		if (level == null) return;
 		if (level.effects().renderSky(level, levelRenderer.getTicks(),
 				f, pose, cam, matrix, bool, runnable)) {
-			
 			return;
 		}
 		runnable.run();
