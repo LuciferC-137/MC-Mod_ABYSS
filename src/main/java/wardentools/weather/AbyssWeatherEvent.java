@@ -12,7 +12,7 @@ public class AbyssWeatherEvent {
 	public static final AbyssWeatherManager WEATHER_MANAGER = new AbyssWeatherManager();
 	
 	@SubscribeEvent
-	public static void playerFallIntoVoid(TickEvent.LevelTickEvent event) {
+	public static void onLevelTickEvent(TickEvent.LevelTickEvent event) {
 		if (event.level.dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
 		WEATHER_MANAGER.tick(event.level);
 	}

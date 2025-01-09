@@ -9,6 +9,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraft.resources.ResourceLocation;
 import wardentools.ModMain;
 import wardentools.entity.custom.*;
+import wardentools.weather.lightning.AbyssLightningEntity;
 
 public class ModEntities {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -74,6 +75,12 @@ public class ModEntities {
 					()->EntityType.Builder.of(ContagionIncarnationCorpseEntity::new, MobCategory.MISC)
 					.sized(4f, 1.5f)
 					.build(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation_corpse").toString()));
+
+	public static final RegistryObject<EntityType<AbyssLightningEntity>> ABYSS_LIGHTNING =
+			ENTITY_TYPES.register("abyss_lightning",
+					()->EntityType.Builder.of(AbyssLightningEntity::new, MobCategory.MISC)
+					.sized(0.5f, 0.5f)
+					.build(new ResourceLocation(ModMain.MOD_ID, "abyss_lightning").toString()));
 	
 	public static void register(IEventBus eventBus) {
 		ENTITY_TYPES.register(eventBus);

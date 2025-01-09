@@ -1,5 +1,6 @@
 package wardentools.mixin;
 
+import net.minecraft.world.entity.player.Player;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -35,7 +36,8 @@ public class LevelRendererMixin {
 	@Inject(method = "renderSky", at = @At("HEAD"))
 	private void onRenderSky(PoseStack pose, Matrix4f matrix,
 			float f, Camera cam, boolean bool, Runnable runnable, CallbackInfo ci) {
-		int BRIGHTNESS = (int)(230f
+        if (cam.getEntity().level().dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
+        int BRIGHTNESS = (int)(230f
 				* (AbyssWeatherEvent.WEATHER_MANAGER.getFogDistance() / AbyssWeatherManager.MAX_FOG_DISTANCE));
 		LevelRenderer levelRenderer = (LevelRenderer) (Object) this;
         Minecraft mc = Minecraft.getInstance();

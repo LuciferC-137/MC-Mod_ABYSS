@@ -2,13 +2,14 @@ package wardentools.weather;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
+import wardentools.entity.ModEntities;
+import wardentools.weather.lightning.AbyssLightningEntity;
 
 public class AbyssWeatherManager {
-    private static final int MAX_WEATHER_DURATION = 1200;
-    private static final int MIN_WEATHER_DURATION = 600;
+    private static final int MAX_EVENT_DURATION = 1200;
+    private static final int MIN_EVENT_DURATION = 600;
     private static final int AVERAGE_TICK_BETWEEN_STORM = 2000; // 100 seconds
     public static final float MAX_FOG_DISTANCE = 150f;
     public static final float MIN_FOG_DISTANCE = 20f;
@@ -40,7 +41,8 @@ public class AbyssWeatherManager {
     }
 
     private void randomChangeInWeather(Level level) {
-        if (level.random.nextInt(AVERAGE_TICK_BETWEEN_STORM) == 0){
+        if (this.weatherTimer <= 0 && level.random.nextInt(AVERAGE_TICK_BETWEEN_STORM) == 0){
+            this.weatherTimer = level.random.nextInt(MIN_EVENT_DURATION, MAX_EVENT_DURATION);
             this.timeSinceLastEvent = 0;
             this.isStorming = !this.isStorming;
             if (this.isStorming) startStorm(level);
@@ -57,18 +59,16 @@ public class AbyssWeatherManager {
     }
 
     private void addLightningBolt(Level level, BlockPos playerPos) {
-        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+        AbyssLightningEntity lightning = ModEntities.ABYSS_LIGHTNING.get().create(level);
         if (lightning != null) {
             lightning.moveTo(playerPos.getX() + level.getRandom().nextInt(300) - 150,
-                    300,
+                    level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, playerPos).getY(),
                     playerPos.getZ() + level.getRandom().nextInt(300) - 150);
-            lightning.setVisualOnly(true);
             level.addFreshEntity(lightning);
         }
     }
 
     private void startStorm(Level level) {
-        this.weatherTimer = level.random.nextInt(MIN_WEATHER_DURATION, MAX_WEATHER_DURATION);
         level.players().stream().filter(player -> player.level() == level)
                 .forEach(player -> player.sendSystemMessage(Component.literal("A storm is coming...")));
     }

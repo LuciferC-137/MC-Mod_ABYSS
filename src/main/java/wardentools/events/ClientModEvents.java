@@ -11,6 +11,7 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.entity.custom.ModBoatEntity;
 import wardentools.entity.custom.ModChestBoatEntity;
+import wardentools.weather.lightning.AbyssLightningRenderer;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
@@ -31,6 +32,7 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.SHADOW.get(), ShadowRenderer::new);
 		event.registerEntityRenderer(ModEntities.CONTAGION_INCARNATION_CORPSE.get(),
 				ContagionIncarnationCorpseRenderer::new);
+		event.registerEntityRenderer(ModEntities.ABYSS_LIGHTNING.get(), AbyssLightningRenderer::new);
 	}
 
 	
