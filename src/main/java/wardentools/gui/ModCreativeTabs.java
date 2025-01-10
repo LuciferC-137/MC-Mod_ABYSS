@@ -1,20 +1,14 @@
 package wardentools.gui;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.ItemRegistry;
-import wardentools.items.enchantment.EnchantmentRegistry;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -170,6 +164,11 @@ public class ModCreativeTabs {
         addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
         addItemToTag("misc", ItemRegistry.SOUL_SPAWNER);
 
+        addItemToTag("disc", ItemRegistry.ABYSS_MUSIC_DISC);
+        addItemToTag("disc", ItemRegistry.INCARNATION_MUSIC_DISC);
+        addItemToTag("disc", ItemRegistry.DEEP_FOREST_MUSIC_DISC);
+        addItemToTag("disc", ItemRegistry.WHITE_FOREST_MUSIC_DISC);
+
         addAllItemsFromRegistry();
     }
 
@@ -244,6 +243,7 @@ public class ModCreativeTabs {
                     .displayItems((pParameters, event) -> {
                         getItemsByTag("corrupted").forEach(item -> event.accept(item.get()));
                         getItemsByTag("radiant").forEach(item -> event.accept(item.get()));
+                        getItemsByTag("disc").forEach(item -> event.accept(item.get()));
                         getItemsByTag("misc").forEach(item -> event.accept(item.get()));
                     }).build());
 

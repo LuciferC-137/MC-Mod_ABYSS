@@ -4,7 +4,7 @@ package wardentools.items;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.RecordItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -13,8 +13,7 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ModBoatEntity;
-
-import java.rmi.registry.Registry;
+import wardentools.sounds.ModSounds;
 
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
@@ -574,4 +573,24 @@ public class ItemRegistry {
 							.rarity(Rarity.RARE)
 							.defaultDurability(2031)
 							.fireResistant()));
+
+	public static final RegistryObject<Item> ABYSS_MUSIC_DISC =
+			REGISTAR.register("music_disc_abyss",
+					() -> new RecordItem(1, ModSounds.ABYSS_THEME_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 3420));
+
+	public static final RegistryObject<Item> INCARNATION_MUSIC_DISC =
+			REGISTAR.register("music_disc_incarnation",
+					() -> new RecordItem(1, ModSounds.INCARNATION_THEME_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2520));
+
+	public static final RegistryObject<Item> DEEP_FOREST_MUSIC_DISC =
+			REGISTAR.register("music_disc_deepforest",
+					() -> new RecordItem(1, ModSounds.DEEP_FOREST_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2420));
+
+	public static final RegistryObject<Item> WHITE_FOREST_MUSIC_DISC =
+			REGISTAR.register("music_disc_whiteforest",
+					() -> new RecordItem(1, ModSounds.WHITE_FOREST_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2060));
 }
