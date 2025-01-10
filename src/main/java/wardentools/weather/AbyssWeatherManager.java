@@ -62,7 +62,7 @@ public class AbyssWeatherManager {
         AbyssLightningEntity lightning = ModEntities.ABYSS_LIGHTNING.get().create(level);
         if (lightning != null) {
             lightning.moveTo(playerPos.getX() + level.getRandom().nextInt(300) - 150,
-                    level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, playerPos).getY(),
+                    level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, playerPos).above(60).getY(),
                     playerPos.getZ() + level.getRandom().nextInt(300) - 150);
             level.addFreshEntity(lightning);
         }
