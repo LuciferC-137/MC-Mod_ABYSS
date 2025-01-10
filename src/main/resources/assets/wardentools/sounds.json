@@ -142,5 +142,11 @@
 		"sounds": [
 			"wardentools:music/incarnation"
 		]
+	},
+	"shockwave_thunder": {
+		"subtitles": "sounds.wardentools.shockwave_thunder",
+		"sounds": [
+			"wardentools:shockwave_thunder"
+		]
 	}
 }

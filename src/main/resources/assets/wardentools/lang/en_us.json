@@ -178,6 +178,7 @@
 	"sounds.wardentools.music.abyss": "Abyss Theme playing",
 	"sounds.wardentools.music.white_forest": "White Forest Music playing",
 	"sounds.wardentools.music.incarnation_theme": "Incarnation Theme playing",
+	"sounds.wardentools.shockwave_thunder": "Thunder Shockwave",
 
 	"effect.wardentools.corrupted": "Corrupted",
 	"effect.wardentools.corruption_vessel": "Corruption Vessel",
@@ -218,5 +219,8 @@
 	"advancements.wardentools.corruption_vessel.title": "Spread the Corruption!",
 	"advancements.wardentools.corruption_vessel.description": "Abandon yourself to the Corruption.",
 	"advancements.wardentools.radiance_bringer.title": "The light of the Radiance.",
-	"advancements.wardentools.radiance_bringer.description": "Chose Light over Darkness."
+	"advancements.wardentools.radiance_bringer.description": "Chose Light over Darkness.",
+
+	"message.wardentools.wind.storm": "<Wind> A storm is comming...",
+	"message.wardentools.wind.storm_end": "<Wind> The storm has passed."
 }

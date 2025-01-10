@@ -52,6 +52,8 @@ public class ModSounds {
 			registerSoundEvents("contagion_incarnation_emerge");
 	public static final RegistryObject<SoundEvent> SONIC_STRIKE =
 			registerSoundEvents("sonic_strike");
+	public static final RegistryObject<SoundEvent> SHOCKWAVE_THUNDER =
+			registerSoundEvents("shockwave_thunder");
 
 	//Musics
 	public static final RegistryObject<SoundEvent> DEEP_FOREST =
