@@ -163,6 +163,7 @@ public class ModCreativeTabs {
 
         addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
         addItemToTag("misc", ItemRegistry.SOUL_SPAWNER);
+        addItemToTag("misc", ItemRegistry.WHISTLE);
 
         addItemToTag("disc", ItemRegistry.ABYSS_MUSIC_DISC);
         addItemToTag("disc", ItemRegistry.INCARNATION_MUSIC_DISC);

@@ -1,6 +1,8 @@
 package wardentools;
 
 
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -65,6 +67,13 @@ public class ModMain {
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
+			ItemProperties.register(ItemRegistry.WHISTLE.get(), new ResourceLocation("using"),
+					(stack, level, entity, seed) -> {
+						if (entity != null && entity.isUsingItem() && entity.getUseItem() == stack) {
+							return 1.0F;
+						}
+						return 0.0F;
+					});
 		});
 
     }

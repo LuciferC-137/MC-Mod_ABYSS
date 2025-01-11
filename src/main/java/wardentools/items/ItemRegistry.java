@@ -593,4 +593,8 @@ public class ItemRegistry {
 			REGISTAR.register("music_disc_whiteforest",
 					() -> new RecordItem(1, ModSounds.WHITE_FOREST_MUSIC_DISC.get(),
 							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2060));
+
+	public static final RegistryObject<Item> WHISTLE =
+			REGISTAR.register("whistle",
+					() -> new WhistleItem(new Item.Properties().stacksTo(1)));
 }
