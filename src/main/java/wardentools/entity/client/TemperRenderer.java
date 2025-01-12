@@ -19,6 +19,7 @@ public class TemperRenderer extends MobRenderer<TemperEntity, Temper>{
 		super(context, new Temper(context.bakeLayer(Temper.LAYER_LOCATION)), 0.4f);
 		this.addLayer(new ItemInHandLayer<TemperEntity, Temper>(
 				(RenderLayerParent<TemperEntity, Temper>)this, context.getItemInHandRenderer()));
+		this.addLayer(new TemperEmissiveLayer(this));
 	}
 
 

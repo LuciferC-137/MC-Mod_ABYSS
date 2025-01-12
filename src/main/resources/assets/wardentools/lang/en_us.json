@@ -42,6 +42,17 @@
 	"item.wardentools.blue_glow_berries": "Blue Glow Berries",
 	"item.wardentools.noctilure_treat": "Noctilure Treat",
 	"item.wardentools.shadow_spawn_egg": "Shadow spawn egg",
+	"item.wardentools.abyssal_scythe": "Abyssal Scythe",
+	"item.wardentools.radiant_spear": "Radiant Spear",
+	"item.wardentools.music_disc_abyss": "Abyss Music Disc",
+	"item.wardentools.music_disc_abyss.desc": "Fenrir C137 - Abyss Theme",
+	"item.wardentools.music_disc_incarnation": "Abyss Music Disc",
+	"item.wardentools.music_disc_incarnation.desc": "Fenrir C137 - Incarnation Theme",
+	"item.wardentools.music_disc_deepforest": "Abyss Music Disc",
+	"item.wardentools.music_disc_deepforest.desc": "Fenrir C137 - Deep Forest Music",
+	"item.wardentools.music_disc_whiteforest": "Abyss Music Disc",
+	"item.wardentools.music_disc_whiteforest.desc": "Fenrir C137 - White Forest Music",
+	"item.wardentools.whistle": "Whistle",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
@@ -146,6 +157,8 @@
 	"creativetab.darktree": "Darktree",
 	"creativetab.whitetree": "Whitetree",
 
+	"enchantment.wardentools.stealth": "Stealth",
+
 	"gui.wardentools.radiance_catalyst_screen": "Radiance Catalyst",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "Corrupted material",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",
@@ -174,6 +187,8 @@
 	"sounds.wardentools.music.abyss": "Abyss Theme playing",
 	"sounds.wardentools.music.white_forest": "White Forest Music playing",
 	"sounds.wardentools.music.incarnation_theme": "Incarnation Theme playing",
+	"sounds.wardentools.shockwave_thunder": "Thunder Shockwave",
+	"sounds.wardentools.whistle": "Whistle",
 
 	"effect.wardentools.corrupted": "Corrupted",
 	"effect.wardentools.corruption_vessel": "Corruption Vessel",
@@ -214,5 +229,11 @@
 	"advancements.wardentools.corruption_vessel.title": "Spread the Corruption!",
 	"advancements.wardentools.corruption_vessel.description": "Abandon yourself to the Corruption.",
 	"advancements.wardentools.radiance_bringer.title": "The light of the Radiance.",
-	"advancements.wardentools.radiance_bringer.description": "Chose Light over Darkness."
+	"advancements.wardentools.radiance_bringer.description": "Chose Light over Darkness.",
+
+	"message.wardentools.wind.storm": "<Wind> A storm is comming...",
+	"message.wardentools.wind.storm_end": "<Wind> The storm has passed.",
+
+	"death.attack.corrupted": "%1$s was consumed by the Corruption",
+	"death.attack.corrupted.player": "%1$s was consumed by the Corruption while fighting %2$s"
 }

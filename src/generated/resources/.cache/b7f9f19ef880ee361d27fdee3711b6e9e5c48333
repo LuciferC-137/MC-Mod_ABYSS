@@ -1,4 +1,4 @@
-// 1.20.4	2024-11-06T18:13:36.0971118	Item Models: wardentools
+// 1.20.4	2025-01-11T09:49:00.6928829	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -83,6 +83,10 @@ ac9bf287cd0d7c2f9eee8bea9ef75df5661acbc4 assets/wardentools/models/item/deep_fra
 e132a841ade458e1fba92f9890b565e60eb931b1 assets/wardentools/models/item/echo_cristal.json
 feb0db5a59a7305c0a266a00acf1a05ca4dda78c assets/wardentools/models/item/malachite.json
 fe3b4dd8c8ed0ef2c3c07977353645e1483aec36 assets/wardentools/models/item/malachite_fragment.json
+c3db8f02d0154624f37afeb3c1692f05bbb5c88b assets/wardentools/models/item/music_disc_abyss.json
+a26b6cf4baca004908e2914b6aa7fdb72a91bb2d assets/wardentools/models/item/music_disc_deepforest.json
+369f26ecd1e606775e571cc088e63df037f964c5 assets/wardentools/models/item/music_disc_incarnation.json
+ee5b6224d21c52ca7bc92d86c1b9272fab1b6c68 assets/wardentools/models/item/music_disc_whiteforest.json
 0f94db5b85f1d9845939458efa9f750d8d70dc7f assets/wardentools/models/item/noctilure_treat.json
 d1f708f033601d63173c94f78141805351173aad assets/wardentools/models/item/pale_cristal.json
 ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_shard.json
@@ -148,6 +152,7 @@ f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped
 0a97dffdd3ad150e8f5754c8e5a285b8d9424e24 assets/wardentools/models/item/tall_dark_grass.json
 6c32364d24d94cdf7cf4110c71b0502f0f641a6e assets/wardentools/models/item/tall_white_grass.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json
+178431c01f78b442c7154eda6cd23c7130c0577b assets/wardentools/models/item/whistle.json
 d863dfe62fd973049057e6058c98b2308aded761 assets/wardentools/models/item/whitetree_boat.json
 e61691d51da15842832df57a056926f39474d0ff assets/wardentools/models/item/whitetree_button.json
 317f6e8472ef449b055bc0323670e03d70aae084 assets/wardentools/models/item/whitetree_chest_boat.json

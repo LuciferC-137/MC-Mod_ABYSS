@@ -2,10 +2,7 @@ package wardentools.gui;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -152,6 +149,9 @@ public class ModCreativeTabs {
         addItemToTag("staff", ItemRegistry.ABYSS_DIVER);
         addItemToTag("staff", ItemRegistry.RADIANT_STAFF);
 
+        addItemToTag("weapons", ItemRegistry.ABYSSAL_SCYTHE);
+        addItemToTag("weapons", ItemRegistry.RADIANT_SPEAR);
+
         addItemToTag("sculk", Items.SCULK);
         addItemToTag("sculk", Items.SCULK_CATALYST);
         addItemToTag("sculk", Items.SCULK_SENSOR);
@@ -163,6 +163,12 @@ public class ModCreativeTabs {
 
         addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
         addItemToTag("misc", ItemRegistry.SOUL_SPAWNER);
+        addItemToTag("misc", ItemRegistry.WHISTLE);
+
+        addItemToTag("disc", ItemRegistry.ABYSS_MUSIC_DISC);
+        addItemToTag("disc", ItemRegistry.INCARNATION_MUSIC_DISC);
+        addItemToTag("disc", ItemRegistry.DEEP_FOREST_MUSIC_DISC);
+        addItemToTag("disc", ItemRegistry.WHITE_FOREST_MUSIC_DISC);
 
         addAllItemsFromRegistry();
     }
@@ -220,6 +226,7 @@ public class ModCreativeTabs {
                         getItemsByTag("deep_armor").forEach(item -> event.accept(item.get()));
                         getItemsByTag("radiant_armor").forEach(item -> event.accept(item.get()));
                         getItemsByTag("staff").forEach(item -> event.accept(item.get()));
+                        getItemsByTag("weapons").forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> CRYSTALS
@@ -237,6 +244,7 @@ public class ModCreativeTabs {
                     .displayItems((pParameters, event) -> {
                         getItemsByTag("corrupted").forEach(item -> event.accept(item.get()));
                         getItemsByTag("radiant").forEach(item -> event.accept(item.get()));
+                        getItemsByTag("disc").forEach(item -> event.accept(item.get()));
                         getItemsByTag("misc").forEach(item -> event.accept(item.get()));
                     }).build());
 

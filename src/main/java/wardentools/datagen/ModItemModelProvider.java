@@ -81,6 +81,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.RADIANCE_INGOTS);
         simpleItem(ItemRegistry.BLUE_GLOW_BERRIES);
         simpleItem(ItemRegistry.NOCTILURE_TREAT);
+        simpleItem(ItemRegistry.ABYSS_MUSIC_DISC);
+        simpleItem(ItemRegistry.DEEP_FOREST_MUSIC_DISC);
+        simpleItem(ItemRegistry.WHITE_FOREST_MUSIC_DISC);
+        simpleItem(ItemRegistry.INCARNATION_MUSIC_DISC);
         
         //Blocks that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);

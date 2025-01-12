@@ -1,6 +1,8 @@
 package wardentools;
 
 
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,6 +21,7 @@ import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.ModFluidTypes;
 import wardentools.items.ItemRegistry;
 import wardentools.items.PaintingsRegistry;
+import wardentools.items.enchantment.EnchantmentRegistry;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
@@ -32,12 +35,11 @@ public class ModMain {
 	public static final String MOD_ID = "wardentools";
 	public static final String MODNAME = "ABYSS";
 	public static final String VERSION = "0.0.1";
-
-	public static final int NEW_STRUCTURE_SIZE = 512;
 	
 	public ModMain() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
+		EnchantmentRegistry.ENCHANTMENTS.register(bus);
 		ArmorRegistry.REGISTAR.register(bus);
 		ItemRegistry.REGISTAR.register(bus);
 		BlockRegistry.REGISTAR.register(bus);
@@ -65,6 +67,13 @@ public class ModMain {
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
+			ItemProperties.register(ItemRegistry.WHISTLE.get(), new ResourceLocation("using"),
+					(stack, level, entity, seed) -> {
+						if (entity != null && entity.isUsingItem() && entity.getUseItem() == stack) {
+							return 1.0F;
+						}
+						return 0.0F;
+					});
 		});
 
     }

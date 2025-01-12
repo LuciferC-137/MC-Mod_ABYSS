@@ -125,10 +125,26 @@
 			"wardentools:music/deep_forest"
 		]
 	},
+	"deep_forest_music_disc": {
+		"sounds": [
+			{
+				"name": "wardentools:music/deep_forest",
+				"stream": true
+			}
+		]
+	},
 	"abyss_theme": {
 		"subtitles": "sounds.wardentools.music.abyss",
 		"sounds": [
 			"wardentools:music/abyss"
+		]
+	},
+	"abyss_theme_disc": {
+		"sounds": [
+			{
+				"name": "wardentools:music/abyss",
+				"stream": true
+			}
 		]
 	},
 	"white_forest_music": {
@@ -137,10 +153,38 @@
 			"wardentools:music/white_forest"
 		]
 	},
+	"white_forest_music_disc": {
+		"sounds": [
+			{
+				"name": "wardentools:music/white_forest",
+				"stream": true
+			}
+		]
+	},
 	"incarnation_theme": {
 		"subtitles": "sounds.wardentools.music.incarnation_theme",
 		"sounds": [
 			"wardentools:music/incarnation"
+		]
+	},
+	"incarnation_theme_disc": {
+		"sounds": [
+			{
+				"name": "wardentools:music/incarnation",
+				"stream": true
+			}
+		]
+	},
+	"shockwave_thunder": {
+		"subtitles": "sounds.wardentools.shockwave_thunder",
+		"sounds": [
+			"wardentools:shockwave_thunder"
+		]
+	},
+	"whistle": 	{
+		"subtitles": "sounds.wardentools.whistle",
+		"sounds": [
+			"wardentools:whistle"
 		]
 	}
 }
