@@ -92,10 +92,10 @@ public class PacketHandler {
 				.decoder(ContagionIncarnationEmergeSound::new)
 				.consumerMainThread(ContagionIncarnationEmergeSound::handle)
 				.add();
-		INSTANCE.messageBuilder(ParticleDarktreFenceDestroyed.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleDarktreFenceDestroyed::encode)
-				.decoder(ParticleDarktreFenceDestroyed::new)
-				.consumerMainThread(ParticleDarktreFenceDestroyed::handle)
+		INSTANCE.messageBuilder(ParticleDarktreeFenceDestroyed.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ParticleDarktreeFenceDestroyed::encode)
+				.decoder(ParticleDarktreeFenceDestroyed::new)
+				.consumerMainThread(ParticleDarktreeFenceDestroyed::handle)
 				.add();
 		INSTANCE.messageBuilder(ContagionIncarnationSonicStrikeSound.class, NetworkDirection.PLAY_TO_CLIENT)
 				.encoder(ContagionIncarnationSonicStrikeSound::encode)

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EEE",
+    "EE "
+  ],
+  "key": {
+    "E": {
+      "item": "wardentools:darktree_slab"
+    }
+  },
+  "result": {
+    "item": "wardentools:whistle",
+    "count": 2
+  }
+}

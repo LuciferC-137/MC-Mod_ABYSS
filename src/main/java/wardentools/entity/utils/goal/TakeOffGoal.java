@@ -6,7 +6,7 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.entity.custom.NoctilureEntity;
 
 public class TakeOffGoal extends Goal {
-    private static final int maxTickCount = 2000;
+    private static final int maxTickCount = 1000;
     private int tickCount = 0;
     private final NoctilureEntity noctilure;
     private Vec3 targetOnTakeOff;

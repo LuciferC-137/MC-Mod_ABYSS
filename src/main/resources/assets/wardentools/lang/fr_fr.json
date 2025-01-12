@@ -189,7 +189,8 @@
 	"sounds.wardentools.music.abyss": "Musique de l'abysse",
 	"sounds.wardentools.music.white_forest": "Musique de la forêt blanche",
 	"sounds.wardentools.music.incarnation_theme": "Musique de l'Incarnation de la Contagion",
-	"sounds.wardentools.shockwave_thunder": "Thunder Shockwave",
+	"sounds.wardentools.shockwave_thunder": "Onde de Tonnerre",
+	"sounds.wardentools.whistle": "Sifflet",
 
 	"effect.wardentools.corrupted": "Corrompu",
 	"effect.wardentools.corruption_vessel": "Receptacle de Corruption",
@@ -233,5 +234,8 @@
 	"advancements.wardentools.radiance_bringer.description": "Choisissez la lumière plutôt que les ténèbres.",
 
 	"message.wardentools.wind.storm": "<Vent> Un orage se arrive...",
-	"message.wardentools.wind.storm_end": "<Vent> L'orage est passé."
+	"message.wardentools.wind.storm_end": "<Vent> L'orage est passé.",
+
+	"death.attack.corrupted": "%1$s a été consumé par la Corruption",
+	"death.attack.corrupted.player": "%1$s a été consumé par la Corruption en combatant %2$s"
 }

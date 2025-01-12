@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
@@ -40,6 +41,7 @@ import org.joml.Vector3f;
 import wardentools.entity.ModEntities;
 import wardentools.entity.utils.CustomFlyingPathNavigation;
 import wardentools.entity.utils.NoctilureFlyingMoveControl;
+import wardentools.entity.utils.goal.JoinOwnerGoal;
 import wardentools.entity.utils.goal.LandGoal;
 import wardentools.entity.utils.goal.RandomFlyGoal;
 import wardentools.entity.utils.goal.TakeOffGoal;
@@ -51,8 +53,8 @@ import java.util.UUID;
 
 public class NoctilureEntity extends TamableAnimal implements NeutralMob, OwnableEntity {
 	public static final float FLYING_SPEED = 0.2f;
-	private static final int CHANCE_TO_LAND = 200;
-	private static final int CHANCE_TO_TAKE_OFF = 200;
+	private static final int CHANCE_TO_LAND = 2000;
+	private static final int CHANCE_TO_TAKE_OFF = 2000;
 	private static final int LANDING_ANIMATION_DURATION = 30;
 	private static final int IDLE_FLY_TO_FLY_DURATION = 15;
 	private static final float FLYING_INERTIA = 0.8f;
@@ -79,6 +81,8 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Optional<UUID>> OWNER_UUID
 			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Boolean> WANTS_TO_JOIN_OWNER
+			= SynchedEntityData.defineId(NoctilureEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 	public final AnimationState standing = new AnimationState();
 	public final AnimationState walking = new AnimationState();
@@ -106,18 +110,20 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
-		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
-		this.goalSelector.addGoal(3, new LandGoal(this));
-		this.goalSelector.addGoal(4, new TakeOffGoal(this));
-		this.goalSelector.addGoal(5, new RandomFlyGoal(this));
-		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
+		this.goalSelector.addGoal(2, new JoinOwnerGoal(this));
+		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(4, new LandGoal(this));
+		this.goalSelector.addGoal(5, new TakeOffGoal(this));
+		this.goalSelector.addGoal(6, new RandomFlyGoal(this));
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
 			@Override
 			public boolean canUse() {
-				return !NoctilureEntity.this.getIsFlying() && super.canUse();
+				return !NoctilureEntity.this.getIsFlying()
+						&& !NoctilureEntity.this.getWantsToJoinOwner() && super.canUse();
 			}
 		});
-		this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 4f));
-		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 4f));
+		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
 
 		this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
 		this.targetSelector.addGoal(2, new OwnerHurtByTargetGoal(this));
@@ -133,12 +139,85 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 
 	@Override
 	public void tick() {
+		if (!this.level().isClientSide) this.handleServerTickers();
+		if (this.level().isClientSide) this.handleAnimation();
+		else if (!this.isVehicle() && !NoctilureEntity.this.getWantsToJoinOwner()) {
+			this.handleRandomFlyingLogic();
+		}
+		if (this.isVehicle())this.handlePlayerControl();
+		super.tick();
+	}
+
+	private void handleRandomFlyingLogic() {
+		if (this.getIsFlying()){
+			// Landing at a random time if no other action is performed
+			if (!this.getWantsToLand() && !this.getWantsToTakeOff()
+					&& this.getRandom().nextInt(CHANCE_TO_LAND) == 0) {
+				this.setWantsToLand(true);
+			}
+			// Condition to land if the ground is reached by chance
+			if (this.getHeightAboveGround() <= 1
+					&& !this.getWantsToTakeOff() && !this.getWantsToLand()){
+				this.land();
+			}
+		} else {
+			// Taking off at a random time if no other action is performed
+			if (!this.getWantsToTakeOff() && !this.getWantsToLand()
+					&& this.getRandom().nextInt(CHANCE_TO_TAKE_OFF) == 0){
+				this.takeOff();
+			}
+		}
+	}
+
+	private void handlePlayerControl() {
+		if (this.getWantsToLand()) {this.setWantsToLand(false);}
+		if (this.getWantsToTakeOff()) {this.setWantsToTakeOff(false);}
+		if (Minecraft.getInstance().options.keyDown.isDown()){
+			if (this.getIsFlying() && this.getHeightAboveGround() <= 1){
+				this.land();
+			}
+		}
+		if (this.getIsFlying()) {
+			if (Minecraft.getInstance().options.keySprint.isDown()) {
+				if (Minecraft.getInstance().options.keyUp.isDown()) this.lowerEnergy(10);
+				if (this.energyWasZero) this.setFlightSprinting(this.getSprintEnergy() > 10);
+				else this.setFlightSprinting(this.getSprintEnergy() > 0);
+			} else {
+				this.setFlightSprinting(false);
+			}
+			if (this.getSprintEnergy() < MAX_SPRINT_ENERGY) {
+				if (!Minecraft.getInstance().options.keyUp.isDown()) {
+					increaseEnergy(2);
+				} else if (!Minecraft.getInstance().options.keySprint.isDown()) {
+					increaseEnergy(1);
+				}
+			}
+		} else if (this.getSprintEnergy() < MAX_SPRINT_ENERGY) {
+			increaseEnergy(20);
+		}
+	}
+
+	private void handleAnimation() {
 		if (this.getLandingTick() > 0) {
 			this.setLandingTick(this.getLandingTick() - 1);
 		}
 		if (this.getIdleFlyToFlyTick() > 0) {
 			this.setIdleFlyToFlyTick(this.getIdleFlyToFlyTick() - 1);
 		}
+		this.standing.animateWhen(!this.walkAnimation.isMoving()
+				&& !this.getIsFlying() && this.noSecondaryAnimation(), this.tickCount);
+		this.walking.animateWhen(this.walkAnimation.isMoving()
+				&& !this.getIsFlying() && this.noSecondaryAnimation(), this.tickCount);
+		this.flying.animateWhen(this.getIsFlying()
+				&& !this.isAlmostIdle() && this.noSecondaryAnimation(), this.tickCount);
+		this.landing.animateWhen(this.getLandingTick() > 0, this.tickCount);
+		this.idleFlying.animateWhen(this.getIsFlying()
+				&& this.isAlmostIdle() && this.noSecondaryAnimation(), this.tickCount);
+		this.idleFlyToFly.animateWhen(this.getIdleFlyToFlyTick() > 0
+				&& this.getLandingTick() == 0 && this.getIsFlying(), this.tickCount);
+	}
+
+	private void handleServerTickers() {
 		if (this.getWasIdleFlying() && !this.isAlmostIdle() && this.getIsFlying()) {
 			this.setWasIdleFlying(false);
 			this.setIdleFlyToFlyTick(IDLE_FLY_TO_FLY_DURATION);
@@ -146,66 +225,6 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 		if (this.isAlmostIdle() && !this.getWasIdleFlying()) {
 			this.setWasIdleFlying(true);
 		}
-		if (this.level().isClientSide){
-			this.standing.animateWhen(!this.walkAnimation.isMoving()
-					&& !this.getIsFlying() && this.noSecondaryAnimation(), this.tickCount);
-			this.walking.animateWhen(this.walkAnimation.isMoving()
-					&& !this.getIsFlying() && this.noSecondaryAnimation(), this.tickCount);
-			this.flying.animateWhen(this.getIsFlying()
-					&& !this.isAlmostIdle() && this.noSecondaryAnimation(), this.tickCount);
-			this.landing.animateWhen(this.getLandingTick() > 0, this.tickCount);
-			this.idleFlying.animateWhen(this.getIsFlying()
-					&& this.isAlmostIdle() && this.noSecondaryAnimation(), this.tickCount);
-			this.idleFlyToFly.animateWhen(this.getIdleFlyToFlyTick() > 0
-					&& this.getLandingTick() == 0 && this.getIsFlying(), this.tickCount);
-		} else if (!this.isVehicle()) {
-			if (this.getIsFlying()){
-				// Landing at a random time if no other action is performed
-				if (!this.getWantsToLand() && !this.getWantsToTakeOff()
-						&& this.getRandom().nextInt(CHANCE_TO_LAND) == 0) {
-					this.setWantsToLand(true);
-				}
-				// Condition to land if the ground is reached by chance
-				if (this.getHeightAboveGround() <= 1
-						&& !this.getWantsToTakeOff() && !this.getWantsToLand()){
-					this.land();
-				}
-			} else {
-				// Taking off at a random time if no other action is performed
-				if (!this.getWantsToTakeOff() && !this.getWantsToLand()
-						&& this.getRandom().nextInt(CHANCE_TO_TAKE_OFF) == 0){
-					this.takeOff();
-				}
-			}
-		}
-		if (this.isVehicle()){
-			if (this.getWantsToLand()) {this.setWantsToLand(false);}
-			if (this.getWantsToTakeOff()) {this.setWantsToTakeOff(false);}
-			if (Minecraft.getInstance().options.keyDown.isDown()){
-				if (this.getIsFlying() && this.getHeightAboveGround() <= 1){
-					this.land();
-				}
-			}
-			if (this.getIsFlying()) {
-				if (Minecraft.getInstance().options.keySprint.isDown()) {
-					if (Minecraft.getInstance().options.keyUp.isDown()) this.lowerEnergy(10);
-					if (this.energyWasZero) this.setFlightSprinting(this.getSprintEnergy() > 10);
-					else this.setFlightSprinting(this.getSprintEnergy() > 0);
-				} else {
-					this.setFlightSprinting(false);
-				}
-				if (this.getSprintEnergy() < MAX_SPRINT_ENERGY) {
-					if (!Minecraft.getInstance().options.keyUp.isDown()) {
-						increaseEnergy(2);
-					} else if (!Minecraft.getInstance().options.keySprint.isDown()) {
-						increaseEnergy(1);
-					}
-				}
-			} else if (this.getSprintEnergy() < MAX_SPRINT_ENERGY) {
-				increaseEnergy(20);
-			}
-		}
-		super.tick();
 	}
 
 	public void increaseEnergy(int energy) {
@@ -218,6 +237,19 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 		int newEnergy = Math.max(this.getSprintEnergy() - energy, 0);
 		this.setSprintEnergy(newEnergy);
 		if (this.getSprintEnergy() <= 0) this.energyWasZero = true;
+	}
+
+	public void call() {
+		if (this.getWantsToJoinOwner()) {
+			this.playSound(ModSounds.NOCTILURE_AMBIENT.get(),
+					this.getSoundVolume() * 2f, this.getVoicePitch());
+		}
+		this.setWantsToJoinOwner(true);
+	}
+
+	@Override
+	public void playAmbientSound() {
+		super.playAmbientSound();
 	}
 
 	public void takeOff() {
@@ -236,6 +268,11 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 		this.setIsFlying(false);
 		this.setNoGravity(false);
 		this.updateMovementLogic();
+	}
+
+	public void resetRandomFlyingLogic() {
+		this.setWantsToLand(false);
+		this.setWantsToTakeOff(false);
 	}
 
 	public double getHeightAboveGround() {
@@ -270,7 +307,12 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	@Override
 	public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
 		if (!this.isVehicle()){
-			if (this.isTamed() && player.getUUID().equals(this.getOwnerUUID())){
+			if (this.isTamed() && player.getItemInHand(hand).getItem()
+					== ItemRegistry.NOCTILURE_TREAT.get() && this.getHealth() < this.getMaxHealth()) {
+				this.heal(4f);
+				player.getItemInHand(hand).shrink(1);
+				return InteractionResult.SUCCESS;
+			} else if (this.isTamed() && player.getUUID().equals(this.getOwnerUUID())){
 				if (!this.level().isClientSide){
 					player.startRiding(this);
 					Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
@@ -408,6 +450,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 		this.entityData.define(flightSprinting, false);
 		this.entityData.define(sprintEnergy, MAX_SPRINT_ENERGY);
 		this.entityData.define(OWNER_UUID, Optional.empty());
+		this.entityData.define(WANTS_TO_JOIN_OWNER, false);
 	}
 
 	@Override
@@ -420,9 +463,8 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 		tag.putInt("landing_tick", this.getLandingTick());
 		tag.putBoolean("was_idle_flying", this.getWasIdleFlying());
 		tag.putInt("sprint_energy", this.getSprintEnergy());
-		if (this.getOwnerUUID() != null){
-			tag.putUUID("owner", this.getOwnerUUID());
-		}
+		if (this.getOwnerUUID() != null)tag.putUUID("owner", this.getOwnerUUID());
+		tag.putBoolean("wants_to_join_owner", this.entityData.get(WANTS_TO_JOIN_OWNER));
 	}
 
 	@Override
@@ -436,6 +478,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 		this.setWasIdleFlying(tag.getBoolean("was_idle_flying"));
 		this.setSprintEnergy(tag.getInt("sprint_energy"));
 		if (tag.hasUUID("owner")){this.setOwnerUUID(tag.getUUID("owner"));}
+		this.setWantsToJoinOwner(tag.getBoolean("wants_to_join_owner"));
 	}
 
 	public int getTargetHeightOnTakeOff() {return this.entityData.get(TARGETED_HEIGHT_ON_TAKE_OFF);}
@@ -473,6 +516,10 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	public int getSprintEnergy() {return this.entityData.get(sprintEnergy);}
 
 	public void setSprintEnergy(int energy) {this.entityData.set(sprintEnergy, energy);}
+
+	public boolean getWantsToJoinOwner() {return this.entityData.get(WANTS_TO_JOIN_OWNER);}
+
+	public void setWantsToJoinOwner(boolean wantsToJoinOwner) {this.entityData.set(WANTS_TO_JOIN_OWNER, wantsToJoinOwner);}
 
 	@Override
 	public int getRemainingPersistentAngerTime() {return this.entityData.get(DATA_REMAINING_ANGER_TIME);}
@@ -526,10 +573,11 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	public void onPlayerJump(Player player) {
-		if (this.getIsFlying()){
-			this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1, 0));
-		} else {
-			this.takeOff();
+		if (!this.getIsFlying()) {
+			this.setIsFlying(true);
+			this.setNoGravity(true);
+			this.setIdleFlyToFlyTick(IDLE_FLY_TO_FLY_DURATION);
+			this.updateMovementLogic();
 		}
 	}
 
@@ -655,6 +703,6 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	protected float getSoundVolume() {
-		return 0.7F;
+		return 0.8F;
 	}
 }

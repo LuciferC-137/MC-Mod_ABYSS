@@ -35,7 +35,7 @@ import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.AncientLaboratoryGateSound;
 import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationEmergeSound;
 import wardentools.network.ParticulesSoundsEffects.ParticleContagionExplosion;
-import wardentools.network.ParticulesSoundsEffects.ParticleDarktreFenceDestroyed;
+import wardentools.network.ParticulesSoundsEffects.ParticleDarktreeFenceDestroyed;
 import wardentools.particle.ParticleRegistry;
 
 import java.util.List;
@@ -289,7 +289,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                     for (BlockPos pos : fencePos) {
                         if (this.level.getBlockState(pos).getBlock() == BlockRegistry.DARKTREE_FENCE.get()) {
                             this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                            PacketHandler.sendToAllClient(new ParticleDarktreFenceDestroyed(pos.getCenter()));
+                            PacketHandler.sendToAllClient(new ParticleDarktreeFenceDestroyed(pos.getCenter()));
                         }
                     }
                 }

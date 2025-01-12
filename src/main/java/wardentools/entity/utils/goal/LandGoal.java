@@ -7,7 +7,7 @@ import wardentools.entity.custom.NoctilureEntity;
 
 public class LandGoal extends Goal {
     private int tickCount = 0;
-    private static final int maxTickCount = 2000;
+    private static final int maxTickCount = 1000;
     private static final float heightToSuccessLanding = 3f;
     private static final int maxLandingRange = 100;
     private final NoctilureEntity noctilure;

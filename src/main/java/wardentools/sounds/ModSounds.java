@@ -54,6 +54,8 @@ public class ModSounds {
 			registerSoundEvents("sonic_strike");
 	public static final RegistryObject<SoundEvent> SHOCKWAVE_THUNDER =
 			registerSoundEvents("shockwave_thunder");
+	public static final RegistryObject<SoundEvent> WHISTLE =
+			registerSoundEvents("whistle");
 
 	//Musics
 	public static final RegistryObject<SoundEvent> DEEP_FOREST =

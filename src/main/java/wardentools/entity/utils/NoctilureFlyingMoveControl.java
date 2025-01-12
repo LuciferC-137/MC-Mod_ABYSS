@@ -21,7 +21,8 @@ public class NoctilureFlyingMoveControl extends MoveControl {
             double dy = this.getWantedY() - this.noctilure.getY();
             double dz = this.getWantedZ() - this.noctilure.getZ();
             this.noctilure.setDeltaMovement(new Vec3(dx, dy, dz)
-                    .normalize().scale(NoctilureEntity.FLYING_SPEED));
+                    .normalize().scale(NoctilureEntity.FLYING_SPEED)
+                    .scale(this.noctilure.getWantsToJoinOwner() ? 1.6f : 1f));
             float newYRot = (float)(Mth.atan2(dz, dx) * (180F / Math.PI)) - 90.0F;
             this.noctilure.yBodyRot = this.noctilure.getYRot();
             this.noctilure.setYRot(this.rotlerp(this.noctilure.getYRot(), newYRot, 90.0F));

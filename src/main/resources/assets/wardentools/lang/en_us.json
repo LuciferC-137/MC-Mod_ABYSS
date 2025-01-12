@@ -188,6 +188,7 @@
 	"sounds.wardentools.music.white_forest": "White Forest Music playing",
 	"sounds.wardentools.music.incarnation_theme": "Incarnation Theme playing",
 	"sounds.wardentools.shockwave_thunder": "Thunder Shockwave",
+	"sounds.wardentools.whistle": "Whistle",
 
 	"effect.wardentools.corrupted": "Corrupted",
 	"effect.wardentools.corruption_vessel": "Corruption Vessel",
@@ -231,5 +232,8 @@
 	"advancements.wardentools.radiance_bringer.description": "Chose Light over Darkness.",
 
 	"message.wardentools.wind.storm": "<Wind> A storm is comming...",
-	"message.wardentools.wind.storm_end": "<Wind> The storm has passed."
+	"message.wardentools.wind.storm_end": "<Wind> The storm has passed.",
+
+	"death.attack.corrupted": "%1$s was consumed by the Corruption",
+	"death.attack.corrupted.player": "%1$s was consumed by the Corruption while fighting %2$s"
 }

@@ -6,7 +6,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class StealthEnchantment extends Enchantment {
     public StealthEnchantment(Rarity rarity, EquipmentSlot... slots) {
-        super(rarity, EnchantmentCategory.ARMOR_FEET, slots);
+        super(rarity, EnchantmentCategory.ARMOR, slots);
     }
 
     @Override
@@ -17,11 +17,6 @@ public class StealthEnchantment extends Enchantment {
     @Override
     public int getMaxCost(int level) {
         return this.getMinCost(level) + 50;
-    }
-
-    @Override
-    public boolean isTreasureOnly() {
-        return true;
     }
 
 }

@@ -180,5 +180,11 @@
 		"sounds": [
 			"wardentools:shockwave_thunder"
 		]
+	},
+	"whistle": 	{
+		"subtitles": "sounds.wardentools.whistle",
+		"sounds": [
+			"wardentools:whistle"
+		]
 	}
 }

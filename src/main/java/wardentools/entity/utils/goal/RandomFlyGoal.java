@@ -53,7 +53,9 @@ public class RandomFlyGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return noctilure.getIsFlying() && !this.noctilure.getWantsToTakeOff() && !this.noctilure.getWantsToLand();
+        return noctilure.getIsFlying() && !this.noctilure.getWantsToTakeOff()
+                && !this.noctilure.getWantsToLand() && !this.noctilure.isVehicle()
+                && !this.noctilure.getWantsToJoinOwner();
     }
 
     @Override

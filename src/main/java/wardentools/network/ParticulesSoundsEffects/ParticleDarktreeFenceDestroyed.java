@@ -8,19 +8,18 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import wardentools.block.BlockRegistry;
-import wardentools.particle.ParticleRegistry;
 
 import java.io.IOException;
 
-public class ParticleDarktreFenceDestroyed {
+public class ParticleDarktreeFenceDestroyed {
     private static final BlockParticleOption FENCE_PARTICLE
             = new BlockParticleOption(ParticleTypes.BLOCK,
             BlockRegistry.DARKTREE_FENCE.get().defaultBlockState());
     private final Vec3 source;
 
-    public ParticleDarktreFenceDestroyed(Vec3 source) {this.source = source;}
+    public ParticleDarktreeFenceDestroyed(Vec3 source) {this.source = source;}
 
-    public ParticleDarktreFenceDestroyed(FriendlyByteBuf buffer) {this.source = buffer.readVec3();}
+    public ParticleDarktreeFenceDestroyed(FriendlyByteBuf buffer) {this.source = buffer.readVec3();}
 
     public void encode(FriendlyByteBuf buffer) {buffer.writeVec3(this.source);}
 
@@ -29,7 +28,7 @@ public class ParticleDarktreFenceDestroyed {
         context.setPacketHandled(true);
     }
 
-    private static void handlePacket(ParticleDarktreFenceDestroyed msg) {
+    private static void handlePacket(ParticleDarktreeFenceDestroyed msg) {
         Vec3 source = msg.source;
         try (ClientLevel level = Minecraft.getInstance().level) {
             if (level != null) {
