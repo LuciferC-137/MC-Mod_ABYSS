@@ -10,22 +10,23 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.entity.custom.DeepLurkerEntity;
+import wardentools.entity.custom.ShadowEntity;
 
-public class DeepLurkerEyesLayer extends RenderLayer<DeepLurkerEntity, DeepLurker> {
-    private static final RenderType EYES = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
-    		"textures/entity/deeplurker_eyes.png"));
+public class ShadowEmissiveLayer extends RenderLayer<ShadowEntity, Shadow> {
+    private static final RenderType EMISSIVE = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
+    		"textures/entity/shadow_emissive.png"));
 
-    public DeepLurkerEyesLayer(RenderLayerParent<DeepLurkerEntity, DeepLurker> renderLayerParent) {
+    public ShadowEmissiveLayer(RenderLayerParent<ShadowEntity, Shadow> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, MultiBufferSource bufferSource,
-                       int packedLight, @NotNull DeepLurkerEntity entity, float limbSwing,
+    public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource,
+                       int packedLight, @NotNull ShadowEntity entity, float limbSwing,
                        float limbSwingAmount, float partialTicks, float ageInTicks,
                        float netHeadYaw, float headPitch) {
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(EYES);
+        if (entity.getMimicEntity() != null) return;
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
         		LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
     }

@@ -20,6 +20,7 @@ public class ShadowRenderer extends MobRenderer<ShadowEntity, Shadow>{
 
     public ShadowRenderer(EntityRendererProvider.Context context) {
 		super(context, new Shadow(context.bakeLayer(Shadow.LAYER_LOCATION)), 0.2f);
+		this.addLayer(new ShadowEmissiveLayer(this));
 	}
 
 	@Override

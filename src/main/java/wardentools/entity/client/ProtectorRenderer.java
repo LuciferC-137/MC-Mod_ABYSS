@@ -16,6 +16,7 @@ public class ProtectorRenderer extends MobRenderer<ProtectorEntity, Protector>{
 
 	public ProtectorRenderer(EntityRendererProvider.Context context) {
 		super(context, new Protector(context.bakeLayer(Protector.LAYER_LOCATION)), 0.5f);
+		this.addLayer(new ProtectorEmissiveLayer(this));
 	}
 
 	@Override

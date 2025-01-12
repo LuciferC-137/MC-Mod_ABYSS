@@ -15,6 +15,7 @@ public class NoctilureRenderer extends MobRenderer<NoctilureEntity, Noctilure>{
 
 	public NoctilureRenderer(EntityRendererProvider.Context context) {
 		super(context, new Noctilure(context.bakeLayer(Noctilure.LAYER_LOCATION)), 1f);
+		this.addLayer(new NoctilureEmissiveLayer(this));
 	}
 
 	@Override

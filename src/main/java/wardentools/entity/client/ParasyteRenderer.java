@@ -17,6 +17,7 @@ public class ParasyteRenderer extends MobRenderer<ParasyteEntity, Parasyte>{
 
 	public ParasyteRenderer(EntityRendererProvider.Context context) {
 		super(context, new Parasyte(context.bakeLayer(Parasyte.LAYER_LOCATION)), 0.2f);
+		this.addLayer(new ParasyteEmissiveLayer(this));
 	}
 
 	@Override

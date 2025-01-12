@@ -10,22 +10,22 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.entity.custom.DeepLurkerEntity;
+import wardentools.entity.custom.ParasyteEntity;
 
-public class DeepLurkerEyesLayer extends RenderLayer<DeepLurkerEntity, DeepLurker> {
-    private static final RenderType EYES = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
-    		"textures/entity/deeplurker_eyes.png"));
+public class ParasyteEmissiveLayer extends RenderLayer<ParasyteEntity, Parasyte> {
+    private static final RenderType EMISSIVE = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
+    		"textures/entity/parasyte_emissive.png"));
 
-    public DeepLurkerEyesLayer(RenderLayerParent<DeepLurkerEntity, DeepLurker> renderLayerParent) {
+    public ParasyteEmissiveLayer(RenderLayerParent<ParasyteEntity, Parasyte> renderLayerParent) {
         super(renderLayerParent);
     }
 
     @Override
     public void render(@NotNull PoseStack poseStack, MultiBufferSource bufferSource,
-                       int packedLight, @NotNull DeepLurkerEntity entity, float limbSwing,
+                       int packedLight, @NotNull ParasyteEntity entity, float limbSwing,
                        float limbSwingAmount, float partialTicks, float ageInTicks,
                        float netHeadYaw, float headPitch) {
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(EYES);
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
         		LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
     }

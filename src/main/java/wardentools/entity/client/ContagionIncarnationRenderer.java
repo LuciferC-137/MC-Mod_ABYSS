@@ -33,7 +33,8 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 			BlockRegistry.SOLID_CORRUPTION.get().defaultBlockState());
 
 	public ContagionIncarnationRenderer(EntityRendererProvider.Context context) {
-		super(context, new ContagionIncarnation(context.bakeLayer(ContagionIncarnation.LAYER_LOCATION)), 0.5f);
+		super(context, new ContagionIncarnation(context.bakeLayer(ContagionIncarnation.LAYER_LOCATION)), 3f);
+		this.addLayer(new ContagionIncarnationEmissiveLayer(this));
 	}
 
 	@Override
