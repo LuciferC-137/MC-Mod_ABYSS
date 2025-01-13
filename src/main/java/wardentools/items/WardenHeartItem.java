@@ -62,7 +62,7 @@ public class WardenHeartItem extends Item {
 		if (player==null) {
 			return false;
 		}
-		return player.getEffect(ModEffects.CORRUPTION_VESSEL.get()) != null;
+		return player.getEffect(ModEffects.CORRUPTION_VESSEL.getHolder().get()) != null;
 	}
 	
 	@Override

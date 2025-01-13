@@ -25,9 +25,8 @@ import java.util.function.Predicate;
 
 public class ContagionIncarnationCorpseEntity extends LivingEntity {
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(4, ItemStack.EMPTY);
-    private static final Predicate<Entity> RIDABLE_MINECARTS = (p_31582_) -> {
-        return p_31582_ instanceof AbstractMinecart && ((AbstractMinecart)p_31582_).canBeRidden();
-    };
+    private static final Predicate<Entity> RIDABLE_MINECARTS =
+            (entity) -> entity instanceof AbstractMinecart && ((AbstractMinecart)entity).canBeRidden();
     public long lastHit;
 
 	public ContagionIncarnationCorpseEntity(EntityType<? extends LivingEntity> entity, Level level) {
@@ -84,8 +83,6 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
                 } else if (source.is(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
                     if (this.isOnFire()) {
                         this.causeDamage(source, 0.15F);
-                    } else {
-                        this.setSecondsOnFire(5);
                     }
                     return false;
                 } else if (source.is(DamageTypeTags.BURNS_ARMOR_STANDS) && this.getHealth() > 0.5F) {
@@ -140,9 +137,6 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
 
     private void brokenByPlayer(DamageSource damageSource) {
         ItemStack itemstack = new ItemStack(ItemRegistry.CONTAGION_INCARNATION_SKULL.get());
-        if (this.hasCustomName()) {
-            itemstack.setHoverName(this.getCustomName());
-        }
         Block.popResource(this.level(), this.blockPosition(), itemstack);
         this.brokenByAnything(damageSource);
     }

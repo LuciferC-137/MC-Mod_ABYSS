@@ -1,6 +1,7 @@
 package wardentools.worldgen.tree.custom;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 import wardentools.worldgen.tree.ModFoliagePlacers;
 
 public class WhitetreeFoliagePlacer extends FoliagePlacer{
-	public static final Codec<WhitetreeFoliagePlacer> CODEC = RecordCodecBuilder.create(whitetreeFoliagePlacerInstance
+	public static final MapCodec<WhitetreeFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(whitetreeFoliagePlacerInstance
             -> foliagePlacerParts(whitetreeFoliagePlacerInstance).and(Codec.intRange(0, 16).fieldOf("height")
             .forGetter(fp -> fp.height)).apply(whitetreeFoliagePlacerInstance, WhitetreeFoliagePlacer::new));
     private final int height;

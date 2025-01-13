@@ -1,7 +1,6 @@
 
 package wardentools.worldgen.tree;
 
-
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.minecraftforge.eventbus.api.IEventBus;

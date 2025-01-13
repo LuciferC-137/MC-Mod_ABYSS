@@ -3,6 +3,7 @@ package wardentools.entity.custom;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -181,10 +182,10 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(IS_STASIS, false);
-		this.entityData.define(walkToIdleTicks, 0);
+	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+		super.defineSynchedData(entityData);
+		entityData.define(IS_STASIS, false);
+		entityData.define(walkToIdleTicks, 0);
 	}
 
 	@Override
@@ -294,15 +295,16 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 		}
 
 		@Override
-		public boolean canReceiveVibration(@NotNull ServerLevel level, @NotNull BlockPos pos,
-										   @NotNull GameEvent event, GameEvent.@NotNull Context context) {
+		public boolean canReceiveVibration(@NotNull ServerLevel serverLevel, @NotNull BlockPos blockPos,
+										   @NotNull Holder<GameEvent> holder,
+										   GameEvent.@NotNull Context context) {
 			return ShadowEntity.this.isStasis();
 		}
 
 		@Override
-		public void onReceiveVibration(@NotNull ServerLevel level, @NotNull BlockPos pos,
-									   @NotNull GameEvent event, @Nullable Entity source,
-									   @Nullable Entity projectile, float distance) {
+		public void onReceiveVibration(@NotNull ServerLevel level, @NotNull BlockPos blockPos,
+									   @NotNull Holder<GameEvent> holder, @Nullable Entity source,
+									   @Nullable Entity entity1, float v) {
 			if (source instanceof ServerPlayer player && !player.isCreative()) {
 				if (ShadowEntity.this.isStasis()) {
 					ShadowEntity.this.setStasis(false);

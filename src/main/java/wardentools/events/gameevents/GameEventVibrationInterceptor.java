@@ -16,19 +16,20 @@ public class GameEventVibrationInterceptor {
 	@SubscribeEvent
     public static void onGameEvent(VanillaGameEvent event) {
         if (event.getCause() instanceof Player player) {
-            if (event.getVanillaEvent() == GameEvent.HIT_GROUND) {
+            boolean b = event.getVanillaEvent() == GameEvent.HIT_GROUND.get();
+            if (event.getVanillaEvent() == GameEvent.HIT_GROUND.get()) {
                 ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
                 if (leggings.getEnchantmentLevel(EnchantmentRegistry.STEALTH.get()) > 0) {
                     event.setCanceled(true);
                 }
-            } else if (event.getVanillaEvent() == GameEvent.BLOCK_PLACE
-                    || event.getVanillaEvent() == GameEvent.BLOCK_DESTROY
-                    || event.getVanillaEvent() == GameEvent.BLOCK_CHANGE) {
+            } else if (event.getVanillaEvent() == GameEvent.BLOCK_PLACE.get()
+                    || event.getVanillaEvent() == GameEvent.BLOCK_DESTROY.get()
+                    || event.getVanillaEvent() == GameEvent.BLOCK_CHANGE.get()) {
                 ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
                 if (chestplate.getEnchantmentLevel(EnchantmentRegistry.STEALTH.get()) > 0) {
                     event.setCanceled(true);
                 }
-            } else if (event.getVanillaEvent() == GameEvent.STEP) {
+            } else if (event.getVanillaEvent() == GameEvent.STEP.get()) {
                 ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
                 if (boots.getEnchantmentLevel(EnchantmentRegistry.STEALTH.get()) > 0) {
                     event.setCanceled(true);

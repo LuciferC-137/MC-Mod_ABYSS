@@ -1,5 +1,6 @@
 package wardentools.blockentity;
 
+import net.minecraft.core.HolderLookup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -75,24 +76,25 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		super.invalidateCaps();
 		this.inventoryOptional.invalidate();
 	}
-	
+
+
 	@Override
-	public @NotNull CompoundTag getUpdateTag() {
-		CompoundTag nbt = super.getUpdateTag();
-		saveAdditional(nbt);
-		return nbt;
+	public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
+		CompoundTag nbt = super.getUpdateTag(provider);
+		saveAdditional(nbt, provider);
+		return super.getUpdateTag(provider);
 	}
-	
+
 	@Nullable
 	@Override
 	public Packet<ClientGamePacketListener> getUpdatePacket(){
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
-	
+
 	@Override
-	public void load(@NotNull CompoundTag nbt) {
-		super.load(nbt);
-		var wardentoolsData = nbt.getCompound(ModMain.MOD_ID);
+	protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
+		super.loadAdditional(tag, provider);
+		var wardentoolsData = tag.getCompound(ModMain.MOD_ID);
 		if (wardentoolsData.isEmpty()) return;
 		if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
 			this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
@@ -101,14 +103,14 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 			this.protectorSuccessfullyInvoked = wardentoolsData.getBoolean("protectorSuccessfullyInvoked");
 		}
 	}
-	
+
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag nbt) {
-		super.saveAdditional(nbt);
+	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
+		super.saveAdditional(tag, provider);
 		var wardentoolsData = new CompoundTag();
 		wardentoolsData.put("Inventory", this.inventory.serializeNBT());
 		wardentoolsData.putBoolean("protectorSuccessfullyInvoked", this.protectorSuccessfullyInvoked);
-		nbt.put(ModMain.MOD_ID, wardentoolsData);
+		tag.put(ModMain.MOD_ID, wardentoolsData);
 	}
 	
 	public ItemStackHandler getInventory() {

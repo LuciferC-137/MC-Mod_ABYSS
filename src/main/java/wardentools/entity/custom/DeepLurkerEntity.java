@@ -110,10 +110,10 @@ public class DeepLurkerEntity extends Animal {
 	}
 	
 	@Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(CLIMBING, false);
-        this.entityData.define(SCARED, false);
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(CLIMBING, false);
+        entityData.define(SCARED, false);
     }
 
     public boolean isClimbing() {

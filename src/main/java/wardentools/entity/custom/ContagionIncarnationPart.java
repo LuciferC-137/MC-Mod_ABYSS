@@ -1,6 +1,7 @@
 package wardentools.entity.custom;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -24,36 +25,42 @@ public class ContagionIncarnationPart extends PartEntity<ContagionIncarnationPar
         this.name = name;
     }
 
-    protected void defineSynchedData() {
+    @Override
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder data) {
     }
 
+    @Override
     protected void readAdditionalSaveData(@NotNull CompoundTag tag) {
     }
 
+    @Override
     protected void addAdditionalSaveData(@NotNull CompoundTag tag) {
     }
 
+    @Override
     public boolean isPickable() {
         return true;
     }
 
     @Nullable
-    public ItemStack getPickResult() {
-        return this.parentMob.getPickResult();
-    }
+    public ItemStack getPickResult() {return this.parentMob.getPickResult();}
 
+    @Override
     public boolean hurt(@NotNull DamageSource source, float damage) {
         return !this.isInvulnerableTo(source) && this.parentMob.hurt(this, source, damage);
     }
 
+    @Override
     public boolean is(@NotNull Entity entity) {
         return this == entity || this.parentMob == entity;
     }
 
+    @Override
     public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
         return this.size;
     }
 
+    @Override
     public boolean shouldBeSaved() {
         return false;
     }

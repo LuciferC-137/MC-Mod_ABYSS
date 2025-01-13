@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
@@ -19,8 +20,8 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 
 public class DarktreeTrunkPlacer extends TrunkPlacer {
-	 public static final Codec<DarktreeTrunkPlacer> CODEC = RecordCodecBuilder
-			 .create(darktreeTrunkPlacerInstance ->
+	 public static final MapCodec<DarktreeTrunkPlacer> CODEC = RecordCodecBuilder
+			 .mapCodec(darktreeTrunkPlacerInstance ->
 			 		trunkPlacerParts(darktreeTrunkPlacerInstance)
 			 			.apply(darktreeTrunkPlacerInstance, DarktreeTrunkPlacer::new));
 

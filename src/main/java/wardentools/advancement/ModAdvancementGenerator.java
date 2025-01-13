@@ -176,7 +176,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("radiant_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.get())))
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.getHolder().get())))
                 .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiant_armor"));
 
         AdvancementHolder protectorInvoker = Advancement.Builder.advancement()
@@ -242,7 +242,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("deep_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.get())))
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.getHolder().get())))
                 .save(saver, new ResourceLocation(ModMain.MOD_ID, "deep_armor"));
 
         AdvancementHolder incarnation = Advancement.Builder.advancement()
@@ -308,7 +308,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("corrupted",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.get())))
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.getHolder().get())))
                 .save(saver, new ResourceLocation(ModMain.MOD_ID, "corrupted"));
 
         AdvancementHolder escape = Advancement.Builder.advancement()

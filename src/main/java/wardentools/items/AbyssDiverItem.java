@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -33,7 +34,7 @@ public class AbyssDiverItem extends Item {
         BlockState clickedBlockState = level.getBlockState(clickedPos);
 
         if (clickedBlockState.is(ModTags.Blocks.ABYSS_TELEPORTABLE)) {
-        	context.getItemInHand().hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
+        	context.getItemInHand().hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
         	if (player.level() instanceof ServerLevel) {
                 PacketHandler.sendToAllClient(
                         new ParticleContagionImplosion(player.getPosition(0.1f)

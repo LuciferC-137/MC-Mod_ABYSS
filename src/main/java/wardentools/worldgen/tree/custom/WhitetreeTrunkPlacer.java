@@ -6,6 +6,7 @@ import java.util.function.BiConsumer;
 
 import com.google.common.base.Function;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
@@ -21,8 +22,8 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 
 public class WhitetreeTrunkPlacer extends TrunkPlacer  {
-	public static final Codec<WhitetreeTrunkPlacer> CODEC = RecordCodecBuilder
-			 .create(whitetreeTrunkPlacerInstance ->
+	public static final MapCodec<WhitetreeTrunkPlacer> CODEC = RecordCodecBuilder
+			 .mapCodec(whitetreeTrunkPlacerInstance ->
 			 		trunkPlacerParts(whitetreeTrunkPlacerInstance)
 			 			.apply(whitetreeTrunkPlacerInstance, WhitetreeTrunkPlacer::new));
 

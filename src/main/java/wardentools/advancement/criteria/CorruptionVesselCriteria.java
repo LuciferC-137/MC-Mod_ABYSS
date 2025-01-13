@@ -28,10 +28,9 @@ public class CorruptionVesselCriteria extends SimpleCriterionTrigger<CorruptionV
             implements SimpleInstance {
         public static final Codec<CorruptionVesselCriteria.TriggerInstance> CODEC
                 = RecordCodecBuilder.create(instance -> {
-            return instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player")
-                            .forGetter(CorruptionVesselCriteria.TriggerInstance::player)
-            ).apply(instance, CorruptionVesselCriteria.TriggerInstance::new);
+            return instance.group(EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
+                            .forGetter(CorruptionVesselCriteria.TriggerInstance::player))
+                    .apply(instance, CorruptionVesselCriteria.TriggerInstance::new);
         });
 
         public static Criterion<CorruptionVesselCriteria.TriggerInstance> choseCorruption() {

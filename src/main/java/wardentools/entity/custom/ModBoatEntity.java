@@ -58,9 +58,10 @@ public class ModBoatEntity extends Boat {
         return Type.byId(this.entityData.get(DATA_ID_TYPE));
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_ID_TYPE, Type.DARKTREE.ordinal());
+    @Override
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(DATA_ID_TYPE, Type.DARKTREE.ordinal());
     }
 
     protected void addAdditionalSaveData(CompoundTag pCompound) {

@@ -1,6 +1,5 @@
 package wardentools.mixin;
 
-import net.minecraft.world.entity.player.Player;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -34,7 +33,7 @@ public class LevelRendererMixin {
 		= new ResourceLocation(ModMain.MOD_ID, "textures/environment/abyss_skyb.png");
 	
 	@Inject(method = "renderSky", at = @At("HEAD"))
-	private void onRenderSky(PoseStack pose, Matrix4f matrix,
+	private void onRenderSky(Matrix4f pose, Matrix4f matrix,
 			float f, Camera cam, boolean bool, Runnable runnable, CallbackInfo ci) {
         if (cam.getEntity().level().dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
         int BRIGHTNESS = (int)(230f
@@ -45,7 +44,7 @@ public class LevelRendererMixin {
         ClientLevel level = mc.level;
 		if (level == null) return;
 		if (level.effects().renderSky(level, levelRenderer.getTicks(),
-				f, pose, cam, matrix, bool, runnable)) {
+				f, cam, pose, bool, runnable)) {
 			return;
 		}
 		runnable.run();
@@ -58,14 +57,15 @@ public class LevelRendererMixin {
 				RenderSystem.setShaderTexture(0, ABYSS_SKY_LOCATION);
 				Tesselator tesselator = Tesselator.getInstance();
 				BufferBuilder bufferbuilder = tesselator.getBuilder();
+				PoseStack posestack = new PoseStack();
 				for(int i = 0; i < 6; ++i) {
-					pose.pushPose();
-					if (i == 1) pose.mulPose(Axis.XP.rotationDegrees(90.0F));
-					if (i == 2) pose.mulPose(Axis.XP.rotationDegrees(-90.0F));
-					if (i == 3) pose.mulPose(Axis.XP.rotationDegrees(180.0F));
-					if (i == 4) pose.mulPose(Axis.ZP.rotationDegrees(90.0F));
-					if (i == 5) pose.mulPose(Axis.ZP.rotationDegrees(-90.0F));
-					Matrix4f matrix4f = pose.last().pose();
+					posestack.pushPose();
+					if (i == 1) posestack.mulPose(Axis.XP.rotationDegrees(90.0F));
+					if (i == 2) posestack.mulPose(Axis.XP.rotationDegrees(-90.0F));
+					if (i == 3) posestack.mulPose(Axis.XP.rotationDegrees(180.0F));
+					if (i == 4) posestack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+					if (i == 5) posestack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
+					Matrix4f matrix4f = posestack.last().pose();
 					bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 					bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F)
 							.uv(0.0F, 0.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY).endVertex();
@@ -76,7 +76,7 @@ public class LevelRendererMixin {
 					bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F)
 							.uv(1.0F, 0.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY).endVertex();
 					tesselator.end();
-					pose.popPose();
+					posestack.popPose();
 				}
 				RenderSystem.depthMask(true);
 				RenderSystem.disableBlend();

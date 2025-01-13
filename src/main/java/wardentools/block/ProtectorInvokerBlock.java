@@ -1,5 +1,6 @@
 package wardentools.block;
 
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -59,18 +60,33 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world,
 										@NotNull BlockPos pos, @NotNull CollisionContext context) {
 		return Shapes.box(0.2, 0.0, 0.2,
 				0.8, 0.9, 0.8);
 	}
-	
+
 	@Override
-	@SuppressWarnings("deprecation")
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
-										  @NotNull Player player, @NotNull InteractionHand interactionHand,
-										  @NotNull BlockHitResult result) {
+	protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
+														@NotNull BlockPos pos, @NotNull Player player,
+														@NotNull BlockHitResult hitResult) {
+		return this.use(level, pos, player, InteractionHand.MAIN_HAND);
+	}
+
+	@Override
+	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+													   @NotNull Level level, @NotNull BlockPos pos,
+													   @NotNull Player player, @NotNull InteractionHand hand,
+													   @NotNull BlockHitResult hitResult) {
+        return switch (this.use(level, pos, player, hand)) {
+            case InteractionResult.SUCCESS -> ItemInteractionResult.SUCCESS;
+            case InteractionResult.FAIL -> ItemInteractionResult.FAIL;
+            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
+
+	public @NotNull InteractionResult use( Level level, @NotNull BlockPos pos,
+										  @NotNull Player player, InteractionHand interactionHand) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (!(blockEntity instanceof ProtectorInvokerBlockEntity invoker)) {
 			return InteractionResult.PASS;
@@ -133,8 +149,7 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 		BlockPos pos2 = protector.invokerPos;
 		return pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY() && pos1.getZ() == pos2.getZ();
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	@Override
 	public void onRemove(@NotNull BlockState state, Level level,
 						 @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {

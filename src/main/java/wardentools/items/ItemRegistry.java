@@ -151,7 +151,7 @@ public class ItemRegistry {
 			() -> new AbyssDiverItem(new Item.Properties()
 					.stacksTo(1)
 					.rarity(Rarity.RARE)
-					.defaultDurability(20)
+					.durability(20)
 					.fireResistant()
 					));
 	
@@ -475,7 +475,7 @@ public class ItemRegistry {
 					() -> new RadiantStaffItem(new Item.Properties()
 							.stacksTo(1)
 							.rarity(Rarity.RARE)
-							.defaultDurability(20)
+							.durability(20)
 							.fireResistant()));
 
 	public static final RegistryObject<Item> SOLID_CORRUPTION =
@@ -560,19 +560,21 @@ public class ItemRegistry {
 
 	public static final RegistryObject<Item> ABYSSAL_SCYTHE =
 			REGISTAR.register("abyssal_scythe",
-					() -> new ScytheItem(12, -3F, new Item.Properties()
+					() -> new ScytheItem(new Item.Properties()
 							.stacksTo(1)
 							.rarity(Rarity.RARE)
-							.defaultDurability(2031)
-							.fireResistant()));
+							.durability(2031)
+							.fireResistant()
+							.attributes(ScytheItem.createAttributes(12, -3F))));
 
 	public static final RegistryObject<Item> RADIANT_SPEAR =
 			REGISTAR.register("radiant_spear",
-					() -> new SpearItem(10, -3F, new Item.Properties()
+					() -> new SpearItem(new Item.Properties()
 							.stacksTo(1)
 							.rarity(Rarity.RARE)
-							.defaultDurability(2031)
-							.fireResistant()));
+							.durability(2031)
+							.fireResistant()
+							.attributes(SpearItem.createAttributes(10, -3F))));
 
 	public static final RegistryObject<Item> ABYSS_MUSIC_DISC =
 			REGISTAR.register("music_disc_abyss",

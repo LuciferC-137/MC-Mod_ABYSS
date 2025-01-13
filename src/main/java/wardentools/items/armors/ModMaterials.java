@@ -1,96 +1,65 @@
 package wardentools.items.armors;
 
+import java.util.EnumMap;
+import java.util.List;
 import java.util.function.Supplier;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
-import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.items.ItemRegistry;
 
-public enum ModMaterials implements ArmorMaterial {
-	DEEPCRISTAL("deepcristal",  37, new int[]{3, 8, 6, 3}, 20,
-			SoundEvents.ARMOR_EQUIP_NETHERITE, 2f, 0f,
-			()->Ingredient.of(ItemRegistry.DEEPINGOTS.get())),
-	RADIANCE_CRISTAL("radiance_cristal",  37, new int[]{3, 8, 6, 3}, 20,
-	SoundEvents.ARMOR_EQUIP_NETHERITE, 2f, 0f,
-			()->Ingredient.of(ItemRegistry.RADIANCE_INGOTS.get()));
+public class ModMaterials {
+	public static final Holder<ArmorMaterial> DEEPCRISTAL = ModMaterials
+			.register("wardentools:deepcristal", new EnumMap<>(ArmorItem.Type.class) {
+				{
+					this.put(ArmorItem.Type.HELMET, 13);
+					this.put(ArmorItem.Type.CHESTPLATE, 15);
+					this.put(ArmorItem.Type.LEGGINGS, 16);
+					this.put(ArmorItem.Type.BOOTS, 11);
+				}
+			}, 37, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.0F, 0.0F,
+					() -> {
+						return Ingredient.of(ItemRegistry.DEEPINGOTS.get());
+					}, List.of(new ArmorMaterial.Layer(new ResourceLocation(ModMain.MOD_ID, "textures/models/armor/deepcristal_layer_1.png"))));
 
-	
-    private final String name;
-    private final int durabilityMultiplier;
-    private final int[] portectionAmounts;
-    private final int enchantmentValue;
-    private final SoundEvent sound;
-    private final float toughness;
-    private final float knockbackResistance;
-    private final Supplier<Ingredient> repairIngredient;
+
+	public static final Holder<ArmorMaterial> RADIANCE_CRISTAL = ModMaterials
+			.register("wardentools:radiance_cristal", new EnumMap<>(ArmorItem.Type.class) {
+				{
+					this.put(ArmorItem.Type.HELMET, 13);
+					this.put(ArmorItem.Type.CHESTPLATE, 15);
+					this.put(ArmorItem.Type.LEGGINGS, 16);
+					this.put(ArmorItem.Type.BOOTS, 11);
+				}
+			}, 37, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.0F, 0.0F,
+					() -> {
+						return Ingredient.of(ItemRegistry.RADIANCE_INGOTS.get());
+					}, List.of(new ArmorMaterial.Layer(new ResourceLocation(ModMain.MOD_ID, "textures/models/armor/radiance_cristal_layer_1.png"))));
     
-    private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
-    
-    ModMaterials(String name, int durability, int[] protection, int enchantability, SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
-        this.name = name;
-        this.durabilityMultiplier = durability;
-        this.portectionAmounts = protection;
-        this.enchantmentValue = enchantability;
-        this.sound = sound;
-        this.toughness = toughness;
-        this.knockbackResistance = knockbackResistance;
-        this.repairIngredient = repairIngredient;
+    ModMaterials() {
     }
 
-	public static int[] getHealthPerSlot() {
-		return BASE_DURABILITY;
+	private static Holder<ArmorMaterial> register(String name,
+												  EnumMap<ArmorItem.Type, Integer> durabilities,
+												  int protection, Holder<SoundEvent> sound,
+												  float toughness, float knockbackResistance,
+												  Supplier<Ingredient> repairIngredient,
+												  List<ArmorMaterial.Layer> layerList) {
+		EnumMap<ArmorItem.Type, Integer> $$8 = new EnumMap<>(ArmorItem.Type.class);
+		ArmorItem.Type[] var9 = ArmorItem.Type.values();
+        for (ArmorItem.Type $$9 : var9) {
+            $$8.put($$9, (Integer) durabilities.get($$9));
+        }
+		return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, new ResourceLocation(name), new ArmorMaterial($$8, protection, sound, repairIngredient, layerList, toughness, knockbackResistance));
 	}
-
-	public @NotNull String getName() {
-		return ModMain.MOD_ID + ":" + this.name;
-	}
-
-	public int getDurabilityMultiplier() {
-		return durabilityMultiplier;
-	}
-
-	public int[] getSlotProtections() {
-		return portectionAmounts;
-	}
-
-	public int getEnchantmentValue() {
-		return enchantmentValue;
-	}
-
-	public SoundEvent getSound() {
-		return sound;
-	}
-
-	public float getToughness() {
-		return toughness;
-	}
-
-	public float getKnockbackResistance() {
-		return knockbackResistance;
-	}
-
-
-	public int getDurabilityForType(ArmorItem.Type pType) {
-		return BASE_DURABILITY[pType.ordinal()] * this.durabilityMultiplier;
-	}
-
-
-	public int getDefenseForType(ArmorItem.Type pType) {
-		return this.portectionAmounts[pType.ordinal()];
-	}
-
-	public @NotNull SoundEvent getEquipSound() {
-		return this.sound;
-	}
-
-	public @NotNull Ingredient getRepairIngredient() {
-		return this.repairIngredient.get();
-	}   
     
 	
 }

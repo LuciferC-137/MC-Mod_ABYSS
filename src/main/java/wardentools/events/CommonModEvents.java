@@ -2,6 +2,8 @@ package wardentools.events;
 
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.SpawnPlacementType;
+import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
@@ -44,42 +46,42 @@ public class CommonModEvents {
     @SubscribeEvent
     public static void registerSpawnPlacement(SpawnPlacementRegisterEvent event) {
     	event.register(ModEntities.DEEPLURKER.get(),
-    			SpawnPlacements.Type.ON_GROUND,
+				SpawnPlacementTypes.ON_GROUND,
     			Heightmap.Types.MOTION_BLOCKING,
     			DeepLurkerEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.PALE_WANDERER.get(),
-    			SpawnPlacements.Type.ON_GROUND,
+    			SpawnPlacementTypes.ON_GROUND,
     			Heightmap.Types.WORLD_SURFACE,
     			PaleWandererEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.PROTECTOR.get(),
-    			SpawnPlacements.Type.ON_GROUND,
+    			SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
     			ProtectorEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.CONTAGION_INCARNATION.get(),
-    			SpawnPlacements.Type.ON_GROUND,
+				SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
     			ContagionIncarnationEntity::canSpawn,
     			SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.TEMPER.get(),
-				SpawnPlacements.Type.NO_RESTRICTIONS,
+				SpawnPlacementTypes.NO_RESTRICTIONS,
 				Heightmap.Types.MOTION_BLOCKING,
 				TemperEntity::canSpawn,
 				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.PARASYTE.get(),
-				SpawnPlacements.Type.ON_GROUND,
+				SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
 				ParasyteEntity::canSpawn,
 				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.NOCTILURE.get(),
-				SpawnPlacements.Type.ON_GROUND,
+				SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.WORLD_SURFACE,
 				NoctilureEntity::canSpawn,
 				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.SHADOW.get(),
-				SpawnPlacements.Type.ON_GROUND,
+				SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
 				ShadowEntity::canSpawn,
 				SpawnPlacementRegisterEvent.Operation.OR);

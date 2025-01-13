@@ -2,7 +2,7 @@ package wardentools.fluid;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraftforge.common.SoundAction;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,8 +25,8 @@ public class ModFluidTypes {
     public static final RegistryObject<FluidType> LIQUID_CORRUPTION = register("liquid_corruption",
             FluidType.Properties.create()
                     .canSwim(false)
-                    .pathType(BlockPathTypes.LAVA)
-                    .adjacentPathType(BlockPathTypes.LAVA)
+                    .pathType(PathType.DAMAGE_FIRE)
+                    .adjacentPathType(PathType.DANGER_FIRE)
                     .lightLevel(5)
                     .density(3000)
                     .viscosity(10)

@@ -159,7 +159,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.add(LootItem.lootTableItem(ItemRegistry.PALE_SHARD.get())
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(1, 3)))
-										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.FORTUNE))
 										.when(HAS_NO_SILK_TOUCH)
 								))
 				.withPool(
@@ -168,7 +168,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.add(LootItem.lootTableItem(Items.ECHO_SHARD)
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(1, 3)))
-										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.FORTUNE)))
 								.when(HAS_NO_SILK_TOUCH)
 				);
 	}
@@ -186,12 +186,12 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.add(LootItem.lootTableItem(ItemRegistry.PALE_SHARD.get())
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(0, 2)))
-										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.FORTUNE))
 										.when(HAS_NO_SILK_TOUCH))
 								.add(LootItem.lootTableItem(Items.ECHO_SHARD)
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(0, 2)))
-										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.FORTUNE))
 										.when(HAS_NO_SILK_TOUCH)
 								))
 				.withPool(
@@ -200,7 +200,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.add(LootItem.lootTableItem(Items.IRON_NUGGET)
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(0, 3)))
-										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.FORTUNE)))
 								.when(HAS_NO_SILK_TOUCH)
 				);
 	}
@@ -211,7 +211,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 						LootItem.lootTableItem(drop)
 						.apply(SetItemCountFunction
 						.setCount(UniformGenerator.between(min, max)))
-						.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+						.apply(ApplyBonusCount.addOreBonusCount(Enchantments.FORTUNE))));
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package wardentools.items.armors;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,16 +23,16 @@ public class ModArmorItem extends ArmorItem {
     private static final ResourceLocation RADIANCE_ADVANCEMENT
             = new ResourceLocation(ModMain.MOD_ID, "radiance_bringer");
     private static final int EFFECT_TIME = 242;
-    private static final Map<ArmorMaterial, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
-            (new ImmutableMap.Builder<ArmorMaterial, MobEffectInstance>())
-                    .put(ModMaterials.DEEPCRISTAL, new MobEffectInstance(ModEffects.CORRUPTION_VESSEL.get(),
+    private static final Map<Holder<ArmorMaterial>, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
+            (new ImmutableMap.Builder<Holder<ArmorMaterial>, MobEffectInstance>())
+                    .put(ModMaterials.DEEPCRISTAL, new MobEffectInstance(ModEffects.CORRUPTION_VESSEL.getHolder().get(),
                             EFFECT_TIME, 0,
                             false,false, true))
-                    .put(ModMaterials.RADIANCE_CRISTAL, new MobEffectInstance(ModEffects.RADIANCE_BRINGER.get(),
+                    .put(ModMaterials.RADIANCE_CRISTAL, new MobEffectInstance(ModEffects.RADIANCE_BRINGER.getHolder().get(),
                             EFFECT_TIME, 0,
                             false,false, true)).build();
 
-    public ModArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
+    public ModArmorItem(Holder<ArmorMaterial> pMaterial, Type pType, Properties pProperties) {
         super(pMaterial, pType, pProperties);
     }
 
@@ -45,8 +46,8 @@ public class ModArmorItem extends ArmorItem {
     }
 
     private void evaluateArmorEffects(Player player) {
-        for (Map.Entry<ArmorMaterial, MobEffectInstance> entry : MATERIAL_TO_EFFECT_MAP.entrySet()) {
-            ArmorMaterial mapArmorMaterial = entry.getKey();
+        for (Map.Entry<Holder<ArmorMaterial>, MobEffectInstance> entry : MATERIAL_TO_EFFECT_MAP.entrySet()) {
+            Holder<ArmorMaterial> mapArmorMaterial = entry.getKey();
             MobEffectInstance mapStatusEffect = entry.getValue();
 
             if(hasCorrectArmorOn(mapArmorMaterial, player)) {
@@ -55,7 +56,7 @@ public class ModArmorItem extends ArmorItem {
         }
     }
 
-    private void addStatusEffectForMaterial(Player player, ArmorMaterial mapArmorMaterial,
+    private void addStatusEffectForMaterial(Player player, Holder<ArmorMaterial> mapArmorMaterial,
                                             MobEffectInstance mapStatusEffect) {
         if(hasCorrectArmorOn(mapArmorMaterial, player)) {
             player.addEffect(new MobEffectInstance(mapStatusEffect));
@@ -72,7 +73,7 @@ public class ModArmorItem extends ArmorItem {
                 && !leggings.isEmpty() && !boots.isEmpty();
     }
 
-    private boolean hasCorrectArmorOn(ArmorMaterial material, Player player) {
+    private boolean hasCorrectArmorOn(Holder<ArmorMaterial> material, Player player) {
         for (ItemStack armorStack : player.getInventory().armor) {
             if(!(armorStack.getItem() instanceof ArmorItem)) {
                 return false;
@@ -89,7 +90,7 @@ public class ModArmorItem extends ArmorItem {
         return allSameMaterial && playerHasAdvancement(breastplate.getMaterial(), player);
     }
 
-    private boolean playerHasAdvancement(ArmorMaterial material, Player player) {
+    private boolean playerHasAdvancement(Holder<ArmorMaterial> material, Player player) {
         if (!player.level().isClientSide) {
             ServerPlayer serverPlayer = (ServerPlayer) player;
             AdvancementHolder advancementHolder = null;

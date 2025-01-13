@@ -59,7 +59,7 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 		super(entity, level);
 		this.moveControl = new FlyingMoveControl(this, 20, true);
 		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
-		this.setTame(false);
+		this.setTame(false, false);
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 
 	private void dispawnIfOwnerNotRadianceBringer(){
 		if (this.getOwner() == null) {return;}
-		if (this.getOwner().getEffect(ModEffects.RADIANCE_BRINGER.get()) == null){
+		if (this.getOwner().getEffect(ModEffects.RADIANCE_BRINGER.getHolder().get()) == null){
 			this.remove(RemovalReason.DISCARDED);
 		}
 	}
@@ -170,10 +170,11 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 		}
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
-		this.entityData.define(attackAnimationTick, 0);
+	@Override
+	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+		super.defineSynchedData(entityData);
+		entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+		entityData.define(attackAnimationTick, 0);
 	}
 
 	public void addAdditionalSaveData(@NotNull CompoundTag tag) {
@@ -185,6 +186,9 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 		super.readAdditionalSaveData(tag);
 		this.readPersistentAngerSaveData(this.level(), tag);
 	}
+
+	@Override
+	public boolean isFood(@NotNull ItemStack itemStack) {return false;}
 
 	public void setPlayerInvoker(Player player){
 		this.invoker = player;
@@ -198,11 +202,6 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 	@Override
 	public boolean canHoldItem(ItemStack stack) {
 		return stack.getItem() instanceof SwordItem || super.canHoldItem(stack);
-	}
-
-	@Override
-	protected float getStandingEyeHeight(@NotNull Pose pose, EntityDimensions dimensions) {
-		return dimensions.height * 0.6F;
 	}
 
 	@Override
@@ -317,19 +316,13 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 
 	public boolean wantsToAttack(@NotNull LivingEntity target, @NotNull LivingEntity owner) {
 		if (!(target instanceof Creeper) && !(target instanceof Ghast)) {
-			if (target instanceof Wolf wolf) {
-                return !wolf.isTame() || wolf.getOwner() != owner;
-			} else if (target instanceof TemperEntity temperTarget){
-                return !temperTarget.isTame() || temperTarget.getOwner() != owner;
-			}else if (target instanceof Player
-					&& owner instanceof Player
-					&& !((Player)owner).canHarmPlayer((Player)target)) {
-				return false;
-			} else if (target instanceof AbstractHorse && ((AbstractHorse)target).isTamed()) {
-				return false;
-			} else {
-				return !(target instanceof TamableAnimal) || !((TamableAnimal)target).isTame();
-			}
+            return switch (target) {
+                case Wolf wolf -> !wolf.isTame() || wolf.getOwner() != owner;
+                case TemperEntity temperTarget -> !temperTarget.isTame() || temperTarget.getOwner() != owner;
+                case Player player when owner instanceof Player && !((Player) owner).canHarmPlayer(player) -> false;
+                case AbstractHorse abstractHorse when abstractHorse.isTamed() -> false;
+                default -> !(target instanceof TamableAnimal) || !((TamableAnimal) target).isTame();
+            };
 		} else {
 			return false;
 		}

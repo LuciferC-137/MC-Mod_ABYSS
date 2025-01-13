@@ -1,6 +1,7 @@
 package wardentools.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -119,9 +120,9 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     @Override
-    public void load(@NotNull CompoundTag nbt) {
-        super.load(nbt);
-        var wardentoolsData = nbt.getCompound(ModMain.MOD_ID);
+    protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
+        super.loadAdditional(tag, provider);
+        var wardentoolsData = tag.getCompound(ModMain.MOD_ID);
         if (wardentoolsData.isEmpty()) return;
         if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
             this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
@@ -137,8 +138,8 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag nbt) {
-        super.saveAdditional(nbt);
+    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
+        super.saveAdditional(tag, provider);
         var wardentoolsData = new CompoundTag();
         wardentoolsData.put("Inventory", this.inventory.serializeNBT());
         wardentoolsData.putInt("Citrine", this.citrine);
@@ -149,7 +150,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         wardentoolsData.putInt("EchoShard", this.echo_shard);
         wardentoolsData.putInt("TotalCharge", this.total_charge);
         wardentoolsData.putBoolean("IsContagionDefeated", this.isContagionDefeated);
-        nbt.put(ModMain.MOD_ID, wardentoolsData);
+        tag.put(ModMain.MOD_ID, wardentoolsData);
     }
 
     @Override
@@ -374,9 +375,9 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag() {
-        CompoundTag nbt = super.getUpdateTag();
-        saveAdditional(nbt);
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
+        CompoundTag nbt = super.getUpdateTag(provider);
+        saveAdditional(nbt, provider);
         return nbt;
     }
 

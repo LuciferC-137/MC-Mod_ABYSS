@@ -1,6 +1,7 @@
 package wardentools.worldgen.tree.custom;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
@@ -14,7 +15,7 @@ import wardentools.worldgen.tree.ModFoliagePlacers;
 
 public class DarktreeFoliagePlacer extends FoliagePlacer {
 
-	public static final Codec<DarktreeFoliagePlacer> CODEC = RecordCodecBuilder.create(darktreeFoliagePlacerInstance
+	public static final MapCodec<DarktreeFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(darktreeFoliagePlacerInstance
             -> foliagePlacerParts(darktreeFoliagePlacerInstance).and(Codec.intRange(0, 16).fieldOf("height")
             .forGetter(fp -> fp.height)).apply(darktreeFoliagePlacerInstance, DarktreeFoliagePlacer::new));
     private final int height;

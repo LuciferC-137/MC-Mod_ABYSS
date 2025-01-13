@@ -2,18 +2,13 @@ package wardentools.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -43,20 +38,18 @@ public class LiquidCorruptionBlock extends LiquidBlock {
     }
 
     @Override
-    public boolean isPathfindable(@NotNull BlockState state, @NotNull BlockGetter getter,
-                                  @NotNull BlockPos pos, @NotNull PathComputationType pathComputationType) {
+    protected boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType type) {
         return false;
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void entityInside(@NotNull BlockState blockState, @NotNull Level level,
                              @NotNull BlockPos blockPos, @NotNull Entity entity) {
         super.entityInside(blockState, level, blockPos, entity);
         if (!entity.level().isClientSide
                 && entity instanceof LivingEntity living
                 && living.level().getGameTime()%20==1) {
-            living.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.get(),
+            living.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.getHolder().get(),
                         400, 1, false, false));
             Holder<DamageType> corruptedDamageTypeHolder = living.level().registryAccess()
                     .registryOrThrow(Registries.DAMAGE_TYPE)

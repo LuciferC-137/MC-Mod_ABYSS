@@ -8,8 +8,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.NodeEvaluator;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 
@@ -101,7 +101,7 @@ public class IncarnationMoveControl extends MoveControl {
             BlockPos blockpos = this.incarnation.blockPosition();
             BlockState blockstate = this.incarnation.level().getBlockState(blockpos);
             VoxelShape voxelshape = blockstate.getCollisionShape(this.incarnation.level(), blockpos);
-            if (dz > (double)this.incarnation.getStepHeight()
+            if (dz > (double)this.incarnation.maxUpStep()
                     && dx * dx + dy * dy < (double)Math.max(1.0F, this.incarnation.getBbWidth())
                     || !voxelshape.isEmpty()
                     && this.incarnation.getY() < voxelshape.max(Direction.Axis.Y) + (double)blockpos.getY()
@@ -122,12 +122,12 @@ public class IncarnationMoveControl extends MoveControl {
     }
 
     private boolean isWalkable(float dx, float dy) {
-        PathNavigation pathnavigation = this.incarnation.getNavigation();
-        NodeEvaluator nodeevaluator = pathnavigation.getNodeEvaluator();
-        return nodeevaluator.getBlockPathType(this.incarnation.level(),
-                Mth.floor(this.incarnation.getX() + (double) dx),
-                this.incarnation.getBlockY(),
-                Mth.floor(this.incarnation.getZ() + (double) dy)) == BlockPathTypes.WALKABLE;
+        PathNavigation navigation = this.mob.getNavigation();
+        NodeEvaluator nodeEvaluator = navigation.getNodeEvaluator();
+        return nodeEvaluator.getPathType(this.mob, BlockPos
+                .containing(this.mob.getX() + (double) dx,
+                        (double) this.mob.getBlockY(), this.mob.getZ() + (double) dy))
+                == PathType.WALKABLE;
     }
 
     protected float rotlerp(float currentYaw, float targetYaw, float maxTurn) {

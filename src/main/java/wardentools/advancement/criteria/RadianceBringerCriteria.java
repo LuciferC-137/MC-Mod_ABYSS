@@ -28,10 +28,9 @@ public class RadianceBringerCriteria extends SimpleCriterionTrigger<RadianceBrin
             implements SimpleInstance {
         public static final Codec<RadianceBringerCriteria.TriggerInstance> CODEC
                 = RecordCodecBuilder.create(instance -> {
-            return instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player")
-                            .forGetter(RadianceBringerCriteria.TriggerInstance::player)
-            ).apply(instance, RadianceBringerCriteria.TriggerInstance::new);
+            return instance.group(EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
+                            .forGetter(RadianceBringerCriteria.TriggerInstance::player))
+                    .apply(instance, RadianceBringerCriteria.TriggerInstance::new);
         });
 
         public static Criterion<RadianceBringerCriteria.TriggerInstance> choseRadiance() {

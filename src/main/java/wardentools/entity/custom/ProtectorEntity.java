@@ -193,7 +193,6 @@ public class ProtectorEntity extends AbstractGolem {
 
 	@Override
 	public void die(@NotNull DamageSource source) {
-		if (net.minecraftforge.common.ForgeHooks.onLivingDeath(this, source)) return;
 		if (this.invokerPos != null
 				&& (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker)) {
 			invoker.saveHealth(this);
@@ -222,12 +221,12 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 
 	@Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(attackAnimationTick, 0);
-		this.entityData.define(dispawnTick, 0);
-		this.entityData.define(spawnTick, 0);
-		this.entityData.define(earTick, 0);
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(attackAnimationTick, 0);
+		entityData.define(dispawnTick, 0);
+		entityData.define(spawnTick, 0);
+		entityData.define(earTick, 0);
     }
 	
 	@Override

@@ -323,7 +323,8 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
                 this.doHurtTarget(this.getTarget());
                 if (this.random.nextInt(CHANCE_TO_CORRUPT_ON_HIT) == 0) {
                     this.getTarget().addEffect(
-                            new MobEffectInstance(ModEffects.CORRUPTED.get(), 100, 0));
+                            new MobEffectInstance(
+                                    ModEffects.CORRUPTED.getHolder().get(), 100, 0));
                 }
             }
         }
@@ -366,14 +367,16 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         return Math.abs(angleDifference) <= degreeMax;
     }
 
+
+
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(tickSpawn, 0);
-        this.entityData.define(rightSwingTick, 0);
-        this.entityData.define(leftSwingTick, 0);
-        this.entityData.define(sonicStrikeTick, 0);
-        this.entityData.define(hasBeenSummonedByCatalyst, false);
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(tickSpawn, 0);
+        entityData.define(rightSwingTick, 0);
+        entityData.define(leftSwingTick, 0);
+        entityData.define(sonicStrikeTick, 0);
+        entityData.define(hasBeenSummonedByCatalyst, false);
     }
 
     @Override
@@ -480,7 +483,6 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 
 	@Override
     public void die(@NotNull DamageSource source) {
-        if (net.minecraftforge.common.ForgeHooks.onLivingDeath(this, source)) return;
         if (!this.isRemoved() && !this.dead) {
            Entity entity = source.getEntity();
            LivingEntity livingentity = this.getKillCredit();

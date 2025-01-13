@@ -72,21 +72,9 @@ public class MimicEntity extends CorruptionMonster {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(MIMIC_ENTITY_ID, -1);
-    }
-
-    @Override
-    protected float getStandingEyeHeight(@NotNull Pose pose, @NotNull EntityDimensions dimensions) {
-        if (this.mimicEntity == null) return super.getStandingEyeHeight(pose, dimensions);
-        return this.mimicEntity.getEyeHeight();
-    }
-
-    @Override
-    public float getEyeHeight(@NotNull Pose pose) {
-        if (this.mimicEntity == null) return super.getEyeHeight(pose);
-        return this.mimicEntity.getEyeHeight(pose);
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+        super.defineSynchedData(entityData);
+        entityData.define(MIMIC_ENTITY_ID, -1);
     }
 
     @Override

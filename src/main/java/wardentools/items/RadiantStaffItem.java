@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -45,7 +46,7 @@ public class RadiantStaffItem extends Item {
                     ModCriteriaTriggers.ABYSS_PORTAL_OPEN.trigger((ServerPlayer)player);
                     PacketHandler.sendToAllClient(new ParticleRadianceExplosion(context.getClickLocation()));
                     context.getItemInHand()
-                            .hurtAndBreak(1, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
+                            .hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                     return InteractionResult.SUCCESS;
                 }
             }

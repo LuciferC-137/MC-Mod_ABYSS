@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -83,12 +83,12 @@ public class CustomNoiseSettings {
         return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation("minecraft", name));
     }
 
-    public static void bootstrap(BootstapContext<NoiseGeneratorSettings> ctx) {
+    public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> ctx) {
         ctx.register(ABYSS_NOISE, createAbyssNoiseSettings(ctx, false, false));
     }
     
     private static NoiseGeneratorSettings createAbyssNoiseSettings(
-            BootstapContext<?> p_256460_, boolean amplified, boolean large){
+            BootstrapContext<?> p_256460_, boolean amplified, boolean large){
         return new NoiseGeneratorSettings(
                 NoiseSettings.create(-64, 384, 1, 2),
                 Blocks.STONE.defaultBlockState(),

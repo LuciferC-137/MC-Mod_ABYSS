@@ -2,7 +2,7 @@ package wardentools.worldgen.biome;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -32,14 +32,14 @@ public class ModBiomes {
     public static final ResourceKey<Biome> CRISTAL_CAVE = ResourceKey.create(Registries.BIOME,
             new ResourceLocation(ModMain.MOD_ID, "cristal_cave"));
 
-    public static void bootstrap(BootstapContext<Biome> context) {
+    public static void bootstrap(BootstrapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));
         context.register(WASTE_LAND, wasteLand(context));
         context.register(WHITE_FOREST, whiteForest(context));
         context.register(CRISTAL_CAVE, cristalCave(context));
     }
 
-    public static Biome deepForest(BootstapContext<Biome> context) {
+    public static Biome deepForest(BootstrapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
@@ -77,7 +77,7 @@ public class ModBiomes {
                         .build()).build();
     }
     
-    public static Biome wasteLand(BootstapContext<Biome> context) {
+    public static Biome wasteLand(BootstrapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
@@ -110,7 +110,7 @@ public class ModBiomes {
                 .specialEffects(commonBiomeSpecialEffects().build()).build();
     }
     
-    public static Biome whiteForest(BootstapContext<Biome> context) {
+    public static Biome whiteForest(BootstrapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
@@ -149,7 +149,7 @@ public class ModBiomes {
                         .build()).build();
     }
 
-    public static Biome cristalCave(BootstapContext<Biome> context) {
+    public static Biome cristalCave(BootstrapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.CREATURE,

@@ -5,6 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,10 +42,30 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
-										  @NotNull Player player, @NotNull InteractionHand interactionHand,
-										  @NotNull BlockHitResult result) {
+	protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
+														@NotNull BlockPos pos, @NotNull Player player,
+														@NotNull BlockHitResult hitResult) {
+		return this.use(level, pos, player);
+	}
+
+	@Override
+	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+													   @NotNull Level level, @NotNull BlockPos pos,
+													   @NotNull Player player, @NotNull InteractionHand hand,
+													   @NotNull BlockHitResult hitResult) {
+		switch (this.use(level, pos, player)) {
+			case InteractionResult.SUCCESS:
+				return ItemInteractionResult.SUCCESS;
+			case InteractionResult.FAIL:
+				return ItemInteractionResult.FAIL;
+			case InteractionResult.PASS:
+				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		}
+		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+	}
+
+	public @NotNull InteractionResult use(Level level, @NotNull BlockPos pos,
+										  @NotNull Player player) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (!(blockEntity instanceof DysfunctionningCatalystBlockEntity)) return InteractionResult.PASS;
 		if (level.isClientSide()) return InteractionResult.SUCCESS;
@@ -64,7 +85,6 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 			(level0, pos0, state0, blockEntity) -> ((DysfunctionningCatalystBlockEntity)blockEntity).tick();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
 						 @NotNull BlockState newState, boolean isMoving) {

@@ -1,6 +1,7 @@
 package wardentools.items.enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -13,7 +14,7 @@ public class EnchantmentRegistry {
 
     public static final RegistryObject<Enchantment> STEALTH
             = ENCHANTMENTS.register("stealth",
-            () -> new StealthEnchantment(Enchantment.Rarity.RARE,
-                    EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD));
+            () -> new StealthEnchantment(EquipmentSlot.FEET, EquipmentSlot.LEGS,
+                    EquipmentSlot.CHEST, EquipmentSlot.HEAD));
 
 }

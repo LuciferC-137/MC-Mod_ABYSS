@@ -11,6 +11,7 @@
     "LocalPlayerMixin",
     "LogoRendererMixin",
     "MinecraftMusicMixin",
-    "MusicManagerMixin"
+    "MusicManagerMixin",
+    "GuiRenderingMixin"
   ]
 }

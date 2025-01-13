@@ -1,5 +1,6 @@
 package wardentools.blockentity;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleOptions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -89,11 +90,11 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	public RadianceCatalystBlockEntity(BlockPos pos, BlockState state) {
 		super(BlockEntityRegistry.RADIANCE_CATALYST_BLOCK_ENTITY.get(), pos, state);
 	}
-	
+
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
-		var wardentoolsData = nbt.getCompound(ModMain.MOD_ID);
+	protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
+		super.loadAdditional(tag, provider);
+		var wardentoolsData = tag.getCompound(ModMain.MOD_ID);
 		if (wardentoolsData.isEmpty()) return;
 		if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
 			this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
@@ -111,17 +112,17 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 			this.purifyingTime = wardentoolsData.getInt("PurifyingTime");
 		}
 	}
-	
+
 	@Override
-	protected void saveAdditional(CompoundTag nbt) {
-		super.saveAdditional(nbt);
+	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
+		super.saveAdditional(tag, provider);
 		var wardentoolsData = new CompoundTag();
 		wardentoolsData.put("Inventory", this.inventory.serializeNBT());
 		wardentoolsData.putInt("Energy", this.energy.getEnergyStored());
 		wardentoolsData.putInt("BurnTime", this.burnTime);
 		wardentoolsData.putInt("MaxBurnTime", this.maxBurnTime);
 		wardentoolsData.putInt("PurifyingTime", this.purifyingTime);
-		nbt.put(ModMain.MOD_ID, wardentoolsData);
+		tag.put(ModMain.MOD_ID, wardentoolsData);
 	}
 	
 	public void tick() {
@@ -160,10 +161,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 									this.inventory.setStackInSlot(2,
 											getPurifiedVersion(this.inventory.getStackInSlot(1)));
 									this.inventory.getStackInSlot(1).shrink(1);
-								} else {
-									
 								}
-								
 							} else if (ItemStack.isSameItem(this.inventory.getStackInSlot(2),
 											(getPurifiedVersion(this.inventory.getStackInSlot(1))))){
 								this.energy.setEnergy(this.energy.getEnergyStored() -
@@ -203,11 +201,11 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		this.inventoryOptional.invalidate();
 		this.energyOptional.invalidate();
 	}
-	
+
 	@Override
-	public @NotNull CompoundTag getUpdateTag() {
-		CompoundTag nbt = super.getUpdateTag();
-		saveAdditional(nbt);
+	public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
+		CompoundTag nbt = super.getUpdateTag(provider);
+		saveAdditional(nbt, provider);
 		return nbt;
 	}
 	
@@ -218,7 +216,8 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 
 	@Override
-	public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+	public AbstractContainerMenu createMenu(int containerId, @NotNull Inventory playerInventory,
+											@NotNull Player player) {
 		return new RadianceCatalystMenu(containerId, playerInventory, this, this.containerData);
 	}
 	
@@ -230,7 +229,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 
 	@Override
-	public Component getDisplayName() {
+	public @NotNull Component getDisplayName() {
 		return TITLE;
 	}
 	

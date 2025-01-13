@@ -17,9 +17,8 @@ public class CorruptionVesselEffect extends MobEffect {
     }
 
     @Override
-    public void applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
-
-        super.applyEffectTick(entity, amplifier);
+    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+        return super.applyEffectTick(entity, amplifier);
     }
 
     @Override

@@ -74,8 +74,8 @@ public class AbyssLightningEntity extends Entity {
         return true;
     }
 
-    protected void defineSynchedData() {
-        this.entityData.define(LEGACY, false);
+    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+        entityData.define(LEGACY, false);
     }
 
     protected void readAdditionalSaveData(@NotNull CompoundTag tag) {

@@ -29,6 +29,8 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -437,20 +439,20 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
-		this.entityData.define(TARGETED_HEIGHT_ON_TAKE_OFF, 0);
-		this.entityData.define(IS_FLYING, false);
-		this.entityData.define(WANTS_TO_LAND, false);
-		this.entityData.define(WANTS_TO_TAKE_OFF, false);
-		this.entityData.define(landingTick, 0);
-		this.entityData.define(idleFlyToFlyTick, 0);
-		this.entityData.define(was_idle_flying, false);
-		this.entityData.define(flightSprinting, false);
-		this.entityData.define(sprintEnergy, MAX_SPRINT_ENERGY);
-		this.entityData.define(OWNER_UUID, Optional.empty());
-		this.entityData.define(WANTS_TO_JOIN_OWNER, false);
+	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
+		super.defineSynchedData(entityData);
+		entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+		entityData.define(TARGETED_HEIGHT_ON_TAKE_OFF, 0);
+		entityData.define(IS_FLYING, false);
+		entityData.define(WANTS_TO_LAND, false);
+		entityData.define(WANTS_TO_TAKE_OFF, false);
+		entityData.define(landingTick, 0);
+		entityData.define(idleFlyToFlyTick, 0);
+		entityData.define(was_idle_flying, false);
+		entityData.define(flightSprinting, false);
+		entityData.define(sprintEnergy, MAX_SPRINT_ENERGY);
+		entityData.define(OWNER_UUID, Optional.empty());
+		entityData.define(WANTS_TO_JOIN_OWNER, false);
 	}
 
 	@Override
@@ -654,16 +656,16 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	@Override
-	protected @NotNull Vector3f getPassengerAttachmentPoint(@NotNull Entity passenger,
+	protected @NotNull Vec3 getPassengerAttachmentPoint(@NotNull Entity passenger,
 															@NotNull EntityDimensions dimensions,
 															float offset) {
-		return new Vector3f(0.0F,
+		return new Vec3(0.0F,
 				this.getPassengersRidingOffsetY(dimensions, offset) + 0.1F  * offset,
 				-0.3F * offset);
 	}
 
 	protected float getPassengersRidingOffsetY(EntityDimensions dimensions, float offset) {
-		return dimensions.height + (this.isBaby() ? 0.2F : -0.15F) * offset;
+		return dimensions.height() + (this.isBaby() ? 0.2F : -0.15F) * offset;
 	}
 
 	@Override
@@ -704,5 +706,10 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 
 	protected float getSoundVolume() {
 		return 0.8F;
+	}
+
+	@Override
+	public boolean isFood(@NotNull ItemStack itemStack) {
+		return itemStack.is(ItemRegistry.NOCTILURE_TREAT.get());
 	}
 }
