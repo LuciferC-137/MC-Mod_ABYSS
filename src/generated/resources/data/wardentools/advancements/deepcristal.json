@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:deepcristal"
-            ]
+            "items": "wardentools:deepcristal"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.wardentools.deepcristal.description"
     },
     "icon": {
-      "item": "wardentools:deepcristal"
+      "count": 1,
+      "id": "wardentools:deepcristal"
     },
     "title": {
       "translate": "advancements.wardentools.deepcristal.title"

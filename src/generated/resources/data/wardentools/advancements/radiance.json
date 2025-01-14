@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:radiance_fragment"
-            ]
+            "items": "wardentools:radiance_fragment"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.wardentools.radiance.description"
     },
     "icon": {
-      "item": "wardentools:radiance_fragment"
+      "count": 1,
+      "id": "wardentools:radiance_fragment"
     },
     "title": {
       "translate": "advancements.wardentools.radiance.title"

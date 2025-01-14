@@ -15,7 +15,8 @@
       "translate": "advancements.wardentools.corrupted.description"
     },
     "icon": {
-      "item": "wardentools:corrupted_essence"
+      "count": 1,
+      "id": "wardentools:corrupted_essence"
     },
     "title": {
       "translate": "advancements.wardentools.corrupted.title"

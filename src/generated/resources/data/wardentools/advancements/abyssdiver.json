@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:abyss_diver"
-            ]
+            "items": "wardentools:abyss_diver"
           }
         ]
       },
@@ -19,8 +17,8 @@
       "translate": "advancements.wardentools.abyssdiver.description"
     },
     "icon": {
-      "item": "wardentools:abyss_diver",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "wardentools:abyss_diver"
     },
     "title": {
       "translate": "advancements.wardentools.abyssdiver.title"

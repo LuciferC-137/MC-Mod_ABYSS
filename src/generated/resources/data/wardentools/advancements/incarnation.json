@@ -22,7 +22,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "wardentools:chiseled_abyssalite"
+      "count": 1,
+      "id": "wardentools:chiseled_abyssalite"
     },
     "title": {
       "translate": "advancements.wardentools.incarnation.title"

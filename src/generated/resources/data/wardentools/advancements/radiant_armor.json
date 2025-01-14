@@ -16,8 +16,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "wardentools:radiance_cristal_chestplate",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "wardentools:radiance_cristal_chestplate"
     },
     "title": {
       "translate": "advancements.wardentools.radiant_armor.title"

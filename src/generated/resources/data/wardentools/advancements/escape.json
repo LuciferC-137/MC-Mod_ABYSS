@@ -11,8 +11,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "wardentools:radiant_staff",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "wardentools:radiant_staff"
     },
     "title": {
       "translate": "advancements.wardentools.escape.title"

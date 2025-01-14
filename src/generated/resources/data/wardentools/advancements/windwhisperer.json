@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:wind_whisperer"
-            ]
+            "items": "wardentools:wind_whisperer"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "wardentools:wind_whisperer"
+      "count": 1,
+      "id": "wardentools:wind_whisperer"
     },
     "title": {
       "translate": "advancements.wardentools.windwhisperer.title"

@@ -11,7 +11,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "wardentools:corrupted_vessel"
+      "count": 1,
+      "id": "wardentools:corrupted_vessel"
     },
     "title": {
       "translate": "advancements.wardentools.corruption_vessel.title"

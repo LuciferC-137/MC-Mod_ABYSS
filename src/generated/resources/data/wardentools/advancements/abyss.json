@@ -4,9 +4,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:sculk"
-            ]
+            "items": "minecraft:sculk"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.wardentools.abyss.description"
     },
     "icon": {
-      "item": "minecraft:sculk"
+      "count": 1,
+      "id": "minecraft:sculk"
     },
     "title": {
       "translate": "advancements.wardentools.abyss.title"

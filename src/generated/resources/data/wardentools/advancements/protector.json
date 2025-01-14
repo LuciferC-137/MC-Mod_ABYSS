@@ -22,7 +22,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "wardentools:protector_heart"
+      "count": 1,
+      "id": "wardentools:protector_heart"
     },
     "title": {
       "translate": "advancements.wardentools.protector.title"

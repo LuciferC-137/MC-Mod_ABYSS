@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:protector_invoker"
-            ]
+            "items": "wardentools:protector_invoker"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.wardentools.protector_invoker.description"
     },
     "icon": {
-      "item": "wardentools:protector_invoker"
+      "count": 1,
+      "id": "wardentools:protector_invoker"
     },
     "title": {
       "translate": "advancements.wardentools.protector_invoker.title"

@@ -11,7 +11,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "wardentools:pure_vessel"
+      "count": 1,
+      "id": "wardentools:pure_vessel"
     },
     "title": {
       "translate": "advancements.wardentools.radiance_bringer.title"
