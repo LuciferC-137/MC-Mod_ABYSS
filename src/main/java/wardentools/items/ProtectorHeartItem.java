@@ -13,6 +13,8 @@ import net.minecraft.world.item.component.CustomData;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.custom.ProtectorEntity;
 
+import javax.annotation.Nullable;
+
 public class ProtectorHeartItem extends Item {
 
 	public ProtectorHeartItem(Properties prop) {
@@ -40,7 +42,7 @@ public class ProtectorHeartItem extends Item {
         return (float)ProtectorEntity.MAX_HEALTH;
     }
 	
-	public UUID getProtectorUUID(ItemStack stack) {
+	public @Nullable UUID getProtectorUUID(ItemStack stack) {
 		CompoundTag tag = this.customTag(stack);
         return tag.contains("ProtectorUUID") ? tag.getUUID("ProtectorUUID") : null;
     }

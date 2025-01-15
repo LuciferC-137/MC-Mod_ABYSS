@@ -58,6 +58,7 @@ public class LevelRendererMixin {
 				Tesselator tesselator = Tesselator.getInstance();
 				BufferBuilder bufferbuilder = tesselator.getBuilder();
 				PoseStack posestack = new PoseStack();
+				posestack.mulPose(pose);
 				for(int i = 0; i < 6; ++i) {
 					posestack.pushPose();
 					if (i == 1) posestack.mulPose(Axis.XP.rotationDegrees(90.0F));

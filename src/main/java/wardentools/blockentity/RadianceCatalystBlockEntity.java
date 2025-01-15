@@ -1,6 +1,9 @@
 package wardentools.blockentity;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleOptions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -94,35 +97,32 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	@Override
 	protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
 		super.loadAdditional(tag, provider);
-		var wardentoolsData = tag.getCompound(ModMain.MOD_ID);
-		if (wardentoolsData.isEmpty()) return;
-		if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
-			this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
+		if (tag.isEmpty()) return;
+		if (tag.contains("Inventory", Tag.TAG_COMPOUND)) {
+			this.inventory.deserializeNBT(provider, tag.getCompound("Inventory"));
 		}
-		if (wardentoolsData.contains("Energy", Tag.TAG_INT)) {
-			this.energy.setEnergy(wardentoolsData.getInt("Energy"));
+		if (tag.contains("Energy", Tag.TAG_INT)) {
+			this.energy.setEnergy(tag.getInt("Energy"));
 		}
-		if (wardentoolsData.contains("BurnTime", Tag.TAG_INT)) {
-			this.burnTime = wardentoolsData.getInt("BurnTime");
+		if (tag.contains("BurnTime", Tag.TAG_INT)) {
+			this.burnTime = tag.getInt("BurnTime");
 		}
-		if (wardentoolsData.contains("MaxBurnTime", Tag.TAG_INT)) {
-			this.maxBurnTime = wardentoolsData.getInt("MaxBurnTime");
+		if (tag.contains("MaxBurnTime", Tag.TAG_INT)) {
+			this.maxBurnTime = tag.getInt("MaxBurnTime");
 		}
-		if (wardentoolsData.contains("PurifyingTime", Tag.TAG_INT)) {
-			this.purifyingTime = wardentoolsData.getInt("PurifyingTime");
+		if (tag.contains("PurifyingTime", Tag.TAG_INT)) {
+			this.purifyingTime = tag.getInt("PurifyingTime");
 		}
 	}
 
 	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
 		super.saveAdditional(tag, provider);
-		var wardentoolsData = new CompoundTag();
-		wardentoolsData.put("Inventory", this.inventory.serializeNBT());
-		wardentoolsData.putInt("Energy", this.energy.getEnergyStored());
-		wardentoolsData.putInt("BurnTime", this.burnTime);
-		wardentoolsData.putInt("MaxBurnTime", this.maxBurnTime);
-		wardentoolsData.putInt("PurifyingTime", this.purifyingTime);
-		tag.put(ModMain.MOD_ID, wardentoolsData);
+		tag.put("Inventory", this.inventory.serializeNBT(provider));
+		tag.putInt("Energy", this.energy.getEnergyStored());
+		tag.putInt("BurnTime", this.burnTime);
+		tag.putInt("MaxBurnTime", this.maxBurnTime);
+		tag.putInt("PurifyingTime", this.purifyingTime);
 	}
 	
 	public void tick() {

@@ -125,7 +125,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         var wardentoolsData = tag.getCompound(ModMain.MOD_ID);
         if (wardentoolsData.isEmpty()) return;
         if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
-            this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
+            this.inventory.deserializeNBT(provider, wardentoolsData.getCompound("Inventory"));
         }
         this.citrine = wardentoolsData.getInt("Citrine");
         this.amethyst = wardentoolsData.getInt("Amethyst");
@@ -141,7 +141,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
         super.saveAdditional(tag, provider);
         var wardentoolsData = new CompoundTag();
-        wardentoolsData.put("Inventory", this.inventory.serializeNBT());
+        wardentoolsData.put("Inventory", this.inventory.serializeNBT(provider));
         wardentoolsData.putInt("Citrine", this.citrine);
         wardentoolsData.putInt("Amethyst", this.amethyst);
         wardentoolsData.putInt("PaleShard", this.pale_shard);

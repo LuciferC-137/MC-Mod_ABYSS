@@ -24,6 +24,8 @@ import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ProtectorHeartItem;
 
+import java.util.Objects;
+
 public class ProtectorInvokerBlockEntity extends BlockEntity implements TickableBlockEntity {
 	public boolean protectorSuccessfullyInvoked = false;
 	
@@ -97,7 +99,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		var wardentoolsData = tag.getCompound(ModMain.MOD_ID);
 		if (wardentoolsData.isEmpty()) return;
 		if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
-			this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
+			this.inventory.deserializeNBT(provider, wardentoolsData.getCompound("Inventory"));
 		}
 		if (wardentoolsData.contains("protectorSuccessfullyInvoked")){
 			this.protectorSuccessfullyInvoked = wardentoolsData.getBoolean("protectorSuccessfullyInvoked");
@@ -108,7 +110,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
 		super.saveAdditional(tag, provider);
 		var wardentoolsData = new CompoundTag();
-		wardentoolsData.put("Inventory", this.inventory.serializeNBT());
+		wardentoolsData.put("Inventory", this.inventory.serializeNBT(provider));
 		wardentoolsData.putBoolean("protectorSuccessfullyInvoked", this.protectorSuccessfullyInvoked);
 		tag.put(ModMain.MOD_ID, wardentoolsData);
 	}
@@ -123,28 +125,30 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	
 	public boolean isProtectorValid(ProtectorEntity protector) {
 		if (!this.inventory.getStackInSlot(0).isEmpty()) {
+			if (heartItem() == null) return false;
 			if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return false;
-			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
+			if (Objects.requireNonNull(heartItem())
 					.getProtectorID(this.inventory.getStackInSlot(0)) == protector.getId()){
 				return true;
 			}
-			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
-					.getProtectorUUID(this.inventory.getStackInSlot(0)).equals(protector.getUUID())) {
-				heartItem().setProtector(
-						this.inventory.getStackInSlot(0), protector);
+			if (Objects.requireNonNull(heartItem()).getProtectorUUID(heartStack()) == null) return false;
+			if (Objects.requireNonNull(heartItem()).getProtectorUUID(heartStack()) == null) return false;
+			if (Objects.equals(Objects.requireNonNull(heartItem())
+					.getProtectorUUID(this.inventory.getStackInSlot(0)), protector.getUUID())) {
+				Objects.requireNonNull(heartItem()).setProtector(this.inventory.getStackInSlot(0), protector);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public ProtectorHeartItem heartItem() {
+	public @Nullable ProtectorHeartItem heartItem() {
 		if (this.inventory.getStackInSlot(0).isEmpty()) return null;
 		if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return null;
 		return (ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem();
 	}
 
-	public ItemStack heartStack() {
+	public @Nullable ItemStack heartStack() {
 		if (this.inventory.getStackInSlot(0).isEmpty()) return null;
 		if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return null;
 		return this.inventory.getStackInSlot(0);
