@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "wardentools:radiant_core"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "GIG",
+    "ICI",
+    "GIG"
+  ],
+  "result": {
+    "item": "wardentools:radiance_catalyst"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wardentools:whitetree_boat"
+    },
+    {
+      "item": "minecraft:chest"
+    },
+    {
+      "item": "minecraft:chest"
+    }
+  ],
+  "result": {
+    "item": "wardentools:whitetree_chest_boat"
+  }
+}

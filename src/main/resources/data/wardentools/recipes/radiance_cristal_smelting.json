@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "wardentools:radiance_cristal"
-  },
-  "result": "wardentools:radiance_ingots",
-  "experience": 2,
-  "cookingtime": 400
-}

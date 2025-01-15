@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "wardentools:pale_shard"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SSS",
+    " S "
+  ],
+  "result": {
+    "item": "wardentools:pale_cristal"
+  }
+}

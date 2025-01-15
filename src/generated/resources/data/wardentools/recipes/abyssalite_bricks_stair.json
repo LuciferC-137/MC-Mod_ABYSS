@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "B": {
+      "item": "wardentools:abyssalite_bricks"
+    }
+  },
+  "pattern": [
+    "  B",
+    " BB",
+    "BBB"
+  ],
+  "result": {
+    "count": 4,
+    "item": "wardentools:abyssalite_bricks_stair"
+  }
+}

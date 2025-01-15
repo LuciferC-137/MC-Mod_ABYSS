@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "wardentools:corrupted_essence"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "P": {
+      "item": "wardentools:pale_shard"
+    }
+  },
+  "pattern": [
+    "GPG",
+    "PEP",
+    "GPG"
+  ],
+  "result": {
+    "item": "wardentools:corrupted_vessel"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "wardentools:dark_stick"
+    },
+    "V": {
+      "item": "wardentools:pure_vessel"
+    }
+  },
+  "pattern": [
+    "V  ",
+    " D ",
+    "  D"
+  ],
+  "result": {
+    "item": "wardentools:radiant_staff"
+  }
+}

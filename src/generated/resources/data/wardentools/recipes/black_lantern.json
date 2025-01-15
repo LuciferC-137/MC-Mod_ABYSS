@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:echo_shard"
+    },
+    "I": {
+      "item": "minecraft:iron_nugget"
+    },
+    "P": {
+      "item": "wardentools:pale_shard"
+    }
+  },
+  "pattern": [
+    "IEI",
+    "EPE",
+    "IEI"
+  ],
+  "result": {
+    "item": "wardentools:black_lantern"
+  }
+}

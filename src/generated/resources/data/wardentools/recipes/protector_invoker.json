@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "wardentools:dark_stick"
+    },
+    "P": {
+      "item": "wardentools:whitetree_planks"
+    },
+    "V": {
+      "item": "wardentools:pure_vessel"
+    }
+  },
+  "pattern": [
+    "D D",
+    " V ",
+    "P P"
+  ],
+  "result": {
+    "item": "wardentools:protector_invoker"
+  }
+}
