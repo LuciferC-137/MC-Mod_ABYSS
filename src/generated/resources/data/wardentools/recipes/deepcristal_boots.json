@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "M": {
+      "item": "wardentools:deepingots"
+    }
+  },
+  "pattern": [
+    "M M",
+    "M M"
+  ],
+  "result": {
+    "item": "wardentools:deepcristal_boots"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "wardentools:radiance_ingots"
+    }
+  },
+  "pattern": [
+    "  R",
+    " R ",
+    "R  "
+  ],
+  "result": {
+    "item": "wardentools:radiant_spear"
+  }
+}

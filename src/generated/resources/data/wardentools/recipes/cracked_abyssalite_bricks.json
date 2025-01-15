@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "wardentools:abyssalite"
+  },
+  "result": "wardentools:cracked_abyssalite_bricks"
+}

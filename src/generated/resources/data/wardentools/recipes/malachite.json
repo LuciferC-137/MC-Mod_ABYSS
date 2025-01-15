@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "wardentools:malachite_fragment"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SSS",
+    " S "
+  ],
+  "result": {
+    "item": "wardentools:malachite"
+  }
+}
