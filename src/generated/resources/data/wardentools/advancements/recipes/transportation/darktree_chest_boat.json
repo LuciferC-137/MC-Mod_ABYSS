@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:darktree_boat"
-            ]
+            "items": "wardentools:darktree_boat"
           }
         ]
       },

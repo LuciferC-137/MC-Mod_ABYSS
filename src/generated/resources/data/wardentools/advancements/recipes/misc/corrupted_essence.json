@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:warden_heart"
-            ]
+            "items": "wardentools:warden_heart"
           }
         ]
       },

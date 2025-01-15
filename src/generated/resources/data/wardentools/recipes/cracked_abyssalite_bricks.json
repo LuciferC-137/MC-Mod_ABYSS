@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "wardentools:abyssalite"
   },
-  "result": "wardentools:cracked_abyssalite_bricks"
+  "result": {
+    "id": "wardentools:cracked_abyssalite_bricks"
+  }
 }

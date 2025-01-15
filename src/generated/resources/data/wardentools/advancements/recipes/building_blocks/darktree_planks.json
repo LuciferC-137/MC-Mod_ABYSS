@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:darktree_log"
-            ]
+            "items": "wardentools:darktree_log"
           }
         ]
       },

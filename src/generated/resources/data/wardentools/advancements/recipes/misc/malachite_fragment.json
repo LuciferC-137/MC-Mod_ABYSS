@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:malachite_block"
-            ]
+            "items": "wardentools:malachite_block"
           }
         ]
       },

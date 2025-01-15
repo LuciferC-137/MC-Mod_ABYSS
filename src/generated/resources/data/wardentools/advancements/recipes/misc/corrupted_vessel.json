@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:pale_shard"
-            ]
+            "items": "wardentools:pale_shard"
           }
         ]
       },

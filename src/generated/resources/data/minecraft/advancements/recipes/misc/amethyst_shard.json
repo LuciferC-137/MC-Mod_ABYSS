@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:citrine_fragment"
-            ]
+            "items": "wardentools:citrine_fragment"
           }
         ]
       },

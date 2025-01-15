@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:pale_cristal_block"
-            ]
+            "items": "wardentools:pale_cristal_block"
           }
         ]
       },

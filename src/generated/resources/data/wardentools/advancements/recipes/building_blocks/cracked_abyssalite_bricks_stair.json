@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:cracked_abyssalite_bricks"
-            ]
+            "items": "wardentools:cracked_abyssalite_bricks"
           }
         ]
       },

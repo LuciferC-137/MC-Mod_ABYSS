@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:deep_fragment"
-            ]
+            "items": "wardentools:deep_fragment"
           }
         ]
       },

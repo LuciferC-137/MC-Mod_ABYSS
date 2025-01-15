@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:darktree_planks"
-            ]
+            "items": "wardentools:darktree_planks"
           }
         ]
       },

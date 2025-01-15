@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "wardentools:deepcristal"
   },
-  "result": "wardentools:deepingots"
+  "result": {
+    "id": "wardentools:deepingots"
+  }
 }

@@ -12,6 +12,7 @@
     "SSS"
   ],
   "result": {
-    "item": "wardentools:echo_block"
+    "count": 1,
+    "id": "wardentools:echo_block"
   }
 }

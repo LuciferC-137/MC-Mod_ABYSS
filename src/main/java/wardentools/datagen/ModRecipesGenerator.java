@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModRecipesGenerator extends RecipeProvider {
     public ModRecipesGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
-        super(packOutput);
+        super(packOutput, completableFuture);
     }
 
     @Override
@@ -256,7 +256,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .unlockedBy("has_item", has(ItemRegistry.WHITE_SEED.get()))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.WHISTLE.get(), 2)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.WHISTLE.get(), 1)
                 .define('S', ItemRegistry.DARKTREE_SLAB.get())
                 .pattern("SSS")
                 .pattern("SS ")

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:whitetree_boat"
-            ]
+            "items": "wardentools:whitetree_boat"
           }
         ]
       },

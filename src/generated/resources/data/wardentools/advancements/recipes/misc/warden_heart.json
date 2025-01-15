@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:corrupted_essence"
-            ]
+            "items": "wardentools:corrupted_essence"
           }
         ]
       },

@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "wardentools:radiance_cristal"
   },
-  "result": "wardentools:radiance_ingots"
+  "result": {
+    "id": "wardentools:radiance_ingots"
+  }
 }

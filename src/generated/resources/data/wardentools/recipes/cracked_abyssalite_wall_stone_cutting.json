@@ -1,8 +1,10 @@
 {
   "type": "minecraft:stonecutting",
-  "count": 1,
   "ingredient": {
     "item": "wardentools:cracked_abyssalite_bricks"
   },
-  "result": "wardentools:cracked_abyssalite_bricks_wall"
+  "result": {
+    "count": 1,
+    "id": "wardentools:cracked_abyssalite_bricks_wall"
+  }
 }

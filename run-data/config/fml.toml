@@ -24,7 +24,5 @@ earlyWindowLogHelpMessage = true
 maxThreads = -1
 #Squir?
 earlyWindowSquir = false
-#Attempt to detect non-Forge mods from their mods.toml to show a friendlier error message. This is a best-effort feature - disable if it causes issues.
-detectNonForgeModsToml = true
 #Whether to show CPU usage stats in early window
 earlyWindowShowCPU = false

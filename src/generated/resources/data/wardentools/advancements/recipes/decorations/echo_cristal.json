@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "wardentools:echo_block"
-            ]
+            "items": "wardentools:echo_block"
           }
         ]
       },

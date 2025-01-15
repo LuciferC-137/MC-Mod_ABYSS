@@ -6,5 +6,7 @@
   "ingredient": {
     "item": "wardentools:citrine_fragment"
   },
-  "result": "minecraft:amethyst_shard"
+  "result": {
+    "id": "minecraft:amethyst_shard"
+  }
 }
