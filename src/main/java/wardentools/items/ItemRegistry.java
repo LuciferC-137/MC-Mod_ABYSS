@@ -1,11 +1,7 @@
 package wardentools.items;
 
 
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.RecordItem;
-import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -136,7 +132,7 @@ public class ItemRegistry {
 	
 	public static final RegistryObject<Item> DEEPLURKER_EGG =
 			REGISTAR.register("deeplurker_spawn_egg",
-			() -> new ForgeSpawnEggItem(ModEntities.DEEPLURKER, 0x005693,
+			() -> new CustomSpawnEggItem(ModEntities.DEEPLURKER, 0x005693,
 					0x00ebff, new Item.Properties()));
 	
 	public static final RegistryObject<Item> DEEP_FRUIT =
@@ -255,7 +251,7 @@ public class ItemRegistry {
 	
 	public static final RegistryObject<Item> PALEWANDERER_EGG =
 			REGISTAR.register("pale_wanderer_spawn_egg",
-			() -> new ForgeSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
+			() -> new CustomSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
 					0x00ebff, new Item.Properties()));
 	
 	public static final RegistryObject<Item> WHITE_GRASS =
@@ -467,7 +463,7 @@ public class ItemRegistry {
 
 	public static final RegistryObject<Item> TEMPER_EGG =
 			REGISTAR.register("temper_spawn_egg",
-					() -> new ForgeSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
+					() -> new CustomSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
 							0x72c8cc, new Item.Properties()));
 
 	public static final RegistryObject<Item> RADIANT_STAFF =
@@ -486,22 +482,22 @@ public class ItemRegistry {
 
 	public static final RegistryObject<Item> PARASYTE_EGG =
 			REGISTAR.register("parasyte_spawn_egg",
-					() -> new ForgeSpawnEggItem(ModEntities.PARASYTE, 0x319473,
+					() -> new CustomSpawnEggItem(ModEntities.PARASYTE, 0x319473,
 							0x30ab9c, new Item.Properties()));
 
 	public static final RegistryObject<Item> PROTECTOR_EGG =
 			REGISTAR.register("protector_spawn_egg",
-					() -> new ForgeSpawnEggItem(ModEntities.PROTECTOR, 0xbad3d4,
+					() -> new CustomSpawnEggItem(ModEntities.PROTECTOR, 0xbad3d4,
 							0x3bedf5, new Item.Properties()));
 
 	public static final RegistryObject<Item> CONTAGION_INCARNATION_EGG =
 			REGISTAR.register("contagion_incarnation_spawn_egg",
-					() -> new ForgeSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
+					() -> new CustomSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
 							0xbdbd8a, new Item.Properties()));
 
 	public static final RegistryObject<Item> NOCTILURE_EGG =
 			REGISTAR.register("noctilure_spawn_egg",
-					() -> new ForgeSpawnEggItem(ModEntities.NOCTILURE, 0x08155c, 0xcad4fc,
+					() -> new CustomSpawnEggItem(ModEntities.NOCTILURE, 0x08155c, 0xcad4fc,
 							new Item.Properties()));
 
 	public static final RegistryObject<Item> DYSFUNCTIONNING_CATALYST =
@@ -540,7 +536,7 @@ public class ItemRegistry {
 
 	public static final RegistryObject<Item> SHADOW_EGG =
 			REGISTAR.register("shadow_spawn_egg",
-					() -> new ForgeSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
+					() -> new CustomSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
 							new Item.Properties()));
 	
 	public static final RegistryObject<Item> CONTAGION_INCARNATION_SKULL =
