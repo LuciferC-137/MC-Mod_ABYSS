@@ -139,7 +139,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 
 	@Override
 	public void tick() {
-		if (!this.level().isClientSide) this.handleServerTickers();
+		this.handleTickers();
 		if (this.level().isClientSide) this.handleAnimation();
 		else if (!this.isVehicle() && !NoctilureEntity.this.getWantsToJoinOwner()) {
 			this.handleRandomFlyingLogic();
@@ -198,12 +198,6 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	private void handleAnimation() {
-		if (this.getLandingTick() > 0) {
-			this.setLandingTick(this.getLandingTick() - 1);
-		}
-		if (this.getIdleFlyToFlyTick() > 0) {
-			this.setIdleFlyToFlyTick(this.getIdleFlyToFlyTick() - 1);
-		}
 		this.standing.animateWhen(!this.walkAnimation.isMoving()
 				&& !this.getIsFlying() && this.noSecondaryAnimation(), this.tickCount);
 		this.walking.animateWhen(this.walkAnimation.isMoving()
@@ -217,13 +211,19 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 				&& this.getLandingTick() == 0 && this.getIsFlying(), this.tickCount);
 	}
 
-	private void handleServerTickers() {
+	private void handleTickers() {
 		if (this.getWasIdleFlying() && !this.isAlmostIdle() && this.getIsFlying()) {
 			this.setWasIdleFlying(false);
 			this.setIdleFlyToFlyTick(IDLE_FLY_TO_FLY_DURATION);
 		}
 		if (this.isAlmostIdle() && !this.getWasIdleFlying()) {
 			this.setWasIdleFlying(true);
+		}
+		if (this.getLandingTick() > 0) {
+			this.setLandingTick(this.getLandingTick() - 1);
+		}
+		if (this.getIdleFlyToFlyTick() > 0) {
+			this.setIdleFlyToFlyTick(this.getIdleFlyToFlyTick() - 1);
 		}
 	}
 
