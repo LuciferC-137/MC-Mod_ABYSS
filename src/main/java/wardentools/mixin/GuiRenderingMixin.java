@@ -22,8 +22,8 @@ public class GuiRenderingMixin {
             = new ResourceLocation(ModMain.MOD_ID,
             "textures/gui/sprint_bar/noctilure_progress.png");
 
-    @Inject(method = "renderExperienceBar", at = @At("HEAD"), cancellable = true)
-    private void onGuiRendering(GuiGraphics graphics, int xp, CallbackInfo ci) {
+    @Inject(method = "renderHotbarAndDecorations", at = @At("TAIL"))
+    private void onGuiRendering(GuiGraphics graphics, float f, CallbackInfo ci) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.player.getVehicle() != null) {
             int screenWidth = minecraft.getWindow().getGuiScaledWidth();
@@ -31,8 +31,8 @@ public class GuiRenderingMixin {
             RenderSystem.enableBlend();
             if (minecraft.player.getVehicle() instanceof NoctilureEntity noctilure) {
                 minecraft.getProfiler().push("energy");
-                float f = (float)noctilure.getSprintEnergy() / (float)NoctilureEntity.MAX_SPRINT_ENERGY;
-                int progress = (int)((1f - f) * 182.0F);
+                float energyNorm = (float)noctilure.getSprintEnergy() / (float)NoctilureEntity.MAX_SPRINT_ENERGY;
+                int progress = (int)((1f - energyNorm) * 182.0F);
                 int barWidth = 182;
                 int barHeight = 5;
                 int y = screenHeight - 29;
@@ -43,7 +43,6 @@ public class GuiRenderingMixin {
                                 0, 0, barWidth - progress,
                                 barHeight, barWidth, barHeight);
                 minecraft.getProfiler().pop();
-                ci.cancel();
             }
         }
     }

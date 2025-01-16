@@ -40,8 +40,7 @@ public class CustomSpawnEggItem extends SpawnEggItem {
         try {
             type.spawn(source.level(), stack, (Player)null, source.pos().relative(face), MobSpawnType.DISPENSER, face != Direction.UP, false);
         } catch (Exception var5) {
-            Exception exception = var5;
-            DispenseItemBehavior.LOGGER.error("Error while dispensing spawn egg from dispenser at {}", source.pos(), exception);
+            DispenseItemBehavior.LOGGER.error("Error while dispensing spawn egg from dispenser at {}", source.pos(), var5);
             return ItemStack.EMPTY;
         }
 
@@ -51,7 +50,7 @@ public class CustomSpawnEggItem extends SpawnEggItem {
     };
 
     public CustomSpawnEggItem(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties props) {
-        super((EntityType)null, backgroundColor, highlightColor, props);
+        super(null, backgroundColor, highlightColor, props);
         this.typeSupplier = type;
         MOD_EGGS.add(this);
     }
@@ -60,13 +59,8 @@ public class CustomSpawnEggItem extends SpawnEggItem {
         return DEFAULT_DISPENSE_BEHAVIOR;
     }
 
-    public static @Nullable SpawnEggItem fromEntityType(@Nullable EntityType<?> type) {
-        SpawnEggItem ret = (SpawnEggItem)TYPE_MAP.get(type);
-        return ret != null ? ret : SpawnEggItem.byId(type);
-    }
-
     protected @NotNull EntityType<?> getDefaultType() {
-        return (EntityType)this.typeSupplier.get();
+        return this.typeSupplier.get();
     }
 
     // Removed due to error in registering colors. Eggs would appear transparent.
@@ -108,7 +102,7 @@ public class CustomSpawnEggItem extends SpawnEggItem {
                 if (dispenseBehavior != null) {
                     DispenserBlock.registerBehavior(egg, dispenseBehavior);
                 }
-                CustomSpawnEggItem.TYPE_MAP.put((EntityType)egg.typeSupplier.get(), egg);
+                CustomSpawnEggItem.TYPE_MAP.put(egg.typeSupplier.get(), egg);
             });
         }
     }

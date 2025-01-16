@@ -27,7 +27,7 @@ public class CorruptedOverlayRenderer {
             = new ResourceLocation(ModMain.MOD_ID, "textures/misc/corruption_outline_screen.png");
     private static final float blurDurationTick = 200.0f; // Approximate
     private static final float glitterPulsation = 0.04f;
-    private static final float transparentMax = 0.99f;
+    private static final float transparentMax = 0.9f;
 
     @SubscribeEvent
     public static void onRenderOverlay(CustomizeGuiOverlayEvent event) {
@@ -47,7 +47,7 @@ public class CorruptedOverlayRenderer {
                }
 
                int elapsedDuration = Math.max(totalDuration - duration, 0);
-               float alpha = Math.min( (float)elapsedDuration / blurDurationTick * 0.05f, 1.0f);
+               float alpha = Math.min((float)elapsedDuration / blurDurationTick, 1.0f);
                float color_intensity = elapsedDuration > blurDurationTick ?
                        Math.abs((float)Math.sin((duration - blurDurationTick) * glitterPulsation)) : 1f;
 

@@ -10,8 +10,8 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -29,7 +29,6 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -39,7 +38,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 import wardentools.entity.ModEntities;
 import wardentools.entity.utils.CustomFlyingPathNavigation;
 import wardentools.entity.utils.NoctilureFlyingMoveControl;
@@ -659,9 +657,10 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	protected @NotNull Vec3 getPassengerAttachmentPoint(@NotNull Entity passenger,
 															@NotNull EntityDimensions dimensions,
 															float offset) {
-		return new Vec3(0.0F,
-				this.getPassengersRidingOffsetY(dimensions, offset) + 0.1F  * offset,
-				-0.3F * offset);
+		float rot = this.yBodyRot * ((float)Math.PI / 180F) + (float)Math.PI / 2F;
+		return new Vec3(- 0.3f * offset * Mth.cos(rot),
+				this.getPassengersRidingOffsetY(dimensions, offset) + 0.1F * offset,
+				- 0.3f * offset * Mth.sin(rot));
 	}
 
 	protected float getPassengersRidingOffsetY(EntityDimensions dimensions, float offset) {
