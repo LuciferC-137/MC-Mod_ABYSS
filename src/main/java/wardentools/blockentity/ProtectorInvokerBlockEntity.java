@@ -18,7 +18,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
-import wardentools.ModMain;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
@@ -46,17 +45,17 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		super(BlockEntityRegistry.PROTECTOR_INVOKER_BLOCK_ENTITY.get(), pos, state);
 	}
 
-
 	public void saveHealth(ProtectorEntity protector){
+		this.saveHealth(protector.getHealth());
+
+	}
+
+	public void saveHealth(float health) {
+		this.sendUpdate();
 		if (!this.inventory.getStackInSlot(0).isEmpty()
 				&& this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) {
 			((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
-					.saveHealth(this.inventory.getStackInSlot(0), protector);
-			this.setChanged();
-			if (level == null) return;
-			if (!level.isClientSide) {
-				level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
-			}
+					.saveHealth(this.inventory.getStackInSlot(0), health);
 			if (((ProtectorHeartItem)this.inventory.getStackInSlot(0).getItem())
 					.readHealth(this.inventory.getStackInSlot(0))<=0.0f) {
 				this.inventory.getStackInSlot(0).shrink(1);
@@ -64,7 +63,14 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 			}
 		}
 	}
-	
+
+	private void sendUpdate() {
+		this.setChanged();
+		if (this.level != null) {
+			this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+		}
+	}
+
 	@Override
 	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap){
 		if (cap == ForgeCapabilities.ITEM_HANDLER) {
@@ -83,36 +89,33 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	@Override
 	public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
 		CompoundTag nbt = super.getUpdateTag(provider);
-		saveAdditional(nbt, provider);
-		return super.getUpdateTag(provider);
+		this.saveAdditional(nbt, provider);
+		return nbt;
 	}
 
 	@Nullable
 	@Override
-	public Packet<ClientGamePacketListener> getUpdatePacket(){
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+	public Packet<ClientGamePacketListener> getUpdatePacket(){return ClientboundBlockEntityDataPacket.create(this);}
+
+
 
 	@Override
 	protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
 		super.loadAdditional(tag, provider);
-		var wardentoolsData = tag.getCompound(ModMain.MOD_ID);
-		if (wardentoolsData.isEmpty()) return;
-		if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
-			this.inventory.deserializeNBT(provider, wardentoolsData.getCompound("Inventory"));
+		if (tag.isEmpty()) return;
+		if (tag.contains("Inventory", Tag.TAG_COMPOUND)) {
+			this.inventory.deserializeNBT(provider, tag.getCompound("Inventory"));
 		}
-		if (wardentoolsData.contains("protectorSuccessfullyInvoked")){
-			this.protectorSuccessfullyInvoked = wardentoolsData.getBoolean("protectorSuccessfullyInvoked");
+		if (tag.contains("ProtectorSuccessfullyInvoked", Tag.TAG_BYTE)) {
+			this.protectorSuccessfullyInvoked = tag.getBoolean("ProtectorSuccessfullyInvoked");
 		}
 	}
 
 	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
 		super.saveAdditional(tag, provider);
-		var wardentoolsData = new CompoundTag();
-		wardentoolsData.put("Inventory", this.inventory.serializeNBT(provider));
-		wardentoolsData.putBoolean("protectorSuccessfullyInvoked", this.protectorSuccessfullyInvoked);
-		tag.put(ModMain.MOD_ID, wardentoolsData);
+		tag.put("Inventory", this.inventory.serializeNBT(provider));
+		tag.putBoolean("ProtectorSuccessfullyInvoked", protectorSuccessfullyInvoked);
 	}
 	
 	public ItemStackHandler getInventory() {
@@ -122,17 +125,20 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	public LazyOptional<ItemStackHandler> getInventoryOptional() {
         return this.inventoryOptional;
     }
+
 	
 	public boolean isProtectorValid(ProtectorEntity protector) {
 		if (!this.inventory.getStackInSlot(0).isEmpty()) {
-			if (heartItem() == null) return false;
-			if (!this.inventory.getStackInSlot(0).is(ItemRegistry.PROTECTOR_HEART.get())) return false;
+			if (heartItem() == null){
+				return false;
+			}
 			if (Objects.requireNonNull(heartItem())
 					.getProtectorID(this.inventory.getStackInSlot(0)) == protector.getId()){
 				return true;
 			}
-			if (Objects.requireNonNull(heartItem()).getProtectorUUID(heartStack()) == null) return false;
-			if (Objects.requireNonNull(heartItem()).getProtectorUUID(heartStack()) == null) return false;
+			if (Objects.requireNonNull(heartItem()).getProtectorUUID(heartStack()) == null) {
+				return false;
+			}
 			if (Objects.equals(Objects.requireNonNull(heartItem())
 					.getProtectorUUID(this.inventory.getStackInSlot(0)), protector.getUUID())) {
 				Objects.requireNonNull(heartItem()).setProtector(this.inventory.getStackInSlot(0), protector);
@@ -166,6 +172,5 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 
 	@Override
 	public void tick() {
-
 	}
 }

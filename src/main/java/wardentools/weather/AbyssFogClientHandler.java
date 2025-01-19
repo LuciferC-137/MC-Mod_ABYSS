@@ -1,15 +1,12 @@
 package wardentools.weather;
 
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
 This class allows to interpolate visually the fog during storms.
 This avoids any strange behavior between inside and outside ambiances.
 */
 
-@OnlyIn(Dist.CLIENT)
 public class AbyssFogClientHandler {
     private static final float FOG_INTERPOLATION_SPEED = 0.05f; // per tick
     private float currentFogDistance = AbyssWeatherManager.MAX_FOG_DISTANCE;

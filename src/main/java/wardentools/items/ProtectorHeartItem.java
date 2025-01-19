@@ -22,15 +22,19 @@ public class ProtectorHeartItem extends Item {
 	}
 	
 	public void setProtector(ItemStack stack, ProtectorEntity protector) {
-        CompoundTag tag = new CompoundTag();
+        CompoundTag tag = this.customTag(stack);
         tag.putUUID("ProtectorUUID", protector.getUUID());
 		tag.putInt("ProtectorID", protector.getId());
 		stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
 
 	public void saveHealth(ItemStack stack, ProtectorEntity protector){
-		CompoundTag tag = new CompoundTag();
-		tag.putFloat("ProtectorHealth", protector.getHealth());
+		this.saveHealth(stack, protector.getHealth());
+	}
+
+	public void saveHealth(ItemStack stack, float health) {
+		CompoundTag tag = this.customTag(stack);
+		tag.putFloat("ProtectorHealth", health);
 		stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
 	}
 	

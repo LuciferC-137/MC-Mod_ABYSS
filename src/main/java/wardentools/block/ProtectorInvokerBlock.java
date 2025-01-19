@@ -34,6 +34,8 @@ import wardentools.items.ItemRegistry;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceExplosion;
 
+import java.util.Objects;
+
 public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	public static final int radiusForProtectorSpawn = 5;
 
@@ -123,10 +125,10 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 			if (protec != null) {
 				protec.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
 							spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);
-				protec.setHealth(invoker.heartItem().readHealth(invoker.heartStack()));
+				protec.setHealth(Objects.requireNonNull(invoker.heartItem()).readHealth(invoker.heartStack()));
 				protec.setInvokerPos(pos);
 				if (invoker.heartItem() != null) {
-					invoker.heartItem().setProtector(invoker.heartStack(), protec);
+					Objects.requireNonNull(invoker.heartItem()).setProtector(invoker.heartStack(), protec);
 				}
 				protec.makeSpawnAnimation();
 				Vec3 particleSource = spawnPos.above().getCenter();

@@ -1,6 +1,5 @@
 package wardentools.blockentity.renderer;
 
-import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -54,14 +53,13 @@ public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorIn
 	        double offset = 0.95;
 	        double rotation = relativeGameTime / 0.8;
 	        double scale = 0.5;
+			if (stack.is(ItemRegistry.PROTECTOR_HEART.get()) && blockEntity.protectorSuccessfullyInvoked) {
+				animateLight(partialTick, buffer, poseStack, offset);
+			} else if (stack.is(ItemRegistry.DYING_PROTECTOR_HEART.get())) {
+				animateRedParticles(level, pos, offset);
+			}
 	        renderItem(level, poseStack, stack, buffer, offset, scale, rotation);
 			renderText(level, pos, poseStack, offset, blockEntity, buffer);
-	        
-            if (stack.is(ItemRegistry.PROTECTOR_HEART.get()) && blockEntity.protectorSuccessfullyInvoked) {
-				animateLight(partialTick, buffer, poseStack, offset);
-            } else if (stack.is(ItemRegistry.DYING_PROTECTOR_HEART.get())) {
-            	animateRedParticles(level, pos, offset);
-            }
         }
 		this.previouspTick = partialTick;
 	}

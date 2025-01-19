@@ -117,6 +117,11 @@ public class PacketHandler {
 				.decoder(StartPlayingIncarnationTheme::new)
 				.consumerMainThread(StartPlayingIncarnationTheme::handle)
 				.add();
+		INSTANCE.messageBuilder(SynchronizeProtectorHeart.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(SynchronizeProtectorHeart::encode)
+				.decoder(SynchronizeProtectorHeart::new)
+				.consumerMainThread(SynchronizeProtectorHeart::handle)
+				.add();
 
 	}
 

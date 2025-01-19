@@ -8,8 +8,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +15,6 @@ import wardentools.ModMain;
 import wardentools.fluid.ModFluidTypes;
 import wardentools.worldgen.dimension.ModDimensions;
 
-@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public class AbyssFogEvent {
 	private static final int RADIUS_FOR_UNDER_SKY_CHECK = 15;

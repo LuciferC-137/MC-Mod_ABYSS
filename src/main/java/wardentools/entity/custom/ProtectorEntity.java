@@ -35,6 +35,7 @@ import wardentools.entity.utils.goal.ChooseMonsterTargetGoal;
 import wardentools.entity.utils.goal.ReturnToInvokerGoal;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceImplosion;
+import wardentools.network.ParticulesSoundsEffects.SynchronizeProtectorHeart;
 import wardentools.sounds.ModSounds;
 
 public class ProtectorEntity extends AbstractGolem {
@@ -268,10 +269,10 @@ public class ProtectorEntity extends AbstractGolem {
 	@Override
 	public boolean hurt(@NotNull DamageSource source, float amount) {
 		if (this.invokerPos != null){
-			ProtectorInvokerBlockEntity invoker =
-					(ProtectorInvokerBlockEntity)this.level().getBlockEntity(this.invokerPos);
-			if (invoker == null) return false;
-			invoker.saveHealth(this);
+			PacketHandler.sendToAllClient(new SynchronizeProtectorHeart(this.invokerPos, this.getHealth()));
+			if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker) {
+				invoker.saveHealth(this);
+			}
 		}
 		return super.hurt(source, amount);
 	}
