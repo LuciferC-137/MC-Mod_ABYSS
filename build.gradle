@@ -122,6 +122,7 @@ tasks.named('jar', Jar).configure {
             "MixinConfigs": "mixins.wardentools.json"
         ])
     }
+    exclude('mixin.refmap.json') // Required to delete generated refmap
     //finalizedBy 'reobfJar' // Not needed anymore after forge50.1.0-1.20.6
 }
 
