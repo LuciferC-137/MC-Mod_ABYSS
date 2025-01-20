@@ -21,11 +21,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import wardentools.sounds.ModMusics;
 import wardentools.worldgen.dimension.ModDimensions;
 
+import javax.annotation.Nullable;
+
 @Mixin(Minecraft.class)
 public class MinecraftMusicMixin {
 
     @Shadow public Screen screen;
-    @Shadow public LocalPlayer player;
+    @Shadow @Nullable public LocalPlayer player;
     @Final @Shadow public Gui gui;
     @Final @Shadow private MusicManager musicManager;
 

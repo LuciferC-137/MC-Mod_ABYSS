@@ -1,7 +1,6 @@
 {
   "minVersion": "0.8.5",
   "package": "wardentools.mixin",
-  "refmap": "wardentools.mixins-refmap.json",
   "required": true,
   "mixins": [
     "WardenTargetMixin"

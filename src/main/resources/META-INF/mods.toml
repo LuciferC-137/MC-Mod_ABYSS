@@ -6,7 +6,7 @@ showAsResourcePack=false
 
 [[mods]]
   modId="wardentools"
-  version="1.0.0"
+  version="1.0.1"
   displayName="ABYSS"
   logoFile="logo.png"
   credits="I pretty much did this by myself"
