@@ -22,7 +22,7 @@ import wardentools.entity.custom.TemperEntity;
 
 public class Temper extends HierarchicalModel<TemperEntity> implements ArmedModel {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation(ModMain.MOD_ID, "temper"), "main");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "temper"), "main");
 	private static final float MAX_FLAP_ANGLE = 27f * ((float)Math.PI / 180F); // Rad
 	private boolean wingOnAscending = true;
 	private float wingAngle = 0f; // Rad
@@ -67,9 +67,8 @@ public class Temper extends HierarchicalModel<TemperEntity> implements ArmedMode
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay,
-							   float red, float green, float blue, float alpha) {
-		FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+							   int packedLight, int packedOverlay, int i) {
+		FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
 	}
 
 	@Override

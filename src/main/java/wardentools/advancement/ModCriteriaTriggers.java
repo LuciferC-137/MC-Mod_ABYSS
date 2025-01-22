@@ -23,6 +23,6 @@ public class ModCriteriaTriggers {
 
     public static <T extends CriterionTrigger<?>> T register(String id, T trigger) {
         return Registry.register(BuiltInRegistries.TRIGGER_TYPES,
-                new ResourceLocation(ModMain.MOD_ID, id), trigger);
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, id), trigger);
     }
 }

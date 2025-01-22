@@ -13,7 +13,7 @@ import wardentools.ModMain;
 import wardentools.entity.custom.ParasyteEntity;
 
 public class ParasyteEmissiveLayer extends RenderLayer<ParasyteEntity, Parasyte> {
-    private static final RenderType EMISSIVE = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
+    private static final RenderType EMISSIVE = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
     		"textures/entity/parasyte_emissive.png"));
 
     public ParasyteEmissiveLayer(RenderLayerParent<ParasyteEntity, Parasyte> renderLayerParent) {
@@ -27,6 +27,6 @@ public class ParasyteEmissiveLayer extends RenderLayer<ParasyteEntity, Parasyte>
                        float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
     }
 }

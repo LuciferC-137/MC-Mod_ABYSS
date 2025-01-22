@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LogoRendererMixin {
     @Shadow @Final private boolean keepLogoThroughFade;
     @Unique private static final ResourceLocation MINECRAFT_LOGO
-            = new ResourceLocation("textures/gui/title/minecraft.png");
+            = ResourceLocation.withDefaultNamespace("textures/gui/title/minecraft.png");
     @Unique private static final ResourceLocation MINECRAFT_EDITION
-            = new ResourceLocation("textures/gui/title/edition.png");
+            = ResourceLocation.withDefaultNamespace("textures/gui/title/edition.png");
     @Unique private static final int LOGO_WIDTH = 256;
     @Unique private static final int LOGO_HEIGHT = 44;
     @Unique private static final int LOGO_TEXTURE_WIDTH = 256;

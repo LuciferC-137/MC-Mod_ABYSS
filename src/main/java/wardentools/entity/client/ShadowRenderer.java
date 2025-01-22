@@ -14,9 +14,9 @@ import wardentools.particle.ParticleRegistry;
 
 public class ShadowRenderer extends MobRenderer<ShadowEntity, Shadow>{
 	private static final ResourceLocation HUMANOID_SHADOW_TEXTURE =
-			new ResourceLocation(ModMain.MOD_ID, "textures/entity/shadow.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/shadow.png");
 	private static final ResourceLocation GENERIC_SHADOW_TEXTURE =
-			new ResourceLocation(ModMain.MOD_ID, "textures/entity/generic_shadow.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/generic_shadow.png");
 
     public ShadowRenderer(EntityRendererProvider.Context context) {
 		super(context, new Shadow(context.bakeLayer(Shadow.LAYER_LOCATION)), 0.2f);

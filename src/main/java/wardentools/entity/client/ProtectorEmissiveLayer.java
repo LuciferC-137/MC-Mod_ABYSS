@@ -13,7 +13,8 @@ import wardentools.ModMain;
 import wardentools.entity.custom.ProtectorEntity;
 
 public class ProtectorEmissiveLayer extends RenderLayer<ProtectorEntity, Protector> {
-    private static final RenderType EMISSIVE = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
+    private static final RenderType EMISSIVE = RenderType.eyes(
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
     		"textures/entity/protector_emissive.png"));
 
     public ProtectorEmissiveLayer(RenderLayerParent<ProtectorEntity, Protector> renderLayerParent) {
@@ -27,6 +28,6 @@ public class ProtectorEmissiveLayer extends RenderLayer<ProtectorEntity, Protect
                        float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
     }
 }

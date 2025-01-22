@@ -37,11 +37,11 @@ import java.util.List;
 public class CustomWinScreen extends Screen {
    private static final Logger LOGGER = LogUtils.getLogger();
    private static final ResourceLocation VIGNETTE_LOCATION
-           = new ResourceLocation("textures/misc/vignette.png");
+           = ResourceLocation.withDefaultNamespace("textures/misc/vignette.png");
    private static final String WIN_TXT = "wardentools:texts/win.txt";
    private static final String MOD_CREDITS = "wardentools:texts/mod_credits.json";
    private static final ResourceLocation MOD_BACKGROUND_LOCATION
-           = new ResourceLocation(ModMain.MOD_ID, "textures/gui/background.png");
+           = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/background.png");
    private static final Component SECTION_HEADING
            = Component.literal("========================").withStyle(ChatFormatting.WHITE);
    private static final String OBFUSCATE_TOKEN
@@ -135,7 +135,7 @@ public class CustomWinScreen extends Screen {
 
    private void wrapCreditsIO(String name, CreditsReader reader1) {
       if (this.minecraft != null) {
-         try (Reader reader = this.minecraft.getResourceManager().openAsReader(new ResourceLocation(name))) {
+         try (Reader reader = this.minecraft.getResourceManager().openAsReader(ResourceLocation.withDefaultNamespace(name))) {
             reader1.read(reader);
          } catch (Exception exception) {
             LOGGER.error("Couldn't load credits", (Throwable)exception);

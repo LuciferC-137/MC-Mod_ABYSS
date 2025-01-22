@@ -13,11 +13,11 @@ import wardentools.ModMain;
 
 public class ModFluidTypes {
     public static final ResourceLocation LIQUID_CORRUPTION_STILL_RL
-            = new ResourceLocation(ModMain.MOD_ID, "block/liquid_corruption_still");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/liquid_corruption_still");
     public static final ResourceLocation LIQUID_CORRUPTION_FLOWING_RL
-            = new ResourceLocation(ModMain.MOD_ID, "block/liquid_corruption_flow");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/liquid_corruption_flow");
     public static final ResourceLocation LIQUID_CORRUPTION_OVERLAY_RL
-            = new ResourceLocation(ModMain.MOD_ID, "misc/in_liquid_corruption_overlay");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "misc/in_liquid_corruption_overlay");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
             DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, ModMain.MOD_ID);

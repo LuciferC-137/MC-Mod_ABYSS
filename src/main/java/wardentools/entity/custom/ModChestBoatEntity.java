@@ -21,9 +21,9 @@ public class ModChestBoatEntity extends ChestBoat {
             SynchedEntityData.defineId(ModChestBoatEntity.class, EntityDataSerializers.INT);
 
     public static final ModelLayerLocation DARKTREE_CHEST_BOAT_LAYER = new ModelLayerLocation(
-            new ResourceLocation(ModMain.MOD_ID, "chest_boat/darktree"), "main");
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chest_boat/darktree"), "main");
     public static final ModelLayerLocation WHITETREE_CHEST_BOAT_LAYER = new ModelLayerLocation(
-            new ResourceLocation(ModMain.MOD_ID, "chest_boat/whitetree"), "main");
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chest_boat/whitetree"), "main");
 
     public ModChestBoatEntity(EntityType<? extends ChestBoat> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);

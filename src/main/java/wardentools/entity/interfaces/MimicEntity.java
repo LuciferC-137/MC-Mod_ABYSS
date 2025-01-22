@@ -88,7 +88,8 @@ public class MimicEntity extends CorruptionMonster {
         EntityRenderer<? super LivingEntity> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
                 .getRenderer(this.mimicEntity);
         if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-            return livingRenderer.getModel()::renderToBuffer;
+            return (poseStack, vertexConsumer, i, j)
+                    -> livingRenderer.getModel().renderToBuffer(poseStack, vertexConsumer, i, j);
         }
         return null;
     }

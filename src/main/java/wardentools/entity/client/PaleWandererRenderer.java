@@ -11,7 +11,7 @@ import wardentools.entity.custom.PaleWandererEntity;
 
 public class PaleWandererRenderer extends MobRenderer<PaleWandererEntity, PaleWanderer>{
 	private static final ResourceLocation PALE_WANDERER_TEXTURE = 
-			new ResourceLocation(ModMain.MOD_ID, "textures/entity/pale_wanderer.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/pale_wanderer.png");
 
 	public PaleWandererRenderer(EntityRendererProvider.Context context) {
 		super(context, new PaleWanderer(context.bakeLayer(PaleWanderer.LAYER_LOCATION)), 0.5f);

@@ -19,9 +19,9 @@ import java.util.Map;
 
 public class ModArmorItem extends ArmorItem {
     private static final ResourceLocation CORRUPTION_ADVANCEMENT
-            = new ResourceLocation(ModMain.MOD_ID, "corruption_vessel");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel");
     private static final ResourceLocation RADIANCE_ADVANCEMENT
-            = new ResourceLocation(ModMain.MOD_ID, "radiance_bringer");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer");
     private static final int EFFECT_TIME = 242;
     private static final Map<Holder<ArmorMaterial>, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
             (new ImmutableMap.Builder<Holder<ArmorMaterial>, MobEffectInstance>())

@@ -13,7 +13,8 @@ import wardentools.ModMain;
 import wardentools.entity.custom.ShadowEntity;
 
 public class ShadowEmissiveLayer extends RenderLayer<ShadowEntity, Shadow> {
-    private static final RenderType EMISSIVE = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
+    private static final RenderType EMISSIVE = RenderType.eyes(
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
     		"textures/entity/shadow_emissive.png"));
 
     public ShadowEmissiveLayer(RenderLayerParent<ShadowEntity, Shadow> renderLayerParent) {
@@ -28,6 +29,6 @@ public class ShadowEmissiveLayer extends RenderLayer<ShadowEntity, Shadow> {
         if (entity.getMimicEntity() != null) return;
         VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
     }
 }

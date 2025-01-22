@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -53,19 +54,13 @@ public class AbyssDiverItem extends Item {
 
     private static void teleportPlayer(Player player){
         ServerLevel serverLevel = (ServerLevel)player.level();
-        MinecraftServer minecraftserver = serverLevel.getServer();
-        BlockPos pPos = player.getOnPos();
-
-        ResourceKey<Level> resourcekey = ModDimensions.ABYSS_LEVEL_KEY;
-        if (player.level().dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
-            resourcekey = Level.OVERWORLD;
-        }
-        ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
-        if (portalDimension != null && !player.isPassenger()) {
-            if(resourcekey == ModDimensions.ABYSS_LEVEL_KEY) {
-                player.changeDimension(portalDimension, new ModTeleporter(pPos));
-            } else {
-                player.changeDimension(portalDimension, new ModTeleporter(pPos));
+        if (player instanceof ServerPlayer serverPlayer) {
+            MinecraftServer minecraftserver = serverLevel.getServer();
+            ResourceKey<Level> resourcekey = ModDimensions.ABYSS_LEVEL_KEY;
+            if (player.level().dimension() == ModDimensions.ABYSS_LEVEL_KEY) resourcekey = Level.OVERWORLD;
+            ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
+            if (portalDimension != null && !player.isPassenger()) {
+                player.changeDimension(ModTeleporter.diveSamePlace(portalDimension, serverPlayer));
             }
         }
     }

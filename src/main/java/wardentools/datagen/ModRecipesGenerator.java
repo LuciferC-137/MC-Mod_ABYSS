@@ -38,7 +38,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern(" D ")
                 .pattern("  D")
                 .unlockedBy("has_item", has(ItemRegistry.CORRUPTED_VESSEL.get()))
-                .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID, "abyss_diver_reverse"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyss_diver_reverse"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.RADIANT_STAFF.get())
                 .define('D', ItemRegistry.DARK_STICK.get())
@@ -56,7 +56,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern(" D ")
                 .pattern("  D")
                 .unlockedBy("has_item", has(ItemRegistry.PURE_VESSEL.get()))
-                .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID, "radiant_staff_reverse"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_staff_reverse"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.ABYSSAL_SCYTHE.get(), 1)
                 .define('D', ItemRegistry.DARK_STICK.get())
@@ -286,7 +286,7 @@ public class ModRecipesGenerator extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(
                 Ingredient.of(block), RecipeCategory.BUILDING_BLOCKS, brick, 1)
                 .unlockedBy("has_item", has(block))
-                .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_brick_stone_cutting"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_brick_stone_cutting"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6)
                 .define('B', brick)
                 .pattern("BBB")
@@ -295,11 +295,11 @@ public class ModRecipesGenerator extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(
                 Ingredient.of(block), RecipeCategory.BUILDING_BLOCKS, slab, 2)
                 .unlockedBy("has_item", has(block))
-                .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_slab_stone_cutting"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_slab_stone_cutting"));
         SingleItemRecipeBuilder.stonecutting(
                 Ingredient.of(brick), RecipeCategory.BUILDING_BLOCKS, slab, 2)
                 .unlockedBy("has_item", has(block))
-                .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_slab_from_brick_stone_cutting"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_slab_from_brick_stone_cutting"));
         if (stairs != null) {
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, stairs, 4)
                     .define('B', brick)
@@ -311,11 +311,11 @@ public class ModRecipesGenerator extends RecipeProvider {
             SingleItemRecipeBuilder.stonecutting(
                     Ingredient.of(block), RecipeCategory.BUILDING_BLOCKS, stairs, 1)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_stairs_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_stairs_stone_cutting"));
             SingleItemRecipeBuilder.stonecutting(
                             Ingredient.of(brick), RecipeCategory.BUILDING_BLOCKS, stairs, 1)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_stairs_from_brick_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_stairs_from_brick_stone_cutting"));
         }
         if (wall != null) {
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, wall, 6)
@@ -327,11 +327,11 @@ public class ModRecipesGenerator extends RecipeProvider {
             SingleItemRecipeBuilder.stonecutting(
                     Ingredient.of(block), RecipeCategory.BUILDING_BLOCKS, wall, 1)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_wall_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_wall_stone_cutting"));
             SingleItemRecipeBuilder.stonecutting(
                     Ingredient.of(brick), RecipeCategory.BUILDING_BLOCKS, wall, 1)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_wall_from_brick_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_wall_from_brick_stone_cutting"));
         }
         if (chiseled != null) {
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, chiseled, 1)
@@ -343,11 +343,11 @@ public class ModRecipesGenerator extends RecipeProvider {
             SingleItemRecipeBuilder.stonecutting(
                     Ingredient.of(block), RecipeCategory.BUILDING_BLOCKS, chiseled, 1)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,"chiseled_" + name + "_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"chiseled_" + name + "_stone_cutting"));
             SingleItemRecipeBuilder.stonecutting(
                     Ingredient.of(brick), RecipeCategory.BUILDING_BLOCKS, chiseled, 1)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,"chiseled_" + name + "_from_brick_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"chiseled_" + name + "_from_brick_stone_cutting"));
         }
     }
 
@@ -364,7 +364,7 @@ public class ModRecipesGenerator extends RecipeProvider {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, plank, 4)
                 .requires(stripedLog)
                 .unlockedBy("has_item", has(log))
-                .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID, name + "_plank_from_striped_log"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name + "_plank_from_striped_log"));
         if (slab != null) {
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, slab, 6)
                     .define('P', plank)
@@ -501,7 +501,7 @@ public class ModRecipesGenerator extends RecipeProvider {
             SingleItemRecipeBuilder.stonecutting(
                     Ingredient.of(cracked), RecipeCategory.BUILDING_BLOCKS, crackedSlab, 2)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_slab_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_slab_stone_cutting"));
         }
         if (crackedStair != null) {
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, crackedStair, 4)
@@ -514,7 +514,7 @@ public class ModRecipesGenerator extends RecipeProvider {
             SingleItemRecipeBuilder.stonecutting(
                     Ingredient.of(cracked), RecipeCategory.BUILDING_BLOCKS, crackedStair, 1)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_stairs_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_stairs_stone_cutting"));
         }
         if (crackedWall != null) {
             ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, crackedWall, 6)
@@ -526,7 +526,7 @@ public class ModRecipesGenerator extends RecipeProvider {
             SingleItemRecipeBuilder.stonecutting(
                     Ingredient.of(cracked), RecipeCategory.BUILDING_BLOCKS, crackedWall, 1)
                     .unlockedBy("has_item", has(block))
-                    .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID,name + "_wall_stone_cutting"));
+                    .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,name + "_wall_stone_cutting"));
         }
     }
 
@@ -535,11 +535,11 @@ public class ModRecipesGenerator extends RecipeProvider {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(input),
                         RecipeCategory.MISC, output, exp, time)
                 .unlockedBy("has_item", has(input))
-                .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID, name + "_smelting"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name + "_smelting"));
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(input),
                         RecipeCategory.MISC, output, exp, time / 2)
                 .unlockedBy("has_item", has(input))
-                .save(recipeOutput, new ResourceLocation(ModMain.MOD_ID, name + "_blasting"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name + "_blasting"));
     }
 
     protected void fullArmorCraft(@NotNull RecipeOutput recipeOutput, @NotNull Item material,

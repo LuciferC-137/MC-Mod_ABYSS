@@ -1,5 +1,6 @@
 package wardentools.mixin;
 
+import com.mojang.blaze3d.vertex.*;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -8,11 +9,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 
 import net.minecraft.client.Camera;
@@ -30,7 +26,7 @@ import wardentools.worldgen.dimension.ModDimensions;
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
 	@Unique private static final ResourceLocation ABYSS_SKY_LOCATION
-		= new ResourceLocation(ModMain.MOD_ID, "textures/environment/abyss_skyb.png");
+		= ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/environment/abyss_skyb.png");
 	
 	@Inject(method = "renderSky", at = @At("HEAD"))
 	private void onRenderSky(Matrix4f pose, Matrix4f matrix,
@@ -56,7 +52,8 @@ public class LevelRendererMixin {
 				RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 				RenderSystem.setShaderTexture(0, ABYSS_SKY_LOCATION);
 				Tesselator tesselator = Tesselator.getInstance();
-				BufferBuilder bufferbuilder = tesselator.getBuilder();
+				BufferBuilder bufferbuilder = tesselator
+						.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 				PoseStack posestack = new PoseStack();
 				posestack.mulPose(pose);
 				for(int i = 0; i < 6; ++i) {
@@ -67,16 +64,15 @@ public class LevelRendererMixin {
 					if (i == 4) posestack.mulPose(Axis.ZP.rotationDegrees(90.0F));
 					if (i == 5) posestack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
 					Matrix4f matrix4f = posestack.last().pose();
-					bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-					bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F)
-							.uv(0.0F, 0.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY).endVertex();
-					bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F)
-							.uv(0.0F, 1.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY).endVertex();
-					bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F)
-							.uv(1.0F, 1.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY).endVertex();
-					bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F)
-							.uv(1.0F, 0.0F).color(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY).endVertex();
-					tesselator.end();
+					bufferbuilder.addVertex(matrix4f, -100.0F, -100.0F, -100.0F)
+							.setUv(0.0F, 0.0F).setColor(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY);
+					bufferbuilder.addVertex(matrix4f, -100.0F, -100.0F, 100.0F)
+							.setUv(0.0F, 1.0F).setColor(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY);
+					bufferbuilder.addVertex(matrix4f, 100.0F, -100.0F, 100.0F)
+							.setUv(1.0F, 1.0F).setColor(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY);
+					bufferbuilder.addVertex(matrix4f, 100.0F, -100.0F, -100.0F)
+							.setUv(1.0F, 0.0F).setColor(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY);
+					BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
 					posestack.popPose();
 				}
 				RenderSystem.depthMask(true);

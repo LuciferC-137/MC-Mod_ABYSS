@@ -28,11 +28,11 @@ import wardentools.worldgen.biome.ModBiomes;
 
 public class ModDimensions {
 	public static final ResourceKey<LevelStem> ABYSS_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-            new ResourceLocation(ModMain.MOD_ID, "abyssdim"));
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim"));
     public static final ResourceKey<Level> ABYSS_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-            new ResourceLocation(ModMain.MOD_ID, "abyssdim"));
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim"));
     public static final ResourceKey<DimensionType> ABYSS_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
-            new ResourceLocation(ModMain.MOD_ID, "abyssdim_type"));
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim_type"));
     
     public static void bootstrapType(BootstrapContext<DimensionType> context) {
         context.register(ABYSS_DIM_TYPE, new DimensionType(

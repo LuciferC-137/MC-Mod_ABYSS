@@ -11,6 +11,6 @@ public class ModStructures {
             = createKey(ModMain.MOD_ID, "surface_ancient_city");
 
     private static ResourceKey<Structure> createKey(String mod_id, String name) {
-        return ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(mod_id, name));
+        return ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(mod_id, name));
     }
 }

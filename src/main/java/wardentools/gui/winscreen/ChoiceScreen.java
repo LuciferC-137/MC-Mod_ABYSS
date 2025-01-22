@@ -22,15 +22,15 @@ import java.util.Random;
 @OnlyIn(Dist.CLIENT)
 public class ChoiceScreen extends Screen {
    private static final ResourceLocation VIGNETTE_LOCATION
-           = new ResourceLocation("textures/misc/vignette.png");
+           = ResourceLocation.withDefaultNamespace("textures/misc/vignette.png");
    private static final ResourceLocation CORRUPTION_LOCATION
-              = new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/corruption.png");
+              = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/choice_screen/corruption.png");
    private static final ResourceLocation RADIANCE_LOCATION
-              = new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/radiance.png");
+              = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/choice_screen/radiance.png");
    private static final ResourceLocation CORRUPTION_BUTTON_OVERLAY
-              = new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/corruption_button_overlay.png");
+              = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/choice_screen/corruption_button_overlay.png");
    private static final ResourceLocation RADIANCE_BUTTON_OVERLAY
-              = new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/radiance_button_overlay.png");
+              = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/choice_screen/radiance_button_overlay.png");
    private static final int BUTTON_WIDTH = 100;
    private static final int BUTTON_HEIGHT = 20;
    private static final int OVERLAY_MARGIN = 40;

@@ -1,5 +1,10 @@
 package wardentools.sounds;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -7,6 +12,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModSounds {
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
@@ -66,21 +74,29 @@ public class ModSounds {
 			registerSoundEvents("incarnation_theme");
 	public static final RegistryObject<SoundEvent> ABYSS_THEME =
 			registerSoundEvents("abyss_theme");
-	//Musics discs
-	public static final RegistryObject<SoundEvent> DEEP_FOREST_MUSIC_DISC =
-			registerSoundEvents("deep_forest_music_disc");
-	public static final RegistryObject<SoundEvent> WHITE_FOREST_MUSIC_DISC =
-			registerSoundEvents("white_forest_music_disc");
-	public static final RegistryObject<SoundEvent> INCARNATION_THEME_MUSIC_DISC =
-			registerSoundEvents("incarnation_theme_disc");
-	public static final RegistryObject<SoundEvent> ABYSS_THEME_MUSIC_DISC =
-			registerSoundEvents("abyss_theme_disc");
 
+	// Music discs (lazy references)
+	public static Holder.Reference<SoundEvent> getDeepForestMusicDisc() {
+		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(ResourceKey
+				.create(Registries.SOUND_EVENT, ModSounds.DEEP_FOREST.getId()));
+	}
+	public static Holder.Reference<SoundEvent> getWhiteForestMusicDisc() {
+		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.WHITE_FOREST.getId()));
+	}
+	public static Holder.Reference<SoundEvent> getIncarnationThemeMusicDisc() {
+		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.INCARNATION_THEME.getId()));
+	}
+	public static Holder.Reference<SoundEvent> getAbyssThemeMusicDisc() {
+		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.ABYSS_THEME.getId()));
+	}
 
-	
 	public static RegistryObject<SoundEvent> registerSoundEvents(String name){
 		return SOUND_EVENTS.register(name,
-				() -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ModMain.MOD_ID, name)));
+				() -> SoundEvent.createVariableRangeEvent(
+						ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name)));
 	}
 	
 	public static void register(IEventBus eventBus) {

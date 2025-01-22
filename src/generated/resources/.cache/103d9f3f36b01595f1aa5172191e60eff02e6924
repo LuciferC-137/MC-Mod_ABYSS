@@ -1,6 +1,7 @@
-// 1.20.6	2025-01-14T14:06:58.8481674	Registries
+// 1.21	2025-01-22T18:06:17.7334517	Registries
 cd53d11755a53b3f0b2795a7bc6e8a1703b1bb16 data/wardentools/dimension/abyssdim.json
 78abca31c24b948721b9b9f97a002c98b1cb0365 data/wardentools/dimension_type/abyssdim_type.json
+19483aa9e109ff6698e521b3fd5ebc14e052cc3f data/wardentools/enchantment/stealth.json
 9cfcee08e59389f54d84cb6a21e1b86726060c64 data/wardentools/worldgen/biome/cristal_cave.json
 05d5cc6ec58245e0a7133f11104ae3fabb53310e data/wardentools/worldgen/biome/deep_forest.json
 2b6c288b864c772e57b6bda1fbc1592cda9959b1 data/wardentools/worldgen/biome/waste_land.json

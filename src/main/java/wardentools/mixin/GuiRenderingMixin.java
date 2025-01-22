@@ -1,6 +1,7 @@
 package wardentools.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,14 +17,14 @@ import wardentools.entity.custom.NoctilureEntity;
 @Mixin(Gui.class)
 public class GuiRenderingMixin {
     @Unique private static final ResourceLocation SPRINT_BAR_BACKGROUND
-            = new ResourceLocation(ModMain.MOD_ID,
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
             "textures/gui/sprint_bar/noctilure_background.png");
     @Unique private static final ResourceLocation SPRINT_BAR_PROGRESS
-            = new ResourceLocation(ModMain.MOD_ID,
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
             "textures/gui/sprint_bar/noctilure_progress.png");
 
     @Inject(method = "renderHotbarAndDecorations", at = @At("TAIL"))
-    private void onGuiRendering(GuiGraphics graphics, float f, CallbackInfo ci) {
+    private void onGuiRendering(GuiGraphics graphics, DeltaTracker tracker, CallbackInfo ci) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.player.getVehicle() != null) {
             int screenWidth = minecraft.getWindow().getGuiScaledWidth();

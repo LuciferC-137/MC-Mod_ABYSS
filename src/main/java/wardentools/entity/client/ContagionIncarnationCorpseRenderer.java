@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.ContagionIncarnationCorpseEntity;
@@ -14,7 +13,7 @@ import wardentools.particle.ParticleRegistry;
 public class ContagionIncarnationCorpseRenderer
 		extends LivingEntityRenderer<ContagionIncarnationCorpseEntity, ContagionIncarnationCorpse> {
 	private static final ResourceLocation CONTAGION_INCARNATION_TEXTURE =
-			new ResourceLocation(ModMain.MOD_ID, "textures/entity/contagion_incarnation_corpse.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/contagion_incarnation_corpse.png");
 	private static final int PARTICLE_EFFECT_DURATION = 200;
 
 	public ContagionIncarnationCorpseRenderer(EntityRendererProvider.Context context) {

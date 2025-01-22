@@ -23,7 +23,7 @@ import wardentools.entity.custom.DeepLurkerEntity;
 public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-            new ResourceLocation(ModMain.MOD_ID, "deeplurker"), "main");
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deeplurker"), "main");
 
     private final ModelParts parts;
 
@@ -70,8 +70,8 @@ public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
 
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-                               int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        this.parts.FULL().render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+                               int packedLight, int packedOverlay, int i) {
+        this.parts.FULL().render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
     }
 
     private record ModelParts(ModelPart FULL,ModelPart LOW_BODY, ModelPart ARM_R, ModelPart foreArmR, ModelPart ARM_L, ModelPart foreArmL, ModelPart LegR, ModelPart LegL, ModelPart HEAD, ModelPart earL, ModelPart earR, ModelPart earR_r1, ModelPart body) {}
@@ -88,16 +88,10 @@ public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
 		root().getAllParts().forEach(ModelPart::resetPose);
 		animate(entity.scaredAnimationState, DeepLurkerAnimation.scared, ageInTicks);
 		animate(entity.calmAnimationState, DeepLurkerAnimation.calm1, ageInTicks);
-		
-		if (entity.isClimbing()) {
-			animateWalk(DeepLurkerAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
-	    } else if (entity.isInWaterOrBubble()) {
-	        // TODO swim animation
-	    } else {
-	        animateWalk(DeepLurkerAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
-	    }
-		
-		parts.HEAD().yRot = parts.HEAD().yRot + netHeadYaw * ((float)Math.PI / 180F);
+
+        animateWalk(DeepLurkerAnimation.walking, limbSwing, limbSwingAmount, 1f, 2.5f);
+
+        parts.HEAD().yRot = parts.HEAD().yRot + netHeadYaw * ((float)Math.PI / 180F);
         parts.HEAD().zRot = parts.HEAD().zRot + headPitch * ((float)Math.PI / 180F);
 	}
 }

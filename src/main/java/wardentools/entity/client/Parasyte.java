@@ -17,7 +17,7 @@ import wardentools.entity.custom.ParasyteEntity;
 @SuppressWarnings("unused")
 public class Parasyte extends HierarchicalModel<ParasyteEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
-			= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "parasyte"), "main");
+			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "parasyte"), "main");
 	private final Parasyte.ModelParts parts;
 
 	public Parasyte(ModelPart root) {
@@ -68,9 +68,8 @@ public class Parasyte extends HierarchicalModel<ParasyteEntity> {
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay,
-							   float red, float green, float blue, float alpha) {
-		this.parts.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+							   int packedLight, int packedOverlay, int i) {
+		this.parts.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import wardentools.entity.custom.ProtectorEntity;
 
 public class Protector extends HierarchicalModel<ProtectorEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION =
-			new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "protector"), "main");
+			new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector"), "main");
 	private final ModelParts parts;
 
 	public Protector(ModelPart root) {
@@ -59,8 +59,8 @@ public class Protector extends HierarchicalModel<ProtectorEntity> {
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		this.parts.FULL().render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+							   int packedLight, int packedOverlay, int i) {
+		this.parts.FULL().render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
 	}
 
 	@Override

@@ -13,7 +13,7 @@
                 "predicates": {
                   "minecraft:enchantments": [
                     {
-                      "enchantment": "minecraft:silk_touch",
+                      "enchantments": "minecraft:silk_touch",
                       "levels": {
                         "min": 1
                       }
@@ -23,7 +23,7 @@
               }
             }
           ],
-          "name": "wardentools:black_lantern"
+          "name": "wardentools:reinforced_glass"
         }
       ],
       "rolls": 1.0
@@ -42,7 +42,7 @@
                   "predicates": {
                     "minecraft:enchantments": [
                       {
-                        "enchantment": "minecraft:silk_touch",
+                        "enchantments": "minecraft:silk_touch",
                         "levels": {
                           "min": 1
                         }
@@ -58,8 +58,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3.0,
-                "min": 1.0
+                "max": 2.0,
+                "min": 0.0
               },
               "function": "minecraft:set_count"
             },
@@ -73,6 +73,49 @@
             }
           ],
           "name": "wardentools:pale_shard"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:inverted",
+              "term": {
+                "condition": "minecraft:match_tool",
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:uniform_bonus_count",
+              "function": "minecraft:apply_bonus",
+              "parameters": {
+                "bonusMultiplier": 1
+              }
+            }
+          ],
+          "name": "minecraft:echo_shard"
         }
       ],
       "rolls": 1.0
@@ -88,7 +131,7 @@
               "predicates": {
                 "minecraft:enchantments": [
                   {
-                    "enchantment": "minecraft:silk_touch",
+                    "enchantments": "minecraft:silk_touch",
                     "levels": {
                       "min": 1
                     }
@@ -108,7 +151,7 @@
               "count": {
                 "type": "minecraft:uniform",
                 "max": 3.0,
-                "min": 1.0
+                "min": 0.0
               },
               "function": "minecraft:set_count"
             },
@@ -121,11 +164,15 @@
               }
             }
           ],
-          "name": "minecraft:echo_shard"
+          "name": "minecraft:iron_nugget"
         }
       ],
-      "rolls": 1.0
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 0.0
+      }
     }
   ],
-  "random_sequence": "wardentools:blocks/black_lantern"
+  "random_sequence": "wardentools:blocks/reinforced_glass"
 }

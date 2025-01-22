@@ -496,7 +496,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
            if (level instanceof ServerLevel serverlevel) {
                if (entity == null || entity.killedEntity(serverlevel, this)) {
                  this.gameEvent(GameEvent.ENTITY_DIE);
-                 this.dropAllDeathLoot(source);
+                 this.dropAllDeathLoot(serverlevel, source);
                  this.createWitherRose(livingentity);
                }
                this.level().broadcastEntityEvent(this, (byte)3);

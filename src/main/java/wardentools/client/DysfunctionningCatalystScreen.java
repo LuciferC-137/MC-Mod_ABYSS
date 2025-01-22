@@ -16,10 +16,10 @@ import java.util.Random;
 
 public class DysfunctionningCatalystScreen extends AbstractContainerScreen<DysfunctionningCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
-			new ResourceLocation(ModMain.MOD_ID,
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
 					"textures/gui/dysfunctionning_catalyst_menu.png");
 	private static final ResourceLocation TEXTURE_EYES =
-			new ResourceLocation(ModMain.MOD_ID,
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
 					"textures/gui/dysfunctionning_catalyst_menu_eye_overlay.png");
 	private static final int BAR_LENGTH = 28;
 	private static final int BG_COLOR = 0xff8B8B8B;

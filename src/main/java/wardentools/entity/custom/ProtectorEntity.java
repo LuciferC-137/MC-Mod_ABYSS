@@ -213,12 +213,13 @@ public class ProtectorEntity extends AbstractGolem {
 			if (level instanceof ServerLevel serverlevel) {
 				if (entity == null || entity.killedEntity(serverlevel, this)) {
 					this.gameEvent(GameEvent.ENTITY_DIE);
-					this.dropAllDeathLoot(source);
+					this.dropAllDeathLoot(serverlevel, source);
 					this.createWitherRose(livingentity);
 				}
 				this.level().broadcastEntityEvent(this, (byte)3);
 			}
 		}
+		super.die(source);
 	}
 
 	@Override
@@ -278,26 +279,9 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 	
 	@Override
-	public boolean doHurtTarget(Entity target) {
+	public boolean doHurtTarget(@NotNull Entity target) {
 	    this.setAttackTick(attackDurationTick);
-	    float f = this.getAttackDamage();
-	    float f1 = (int)f > 0 ? f / 2.0F + (float)this.random.nextInt((int)f) : f;
-	    boolean flag = target.hurt(this.damageSources().mobAttack(this), f1);
-	    if (flag) {
-	       double d2;
-	       if (target instanceof LivingEntity livingentity) {
-               d2 = livingentity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
-	       } else {
-	          d2 = 0.0D;
-	       }
-	       double d0 = d2;
-	       double d1 = Math.max(0.0D, 1.0D - d0);
-	       target.setDeltaMovement(target.getDeltaMovement().add(0.0D, (double)0.4F * d1, 0.0D));
-	       this.doEnchantDamageEffects(this, target);
-	    }
-
-	    this.playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.0F, 1.0F);
-	    return flag;
+	    return super.doHurtTarget(target);
 	}
 	
 	@Override

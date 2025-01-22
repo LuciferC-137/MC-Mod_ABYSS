@@ -9,7 +9,6 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ModBoatEntity;
-import wardentools.sounds.ModSounds;
 
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
@@ -574,23 +573,23 @@ public class ItemRegistry {
 
 	public static final RegistryObject<Item> ABYSS_MUSIC_DISC =
 			REGISTAR.register("music_disc_abyss",
-					() -> new RecordItem(1, ModSounds.ABYSS_THEME_MUSIC_DISC.get(),
-							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 3420));
+					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+							.jukeboxPlayable(ModJukeBoxSongsGenerator.ABYSS)));
 
 	public static final RegistryObject<Item> INCARNATION_MUSIC_DISC =
 			REGISTAR.register("music_disc_incarnation",
-					() -> new RecordItem(1, ModSounds.INCARNATION_THEME_MUSIC_DISC.get(),
-							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2520));
+					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+							.jukeboxPlayable(ModJukeBoxSongsGenerator.INCARNATION)));
 
 	public static final RegistryObject<Item> DEEP_FOREST_MUSIC_DISC =
 			REGISTAR.register("music_disc_deepforest",
-					() -> new RecordItem(1, ModSounds.DEEP_FOREST_MUSIC_DISC.get(),
-							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2420));
+					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+							.jukeboxPlayable(ModJukeBoxSongsGenerator.DEEPFOREST)));
 
 	public static final RegistryObject<Item> WHITE_FOREST_MUSIC_DISC =
 			REGISTAR.register("music_disc_whiteforest",
-					() -> new RecordItem(1, ModSounds.WHITE_FOREST_MUSIC_DISC.get(),
-							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2060));
+					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
+							.jukeboxPlayable(ModJukeBoxSongsGenerator.WHITEFOREST)));
 
 	public static final RegistryObject<Item> WHISTLE =
 			REGISTAR.register("whistle",

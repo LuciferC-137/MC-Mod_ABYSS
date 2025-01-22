@@ -18,7 +18,7 @@ import wardentools.items.ItemRegistry;
 
 public class ModMaterials {
 	public static final Holder<ArmorMaterial> DEEPCRISTAL = ModMaterials
-			.register("wardentools:deepcristal", new EnumMap<>(ArmorItem.Type.class) {
+			.register("deepcristal", new EnumMap<>(ArmorItem.Type.class) {
 				{
 					this.put(ArmorItem.Type.HELMET, 13);
 					this.put(ArmorItem.Type.CHESTPLATE, 15);
@@ -28,11 +28,11 @@ public class ModMaterials {
 			}, 37, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.0F, 0.0F,
 					() -> {
 						return Ingredient.of(ItemRegistry.DEEPINGOTS.get());
-					}, List.of(new ArmorMaterial.Layer(new ResourceLocation(ModMain.MOD_ID, "textures/models/armor/deepcristal_layer_1.png"))));
+					}, List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/armor/deepcristal_layer_1.png"))));
 
 
 	public static final Holder<ArmorMaterial> RADIANCE_CRISTAL = ModMaterials
-			.register("wardentools:radiance_cristal", new EnumMap<>(ArmorItem.Type.class) {
+			.register("radiance_cristal", new EnumMap<>(ArmorItem.Type.class) {
 				{
 					this.put(ArmorItem.Type.HELMET, 13);
 					this.put(ArmorItem.Type.CHESTPLATE, 15);
@@ -42,7 +42,7 @@ public class ModMaterials {
 			}, 37, SoundEvents.ARMOR_EQUIP_NETHERITE, 2.0F, 0.0F,
 					() -> {
 						return Ingredient.of(ItemRegistry.RADIANCE_INGOTS.get());
-					}, List.of(new ArmorMaterial.Layer(new ResourceLocation(ModMain.MOD_ID, "textures/models/armor/radiance_cristal_layer_1.png"))));
+					}, List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/armor/radiance_cristal_layer_1.png"))));
     
     ModMaterials() {
     }
@@ -58,7 +58,7 @@ public class ModMaterials {
         for (ArmorItem.Type $$9 : var9) {
             $$8.put($$9, (Integer) durabilities.get($$9));
         }
-		return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, new ResourceLocation(name), new ArmorMaterial($$8, protection, sound, repairIngredient, layerList, toughness, knockbackResistance));
+		return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, ResourceLocation.withDefaultNamespace(name), new ArmorMaterial($$8, protection, sound, repairIngredient, layerList, toughness, knockbackResistance));
 	}
     
 	

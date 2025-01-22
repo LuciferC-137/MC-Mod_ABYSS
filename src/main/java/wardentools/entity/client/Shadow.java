@@ -9,7 +9,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.ShadowAnimation;
@@ -19,7 +18,7 @@ import wardentools.entity.utils.RenderToBufferFunction;
 @SuppressWarnings("unused")
 public class Shadow extends HierarchicalModel<ShadowEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
-			= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "shadow"), "main");
+			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "shadow"), "main");
 	private RenderToBufferFunction renderToBufferFunction;
 	private final ModelPart FULL;
 	private final ModelPart HEAD;
@@ -57,13 +56,12 @@ public class Shadow extends HierarchicalModel<ShadowEntity> {
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay,
-							   float red, float green, float blue, float alpha) {
+							   int packedLight, int packedOverlay, int i) {
 		if (this.renderToBufferFunction == null) {
-			this.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+			this.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
 		} else {
 			this.renderToBufferFunction
-					.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+					.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay);
 		}
 	}
 

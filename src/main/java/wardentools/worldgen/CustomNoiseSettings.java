@@ -76,11 +76,13 @@ public class CustomNoiseSettings {
     public static final ResourceKey<NoiseGeneratorSettings> ABYSS_NOISE = createNoiseKey("abyss_noise");
 
     private static ResourceKey<NoiseGeneratorSettings> createNoiseKey(String name) {
-        return ResourceKey.create(Registries.NOISE_SETTINGS, new ResourceLocation(ModMain.MOD_ID, name));
+        return ResourceKey.create(Registries.NOISE_SETTINGS,
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
     }
 
     private static ResourceKey<DensityFunction> createKey(String name) {
-        return ResourceKey.create(Registries.DENSITY_FUNCTION, new ResourceLocation("minecraft", name));
+        return ResourceKey.create(Registries.DENSITY_FUNCTION,
+                ResourceLocation.fromNamespaceAndPath("minecraft", name));
     }
 
     public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> ctx) {

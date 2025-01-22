@@ -13,7 +13,7 @@ import wardentools.entity.custom.TemperEntity;
 
 public class TemperRenderer extends MobRenderer<TemperEntity, Temper>{
 	private static final ResourceLocation TEMPER_TEXTURE =
-			new ResourceLocation(ModMain.MOD_ID, "textures/entity/temper.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/temper.png");
 
 	public TemperRenderer(EntityRendererProvider.Context context) {
 		super(context, new Temper(context.bakeLayer(Temper.LAYER_LOCATION)), 0.4f);

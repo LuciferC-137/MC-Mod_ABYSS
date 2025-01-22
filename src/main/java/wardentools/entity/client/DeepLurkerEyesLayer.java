@@ -13,7 +13,8 @@ import wardentools.ModMain;
 import wardentools.entity.custom.DeepLurkerEntity;
 
 public class DeepLurkerEyesLayer extends RenderLayer<DeepLurkerEntity, DeepLurker> {
-    private static final RenderType EYES = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
+    private static final RenderType EYES = RenderType.eyes(ResourceLocation
+            .fromNamespaceAndPath(ModMain.MOD_ID,
     		"textures/entity/deeplurker_eyes.png"));
 
     public DeepLurkerEyesLayer(RenderLayerParent<DeepLurkerEntity, DeepLurker> renderLayerParent) {
@@ -27,6 +28,6 @@ public class DeepLurkerEyesLayer extends RenderLayer<DeepLurkerEntity, DeepLurke
                        float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(EYES);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F), 1.0F, 1.0F, 1.0F, 1.0F);
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
     }
 }

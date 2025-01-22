@@ -12,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import wardentools.ModMain;
 import wardentools.blockentity.AbyssPortalBlockEntity;
@@ -22,13 +23,13 @@ import java.io.IOException;
 public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortalBlockEntity> {
     // TEXTURES
     public static final ResourceLocation ABYSS_ENV_LOCATION
-            = new ResourceLocation(ModMain.MOD_ID,"textures/misc/abyss_portal_env.png");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"textures/misc/abyss_portal_env.png");
     public static final ResourceLocation ABYSS_PORTAL_LOCATION
-            = new ResourceLocation(ModMain.MOD_ID,"textures/misc/abyss_portal.png");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"textures/misc/abyss_portal.png");
 
     // SHADER
     public static final ResourceLocation shaderLocation
-            = new ResourceLocation(ModMain.MOD_ID, "rendertype_abyss_portal");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "rendertype_abyss_portal");
     public static final ShaderInstance shader;
     static {
         try {
@@ -59,7 +60,7 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
     }
 
     @Override
-    public void render(AbyssPortalBlockEntity entity, float f1, PoseStack poseStack, MultiBufferSource buffer, int i1, int i2) {
+    public void render(@NotNull AbyssPortalBlockEntity entity, float f1, PoseStack poseStack, MultiBufferSource buffer, int i1, int i2) {
         Matrix4f matrix4f = poseStack.last().pose();
         this.renderCube(entity, matrix4f, buffer.getBuffer(this.renderType()));
     }
@@ -85,10 +86,10 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
                             float x1, float x2, float y1, float y2, float z1, float z2, float z3, float z4,
                             Direction direction) {
         if (blockEntity.shouldRenderFace(direction)) {
-            consumer.vertex(matrix4f, x1, y1, z1).endVertex();
-            consumer.vertex(matrix4f, x2, y1, z2).endVertex();
-            consumer.vertex(matrix4f, x2, y2, z3).endVertex();
-            consumer.vertex(matrix4f, x1, y2, z4).endVertex();
+            consumer.addVertex(matrix4f, x1, y1, z1);
+            consumer.addVertex(matrix4f, x2, y1, z2);
+            consumer.addVertex(matrix4f, x2, y2, z3);
+            consumer.addVertex(matrix4f, x1, y2, z4);
         }
 
     }

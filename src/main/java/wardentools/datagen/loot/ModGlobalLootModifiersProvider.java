@@ -4,6 +4,7 @@ package wardentools.datagen.loot;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
 import java.util.concurrent.CompletableFuture;
@@ -16,7 +17,7 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
     }
 
     @Override
-    protected void start() {
+    protected void start(HolderLookup.@NotNull Provider provider) {
     	
        
     }

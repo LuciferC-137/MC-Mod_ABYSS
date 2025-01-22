@@ -6,12 +6,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.DeepLurkerEntity;
 
 public class DeepLurkerRenderer extends MobRenderer<DeepLurkerEntity, DeepLurker>{
 	private static final ResourceLocation DEEPLURKER_TEXTURE = 
-			new ResourceLocation(ModMain.MOD_ID, "textures/entity/deeplurker.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/deeplurker.png");
 
 	public DeepLurkerRenderer(EntityRendererProvider.Context context) {
 		super(context, new DeepLurker(context.bakeLayer(DeepLurker.LAYER_LOCATION)), 0.5f);
@@ -19,13 +20,14 @@ public class DeepLurkerRenderer extends MobRenderer<DeepLurkerEntity, DeepLurker
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(DeepLurkerEntity pEntity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull DeepLurkerEntity pEntity) {
 		return DEEPLURKER_TEXTURE;
 	}
 	
 	@Override
-	public void render(DeepLurkerEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
-						MultiBufferSource pBuffer, int pPackedLight) {
+	public void render(DeepLurkerEntity pEntity, float pEntityYaw, float pPartialTicks,
+					   @NotNull PoseStack pMatrixStack,
+					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {
 		if (pEntity.isBaby()) {
 			pMatrixStack.scale(0.5f, 0.5f, 0.5f);
 		}	

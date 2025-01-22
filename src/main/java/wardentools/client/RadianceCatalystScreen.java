@@ -13,7 +13,7 @@ import wardentools.blockentity.RadianceCatalystBlockEntity;
 
 public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
-			new ResourceLocation(ModMain.MOD_ID, "textures/gui/radiance_catalyst_menu.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/radiance_catalyst_menu.png");
 	private static final Component CORRUPTED =
 			Component.translatable("gui." + ModMain.MOD_ID + ".radiance_catalyst_screen.hover.corrupted");
 	private static final Component PURE =

@@ -21,7 +21,7 @@ import wardentools.client.model.RadianceCatalystInterior;
 public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCatalystBlockEntity> {
 	private static final float rotationSpeed = 1.5f;
     private static final ResourceLocation INTERIOR_TEXTURE
-            = new ResourceLocation(ModMain.MOD_ID, "textures/models/radiance_catalyst_interior.png");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/radiance_catalyst_interior.png");
     private static final RadianceCatalystInterior model =
 			new RadianceCatalystInterior(RadianceCatalystInterior.createBodyLayer().bakeRoot());
 	
@@ -60,7 +60,7 @@ public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCat
 
         model.render(poseStack, vertexConsumer, LightTexture.pack(
 				level.getBrightness(LightLayer.BLOCK, pos), level.getBrightness(LightLayer.SKY, pos)),
-        		packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        		packedOverlay);
 
         poseStack.popPose();
     }

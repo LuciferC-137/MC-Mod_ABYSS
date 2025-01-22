@@ -16,7 +16,7 @@
                     "predicates": {
                       "minecraft:enchantments": [
                         {
-                          "enchantment": "minecraft:silk_touch",
+                          "enchantments": "minecraft:silk_touch",
                           "levels": {
                             "min": 1
                           }
@@ -26,20 +26,11 @@
                   }
                 }
               ],
-              "name": "wardentools:abyssalite_deep_ore"
+              "name": "wardentools:abyssalite_coal_ore"
             },
             {
               "type": "minecraft:item",
               "functions": [
-                {
-                  "add": false,
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 3.0,
-                    "min": 1.0
-                  },
-                  "function": "minecraft:set_count"
-                },
                 {
                   "enchantment": "minecraft:fortune",
                   "formula": "minecraft:ore_drops",
@@ -49,7 +40,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "wardentools:deep_fragment"
+              "name": "minecraft:coal"
             }
           ]
         }
@@ -57,5 +48,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "wardentools:blocks/abyssalite_deep_ore"
+  "random_sequence": "wardentools:blocks/abyssalite_coal_ore"
 }

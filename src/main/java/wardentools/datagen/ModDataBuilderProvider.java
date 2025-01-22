@@ -2,6 +2,8 @@ package wardentools.datagen;
 
 
 import net.minecraft.core.registries.Registries;
+import wardentools.items.ModJukeBoxSongsGenerator;
+import wardentools.items.enchantment.EnchantmentGenerator;
 import wardentools.worldgen.CustomNoiseSettings;
 import wardentools.worldgen.features.ModConfiguredFeatures;
 import net.minecraft.core.HolderLookup;
@@ -18,17 +20,21 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 
-public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
+public class ModDataBuilderProvider extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+            // WorldGen Providers
     		.add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
             .add(Registries.DIMENSION_TYPE, ModDimensions::bootstrapType)
     		.add(Registries.LEVEL_STEM, ModDimensions::bootstrapStem)
     		.add(Registries.BIOME, ModBiomes::bootstrap)
     		.add(Registries.CONFIGURED_CARVER, ModConfiguredCarver::bootstrap)
-            .add(Registries.NOISE_SETTINGS, CustomNoiseSettings::bootstrap);
+            .add(Registries.NOISE_SETTINGS, CustomNoiseSettings::bootstrap)
+            // Other Providers
+            .add(Registries.ENCHANTMENT, EnchantmentGenerator::bootstrap)
+            .add(Registries.JUKEBOX_SONG, ModJukeBoxSongsGenerator::bootstrap);;
 
-    public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public ModDataBuilderProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(ModMain.MOD_ID));
     }
 }

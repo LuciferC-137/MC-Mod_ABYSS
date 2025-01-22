@@ -11,8 +11,8 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.items.ItemRegistry;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 
@@ -24,7 +24,7 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 	}
 	
 	@Override
-	protected void addTags(HolderLookup.Provider Provider) {
+	protected void addTags(HolderLookup.@NotNull Provider Provider) {
 		this.tag(ItemTags.TRIMMABLE_ARMOR).add(
 				ArmorRegistry.DEEPCRISTAL_HELMET.get(),
 				ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get(),
@@ -45,18 +45,38 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 	        .add(BlockRegistry.STRIPPED_WHITETREE_LOG.get().asItem())
 	        .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get().asItem());
 		
-		 this.tag(ItemTags.PLANKS)
+		this.tag(ItemTags.PLANKS)
          	.add(BlockRegistry.DARKTREE_PLANKS.get().asItem())
          	.add(BlockRegistry.WHITETREE_PLANKS.get().asItem());
 		 
-		 this.tag(ItemTags.DIRT)
+		this.tag(ItemTags.DIRT)
 		 	 .add(BlockRegistry.DARKDIRT.get().asItem());
 
-		 this.tag(ItemTags.MUSIC_DISCS)
-			 .add(ItemRegistry.ABYSS_MUSIC_DISC.get())
-			 .add(ItemRegistry.DEEP_FOREST_MUSIC_DISC.get())
-			 .add(ItemRegistry.WHITE_FOREST_MUSIC_DISC.get())
-			 .add(ItemRegistry.INCARNATION_MUSIC_DISC.get());
+
+		this.tag(ItemTags.FOOT_ARMOR)
+				.add(ArmorRegistry.DEEPCRISTAL_BOOTS.get())
+				.add(ArmorRegistry.RADIANCE_CRISTAL_BOOTS.get());
+		this.tag(ItemTags.FOOT_ARMOR_ENCHANTABLE)
+				.add(ArmorRegistry.DEEPCRISTAL_BOOTS.get())
+				.add(ArmorRegistry.RADIANCE_CRISTAL_BOOTS.get());
+		this.tag(ItemTags.HEAD_ARMOR)
+				.add(ArmorRegistry.DEEPCRISTAL_HELMET.get())
+				.add(ArmorRegistry.RADIANCE_CRISTAL_HELMET.get());
+		this.tag(ItemTags.HEAD_ARMOR_ENCHANTABLE)
+				.add(ArmorRegistry.DEEPCRISTAL_HELMET.get())
+				.add(ArmorRegistry.RADIANCE_CRISTAL_HELMET.get());
+		this.tag(ItemTags.CHEST_ARMOR)
+				.add(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get())
+				.add(ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get());
+		this.tag(ItemTags.CHEST_ARMOR_ENCHANTABLE)
+				.add(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get())
+				.add(ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get());
+		this.tag(ItemTags.LEG_ARMOR)
+				.add(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get())
+				.add(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS.get());
+		this.tag(ItemTags.LEG_ARMOR_ENCHANTABLE)
+				.add(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get())
+				.add(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS.get());
 	}
 
 }

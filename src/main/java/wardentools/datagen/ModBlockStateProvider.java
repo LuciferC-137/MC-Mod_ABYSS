@@ -55,7 +55,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerCrossCutoutBlock(BlockRegistry.BLUE_BUSH);
         registerCrossCutoutBlock(BlockRegistry.DARK_GRASS);
         simpleBlockWithItem(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(), models()
-        		.singleTexture("potted_white_torchflower", new ResourceLocation("flower_pot_cross"), "plant",
+        		.singleTexture("potted_white_torchflower",
+                        ResourceLocation.withDefaultNamespace("flower_pot_cross"), "plant",
                 blockTexture(BlockRegistry.WHITE_TORCHFLOWER.get())).renderType("cutout"));
         
         // Registering block model for block using another model name
@@ -147,7 +148,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private void registerLeavesBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(),
                 models().singleTexture(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
-                        new ResourceLocation("minecraft:block/leaves"),
+                        ResourceLocation.withDefaultNamespace("block/leaves"),
                         "all", blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
     
@@ -162,9 +163,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
     
     private void registerDarkGrassBlock(RegistryObject<Block> blockRegistryObject) {
-        ResourceLocation sideTexture = new ResourceLocation(ModMain.MOD_ID, "block/darkgrass_block_side");
-        ResourceLocation topTexture = new ResourceLocation(ModMain.MOD_ID,"block/darkgrass_block_top");
-        ResourceLocation bottomTexture = new ResourceLocation(ModMain.MOD_ID, "block/darkdirt");
+        ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darkgrass_block_side");
+        ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/darkgrass_block_top");
+        ResourceLocation bottomTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darkdirt");
         ModelFile modelFile = models().cubeBottomTop(
         		ForgeRegistries.BLOCKS.getKey(
         				blockRegistryObject.get()).getPath(), sideTexture, bottomTexture, topTexture);
@@ -174,6 +175,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private void registerFromLocation(RegistryObject<Block> blockRegistryObject, String location) {
         	simpleBlockWithItem(blockRegistryObject.get(),
         	    models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
-        	    		new ResourceLocation(ModMain.MOD_ID, location)));
+        	    		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, location)));
     }
 }

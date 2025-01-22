@@ -24,13 +24,13 @@ public class ModBiomes {
     private static final GenerationStep.Decoration SCULK_STEP = GenerationStep.Decoration.UNDERGROUND_DECORATION;
 	
 	public static final ResourceKey<Biome> DEEP_FOREST = ResourceKey.create(Registries.BIOME,
-            new ResourceLocation(ModMain.MOD_ID, "deep_forest"));
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_forest"));
 	public static final ResourceKey<Biome> WASTE_LAND = ResourceKey.create(Registries.BIOME,
-            new ResourceLocation(ModMain.MOD_ID, "waste_land"));
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "waste_land"));
 	public static final ResourceKey<Biome> WHITE_FOREST = ResourceKey.create(Registries.BIOME,
-            new ResourceLocation(ModMain.MOD_ID, "white_forest"));
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "white_forest"));
     public static final ResourceKey<Biome> CRISTAL_CAVE = ResourceKey.create(Registries.BIOME,
-            new ResourceLocation(ModMain.MOD_ID, "cristal_cave"));
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristal_cave"));
 
     public static void bootstrap(BootstrapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));

@@ -19,7 +19,7 @@ public class WardenLootTableModifier {
 
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {
-        ResourceLocation wardenLootTable = new ResourceLocation("minecraft", "entities/warden");
+        ResourceLocation wardenLootTable = ResourceLocation.withDefaultNamespace("entities/warden");
         if (event.getName().equals(wardenLootTable)) {
             LootTable table = event.getTable();
 

@@ -28,7 +28,7 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
     private static final DysfunctionningCatalystInterior model =
 			new DysfunctionningCatalystInterior(DysfunctionningCatalystInterior.createBodyLayer().bakeRoot());
     private static final ResourceLocation INTERIOR_TEXTURE
-            = new ResourceLocation(ModMain.MOD_ID, "textures/models/dysfunctionning_catalyst_interior.png");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/dysfunctionning_catalyst_interior.png");
 
 	public DysfunctionningCatalystRenderer(BlockEntityRendererProvider.Context ctx) {
 	}
@@ -90,7 +90,7 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
 
         model.render(poseStack, vertexConsumer, LightTexture.pack(
                         level.getBrightness(LightLayer.BLOCK, pos), level.getBrightness(LightLayer.SKY, pos)),
-                packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                packedOverlay);
 
         poseStack.popPose();
     }

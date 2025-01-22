@@ -24,7 +24,7 @@ import java.util.UUID;
 public class CorruptedOverlayRenderer {
     private static final Map<UUID, Integer> effectTotalDurations = new HashMap<>();
     private static final ResourceLocation CORRUPTED_OVERLAY
-            = new ResourceLocation(ModMain.MOD_ID, "textures/misc/corruption_outline_screen.png");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/misc/corruption_outline_screen.png");
     private static final float blurDurationTick = 200.0f; // Approximate
     private static final float glitterPulsation = 0.04f;
     private static final float transparentMax = 0.9f;

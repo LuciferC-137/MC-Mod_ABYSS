@@ -78,15 +78,12 @@ public class TeleportPlayerTo {
 
     private static void teleportToDimension(Entity entity, ResourceKey<Level> targetDimension,
                                             BlockPos targetPos) {
+        ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
+        if (targetLevel == null) return;
         if (entity instanceof ServerPlayer serverPlayer) {
-            serverPlayer.changeDimension(Objects.requireNonNull(
-                            Objects.requireNonNull(serverPlayer.getServer()).getLevel(targetDimension)),
-                    new ModTeleporter(targetPos, true));
+            serverPlayer.changeDimension(ModTeleporter.diveTo(targetLevel, targetPos.getCenter(), serverPlayer));
         } else if (!entity.level().isClientSide) {
-            ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
-            if (targetLevel != null) {
-                entity.changeDimension(targetLevel, new ModTeleporter(targetPos, true));
-            }
+            entity.changeDimension(ModTeleporter.diveTo(targetLevel, targetPos.getCenter(), entity));
         }
     }
 }

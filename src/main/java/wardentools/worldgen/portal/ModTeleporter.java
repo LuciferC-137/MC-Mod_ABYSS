@@ -1,51 +1,64 @@
 package wardentools.worldgen.portal;
 
-import java.util.function.Function;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.util.ITeleporter;
-import org.jetbrains.annotations.Nullable;
 
-public class ModTeleporter implements ITeleporter {
-	private final BlockPos targetPos;
-	private boolean findAncientCity = false;
+public class ModTeleporter {
 
-	public ModTeleporter(BlockPos pos) {
-		this.targetPos = pos;
+	public ModTeleporter() {}
+
+	public static DimensionTransition diveTo(ServerLevel targetWorld, Vec3 targetPos, float yRot, float xRot) {
+		return new DimensionTransition(targetWorld, targetPos, Vec3.ZERO,
+				yRot, xRot, DimensionTransition.DO_NOTHING);
 	}
 
-	public ModTeleporter(BlockPos pos, boolean findAncientCity){
-		this.targetPos = pos;
-		this.findAncientCity = findAncientCity;
+	public static DimensionTransition diveTo(ServerLevel targetWorld, Vec3 targetPos) {
+		return new DimensionTransition(targetWorld, targetPos, Vec3.ZERO,
+				0, 0, DimensionTransition.DO_NOTHING);
 	}
 
-	@Override
-	public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destinationWorld,
-							  float yaw, Function<Boolean, Entity> repositionEntity) {
-		entity = repositionEntity.apply(false);
-
-		BlockPos destinationPos = findValidSpawn(destinationWorld, this.targetPos);
-		entity.setPos(destinationPos.getX(), destinationPos.getY(), destinationPos.getZ());
-		return entity;
+	public static DimensionTransition diveTo(ServerLevel targetWorld, Vec3 targetPos, Entity entity) {
+		return new DimensionTransition(targetWorld, targetPos, Vec3.ZERO,
+				entity.getYRot(), entity.getXRot(), DimensionTransition.DO_NOTHING);
 	}
 
-	@Override
-	public @Nullable PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
-											  Function<ServerLevel, PortalInfo> defaultPortalInfo) {
-		BlockPos destination = findValidSpawn(destWorld, this.targetPos);
-		return destination == null ? ITeleporter.super.getPortalInfo(entity, destWorld, defaultPortalInfo) :
-				new PortalInfo(new Vec3(
-						destination.getX() + 0.5D, destination.getY(), destination.getZ() + 0.5D),
-						entity.getDeltaMovement(), entity.getYRot(), entity.getXRot());
+	public static DimensionTransition diveTo(ServerLevel targetWorld, Vec3 targetPos, ServerPlayer player) {
+		player.setCamera(player);
+		player.stopRiding();
+		return new DimensionTransition(targetWorld, targetPos, Vec3.ZERO,
+				player.getYRot(), player.getXRot(), DimensionTransition.DO_NOTHING);
 	}
 
-	private BlockPos findValidSpawn(ServerLevel level, BlockPos targetPos){
+	public static DimensionTransition diveSamePlace(ServerLevel targetWorld, ServerPlayer player) {
+		player.setCamera(player);
+		player.stopRiding();
+		BlockPos targetPos = findValidSpawn(targetWorld, player.blockPosition(), false);
+		return new DimensionTransition(targetWorld, player.getPosition(1f), Vec3.ZERO,
+				player.getYRot(), player.getXRot(), DimensionTransition.DO_NOTHING);
+	}
+
+	public static DimensionTransition diveToAncientCity(ServerLevel targetWorld, BlockPos targetPos, ServerPlayer player) {
+		player.setCamera(player);
+		player.stopRiding();
+		BlockPos validSpawn = findValidSpawn(targetWorld, targetPos, true);
+		return new DimensionTransition(targetWorld, validSpawn.getCenter(), Vec3.ZERO,
+				player.getYRot(), player.getXRot(), DimensionTransition.DO_NOTHING);
+	}
+
+	public static DimensionTransition diveToAncientCity(ServerLevel targetWorld, BlockPos targetPos, Entity entity) {
+		entity.stopRiding();
+		BlockPos validSpawn = findValidSpawn(targetWorld, targetPos, true);
+		return new DimensionTransition(targetWorld, validSpawn.getCenter(), Vec3.ZERO,
+				entity.getYRot(), entity.getXRot(), DimensionTransition.DO_NOTHING);
+	}
+
+	private static BlockPos findValidSpawn(ServerLevel level, BlockPos targetPos, boolean findAncientCity){
 		int maxTries = 300;
 		if (!findAncientCity){
 			BlockPos destinationPos = targetPos;
@@ -57,7 +70,7 @@ public class ModTeleporter implements ITeleporter {
 				destinationPos = destinationPos.above(2);
 				tries++;
 			}
-			return tries==maxTries ? targetPos : destinationPos;
+			return tries==maxTries ? targetPos : destinationPos.above();
 		} else {
 			BlockPos destinationPos = new BlockPos(targetPos.getX(), -60, targetPos.getZ());
 			int tries = 0;
@@ -70,7 +83,7 @@ public class ModTeleporter implements ITeleporter {
 		}
 	}
 
-	private BlockPos inFrontOfAncientPortal(ServerLevel level, BlockPos targetPos){
+	private static BlockPos inFrontOfAncientPortal(ServerLevel level, BlockPos targetPos){
 		int random1 = level.getRandom().nextBoolean() ? -1 : 1;
 		int random2 = level.getRandom().nextBoolean() ? -1 : 1;
 		return targetPos.offset(random1, -1, random2);

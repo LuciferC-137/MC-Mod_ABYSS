@@ -13,8 +13,10 @@ import wardentools.ModMain;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public class CustomizeBossBar {
-	private static final ResourceLocation FULL = new ResourceLocation(ModMain.MOD_ID, "textures/gui/bossbar/bar_full.png");
-	private static final ResourceLocation EMPTY = new ResourceLocation(ModMain.MOD_ID, "textures/gui/bossbar/bar_empty.png");
+	private static final ResourceLocation FULL
+			= ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/bossbar/bar_full.png");
+	private static final ResourceLocation EMPTY
+			= ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/bossbar/bar_empty.png");
 	private static final int barWidth = 182;
 	private static final int barHeight = 31;
 	

@@ -33,7 +33,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         Items.SCULK, // Picture displayed
                         Component.translatable("advancements.wardentools.abyss.title"), // Title
                         Component.translatable("advancements.wardentools.abyss.description"), // Description
-                        new ResourceLocation(ModMain.MOD_ID, "textures/gui/advancements/backgrounds/sculk.png"), // Background
+                        ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/advancements/backgrounds/sculk.png"), // Background
                         AdvancementType.TASK, //  (TASK, GOAL, or CHALLENGE)
                         true, // Show to everyone when completed
                         true, // Show in toast
@@ -41,7 +41,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 // Advancement criterion
                 .addCriterion("has_sculk", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SCULK))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "abyss"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyss"));
 
         // Second advancement triggering after abyss
         AdvancementHolder corruptedHeart = Advancement.Builder.advancement()
@@ -58,7 +58,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("has_warden_heart",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_HEART.get()))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "corrupted_heart"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted_heart"));
 
         AdvancementHolder abyssdiver = Advancement.Builder.advancement()
                 .parent(corruptedHeart)
@@ -74,7 +74,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("has_abyssdiver",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ABYSS_DIVER.get()))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "abyssdiver"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdiver"));
 
         AdvancementHolder windwhisperer = Advancement.Builder.advancement()
                 .parent(corruptedHeart)
@@ -90,7 +90,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("windwhisperer",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WIND_WHISPERER.get()))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "windwhisperer"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "windwhisperer"));
 
         AdvancementHolder theAbyss = Advancement.Builder.advancement()
                 .parent(abyss)
@@ -106,7 +106,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("to_the_abyss",
                         ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.ABYSS_LEVEL_KEY))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "the_abyss"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "the_abyss"));
 
         AdvancementHolder cristals = Advancement.Builder.advancement()
                 .parent(theAbyss)
@@ -128,7 +128,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                                 ItemRegistry.CITRINE_BLOCK.get(),
                                 ItemRegistry.MALACHITE_BLOCK.get(),
                                 Items.AMETHYST_BLOCK))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "cristals"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristals"));
 
         AdvancementHolder radiance = Advancement.Builder.advancement()
                 .parent(theAbyss)
@@ -144,7 +144,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("radiance",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RADIANCE_FRAGMENT.get()))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiance"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance"));
 
         AdvancementHolder radianceCatalyst = Advancement.Builder.advancement()
                 .parent(radiance)
@@ -160,7 +160,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("radiance_catalyst",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RADIANCE_CATALYST.get()))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiance_catalyst"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_catalyst"));
 
         AdvancementHolder radiantArmor = Advancement.Builder.advancement()
                 .parent(radianceCatalyst)
@@ -177,7 +177,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 .addCriterion("radiant_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
                                 MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.getHolder().get())))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiant_armor"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_armor"));
 
         AdvancementHolder protectorInvoker = Advancement.Builder.advancement()
                 .parent(radiance)
@@ -193,7 +193,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("protector_invoker",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.PROTECTOR_INVOKER.get()))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "protector_invoker"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector_invoker"));
 
         AdvancementHolder protector = Advancement.Builder.advancement()
                 .parent(protectorInvoker)
@@ -210,7 +210,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 .addCriterion("protector",
                         SummonedEntityTrigger.TriggerInstance.summonedEntity(
                                 EntityPredicate.Builder.entity().of(ModEntities.PROTECTOR.get())))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "protector"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector"));
 
         AdvancementHolder deepCristal = Advancement.Builder.advancement()
                 .parent(theAbyss)
@@ -226,7 +226,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("deepcristal",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DEEPCRISTAL.get()))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "deepcristal"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal"));
 
         AdvancementHolder deepArmor = Advancement.Builder.advancement()
                 .parent(deepCristal)
@@ -243,7 +243,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 .addCriterion("deep_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
                                 MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.getHolder().get())))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "deep_armor"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_armor"));
 
         AdvancementHolder incarnation = Advancement.Builder.advancement()
                 .parent(deepCristal)
@@ -260,7 +260,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 .addCriterion("kill_contagion_incarnation",
                         KilledTrigger.TriggerInstance.playerKilledEntity(
                                 EntityPredicate.Builder.entity().of(ModEntities.CONTAGION_INCARNATION.get())))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "incarnation"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "incarnation"));
 
         AdvancementHolder corruption_vessel = Advancement.Builder.advancement()
                 .parent(incarnation)
@@ -276,7 +276,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("corruption_vessel",
                         CorruptionVesselCriteria.TriggerInstance.choseCorruption())
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "corruption_vessel"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel"));
 
         AdvancementHolder radiance_bringer = Advancement.Builder.advancement()
                 .parent(incarnation)
@@ -292,7 +292,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("radiance_bringer",
                         RadianceBringerCriteria.TriggerInstance.choseRadiance())
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiance_bringer"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer"));
 
         AdvancementHolder corrupted = Advancement.Builder.advancement()
                 .parent(deepCristal)
@@ -309,7 +309,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 .addCriterion("corrupted",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
                                 MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.getHolder().get())))
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "corrupted"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted"));
 
         AdvancementHolder escape = Advancement.Builder.advancement()
                 .parent(abyssdiver)
@@ -324,6 +324,6 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         false
                 )
                 .addCriterion("escape", AbyssPortalCriteria.TriggerInstance.openPortal())
-                .save(saver, new ResourceLocation(ModMain.MOD_ID, "escape"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "escape"));
     }
 }

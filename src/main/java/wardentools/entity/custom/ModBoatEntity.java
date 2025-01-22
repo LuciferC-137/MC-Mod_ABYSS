@@ -23,9 +23,9 @@ import java.util.function.IntFunction;
 
 public class ModBoatEntity extends Boat {
     public static final ModelLayerLocation DARKTREE_BOAT_LAYER = new ModelLayerLocation(
-            new ResourceLocation(ModMain.MOD_ID, "boat/darktree"), "main");
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "boat/darktree"), "main");
     public static final ModelLayerLocation WHITETREE_BOAT_LAYER = new ModelLayerLocation(
-            new ResourceLocation(ModMain.MOD_ID, "boat/whitetree"), "main");
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "boat/whitetree"), "main");
 
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE
             = SynchedEntityData.defineId(ModBoatEntity.class, EntityDataSerializers.INT);

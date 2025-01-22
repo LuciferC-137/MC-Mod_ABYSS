@@ -142,10 +142,10 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity>
         };
         for (int i = 0; i < 4; i++) {
             int next = (i + 1) % 4;
-            vertexConsumer.vertex(matrix, centerX + xOffsets[i], 0.0F,
-                            centerZ + zOffsets[i]).color(red, green, blue, OPACITY).endVertex();
-            vertexConsumer.vertex(matrix, centerX + xOffsets[next], 0.0F,
-                            centerZ + zOffsets[next]).color(red, green, blue, OPACITY).endVertex();
+            vertexConsumer.addVertex(matrix, centerX + xOffsets[i], 0.0F,
+                            centerZ + zOffsets[i]).setColor(red, green, blue, OPACITY);
+            vertexConsumer.addVertex(matrix, centerX + xOffsets[next], 0.0F,
+                            centerZ + zOffsets[next]).setColor(red, green, blue, OPACITY);
         }
     }
 
@@ -210,14 +210,14 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity>
     private static void drawQuad(Matrix4f matrix, VertexConsumer vertexConsumer, float startX, float startZ, int segment,
                                  float endX, float endZ, float red, float green, float blue, float thicknessStart, float thicknessEnd,
                                  boolean flipXStart, boolean flipZStart, boolean flipXEnd, boolean flipZEnd) {
-        vertexConsumer.vertex(matrix, startX + (flipXStart ? thicknessEnd : -thicknessEnd), (float)(segment * 16), startZ + (flipZStart ? thicknessEnd : -thicknessEnd))
-                .color(red, green, blue, OPACITY).endVertex();
-        vertexConsumer.vertex(matrix, endX + (flipXStart ? thicknessStart : -thicknessStart), (float)((segment + 1) * 16), endZ + (flipZStart ? thicknessStart : -thicknessStart))
-                .color(red, green, blue, OPACITY).endVertex();
-        vertexConsumer.vertex(matrix, endX + (flipXEnd ? thicknessStart : -thicknessStart), (float)((segment + 1) * 16), endZ + (flipZEnd ? thicknessStart : -thicknessStart))
-                .color(red, green, blue, OPACITY).endVertex();
-        vertexConsumer.vertex(matrix, startX + (flipXEnd ? thicknessEnd : -thicknessEnd), (float)(segment * 16), startZ + (flipZEnd ? thicknessEnd : -thicknessEnd))
-                .color(red, green, blue, OPACITY).endVertex();
+        vertexConsumer.addVertex(matrix, startX + (flipXStart ? thicknessEnd : -thicknessEnd), (float)(segment * 16), startZ + (flipZStart ? thicknessEnd : -thicknessEnd))
+                .setColor(red, green, blue, OPACITY);
+        vertexConsumer.addVertex(matrix, endX + (flipXStart ? thicknessStart : -thicknessStart), (float)((segment + 1) * 16), endZ + (flipZStart ? thicknessStart : -thicknessStart))
+                .setColor(red, green, blue, OPACITY);
+        vertexConsumer.addVertex(matrix, endX + (flipXEnd ? thicknessStart : -thicknessStart), (float)((segment + 1) * 16), endZ + (flipZEnd ? thicknessStart : -thicknessStart))
+                .setColor(red, green, blue, OPACITY);
+        vertexConsumer.addVertex(matrix, startX + (flipXEnd ? thicknessEnd : -thicknessEnd), (float)(segment * 16), startZ + (flipZEnd ? thicknessEnd : -thicknessEnd))
+                .setColor(red, green, blue, OPACITY);
     }
 
 

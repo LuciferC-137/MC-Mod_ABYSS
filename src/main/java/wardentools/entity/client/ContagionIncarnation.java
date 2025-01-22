@@ -24,7 +24,7 @@ import wardentools.entity.custom.ContagionIncarnationPart;
 @SuppressWarnings("unused")
 public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnationEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
-		= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation"), "main");
+		= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "contagion_incarnation"), "main");
 	private static final float rad = (float)Math.PI / 180f;
 	private final ModelPart FULL;
 	private final ModelPart TAIL;
@@ -796,9 +796,8 @@ public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnation
 	
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay,
-							   float red, float green, float blue, float alpha) {
-		this.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+							   int packedLight, int packedOverlay, int i) {
+		this.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
 	}
 
 	@Override

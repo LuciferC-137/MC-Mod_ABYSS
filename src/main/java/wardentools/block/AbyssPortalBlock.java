@@ -76,10 +76,8 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
                 d2 = (double)pos.getZ() + 0.5D + 0.25D * (double)j;
                 d5 = (double)(random.nextFloat() * 2.0F * (float)j);
             }
-
             level.addParticle(ParticleRegistry.ABYSS_PORTAL.get(), d0, d1, d2, d3, d4, d5);
         }
-
     }
 
     @Override
@@ -97,7 +95,7 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
                     teleport((ServerLevel)level, pos, player);
                 }
             }
-        } else if (!level.isClientSide && entity.canChangeDimensions()) {
+        } else if (!level.isClientSide) {
             for (Entity passengers : entity.getPassengers()){
                 teleport((ServerLevel) level, pos, passengers);
             }
@@ -111,14 +109,14 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
             if (abyssLevel != null) {
                 BlockPos ancientCityPos
                         = findNearestStructure(abyssLevel, ModStructures.SURFACE_ANCIENT_CITY, pos);
-                teleportToDimension(entity, ModDimensions.ABYSS_LEVEL_KEY, ancientCityPos);
+                teleportToAncientCity(entity, ModDimensions.ABYSS_LEVEL_KEY, ancientCityPos);
             }
         } else if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
             ServerLevel overworldLevel = level.getServer().getLevel(Level.OVERWORLD);
             if (overworldLevel != null) {
                 BlockPos ancientCityPos
                         = findNearestStructure(overworldLevel, BuiltinStructures.ANCIENT_CITY, pos);
-                teleportToDimension(entity, Level.OVERWORLD, ancientCityPos);
+                teleportToAncientCity(entity, Level.OVERWORLD, ancientCityPos);
             }
         }
     }
@@ -145,15 +143,15 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
         return pos.offset(level.random.nextBoolean() ? -2 : 2, i, level.random.nextBoolean() ? -2 : 2);
     }
 
-    private void teleportToDimension(Entity entity, ResourceKey<Level> targetDimension, BlockPos targetPos) {
+    private void teleportToAncientCity(Entity entity, ResourceKey<Level> targetDimension, BlockPos targetPos) {
         if (entity instanceof ServerPlayer serverPlayer) {
-            serverPlayer.changeDimension(Objects.requireNonNull(
-                    Objects.requireNonNull(serverPlayer.getServer()).getLevel(targetDimension)),
-                    new ModTeleporter(targetPos, true));
+            ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
+            serverPlayer.changeDimension(
+                    ModTeleporter.diveToAncientCity(targetLevel, targetPos, serverPlayer));
         } else if (!entity.level().isClientSide) {
             ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
             if (targetLevel != null) {
-                entity.changeDimension(targetLevel, new ModTeleporter(targetPos, true));
+                entity.changeDimension(ModTeleporter.diveToAncientCity(targetLevel, targetPos, entity));
             }
         }
     }

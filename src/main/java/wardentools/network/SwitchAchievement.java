@@ -10,9 +10,9 @@ import wardentools.advancement.ModCriteriaTriggers;
 
 public class SwitchAchievement {
     private static final ResourceLocation CORRUPTION_ADVANCEMENT
-            = new ResourceLocation(ModMain.MOD_ID, "corruption_vessel");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel");
     private static final ResourceLocation RADIANCE_ADVANCEMENT
-            = new ResourceLocation(ModMain.MOD_ID, "radiance_bringer");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer");
     private final int index; // 0 gives the radiance bringer, 1 gives the corruption vessel
 
     public SwitchAchievement(int index) {

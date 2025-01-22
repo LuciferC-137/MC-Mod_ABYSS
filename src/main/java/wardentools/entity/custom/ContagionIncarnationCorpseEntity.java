@@ -152,9 +152,10 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
 
     }
 
-    private void brokenByAnything(DamageSource p_31654_) {
+    private void brokenByAnything(DamageSource source) {
         this.playBrokenSound();
-        this.dropAllDeathLoot(p_31654_);
+        if (this.level().isClientSide) return;
+        this.dropAllDeathLoot((ServerLevel)this.level(), source);
         for(int j = 0; j < this.armorItems.size(); ++j) {
             ItemStack itemStack = this.armorItems.get(j);
             if (!itemStack.isEmpty()) {

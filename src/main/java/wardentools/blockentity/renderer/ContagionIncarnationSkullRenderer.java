@@ -23,7 +23,7 @@ public class ContagionIncarnationSkullRenderer implements BlockEntityRenderer<Co
     private static final ContagionIncarnationSkull model =
 			new ContagionIncarnationSkull(ContagionIncarnationSkull.createBodyLayer().bakeRoot());
     private static final ResourceLocation INTERIOR_TEXTURE
-            = new ResourceLocation(ModMain.MOD_ID, "textures/models/contagion_incarnation_corpse_skull.png");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/contagion_incarnation_corpse_skull.png");
 
 	public ContagionIncarnationSkullRenderer(BlockEntityRendererProvider.Context ctx) {
 	}
@@ -70,7 +70,7 @@ public class ContagionIncarnationSkullRenderer implements BlockEntityRenderer<Co
 
         model.render(poseStack, vertexConsumer, LightTexture.pack(
                         level.getBrightness(LightLayer.BLOCK, pos), level.getBrightness(LightLayer.SKY, pos)),
-                packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+                packedOverlay);
 
         poseStack.popPose();
     }

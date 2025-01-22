@@ -21,7 +21,8 @@ public class ModConfiguredCarver {
 	public static final ResourceKey<ConfiguredWorldCarver<?>> ABYSS_CAVE = createKey("abyss_cave");
 	
 	private static ResourceKey<ConfiguredWorldCarver<?>> createKey(String name) {
-	      return ResourceKey.create(Registries.CONFIGURED_CARVER, new ResourceLocation(ModMain.MOD_ID, name));
+	      return ResourceKey.create(Registries.CONFIGURED_CARVER,
+				  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
 	}
 	
 	public static void bootstrap(BootstrapContext<ConfiguredWorldCarver<?>> ctx) {

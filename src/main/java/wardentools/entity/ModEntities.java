@@ -19,27 +19,27 @@ public class ModEntities {
 			ENTITY_TYPES.register("deeplurker",
 					()->EntityType.Builder.of(DeepLurkerEntity::new, MobCategory.CREATURE)
 					.sized(0.5f, 0.5f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "deeplurker").toString())
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deeplurker").toString())
 					);
 
 	public static final RegistryObject<EntityType<PaleWandererEntity>> PALE_WANDERER =
 			ENTITY_TYPES.register("pale_wanderer",
 					()->EntityType.Builder.of(PaleWandererEntity::new, MobCategory.CREATURE)
 					.sized(0.9f, 0.4f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "pale_wanderer").toString())
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "pale_wanderer").toString())
 					);
 	
 	public static final RegistryObject<EntityType<ProtectorEntity>> PROTECTOR =
 			ENTITY_TYPES.register("protector",
 					()->EntityType.Builder.of(ProtectorEntity::new, MobCategory.CREATURE)
 					.sized(1.5f, 2.5f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "protector").toString()));
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector").toString()));
 	
 	public static final RegistryObject<EntityType<ContagionIncarnationEntity>> CONTAGION_INCARNATION =
 			ENTITY_TYPES.register("contagion_incarnation",
 					()->EntityType.Builder.of(ContagionIncarnationEntity::new, MobCategory.MONSTER)
 					.sized(3f, 2f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation").toString())
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "contagion_incarnation").toString())
 					);
 	public static final RegistryObject<EntityType<ModBoatEntity>> MOD_BOAT =
 			ENTITY_TYPES.register("mod_boat", () -> EntityType.Builder.<ModBoatEntity>of(ModBoatEntity::new, MobCategory.MISC)
@@ -51,36 +51,36 @@ public class ModEntities {
 			ENTITY_TYPES.register("temper",
 					()->EntityType.Builder.of(TemperEntity::new, MobCategory.MISC)
 					.sized(0.5f, 0.5f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "temper").toString()));
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "temper").toString()));
 	public static final RegistryObject<EntityType<ParasyteEntity>> PARASYTE =
 			ENTITY_TYPES.register("parasyte",
 					() -> EntityType.Builder.of(ParasyteEntity::new, MobCategory.MONSTER)
 					.sized(0.4f, 0.3f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "parasyte").toString()));
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "parasyte").toString()));
 
 	public static final RegistryObject<EntityType<NoctilureEntity>> NOCTILURE =
 			ENTITY_TYPES.register("noctilure",
 					() -> EntityType.Builder.of(NoctilureEntity::new, MobCategory.CREATURE)
 							.sized(2f, 1f)
-							.build(new ResourceLocation(ModMain.MOD_ID, "noctilure").toString()));
+							.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "noctilure").toString()));
 
 	public static final RegistryObject<EntityType<ShadowEntity>> SHADOW =
 			ENTITY_TYPES.register("shadow",
 					() -> EntityType.Builder.of(ShadowEntity::new, MobCategory.MONSTER)
 					.sized(0.6f, 1.8f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "shadow").toString()));
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "shadow").toString()));
 
 	public static final RegistryObject<EntityType<ContagionIncarnationCorpseEntity>> CONTAGION_INCARNATION_CORPSE =
 			ENTITY_TYPES.register("contagion_incarnation_corpse",
 					()->EntityType.Builder.of(ContagionIncarnationCorpseEntity::new, MobCategory.MISC)
 					.sized(4f, 1.5f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation_corpse").toString()));
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "contagion_incarnation_corpse").toString()));
 
 	public static final RegistryObject<EntityType<AbyssLightningEntity>> ABYSS_LIGHTNING =
 			ENTITY_TYPES.register("abyss_lightning",
 					()->EntityType.Builder.of(AbyssLightningEntity::new, MobCategory.MISC)
 					.sized(0.5f, 0.5f)
-					.build(new ResourceLocation(ModMain.MOD_ID, "abyss_lightning").toString()));
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyss_lightning").toString()));
 	
 	public static void register(IEventBus eventBus) {
 		ENTITY_TYPES.register(eventBus);

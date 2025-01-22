@@ -7,12 +7,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 
-@SuppressWarnings("deprecation")
+
 public class ModMusics {
     public static final int ONE_SECOND = 20;
     public static final int THIRTY_SECONDS = 600;
     public static final int TEN_MINUTES = 12000;
-    public static final int TWENTY_MINUTES = 24000;
     public static final int FIVE_MINUTES = 6000;
     private static final ResourceKey<SoundEvent> DEEP_FOREST_KEY = ResourceKey.create(Registries.SOUND_EVENT,
             ModSounds.DEEP_FOREST.getId());

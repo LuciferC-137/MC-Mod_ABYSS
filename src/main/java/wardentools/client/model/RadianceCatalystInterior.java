@@ -33,14 +33,12 @@ public class RadianceCatalystInterior extends Model {
 
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-                               int packedLight, int packedOverlay,
-                               float red, float green, float blue, float alpha) {
-        root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+                               int packedLight, int packedOverlay, int i) {
+        root.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
     }
 
-    public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay,
-                       float red, float green, float blue, float alpha) {
-        root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+    public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {
+        root.render(poseStack, vertexConsumer, packedLight, packedOverlay);
     }
 }
 

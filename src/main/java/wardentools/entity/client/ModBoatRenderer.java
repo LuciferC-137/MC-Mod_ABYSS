@@ -25,7 +25,7 @@ public class ModBoatRenderer extends BoatRenderer {
     public ModBoatRenderer(EntityRendererProvider.Context pContext, boolean pChestBoat) {
         super(pContext, pChestBoat);
         this.boatResources = Stream.of(ModBoatEntity.Type.values()).collect(ImmutableMap.toImmutableMap(type -> type,
-                type -> Pair.of(new ResourceLocation(ModMain.MOD_ID,
+                type -> Pair.of(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                         getTextureLocation(type, pChestBoat)),
                         this.createBoatModel(pContext, type, pChestBoat))));
     }
@@ -53,7 +53,7 @@ public class ModBoatRenderer extends BoatRenderer {
     }
 
     private static ModelLayerLocation createLocation(String pPath, String pModel) {
-        return new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, pPath), pModel);
+        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, pPath), pModel);
     }
 
     public @NotNull Pair<ResourceLocation, ListModel<Boat>> getModelWithLocation(@NotNull Boat boat) {

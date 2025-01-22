@@ -110,55 +110,55 @@ public class ModItemModelProvider extends ItemModelProvider {
         
         //Blocks that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_wood"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darktree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_DARKTREE_WOOD.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/stripped_darktree_wood"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/stripped_darktree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_DARKTREE_LOG.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/stripped_darktree_log"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/stripped_darktree_log"));
         withExistingParent(BlockRegistry.DARKTREE_LOG.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_log"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darktree_log"));
         withExistingParent(BlockRegistry.DARKTREE_STAIR.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_stair"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darktree_stair"));
         withExistingParent(BlockRegistry.DARKTREE_SLAB.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_slab"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darktree_slab"));
         withExistingParent(BlockRegistry.DARKTREE_PRESSURE_PLATE.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_pressure_plate"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darktree_pressure_plate"));
         withExistingParent(BlockRegistry.DARKTREE_FENCE_GATE.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/darktree_fence_gate"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darktree_fence_gate"));
         
         withExistingParent(BlockRegistry.WHITETREE_WOOD.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_wood"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/whitetree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_WHITETREE_WOOD.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/stripped_whitetree_wood"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/stripped_whitetree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_WHITETREE_LOG.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/stripped_whitetree_log"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/stripped_whitetree_log"));
         withExistingParent(BlockRegistry.WHITETREE_LOG.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_log"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/whitetree_log"));
         withExistingParent(BlockRegistry.WHITETREE_STAIR.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_stair"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/whitetree_stair"));
         withExistingParent(BlockRegistry.WHITETREE_SLAB.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_slab"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/whitetree_slab"));
         withExistingParent(BlockRegistry.WHITETREE_PRESSURE_PLATE.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_pressure_plate"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/whitetree_pressure_plate"));
         withExistingParent(BlockRegistry.WHITETREE_FENCE_GATE.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/whitetree_fence_gate"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/whitetree_fence_gate"));
 
         withExistingParent(BlockRegistry.RADIANCE_CATALYST.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/radiance_catalyst"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/radiance_catalyst"));
         withExistingParent(BlockRegistry.CHISELED_ABYSSALITE.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/chiseled_abyssalite"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/chiseled_abyssalite"));
         withExistingParent(BlockRegistry.ABYSSALITE_BRICKS_STAIRS.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks_stair"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks_stair"));
         withExistingParent(BlockRegistry.ABYSSALITE_BRICKS_SLAB.getId().getPath(),
-        		new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks_slab"));
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks_slab"));
         withExistingParent(BlockRegistry.DYSFUNCTIONNING_CATALYST.getId().getPath(),
-                new ResourceLocation(ModMain.MOD_ID, "block/dysfunctionning_catalyst"));
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/dysfunctionning_catalyst"));
         withExistingParent(BlockRegistry.BLACK_LANTERN.getId().getPath(),
-                new ResourceLocation(ModMain.MOD_ID, "block/black_lantern"));
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/black_lantern"));
         withExistingParent(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.getId().getPath(),
-                new ResourceLocation(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_stair"));
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_stair"));
         withExistingParent(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.getId().getPath(),
-                new ResourceLocation(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_slab"));
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_slab"));
 
         //Blocks that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);
@@ -175,14 +175,14 @@ public class ModItemModelProvider extends ItemModelProvider {
  
     private ItemModelBuilder blockItemWithItemModel(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(ModMain.MOD_ID,"item/" + item.getId().getPath()));
+                ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"item/" + item.getId().getPath()));
     }
     
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
-                new ResourceLocation("item/generated")).texture("layer0",
-                new ResourceLocation(ModMain.MOD_ID,"item/" + item.getId().getPath()));
+                ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"item/" + item.getId().getPath()));
     }
     
     public void trapdoorItem(RegistryObject<Block> block) {
@@ -192,27 +192,26 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     public void fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
-                .texture("texture",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+                .texture("texture",  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
 
     public void buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
-                .texture("texture",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+                .texture("texture",  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
     
     public void wallItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall",  new ResourceLocation(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
+                .texture("wall",  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
     
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {
         final String MOD_ID = ModMain.MOD_ID;
 
         if(itemRegistryObject.get() instanceof ArmorItem armorItem) {
-            trimMaterials.entrySet().forEach(entry -> {
+            trimMaterials.forEach((trimMaterial, value) -> {
 
-                ResourceKey<TrimMaterial> trimMaterial = entry.getKey();
-                float trimValue = entry.getValue();
+                float trimValue = value;
 
                 String armorType = switch (armorItem.getEquipmentSlot()) {
                     case HEAD -> "helmet";
@@ -221,13 +220,13 @@ public class ModItemModelProvider extends ItemModelProvider {
                     case FEET -> "boots";
                     default -> "";
                 };
-
-                String armorItemPath = "item/" + armorItem;
+                String armorItemPathPrefix = "" + armorItem;
+                String armorItemPath = "item/" + armorItemPathPrefix.replace(ModMain.MOD_ID + ":", "");
                 String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
                 String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-                ResourceLocation armorItemResLoc = new ResourceLocation(MOD_ID, armorItemPath);
-                ResourceLocation trimResLoc = new ResourceLocation(trimPath); // minecraft namespace
-                ResourceLocation trimNameResLoc = new ResourceLocation(MOD_ID, currentTrimName);
+                ResourceLocation armorItemResLoc = ResourceLocation.fromNamespaceAndPath(MOD_ID, armorItemPath);
+                ResourceLocation trimResLoc = ResourceLocation.withDefaultNamespace(trimPath); // minecraft namespace
+                ResourceLocation trimNameResLoc = ResourceLocation.fromNamespaceAndPath(MOD_ID, currentTrimName);
 
                 // This is used for making the ExistingFileHelper acknowledge that this texture exist, so this will
                 // avoid an IllegalArgumentException
@@ -246,7 +245,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                         .model(new ModelFile.UncheckedModelFile(trimNameResLoc))
                         .predicate(mcLoc("trim_type"), trimValue).end()
                         .texture("layer0",
-                                new ResourceLocation(MOD_ID,
+                                ResourceLocation.fromNamespaceAndPath(MOD_ID,
                                         "item/" + itemRegistryObject.getId().getPath()));
             });
         }

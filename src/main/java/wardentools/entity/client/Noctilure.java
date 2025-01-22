@@ -16,7 +16,7 @@ import wardentools.entity.custom.NoctilureEntity;
 
 public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
-			= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "noctilure"), "main");
+			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "noctilure"), "main");
     private static final int WING_ANGLE_MAX_COUNT_ON_FALL = 50;
     private int wingAngleCount = 0;
     private final ModelPart ROOT;
@@ -214,9 +214,8 @@ public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay,
-							   float red, float green, float blue, float alpha) {
-		this.ROOT.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+							   int packedLight, int packedOverlay, int i) {
+		this.ROOT.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
 	}
 
 	@Override

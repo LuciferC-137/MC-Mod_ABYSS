@@ -27,8 +27,9 @@ public class FallIntoVoidEvent {
 	                if (portalDimension != null && !event.getEntity().isPassenger()) {
 	                	event.getEntity().setPos(event.getEntity().blockPosition().getX(),
 	                			250, event.getEntity().blockPosition().getX());
-	                    event.getEntity().changeDimension(portalDimension,
-	                    		new ModTeleporter(event.getEntity().blockPosition()));
+	                    event.getEntity().changeDimension(ModTeleporter
+								.diveTo(portalDimension,
+										event.getEntity().blockPosition().getCenter(), event.getEntity()));
 	               }
 	            }
 	        }

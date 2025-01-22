@@ -15,7 +15,8 @@ import wardentools.network.ParticulesSoundsEffects.*;
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class PacketHandler {
     
-    public static final SimpleChannel INSTANCE = ChannelBuilder.named(new ResourceLocation(ModMain.MOD_ID, "main"))
+    public static final SimpleChannel INSTANCE = ChannelBuilder.named(
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "main"))
     		.serverAcceptedVersions((status, version)->true)
     		.clientAcceptedVersions((status, version)->true)
     		.networkProtocolVersion(1)

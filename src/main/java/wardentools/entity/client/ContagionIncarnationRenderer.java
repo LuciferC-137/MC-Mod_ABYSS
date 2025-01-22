@@ -2,7 +2,6 @@ package wardentools.entity.client;
 
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -24,7 +23,7 @@ import wardentools.particle.ParticleRegistry;
 
 public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnationEntity, ContagionIncarnation>{
 	private static final ResourceLocation CONTAGION_INCARNATION_TEXTURE = 
-			new ResourceLocation(ModMain.MOD_ID, "textures/entity/contagion_incarnation.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/contagion_incarnation.png");
 	private static final float HALF_SQRT_3 = (float)(Math.sqrt(3.0D) / 2.0D);
 	private static final float PARTICLE_DEATH_RADIUS = 2f;
 	private static final float PARTICLE_SPAWN_RADIUS = 4f;
@@ -151,19 +150,19 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 	}
 	
 	private static void vertex01(VertexConsumer consumer, Matrix4f matrix, int alpha) {
-		consumer.vertex(matrix, 0.0F, 0.0F, 0.0F).color(0, 55, 70, alpha).endVertex();
+		consumer.addVertex(matrix, 0.0F, 0.0F, 0.0F).setColor(0, 55, 70, alpha);
 	   }
 
 	   private static void vertex2(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
-		   consumer.vertex(matrix, -HALF_SQRT_3 * f2, f1, -0.5F * f2).color(0, 55, 70, 0).endVertex();
+		   consumer.addVertex(matrix, -HALF_SQRT_3 * f2, f1, -0.5F * f2).setColor(0, 55, 70, 0);
 	   }
 
 	   private static void vertex3(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
-		   consumer.vertex(matrix, HALF_SQRT_3 * f2, f1, -0.5F * f2).color(0, 55, 70, 0).endVertex();
+		   consumer.addVertex(matrix, HALF_SQRT_3 * f2, f1, -0.5F * f2).setColor(0, 55, 70, 0);
 	   }
 
 	   private static void vertex4(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
-		   consumer.vertex(matrix, 0.0F, f1, f2).color(0, 55, 70, 0).endVertex();
+		   consumer.addVertex(matrix, 0.0F, f1, f2).setColor(0, 55, 70, 0);
 	   }
 
 	@Override

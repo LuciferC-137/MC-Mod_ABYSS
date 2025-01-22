@@ -6,5 +6,5 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 @FunctionalInterface
 public interface RenderToBufferFunction {
     void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer,
-                        int packedLight, int packedOverlay, float red, float green, float blue, float alpha);
+                        int packedLight, int packedOverlay);
 }
