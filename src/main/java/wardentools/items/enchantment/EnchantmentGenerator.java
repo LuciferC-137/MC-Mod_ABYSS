@@ -21,7 +21,7 @@ public class EnchantmentGenerator {
                 items.getOrThrow(ItemTags.ARMOR_ENCHANTABLE),
                 items.getOrThrow(ItemTags.FOOT_ARMOR_ENCHANTABLE),
                 5, // weight
-                2,           // maxLevel
+                1,           // maxLevel
                 Enchantment.dynamicCost(1, 11), //min cost
                 Enchantment.dynamicCost(10, 11), //max cost
                 2, // anvil cost

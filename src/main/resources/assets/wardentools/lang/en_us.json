@@ -190,6 +190,13 @@
 	"sounds.wardentools.shockwave_thunder": "Thunder Shockwave",
 	"sounds.wardentools.whistle": "Whistle",
 
+	"painting.wardentools.quiet_life.title": "Quiet Life",
+	"painting.wardentools.quiet_life.author": "Lucifer C137",
+	"painting.wardentools.abyss.title": "Abyss",
+	"painting.wardentools.abyss.author": "Lucifer C137",
+	"painting.wardentools.incarnation.title": "Incarnation",
+	"painting.wardentools.incarnation.author": "Lucifer C137",
+
 	"effect.wardentools.corrupted": "Corrupted",
 	"effect.wardentools.corruption_vessel": "Corruption Vessel",
 	"effect.wardentools.radiance_bringer": "Radiance Bringer",

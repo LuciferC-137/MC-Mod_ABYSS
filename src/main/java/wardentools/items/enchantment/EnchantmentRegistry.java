@@ -1,5 +1,6 @@
 package wardentools.items.enchantment;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.RegistryObject;
@@ -10,8 +11,8 @@ public class EnchantmentRegistry {
     
     public static RegistryObject<Enchantment> register(String name) {
         return RegistryObject.create(
-                ResourceLocation.fromNamespaceAndPath(name, ModMain.MOD_ID),
-                EnchantmentGenerator.STEALTH_KEY.registry(), ModMain.MOD_ID);
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name),
+                Registries.ENCHANTMENT.location(), ModMain.MOD_ID);
     }
 
 }

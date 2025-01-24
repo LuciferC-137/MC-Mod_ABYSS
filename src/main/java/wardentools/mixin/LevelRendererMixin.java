@@ -52,8 +52,6 @@ public class LevelRendererMixin {
 				RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 				RenderSystem.setShaderTexture(0, ABYSS_SKY_LOCATION);
 				Tesselator tesselator = Tesselator.getInstance();
-				BufferBuilder bufferbuilder = tesselator
-						.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 				PoseStack posestack = new PoseStack();
 				posestack.mulPose(pose);
 				for(int i = 0; i < 6; ++i) {
@@ -64,6 +62,8 @@ public class LevelRendererMixin {
 					if (i == 4) posestack.mulPose(Axis.ZP.rotationDegrees(90.0F));
 					if (i == 5) posestack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
 					Matrix4f matrix4f = posestack.last().pose();
+					BufferBuilder bufferbuilder = tesselator
+							.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 					bufferbuilder.addVertex(matrix4f, -100.0F, -100.0F, -100.0F)
 							.setUv(0.0F, 0.0F).setColor(BRIGHTNESS, BRIGHTNESS, BRIGHTNESS, FOG_COLOR_OVERLAY);
 					bufferbuilder.addVertex(matrix4f, -100.0F, -100.0F, 100.0F)

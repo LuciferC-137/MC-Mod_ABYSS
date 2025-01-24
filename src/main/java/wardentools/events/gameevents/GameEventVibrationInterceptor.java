@@ -1,5 +1,6 @@
 package wardentools.events.gameevents;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -8,6 +9,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.event.VanillaGameEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import wardentools.ModMain;
 import wardentools.items.enchantment.EnchantmentRegistry;
 
@@ -17,7 +19,11 @@ public class GameEventVibrationInterceptor {
     @SubscribeEvent
     public static void onGameEvent(VanillaGameEvent event) {
         if (event.getCause() instanceof Player player) {
-            if (EnchantmentRegistry.STEALTH.getHolder().isEmpty()) return;
+            if (EnchantmentRegistry.STEALTH.getHolder().isEmpty()) {
+                System.out.println(EnchantmentRegistry.STEALTH);
+                System.out.println("Stealth enchantment not found!");
+                return;
+            }
             ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
             ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
             ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);

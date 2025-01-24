@@ -20,7 +20,6 @@ import wardentools.entity.ModEntities;
 import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.ModFluidTypes;
 import wardentools.items.ItemRegistry;
-import wardentools.items.PaintingsRegistry;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
@@ -42,7 +41,6 @@ public class ModMain {
 		ItemRegistry.REGISTAR.register(bus);
 		BlockRegistry.REGISTAR.register(bus);
 		BlockEntityRegistry.BLOCK_ENTITIES.register(bus);
-		PaintingsRegistry.PAINTINGS.register(bus);
 		ModTrunkPlacerTypes.TRUNK_PLACER.register(bus);
 		ModFoliagePlacers.FOLIAGE_PLACERS.register(bus);
 		ModEntities.ENTITY_TYPES.register(bus);
@@ -65,7 +63,8 @@ public class ModMain {
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
-			ItemProperties.register(ItemRegistry.WHISTLE.get(), ResourceLocation.withDefaultNamespace("using"),
+			ItemProperties.register(ItemRegistry.WHISTLE.get(),
+					ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "using"),
 					(stack, level, entity, seed) -> {
 						if (entity != null && entity.isUsingItem() && entity.getUseItem() == stack) {
 							return 1.0F;

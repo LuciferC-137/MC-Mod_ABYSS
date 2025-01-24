@@ -1,7 +1,7 @@
 {
-	"values": [
-		"wardentools:quiet_life",
-		"wardentools:incarnation",
-		"wardentools:abyss"
-	]
+  "values": [
+    "wardentools:quiet_life",
+    "wardentools:incarnation",
+    "wardentools:abyss"
+  ]
 }
