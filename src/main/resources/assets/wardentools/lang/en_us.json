@@ -45,13 +45,9 @@
 	"item.wardentools.abyssal_scythe": "Abyssal Scythe",
 	"item.wardentools.radiant_spear": "Radiant Spear",
 	"item.wardentools.music_disc_abyss": "Abyss Music Disc",
-	"item.wardentools.music_disc_abyss.desc": "Fenrir C137 - Abyss Theme",
 	"item.wardentools.music_disc_incarnation": "Abyss Music Disc",
-	"item.wardentools.music_disc_incarnation.desc": "Fenrir C137 - Incarnation Theme",
 	"item.wardentools.music_disc_deepforest": "Abyss Music Disc",
-	"item.wardentools.music_disc_deepforest.desc": "Fenrir C137 - Deep Forest Music",
 	"item.wardentools.music_disc_whiteforest": "Abyss Music Disc",
-	"item.wardentools.music_disc_whiteforest.desc": "Fenrir C137 - White Forest Music",
 	"item.wardentools.whistle": "Whistle",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
@@ -189,6 +185,11 @@
 	"sounds.wardentools.music.incarnation_theme": "Incarnation Theme playing",
 	"sounds.wardentools.shockwave_thunder": "Thunder Shockwave",
 	"sounds.wardentools.whistle": "Whistle",
+
+	"jukebox_song.wardentools.abyss_theme": "Fenrir C137 - Abyss Theme",
+	"jukebox_song.wardentools.incarnation_theme": "Fenrir C137 - Incarnation Theme",
+	"jukebox_song.wardentools.deep_forest": "Fenrir C137 - Deep Forest Music",
+	"jukebox_song.wardentools.white_forest": "Fenrir C137 - White Forest Music",
 
 	"painting.wardentools.quiet_life.title": "Quiet Life",
 	"painting.wardentools.quiet_life.author": "Lucifer C137",

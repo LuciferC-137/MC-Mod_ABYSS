@@ -1,0 +1,8 @@
+{
+  "comparator_output": 3,
+  "description": {
+    "translate": "jukebox_song.wardentools.deepforest_music"
+  },
+  "length_in_seconds": 121.0,
+  "sound_event": "wardentools:deep_forest_music"
+}

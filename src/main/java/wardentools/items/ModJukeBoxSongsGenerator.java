@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.JukeboxSong;
+import wardentools.ModMain;
 import wardentools.sounds.ModSounds;
 
 public class ModJukeBoxSongsGenerator {
@@ -35,6 +36,6 @@ public class ModJukeBoxSongsGenerator {
     }
 
     private static ResourceKey<JukeboxSong> create(String name) {
-        return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.withDefaultNamespace(name));
+        return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
     }
 }
