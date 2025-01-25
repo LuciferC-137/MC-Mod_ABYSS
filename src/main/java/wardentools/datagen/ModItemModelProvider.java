@@ -204,13 +204,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/wall_inventory"))
                 .texture("wall",  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + ForgeRegistries.BLOCKS.getKey(baseBlock.get()).getPath()));
     }
-    
+
+    // Shoutout to El_Redstoniano for making this
     private void trimmedArmorItem(RegistryObject<Item> itemRegistryObject) {
-        final String MOD_ID = ModMain.MOD_ID;
+        final String MOD_ID = ModMain.MOD_ID; // Change this to your mod id
 
         if(itemRegistryObject.get() instanceof ArmorItem armorItem) {
             trimMaterials.forEach((trimMaterial, value) -> {
-
                 float trimValue = value;
 
                 String armorType = switch (armorItem.getEquipmentSlot()) {
@@ -220,13 +220,13 @@ public class ModItemModelProvider extends ItemModelProvider {
                     case FEET -> "boots";
                     default -> "";
                 };
-                String armorItemPathPrefix = "" + armorItem;
-                String armorItemPath = "item/" + armorItemPathPrefix.replace(ModMain.MOD_ID + ":", "");
+
+                String armorItemPath = armorItem.toString();
                 String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
                 String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-                ResourceLocation armorItemResLoc = ResourceLocation.fromNamespaceAndPath(MOD_ID, armorItemPath);
-                ResourceLocation trimResLoc = ResourceLocation.withDefaultNamespace(trimPath); // minecraft namespace
-                ResourceLocation trimNameResLoc = ResourceLocation.fromNamespaceAndPath(MOD_ID, currentTrimName);
+                ResourceLocation armorItemResLoc = ResourceLocation.parse(armorItemPath);
+                ResourceLocation trimResLoc = ResourceLocation.parse(trimPath); // minecraft namespace
+                ResourceLocation trimNameResLoc = ResourceLocation.parse(currentTrimName);
 
                 // This is used for making the ExistingFileHelper acknowledge that this texture exist, so this will
                 // avoid an IllegalArgumentException
@@ -235,14 +235,14 @@ public class ModItemModelProvider extends ItemModelProvider {
                 // Trimmed armorItem files
                 getBuilder(currentTrimName)
                         .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                        .texture("layer0", armorItemResLoc)
+                        .texture("layer0", armorItemResLoc.getNamespace() + ":item/" + armorItemResLoc.getPath())
                         .texture("layer1", trimResLoc);
 
                 // Non-trimmed armorItem file (normal variant)
                 this.withExistingParent(itemRegistryObject.getId().getPath(),
                                 mcLoc("item/generated"))
                         .override()
-                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc))
+                        .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace()  + ":item/" + trimNameResLoc.getPath()))
                         .predicate(mcLoc("trim_type"), trimValue).end()
                         .texture("layer0",
                                 ResourceLocation.fromNamespaceAndPath(MOD_ID,
