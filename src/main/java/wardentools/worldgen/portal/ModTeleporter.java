@@ -39,7 +39,7 @@ public class ModTeleporter {
 		player.setCamera(player);
 		player.stopRiding();
 		BlockPos targetPos = findValidSpawn(targetWorld, player.blockPosition(), false);
-		return new DimensionTransition(targetWorld, player.getPosition(1f), Vec3.ZERO,
+		return new DimensionTransition(targetWorld, targetPos.getCenter(), Vec3.ZERO,
 				player.getYRot(), player.getXRot(), DimensionTransition.DO_NOTHING);
 	}
 

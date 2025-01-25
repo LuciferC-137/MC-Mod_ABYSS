@@ -81,7 +81,6 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void entityInside(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
         if (!level.isClientSide && entity instanceof Player player) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
@@ -192,7 +191,7 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     }
 
     private void sendScreenPacket(Player player, BlockPos pos){
-        player.remove(Entity.RemovalReason.CHANGED_DIMENSION);
+        ((ServerLevel)player.level()).removePlayerImmediately((ServerPlayer)player, Entity.RemovalReason.CHANGED_DIMENSION);
         PacketHandler.sendToClient(new ShowWinScreen(pos), (ServerPlayer) player);
     }
 }

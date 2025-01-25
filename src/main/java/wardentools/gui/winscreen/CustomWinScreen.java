@@ -38,8 +38,12 @@ public class CustomWinScreen extends Screen {
    private static final Logger LOGGER = LogUtils.getLogger();
    private static final ResourceLocation VIGNETTE_LOCATION
            = ResourceLocation.withDefaultNamespace("textures/misc/vignette.png");
-   private static final String WIN_TXT = "wardentools:texts/win.txt";
-   private static final String MOD_CREDITS = "wardentools:texts/mod_credits.json";
+   private static final ResourceLocation WIN_TXT
+           = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "texts/win.txt");
+   private static final ResourceLocation MOD_CREDITS
+           = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "texts/mod_credits.json");
+   private static final ResourceLocation POSTCREDITS_LOCATION
+           = ResourceLocation.withDefaultNamespace("texts/postcredits.txt");
    private static final ResourceLocation MOD_BACKGROUND_LOCATION
            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/background.png");
    private static final Component SECTION_HEADING
@@ -127,19 +131,23 @@ public class CustomWinScreen extends Screen {
          this.centeredLines = new IntOpenHashSet();
          if (this.poem) this.wrapCreditsIO(WIN_TXT, this::addPoemFile);
          this.wrapCreditsIO(MOD_CREDITS, this::addCreditsFile);
-         if (this.poem) this.wrapCreditsIO("texts/postcredits.txt", this::addPoemFile);
+         if (this.poem) this.wrapCreditsIO(POSTCREDITS_LOCATION, this::addPoemFile);
          this.totalScrollLength = this.lines.size() * 12;
       }
       this.musicTickCountDown = MUSIC_TICK_COUNTDOWN;
    }
 
-   private void wrapCreditsIO(String name, CreditsReader reader1) {
-      if (this.minecraft != null) {
-         try (Reader reader = this.minecraft.getResourceManager().openAsReader(ResourceLocation.withDefaultNamespace(name))) {
-            reader1.read(reader);
-         } catch (Exception exception) {
-            LOGGER.error("Couldn't load credits", (Throwable)exception);
+   private void wrapCreditsIO(ResourceLocation location, CreditsReader reader) {
+      if (minecraft == null) return;
+      try {
+         Reader reader1 = this.minecraft.getResourceManager().openAsReader(location);
+         try {reader.read(reader1);} catch (Throwable var7) {
+             try {((Reader) reader1).close();} catch (Throwable var6) {var7.addSuppressed(var6);}
+             throw var7;
          }
+          ((Reader) reader1).close();
+      } catch (Exception var8) {
+          LOGGER.error("Couldn't load credits from file {}", location, var8);
       }
    }
 
@@ -290,6 +298,6 @@ public class CustomWinScreen extends Screen {
    @FunctionalInterface
    @OnlyIn(Dist.CLIENT)
    interface CreditsReader {
-      void read(Reader p_232822_) throws IOException;
+      void read(Reader var1) throws IOException;
    }
 }

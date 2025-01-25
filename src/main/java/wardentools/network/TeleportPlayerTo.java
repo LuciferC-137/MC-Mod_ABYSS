@@ -2,11 +2,20 @@ package wardentools.network;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerAbilitiesPacket;
+import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.storage.LevelData;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
@@ -81,9 +90,11 @@ public class TeleportPlayerTo {
         ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
         if (targetLevel == null) return;
         if (entity instanceof ServerPlayer serverPlayer) {
-            serverPlayer.changeDimension(ModTeleporter.diveTo(targetLevel, targetPos.getCenter(), serverPlayer));
+            System.out.println("player is teleported to ancient city");
+            serverPlayer.revive();
+            serverPlayer.changeDimension(ModTeleporter.diveToAncientCity(targetLevel, targetPos, serverPlayer));
         } else if (!entity.level().isClientSide) {
-            entity.changeDimension(ModTeleporter.diveTo(targetLevel, targetPos.getCenter(), entity));
+            entity.changeDimension(ModTeleporter.diveToAncientCity(targetLevel, targetPos, entity));
         }
     }
 }

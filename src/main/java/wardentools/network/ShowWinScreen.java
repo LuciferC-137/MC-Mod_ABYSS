@@ -2,22 +2,10 @@ package wardentools.network;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.WinScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import wardentools.gui.winscreen.CustomWinScreen;
-import wardentools.worldgen.dimension.ModDimensions;
-import wardentools.worldgen.portal.ModTeleporter;
-
-import java.util.Objects;
 
 public class ShowWinScreen {
     private final int x, y, z;

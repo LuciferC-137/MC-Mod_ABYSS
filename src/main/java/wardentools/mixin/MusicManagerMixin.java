@@ -49,4 +49,9 @@ public abstract class MusicManagerMixin {
         }
         ci.cancel();
     }
+
+    @Inject(method="startPlaying", at=@At("HEAD"))
+    public void onStartPlaying(Music music, CallbackInfo ci) {
+        ((MusicManager)(Object)this).stopPlaying();
+    }
 }
