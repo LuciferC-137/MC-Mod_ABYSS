@@ -1,17 +1,18 @@
 package wardentools;
 
 
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import wardentools.gui.MenuRegistry;
 import wardentools.gui.ModCreativeTabs;
+import wardentools.items.ModItemProperties;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
@@ -54,26 +55,9 @@ public class ModMain {
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 
 		MinecraftForge.EVENT_BUS.register(this);
-        bus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);
         
 	}
-
-	private void commonSetup(final FMLCommonSetupEvent event) {
-		event.enqueueWork(()->{
-			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
-					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
-			ItemProperties.register(ItemRegistry.WHISTLE.get(),
-					ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "using"),
-					(stack, level, entity, seed) -> {
-						if (entity != null && entity.isUsingItem() && entity.getUseItem() == stack) {
-							return 1.0F;
-						}
-						return 0.0F;
-					});
-		});
-
-    }
 }
 
 

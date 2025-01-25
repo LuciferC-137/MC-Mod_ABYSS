@@ -2,9 +2,9 @@ package wardentools.events;
 
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.SpawnPlacementType;
 import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
+import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
 import wardentools.network.PacketHandler;
@@ -26,6 +27,10 @@ public class CommonModEvents {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(PacketHandler::register);
+		event.enqueueWork(()->{
+			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
+					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
+		});
 		ModCriteriaTriggers.init();
     }
     

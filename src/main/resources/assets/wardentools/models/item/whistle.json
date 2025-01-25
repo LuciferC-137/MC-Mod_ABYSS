@@ -28,7 +28,7 @@
   "overrides": [
     {
       "predicate": {
-        "using": 1
+        "wardentools:blowing": 1
       },
       "model": "wardentools:item/whistle_whistling"
     }
