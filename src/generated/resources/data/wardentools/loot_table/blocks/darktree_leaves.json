@@ -16,28 +16,28 @@
                     {
                       "condition": "minecraft:match_tool",
                       "predicate": {
-                        "items": [
-                          "minecraft:shears"
-                        ]
+                        "items": "minecraft:shears"
                       }
                     },
                     {
                       "condition": "minecraft:match_tool",
                       "predicate": {
-                        "enchantments": [
-                          {
-                            "enchantment": "minecraft:silk_touch",
-                            "levels": {
-                              "min": 1
+                        "predicates": {
+                          "minecraft:enchantments": [
+                            {
+                              "enchantments": "minecraft:silk_touch",
+                              "levels": {
+                                "min": 1
+                              }
                             }
-                          }
-                        ]
+                          ]
+                        }
                       }
                     }
                   ]
                 }
               ],
-              "name": "wardentools:whitetree_leaves"
+              "name": "wardentools:darktree_leaves"
             },
             {
               "type": "minecraft:item",
@@ -47,16 +47,13 @@
                 },
                 {
                   "chances": [
-                    0.05,
-                    0.0625,
-                    0.083333336,
-                    0.1
+                    1.0
                   ],
                   "condition": "minecraft:table_bonus",
                   "enchantment": "minecraft:fortune"
                 }
               ],
-              "name": "wardentools:whitetree_sapling"
+              "name": "wardentools:darktree_sapling"
             }
           ]
         }
@@ -74,22 +71,22 @@
               {
                 "condition": "minecraft:match_tool",
                 "predicate": {
-                  "items": [
-                    "minecraft:shears"
-                  ]
+                  "items": "minecraft:shears"
                 }
               },
               {
                 "condition": "minecraft:match_tool",
                 "predicate": {
-                  "enchantments": [
-                    {
-                      "enchantment": "minecraft:silk_touch",
-                      "levels": {
-                        "min": 1
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
                       }
-                    }
-                  ]
+                    ]
+                  }
                 }
               }
             ]
@@ -117,8 +114,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": 0.0
+                "max": 2.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             },
@@ -126,12 +123,68 @@
               "function": "minecraft:explosion_decay"
             }
           ],
-          "name": "wardentools:white_seed"
+          "name": "minecraft:stick"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:inverted",
+          "term": {
+            "condition": "minecraft:any_of",
+            "terms": [
+              {
+                "condition": "minecraft:match_tool",
+                "predicate": {
+                  "items": "minecraft:shears"
+                }
+              },
+              {
+                "condition": "minecraft:match_tool",
+                "predicate": {
+                  "predicates": {
+                    "minecraft:enchantments": [
+                      {
+                        "enchantments": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:survives_explosion"
+            },
+            {
+              "chances": [
+                0.005,
+                0.0055555557,
+                0.00625,
+                0.008333334,
+                0.025
+              ],
+              "condition": "minecraft:table_bonus",
+              "enchantment": "minecraft:fortune"
+            }
+          ],
+          "name": "wardentools:deep_fruit"
         }
       ],
       "rolls": 1.0
     }
   ],
-  	"random_sequence": "wardentools:blocks/whitetree_leaves"
-  }
-  
+  "random_sequence": "wardentools:blocks/darktree_leaves"
+}
