@@ -13,8 +13,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -128,6 +131,30 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				block -> this.createNumberBasedOreDrop(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
 						ItemRegistry.DEEP_FRAGMENT.get(), 1, 3));
 
+		// Cristal drop
+		this.add(BlockRegistry.CITRINE.get(),
+				block -> this.cristalLoot(BlockRegistry.CITRINE.get(), ItemRegistry.CITRINE_FRAGMENT.get()));
+		this.add(BlockRegistry.ECHO_CRISTAL.get(),
+				block -> this.cristalLoot(BlockRegistry.ECHO_CRISTAL.get(), Items.ECHO_SHARD));
+		this.add(BlockRegistry.RUBY.get(),
+				block -> this.cristalLoot(BlockRegistry.RUBY.get(), ItemRegistry.RUBY_FRAGMENT.get()));
+		this.add(BlockRegistry.MALACHITE.get(),
+				block -> this.cristalLoot(BlockRegistry.MALACHITE.get(), ItemRegistry.MALACHITE_FRAGMENT.get()));
+		this.add(BlockRegistry.PALE_CRISTAL.get(),
+				block -> this.cristalLoot(BlockRegistry.PALE_CRISTAL.get(), ItemRegistry.PALE_SHARD.get()));
+		this.add(BlockRegistry.DEEP_CRISTAL.get(),
+				block -> this.cristalLoot(BlockRegistry.DEEP_CRISTAL.get(), ItemRegistry.DEEP_FRAGMENT.get()));
+		this.add(BlockRegistry.RADIANCE_CRISTAL.get(),
+				block -> this.cristalLoot(BlockRegistry.RADIANCE_CRISTAL.get(), ItemRegistry.RADIANCE_FRAGMENT.get()));
+
+		// Leaves drop
+		this.add(BlockRegistry.DARKTREE_LEAVES.get(),
+				block -> this.createCustomLeaveDrop(BlockRegistry.DARKTREE_LEAVES.get(),
+						BlockRegistry.DARKTREE_SAPLING.get(), ItemRegistry.DEEP_FRUIT.get(), 0.05F));
+		this.add(BlockRegistry.WHITETREE_LEAVES.get(),
+				block -> this.createCustomLeaveDrop(BlockRegistry.WHITETREE_LEAVES.get(),
+						BlockRegistry.WHITETREE_SAPLING.get(), ItemRegistry.WHITE_SEED.get(), 0.05F));
+
 		// Special drop
 		this.add(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(),
 				createPotFlowerItemTable(BlockRegistry.WHITE_TORCHFLOWER.get()));
@@ -228,20 +255,42 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								registrylookup.getOrThrow(Enchantments.FORTUNE)))));
 	}
 
+	private LootTable.Builder cristalLoot(Block block, ItemLike cristal) {
+		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+		return createSilkTouchDispatchTable(block,
+				this.applyExplosionDecay(block,
+						LootItem.lootTableItem(cristal)
+						.apply(SetItemCountFunction
+						.setCount(UniformGenerator.between(1, 2)))
+						.apply(ApplyBonusCount.addUniformBonusCount(
+								registrylookup.getOrThrow(Enchantments.FORTUNE)))));
+	}
+
+	protected LootTable.Builder createCustomLeaveDrop(Block leave, Block sapling, ItemLike fruit, float... f) {
+		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+		return this.createLeavesDrops(leave, sapling, f)
+				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+						.when(this.doesNotHaveShearsOrSilkTouch())
+						.add(((LootPoolSingletonContainer.Builder<?>)
+								this.applyExplosionCondition(leave, LootItem.lootTableItem(fruit)))
+								.when(BonusLevelTableCondition
+										.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE),
+												new float[]{0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F}))));
+	}
+
+	private LootItemCondition.Builder hasShearsOrSilkTouch() {
+		return HAS_SHEARS.or(this.hasSilkTouch());
+	}
+
+	private LootItemCondition.Builder doesNotHaveShearsOrSilkTouch() {
+		return this.hasShearsOrSilkTouch().invert();
+	}
+
 	@Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
     	Set<Block> blocksToIgnore = Set.of(
-    	        BlockRegistry.RADIANCE_CRISTAL.get(),
-    	        BlockRegistry.DARKTREE_LEAVES.get(),
-    	        BlockRegistry.WHITETREE_LEAVES.get(),
     	        BlockRegistry.RADIANCE_CATALYST.get(),
-				BlockRegistry.DEEP_CRISTAL.get(),
 				BlockRegistry.LIQUID_CORRUPTION_BLOCK.get(),
-				BlockRegistry.CITRINE.get(),
-				BlockRegistry.ECHO_CRISTAL.get(),
-				BlockRegistry.RUBY.get(),
-				BlockRegistry.MALACHITE.get(),
-				BlockRegistry.PALE_CRISTAL.get(),
 				BlockRegistry.ABYSS_PORTAL_BLOCK.get(),
 				BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),
 				BlockRegistry.SOUL_SPAWNER.get()
