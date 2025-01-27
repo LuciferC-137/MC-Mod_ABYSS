@@ -9,8 +9,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
@@ -79,7 +79,7 @@ public class PaleWandererEntity extends Animal {
 
 	@Override
 	public AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob mob) {
-		return ModEntities.PALE_WANDERER.get().create(level);
+		return ModEntities.PALE_WANDERER.get().create(level, EntitySpawnReason.BREEDING);
 	}
 	
 	@Override
@@ -88,13 +88,13 @@ public class PaleWandererEntity extends Animal {
 	}
     
     @Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor accessor, @NotNull MobSpawnType spawnType) {
+	public boolean checkSpawnRules(@NotNull LevelAccessor accessor, @NotNull EntitySpawnReason reason) {
     	return true;
     }
 	
     public static boolean canSpawn(EntityType<PaleWandererEntity> entityType, ServerLevelAccessor level,
-            MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);// Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
+								   EntitySpawnReason reason, BlockPos pos, RandomSource random) {
+        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
     }
 
     @Override

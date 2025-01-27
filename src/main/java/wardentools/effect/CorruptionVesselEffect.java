@@ -1,10 +1,6 @@
 package wardentools.effect;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,8 +13,8 @@ public class CorruptionVesselEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
-        return super.applyEffectTick(entity, amplifier);
+    public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int amplifier) {
+        return super.applyEffectTick(level, entity, amplifier);
     }
 
     @Override

@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.Level;
@@ -22,31 +23,13 @@ import java.util.List;
 
 public class SpearItem extends Item {
 
-    public SpearItem(Item.Properties properties) {
-        super(properties.component(DataComponents.TOOL, createToolProperties()));
+    public SpearItem(Item.Properties properties, float attackDamage, float attackSpeed) {
+        this(ToolMaterials.RADIANCE_CRISTAL, attackDamage, attackSpeed, properties);
     }
 
-    private static Tool createToolProperties() {
-        return new Tool(List.of(Tool.Rule.minesAndDrops(List.of(Blocks.COBWEB), 15.0F),
-                Tool.Rule.overrideSpeed(BlockTags.MINEABLE_WITH_HOE, 1.5F)),
-                1.0F, 2);
-    }
-
-    public static ItemAttributeModifiers createAttributes(int attackDamage, float attackSpeed) {
-        return ItemAttributeModifiers.builder()
-                .add(Attributes.ATTACK_DAMAGE,
-                        new AttributeModifier(BASE_ATTACK_DAMAGE_ID,
-                                (float)attackDamage, AttributeModifier.Operation.ADD_VALUE),
-                        EquipmentSlotGroup.MAINHAND)
-                .add(Attributes.ATTACK_SPEED,
-                        new AttributeModifier(BASE_ATTACK_SPEED_ID,
-                                attackSpeed, AttributeModifier.Operation.ADD_VALUE),
-                        EquipmentSlotGroup.MAINHAND).build();
-    }
-
-    @Override
-    public boolean isValidRepairItem(ItemStack stack, @NotNull ItemStack stack1) {
-        return stack.is(ItemRegistry.RADIANCE_INGOTS.get()) || stack1.is(ItemRegistry.RADIANCE_INGOTS.get());
+    public SpearItem(ToolMaterial material, float attackDamage, float attackSpeed,
+                      Item.Properties properties) {
+        super(material.applySwordProperties(properties, attackDamage, attackSpeed));
     }
 
 

@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "wardentools:deepcristal"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "wardentools:deepcristal"
+      }
+    ]
+  }
+}

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -60,7 +61,9 @@ public class CorruptedOverlayRenderer {
                Window window = event.getWindow();
                int screenWidth = window.getGuiScaledWidth();
                int screenHeight = window.getGuiScaledHeight();
-               guiGraphics.blit(CORRUPTED_OVERLAY, 0, 0,
+               guiGraphics.blit(
+                       (resourceLocation) -> RenderType.gui(),
+                       CORRUPTED_OVERLAY, 0, 0,
                        0, 0, screenWidth, screenHeight, screenWidth, screenHeight);
 
                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);

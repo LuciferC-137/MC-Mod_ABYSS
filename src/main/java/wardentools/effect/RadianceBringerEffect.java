@@ -1,12 +1,15 @@
 package wardentools.effect;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.TemperEntity;
 
@@ -21,19 +24,19 @@ public class RadianceBringerEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int amplifier) {
         if (!(entity.tickCount%(200 / (amplifier + 1))==0)) return false;
         if (!(entity instanceof Player)) return false;
-        if (countMyTemper(entity.level(), (Player)entity) >= MAX_NUMBER_OF_TEMPER) return false;
-        TemperEntity temper = ModEntities.TEMPER.get().create(entity.level());
+        if (countMyTemper(level, (Player)entity) >= MAX_NUMBER_OF_TEMPER) return false;
+        TemperEntity temper = ModEntities.TEMPER.get().create(level, EntitySpawnReason.MOB_SUMMONED);
         if (temper==null) return false;
-        BlockPos spawnPos = findSpawnPosition(entity.level(), entity.getOnPos());
+        BlockPos spawnPos = findSpawnPosition(level, entity.getOnPos());
         if (spawnPos == null) return false;
         temper.moveTo(spawnPos.getX() + 0.5f, spawnPos.getY() + 0.5f,
                 spawnPos.getZ() + 0.5f);
         temper.setPlayerInvoker((Player)entity);
-        entity.level().addFreshEntity(temper);
-        return super.applyEffectTick(entity, amplifier);
+        level.addFreshEntity(temper);
+        return super.applyEffectTick(level, entity, amplifier);
     }
 
     private BlockPos findSpawnPosition(Level level, BlockPos origin) {

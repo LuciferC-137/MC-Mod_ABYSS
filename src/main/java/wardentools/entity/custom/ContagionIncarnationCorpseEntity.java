@@ -20,13 +20,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import wardentools.items.ItemRegistry;
+import wardentools.particle.ParticleRegistry;
 
 import java.util.function.Predicate;
 
 public class ContagionIncarnationCorpseEntity extends LivingEntity {
+    private static final int PARTICLE_EFFECT_DURATION = 200;
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(4, ItemStack.EMPTY);
     private static final Predicate<Entity> RIDABLE_MINECARTS =
-            (entity) -> entity instanceof AbstractMinecart && ((AbstractMinecart)entity).canBeRidden();
+            (entity) -> entity instanceof AbstractMinecart && ((AbstractMinecart)entity).isRideable();
     public long lastHit;
 
 	public ContagionIncarnationCorpseEntity(EntityType<? extends LivingEntity> entity, Level level) {
@@ -45,6 +47,32 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
     @Override
     public void tick() {
         super.tick();
+        if (this.level().isClientSide) {
+            int particleCount = (PARTICLE_EFFECT_DURATION - this.tickCount) / 10;
+            if (particleCount > 0) {
+                renderParticles(this, particleCount);
+            } else if (this.tickCount <= 3 * PARTICLE_EFFECT_DURATION && this.tickCount % 10 == 0) {
+                renderParticles(this, 1);
+            }
+        }
+    }
+
+    private void renderParticles(ContagionIncarnationCorpseEntity entity, int particleCountMax) {
+        double minX = entity.getBoundingBox().minX;
+        double minY = entity.getBoundingBox().minY;
+        double minZ = entity.getBoundingBox().minZ - 2d;
+        double maxX = entity.getBoundingBox().maxX;
+        double maxY = entity.getBoundingBox().maxY;
+        double maxZ = entity.getBoundingBox().maxZ + 1d;
+        int particleCount = entity.getRandom()
+                .nextInt(0, particleCountMax);
+        for (int j = 0; j < particleCount; j++) {
+            double x = minX + (maxX - minX) * entity.getRandom().nextDouble();
+            double y = minY + (maxY - minY) * entity.getRandom().nextDouble();
+            double z = minZ + (maxZ - minZ) * entity.getRandom().nextDouble();
+            entity.level().addParticle(ParticleRegistry.CORRUPTION.get(), x, y, z,
+                    0, -0.1, 0);
+        }
     }
 
     @Override
@@ -70,15 +98,16 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
         }
     }
 
-    public boolean hurt(@NotNull DamageSource source, float damage) {
+    @Override
+    public boolean hurtServer(@NotNull ServerLevel level, @NotNull DamageSource source, float damage) {
         if (!this.level().isClientSide && !this.isRemoved()) {
             if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
-                this.kill();
+                this.kill((ServerLevel)this.level());
                 return false;
-            } else if (!this.isInvulnerableTo(source)) {
+            } else if (!this.isInvulnerableTo(level, source)) {
                 if (source.is(DamageTypeTags.IS_EXPLOSION)) {
                     this.brokenByAnything(source);
-                    this.kill();
+                    this.kill((ServerLevel)this.level());
                     return false;
                 } else if (source.is(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
                     if (this.isOnFire()) {
@@ -103,7 +132,7 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
                         if (source.isCreativePlayer()) {
                             this.playBrokenSound();
                             this.showBreakingParticles();
-                            this.kill();
+                            this.kill((ServerLevel)this.level());
                         } else {
                             long i = this.level().getGameTime();
                             if (i - this.lastHit > 5L && !flag1) {
@@ -113,7 +142,7 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
                             } else {
                                 this.brokenByPlayer(source);
                                 this.showBreakingParticles();
-                                this.kill();
+                                this.kill((ServerLevel)this.level());
                             }
                         }
                         return true;
@@ -128,7 +157,7 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
         f -= damage;
         if (f <= 0.5F) {
             this.brokenByAnything(damageSource);
-            this.kill();
+            this.kill((ServerLevel)this.level());
         } else {
             this.setHealth(f);
             this.gameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getEntity());
@@ -167,7 +196,7 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
     }
 
     @Override
-    public void kill() {
+    public void kill(@NotNull ServerLevel level) {
         this.remove(Entity.RemovalReason.KILLED);
         this.gameEvent(GameEvent.ENTITY_DIE);
     }

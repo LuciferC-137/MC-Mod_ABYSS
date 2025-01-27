@@ -39,7 +39,7 @@ public class WardenLootTableModifier {
                     .add(EmptyLootItem.emptyItem()
                             .setWeight(5));
 
-            // 100% chance to get between 1 and 3 "deepcristal"
+            // 100% chance to get between 1 and 3 "deepcristal.json"
             LootPool.Builder poolBuilder3 = LootPool.lootPool()
                     .setRolls(ConstantValue.exactly(1))
                     .add(LootItem.lootTableItem(ItemRegistry.DEEPCRISTAL.get())

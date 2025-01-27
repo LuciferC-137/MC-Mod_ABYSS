@@ -3,24 +3,17 @@ package wardentools.block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-import wardentools.effect.ModEffects;
 import wardentools.misc.WindWhisper;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleContagionImplosion;
@@ -35,7 +28,6 @@ public class WindWhispererBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world,
                                         @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return Shapes.box(0.2, 0.0, 0.2,
@@ -43,7 +35,6 @@ public class WindWhispererBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         level.players().forEach(player -> {
@@ -63,7 +54,7 @@ public class WindWhispererBlock extends Block {
     }
 
     private static void sendMessage(Player player, String message) {
-        player.sendSystemMessage(Component.literal(message));
+        player.displayClientMessage(Component.literal(message), false);
     }
 
     private static boolean isInAbyss(Player player) {

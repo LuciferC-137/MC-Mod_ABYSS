@@ -1,8 +1,6 @@
 package wardentools.block;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.component.CustomData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -54,19 +52,11 @@ public class RadianceCatalystBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+	protected @NotNull InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
 													   @NotNull Level level, @NotNull BlockPos pos,
 													   @NotNull Player player, @NotNull InteractionHand hand,
 													   @NotNull BlockHitResult hitResult) {
-		switch (this.use(level, pos, player)) {
-			case InteractionResult.SUCCESS:
-				return ItemInteractionResult.SUCCESS;
-			case InteractionResult.FAIL:
-				return ItemInteractionResult.FAIL;
-			case InteractionResult.PASS:
-				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return this.use(level, pos, player);
 	}
 
 	public @NotNull InteractionResult use(Level level, BlockPos pos,

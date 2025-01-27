@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -17,8 +16,6 @@ import org.joml.Matrix4f;
 import wardentools.ModMain;
 import wardentools.blockentity.AbyssPortalBlockEntity;
 
-import java.io.IOException;
-
 @OnlyIn(Dist.CLIENT)
 public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortalBlockEntity> {
     // TEXTURES
@@ -30,17 +27,12 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
     // SHADER
     public static final ResourceLocation shaderLocation
             = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "rendertype_abyss_portal");
-    public static final ShaderInstance shader;
+    public static final ShaderProgram shader;
     static {
-        try {
-            shader = new ShaderInstance(Minecraft.getInstance().getResourceManager(),
-                    shaderLocation, DefaultVertexFormat.POSITION);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        shader = new ShaderProgram(shaderLocation, DefaultVertexFormat.POSITION, ShaderDefines.EMPTY);
     }
     protected static final RenderStateShard.ShaderStateShard RENDERTYPE_SHADER
-            = new RenderStateShard.ShaderStateShard(() -> shader);
+            = new RenderStateShard.ShaderStateShard(shader);
 
     // RENDER TYPE
     private static final RenderType ABYSS_PORTAL

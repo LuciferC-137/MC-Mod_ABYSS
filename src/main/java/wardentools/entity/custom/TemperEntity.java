@@ -99,13 +99,14 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 	}
 
 	@Override
-	public boolean doHurtTarget(@NotNull Entity target) {
+	public boolean doHurtTarget(@NotNull ServerLevel level, @NotNull Entity target) {
 		this.setAttackTick(attackDurationTick);
-		return super.doHurtTarget(target);
+		return super.doHurtTarget(level, target);
 	}
 
 	private void dispawnIfOwnerNotRadianceBringer(){
 		if (this.getOwner() == null) {return;}
+		if (ModEffects.RADIANCE_BRINGER.getHolder().isEmpty()) return;
 		if (this.getOwner().getEffect(ModEffects.RADIANCE_BRINGER.getHolder().get()) == null){
 			this.remove(RemovalReason.DISCARDED);
 		}
@@ -214,12 +215,12 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 	}
 
 	@Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull MobSpawnType type) {
+	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull EntitySpawnReason reason) {
     	return true;
     }
 	
     public static boolean canSpawn(EntityType<TemperEntity> entityType, ServerLevelAccessor level,
-                                   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+                                   EntitySpawnReason reason, BlockPos pos, RandomSource random) {
 		return level.getBlockState(pos).isAir();
     }
 

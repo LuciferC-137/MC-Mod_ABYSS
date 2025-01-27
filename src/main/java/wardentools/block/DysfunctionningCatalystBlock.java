@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -48,20 +47,13 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 		return this.use(level, pos, player);
 	}
 
+
 	@Override
-	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+	protected @NotNull InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
 													   @NotNull Level level, @NotNull BlockPos pos,
 													   @NotNull Player player, @NotNull InteractionHand hand,
 													   @NotNull BlockHitResult hitResult) {
-		switch (this.use(level, pos, player)) {
-			case InteractionResult.SUCCESS:
-				return ItemInteractionResult.SUCCESS;
-			case InteractionResult.FAIL:
-				return ItemInteractionResult.FAIL;
-			case InteractionResult.PASS:
-				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return this.use(level, pos, player);
 	}
 
 	public @NotNull InteractionResult use(Level level, @NotNull BlockPos pos,

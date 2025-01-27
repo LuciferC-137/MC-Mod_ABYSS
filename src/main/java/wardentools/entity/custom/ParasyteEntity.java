@@ -22,9 +22,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.interfaces.CorruptionMonster;
 import wardentools.entity.utils.goal.ClimbParasyteGoal;
+import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
 
 public class ParasyteEntity extends CorruptionMonster {
@@ -72,11 +74,23 @@ public class ParasyteEntity extends CorruptionMonster {
 	@Override
 	public void tick() {
 		this.idleAnimation.animateWhen(!this.walkAnimation.isMoving(), this.tickCount);
+		if (this.level().isClientSide) animateParticleClient();
 		super.tick();
 	}
 
+	private void animateParticleClient() {
+		if (this.tickCount%10 == this.level().getRandom().nextInt(0, 10)){
+			Vec3 particlePos = this.getPosition(1f);
+			this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
+					particlePos.x, particlePos.y, particlePos.z,
+					this.level().getRandom().nextFloat() * 0.04f,
+					this.level().getRandom().nextFloat() * 0.1f,
+					this.level().getRandom().nextFloat() * 0.04f);
+		}
+	}
+
     public static boolean canSpawn(EntityType<ParasyteEntity> entityType, ServerLevelAccessor level,
-                                   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+                                   EntitySpawnReason reason, BlockPos pos, RandomSource random) {
 		return level.getBlockState(pos).isAir();
     }
 

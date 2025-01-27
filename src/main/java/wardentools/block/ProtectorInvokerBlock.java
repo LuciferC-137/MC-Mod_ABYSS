@@ -1,6 +1,6 @@
 package wardentools.block;
 
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -76,15 +76,11 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+	protected @NotNull InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
 													   @NotNull Level level, @NotNull BlockPos pos,
 													   @NotNull Player player, @NotNull InteractionHand hand,
 													   @NotNull BlockHitResult hitResult) {
-        return switch (this.use(level, pos, player, hand)) {
-            case InteractionResult.SUCCESS -> ItemInteractionResult.SUCCESS;
-            case InteractionResult.FAIL -> ItemInteractionResult.FAIL;
-            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
+        return this.use(level, pos, player, hand);
     }
 
 	public @NotNull InteractionResult use( Level level, @NotNull BlockPos pos,
@@ -121,7 +117,7 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 		if (level.isClientSide()) return;
 		BlockPos spawnPos = findSpawnPosition(level, pos);
 		if (spawnPos != null) {
-			ProtectorEntity protec = ModEntities.PROTECTOR.get().create(level);
+			ProtectorEntity protec = ModEntities.PROTECTOR.get().create(level, EntitySpawnReason.SPAWNER);
 			if (protec != null) {
 				protec.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
 							spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);

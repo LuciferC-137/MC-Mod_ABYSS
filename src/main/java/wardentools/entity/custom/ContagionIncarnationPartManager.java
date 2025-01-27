@@ -3,6 +3,7 @@ package wardentools.entity.custom;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -337,7 +338,8 @@ public class ContagionIncarnationPartManager extends CorruptionMonster implement
     }
 
     protected boolean reallyHurt(DamageSource source, float damage) {
-        return super.hurt(source, damage);
+        if (this.level().isClientSide) return false;
+        return super.hurtServer((ServerLevel)this.level(), source, damage);
     }
 
     public ContagionIncarnationPart[] getSubEntities() {

@@ -277,7 +277,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 
 	public double getHeightAboveGround() {
         BlockPos groundPos = this.blockPosition();
-		while (groundPos.getY() > this.level().getMinBuildHeight()
+		while (groundPos.getY() > this.level().getMinY()
 				&& this.level().getBlockState(groundPos).isAir()) {
 			groundPos = groundPos.below();
 		}
@@ -353,7 +353,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
     public static boolean canSpawn(EntityType<NoctilureEntity> entityType, ServerLevelAccessor level,
-                                   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+                                   EntitySpawnReason reason, BlockPos pos, RandomSource random) {
 		return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
     }
 
@@ -545,13 +545,13 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	@Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull MobSpawnType type) {
+	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull EntitySpawnReason reason) {
 		return true;
 	}
 
 	@Override
 	public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel level, @NotNull AgeableMob mob) {
-		return ModEntities.NOCTILURE.get().create(level);
+		return ModEntities.NOCTILURE.get().create(level, EntitySpawnReason.BREEDING);
 	}
 
 	@Override

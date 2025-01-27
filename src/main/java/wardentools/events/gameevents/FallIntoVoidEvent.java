@@ -11,7 +11,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import wardentools.ModMain;
 import wardentools.worldgen.dimension.ModDimensions;
-import wardentools.worldgen.portal.ModTeleporter;
+
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public class FallIntoVoidEvent {
@@ -25,11 +26,11 @@ public class FallIntoVoidEvent {
 	                ResourceKey<Level> resourcekey = ModDimensions.ABYSS_LEVEL_KEY;
 	                ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
 	                if (portalDimension != null && !event.getEntity().isPassenger()) {
-	                	event.getEntity().setPos(event.getEntity().blockPosition().getX(),
-	                			250, event.getEntity().blockPosition().getX());
-	                    event.getEntity().changeDimension(ModTeleporter
-								.diveTo(portalDimension,
-										event.getEntity().blockPosition().getCenter(), event.getEntity()));
+						event.getEntity().teleportTo(portalDimension,
+								event.getEntity().blockPosition().getX(),
+								250, event.getEntity().blockPosition().getX(),
+								Set.of(), event.getEntity().getYRot(), event.getEntity().getXRot(),
+								false);
 	               }
 	            }
 	        }

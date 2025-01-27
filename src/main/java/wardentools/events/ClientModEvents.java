@@ -1,7 +1,6 @@
 package wardentools.events;
 
 import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.ChestBoatModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -9,9 +8,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
-import wardentools.entity.client.*;
-import wardentools.entity.custom.ModBoatEntity;
-import wardentools.entity.custom.ModChestBoatEntity;
+import wardentools.entity.client.model.*;
+import wardentools.entity.client.renderer.*;
+import wardentools.entity.custom.DarktreeBoat;
+import wardentools.entity.custom.DarktreeChestBoat;
+import wardentools.entity.custom.WhitetreeBoat;
+import wardentools.entity.custom.WhitetreeChestBoat;
+import wardentools.items.BoatItem;
 import wardentools.items.ModItemProperties;
 import wardentools.weather.lightning.AbyssLightningRenderer;
 
@@ -29,10 +32,10 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.PALE_WANDERER.get(), PaleWandererRenderer::new);
 		event.registerEntityRenderer(ModEntities.PROTECTOR.get(), ProtectorRenderer::new);
 		event.registerEntityRenderer(ModEntities.CONTAGION_INCARNATION.get(), ContagionIncarnationRenderer::new);
-		event.registerEntityRenderer(ModEntities.MOD_BOAT.get(),
-				context -> new ModBoatRenderer(context, false));
-		event.registerEntityRenderer(ModEntities.MOD_CHEST_BOAT.get(),
-				context -> new ModBoatRenderer(context, true));
+		event.registerEntityRenderer(ModEntities.DARKTREE_BOAT.get(),
+				context -> new ModBoatRenderer(context, BoatItem.Type.DARKTREE_BOAT));
+		event.registerEntityRenderer(ModEntities.WHITETREE_CHEST_BOAT.get(),
+				context -> new ModBoatRenderer(context, BoatItem.Type.WHITETREE_CHEST_BOAT));
 		event.registerEntityRenderer(ModEntities.TEMPER.get(), TemperRenderer::new);
 		event.registerEntityRenderer(ModEntities.PARASYTE.get(), ParasyteRenderer::new);
 		event.registerEntityRenderer(ModEntities.NOCTILURE.get(), NoctilureRenderer::new);
@@ -49,10 +52,10 @@ public class ClientModEvents {
 		event.registerLayerDefinition(PaleWanderer.LAYER_LOCATION, PaleWanderer::createBodyLayer);
 		event.registerLayerDefinition(Protector.LAYER_LOCATION, Protector::createBodyLayer);
 		event.registerLayerDefinition(ContagionIncarnation.LAYER_LOCATION, ContagionIncarnation::createBodyLayer);
-		event.registerLayerDefinition(ModBoatEntity.DARKTREE_BOAT_LAYER, BoatModel::createBodyModel);
-		event.registerLayerDefinition(ModChestBoatEntity.DARKTREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
-		event.registerLayerDefinition(ModBoatEntity.WHITETREE_BOAT_LAYER, BoatModel::createBodyModel);
-		event.registerLayerDefinition(ModChestBoatEntity.WHITETREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+		event.registerLayerDefinition(DarktreeBoat.DARKTREE_BOAT_LAYER, BoatModel::createBoatModel);
+		event.registerLayerDefinition(DarktreeChestBoat.DARKTREE_CHEST_BOAT_LAYER, BoatModel::createChestBoatModel);
+		event.registerLayerDefinition(WhitetreeBoat.WHITETREE_BOAT_LAYER, BoatModel::createBoatModel);
+		event.registerLayerDefinition(WhitetreeChestBoat.WHITETREE_CHEST_BOAT_LAYER, BoatModel::createChestBoatModel);
 		event.registerLayerDefinition(Temper.LAYER_LOCATION, Temper::createBodyLayer);
 		event.registerLayerDefinition(Parasyte.LAYER_LOCATION, Parasyte::createBodyLayer);
 		event.registerLayerDefinition(Noctilure.LAYER_LOCATION, Noctilure::createBodyLayer);

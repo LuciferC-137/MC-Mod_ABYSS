@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -32,7 +33,6 @@ public class SoulSpawner extends Block implements EntityBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (level.isClientSide()) return;
@@ -52,7 +52,7 @@ public class SoulSpawner extends Block implements EntityBlock {
         BlockEntity be = level.getBlockEntity(pos);
         if (be instanceof SoulSpawnerBlockEntity soulSpawner) {
             if (soulSpawner.getShadowEntity() == null) {
-                ShadowEntity shadowEntity = ModEntities.SHADOW.get().create(level);
+                ShadowEntity shadowEntity = ModEntities.SHADOW.get().create(level, EntitySpawnReason.SPAWNER);
                 if (shadowEntity != null) {
                     shadowEntity.moveTo(soulSpawner.getBlockPos(), 0.0F, 0.0F);
                     soulSpawner.setShadowEntity(shadowEntity);

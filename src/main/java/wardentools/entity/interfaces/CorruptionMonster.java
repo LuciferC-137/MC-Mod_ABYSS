@@ -23,11 +23,11 @@ public class CorruptionMonster extends Monster {
     }
 
     @Override
-    public boolean hurt(@NotNull DamageSource source, float v) {
+    public boolean hurtServer(@NotNull ServerLevel level, @NotNull DamageSource source, float v) {
         if (source.getMsgId().equals("corrupted")) {
             return false;
         }
-        return super.hurt(source, v);
+        return super.hurtServer(level, source, v);
     }
 
     @Override
@@ -35,29 +35,29 @@ public class CorruptionMonster extends Monster {
         return super.canAttack(living) && !(living instanceof CorruptionMonster);
     }
 
+
     @Override
-    public boolean doHurtTarget(Entity target) {
+    public boolean doHurtTarget(@NotNull ServerLevel level, Entity target) {
         float f = (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
         Level var5 = this.level();
+        if (target.level().registryAccess().get(Registries.DAMAGE_TYPE).isEmpty()) return false;
         Holder<DamageType> corruptedDamageHolder
-                = target.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
-                .getHolderOrThrow(CustomDamageType.CORRUPTED_KEY);
+                = target.level().registryAccess().get(Registries.DAMAGE_TYPE).get().get()
+                .wrapAsHolder(CustomDamageType.CORRUPTED_KEY.getOrThrow(level).get());
         DamageSource damageSource = new DamageSource(corruptedDamageHolder, target, this);
         if (var5 instanceof ServerLevel serverlevel) {
             f = EnchantmentHelper.modifyDamage(serverlevel, this.getWeaponItem(), target, damageSource, f);
         }
-        boolean flag = target.hurt(damageSource, f);
+        boolean flag = target.hurtServer(level, damageSource, f);
         if (flag) {
             float f1 = this.getKnockback(target, damageSource);
-            if (f1 > 0.0F && target instanceof LivingEntity) {
-                LivingEntity livingentity = (LivingEntity)target;
+            if (f1 > 0.0F && target instanceof LivingEntity livingentity) {
                 livingentity.knockback((double)(f1 * 0.5F), (double)Mth.sin(this.getYRot() * 0.017453292F), (double)(-Mth.cos(this.getYRot() * 0.017453292F)));
                 this.setDeltaMovement(this.getDeltaMovement().multiply(0.6, 1.0, 0.6));
             }
             Level var7 = this.level();
-            if (var7 instanceof ServerLevel) {
-                ServerLevel serverlevel1 = (ServerLevel)var7;
-                EnchantmentHelper.doPostAttackEffects(serverlevel1, target, damageSource);
+            if (var7 instanceof ServerLevel serverLevel1) {
+                EnchantmentHelper.doPostAttackEffects(serverLevel1, target, damageSource);
             }
             this.setLastHurtMob(target);
             this.playAttackSound();

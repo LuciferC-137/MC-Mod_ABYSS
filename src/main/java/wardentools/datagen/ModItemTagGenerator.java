@@ -13,8 +13,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.items.ItemRegistry;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
+import wardentools.tags.ModTags;
 
 public class ModItemTagGenerator extends ItemTagsProvider {
 
@@ -77,6 +79,12 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 		this.tag(ItemTags.LEG_ARMOR_ENCHANTABLE)
 				.add(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get())
 				.add(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS.get());
+
+		this.tag(ModTags.Items.DEEPCRISTAL_REPAIRS)
+				.add(ItemRegistry.DEEPINGOTS.get());
+
+		this.tag(ModTags.Items.RADIANCE_CRISTAL_REPAIRS)
+				.add(ItemRegistry.RADIANCE_INGOTS.get());
 	}
 
 }

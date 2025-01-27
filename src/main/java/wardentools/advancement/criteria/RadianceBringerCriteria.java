@@ -7,7 +7,6 @@ import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import org.jetbrains.annotations.NotNull;
 import wardentools.advancement.ModCriteriaTriggers;
 

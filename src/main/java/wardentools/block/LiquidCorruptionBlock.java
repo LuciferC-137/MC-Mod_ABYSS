@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.effect.ModEffects;
@@ -49,24 +50,27 @@ public class LiquidCorruptionBlock extends LiquidBlock {
         if (!entity.level().isClientSide
                 && entity instanceof LivingEntity living
                 && living.level().getGameTime()%20==1) {
+            if (ModEffects.CORRUPTED.getHolder().isEmpty()) return;
             living.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.getHolder().get(),
                         400, 1, false, false));
+            if (living.level().registryAccess().get(Registries.DAMAGE_TYPE).isEmpty()) return;
             Holder<DamageType> corruptedDamageTypeHolder = living.level().registryAccess()
-                    .registryOrThrow(Registries.DAMAGE_TYPE)
-                    .getHolderOrThrow(CustomDamageType.CORRUPTED_KEY);
+                    .get(Registries.DAMAGE_TYPE).get().get()
+                    .wrapAsHolder(CustomDamageType.CORRUPTED_KEY.getOrThrow(level).get());
             living.hurt(new DamageSource(corruptedDamageTypeHolder,
                     null, living, null), 3f);
         }
     }
 
+
     @Override
-    public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
-                                @NotNull Block block, @NotNull BlockPos neighborPos, boolean isMoving) {
-        BlockState neighborState = level.getBlockState(neighborPos);
+     public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                                  @NotNull Block block, Orientation orientation, boolean isMoving) {
+        BlockState neighborState = block.defaultBlockState();
         if (neighborState.is(Blocks.WATER) || neighborState.is(Blocks.LAVA)) {
             level.setBlock(pos, BlockRegistry.SOLID_CORRUPTION.get().defaultBlockState(), Block.UPDATE_ALL);
         }
-        super.neighborChanged(state, level, pos, block, neighborPos, isMoving);
+        super.neighborChanged(state, level, pos, block, orientation, isMoving);
     }
 
     @Override

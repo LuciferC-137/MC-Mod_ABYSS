@@ -27,10 +27,10 @@ import wardentools.network.PacketHandler;
 import wardentools.network.ShowWinScreen;
 import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
-import wardentools.worldgen.portal.ModTeleporter;
 import wardentools.worldgen.structure.ModStructures;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class AbyssPortalBlock extends Block implements EntityBlock {
     public static final MapCodec<AbyssPortalBlock> CODEC = simpleCodec(AbyssPortalBlock::new);
@@ -123,8 +123,9 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     private BlockPos findNearestStructure(ServerLevel level, ResourceKey<Structure> structureKey,
                                           BlockPos pos) {
         // WARNING: if the dimension does not correspond to the wanted structure, this method returns 0,0,0
+        if (level.registryAccess().get(Registries.STRUCTURE).isEmpty()) return new BlockPos(0, 0, 0);
         Holder<Structure> structureHolder = level.registryAccess()
-                .registryOrThrow(Registries.STRUCTURE).getHolderOrThrow(structureKey);
+                .get(Registries.STRUCTURE).get().get().wrapAsHolder(structureKey.getOrThrow(level).get());
         HolderSet<Structure> structureHolderSet = HolderSet.direct(structureHolder);
         var result = level.getChunkSource().getGenerator()
                 .findNearestMapStructure(level, structureHolderSet, pos, 10000, false);
@@ -133,8 +134,8 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     }
 
     private BlockPos findSpawnOnPortalFrame(Level level, BlockPos pos) {
-        int i = level.getMinBuildHeight();
-        while (i < level.getMaxBuildHeight()
+        int i = level.getMinY();
+        while (i < level.getMaxY()
                 && !level.getBlockState(pos.offset(0, i, 0))
                     .is(Blocks.REINFORCED_DEEPSLATE)) {
             i++;
@@ -145,12 +146,17 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     private void teleportToAncientCity(Entity entity, ResourceKey<Level> targetDimension, BlockPos targetPos) {
         if (entity instanceof ServerPlayer serverPlayer) {
             ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
-            serverPlayer.changeDimension(
-                    ModTeleporter.diveToAncientCity(targetLevel, targetPos, serverPlayer));
+            if (targetLevel == null) return;
+            serverPlayer.teleportTo(targetLevel,
+                    targetPos.getX() + 0.5D, targetPos.getY() + 1.0D, targetPos.getZ() + 0.5D,
+                    Set.of(), serverPlayer.getXRot(), serverPlayer.getYRot(), false);
         } else if (!entity.level().isClientSide) {
             ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
             if (targetLevel != null) {
-                entity.changeDimension(ModTeleporter.diveToAncientCity(targetLevel, targetPos, entity));
+                entity.teleportTo(targetLevel,
+                        targetPos.getX() + 0.5D, targetPos.getY() + 1.0D, targetPos.getZ() + 0.5D,
+                        Set.of(),
+                        entity.getYRot(), entity.getXRot(), false);
             }
         }
     }

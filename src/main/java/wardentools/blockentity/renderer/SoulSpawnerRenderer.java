@@ -1,32 +1,16 @@
 package wardentools.blockentity.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.entity.EntitySpawnReason;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
-import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.blockentity.SoulSpawnerBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ShadowEntity;
-import wardentools.items.ItemRegistry;
 
 public class SoulSpawnerRenderer implements BlockEntityRenderer<SoulSpawnerBlockEntity> {
 	private final BlockEntityRendererProvider.Context context;
@@ -41,7 +25,7 @@ public class SoulSpawnerRenderer implements BlockEntityRenderer<SoulSpawnerBlock
 					   @NotNull MultiBufferSource buffer, int packLight, int packedOverlay) {
 		if (soulSpawner.getLevel() == null) return;
 		if (soulSpawner.getShadowEntity() == null) {
-			ShadowEntity shadowEntity = ModEntities.SHADOW.get().create(soulSpawner.getLevel());
+			ShadowEntity shadowEntity = ModEntities.SHADOW.get().create(soulSpawner.getLevel(), EntitySpawnReason.COMMAND);
 			if (shadowEntity != null) {
 				shadowEntity.moveTo(soulSpawner.getBlockPos(), 0.0F, 0.0F);
 				soulSpawner.setShadowEntity(shadowEntity);
@@ -63,7 +47,6 @@ public class SoulSpawnerRenderer implements BlockEntityRenderer<SoulSpawnerBlock
 			Minecraft.getInstance().getEntityRenderDispatcher().render(
 					entity,
 					0.0, 0.0, 0.0,
-					0.0F,
 					partialTick,
 					poseStack,
 					buffer,

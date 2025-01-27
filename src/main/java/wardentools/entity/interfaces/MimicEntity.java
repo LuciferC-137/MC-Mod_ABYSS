@@ -4,13 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -18,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.entity.utils.RenderToBufferFunction;
 import wardentools.entity.utils.ScaleFunction;
 import wardentools.entity.utils.SetUpAnimFunction;
-import wardentools.entity.utils.getBobFunction;
 
 import java.lang.reflect.Method;
 
@@ -85,68 +83,51 @@ public class MimicEntity extends CorruptionMonster {
 
     public RenderToBufferFunction getRenderToBufferFunction() {
         if (this.mimicEntity == null) return null;
-        EntityRenderer<? super LivingEntity> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
+        EntityRenderer<? super LivingEntity, ?> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
                 .getRenderer(this.mimicEntity);
-        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+        if (renderer instanceof LivingEntityRenderer<?, ?, ?> livingRenderer) {
             return (poseStack, vertexConsumer, i, j)
                     -> livingRenderer.getModel().renderToBuffer(poseStack, vertexConsumer, i, j);
         }
         return null;
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends LivingEntity> SetUpAnimFunction<T> getSetUpAnimFunction() {
+    public LivingEntityRenderState getNewRenderState() {
         if (this.mimicEntity == null) return null;
-        T deadEntityCasted = (T) this.mimicEntity;
-        EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-                .getRenderer(deadEntityCasted);
-        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-            return ((LivingEntityRenderer<T, ?>)livingRenderer).getModel()::setupAnim;
+        EntityRenderer<? super LivingEntity, ?> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
+                .getRenderer(this.mimicEntity);
+        if (renderer instanceof LivingEntityRenderer<?, ?, ?> livingRenderer) {
+            return livingRenderer.createRenderState();
         }
         return null;
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends LivingEntity> getBobFunction<T> getGetBobFunction() {
+    public <T extends LivingEntity, S extends LivingEntityRenderState> SetUpAnimFunction<S> getSetUpAnimFunction() {
         if (this.mimicEntity == null) return null;
         T deadEntityCasted = (T) this.mimicEntity;
-        EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
+        EntityRenderer<? super T, ?> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
                 .getRenderer(deadEntityCasted);
-        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-            try {
-                Method getBobMethod = LivingEntityRenderer.class
-                        .getDeclaredMethod("getBob", LivingEntity.class, float.class);
-                getBobMethod.setAccessible(true);
-                return (getBobFunction<T>) (entity, partialTicks) -> {
-                    if (deadEntityCasted instanceof Chicken || deadEntityCasted instanceof Parrot) return 0.0f;
-                    try {
-                        return (float)getBobMethod.invoke(livingRenderer, entity, partialTicks);
-                    } catch (Exception e) {
-                        System.out.println("Error invoking getBob method");
-                        return 0.0f;
-                    }
-                };
-            } catch (NoSuchMethodException e) {
-                System.out.println("Error invoking getBob method: NoSuchMethodException");
-            }
+        if (renderer instanceof LivingEntityRenderer<?, ?, ?> livingRenderer) {
+            return ((LivingEntityRenderer<T, S, ?>)livingRenderer).getModel()::setupAnim;
         }
         return null;
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends LivingEntity> ScaleFunction<T> getScaleFunction() {
+    public <T extends LivingEntity, S extends LivingEntityRenderState> ScaleFunction<S> getScaleFunction() {
         if (this.mimicEntity == null) return null;
         T deadEntityCasted = (T) this.mimicEntity;
-        EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
+        EntityRenderer<? super T, ?> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
                 .getRenderer(deadEntityCasted);
-        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+        if (renderer instanceof LivingEntityRenderer<?, ?, ?> livingRenderer) {
             try {
                 Method scaleMethod = LivingEntityRenderer.class
-                        .getDeclaredMethod("scale", LivingEntity.class, PoseStack.class, float.class);
+                        .getDeclaredMethod("scale", LivingEntityRenderState.class, PoseStack.class);
                 scaleMethod.setAccessible(true);
-                return (ScaleFunction<T>) (entity, poseStack, v) -> {
+                return (ScaleFunction<S>) (state, poseStack) -> {
                     try {
-                        scaleMethod.invoke(livingRenderer, entity, poseStack, v);
+                        scaleMethod.invoke(livingRenderer, state, poseStack);
                     } catch (Exception e) {
                         System.out.println("Error invoking scale method");
                     }

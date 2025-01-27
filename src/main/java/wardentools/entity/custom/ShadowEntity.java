@@ -16,12 +16,13 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.GameEventTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -36,12 +37,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.*;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import wardentools.entity.interfaces.MimicEntity;
 import wardentools.fluid.FluidRegistry;
+import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
 
 import java.util.function.BiConsumer;
@@ -124,6 +127,7 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 			this.idleAnimation.animateWhen(this.isAlmostIdle() && this.getWalkToIdleTicks() <= 0
 					&& !this.isStasis(), this.tickCount);
 			this.stasisAnimation.animateWhen(this.isStasis(), this.tickCount);
+			this.animateParticleClient();
 		}
 		if (this.isStasis()) this.doStasisTick(); else this.setNoGravity(false);
 		if (!this.isStasis() && this.getTarget() == null) {
@@ -160,7 +164,7 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 
 	public double getHeightAboveGround() {
 		BlockPos groundPos = this.blockPosition();
-		while (groundPos.getY() > this.level().getMinBuildHeight()
+		while (groundPos.getY() > this.level().getMinY()
 				&& this.level().getBlockState(groundPos).isAir()) {
 			groundPos = groundPos.below();
 		}
@@ -213,6 +217,40 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 		}
 	}
 
+	private void animateParticleClient() {
+		float particleSpawnRadius = this.getBbWidth() * 4f;
+		Vec3 center = this.getBoundingBox().getCenter();
+		if (this.isStasis()) {
+			if (this.tickCount%10 == this.getRandom().nextInt(10)) {
+				float x =  (this.getRandom().nextFloat() - 0.5f) * 1.2f
+						*  (float)this.getBoundingBox().getXsize();
+				float y = (this.getRandom().nextFloat() - 0.5f) * 1.2f
+						* (float)this.getBoundingBox().getYsize();
+				float z = (this.getRandom().nextFloat() - 0.5f) * 1.2f
+						* (float)this.getBoundingBox().getZsize();
+				this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
+						(float)center.x + x,
+						(float)center.y + y,
+						(float)center.z + z,
+						0, -0.2, 0);
+			}
+		} else {
+			if (this.tickCount%10 == this.getRandom().nextInt(10)){
+				float x =  (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+				float y = (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+				float z = (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+				float norm = Mth.sqrt(x*x + y*y + z*z) / (0.1f * particleSpawnRadius) ;
+				this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
+						(float)center.x + x,
+						(float)center.y + y,
+						(float)center.z + z,
+						-x / norm,
+						-y / norm,
+						-z / norm);
+			}
+		}
+	}
+
 	public boolean isStasis() {return this.entityData.get(IS_STASIS);}
 
 	public void setStasis(boolean stasis) {this.entityData.set(IS_STASIS, stasis);}
@@ -232,7 +270,7 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	}
 
 	public static boolean canSpawn(EntityType<ShadowEntity> entityType, ServerLevelAccessor level,
-								   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+								   EntitySpawnReason spawnType, BlockPos pos, RandomSource random) {
 		return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
     }
 

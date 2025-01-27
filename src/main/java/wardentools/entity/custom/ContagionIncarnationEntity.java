@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -28,6 +29,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -36,8 +38,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.effect.ModEffects;
@@ -53,6 +58,8 @@ import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class ContagionIncarnationEntity extends ContagionIncarnationPartManager implements Enemy {
@@ -161,8 +168,8 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     }
 
     @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
+    public void customServerAiStep(@NotNull ServerLevel level) {
+        super.customServerAiStep(level);
         this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
@@ -317,10 +324,11 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     }
 
     private void hurtTargetAtEndOfSwingIfStillInRange() {
+        if (this.level().isClientSide) return;
         if (this.getTarget() != null) {
             if (this.isWithinMeleeAttackRange(this.getTarget())
                     && this.getSensing().hasLineOfSight(this.getTarget())) {
-                this.doHurtTarget(this.getTarget());
+                this.doHurtTarget((ServerLevel)this.level(), this.getTarget());
                 if (this.random.nextInt(CHANCE_TO_CORRUPT_ON_HIT) == 0) {
                     this.getTarget().addEffect(
                             new MobEffectInstance(
@@ -431,16 +439,15 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void setClientInBossEvent(boolean isClientInBossEvent) {this.isClientInBossEvent = isClientInBossEvent;}
 
     public static boolean canSpawn(EntityType<ContagionIncarnationEntity> entityType, ServerLevelAccessor level,
-                                   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+                                   EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
     	return true;
     }
-
 
     @Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor p_21686_, @NotNull MobSpawnType p_21687_) {
-    	return true;
+    public boolean checkSpawnRules(@NotNull LevelAccessor accessor, @NotNull EntitySpawnReason spawnReason) {
+        return true;
     }
-	
+
     @Override
     protected SoundEvent getAmbientSound() {
         return ModSounds.CONTAGION_INCARNATION_AMBIENT.get();

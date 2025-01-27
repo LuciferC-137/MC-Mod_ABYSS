@@ -224,9 +224,9 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         true,
                         false
                 )
-                .addCriterion("deepcristal",
+                .addCriterion("deepcristal.json",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DEEPCRISTAL.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal.json"));
 
         AdvancementHolder deepArmor = Advancement.Builder.advancement()
                 .parent(deepCristal)

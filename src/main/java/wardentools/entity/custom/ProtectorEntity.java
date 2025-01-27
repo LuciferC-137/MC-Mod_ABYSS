@@ -7,14 +7,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -268,20 +263,20 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 
 	@Override
-	public boolean hurt(@NotNull DamageSource source, float amount) {
+	public boolean hurtServer(@NotNull ServerLevel level, @NotNull DamageSource source, float amount) {
 		if (this.invokerPos != null){
 			PacketHandler.sendToAllClient(new SynchronizeProtectorHeart(this.invokerPos, this.getHealth()));
 			if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker) {
 				invoker.saveHealth(this);
 			}
 		}
-		return super.hurt(source, amount);
+		return super.hurtServer(level, source, amount);
 	}
 	
 	@Override
-	public boolean doHurtTarget(@NotNull Entity target) {
+	public boolean doHurtTarget(@NotNull ServerLevel level, @NotNull Entity target) {
 	    this.setAttackTick(attackDurationTick);
-	    return super.doHurtTarget(target);
+	    return super.doHurtTarget(level, target);
 	}
 	
 	@Override
@@ -290,12 +285,12 @@ public class ProtectorEntity extends AbstractGolem {
     }
 	
 	@Override
-	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull MobSpawnType spawnType) {
+	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull EntitySpawnReason reason) {
     	return true;
     }
 	
     public static boolean canSpawn(EntityType<ProtectorEntity> entityType, ServerLevelAccessor level,
-            MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+            EntitySpawnReason reason, BlockPos pos, RandomSource random) {
 		return true;
     }
 

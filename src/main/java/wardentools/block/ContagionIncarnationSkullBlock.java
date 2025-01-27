@@ -1,9 +1,7 @@
 package wardentools.block;
 
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -12,8 +10,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +32,6 @@ public class ContagionIncarnationSkullBlock extends HorizontalDirectionalBlock i
 		return CODEC;
 	}
 
-	@SuppressWarnings("deprecation")
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter,
 										@NotNull BlockPos pos, @NotNull CollisionContext ctx) {
 		return Block.box(1.0D, 0.0D, 1.0D,

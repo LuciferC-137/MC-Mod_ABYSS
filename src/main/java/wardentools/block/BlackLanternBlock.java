@@ -28,7 +28,6 @@ public class BlackLanternBlock extends Block implements EntityBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (level.getBlockEntity(blockPos) instanceof BlackLanternBlockEntity lantern) {

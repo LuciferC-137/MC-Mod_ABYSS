@@ -14,7 +14,6 @@ public class DarkGrassBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (level.getBlockState(blockPos.above()).isCollisionShapeFullBlock(level, blockPos.above())) {

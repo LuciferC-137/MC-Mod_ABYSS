@@ -9,10 +9,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
@@ -23,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -42,7 +44,7 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
 	
 	
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final DirectionProperty FACING = BlockStateProperties.FACING;
+	public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 	protected final VoxelShape northAabb;
 	protected final VoxelShape southAabb;
 	protected final VoxelShape eastAabb;
@@ -72,7 +74,7 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
 	      this.aabbOffset = length;
 	   }
 
-	@SuppressWarnings("deprecation")
+	@Override
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter,
 										@NotNull BlockPos pos, @NotNull CollisionContext ctx) {
 	      Direction direction = state.getValue(FACING);
@@ -86,27 +88,31 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
         };
 	   }
 
-	@SuppressWarnings("deprecation")
+	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 	      Direction direction = state.getValue(FACING);
 	      BlockPos blockpos = pos.relative(direction.getOpposite());
 	      return level.getBlockState(blockpos).isFaceSturdy(level, blockpos, direction);
 	}
 
-	@SuppressWarnings("deprecation")
-	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction,
-										   @NotNull BlockState state1, @NotNull LevelAccessor level,
-										   @NotNull BlockPos pos, @NotNull BlockPos pos1) {
-	      if (state.getValue(WATERLOGGED)) {
-	         level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
-	      }
-
-	      return direction == state.getValue(FACING).getOpposite()
-				  && !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState()
-				  : super.updateShape(state, direction, state1, level, pos, pos1);
+	@Override
+	protected @NotNull BlockState updateShape(BlockState state, @NotNull LevelReader levelReader,
+											  @NotNull ScheduledTickAccess scheduledTickAccess,
+											  @NotNull BlockPos pos,
+											  @NotNull Direction direction, @NotNull BlockPos pos1,
+											  @NotNull BlockState state1,
+											  @NotNull RandomSource randomSource) {
+		if ((Boolean)state.getValue(WATERLOGGED)) {
+			scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(levelReader));
+		}
+		return direction == ((Direction)state.getValue(FACING)).getOpposite()
+				&& !state.canSurvive(levelReader, pos) ? Blocks.AIR.defaultBlockState()
+				: super.updateShape(state, levelReader, scheduledTickAccess, pos,
+				direction, pos1, state1, randomSource);
 	}
 
 	@Nullable
+	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 	      LevelAccessor levelaccessor = ctx.getLevel();
 	      BlockPos blockpos = ctx.getClickedPos();
@@ -115,22 +121,24 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
                           .getType() == Fluids.WATER).setValue(FACING, ctx.getClickedFace());
 	}
 
-	@SuppressWarnings("deprecation")
+
 	public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
 	      return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
 	      return state.rotate(mirror.getRotation(state.getValue(FACING)));
-	   }
+	}
 
-	  @SuppressWarnings("deprecation")
+	@Override
 	public @NotNull FluidState getFluidState(BlockState state) {
 	      return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false)
 				  : super.getFluidState(state);
 	}
 
+	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
 	      stateBuilder.add(WATERLOGGED, FACING);
 	}

@@ -52,8 +52,10 @@ public class GameEventVibrationInterceptor {
     private static boolean isStealthEnchanted(Player player, ItemStack stack) {
         if (stack.isEmpty()) return false;
         RegistryAccess registryAccess = player.registryAccess();
-        Registry<Enchantment> enchantmentRegistry = registryAccess.registryOrThrow(Registries.ENCHANTMENT);
-        Holder<Enchantment> stealthEnchantment = enchantmentRegistry.getHolderOrThrow(EnchantmentRegistry.STEALTH);
+        if (registryAccess.get(Registries.ENCHANTMENT).isEmpty()) return false;
+        Registry<Enchantment> enchantmentRegistry = registryAccess.get(Registries.ENCHANTMENT).get().get();
+        if (enchantmentRegistry.get(EnchantmentRegistry.STEALTH).isEmpty()) return false;
+        Holder<Enchantment> stealthEnchantment = enchantmentRegistry.get(EnchantmentRegistry.STEALTH).get();
         return EnchantmentHelper.getItemEnchantmentLevel(stealthEnchantment, stack) > 0;
     }
 
