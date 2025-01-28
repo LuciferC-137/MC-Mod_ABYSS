@@ -12,6 +12,7 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.DarktreeBoat;
+import wardentools.tags.ModTags;
 
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
@@ -215,6 +216,7 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> ABYSS_DIVER =
 			REGISTAR.register("abyss_diver",
 			() -> new AbyssDiverItem(new Item.Properties()
+					.repairable(ModTags.Items.DEEPCRISTAL_REPAIRS)
 					.stacksTo(1)
 					.rarity(Rarity.RARE)
 					.durability(20)

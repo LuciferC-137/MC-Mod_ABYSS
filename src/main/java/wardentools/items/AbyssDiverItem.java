@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,10 +19,12 @@ import wardentools.tags.ModTags;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
+import java.util.Set;
+
 public class AbyssDiverItem extends Item {
 
 	public AbyssDiverItem(Properties prop) {
-		super(prop);
+        super(prop);
 	}
 		
 	@Override
@@ -46,21 +47,21 @@ public class AbyssDiverItem extends Item {
         }
         return InteractionResult.PASS;
     }
-	
-	@Override
-    public boolean isValidRepairItem(@NotNull ItemStack toRepair, ItemStack repair) {
-        return repair.getItem() == ItemRegistry.DEEP_FRAGMENT.get();
-    }
+
 
     private static void teleportPlayer(Player player){
         ServerLevel serverLevel = (ServerLevel)player.level();
-        if (player instanceof ServerPlayer serverPlayer) {
+        if (player instanceof ServerPlayer) {
             MinecraftServer minecraftserver = serverLevel.getServer();
             ResourceKey<Level> resourcekey = ModDimensions.ABYSS_LEVEL_KEY;
             if (player.level().dimension() == ModDimensions.ABYSS_LEVEL_KEY) resourcekey = Level.OVERWORLD;
             ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
             if (portalDimension != null && !player.isPassenger()) {
-                player.changeDimension(ModTeleporter.diveSamePlace(portalDimension, serverPlayer));
+                BlockPos targetPos = ModTeleporter.findValidSpawn(portalDimension,
+                        player.blockPosition(), false);
+                player.teleportTo(serverLevel, targetPos.getX() + 0.5D,
+                        targetPos.getY() + 1.5D, targetPos.getZ() + 0.5D,
+                        Set.of(), player.getYRot(), player.getXRot(), false);
             }
         }
     }

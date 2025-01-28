@@ -27,6 +27,7 @@ import wardentools.network.PacketHandler;
 import wardentools.network.ShowWinScreen;
 import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
+import wardentools.worldgen.portal.ModTeleporter;
 import wardentools.worldgen.structure.ModStructures;
 
 import java.util.Objects;
@@ -129,29 +130,19 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
         HolderSet<Structure> structureHolderSet = HolderSet.direct(structureHolder);
         var result = level.getChunkSource().getGenerator()
                 .findNearestMapStructure(level, structureHolderSet, pos, 10000, false);
-        return result != null ? findSpawnOnPortalFrame(level, result.getFirst())
+        return result != null ? result.getFirst()
                 : new BlockPos(0, 0, 0);
     }
 
-    private BlockPos findSpawnOnPortalFrame(Level level, BlockPos pos) {
-        int i = level.getMinY();
-        while (i < level.getMaxY()
-                && !level.getBlockState(pos.offset(0, i, 0))
-                    .is(Blocks.REINFORCED_DEEPSLATE)) {
-            i++;
-        }
-        return pos.offset(level.random.nextBoolean() ? -2 : 2, i, level.random.nextBoolean() ? -2 : 2);
-    }
-
     private void teleportToAncientCity(Entity entity, ResourceKey<Level> targetDimension, BlockPos targetPos) {
+        ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
+        targetPos = ModTeleporter.findValidSpawn(targetLevel, targetPos, true);
         if (entity instanceof ServerPlayer serverPlayer) {
-            ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
             if (targetLevel == null) return;
             serverPlayer.teleportTo(targetLevel,
                     targetPos.getX() + 0.5D, targetPos.getY() + 1.0D, targetPos.getZ() + 0.5D,
                     Set.of(), serverPlayer.getXRot(), serverPlayer.getYRot(), false);
         } else if (!entity.level().isClientSide) {
-            ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
             if (targetLevel != null) {
                 entity.teleportTo(targetLevel,
                         targetPos.getX() + 0.5D, targetPos.getY() + 1.0D, targetPos.getZ() + 0.5D,

@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -24,7 +25,6 @@ public class AbyssLightningEntity extends Entity {
 
     public AbyssLightningEntity(EntityType<? extends AbyssLightningEntity> entityType, Level level) {
         super(entityType, level);
-        this.noCulling = true;
         this.life = START_LIFE;
         this.seed = this.random.nextLong();
         this.flashes = this.random.nextInt(3) + 1;
@@ -65,6 +65,11 @@ public class AbyssLightningEntity extends Entity {
             }
         }
 
+    }
+
+    @Override
+    public boolean hurtServer(@NotNull ServerLevel serverLevel, @NotNull DamageSource damageSource, float v) {
+        return false;
     }
 
     public void setIsLegacyLightning(boolean isLegacyLightning) {this.entityData.set(LEGACY, isLegacyLightning);}

@@ -2,7 +2,9 @@ package wardentools.weather;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
@@ -36,7 +38,7 @@ public class AbyssWeatherManager {
 
     public void tick(Level level) {
         if (level.isClientSide) return;
-        if (!level.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) return;
+        if (!((ServerLevel)level).getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) return;
         this.weatherTimer--;
         if (this.isStorming) stormTick(level);
         if (this.weatherTimer <= 0 && this.anyWeatherEventActive()) {
@@ -105,7 +107,7 @@ public class AbyssWeatherManager {
     }
 
     private void addLightningInChunk(Level level, ChunkPos chunkPos) {
-        AbyssLightningEntity lightning = ModEntities.ABYSS_LIGHTNING.get().create(level);
+        AbyssLightningEntity lightning = ModEntities.ABYSS_LIGHTNING.get().create(level, EntitySpawnReason.EVENT);
         if (lightning != null) {
             RandomSource random = level.random;
             int x = (chunkPos.x << 4) + random.nextInt(16);
@@ -123,12 +125,12 @@ public class AbyssWeatherManager {
         this.isStorming = true;
         this.timeSinceLastEvent = 0;
         level.players().stream().filter(player -> player.level() == level)
-                .forEach(player -> player.sendSystemMessage(stormMessage));
+                .forEach(player -> player.displayClientMessage(stormMessage, false));
     }
 
     private void stopStorm(Level level) {
         level.players().stream().filter(player -> player.level() == level)
-                .forEach(player -> player.sendSystemMessage(stormEndMessage));
+                .forEach(player -> player.displayClientMessage(stormEndMessage, false));
         this.timeSinceStormBegin = 0;
     }
 

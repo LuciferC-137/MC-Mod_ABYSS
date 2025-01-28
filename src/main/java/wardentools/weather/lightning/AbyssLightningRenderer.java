@@ -10,8 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -21,13 +19,13 @@ import org.joml.Matrix4f;
 import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
-public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity> {
+public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity, AbyssLightningRenderState> {
     private static final float RED = 0.1f;
     private static final float GREEN = 0.7f;
     private static final float BLUE = 0.9f;
     private static final float OPACITY = 1.f;
     protected static final RenderStateShard.ShaderStateShard RENDERTYPE_LIGHTNING_SHADER
-            = new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeLightningShader);
+            = new RenderStateShard.ShaderStateShard(CoreShaders.RENDERTYPE_LIGHTNING);
     protected static final RenderStateShard.WriteMaskStateShard COLOR_DEPTH_WRITE
             = new RenderStateShard.WriteMaskStateShard(true, true);
     protected static final RenderStateShard.TransparencyStateShard LIGHTNING_TRANSPARENCY
@@ -50,7 +48,7 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity>
         }
     });
     protected static final RenderStateShard.LayeringStateShard NO_FOG_LAYERING
-            = new RenderStateShard.LayeringStateShard("no_fog", FogRenderer::setupNoFog, () -> {  });
+            = new RenderStateShard.LayeringStateShard("no_fog", FogRenderer::toggleFog, () -> {  });
     
 
     private static final RenderType LIGHTNING = RenderType.create("lightning",
@@ -220,9 +218,20 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity>
                 .setColor(red, green, blue, OPACITY);
     }
 
+    @Override
+    protected boolean affectedByCulling(@NotNull AbyssLightningEntity lightning) {
+        return false;
+    }
 
-    @SuppressWarnings("deprecation")
-    public @NotNull ResourceLocation getTextureLocation(@NotNull AbyssLightningEntity lightning) {
-        return TextureAtlas.LOCATION_BLOCKS;
+    @Override
+    public @NotNull AbyssLightningRenderState createRenderState() {
+        return new AbyssLightningRenderState();
+    }
+
+    @Override
+    public void extractRenderState(@NotNull AbyssLightningEntity lightning,
+                                   @NotNull AbyssLightningRenderState state, float partialTick) {
+        super.extractRenderState(lightning, state, partialTick);
+        state.seed = lightning.seed;
     }
 }

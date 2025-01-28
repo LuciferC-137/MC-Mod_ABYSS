@@ -2,7 +2,7 @@ package wardentools.items;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +24,7 @@ import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPa
 public class WardenHeartItem extends Item {
 	
 	private final WardenLaserAttack laserAttack;
-	private static int laserLength = 14;
+	private static final int laserLength = 14;
 	private Player currentPlayer;
 
 	public WardenHeartItem(Properties properties) {
@@ -34,11 +34,11 @@ public class WardenHeartItem extends Item {
 	}
 	
 	@Override
-	public @NotNull InteractionResultHolder<ItemStack> use(Level level, @NotNull Player player,
-														   @NotNull InteractionHand interactionHand) {
+	public @NotNull InteractionResult use(Level level, @NotNull Player player,
+                                          @NotNull InteractionHand interactionHand) {
 		if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
 				if (isCorruptionVessel(player))  {
-					player.getCooldowns().addCooldown(this, 120);
+					player.getCooldowns().addCooldown(player.getItemInHand(interactionHand), 120);
 			            long gameTime = serverLevel.getGameTime();
 			            Vec3 startPosition = player.position().add(0.0D, 1.0F, 0.0D);
 			            Vec3 direction = player.getLookAngle();
@@ -47,10 +47,10 @@ public class WardenHeartItem extends Item {
 			            //Send packet for sound and visuals
 			            PacketHandler.sendToAllClient(
 			            		new WardenLaserParticleAndSoundPacket(startPosition, direction, laserLength));
-						return InteractionResultHolder.success(player.getItemInHand(interactionHand));
+						return InteractionResult.SUCCESS;
 			    }
 		}
-	    return InteractionResultHolder.fail(player.getItemInHand(interactionHand));
+	    return InteractionResult.FAIL;
 	}
 	
 	@SubscribeEvent
@@ -62,6 +62,7 @@ public class WardenHeartItem extends Item {
 		if (player==null) {
 			return false;
 		}
+        if (ModEffects.CORRUPTION_VESSEL.getHolder().isEmpty()) return false;
 		return player.getEffect(ModEffects.CORRUPTION_VESSEL.getHolder().get()) != null;
 	}
 	

@@ -7,12 +7,12 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
@@ -31,15 +31,14 @@ public class WhistleItem extends Item {
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player,
-                                                           @NotNull InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
+    public @NotNull InteractionResult use(@NotNull Level level, Player player,
+                                          @NotNull InteractionHand hand) {
         player.startUsingItem(hand);
         play(level, player);
-        player.getCooldowns().addCooldown(this, USE_DURATION);
+        player.getCooldowns().addCooldown(player.getItemInHand(hand), USE_DURATION);
         player.awardStat(Stats.ITEM_USED.get(this));
         if (!level.isClientSide) callForTamedNoctilure(level, player);
-        return InteractionResultHolder.consume(itemstack);
+        return InteractionResult.CONSUME;
     }
 
     @Override
@@ -79,7 +78,7 @@ public class WhistleItem extends Item {
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {
-        return UseAnim.TOOT_HORN;
+    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack stack) {
+        return ItemUseAnimation.TOOT_HORN;
     }
 }
