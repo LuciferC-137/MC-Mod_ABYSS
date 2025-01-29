@@ -106,7 +106,7 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 				.add(Attributes.MOVEMENT_SPEED, 0.1D)
 				.add(Attributes.ATTACK_DAMAGE, 4.0D)
 				.add(Attributes.FLYING_SPEED, 0.01D)
-				.add(Attributes.FOLLOW_RANGE, 20.0D);
+				.add(Attributes.FOLLOW_RANGE, 16D);
 	}
 
 	@Override

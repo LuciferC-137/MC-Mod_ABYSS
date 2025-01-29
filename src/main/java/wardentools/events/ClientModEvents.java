@@ -34,6 +34,10 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.CONTAGION_INCARNATION.get(), ContagionIncarnationRenderer::new);
 		event.registerEntityRenderer(ModEntities.DARKTREE_BOAT.get(),
 				context -> new ModBoatRenderer(context, BoatItem.Type.DARKTREE_BOAT));
+		event.registerEntityRenderer(ModEntities.DARKTREE_CHEST_BOAT.get(),
+				context -> new ModBoatRenderer(context, BoatItem.Type.DARKTREE_CHEST_BOAT));
+		event.registerEntityRenderer(ModEntities.WHITETREE_BOAT.get(),
+				context -> new ModBoatRenderer(context, BoatItem.Type.WHITETREE_BOAT));
 		event.registerEntityRenderer(ModEntities.WHITETREE_CHEST_BOAT.get(),
 				context -> new ModBoatRenderer(context, BoatItem.Type.WHITETREE_CHEST_BOAT));
 		event.registerEntityRenderer(ModEntities.TEMPER.get(), TemperRenderer::new);

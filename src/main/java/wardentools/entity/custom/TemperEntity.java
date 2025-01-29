@@ -83,7 +83,8 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 				.add(Attributes.FLYING_SPEED, 0.16D)
 				.add(Attributes.MOVEMENT_SPEED, 0.1D)
 				.add(Attributes.ATTACK_DAMAGE, 4.0D)
-				.add(Attributes.FOLLOW_RANGE, 48.0D);
+				.add(Attributes.FOLLOW_RANGE, 48.0D)
+				.add(Attributes.TEMPT_RANGE, 15D);
 	}
 
 	@Override

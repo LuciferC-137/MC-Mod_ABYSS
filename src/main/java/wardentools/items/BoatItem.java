@@ -14,8 +14,10 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import wardentools.entity.custom.DarktreeBoat;
 import wardentools.entity.custom.DarktreeChestBoat;
 import wardentools.entity.custom.WhitetreeBoat;
+import wardentools.entity.custom.WhitetreeChestBoat;
 
 import java.util.List;
 
@@ -59,7 +61,7 @@ public class BoatItem extends Item {
 
     private InteractionResult choseAndPlaceBoat(Level level, HitResult hitResult, ItemStack stack, Player player) {
         if (this.boat == Type.DARKTREE_BOAT) {
-            DarktreeChestBoat boat = new DarktreeChestBoat(level,
+            DarktreeBoat boat = new DarktreeBoat(level,
                     hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z,
                     () -> this);
             return placeBoat(level, hitResult, stack, player, boat);
@@ -74,7 +76,7 @@ public class BoatItem extends Item {
                     () -> this);
             return placeBoat(level, hitResult, stack, player, boat);
         } else if (this.boat == Type.WHITETREE_CHEST_BOAT) {
-            DarktreeChestBoat boat = new DarktreeChestBoat(level,
+            WhitetreeChestBoat boat = new WhitetreeChestBoat(level,
                     hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z,
                     () -> this);
             return placeBoat(level, hitResult, stack, player, boat);

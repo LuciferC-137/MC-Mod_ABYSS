@@ -220,6 +220,8 @@ public class ItemRegistry {
 					.rarity(Rarity.RARE)
 					.durability(20)
 					.fireResistant()
+					.overrideModel(ResourceLocation
+							.fromNamespaceAndPath(ModMain.MOD_ID, "abyss_diver_in_hand"))
 					.setId(ResourceKey.create(Registries.ITEM,
 							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyss_diver")))
 					));

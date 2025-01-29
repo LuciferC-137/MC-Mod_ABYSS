@@ -21,7 +21,7 @@ public class ModMaterials {
 				attribute.put(ArmorType.BODY, 11);
 			}), 15, SoundEvents.ARMOR_EQUIP_NETHERITE,
 			4f, 0.1f, ModTags.Items.DEEPCRISTAL_REPAIRS,
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal.json"));
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal"));
 
 	public static final ArmorMaterial RADIANCE_CRISTAL = new ArmorMaterial(1200,
 			Util.make(new EnumMap<>(ArmorType.class),
