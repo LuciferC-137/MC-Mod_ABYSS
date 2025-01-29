@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "building",
   "ingredients": [
-    {
-      "item": "wardentools:whitetree_log"
-    }
+    "wardentools:whitetree_log"
   ],
   "result": {
     "count": 4,

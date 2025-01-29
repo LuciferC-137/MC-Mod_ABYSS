@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
-      "item": "wardentools:malachite_fragment"
-    }
+    "S": "wardentools:malachite_fragment"
   },
   "pattern": [
     "SSS",

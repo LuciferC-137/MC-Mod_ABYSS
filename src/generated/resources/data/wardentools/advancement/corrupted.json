@@ -1,5 +1,5 @@
 {
-  "parent": "wardentools:deepcristal",
+  "parent": "wardentools:deepcristal.json",
   "criteria": {
     "corrupted": {
       "conditions": {

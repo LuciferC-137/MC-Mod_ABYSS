@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "D": {
-      "item": "wardentools:dark_stick"
-    },
-    "V": {
-      "item": "wardentools:corrupted_vessel"
-    }
+    "D": "wardentools:dark_stick",
+    "V": "wardentools:corrupted_vessel"
   },
   "pattern": [
     "  V",

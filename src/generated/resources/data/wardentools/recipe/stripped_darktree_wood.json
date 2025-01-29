@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "wardentools:stripped_darktree_log"
-    }
+    "P": "wardentools:stripped_darktree_log"
   },
   "pattern": [
     "PP",

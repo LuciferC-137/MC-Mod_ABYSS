@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
-      "item": "wardentools:citrine_fragment"
-    }
+    "S": "wardentools:citrine_fragment"
   },
   "pattern": [
     "SSS",

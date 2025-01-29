@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "item": "wardentools:radiance_fragment"
-    }
+    "F": "wardentools:radiance_fragment"
   },
   "pattern": [
     " F ",

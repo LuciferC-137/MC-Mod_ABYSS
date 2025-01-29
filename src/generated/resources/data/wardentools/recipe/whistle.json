@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "S": {
-      "item": "wardentools:darktree_slab"
-    }
+    "S": "wardentools:darktree_slab"
   },
   "pattern": [
     "SSS",

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "item": "wardentools:whitetree_planks"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "P": "wardentools:whitetree_planks",
+    "S": "minecraft:stick"
   },
   "pattern": [
     "PSP",

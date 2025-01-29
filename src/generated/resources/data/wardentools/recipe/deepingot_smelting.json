@@ -3,9 +3,7 @@
   "category": "misc",
   "cookingtime": 400,
   "experience": 2.0,
-  "ingredient": {
-    "item": "wardentools:deepcristal"
-  },
+  "ingredient": "wardentools:deepcristal",
   "result": {
     "id": "wardentools:deepingots"
   }

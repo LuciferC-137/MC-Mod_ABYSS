@@ -3,9 +3,7 @@
   "category": "blocks",
   "cookingtime": 100,
   "experience": 0.0,
-  "ingredient": {
-    "item": "wardentools:abyssalite"
-  },
+  "ingredient": "wardentools:abyssalite",
   "result": {
     "id": "wardentools:cracked_abyssalite_bricks"
   }

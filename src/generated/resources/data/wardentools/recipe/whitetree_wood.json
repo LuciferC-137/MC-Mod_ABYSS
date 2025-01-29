@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "P": {
-      "item": "wardentools:whitetree_log"
-    }
+    "P": "wardentools:whitetree_log"
   },
   "pattern": [
     "PP",

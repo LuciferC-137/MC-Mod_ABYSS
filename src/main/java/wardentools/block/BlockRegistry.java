@@ -39,12 +39,12 @@ public class BlockRegistry {
 					));
 	
 	
-	public static final RegistryObject<Block> DEEP_CRISTAL = REGISTAR.register("deepcristal.json",
+	public static final RegistryObject<Block> DEEP_CRISTAL = REGISTAR.register("deepcristal",
 			()->new CristalBlock(7.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 					.requiresCorrectToolForDrops()
 					.strength(30.0F, 900.0F)
 					.setId(ResourceKey.create(Registries.BLOCK,
-							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal.json")))
+							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal")))
 					));
 	
 	public static final RegistryObject<Block> RADIANCE_CRISTAL = REGISTAR.register("radiance_cristal",

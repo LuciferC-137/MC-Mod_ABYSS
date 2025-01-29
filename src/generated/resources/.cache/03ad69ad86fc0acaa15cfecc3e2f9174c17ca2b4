@@ -1,4 +1,4 @@
-// 1.21	2025-01-25T16:56:33.2581482	Tags for minecraft:item mod id wardentools
+// 1.21.3	2025-01-29T14:14:42.1850252	Tags for minecraft:item mod id wardentools
 29ed2dcbd1599255607a303305709089499f8809 data/minecraft/tags/item/chest_armor.json
 b6ce86dae9c0863c20ed176110b5c8a0cbed91a6 data/minecraft/tags/item/dirt.json
 29ed2dcbd1599255607a303305709089499f8809 data/minecraft/tags/item/enchantable/chest_armor.json
@@ -11,3 +11,5 @@ cb821ff60c71241e4afb6116221c80b9ad03b9d1 data/minecraft/tags/item/leg_armor.json
 b8d3fede55bff9a0af3aff1f4f5ac9f0ce926adf data/minecraft/tags/item/logs_that_burn.json
 31e2d784730c13e14e28ca0d2bb0202d9e774b0e data/minecraft/tags/item/planks.json
 cbfb44a33a8986ddca4fc00a8dd154b14a56911e data/minecraft/tags/item/trimmable_armor.json
+bb6467caf425706060d80ddee1339145160c14cb data/wardentools/tags/item/deepcristal_repairs.json
+456c50e2d918b1b19534de581e7546e49fa908a3 data/wardentools/tags/item/radiance_cristal_repairs.json

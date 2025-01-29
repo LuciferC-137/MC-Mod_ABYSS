@@ -1,7 +1,5 @@
 {
-  "carvers": {
-    "air": "wardentools:abyss_cave"
-  },
+  "carvers": "wardentools:abyss_cave",
   "downfall": 0.8,
   "effects": {
     "fog_color": 2844,

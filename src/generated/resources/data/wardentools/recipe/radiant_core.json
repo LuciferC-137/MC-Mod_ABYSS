@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "item": "wardentools:radiance_fragment"
-    },
-    "W": {
-      "item": "wardentools:white_seed"
-    }
+    "F": "wardentools:radiance_fragment",
+    "W": "wardentools:white_seed"
   },
   "pattern": [
     "FFF",

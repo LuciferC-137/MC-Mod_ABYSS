@@ -1,4 +1,4 @@
-// 1.21	2025-01-25T18:03:07.0296152	Registries
+// 1.21.3	2025-01-29T14:14:42.2082781	Registries
 cd53d11755a53b3f0b2795a7bc6e8a1703b1bb16 data/wardentools/dimension/abyssdim.json
 78abca31c24b948721b9b9f97a002c98b1cb0365 data/wardentools/dimension_type/abyssdim_type.json
 1c11a8f49d2df8e89a69dcab7725f1897a55fef4 data/wardentools/enchantment/stealth.json
@@ -6,10 +6,10 @@ cd53d11755a53b3f0b2795a7bc6e8a1703b1bb16 data/wardentools/dimension/abyssdim.jso
 7a8765793d44bb393e6127a2f05a2d262edde0a8 data/wardentools/jukebox_song/deepforest_music.json
 d70cab38771a266de6f01698563d9d0869c67635 data/wardentools/jukebox_song/incarnation_theme.json
 0c6bc901a2c99524a803fb79eb5756b109d17c4e data/wardentools/jukebox_song/whiteforest_music.json
-9cfcee08e59389f54d84cb6a21e1b86726060c64 data/wardentools/worldgen/biome/cristal_cave.json
-05d5cc6ec58245e0a7133f11104ae3fabb53310e data/wardentools/worldgen/biome/deep_forest.json
-2b6c288b864c772e57b6bda1fbc1592cda9959b1 data/wardentools/worldgen/biome/waste_land.json
-3cf6b765d60f93a3b11d784c54789949334b3822 data/wardentools/worldgen/biome/white_forest.json
+e1c57c4eec380507b6bdfc8e352af06325c37463 data/wardentools/worldgen/biome/cristal_cave.json
+ac8f63836fb3e179a918d5e0bcfeb9ae65729628 data/wardentools/worldgen/biome/deep_forest.json
+46dd516af7a150730ae105846a14e5a1c0651ab4 data/wardentools/worldgen/biome/waste_land.json
+564b61e9ef7c3d1fe71c12d0aa1639ba3ef52fdb data/wardentools/worldgen/biome/white_forest.json
 40902434f15e526ef476a5aef6ff3cfd4389819a data/wardentools/worldgen/configured_carver/abyss_cave.json
 60aeab287f904ae02c66322770a64694cd564a71 data/wardentools/worldgen/configured_feature/amethyst_cristal.json
 2a7e7da41353cb8b908cb594c1ae20734eeb4fa1 data/wardentools/worldgen/configured_feature/amethyst_vein.json

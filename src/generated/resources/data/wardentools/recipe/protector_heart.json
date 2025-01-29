@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "wardentools:pure_essence"
-    }
+    "E": "wardentools:pure_essence"
   },
   "pattern": [
     "EEE",

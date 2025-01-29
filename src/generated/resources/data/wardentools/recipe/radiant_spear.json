@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "R": {
-      "item": "wardentools:radiance_ingots"
-    }
+    "R": "wardentools:radiance_ingots"
   },
   "pattern": [
     "  R",

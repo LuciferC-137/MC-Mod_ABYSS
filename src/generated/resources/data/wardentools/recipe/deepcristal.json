@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "item": "wardentools:deep_fragment"
-    }
+    "F": "wardentools:deep_fragment"
   },
   "pattern": [
     " F ",

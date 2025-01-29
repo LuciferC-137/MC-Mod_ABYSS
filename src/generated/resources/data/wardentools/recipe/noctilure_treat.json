@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "wardentools:deep_fruit"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "wardentools:blue_glow_berries"
-    }
+    "wardentools:deep_fruit",
+    "minecraft:sugar",
+    "wardentools:blue_glow_berries"
   ],
   "result": {
     "count": 1,

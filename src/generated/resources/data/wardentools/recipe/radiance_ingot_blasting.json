@@ -3,9 +3,7 @@
   "category": "misc",
   "cookingtime": 200,
   "experience": 2.0,
-  "ingredient": {
-    "item": "wardentools:radiance_cristal"
-  },
+  "ingredient": "wardentools:radiance_cristal",
   "result": {
     "id": "wardentools:radiance_ingots"
   }

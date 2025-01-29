@@ -11,7 +11,6 @@ import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
-import wardentools.entity.custom.DarktreeBoat;
 import wardentools.tags.ModTags;
 
 public class ItemRegistry {
@@ -38,13 +37,13 @@ public class ItemRegistry {
 					));
 	
 	public static final RegistryObject<Item> DEEPCRISTAL =
-			REGISTAR.register("deepcristal.json",
+			REGISTAR.register("deepcristal",
 			() -> new BlockItem(BlockRegistry.DEEP_CRISTAL.get(), new Item.Properties()
 					.stacksTo(64)
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
 					.setId(ResourceKey.create(Registries.ITEM,
-							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal.json")))
+							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal")))
 					));
 	
 	public static final RegistryObject<Item> RADIANCE_FRAGMENT =

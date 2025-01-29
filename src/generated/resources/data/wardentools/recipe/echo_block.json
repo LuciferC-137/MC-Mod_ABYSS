@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "S": {
-      "item": "minecraft:echo_shard"
-    }
+    "S": "minecraft:echo_shard"
   },
   "pattern": [
     "SSS",

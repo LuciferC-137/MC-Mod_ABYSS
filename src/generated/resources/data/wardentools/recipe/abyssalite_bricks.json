@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "B": {
-      "item": "wardentools:abyssalite"
-    }
+    "B": "wardentools:abyssalite"
   },
   "pattern": [
     "BB",

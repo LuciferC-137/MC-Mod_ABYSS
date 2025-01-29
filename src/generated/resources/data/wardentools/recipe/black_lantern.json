@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "minecraft:echo_shard"
-    },
-    "I": {
-      "item": "minecraft:iron_nugget"
-    },
-    "P": {
-      "item": "wardentools:pale_shard"
-    }
+    "E": "minecraft:echo_shard",
+    "I": "minecraft:iron_nugget",
+    "P": "wardentools:pale_shard"
   },
   "pattern": [
     "IEI",
