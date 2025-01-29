@@ -12,6 +12,8 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 
 public class ModBlockStateProvider extends BlockStateProvider {
+    private static final String CUTOUT = "cutout";
+    
 
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, ModMain.MOD_ID, exFileHelper);
@@ -57,7 +59,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(), models()
         		.singleTexture("potted_white_torchflower",
                         ResourceLocation.withDefaultNamespace("flower_pot_cross"), "plant",
-                blockTexture(BlockRegistry.WHITE_TORCHFLOWER.get())).renderType("cutout"));
+                blockTexture(BlockRegistry.WHITE_TORCHFLOWER.get())).renderType(CUTOUT));
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
@@ -86,9 +88,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         fenceGateBlock(((FenceGateBlock)BlockRegistry.DARKTREE_FENCE_GATE.get()),
         		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()));
         doorBlockWithRenderType(((DoorBlock)BlockRegistry.DARKTREE_DOOR.get()),
-        		modLoc("block/darktree_door_bottom"), modLoc("block/darktree_door_top"), "cutout");
+        		modLoc("block/darktree_door_bottom"), modLoc("block/darktree_door_top"), CUTOUT);
         trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.DARKTREE_TRAPDOOR.get()),
-        		modLoc("block/darktree_trap_door"), true, "cutout");
+        		modLoc("block/darktree_trap_door"), true, CUTOUT);
         
         stairsBlock(((StairBlock)BlockRegistry.WHITETREE_STAIR.get()),
         		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()));
@@ -104,9 +106,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         fenceGateBlock(((FenceGateBlock)BlockRegistry.WHITETREE_FENCE_GATE.get()),
         		blockTexture(BlockRegistry.WHITETREE_PLANKS.get()));
         doorBlockWithRenderType(((DoorBlock)BlockRegistry.WHITETREE_DOOR.get()),
-        		modLoc("block/whitetree_door_bottom"), modLoc("block/whitetree_door_top"), "cutout");
+        		modLoc("block/whitetree_door_bottom"), modLoc("block/whitetree_door_top"), CUTOUT);
         trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.WHITETREE_TRAPDOOR.get()),
-        		modLoc("block/whitetree_trap_door"), true, "cutout");
+        		modLoc("block/whitetree_trap_door"), true, CUTOUT);
         
         stairsBlock(((StairBlock)BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get()),
         		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
@@ -128,13 +130,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private void registerCrossCutoutBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
                 models().cross(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
-                        blockTexture(blockRegistryObject.get())).renderType("cutout"));
+                        blockTexture(blockRegistryObject.get())).renderType(CUTOUT));
     }
 
     private void registerCutoutBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
                 models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
-                        blockTexture(blockRegistryObject.get())).renderType("cutout"));
+                        blockTexture(blockRegistryObject.get())).renderType(CUTOUT));
         simpleBlockItem(blockRegistryObject.get(), models().getExistingFile(blockTexture(blockRegistryObject.get())));
     }
 
@@ -149,7 +151,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(blockRegistryObject.get(),
                 models().singleTexture(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
                         ResourceLocation.withDefaultNamespace("block/leaves"),
-                        "all", blockTexture(blockRegistryObject.get())).renderType("cutout"));
+                        "all", blockTexture(blockRegistryObject.get())).renderType(CUTOUT));
     }
     
 

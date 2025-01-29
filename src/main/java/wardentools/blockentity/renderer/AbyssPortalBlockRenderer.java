@@ -26,10 +26,10 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
 
     // SHADER
     public static final ResourceLocation shaderLocation
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "rendertype_abyss_portal");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "core/rendertype_abyss_portal");
     public static final ShaderProgram shader;
     static {
-        shader = new ShaderProgram(shaderLocation, DefaultVertexFormat.POSITION, ShaderDefines.EMPTY);
+        shader = new ShaderProgram(shaderLocation, DefaultVertexFormat.POSITION_COLOR, ShaderDefines.EMPTY);
     }
     protected static final RenderStateShard.ShaderStateShard RENDERTYPE_SHADER
             = new RenderStateShard.ShaderStateShard(shader);
