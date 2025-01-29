@@ -69,7 +69,7 @@ public class AbyssFogEvent {
 	}
 
 	public static boolean underOpenSky(Level level, BlockPos pos){
-		for (int y = pos.getY(); y < Math.min(level.getMaxBuildHeight(), pos.getY() + 40); y++) {
+		for (int y = pos.getY(); y < Math.min(level.getMaxY(), pos.getY() + 40); y++) {
 			BlockPos posAbove = new BlockPos(pos.getX(), y, pos.getZ());
 			if (level.getBlockState(posAbove).isCollisionShapeFullBlock(level, posAbove)) {
 				return false;

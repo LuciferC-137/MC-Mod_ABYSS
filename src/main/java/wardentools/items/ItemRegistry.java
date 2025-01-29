@@ -738,6 +738,7 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> RADIANT_STAFF =
 			REGISTAR.register("radiant_staff",
 					() -> new RadiantStaffItem(new Item.Properties()
+							.repairable(ModTags.Items.RADIANCE_CRISTAL_REPAIRS)
 							.stacksTo(1)
 							.rarity(Rarity.RARE)
 							.durability(20)

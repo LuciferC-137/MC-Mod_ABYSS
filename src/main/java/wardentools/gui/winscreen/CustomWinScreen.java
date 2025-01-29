@@ -14,6 +14,7 @@ import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.LogoRenderer;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
@@ -32,6 +33,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
+import java.util.function.Function;
 
 @OnlyIn(Dist.CLIENT)
 public class CustomWinScreen extends Screen {
@@ -67,6 +69,8 @@ public class CustomWinScreen extends Screen {
    private final LogoRenderer logoRenderer = new LogoRenderer(false);
    private int musicTickCountDown = 0;
    private static final int MUSIC_TICK_COUNTDOWN = 80;
+   private static final Function<ResourceLocation, RenderType> GUI
+           = (resourceLocation) -> RenderType.gui();
 
    public CustomWinScreen(boolean hasPoem, Runnable runnable) {
       super(GameNarrator.NO_TITLE);
@@ -266,8 +270,8 @@ public class CustomWinScreen extends Screen {
       RenderSystem.enableBlend();
       RenderSystem.blendFunc(GlStateManager.SourceFactor.ZERO,
               GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR);
-      graphics.blit(VIGNETTE_LOCATION, 0, 0,
-              0, 0.0F, 0.0F, this.width, this.height, this.width, this.height);
+      graphics.blit(RenderType::vignette, VIGNETTE_LOCATION, 0, 0,
+              0.0F, 0.0F, this.width, this.height, this.width, this.height);
       RenderSystem.disableBlend();
       RenderSystem.defaultBlendFunc();
    }
@@ -285,10 +289,10 @@ public class CustomWinScreen extends Screen {
       if (f2 > 1.0F)  f2 = 1.0F;
       f2 *= f2;
       f2 = f2 * 96.0F / 255.0F;
-      graphics.setColor(f2, f2, f2, 1.0F);
-      graphics.blit(MOD_BACKGROUND_LOCATION, 0, 0, 0, 0.0F,
-              f, i, this.height, 64, 64);
-      graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+      //graphics.setColor(f2, f2, f2, 1.0F);
+      graphics.blit(GUI, MOD_BACKGROUND_LOCATION, 0, 0,
+              0, 0, i, this.height, 64, 64);
+      //graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
    }
 
    public @NotNull Music getBackgroundMusic() {

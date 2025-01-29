@@ -35,9 +35,9 @@ public class ModFluidTypes {
                     .canDrown(false)
                     .canPushEntity(true)
                     .motionScale(0.01f)
-                    .sound(SoundAction.get("splash"), SoundEvents.HONEY_DRINK)
+                    .sound(SoundAction.get("splash"), SoundEvents.HONEY_DRINK.get())
                     .sound(SoundAction.get("swim"), SoundEvents.HONEY_BLOCK_SLIDE)
-                    .sound(SoundAction.get("wade"), SoundEvents.HONEY_DRINK));
+                    .sound(SoundAction.get("wade"), SoundEvents.HONEY_DRINK.get()));
 
     private static RegistryObject<FluidType> register(String name, FluidType.Properties properties) {
         return FLUID_TYPES.register(name,

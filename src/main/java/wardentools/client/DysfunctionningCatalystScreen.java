@@ -3,16 +3,17 @@ package wardentools.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.block.DysfunctionningCatalystBlock;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
 
 import java.util.Random;
+import java.util.function.Function;
 
 public class DysfunctionningCatalystScreen extends AbstractContainerScreen<DysfunctionningCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
@@ -21,6 +22,8 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 	private static final ResourceLocation TEXTURE_EYES =
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
 					"textures/gui/dysfunctionning_catalyst_menu_eye_overlay.png");
+	private static final Function<ResourceLocation, RenderType> GUI
+			= (resourceLocation) -> RenderType.gui();
 	private static final int BAR_LENGTH = 28;
 	private static final int BG_COLOR = 0xff8B8B8B;
 	private final Random random;
@@ -41,8 +44,8 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 	@Override
 	protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		renderTransparentBackground(guiGraphics);
-		guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0,
-				this.imageWidth, this.imageHeight);
+		guiGraphics.blit(GUI, TEXTURE, this.leftPos, this.topPos, 0, 0,
+				this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 
 		// LEFT bars
 		guiGraphics.fill(this.leftPos + 32 + menu.getCitrineProgression(),
@@ -76,7 +79,7 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F,
 				(float)menu.getEyeProgression()/(float)DysfunctionningCatalystBlockEntity.MAX_EYE);
-		guiGraphics.blit(TEXTURE_EYES, this.leftPos + 61, this.topPos + 44,
+		guiGraphics.blit(GUI, TEXTURE_EYES, this.leftPos + 61, this.topPos + 44,
 				0, 0, 54, 20, 54, 20);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.disableBlend();

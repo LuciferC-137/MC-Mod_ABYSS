@@ -3,6 +3,7 @@ package wardentools.entity.utils.goal;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -91,7 +92,7 @@ public class IncarnationSonicStrikeAttackGoal extends Goal {
             double angle = i * (360.0 / PARASYTES_TO_SPAWN);
             double xOffset = Math.cos(Math.toRadians(angle)) * PARASYTE_SPAWN_RADIUS;
             double zOffset = Math.sin(Math.toRadians(angle)) * PARASYTE_SPAWN_RADIUS;
-            var entity = entityType.create(level);
+            var entity = entityType.create(level, EntitySpawnReason.MOB_SUMMONED);
             if (entity != null) {
                 entity.moveTo(incarnation.getX() + xOffset, incarnation.getY(),
                         incarnation.getZ() + zOffset, 0, 0);

@@ -23,13 +23,13 @@ public class ModMusics {
             ModSounds.ABYSS_THEME.getId());
 
     private static final Holder<SoundEvent> DEEP_FOREST_SOUND
-            = BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(DEEP_FOREST_KEY);
+            = BuiltInRegistries.SOUND_EVENT.getOrThrow(DEEP_FOREST_KEY);
     private static final Holder<SoundEvent> WHITE_FOREST_SOUND
-            = BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(WHITE_FOREST_KEY);
+            = BuiltInRegistries.SOUND_EVENT.getOrThrow(WHITE_FOREST_KEY);
     private static final Holder<SoundEvent> INCARNATION_THEME_SOUND
-            = BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(INCARNATION_KEY);
+            = BuiltInRegistries.SOUND_EVENT.getOrThrow(INCARNATION_KEY);
     private static final Holder<SoundEvent> ABYSS_THEME_SOUND
-            = BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(ABYSS_KEY);
+            = BuiltInRegistries.SOUND_EVENT.getOrThrow(ABYSS_KEY);
 
     // Parameters = (SOUND_EVENT, minimum delay before playing again, maximum delay before playing again,
     // replace music)

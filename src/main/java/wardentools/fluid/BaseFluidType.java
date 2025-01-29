@@ -1,9 +1,8 @@
 package wardentools.fluid;
 
-import com.mojang.blaze3d.shaders.FogShape;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.FogParameters;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
@@ -82,12 +81,13 @@ public class BaseFluidType extends FluidType {
             }
 
             @Override
-            public void modifyFogRender(Camera camera, FogRenderer.FogMode mode,
-                                        float renderDistance, float partialTick,
-                                        float nearDistance, float farDistance, FogShape shape) {
-                RenderSystem.setShaderFogStart(0f);
-                RenderSystem.setShaderFogEnd(2f);
+            public FogParameters modifyFogRender(Camera camera, FogRenderer.FogMode mode,
+                                                 float renderDistance, float partialTick,
+                                                 FogParameters original) {
+                return new FogParameters(0f, 2f, original.shape(),
+                        original.red(), original.green(), original.blue(), original.alpha());
             }
+
         });
     }
 }

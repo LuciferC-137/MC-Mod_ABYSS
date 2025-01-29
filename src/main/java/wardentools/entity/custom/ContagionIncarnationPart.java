@@ -2,6 +2,7 @@ package wardentools.entity.custom;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -46,8 +47,8 @@ public class ContagionIncarnationPart extends PartEntity<ContagionIncarnationPar
     public ItemStack getPickResult() {return this.parentMob.getPickResult();}
 
     @Override
-    public boolean hurt(@NotNull DamageSource source, float damage) {
-        return !this.isInvulnerableTo(source) && this.parentMob.hurt(this, source, damage);
+    public boolean hurtServer(@NotNull ServerLevel level, @NotNull DamageSource source, float damage) {
+        return !this.isInvulnerableToBase(source) && this.parentMob.hurt(this, source, damage);
     }
 
     @Override

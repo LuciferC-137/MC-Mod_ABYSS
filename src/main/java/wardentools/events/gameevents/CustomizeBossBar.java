@@ -7,7 +7,6 @@ import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.RenderTypeGroup;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +22,7 @@ public class CustomizeBossBar {
 			= ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/bossbar/bar_empty.png");
 	private static final int barWidth = 182;
 	private static final int barHeight = 31;
-	private static final Function<ResourceLocation, RenderType> FUNCTION
+	private static final Function<ResourceLocation, RenderType> GUI
 			= (resourceLocation) -> RenderType.gui();
 	
 	@SubscribeEvent
@@ -41,10 +40,10 @@ public class CustomizeBossBar {
 	        
 	        int progressWidth = (int)((1f-bossInfo.getProgress())*(float)barWidth);
 	       
-	        guiGraphics.blit(FUNCTION,
+	        guiGraphics.blit(GUI,
 					EMPTY, x, y,
 	        		0, 0, barWidth, barHeight, barWidth, barHeight);
-	        guiGraphics.blit(FUNCTION,
+	        guiGraphics.blit(GUI,
 					FULL, x, y,
 	        		0, 0, barWidth-progressWidth, barHeight, barWidth, barHeight);
 	

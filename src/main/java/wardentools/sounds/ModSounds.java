@@ -1,22 +1,16 @@
 package wardentools.sounds;
 
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.item.JukeboxSong;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ModSounds {
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
@@ -79,19 +73,19 @@ public class ModSounds {
 
 	// Music discs (lazy references)
 	public static Holder.Reference<SoundEvent> getDeepForestMusicDisc() {
-		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(ResourceKey
+		return BuiltInRegistries.SOUND_EVENT.getOrThrow(ResourceKey
 				.create(Registries.SOUND_EVENT, ModSounds.DEEP_FOREST.getId()));
 	}
 	public static Holder.Reference<SoundEvent> getWhiteForestMusicDisc() {
-		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+		return BuiltInRegistries.SOUND_EVENT.getOrThrow(
 				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.WHITE_FOREST.getId()));
 	}
 	public static Holder.Reference<SoundEvent> getIncarnationThemeMusicDisc() {
-		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+		return BuiltInRegistries.SOUND_EVENT.getOrThrow(
 				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.INCARNATION_THEME.getId()));
 	}
 	public static Holder.Reference<SoundEvent> getAbyssThemeMusicDisc() {
-		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+		return BuiltInRegistries.SOUND_EVENT.getOrThrow(
 				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.ABYSS_THEME.getId()));
 	}
 

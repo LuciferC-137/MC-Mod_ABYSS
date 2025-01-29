@@ -4,9 +4,12 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
@@ -28,6 +31,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     public void generate(HolderLookup.@NotNull Provider registries,
                          @NotNull Consumer<AdvancementHolder> saver,
                          @NotNull ExistingFileHelper existingFileHelper) {
+        HolderGetter<EntityType<?>> entityTypeHolderGetter
+                = registries.lookupOrThrow(Registries.ENTITY_TYPE);
         AdvancementHolder abyss = Advancement.Builder.advancement()
                 .display(
                         Items.SCULK, // Picture displayed
@@ -162,22 +167,24 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RADIANCE_CATALYST.get()))
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_catalyst"));
 
-        AdvancementHolder radiantArmor = Advancement.Builder.advancement()
-                .parent(radianceCatalyst)
-                .display(
-                        ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get(),
-                        Component.translatable("advancements.wardentools.radiant_armor.title"),
-                        Component.translatable("advancements.wardentools.radiant_armor.description"),
-                        null,
-                        AdvancementType.GOAL,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("radiant_armor",
-                        EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.getHolder().get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_armor"));
+        if (ModEffects.RADIANCE_BRINGER.getHolder().isPresent()) {
+            AdvancementHolder radiantArmor = Advancement.Builder.advancement()
+                    .parent(radianceCatalyst)
+                    .display(
+                            ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get(),
+                            Component.translatable("advancements.wardentools.radiant_armor.title"),
+                            Component.translatable("advancements.wardentools.radiant_armor.description"),
+                            null,
+                            AdvancementType.GOAL,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("radiant_armor",
+                            EffectsChangedTrigger.TriggerInstance.hasEffects(
+                                    MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.getHolder().get())))
+                    .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_armor"));
+        }
 
         AdvancementHolder protectorInvoker = Advancement.Builder.advancement()
                 .parent(radiance)
@@ -209,7 +216,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("protector",
                         SummonedEntityTrigger.TriggerInstance.summonedEntity(
-                                EntityPredicate.Builder.entity().of(ModEntities.PROTECTOR.get())))
+                                EntityPredicate.Builder.entity().of(entityTypeHolderGetter,
+                                        ModEntities.PROTECTOR.get())))
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector"));
 
         AdvancementHolder deepCristal = Advancement.Builder.advancement()
@@ -228,22 +236,24 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DEEPCRISTAL.get()))
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal.json"));
 
-        AdvancementHolder deepArmor = Advancement.Builder.advancement()
-                .parent(deepCristal)
-                .display(
-                        ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get(),
-                        Component.translatable("advancements.wardentools.deep_armor.title"),
-                        Component.translatable("advancements.wardentools.deep_armor.description"),
-                        null,
-                        AdvancementType.GOAL,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("deep_armor",
-                        EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.getHolder().get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_armor"));
+        if (ModEffects.CORRUPTION_VESSEL.getHolder().isPresent()) {
+            AdvancementHolder deepArmor = Advancement.Builder.advancement()
+                    .parent(deepCristal)
+                    .display(
+                            ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get(),
+                            Component.translatable("advancements.wardentools.deep_armor.title"),
+                            Component.translatable("advancements.wardentools.deep_armor.description"),
+                            null,
+                            AdvancementType.GOAL,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("deep_armor",
+                            EffectsChangedTrigger.TriggerInstance.hasEffects(
+                                    MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.getHolder().get())))
+                    .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_armor"));
+        }
 
         AdvancementHolder incarnation = Advancement.Builder.advancement()
                 .parent(deepCristal)
@@ -259,7 +269,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("kill_contagion_incarnation",
                         KilledTrigger.TriggerInstance.playerKilledEntity(
-                                EntityPredicate.Builder.entity().of(ModEntities.CONTAGION_INCARNATION.get())))
+                                EntityPredicate.Builder.entity().of(entityTypeHolderGetter,
+                                        ModEntities.CONTAGION_INCARNATION.get())))
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "incarnation"));
 
         AdvancementHolder corruption_vessel = Advancement.Builder.advancement()
@@ -294,22 +305,24 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         RadianceBringerCriteria.TriggerInstance.choseRadiance())
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer"));
 
-        AdvancementHolder corrupted = Advancement.Builder.advancement()
-                .parent(deepCristal)
-                .display(
-                        ItemRegistry.CORRUPTED_ESSENCE.get(),
-                        Component.translatable("advancements.wardentools.corrupted.title"),
-                        Component.translatable("advancements.wardentools.corrupted.description"),
-                        null,
-                        AdvancementType.TASK,
-                        true,
-                        true,
-                        false
-                )
-                .addCriterion("corrupted",
-                        EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.getHolder().get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted"));
+        if (ModEffects.CORRUPTED.getHolder().isPresent()) {
+            AdvancementHolder corrupted = Advancement.Builder.advancement()
+                    .parent(deepCristal)
+                    .display(
+                            ItemRegistry.CORRUPTED_ESSENCE.get(),
+                            Component.translatable("advancements.wardentools.corrupted.title"),
+                            Component.translatable("advancements.wardentools.corrupted.description"),
+                            null,
+                            AdvancementType.TASK,
+                            true,
+                            true,
+                            false
+                    )
+                    .addCriterion("corrupted",
+                            EffectsChangedTrigger.TriggerInstance.hasEffects(
+                                    MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.getHolder().get())))
+                    .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted"));
+        }
 
         AdvancementHolder escape = Advancement.Builder.advancement()
                 .parent(abyssdiver)

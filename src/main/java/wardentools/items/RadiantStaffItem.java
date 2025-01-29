@@ -54,11 +54,6 @@ public class RadiantStaffItem extends Item {
         }
         return InteractionResult.PASS;
     }
-	
-	@Override
-    public boolean isValidRepairItem(@NotNull ItemStack toRepair, ItemStack repair) {
-        return repair.getItem() == ItemRegistry.RADIANCE_FRAGMENT.get();
-    }
 }
 
 

@@ -14,7 +14,7 @@ public class LocalPlayerMixin {
     private void onAiStep(CallbackInfo ci) {
         LocalPlayer player = (LocalPlayer) (Object) this;
         if (player.getVehicle() instanceof NoctilureEntity noctilure) {
-            if (player.input.jumping) {
+            if (player.input.keyPresses.jump()) {
                 noctilure.onPlayerJump(player);
             }
         }

@@ -76,7 +76,7 @@ public class WindWhispererItem extends BlockItem {
     
     private static void sendMessage(Player player, String message) {
         MutableComponent chatComponent = Component.literal(message);
-        player.sendSystemMessage(chatComponent);
+        player.displayClientMessage(chatComponent, false);
     }
     
     @Override

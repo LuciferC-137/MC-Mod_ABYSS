@@ -190,7 +190,7 @@ public class ModBiomes {
     }
 
     public static void defaultAbyssCaves(BiomeGenerationSettings.Builder builder) {
-        builder.addCarver(GenerationStep.Carving.AIR, ModConfiguredCarver.ABYSS_CAVE);
+        builder.addCarver(ModConfiguredCarver.ABYSS_CAVE);
     }
 
     public static void defaultAbyssOres(BiomeGenerationSettings.Builder builder){

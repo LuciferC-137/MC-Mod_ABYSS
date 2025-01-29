@@ -7,13 +7,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
-import org.jetbrains.annotations.NotNull;
 
 public class DysfunctionningCatalystInterior extends Model {
     private final ModelPart root;
 
     public DysfunctionningCatalystInterior(ModelPart parts) {
-        super(RenderType::entitySolid);
+        super(parts, RenderType::entitySolid);
         this.root = parts;
     }
     
@@ -30,12 +29,6 @@ public class DysfunctionningCatalystInterior extends Model {
                 PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 32, 32);
-    }
-
-    @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-                               int packedLight, int packedOverlay, int i) {
-        root.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
     }
 
     public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {

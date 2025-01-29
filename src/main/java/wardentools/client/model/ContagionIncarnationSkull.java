@@ -7,13 +7,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
-import org.jetbrains.annotations.NotNull;
 
 public class ContagionIncarnationSkull extends Model {
     private final ModelPart root;
 
     public ContagionIncarnationSkull(ModelPart parts) {
-        super(RenderType::entitySolid);
+        super(parts, RenderType::entitySolid);
         this.root = parts;
     }
 
@@ -57,12 +56,6 @@ public class ContagionIncarnationSkull extends Model {
         PartDefinition cube_r31 = bb_main.addOrReplaceChild("cube_r31", CubeListBuilder.create().texOffs(31, 155).addBox(0.637F, -6.7153F, -5.7227F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -7.7406F, -1.8088F, 1.6077F, -0.473F, 0.5895F));
         PartDefinition cube_r32 = bb_main.addOrReplaceChild("cube_r32", CubeListBuilder.create().texOffs(111, 8).addBox(1.7287F, -5.1121F, -6.6595F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -7.7406F, -1.8088F, 1.1334F, -0.549F, 0.9168F));
         return LayerDefinition.create(meshdefinition, 256, 256);
-    }
-
-    @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-                               int packedLight, int packedOverlay, int i) {
-        root.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
     }
 
     public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {
