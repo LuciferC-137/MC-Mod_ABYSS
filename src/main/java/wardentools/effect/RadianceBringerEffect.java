@@ -22,13 +22,13 @@ public class RadianceBringerEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        if (!(entity.tickCount%(200 / (amplifier + 1))==0)) return false;
-        if (!(entity instanceof Player)) return false;
-        if (countMyTemper(entity.level(), (Player)entity) >= MAX_NUMBER_OF_TEMPER) return false;
+        if (!(entity.tickCount%(200 / (amplifier + 1))==0)) return true;
+        if (!(entity instanceof Player)) return true;
+        if (countMyTemper(entity.level(), (Player)entity) >= MAX_NUMBER_OF_TEMPER) return true;
         TemperEntity temper = ModEntities.TEMPER.get().create(entity.level());
-        if (temper==null) return false;
+        if (temper==null) return true;
         BlockPos spawnPos = findSpawnPosition(entity.level(), entity.getOnPos());
-        if (spawnPos == null) return false;
+        if (spawnPos == null) return true;
         temper.moveTo(spawnPos.getX() + 0.5f, spawnPos.getY() + 0.5f,
                 spawnPos.getZ() + 0.5f);
         temper.setPlayerInvoker((Player)entity);
