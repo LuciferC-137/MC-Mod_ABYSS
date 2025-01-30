@@ -190,8 +190,8 @@
 
 	"jukebox_song.wardentools.abyss_theme": "Fenrir C137 - Abyss Theme",
 	"jukebox_song.wardentools.incarnation_theme": "Fenrir C137 - Incarnation Theme",
-	"jukebox_song.wardentools.deep_forest": "Fenrir C137 - Deep Forest Music",
-	"jukebox_song.wardentools.white_forest": "Fenrir C137 - White Forest Music",
+	"jukebox_song.wardentools.deepforest_music": "Fenrir C137 - Deep Forest Music",
+	"jukebox_song.wardentools.whiteforest_music": "Fenrir C137 - White Forest Music",
 
 	"painting.wardentools.quiet_life.title": "Vie Paisible",
 	"painting.wardentools.quiet_life.author": "Lucifer C137",
@@ -241,7 +241,7 @@
 	"advancements.wardentools.radiance_bringer.title": "La lumière de la Radiance",
 	"advancements.wardentools.radiance_bringer.description": "Choisissez la lumière plutôt que les ténèbres.",
 
-	"message.wardentools.wind.storm": "<Vent> Un orage se arrive...",
+	"message.wardentools.wind.storm": "<Vent> Un orage arrive...",
 	"message.wardentools.wind.storm_end": "<Vent> L'orage est passé.",
 
 	"death.attack.corrupted": "%1$s a été consumé par la Corruption",
