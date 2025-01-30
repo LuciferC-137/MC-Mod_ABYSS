@@ -574,6 +574,7 @@ public class BlockRegistry {
 							.requiresCorrectToolForDrops()
 							.strength(3, 6)
 							.lightLevel((state) -> 8)
+							.noOcclusion()
 							.setId(ResourceKey.create(Registries.BLOCK,
 									ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "pale_cristal")))
 			));
