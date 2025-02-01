@@ -20,6 +20,7 @@ public class ArmorRegistry {
 			()->new ArmorItem(ModMaterials.DEEPCRISTAL, ArmorType.HELMET, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
+					.stacksTo(1)
 					.setId(ResourceKey.create(Registries.ITEM,
 							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal_helmet")))
 			));
@@ -28,6 +29,7 @@ public class ArmorRegistry {
 			()->new ModArmorItem(ModMaterials.DEEPCRISTAL, ArmorType.CHESTPLATE, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
+					.stacksTo(1)
 					.setId(ResourceKey.create(Registries.ITEM,
 							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal_chestplate")))
 			));
@@ -36,6 +38,7 @@ public class ArmorRegistry {
 			()->new ArmorItem(ModMaterials.DEEPCRISTAL, ArmorType.LEGGINGS, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
+					.stacksTo(1)
 					.setId(ResourceKey.create(Registries.ITEM,
 							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal_leggings")))
 			));
@@ -44,6 +47,7 @@ public class ArmorRegistry {
 			()->new ArmorItem(ModMaterials.DEEPCRISTAL, ArmorType.BOOTS, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.fireResistant()
+					.stacksTo(1)
 					.setId(ResourceKey.create(Registries.ITEM,
 							ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal_boots")))
 			));
@@ -54,6 +58,7 @@ public class ArmorRegistry {
 					()->new ArmorItem(ModMaterials.RADIANCE_CRISTAL, ArmorType.HELMET, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()
+							.stacksTo(1)
 							.setId(ResourceKey.create(Registries.ITEM,
 									ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_cristal_helmet")))
 					));
@@ -62,6 +67,7 @@ public class ArmorRegistry {
 					()->new ModArmorItem(ModMaterials.RADIANCE_CRISTAL, ArmorType.CHESTPLATE, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()
+							.stacksTo(1)
 							.setId(ResourceKey.create(Registries.ITEM,
 									ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_cristal_chestplate")))
 					));
@@ -70,6 +76,7 @@ public class ArmorRegistry {
 					()->new ArmorItem(ModMaterials.RADIANCE_CRISTAL, ArmorType.LEGGINGS, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()
+							.stacksTo(1)
 							.setId(ResourceKey.create(Registries.ITEM,
 									ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_cristal_leggings")))
 					));
@@ -78,6 +85,7 @@ public class ArmorRegistry {
 					()->new ArmorItem(ModMaterials.RADIANCE_CRISTAL, ArmorType.BOOTS, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()
+							.stacksTo(1)
 							.setId(ResourceKey.create(Registries.ITEM,
 									ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_cristal_boots")))
 					));
