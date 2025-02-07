@@ -169,7 +169,7 @@ public class AbyssPortalBlock extends Block implements EntityBlock, Portal {
             if (targetLevel == null) return null;
             structurePos = findNearestStructure(targetLevel, ModStructures.SURFACE_ANCIENT_CITY, blockPos);
         }
-        BlockPos validSpawn = ModTeleporter.findValidSpawn(serverLevel, structurePos, true);
+        BlockPos validSpawn = ModTeleporter.findValidSpawn(targetLevel, structurePos, true);
         return ModTeleporter.getTeleportTransition(targetLevel, entity, validSpawn.getCenter());
     }
 }

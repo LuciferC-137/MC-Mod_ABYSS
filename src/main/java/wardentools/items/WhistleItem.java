@@ -43,7 +43,6 @@ public class WhistleItem extends Item {
 
     @Override
     public void onStopUsing(ItemStack stack, LivingEntity entity, int count) {
-        entity.stopUsingItem();
         Minecraft minecraft = Minecraft.getInstance();
         minecraft.getSoundManager().stop(this.lastSoundInstance);
         super.onStopUsing(stack, entity, count);

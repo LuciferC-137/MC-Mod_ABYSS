@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
+import net.minecraft.util.ARGB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -48,7 +49,7 @@ public class ChoiceScreen extends Screen {
    private int fadeInTick = 0;
    private static final int FADE_IN_DURATION = 80;
    private static final Function<ResourceLocation, RenderType> GUI
-           = (resourceLocation) -> RenderType.gui();
+           = RenderType::guiTextured;
 
    public ChoiceScreen(Runnable runnable) {
       super(GameNarrator.NO_TITLE);
@@ -110,7 +111,8 @@ public class ChoiceScreen extends Screen {
       RenderSystem.enableBlend();
       RenderSystem.blendFunc(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR);
       graphics.blit(GUI, VIGNETTE_LOCATION, 0, 0,
-              0, 0, this.width, this.height, this.width, this.height);
+              0, 0, this.width, this.height,
+              this.width, this.height, ARGB.white(1f));
       RenderSystem.disableBlend();
       RenderSystem.defaultBlendFunc();
       this.renderButtonOverlay(graphics);
@@ -124,7 +126,7 @@ public class ChoiceScreen extends Screen {
               this.contagionButton.getWidth() + OVERLAY_MARGIN,
               this.contagionButton.getHeight()  + OVERLAY_MARGIN,
               this.contagionButton.getWidth()  + OVERLAY_MARGIN,
-              this.contagionButton.getHeight()  + OVERLAY_MARGIN);
+              this.contagionButton.getHeight()  + OVERLAY_MARGIN, ARGB.white(1f));
       graphics.blit(GUI, RADIANCE_BUTTON_OVERLAY,
               this.radianceButton.getX() - OVERLAY_MARGIN / 2,
               this.radianceButton.getY()  - OVERLAY_MARGIN / 2,
@@ -132,12 +134,13 @@ public class ChoiceScreen extends Screen {
               this.radianceButton.getWidth() + OVERLAY_MARGIN,
               this.radianceButton.getHeight()  + OVERLAY_MARGIN,
               this.radianceButton.getWidth()  + OVERLAY_MARGIN,
-              this.radianceButton.getHeight()  + OVERLAY_MARGIN);
+              this.radianceButton.getHeight()  + OVERLAY_MARGIN, ARGB.white(1f));
    }
 
    public void renderBackground(@NotNull GuiGraphics graphics, int x, int y, float a) {
       Random random = new Random(this.seed);
-      //graphics.setColor(0.5F, 0.5F, 0.5F, 1F);
+      int color = ARGB.white(1f);
+      color = ARGB.scaleRGB(color, 0.5f);
       float min = 0.1f * this.width;
       float max = 0.8f * this.width;
       for (int i = 0; i < (this.width / 16) + 1; i++) {
@@ -145,11 +148,11 @@ public class ChoiceScreen extends Screen {
             if (i*16 < min) {
                graphics.blit(GUI, CORRUPTION_LOCATION, i * 16, j * 16,
                        0, 0.0F, 0,
-                       16, 16, 16, 16);
+                       16, 16, 16, 16, color);
             } else if (i*16 > max) {
                graphics.blit(GUI, RADIANCE_LOCATION, i * 16, j * 16,
                        0, 0.0F, 0,
-                       16, 16, 16, 16);
+                       16, 16, 16, 16, color);
             } else {
                float distanceFromLeft = (float)i * 16 - min;
                float maxDistance = max - min;
@@ -158,11 +161,11 @@ public class ChoiceScreen extends Screen {
                if (random.nextFloat() < contagionProbability) {
                   graphics.blit(GUI, CORRUPTION_LOCATION, i * 16, j * 16,
                           0, 0.0F, 0,
-                          16, 16, 16, 16);
+                          16, 16, 16, 16, ARGB.white(1f));
                } else {
                   graphics.blit(GUI, RADIANCE_LOCATION, i * 16, j * 16,
                           0, 0.0F, 0,
-                          16, 16, 16, 16);
+                          16, 16, 16, 16, ARGB.white(1f));
                }
             }
          }

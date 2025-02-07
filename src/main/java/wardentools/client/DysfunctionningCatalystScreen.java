@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
@@ -24,6 +25,8 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 					"textures/gui/dysfunctionning_catalyst_menu_eye_overlay.png");
 	private static final Function<ResourceLocation, RenderType> GUI
 			= (resourceLocation) -> RenderType.gui();
+	private static final int EYE_WIDTH = 54;
+	private static final int EYE_HEIGHT = 20;
 	private static final int BAR_LENGTH = 28;
 	private static final int BG_COLOR = 0xff8B8B8B;
 	private final Random random;
@@ -33,7 +36,7 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 										 Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
 		this.imageWidth = 176;
-		this.imageHeight = 186;
+		this.imageHeight = 187;
 		this.inventoryLabelY += 20;
 		this.titleLabelY -= 1;
 		this.random = new Random();
@@ -44,8 +47,10 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 	@Override
 	protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		renderTransparentBackground(guiGraphics);
-		guiGraphics.blit(GUI, TEXTURE, this.leftPos, this.topPos, 0, 0,
-				this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.leftPos, this.topPos, 0f, 0f,
+				this.imageWidth, this.imageHeight,
+				this.imageWidth, this.imageHeight,
+				ARGB.white(1f));
 
 		// LEFT bars
 		guiGraphics.fill(this.leftPos + 32 + menu.getCitrineProgression(),
@@ -77,11 +82,13 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 
 	private void renderEyes(@NotNull GuiGraphics guiGraphics) {
 		RenderSystem.enableBlend();
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F,
-				(float)menu.getEyeProgression()/(float)DysfunctionningCatalystBlockEntity.MAX_EYE);
-		guiGraphics.blit(GUI, TEXTURE_EYES, this.leftPos + 61, this.topPos + 44,
-				0, 0, 54, 20, 54, 20);
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+		float blend = (float)menu.getEyeProgression()/(float)DysfunctionningCatalystBlockEntity.MAX_EYE;
+		guiGraphics.blit(RenderType::guiTextured, TEXTURE_EYES,
+				this.leftPos + 61, this.topPos + 44,
+				0f, 0f,
+				EYE_WIDTH, EYE_HEIGHT,
+				EYE_WIDTH, EYE_HEIGHT,
+				ARGB.white(blend));
 		RenderSystem.disableBlend();
 	}
 

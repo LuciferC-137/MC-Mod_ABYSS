@@ -1,6 +1,7 @@
 package wardentools.client;
 
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.util.ARGB;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,8 +13,6 @@ import wardentools.ModMain;
 import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 
-import java.util.function.Function;
-
 public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/radiance_catalyst_menu.png");
@@ -21,8 +20,6 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 			Component.translatable("gui." + ModMain.MOD_ID + ".radiance_catalyst_screen.hover.corrupted");
 	private static final Component PURE =
 			Component.translatable("gui." + ModMain.MOD_ID + ".radiance_catalyst_screen.hover.pure");
-	private static final Function<ResourceLocation, RenderType> GUI
-			= (resourceLocation) -> RenderType.gui();
 
 	public RadianceCatalystScreen(RadianceCatalystMenu menu, Inventory playerInventory, Component title) {
 		super(menu, playerInventory, title);
@@ -33,8 +30,10 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 	@Override
 	protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		renderTransparentBackground(guiGraphics);
-		guiGraphics.blit(GUI, TEXTURE, this.leftPos,this.topPos, 0, 0,
-				this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(RenderType::guiTextured, TEXTURE,
+				this.leftPos,this.topPos, 0f, 0f,
+				this.imageWidth, this.imageHeight,
+				this.imageWidth, this.imageHeight, ARGB.white(1f));
 			
 		// Render Energy bar
 		int bar1Length1 = 36;
