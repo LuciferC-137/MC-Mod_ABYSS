@@ -3,6 +3,7 @@ package wardentools.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
@@ -25,7 +26,7 @@ import wardentools.misc.CustomDamageType;
 import wardentools.particle.ParticleRegistry;
 
 public class LiquidCorruptionBlock extends LiquidBlock {
-    private static final int PARTICLE_PERDIOD = 30;
+    private static final int PARTICLE_PERIOD = 30;
     private static final double PARTICLE_SPEED = 0.1;
 
     @Deprecated
@@ -52,12 +53,12 @@ public class LiquidCorruptionBlock extends LiquidBlock {
                 && living.level().getGameTime()%20==1) {
             if (ModEffects.CORRUPTED.getHolder().isEmpty()) return;
             living.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.getHolder().get(),
-                        400, 1, false, false));
-            if (living.level().registryAccess().get(Registries.DAMAGE_TYPE).isEmpty()) return;
+                        400, 1, false, false), living);
+            if (living.level().registryAccess().lookup(Registries.DAMAGE_TYPE).isEmpty()) return;
             Holder<DamageType> corruptedDamageTypeHolder = living.level().registryAccess()
-                    .get(Registries.DAMAGE_TYPE).get().get()
+                    .lookup(Registries.DAMAGE_TYPE).get()
                     .wrapAsHolder(CustomDamageType.CORRUPTED_KEY.getOrThrow(level).get());
-            living.hurt(new DamageSource(corruptedDamageTypeHolder,
+            living.hurtServer((ServerLevel)level, new DamageSource(corruptedDamageTypeHolder,
                     null, living, null), 3f);
         }
     }
@@ -78,7 +79,7 @@ public class LiquidCorruptionBlock extends LiquidBlock {
                             @NotNull BlockPos pos, @NotNull RandomSource random) {
         super.animateTick(state, level, pos, random);
         Vec3 spawnPos = new Vec3(pos.getX(), pos.getY() + 1.0D, pos.getZ());
-        if (random.nextInt(PARTICLE_PERDIOD)==0){
+        if (random.nextInt(PARTICLE_PERIOD)==0){
             level.addParticle(ParticleRegistry.BLACK_CORRUPTION.get(),
                     spawnPos.x + random.nextDouble(),
                     spawnPos.y,

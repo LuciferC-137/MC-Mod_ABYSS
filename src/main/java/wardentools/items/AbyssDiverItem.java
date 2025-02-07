@@ -59,7 +59,7 @@ public class AbyssDiverItem extends Item {
             if (portalDimension != null && !player.isPassenger()) {
                 BlockPos targetPos = ModTeleporter.findValidSpawn(portalDimension,
                         player.blockPosition(), false);
-                player.teleportTo(serverLevel, targetPos.getX() + 0.5D,
+                player.teleportTo(portalDimension, targetPos.getX() + 0.5D,
                         targetPos.getY() + 1.5D, targetPos.getZ() + 0.5D,
                         Set.of(), player.getYRot(), player.getXRot(), false);
             }

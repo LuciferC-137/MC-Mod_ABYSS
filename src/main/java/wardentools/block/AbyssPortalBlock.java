@@ -9,7 +9,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Relative;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -17,11 +20,14 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.Portal;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.portal.TeleportTransition;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.AbyssPortalBlockEntity;
 import wardentools.network.PacketHandler;
 import wardentools.network.ShowWinScreen;
@@ -31,9 +37,8 @@ import wardentools.worldgen.portal.ModTeleporter;
 import wardentools.worldgen.structure.ModStructures;
 
 import java.util.Objects;
-import java.util.Set;
 
-public class AbyssPortalBlock extends Block implements EntityBlock {
+public class AbyssPortalBlock extends Block implements EntityBlock, Portal {
     public static final MapCodec<AbyssPortalBlock> CODEC = simpleCodec(AbyssPortalBlock::new);
 
     public AbyssPortalBlock(Properties prop) {
@@ -83,73 +88,30 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
 
     @Override
     public void entityInside(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
-        if (!level.isClientSide && entity instanceof Player player) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof AbyssPortalBlockEntity abyssPortalBlockEntity) {
-                if (abyssPortalBlockEntity.shouldShowWinScreen()) {
-                    this.showWinScreen(player, pos);
-                } else {
-                    if (player.isPassenger()) {
-                        player.stopRiding();
+        if (!level.isClientSide) {
+            if (entity instanceof ServerPlayer player) {
+                if (level.getBlockEntity(pos) instanceof AbyssPortalBlockEntity entityBlock) {
+                    if (entityBlock.shouldShowWinScreen()) {
+                        showWinScreen(player, pos);
+                        return;
                     }
-                    teleport((ServerLevel)level, pos, player);
                 }
             }
-        } else if (!level.isClientSide) {
-            for (Entity passengers : entity.getPassengers()){
-                teleport((ServerLevel) level, pos, passengers);
-            }
-            teleport((ServerLevel) level, pos, entity);
-        }
-    }
-
-    private void teleport(ServerLevel level, BlockPos pos, Entity entity) {
-        if (level.dimension() == Level.OVERWORLD) {
-            ServerLevel abyssLevel = level.getServer().getLevel(ModDimensions.ABYSS_LEVEL_KEY);
-            if (abyssLevel != null) {
-                BlockPos ancientCityPos
-                        = findNearestStructure(abyssLevel, ModStructures.SURFACE_ANCIENT_CITY, pos);
-                teleportToAncientCity(entity, ModDimensions.ABYSS_LEVEL_KEY, ancientCityPos);
-            }
-        } else if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
-            ServerLevel overworldLevel = level.getServer().getLevel(Level.OVERWORLD);
-            if (overworldLevel != null) {
-                BlockPos ancientCityPos
-                        = findNearestStructure(overworldLevel, BuiltinStructures.ANCIENT_CITY, pos);
-                teleportToAncientCity(entity, Level.OVERWORLD, ancientCityPos);
-            }
+            entity.setAsInsidePortal(this, pos);
         }
     }
 
     private BlockPos findNearestStructure(ServerLevel level, ResourceKey<Structure> structureKey,
                                           BlockPos pos) {
         // WARNING: if the dimension does not correspond to the wanted structure, this method returns 0,0,0
-        if (level.registryAccess().get(Registries.STRUCTURE).isEmpty()) return new BlockPos(0, 0, 0);
+        if (level.registryAccess().lookup(Registries.STRUCTURE).isEmpty()) return new BlockPos(0, 0, 0);
         Holder<Structure> structureHolder = level.registryAccess()
-                .get(Registries.STRUCTURE).get().get().wrapAsHolder(structureKey.getOrThrow(level).get());
+                .lookup(Registries.STRUCTURE).get().wrapAsHolder(structureKey.getOrThrow(level).get());
         HolderSet<Structure> structureHolderSet = HolderSet.direct(structureHolder);
         var result = level.getChunkSource().getGenerator()
                 .findNearestMapStructure(level, structureHolderSet, pos, 10000, false);
         return result != null ? result.getFirst()
                 : new BlockPos(0, 0, 0);
-    }
-
-    private void teleportToAncientCity(Entity entity, ResourceKey<Level> targetDimension, BlockPos targetPos) {
-        ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
-        targetPos = ModTeleporter.findValidSpawn(targetLevel, targetPos, true);
-        if (entity instanceof ServerPlayer serverPlayer) {
-            if (targetLevel == null) return;
-            serverPlayer.teleportTo(targetLevel,
-                    targetPos.getX() + 0.5D, targetPos.getY() + 1.0D, targetPos.getZ() + 0.5D,
-                    Set.of(), serverPlayer.getXRot(), serverPlayer.getYRot(), false);
-        } else if (!entity.level().isClientSide) {
-            if (targetLevel != null) {
-                entity.teleportTo(targetLevel,
-                        targetPos.getX() + 0.5D, targetPos.getY() + 1.0D, targetPos.getZ() + 0.5D,
-                        Set.of(),
-                        entity.getYRot(), entity.getXRot(), false);
-            }
-        }
     }
 
     @Override
@@ -190,5 +152,24 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     private void sendScreenPacket(Player player, BlockPos pos){
         ((ServerLevel)player.level()).removePlayerImmediately((ServerPlayer)player, Entity.RemovalReason.CHANGED_DIMENSION);
         PacketHandler.sendToClient(new ShowWinScreen(pos), (ServerPlayer) player);
+    }
+
+    @Override
+    public @Nullable TeleportTransition getPortalDestination(@NotNull ServerLevel serverLevel,
+                                                             @NotNull Entity entity,
+                                                             @NotNull BlockPos blockPos) {
+        ServerLevel targetLevel;
+        BlockPos structurePos;
+        if (serverLevel.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
+            targetLevel = serverLevel.getServer().getLevel(Level.OVERWORLD);
+            if (targetLevel == null) return null;
+            structurePos = findNearestStructure(targetLevel, BuiltinStructures.ANCIENT_CITY, blockPos);
+        } else {
+            targetLevel = serverLevel.getServer().getLevel(ModDimensions.ABYSS_LEVEL_KEY);
+            if (targetLevel == null) return null;
+            structurePos = findNearestStructure(targetLevel, ModStructures.SURFACE_ANCIENT_CITY, blockPos);
+        }
+        BlockPos validSpawn = ModTeleporter.findValidSpawn(serverLevel, structurePos, true);
+        return ModTeleporter.getTeleportTransition(targetLevel, entity, validSpawn.getCenter());
     }
 }

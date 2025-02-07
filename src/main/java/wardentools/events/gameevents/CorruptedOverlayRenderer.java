@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -47,29 +48,32 @@ public class CorruptedOverlayRenderer {
                    totalDuration = duration * 100;
                }
 
-               int elapsedDuration = Math.max(totalDuration - duration, 0);
-               float alpha = Math.min((float)elapsedDuration / blurDurationTick, 1.0f);
-               float color_intensity = elapsedDuration > blurDurationTick ?
-                       Math.abs((float)Math.sin((duration - blurDurationTick) * glitterPulsation)) : 1f;
-
+               int color = getColor(totalDuration, duration);
                RenderSystem.enableBlend();
-               RenderSystem.defaultBlendFunc();
-               RenderSystem.setShaderColor(color_intensity, color_intensity, color_intensity,
-                       alpha * transparentMax); // RGBA
-
                GuiGraphics guiGraphics = event.getGuiGraphics();
                Window window = event.getWindow();
                int screenWidth = window.getGuiScaledWidth();
                int screenHeight = window.getGuiScaledHeight();
                guiGraphics.blit(
-                       (resourceLocation) -> RenderType.gui(),
+                       RenderType::guiTextured,
                        CORRUPTED_OVERLAY, 0, 0,
-                       0, 0, screenWidth, screenHeight, screenWidth, screenHeight);
-
-               RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                       0, 0, screenWidth, screenHeight,
+                       screenWidth, screenHeight, color);
                RenderSystem.disableBlend();
            }
 
+    }
+
+    private static int getColor(int totalDuration, int duration) {
+        int elapsedDuration = Math.max(totalDuration - duration, 0);
+        float alpha = Math.min((float)elapsedDuration / blurDurationTick, 1.0f);
+        float color_intensity = elapsedDuration > blurDurationTick ?
+                Math.abs((float)Math.sin((duration - blurDurationTick) * glitterPulsation)) : 1f;
+        return ARGB.color(
+                (int)(alpha * transparentMax * 255f),
+                (int)(color_intensity * 255f),
+                (int)(color_intensity * 255f),
+                (int)(color_intensity * 255f));
     }
 
     @SubscribeEvent

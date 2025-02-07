@@ -19,12 +19,12 @@ public class CorruptedEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int amplifier) {
-        if (level.registryAccess().get(Registries.DAMAGE_TYPE).isEmpty()) return false;
+        if (level.registryAccess().lookup(Registries.DAMAGE_TYPE).isEmpty()) return true;
         Holder<DamageType> corruptedDamageHolder
-                = level.registryAccess().get(Registries.DAMAGE_TYPE).get()
+                = level.registryAccess().lookup(Registries.DAMAGE_TYPE)
                 .get().wrapAsHolder(CustomDamageType.CORRUPTED_KEY.getOrThrow(entity.level()).get());
 
-        entity.hurt(new DamageSource(corruptedDamageHolder, null, entity, null),
+        entity.hurtServer(level, new DamageSource(corruptedDamageHolder, null, entity, null),
                 1 + amplifier );
         return super.applyEffectTick(level, entity, amplifier);
     }

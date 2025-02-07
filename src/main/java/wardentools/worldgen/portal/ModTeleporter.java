@@ -2,12 +2,21 @@ package wardentools.worldgen.portal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.phys.Vec3;
 
 public class ModTeleporter {
 
 	public ModTeleporter() {}
+
+	public static TeleportTransition getTeleportTransition(ServerLevel targetLevel,
+														   Entity entity, Vec3 pos) {
+		return new TeleportTransition(targetLevel, pos, Vec3.ZERO,
+				entity.getYRot(), entity.getXRot(), TeleportTransition.PLAY_PORTAL_SOUND);
+	}
 
 	public static BlockPos findValidSpawn(ServerLevel level, BlockPos targetPos, boolean findAncientCity){
 		int maxTries = 300;
