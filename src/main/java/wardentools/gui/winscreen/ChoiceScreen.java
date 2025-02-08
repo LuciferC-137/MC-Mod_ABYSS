@@ -73,6 +73,7 @@ public class ChoiceScreen extends Screen {
       this.fadeInTick = FADE_IN_DURATION;
    }
 
+   @Override
    public void tick() {
       if (fadeInTick > 0) --fadeInTick;
       if (this.minecraft != null) {
@@ -106,16 +107,18 @@ public class ChoiceScreen extends Screen {
       this.respawn();
    }
 
+   @Override
    public void render(@NotNull GuiGraphics graphics, int x, int y, float a) {
       super.render(graphics, x, y, a);
+      this.renderButtonOverlay(graphics);
       RenderSystem.enableBlend();
-      RenderSystem.blendFunc(GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR);
-      graphics.blit(GUI, VIGNETTE_LOCATION, 0, 0,
-              0, 0, this.width, this.height,
+      RenderSystem.blendFunc(GlStateManager.SourceFactor.ZERO,
+              GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR);
+      graphics.blit(RenderType::vignette, VIGNETTE_LOCATION, 0, 0,
+              0.0F, 0.0F, this.width, this.height,
               this.width, this.height, ARGB.white(1f));
       RenderSystem.disableBlend();
       RenderSystem.defaultBlendFunc();
-      this.renderButtonOverlay(graphics);
    }
 
    private void renderButtonOverlay(@NotNull GuiGraphics graphics) {
@@ -137,6 +140,7 @@ public class ChoiceScreen extends Screen {
               this.radianceButton.getHeight()  + OVERLAY_MARGIN, ARGB.white(1f));
    }
 
+   @Override
    public void renderBackground(@NotNull GuiGraphics graphics, int x, int y, float a) {
       Random random = new Random(this.seed);
       int color = ARGB.white(1f);
@@ -147,11 +151,11 @@ public class ChoiceScreen extends Screen {
          for (int j = 0; j < (this.height / 16) + 1; j++) {
             if (i*16 < min) {
                graphics.blit(GUI, CORRUPTION_LOCATION, i * 16, j * 16,
-                       0, 0.0F, 0,
+                       0.0F, 0.0F,
                        16, 16, 16, 16, color);
             } else if (i*16 > max) {
                graphics.blit(GUI, RADIANCE_LOCATION, i * 16, j * 16,
-                       0, 0.0F, 0,
+                       0.0F, 0.0F,
                        16, 16, 16, 16, color);
             } else {
                float distanceFromLeft = (float)i * 16 - min;
@@ -160,12 +164,12 @@ public class ChoiceScreen extends Screen {
                        1.0F - distanceFromLeft / maxDistance * (2f * this.spreadFactor));
                if (random.nextFloat() < contagionProbability) {
                   graphics.blit(GUI, CORRUPTION_LOCATION, i * 16, j * 16,
-                          0, 0.0F, 0,
-                          16, 16, 16, 16, ARGB.white(1f));
+                          0.0F, 0.0F,
+                          16, 16, 16, 16, color);
                } else {
                   graphics.blit(GUI, RADIANCE_LOCATION, i * 16, j * 16,
-                          0, 0.0F, 0,
-                          16, 16, 16, 16, ARGB.white(1f));
+                          0.0F, 0.0F,
+                          16, 16, 16, 16, color);
                }
             }
          }

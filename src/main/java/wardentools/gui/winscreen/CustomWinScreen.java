@@ -292,7 +292,7 @@ public class CustomWinScreen extends Screen {
       f2 = f2 * 96.0F / 255.0F;
       graphics.blit(GUI, MOD_BACKGROUND_LOCATION, 0, 0,
               0, 0, i, this.height,
-              64, 64, ARGB.white(f2));
+              64, 64, ARGB.scaleRGB(ARGB.white(1f), f2));
    }
 
    public @NotNull Music getBackgroundMusic() {
