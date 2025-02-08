@@ -66,6 +66,34 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 		state.rightSwing.copyFrom(incarnation.rightSwing);
 		state.leftSwing.copyFrom(incarnation.leftSwing);
 		state.sonicStrike.copyFrom(incarnation.sonicStrike);
+		state.section6XRot = incarnation.getSection_6_rotX();
+		state.section6YRot = incarnation.getSection_6_rotY();
+		state.section7XRot = incarnation.getSection_7_rotX();
+		state.section7YRot = incarnation.getSection_7_rotY();
+		state.section8XRot = incarnation.getSection_8_rotX();
+		state.section8YRot = incarnation.getSection_8_rotY();
+		state.section9XRot = incarnation.getSection_9_rotX();
+		state.section9YRot = incarnation.getSection_9_rotY();
+		state.section10XRot = incarnation.getSection_10_rotX();
+		state.section10YRot = incarnation.getSection_10_rotY();
+		state.section11XRot = incarnation.getSection_11_rotX();
+		state.section11YRot = incarnation.getSection_11_rotY();
+		state.section12XRot = incarnation.getSection_12_rotX();
+		state.section12YRot = incarnation.getSection_12_rotY();
+		state.section13XRot = incarnation.getSection_13_rotX();
+		state.section13YRot = incarnation.getSection_13_rotY();
+		state.section14XRot = incarnation.getSection_14_rotX();
+		state.section14YRot = incarnation.getSection_14_rotY();
+		state.section15XRot = incarnation.getSection_15_rotX();
+		state.section15YRot = incarnation.getSection_15_rotY();
+		state.section16XRot = incarnation.getSection_16_rotX();
+		state.section16YRot = incarnation.getSection_16_rotY();
+		state.section17XRot = incarnation.getSection_17_rotX();
+		state.section17YRot = incarnation.getSection_17_rotY();
+		state.section18XRot = incarnation.getSection_18_rotX();
+		state.section18YRot = incarnation.getSection_18_rotY();
+		state.sectionEndXRot = incarnation.getEnd_rotX();
+		state.sectionEndYRot = incarnation.getEnd_rotY();
 	}
 
 	@Override
@@ -73,15 +101,8 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 					   @NotNull PoseStack pMatrixStack,
 					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {
 		if (state.tickSpawn >= ContagionIncarnationEntity.SPAWN_DURATION - 1) return;// This line prevents the visualization of a wrong first frame of the entity.
-		int blockLight = (pPackedLight >> 4) & 0xF;
-		int skyLight = (pPackedLight >> 20) & 0xF;
-		float reductionFactor = ((float)ContagionIncarnationEntity.DEATH_DURATION - (float)state.contagionIncarnationDeathTime)
-		                        / (float)ContagionIncarnationEntity.DEATH_DURATION;
-		int decreasingBlockLight = (int)(blockLight * reductionFactor);
-		int decreasingSkyLight = (int)(skyLight * reductionFactor);
-		int decreasingLight = LightTexture.pack(decreasingSkyLight, decreasingBlockLight);
 
-		super.render(state, pMatrixStack, pBuffer, decreasingLight);
+		super.render(state, pMatrixStack, pBuffer, pPackedLight);
 		this.deathLightEffect(state, state.level.getGameTime(), pMatrixStack, pBuffer);
 		this.deathParticleEffect(state);
 		this.spawnParticleEffect(state);

@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -29,7 +28,6 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -38,11 +36,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.effect.ModEffects;
@@ -58,8 +53,6 @@ import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class ContagionIncarnationEntity extends ContagionIncarnationPartManager implements Enemy {
@@ -330,6 +323,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
                     && this.getSensing().hasLineOfSight(this.getTarget())) {
                 this.doHurtTarget((ServerLevel)this.level(), this.getTarget());
                 if (this.random.nextInt(CHANCE_TO_CORRUPT_ON_HIT) == 0) {
+                    if (ModEffects.CORRUPTED.getHolder().isEmpty()) return;
                     this.getTarget().addEffect(
                             new MobEffectInstance(
                                     ModEffects.CORRUPTED.getHolder().get(), 100, 0));
@@ -481,8 +475,8 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         ++this.contagionIncarnationDeathTime;
         if (this.contagionIncarnationDeathTime >= DEATH_DURATION
         		&& !this.level().isClientSide() && !this.isRemoved()) {
-           this.level().broadcastEntityEvent(this, (byte)60);
-           this.remove(Entity.RemovalReason.KILLED);
+            this.level().broadcastEntityEvent(this, (byte)60);
+            this.remove(RemovalReason.KILLED);
            this.createCorpse();
            this.informCatalystOfDeath();
         }
@@ -490,25 +484,12 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 
 	@Override
     public void die(@NotNull DamageSource source) {
-        if (!this.isRemoved() && !this.dead) {
-           Entity entity = source.getEntity();
-           LivingEntity livingentity = this.getKillCredit();
-           if (this.deathScore >= 0 && livingentity != null) {
-              livingentity.awardKillScore(this, this.deathScore, source);
-           }
-           if (this.isSleeping()) this.stopSleeping();
-           this.dead = true;
-           this.getCombatTracker().recheckStatus();
-           Level level = this.level();
-           if (level instanceof ServerLevel serverlevel) {
-               if (entity == null || entity.killedEntity(serverlevel, this)) {
-                 this.gameEvent(GameEvent.ENTITY_DIE);
-                 this.dropAllDeathLoot(serverlevel, source);
-                 this.createWitherRose(livingentity);
-               }
-               this.level().broadcastEntityEvent(this, (byte)3);
-           }
+        if (this.deathScore >= 0 && !this.level().isClientSide) {
+            for (Player player : this.bossEvent.getPlayers()) {
+                player.awardKillScore(this, this.deathScore, source);
+            }
         }
+        super.die(source);
     }
 
     private void createCorpse() {

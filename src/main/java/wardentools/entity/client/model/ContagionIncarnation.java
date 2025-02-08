@@ -810,43 +810,43 @@ public class ContagionIncarnation extends EntityModel<ContagionIncarnationRender
 		animate(state.rightSwing, ContagionIncarnationAnimation.arm_right_attack, ageInTicks);
 		animate(state.leftSwing, ContagionIncarnationAnimation.arm_left_attack, ageInTicks);
 		animate(state.sonicStrike, ContagionIncarnationAnimation.scream, ageInTicks);
-		if (!state.isSonicStrikeStarted) this.animateLookAt(state.xRot, state.yRot);
-		//this.animateTail(entity);
+		if (!state.isSonicStrikeStarted) this.animateLookAt(state.yRot, state.xRot);
+		this.animateTail(state);
 	}
 	
 	private void animateLookAt(float yaw, float pitch) {
 		this.section_5.homogeneousRotation(yaw / 6f, pitch / 6f);
 	}
 
-	private void animateTail(ContagionIncarnationEntity entity) {
-		this.SECTION_6.xRot = entity.getSection_6_rotX();
-		this.SECTION_6.yRot = entity.getSection_6_rotY();
-		this.SECTION_7.xRot = entity.getSection_7_rotX();
-		this.SECTION_7.yRot = entity.getSection_7_rotY();
-		this.SECTION_8.xRot = entity.getSection_8_rotX();
-		this.SECTION_8.yRot = entity.getSection_8_rotY();
-		this.SECTION_9.xRot = entity.getSection_9_rotX();
-		this.SECTION_9.yRot = entity.getSection_9_rotY();
-		this.SECTION_10.xRot = entity.getSection_10_rotX();
-		this.SECTION_10.yRot = entity.getSection_10_rotY();
-		this.SECTION_11.xRot = entity.getSection_11_rotX();
-		this.SECTION_11.yRot = entity.getSection_11_rotY();
-		this.SECTION_12.xRot = entity.getSection_12_rotX();
-		this.SECTION_12.yRot = entity.getSection_12_rotY();
-		this.SECTION_13.xRot = entity.getSection_13_rotX();
-		this.SECTION_13.yRot = entity.getSection_13_rotY();
-		this.SECTION_14.xRot = entity.getSection_14_rotX();
-		this.SECTION_14.yRot = entity.getSection_14_rotY();
-		this.SECTION_15.xRot = entity.getSection_15_rotX();
-		this.SECTION_15.yRot = entity.getSection_15_rotY();
-		this.SECTION_16.xRot = entity.getSection_16_rotX();
-		this.SECTION_16.yRot = entity.getSection_16_rotY();
-		this.SECTION_17.xRot = entity.getSection_17_rotX();
-		this.SECTION_17.yRot = entity.getSection_17_rotY();
-		this.SECTION_18.xRot = entity.getSection_18_rotX();
-		this.SECTION_18.yRot = entity.getSection_18_rotY();
-		this.END.xRot = entity.getEnd_rotX();
-		this.END.yRot = entity.getEnd_rotY();
+	private void animateTail(ContagionIncarnationRenderState state) {
+		this.SECTION_6.xRot = state.section6XRot;
+		this.SECTION_6.yRot = state.section6YRot;
+		this.SECTION_7.xRot = state.section7XRot;
+		this.SECTION_7.yRot = state.section7YRot;
+		this.SECTION_8.xRot = state.section8XRot;
+		this.SECTION_8.yRot = state.section8YRot;
+		this.SECTION_9.xRot = state.section9XRot;
+		this.SECTION_9.yRot = state.section9YRot;
+		this.SECTION_10.xRot = state.section10XRot;
+		this.SECTION_10.yRot = state.section10YRot;
+		this.SECTION_11.xRot = state.section11XRot;
+		this.SECTION_11.yRot = state.section11YRot;
+		this.SECTION_12.xRot = state.section12XRot;
+		this.SECTION_12.yRot = state.section12YRot;
+		this.SECTION_13.xRot = state.section13XRot;
+		this.SECTION_13.yRot = state.section13YRot;
+		this.SECTION_14.xRot = state.section14XRot;
+		this.SECTION_14.yRot = state.section14YRot;
+		this.SECTION_15.xRot = state.section15XRot;
+		this.SECTION_15.yRot = state.section15YRot;
+		this.SECTION_16.xRot = state.section16XRot;
+		this.SECTION_16.yRot = state.section16YRot;
+		this.SECTION_17.xRot = state.section17XRot;
+		this.SECTION_17.yRot = state.section17YRot;
+		this.SECTION_18.xRot = state.section18XRot;
+		this.SECTION_18.yRot = state.section18YRot;
+		this.END.xRot = state.sectionEndXRot;
+		this.END.yRot = state.sectionEndYRot;
 	}
 
 	private static class Section {
