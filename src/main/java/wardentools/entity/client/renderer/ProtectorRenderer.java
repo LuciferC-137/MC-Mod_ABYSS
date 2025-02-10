@@ -34,6 +34,11 @@ public class ProtectorRenderer extends LivingEntityRenderer<ProtectorEntity, Pro
 	}
 
 	@Override
+	protected boolean shouldShowName(@NotNull ProtectorEntity entity, double v) {
+		return entity.hasCustomName() && super.shouldShowName(entity, v);
+	}
+
+	@Override
 	public @NotNull ProtectorRenderState createRenderState() {
 		return new ProtectorRenderState();
 	}

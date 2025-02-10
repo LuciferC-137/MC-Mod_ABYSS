@@ -18,10 +18,12 @@ import wardentools.entity.utils.RenderToBufferFunction;
 import wardentools.entity.utils.ScaleFunction;
 import wardentools.entity.utils.SetUpAnimFunction;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Method;
 
 public class MimicEntity extends CorruptionMonster {
     private LivingEntity mimicEntity = null;
+    private LivingEntityRenderState mimicRenderState = null;
     private static final EntityDataAccessor<Integer> MIMIC_ENTITY_ID
             = SynchedEntityData.defineId(MimicEntity.class, EntityDataSerializers.INT);
 
@@ -92,16 +94,6 @@ public class MimicEntity extends CorruptionMonster {
         return null;
     }
 
-    public LivingEntityRenderState getNewRenderState() {
-        if (this.mimicEntity == null) return null;
-        EntityRenderer<? super LivingEntity, ?> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-                .getRenderer(this.mimicEntity);
-        if (renderer instanceof LivingEntityRenderer<?, ?, ?> livingRenderer) {
-            return livingRenderer.createRenderState();
-        }
-        return null;
-    }
-
     @SuppressWarnings("unchecked")
     public <T extends LivingEntity, S extends LivingEntityRenderState> SetUpAnimFunction<S> getSetUpAnimFunction() {
         if (this.mimicEntity == null) return null;
@@ -112,6 +104,17 @@ public class MimicEntity extends CorruptionMonster {
             return ((LivingEntityRenderer<T, S, ?>)livingRenderer).getModel()::setupAnim;
         }
         return null;
+    }
+
+    public <T extends LivingEntity> @Nullable LivingEntityRenderState getMimicRenderState() {
+        if (this.mimicRenderState == null) {
+            if (mimicEntity == null) return null;
+            T deadEntityCasted = (T) this.mimicEntity;
+            EntityRenderer<? super T, ?> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
+                    .getRenderer(deadEntityCasted);
+            return this.mimicRenderState = (LivingEntityRenderState) renderer.createRenderState();
+        }
+        return this.mimicRenderState;
     }
 
     @SuppressWarnings("unchecked")

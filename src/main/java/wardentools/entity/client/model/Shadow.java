@@ -17,7 +17,6 @@ import wardentools.entity.utils.RenderToBufferFunction;
 public class Shadow extends EntityModel<ShadowRenderState> {
 	public static final ModelLayerLocation LAYER_LOCATION
 			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "shadow"), "main");
-	private RenderToBufferFunction renderToBufferFunction;
 	private final ModelPart FULL;
 	private final ModelPart HEAD;
 	private final ModelPart BODY;
@@ -67,7 +66,6 @@ public class Shadow extends EntityModel<ShadowRenderState> {
 
 	@Override
 	public void setupAnim(@NotNull ShadowRenderState state) {
-		this.renderToBufferFunction = state.renderToBufferFunction; // Do not remove this line
 		root().getAllParts().forEach(ModelPart::resetPose);
 		if (state.setUpAnimFunction != null){
 			state.setUpAnimFunction.setupAnim(state);
