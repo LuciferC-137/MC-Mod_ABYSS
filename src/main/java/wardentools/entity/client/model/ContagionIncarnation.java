@@ -810,7 +810,9 @@ public class ContagionIncarnation extends EntityModel<ContagionIncarnationRender
 		animate(state.rightSwing, ContagionIncarnationAnimation.arm_right_attack, ageInTicks);
 		animate(state.leftSwing, ContagionIncarnationAnimation.arm_left_attack, ageInTicks);
 		animate(state.sonicStrike, ContagionIncarnationAnimation.scream, ageInTicks);
-		if (!state.isSonicStrikeStarted) this.animateLookAt(state.yRot, state.xRot);
+		if (!state.isSonicStrikeStarted && state.contagionIncarnationDeathTime <= 0) {
+			this.animateLookAt(state.yRot, state.xRot);
+		}
 		this.animateTail(state);
 	}
 	

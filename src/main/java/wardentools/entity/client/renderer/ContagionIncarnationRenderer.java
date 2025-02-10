@@ -2,20 +2,20 @@ package wardentools.entity.client.renderer;
 
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
-
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.client.emissive.ContagionIncarnationEmissiveLayer;
@@ -103,7 +103,7 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 		if (state.tickSpawn >= ContagionIncarnationEntity.SPAWN_DURATION - 1) return;// This line prevents the visualization of a wrong first frame of the entity.
 
 		super.render(state, pMatrixStack, pBuffer, pPackedLight);
-		this.deathLightEffect(state, state.level.getGameTime(), pMatrixStack, pBuffer);
+		this.deathLightEffect(state, pMatrixStack, pBuffer);
 		this.deathParticleEffect(state);
 		this.spawnParticleEffect(state);
 	}
@@ -163,57 +163,67 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 		}
 	}
 
-	private void deathLightEffect(ContagionIncarnationRenderState state, float partialTicks,
-								  PoseStack pMatrixStack, @NotNull MultiBufferSource pBuffer) {
+	private void deathLightEffect(ContagionIncarnationRenderState state,
+								  PoseStack poseStack, @NotNull MultiBufferSource buffer) {
 		if (state.contagionIncarnationDeathTime > 0) {
-			float f5 = ((float)state.contagionIncarnationDeathTime + partialTicks) / 200.0F;
-			float f7 = Math.min(f5 > 0.8F ? (f5 - 0.8F) / 0.2F : 0.0F, 1.0F);
-			RandomSource randomsource = RandomSource.create(432L);
-			VertexConsumer vertexconsumer2 = pBuffer.getBuffer(RenderType.lightning());
-			pMatrixStack.pushPose();
-			pMatrixStack.translate(0.0F, 1.0F, 0.0F);
-
-			for(int i = 0; (float)i < (f5 + f5 * f5) / 2.0F * 60.0F; ++i) {
-				pMatrixStack.mulPose(Axis.XP.rotationDegrees(randomsource.nextFloat() * 360.0F));
-				pMatrixStack.mulPose(Axis.YP.rotationDegrees(randomsource.nextFloat() * 360.0F));
-				pMatrixStack.mulPose(Axis.ZP.rotationDegrees(randomsource.nextFloat() * 360.0F));
-				pMatrixStack.mulPose(Axis.XP.rotationDegrees(randomsource.nextFloat() * 360.0F));
-				pMatrixStack.mulPose(Axis.YP.rotationDegrees(randomsource.nextFloat() * 360.0F));
-				pMatrixStack.mulPose(Axis.ZP.rotationDegrees(randomsource.nextFloat() * 360.0F + f5 * 90.0F));
-				float f3 = randomsource.nextFloat() * 20.0F + 5.0F + f7 * 10.0F;
-				float f4 = randomsource.nextFloat() * 2.0F + 1.0F + f7 * 2.0F;
-				Matrix4f matrix4f = pMatrixStack.last().pose();
-				int j = (int)(255.0F * (1.0F - f7));
-				vertex01(vertexconsumer2, matrix4f, j);
-				vertex2(vertexconsumer2, matrix4f, f3, f4);
-				vertex3(vertexconsumer2, matrix4f, f3, f4);
-				vertex01(vertexconsumer2, matrix4f, j);
-				vertex3(vertexconsumer2, matrix4f, f3, f4);
-				vertex4(vertexconsumer2, matrix4f, f3, f4);
-				vertex01(vertexconsumer2, matrix4f, j);
-				vertex4(vertexconsumer2, matrix4f, f3, f4);
-				vertex2(vertexconsumer2, matrix4f, f3, f4);
-			}
-
-			pMatrixStack.popPose();
+			float deathTimeScale = (float)state.contagionIncarnationDeathTime
+					/ (float)ContagionIncarnationEntity.DEATH_DURATION;
+			poseStack.pushPose();
+			poseStack.translate(0.0D, 0.5D, 0.0D);
+			float timeBound = Math.min(deathTimeScale > 0.8F ?
+					(deathTimeScale - 0.8F) / 0.2F : 0.0F, 1.0F);
+			int color1 = ARGB.colorFromFloat(1.0F - timeBound,
+					0F, 55F / 255F, 70F / 255F);
+			int color2 = ARGB.colorFromFloat((1.0F - timeBound) * 0.01F,
+					0F, 55F / 255F, 70F / 255F);
+			renderRays(poseStack, deathTimeScale,
+					buffer.getBuffer(RenderType.dragonRays()), color1, color2);
+			renderRays(poseStack, deathTimeScale,
+					buffer.getBuffer(RenderType.dragonRaysDepth()), color1, color2);
+			poseStack.popPose();
 		}
 	}
-	
-	private static void vertex01(VertexConsumer consumer, Matrix4f matrix, int alpha) {
-		consumer.addVertex(matrix, 0.0F, 0.0F, 0.0F).setColor(0, 55, 70, alpha);
-	   }
 
-	   private static void vertex2(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
-		   consumer.addVertex(matrix, -HALF_SQRT_3 * f2, f1, -0.5F * f2).setColor(0, 55, 70, 0);
-	   }
+	private static void renderRays(PoseStack poseStack, float time,
+								   VertexConsumer vertexConsumer, int color1, int color2) {
+		poseStack.pushPose();
+		RandomSource random = RandomSource.create(432L);
+		float timeBound = Math.min(time > 0.8F ?
+				(time - 0.8F) / 0.2F : 0.0F, 1.0F);
+		Vector3f vec1 = new Vector3f();
+		Vector3f vec2 = new Vector3f();
+		Vector3f vec3 = new Vector3f();
+		Vector3f vec4 = new Vector3f();
+		Quaternionf quaternion = new Quaternionf();
+		int rayNumber = Mth.floor((time * time + 0.1F) * 20.0F);
+		float twoPi = 6.2831855F;
+		for(int rayInt = 0; rayInt < rayNumber; ++rayInt) {
+			quaternion.rotationXYZ(random.nextFloat() * twoPi,
+					random.nextFloat() * twoPi,
+					random.nextFloat() * twoPi)
+					.rotateXYZ(random.nextFloat() * twoPi,
+							random.nextFloat() * twoPi,
+							random.nextFloat() * twoPi + time * twoPi);
+			poseStack.mulPose(quaternion);
+			float r1 = random.nextFloat() * 20.0F + 5.0F + timeBound * 10.0F;
+			float r2 = random.nextFloat() * 2.0F + 1.0F + timeBound * 2.0F;
+			vec2.set(-HALF_SQRT_3 * r2, r1, -0.5F * r2);
+			vec3.set(HALF_SQRT_3 * r2, r1, -0.5F * r2);
+			vec4.set(0.0F, r1, r2);
+			PoseStack.Pose pose = poseStack.last();
+			vertexConsumer.addVertex(pose, vec1).setColor(color1);
+			vertexConsumer.addVertex(pose, vec2).setColor(color2);
+			vertexConsumer.addVertex(pose, vec3).setColor(color2);
+			vertexConsumer.addVertex(pose, vec1).setColor(color1);
+			vertexConsumer.addVertex(pose, vec3).setColor(color2);
+			vertexConsumer.addVertex(pose, vec4).setColor(color2);
+			vertexConsumer.addVertex(pose, vec1).setColor(color1);
+			vertexConsumer.addVertex(pose, vec4).setColor(color2);
+			vertexConsumer.addVertex(pose, vec2).setColor(color2);
+		}
 
-	   private static void vertex3(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
-		   consumer.addVertex(matrix, HALF_SQRT_3 * f2, f1, -0.5F * f2).setColor(0, 55, 70, 0);
-	   }
-
-	   private static void vertex4(VertexConsumer consumer, Matrix4f matrix, float f1, float f2) {
-		   consumer.addVertex(matrix, 0.0F, f1, f2).setColor(0, 55, 70, 0);
-	   }
+		poseStack.popPose();
+	}
 
 	@Override
 	protected void scale(@NotNull ContagionIncarnationRenderState renderState, @NotNull PoseStack stack) {
