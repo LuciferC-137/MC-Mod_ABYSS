@@ -884,7 +884,7 @@ public class ItemRegistry {
 							.fireResistant()
 							.setId(ResourceKey.create(Registries.ITEM,
 									ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssal_scythe")))
-							, 12, -3F));
+							, 9, -3F));
 
 	public static final RegistryObject<Item> RADIANT_SPEAR =
 			REGISTAR.register("radiant_spear",
@@ -894,7 +894,7 @@ public class ItemRegistry {
 							.fireResistant()
 							.setId(ResourceKey.create(Registries.ITEM,
 									ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_spear")))
-							, 10, -3F));
+							, 7, -3F));
 
 	public static final RegistryObject<Item> ABYSS_MUSIC_DISC =
 			REGISTAR.register("music_disc_abyss",

@@ -1,6 +1,7 @@
 package wardentools.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
@@ -11,6 +12,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -63,15 +65,23 @@ public class LiquidCorruptionBlock extends LiquidBlock {
         }
     }
 
-
     @Override
-     public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+    public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
                                   @NotNull Block block, Orientation orientation, boolean isMoving) {
-        BlockState neighborState = block.defaultBlockState();
-        if (neighborState.is(Blocks.WATER) || neighborState.is(Blocks.LAVA)) {
+        if (this.anyNeighborLiquid(level, pos)) {
             level.setBlock(pos, BlockRegistry.SOLID_CORRUPTION.get().defaultBlockState(), Block.UPDATE_ALL);
         }
         super.neighborChanged(state, level, pos, block, orientation, isMoving);
+    }
+
+    private boolean anyNeighborLiquid(@NotNull LevelReader level, @NotNull BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            if (level.getBlockState(pos.relative(direction)).is(Blocks.WATER)
+                    || level.getBlockState(pos.relative(direction)).is(Blocks.LAVA)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
