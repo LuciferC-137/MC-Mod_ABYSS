@@ -40,8 +40,7 @@ public abstract class LevelRendererMixin {
 							   LightTexture lightTexture, Matrix4f matrix1, Matrix4f matrix2,
 							   CallbackInfo ci) {
 		if (cam.getEntity().level().dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
-			int BRIGHTNESS =
-					(int)(230f * (AbyssWeatherEvent.WEATHER_MANAGER.getFogDistance()
+			int BRIGHTNESS = (int)(230f * (AbyssWeatherEvent.WEATHER_MANAGER.getFogDistance()
 					/ AbyssWeatherManager.MAX_FOG_DISTANCE));
 			int white = ARGB.white(1f);
 			int FOG_INTENSITY_OVERLAY = ARGB.scaleRGB(white, (int)((float)BRIGHTNESS

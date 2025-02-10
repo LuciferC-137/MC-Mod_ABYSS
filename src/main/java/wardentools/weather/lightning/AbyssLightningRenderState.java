@@ -7,6 +7,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AbyssLightningRenderState extends EntityRenderState {
     public long seed;
+    public boolean isLegacyLightning;
 
     public AbyssLightningRenderState() {
     }

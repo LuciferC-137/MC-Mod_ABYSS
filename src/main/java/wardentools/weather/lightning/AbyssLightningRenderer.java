@@ -25,7 +25,7 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity,
     private static final float BLUE = 0.9f;
     private static final float OPACITY = 1.f;
     protected static final RenderStateShard.ShaderStateShard RENDERTYPE_LIGHTNING_SHADER
-            = new RenderStateShard.ShaderStateShard(CoreShaders.RENDERTYPE_LIGHTNING);
+            = new RenderStateShard.ShaderStateShard(CoreShaders.RENDERTYPE_GUI_OVERLAY);
     protected static final RenderStateShard.WriteMaskStateShard COLOR_DEPTH_WRITE
             = new RenderStateShard.WriteMaskStateShard(true, true);
     protected static final RenderStateShard.TransparencyStateShard LIGHTNING_TRANSPARENCY
@@ -47,8 +47,8 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity,
             Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
         }
     });
-    protected static final RenderStateShard.LayeringStateShard NO_FOG_LAYERING
-            = new RenderStateShard.LayeringStateShard("no_fog", FogRenderer::toggleFog, () -> {  });
+    protected static final RenderStateShard.LayeringStateShard EMPTY_LAYERING
+            = new RenderStateShard.LayeringStateShard("empty_layering", () -> {}, () -> {});
     
 
     private static final RenderType LIGHTNING = RenderType.create("lightning",
@@ -58,7 +58,7 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity,
                     .setWriteMaskState(COLOR_DEPTH_WRITE)
                     .setTransparencyState(LIGHTNING_TRANSPARENCY)
                     .setOutputState(WEATHER_TARGET)
-                    .setLayeringState(NO_FOG_LAYERING)
+                    .setLayeringState(EMPTY_LAYERING)
                     .setCullState(NO_CULL)
                     .createCompositeState(false));
 
@@ -67,18 +67,20 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity,
         super(ctx);
     }
 
-    public void render(AbyssLightningEntity lightningEntity, float yaw, float partialTicks,
-                       @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        if (lightningEntity.isLegacyLightning()) {
-            renderLegacyLightning(lightningEntity, poseStack, bufferSource);
+    @Override
+    public void render(AbyssLightningRenderState state,
+                       @NotNull PoseStack poseStack,
+                       @NotNull MultiBufferSource bufferSource, int packedLight) {
+        if (state.isLegacyLightning) {
+            renderLegacyLightning(state, poseStack, bufferSource);
         } else {
-            drawAbyssLightning(lightningEntity, poseStack, bufferSource);
+            drawAbyssLightning(state, poseStack, bufferSource);
         }
     }
 
-    private void drawAbyssLightning(AbyssLightningEntity lightningEntity, PoseStack poseStack,
+    private void drawAbyssLightning(AbyssLightningRenderState state, PoseStack poseStack,
                                     MultiBufferSource bufferSource){
-        RandomSource randomGenerator = RandomSource.create(lightningEntity.seed);
+        RandomSource randomGenerator = RandomSource.create(state.seed);
         float length = 10f;
         float thickness = length / 15f;
         int depth = 4;
@@ -147,13 +149,13 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity,
         }
     }
 
-    private void renderLegacyLightning(AbyssLightningEntity lightningEntity,
+    private void renderLegacyLightning(AbyssLightningRenderState state,
                                        @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource) {
         float[] xOffsets = new float[8];
         float[] zOffsets = new float[8];
         float previousXOffset = 0.0F;
         float previousZOffset = 0.0F;
-        RandomSource randomGenerator = RandomSource.create(lightningEntity.seed);
+        RandomSource randomGenerator = RandomSource.create(state.seed);
         for (int segment = 7; segment >= 0; --segment) {
             xOffsets[segment] = previousXOffset;
             zOffsets[segment] = previousZOffset;
@@ -163,7 +165,7 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity,
         VertexConsumer vertexConsumer = bufferSource.getBuffer(LIGHTNING);
         Matrix4f transformationMatrix = poseStack.last().pose();
         for (int branch = 0; branch < 4; ++branch) {
-            RandomSource branchRandomGenerator = RandomSource.create(lightningEntity.seed);
+            RandomSource branchRandomGenerator = RandomSource.create(state.seed);
             for (int pass = 0; pass < 3; ++pass) {
                 int startSegment = 7;
                 int endSegment = 0;
@@ -233,5 +235,6 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity,
                                    @NotNull AbyssLightningRenderState state, float partialTick) {
         super.extractRenderState(lightning, state, partialTick);
         state.seed = lightning.seed;
+        state.isLegacyLightning = lightning.isLegacyLightning();
     }
 }
