@@ -10,6 +10,7 @@ public class ModItemProperties {
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "blowing"),
                 (stack, level, entity, seed) -> {
             return stack.is(ItemRegistry.WHISTLE.get())
-                    && ((WhistleItem)stack.getItem()).isUsing() ? 1.0F : 0.0F;});
+                    && ((WhistleItem)stack.getItem())
+                    .doUseAnimation(stack, level, entity, seed) ? 1.0F : 0.0F;});
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -35,7 +36,8 @@ public class WhistleItem extends Item {
                                           @NotNull InteractionHand hand) {
         player.startUsingItem(hand);
         play(level, player);
-        player.getCooldowns().addCooldown(player.getItemInHand(hand), USE_DURATION);
+        player.getCooldowns().addCooldown(player.getItemInHand(hand),
+                USE_DURATION * 2);
         player.awardStat(Stats.ITEM_USED.get(this));
         if (!level.isClientSide) callForTamedNoctilure(level, player);
         return InteractionResult.CONSUME;
@@ -48,9 +50,23 @@ public class WhistleItem extends Item {
         super.onStopUsing(stack, entity, count);
     }
 
-    public boolean isUsing() {
+    public boolean isSoundActive() {
         Minecraft minecraft = Minecraft.getInstance();
         return minecraft.getSoundManager().isActive(this.lastSoundInstance);
+    }
+
+    public boolean doUseAnimation(ItemStack stack, Level level, Entity entity, int seed){
+        if (entity instanceof Player player) {
+            return this.isSoundActive() || (player.isUsingItem()
+                    && player.getItemInHand(InteractionHand.MAIN_HAND)
+                    .is(stack.getItem()));
+        }
+        return this.isSoundActive();
+    }
+
+    @Override
+    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
+        return USE_DURATION;
     }
 
     private void callForTamedNoctilure(Level level, Player player) {
@@ -62,9 +78,6 @@ public class WhistleItem extends Item {
         });
     }
 
-    public int getUseDuration(@NotNull ItemStack stack) {
-        return USE_DURATION;
-    }
 
     private void play(Level level, Player player) {
         if (level.isClientSide) {
