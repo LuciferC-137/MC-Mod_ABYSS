@@ -1,18 +1,6 @@
 { 
 	"parent": "minecraft:item/handheld",
-    "loader": "forge:separate_transforms",
-	"base":{ 
-		"parent": "wardentools:item/radiant_spear_3d"
-	},
-	"perspectives":{ 
-		"gui":{ 
-			"parent": "wardentools:item/radiant_spear_2d"
-		},
-		"ground":{ 
-			"parent": "wardentools:item/radiant_spear_2d"
-		},
-		"fixed":{ 
-			"parent": "wardentools:item/radiant_spear_2d"
-		}
+	"textures":{ 
+		"layer0": "wardentools:item/radiant_spear"
 	}
 }

@@ -109,6 +109,7 @@ public class MimicEntity extends CorruptionMonster {
     public <T extends LivingEntity> @Nullable LivingEntityRenderState getMimicRenderState() {
         if (this.mimicRenderState == null) {
             if (mimicEntity == null) return null;
+            @SuppressWarnings("unchecked")
             T deadEntityCasted = (T) this.mimicEntity;
             EntityRenderer<? super T, ?> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
                     .getRenderer(deadEntityCasted);
