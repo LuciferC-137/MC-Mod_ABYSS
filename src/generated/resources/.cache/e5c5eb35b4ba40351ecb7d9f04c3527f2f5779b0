@@ -1,4 +1,4 @@
-// 1.20.4	2024-11-02T09:40:52.8868578	Advancements
+// 1.20.4	2025-02-13T18:18:01.7277394	Advancements
 83d73bbf493867d6aab2dba7efc6b5c6c35e1bf8 data/wardentools/advancements/abyss.json
 36dbaec1cab3337472b4b662fc15a0caae468134 data/wardentools/advancements/abyssdiver.json
 a1b9b21a7252deed8ab1b6a64f5acf8021f5ef47 data/wardentools/advancements/corrupted.json
@@ -9,7 +9,7 @@ c1c5b27dd4a57d9fad761e4b15bafe2e80cafd5e data/wardentools/advancements/deepcrist
 c4b7f12e0935e9ea4bc45e160a1129ce2983c6d0 data/wardentools/advancements/deep_armor.json
 0128f0984f1093013e9c90b358ffe720a336fee8 data/wardentools/advancements/escape.json
 3c3aa4bcbfa9886761e9ac7e1b8b2c6c10f83879 data/wardentools/advancements/incarnation.json
-443215326911386c509eb81c78c69ca4a67e2a30 data/wardentools/advancements/protector.json
+480b74d58e4251c7aebeb100ffb7fbb6ad6da71b data/wardentools/advancements/protector.json
 4ebf486c68bbf77170e19bd94bd7a05cbdda935c data/wardentools/advancements/protector_invoker.json
 d8299411462cb7d9ad9dd23aa8103067540d7896 data/wardentools/advancements/radiance.json
 f7432f896d3d878babc7d218684c6b9a8e678ccf data/wardentools/advancements/radiance_bringer.json

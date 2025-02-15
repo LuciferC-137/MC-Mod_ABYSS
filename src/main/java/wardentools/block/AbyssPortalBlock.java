@@ -21,6 +21,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.AbyssPortalBlockEntity;
 import wardentools.network.PacketHandler;
@@ -196,5 +198,11 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     private void sendScreenPacket(Player player, BlockPos pos){
         player.remove(Entity.RemovalReason.CHANGED_DIMENSION);
         PacketHandler.sendToClient(new ShowWinScreen(pos), (ServerPlayer) player);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean canBeReplaced(@NotNull BlockState state, @NotNull Fluid fluid) {
+        return false;
     }
 }

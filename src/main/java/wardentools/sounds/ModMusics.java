@@ -1,5 +1,6 @@
 package wardentools.sounds;
 
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -35,11 +36,21 @@ public class ModMusics {
     // Parameters = (SOUND_EVENT, minimum delay before playing again, maximum delay before playing again,
     // replace music)
     public static final Music DEEP_FOREST
-            = new Music(DEEP_FOREST_SOUND, FIVE_MINUTES, TEN_MINUTES, true);
+            = new Music(DEEP_FOREST_SOUND, FIVE_MINUTES, TEN_MINUTES, false);
     public static final Music WHITE_FOREST
-            = new Music(WHITE_FOREST_SOUND, FIVE_MINUTES, TEN_MINUTES, true);
+            = new Music(WHITE_FOREST_SOUND, FIVE_MINUTES, TEN_MINUTES, false);
     public static final Music INCARNATION_THEME
             = new Music(INCARNATION_THEME_SOUND, FIVE_MINUTES, TEN_MINUTES, true);
     public static final Music ABYSS_THEME
             = new Music(ABYSS_THEME_SOUND, ONE_SECOND, THIRTY_SECONDS / 2, true);
+
+    public static  boolean isAbyssMusic(Music music) {
+        return ModMusics.DEEP_FOREST.getEvent().is(music.getEvent().value().getLocation()) ||
+                ModMusics.WHITE_FOREST.getEvent().is(music.getEvent().value().getLocation());
+    }
+
+    public static  boolean isAbyssMusic(SoundInstance music) {
+        return ModMusics.DEEP_FOREST.getEvent().is(music.getLocation()) ||
+                ModMusics.WHITE_FOREST.getEvent().is(music.getLocation());
+    }
 }

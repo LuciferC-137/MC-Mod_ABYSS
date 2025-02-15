@@ -8,6 +8,7 @@ import wardentools.ModMain;
 import wardentools.advancement.criteria.AbyssPortalCriteria;
 import wardentools.advancement.criteria.CorruptionVesselCriteria;
 import wardentools.advancement.criteria.RadianceBringerCriteria;
+import wardentools.advancement.criteria.SummonProtectorCriteria;
 
 public class ModCriteriaTriggers {
     public static final AbyssPortalCriteria ABYSS_PORTAL_OPEN
@@ -16,6 +17,8 @@ public class ModCriteriaTriggers {
             = register("corruption_vessel", new CorruptionVesselCriteria());
     public static final RadianceBringerCriteria RADIANCE_BRINGER
             = register("radiance_bringer", new RadianceBringerCriteria());
+    public static final SummonProtectorCriteria SUMMON_PROTECTOR
+            = register("summon_protector", new SummonProtectorCriteria());
 
     public static void init() {
         // static call to register all criteria

@@ -2,18 +2,7 @@
   "parent": "wardentools:protector_invoker",
   "criteria": {
     "protector": {
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "wardentools:protector"
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:summoned_entity"
+      "trigger": "wardentools:summon_protector"
     }
   },
   "display": {

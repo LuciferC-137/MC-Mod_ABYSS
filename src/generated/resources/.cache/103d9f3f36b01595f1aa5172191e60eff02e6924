@@ -1,4 +1,4 @@
-// 1.20.4	2025-01-06T19:10:20.636112	Registries
+// 1.20.4	2025-02-13T18:38:25.8035856	Registries
 cd53d11755a53b3f0b2795a7bc6e8a1703b1bb16 data/wardentools/dimension/abyssdim.json
 78abca31c24b948721b9b9f97a002c98b1cb0365 data/wardentools/dimension_type/abyssdim_type.json
 9cfcee08e59389f54d84cb6a21e1b86726060c64 data/wardentools/worldgen/biome/cristal_cave.json
@@ -6,8 +6,8 @@ cd53d11755a53b3f0b2795a7bc6e8a1703b1bb16 data/wardentools/dimension/abyssdim.jso
 2b6c288b864c772e57b6bda1fbc1592cda9959b1 data/wardentools/worldgen/biome/waste_land.json
 3cf6b765d60f93a3b11d784c54789949334b3822 data/wardentools/worldgen/biome/white_forest.json
 25b73ca10a908c5bc9516599063eb1f5f118774f data/wardentools/worldgen/configured_carver/abyss_cave.json
-60aeab287f904ae02c66322770a64694cd564a71 data/wardentools/worldgen/configured_feature/amethyst_cristal.json
-2a7e7da41353cb8b908cb594c1ae20734eeb4fa1 data/wardentools/worldgen/configured_feature/amethyst_vein.json
+15dd5845980e08d1e2756c1ffd1bd39ee577536e data/wardentools/worldgen/configured_feature/amethyst_cristal.json
+f9a2cc01898e207cb36a60fe4085ffe6a48a4cb4 data/wardentools/worldgen/configured_feature/amethyst_vein.json
 ee1fbc8c0487057aa85d16fce95b0ad537add709 data/wardentools/worldgen/configured_feature/blue_bush.json
 e9276e0ff0dc42102f2c29b01ea734c643eb7990 data/wardentools/worldgen/configured_feature/citrine_cristal.json
 7271522c3f25ad769508dd4a144c64be5a4092c3 data/wardentools/worldgen/configured_feature/citrine_vein.json

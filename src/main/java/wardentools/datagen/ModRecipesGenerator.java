@@ -449,7 +449,7 @@ public class ModRecipesGenerator extends RecipeProvider {
         }
         if (chestboat != null && boat != null) {
             ShapelessRecipeBuilder.shapeless(RecipeCategory.TRANSPORTATION, chestboat, 1)
-                    .requires(boat).requires(Items.CHEST)
+                    .requires(boat)
                     .requires(Items.CHEST)
                     .unlockedBy("has_item", has(boat))
                     .save(recipeOutput);

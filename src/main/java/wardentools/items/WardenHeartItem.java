@@ -24,7 +24,7 @@ import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPa
 public class WardenHeartItem extends Item {
 	
 	private final WardenLaserAttack laserAttack;
-	private static int laserLength = 14;
+	private static final int laserLength = 14;
 	private Player currentPlayer;
 
 	public WardenHeartItem(Properties properties) {
