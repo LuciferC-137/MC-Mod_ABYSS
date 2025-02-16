@@ -21,7 +21,7 @@ public class SendFogDistanceToClient {
 
     public void handle(CustomPayloadEvent.Context context) {
         context.enqueueWork(() -> {
-            AbyssWeatherEvent.CLIENT_WEATHER.setTargetFogDistance(serverFogDistance);
+            AbyssWeatherEvent.CLIENT_WEATHER.setServerFogDistance(serverFogDistance);
         });
         context.setPacketHandled(true);
     }

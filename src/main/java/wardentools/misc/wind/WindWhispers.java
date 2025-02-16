@@ -1,16 +1,16 @@
-package wardentools.misc;
+package wardentools.misc.wind;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.util.RandomSource;
 
-public class WindWhisper {
+public class WindWhispers {
 	
 	private static final List<String> whispers_en = new ArrayList<String>();
 	private static final List<String> whispers_fr = new ArrayList<String>();
 	
-	public WindWhisper() {
+	public WindWhispers() {
 		whispers_en.add("Are you lost ?");
 		whispers_en.add("Do you hear this ?");
 		whispers_en.add("After all, you might have gotten too deep...");
@@ -103,7 +103,7 @@ public class WindWhisper {
 
 	}
 	
-	public WindWhisper(List<String> addWhispers) {
+	public WindWhispers(List<String> addWhispers) {
 		whispers_en.addAll(addWhispers);
 		whispers_fr.addAll(addWhispers);
 	}
