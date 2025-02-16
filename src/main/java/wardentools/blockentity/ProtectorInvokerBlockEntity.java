@@ -25,7 +25,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
-import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.entity.ModEntities;
@@ -93,10 +92,10 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 			if (protec != null) {
 				protec.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
 						spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);
-				protec.setHealth(invoker.heartItem().readHealth(invoker.heartStack()));
+				protec.setHealth(Objects.requireNonNull(invoker.heartItem()).readHealth(invoker.heartStack()));
 				protec.setInvokerPos(pos);
 				if (invoker.heartItem() != null) {
-					invoker.heartItem().setProtector(invoker.heartStack(), protec);
+					Objects.requireNonNull(invoker.heartItem()).setProtector(invoker.heartStack(), protec);
 				}
 				protec.makeSpawnAnimation();
 				Vec3 particleSource = spawnPos.above().getCenter();

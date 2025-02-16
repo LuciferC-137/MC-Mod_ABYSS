@@ -1,5 +1,7 @@
 package wardentools.block;
 
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -9,7 +11,6 @@ import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -56,15 +57,24 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 		return Shapes.box(0.2, 0.0, 0.2,
 				0.8, 0.9, 0.8);
 	}
-	
+
 	@Override
-	@SuppressWarnings("deprecation")
-	public @NotNull InteractionResult use(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
-										  @NotNull Player player, @NotNull InteractionHand interactionHand,
-										  @NotNull BlockHitResult result) {
+	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+													   @NotNull Level level, @NotNull BlockPos pos,
+													   @NotNull Player player, @NotNull InteractionHand hand,
+													   @NotNull BlockHitResult hitResult) {
+		return switch (this.use(level, pos, player, hand)) {
+			case InteractionResult.SUCCESS -> ItemInteractionResult.SUCCESS;
+			case InteractionResult.FAIL -> ItemInteractionResult.FAIL;
+			default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		};
+	}
+
+	public @NotNull InteractionResult use( Level level, @NotNull BlockPos pos,
+											  @NotNull Player player, @NotNull InteractionHand interactionHand) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (!(blockEntity instanceof ProtectorInvokerBlockEntity invoker)) {
-			return InteractionResult.FAIL;
+			return InteractionResult.PASS;
 		}
         if (InteractionHand.MAIN_HAND != interactionHand) {
 			return InteractionResult.FAIL;
@@ -72,7 +82,6 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 		return invoker.playerInteract(player, pos, interactionHand);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(@NotNull BlockState state, Level level,
 						 @NotNull BlockPos pos, @NotNull BlockState newState, boolean isMoving) {

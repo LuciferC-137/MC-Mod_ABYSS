@@ -25,17 +25,17 @@ public class GameEventVibrationInterceptor {
                 && leggings.getEnchantmentLevel(EnchantmentRegistry.STEALTH.get()) > 0
                 && boots.getEnchantmentLevel(EnchantmentRegistry.STEALTH.get()) > 0) {
                 event.setCanceled(true);
-            } else if (event.getVanillaEvent() == GameEvent.HIT_GROUND) {
+            } else if (event.getVanillaEvent() == GameEvent.HIT_GROUND.get()) {
                 if (leggings.getEnchantmentLevel(EnchantmentRegistry.STEALTH.get()) > 0) {
                     event.setCanceled(true);
                 }
-            } else if (event.getVanillaEvent() == GameEvent.BLOCK_PLACE
-                    || event.getVanillaEvent() == GameEvent.BLOCK_DESTROY
-                    || event.getVanillaEvent() == GameEvent.BLOCK_CHANGE) {
+            } else if (event.getVanillaEvent() == GameEvent.BLOCK_PLACE.get()
+                    || event.getVanillaEvent() == GameEvent.BLOCK_DESTROY.get()
+                    || event.getVanillaEvent() == GameEvent.BLOCK_CHANGE.get()) {
                 if (chestplate.getEnchantmentLevel(EnchantmentRegistry.STEALTH.get()) > 0) {
                     event.setCanceled(true);
                 }
-            } else if (event.getVanillaEvent() == GameEvent.STEP) {
+            } else if (event.getVanillaEvent() == GameEvent.STEP.get()) {
                 if (boots.getEnchantmentLevel(EnchantmentRegistry.STEALTH.get()) > 0) {
                     event.setCanceled(true);
                 }

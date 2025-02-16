@@ -7,7 +7,6 @@ import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import org.jetbrains.annotations.NotNull;
 import wardentools.advancement.ModCriteriaTriggers;
 
@@ -28,10 +27,9 @@ public class SummonProtectorCriteria extends SimpleCriterionTrigger<SummonProtec
             implements SimpleInstance {
         public static final Codec<SummonProtectorCriteria.TriggerInstance> CODEC
                 = RecordCodecBuilder.create(instance -> {
-            return instance.group(
-                    ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player")
-                            .forGetter(SummonProtectorCriteria.TriggerInstance::player)
-            ).apply(instance, SummonProtectorCriteria.TriggerInstance::new);
+            return instance.group(EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
+                            .forGetter(SummonProtectorCriteria.TriggerInstance::player))
+                    .apply(instance, SummonProtectorCriteria.TriggerInstance::new);
         });
 
         public static Criterion<SummonProtectorCriteria.TriggerInstance> summonProtector() {

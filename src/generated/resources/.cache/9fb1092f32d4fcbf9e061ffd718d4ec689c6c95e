@@ -1,4 +1,4 @@
-// 1.20.6	2025-01-15T17:16:37.6598826	Recipes
+// 1.20.6	2025-02-16T14:44:36.7143914	Recipes
 0413a6dbf7f1225ebfff9a57b839065d5afd3456 data/minecraft/advancements/recipes/misc/amethyst_shard.json
 a25cf481b3b1ae9dbf9a560e44ca623f96d32ff9 data/minecraft/advancements/recipes/misc/echo_shard.json
 38205a97fed929a8c61c6980bb2fb62a7a177f35 data/minecraft/recipes/amethyst_shard.json
@@ -130,7 +130,7 @@ cf4900d5bcd75dd870378539b911fd09edfaf7d3 data/wardentools/recipes/cracked_abyssa
 9d2f3ee7dea86cf709ca153a1bf47494a3841225 data/wardentools/recipes/cracked_abyssalite_wall_stone_cutting.json
 11f76344328f337b3c047292d517babff281500a data/wardentools/recipes/darktree_boat.json
 f1a2bf040392ad40a71dff4ee6b8bd14417ccaa9 data/wardentools/recipes/darktree_button.json
-266cbfb7a1ddf44df7b54c2c2c3d5c64f635eea1 data/wardentools/recipes/darktree_chest_boat.json
+15ea6d655002fbc17d93ab51cec70adcfbb7708a data/wardentools/recipes/darktree_chest_boat.json
 3c706e5190e92bdaaeb8d199b73c22351f3a50e6 data/wardentools/recipes/darktree_door.json
 e188f693c38419881b2555b6cdd72e23be717aa1 data/wardentools/recipes/darktree_fence.json
 995772d73a4587ed71a6a224e04d0a3ffa877453 data/wardentools/recipes/darktree_fence_gate.json
@@ -182,7 +182,7 @@ fa2454ae486c329b1c5a5ee9bab5de69a0b5d898 data/wardentools/recipes/ruby.json
 0440e7b38d69b610ee6639c8727c47d56871d6d4 data/wardentools/recipes/whistle.json
 18c75efbc686453d4de5b9750469871c53e36ed7 data/wardentools/recipes/whitetree_boat.json
 68df18adf3899a925ef6651d859b279bd27b3f5d data/wardentools/recipes/whitetree_button.json
-2c573500fbb207f2f5234a8f84a965fafb6fa0f0 data/wardentools/recipes/whitetree_chest_boat.json
+a92ed1aeac1a51ad1afea0daae8491042b309d24 data/wardentools/recipes/whitetree_chest_boat.json
 a348d48529dd7acedf8379d133e7a793408f7957 data/wardentools/recipes/whitetree_door.json
 e7c0b4356bb4eff66685e28c903865c0345ae69c data/wardentools/recipes/whitetree_fence.json
 61768f10489849e26cc19a45fa9db525c958d8b0 data/wardentools/recipes/whitetree_fence_gate.json
