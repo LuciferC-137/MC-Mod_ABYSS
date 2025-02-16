@@ -32,38 +32,9 @@ public class ShadowRenderer extends MobRenderer<ShadowEntity, Shadow>{
 	public void render(@NotNull ShadowEntity shadow, float yaw, float partialTick,
 					   @NotNull PoseStack stack, @NotNull MultiBufferSource buffer, int packedLight) {
 		super.render(shadow, yaw, partialTick, stack, buffer, packedLight);
-        float particleSpawnRadius = (float) shadow.getBoundingBox().getXsize() * 4f;
-		Vec3 center = this.getParticleCenter(shadow);
-		if (shadow.isStasis()) {
-			if (shadow.tickCount%10 == shadow.getRandom().nextInt(10)) {
-				float x =  (shadow.getRandom().nextFloat() - 0.5f) * 1.2f
-						*  (float)shadow.getBoundingBox().getXsize();
-				float y = (shadow.getRandom().nextFloat() - 0.5f) * 1.2f
-						* (float)shadow.getBoundingBox().getYsize();
-				float z = (shadow.getRandom().nextFloat() - 0.5f) * 1.2f
-						* (float)shadow.getBoundingBox().getZsize();
-				shadow.level().addParticle(ParticleRegistry.CORRUPTION.get(),
-						(float)center.x + x,
-						(float)center.y + y,
-						(float)center.z + z,
-						0, -0.2, 0);
-			}
-		} else {
-			if (shadow.tickCount%10 == shadow.getRandom().nextInt(10)){
-				float x =  (shadow.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-				float y = (shadow.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-				float z = (shadow.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-				float norm = Mth.sqrt(x*x + y*y + z*z) / (0.1f * particleSpawnRadius) ;
-				shadow.level().addParticle(ParticleRegistry.CORRUPTION.get(),
-						(float)center.x + x,
-						(float)center.y + y,
-						(float)center.z + z,
-						-x / norm,
-						-y / norm,
-						-z / norm);
-			}
-		}
 	}
+
+
 
 	@Override
 	protected float getBob(@NotNull ShadowEntity shadow, float ageInTick) {
@@ -75,9 +46,5 @@ public class ShadowRenderer extends MobRenderer<ShadowEntity, Shadow>{
 	protected void scale(@NotNull ShadowEntity shadow, @NotNull PoseStack poseStack, float v) {
 		if (shadow.getScaleFunction() == null) super.scale(shadow, poseStack, v);
 		else shadow.getScaleFunction().scale(shadow.getMimicEntity(), poseStack, v);
-	}
-
-	private Vec3 getParticleCenter(ShadowEntity shadow) {
-		return shadow.getBoundingBox().getCenter();
 	}
 }

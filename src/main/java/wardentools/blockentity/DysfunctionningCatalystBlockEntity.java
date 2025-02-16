@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -42,6 +43,7 @@ import wardentools.particle.ParticleRegistry;
 import java.util.List;
 
 public class DysfunctionningCatalystBlockEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
+    private static final float particleSpawnRadius = 2f;
     private final ItemStackHandler inventory = new ItemStackHandler(6) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -218,7 +220,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
             }
             if (this.crystalsFullyCharged() && this.total_charge < MAX_TOTAL) {
                 this.total_charge++;
-                if (this.readyToSummon()) {
+                if (this.readyToSummon() && this.isInCorrectSpot()) {
                     this.doSummoning();
                 }
             } else if (this.total_charge > 0 && !this.crystalsFullyCharged() && this.total_charge < MAX_TOTAL) {
@@ -230,21 +232,22 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                 this.eye_progression --; // this should normally never happen.
             }
 
-            // Fence placement Logic
-            if (this.schedule_fence > 0 && this.fence_level < MAX_FENCE) {
-                this.schedule_fence--;
-                if (this.schedule_fence == 0) {
-                    this.placeFence();
-                    this.fence_level++;
-                    if (this.fence_level < MAX_FENCE) this.schedule_fence = FENCE_INTERVAL;
+            if (this.isInCorrectSpot()) {
+                // Fence placement Logic
+                if (this.schedule_fence > 0 && this.fence_level < MAX_FENCE) {
+                    this.schedule_fence--;
+                    if (this.schedule_fence == 0) {
+                        this.placeFence();
+                        this.fence_level++;
+                        if (this.fence_level < MAX_FENCE) this.schedule_fence = FENCE_INTERVAL;
+                    }
                 }
-            }
-
-            // Summoning Logic
-            if (this.schedule_summon > 0) {
-                this.schedule_summon--;
-                if (this.schedule_summon == 0) {
-                    this.summonContagionIncarnation();
+                // Summoning Logic
+                if (this.schedule_summon > 0) {
+                    this.schedule_summon--;
+                    if (this.schedule_summon == 0) {
+                        this.summonContagionIncarnation();
+                    }
                 }
             }
         }
@@ -265,7 +268,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     public void clientTick() {
-        handleParticleEffects();
+        this.handleParticleEffects();
     }
 
     private void placeFence() {
@@ -314,6 +317,21 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
 
     private void handleParticleEffects() {
         if (this.isContagionDefeated) return;
+        if (this.level == null) return;
+        if (level.getGameTime()%5 == level.getRandom().nextInt(5)){
+            Vec3 center = this.getBlockPos().getCenter();
+            float x =  (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+            float y = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+            float z = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+            float norm = Mth.sqrt(x*x + y*y + z*z) / 0.2f;
+            level.addParticle(ParticleRegistry.CORRUPTION.get(),
+                    (float)center.x + x,
+                    (float)center.y + y,
+                    (float)center.z + z,
+                    -x / norm,
+                    -y / norm,
+                    -z / norm);
+        }
         if (this.isChargingCrystals()) {
             this.particleLevitation(10, 0.2f, 5f,
                     -13f, 5f);
@@ -432,6 +450,16 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
 
     public boolean isFightActive() {
         return this.total_charge == MAX_TOTAL;
+    }
+
+    public boolean isInCorrectSpot() {
+        if (this.level == null) return false;
+        for (BlockPos pos : this.getFountainBelowPositions()) {
+            if (!this.level.getBlockState(pos.below(2)).getBlock().equals(Blocks.BEDROCK)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void doSummoning() {

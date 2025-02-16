@@ -145,7 +145,7 @@ public class ModConfiguredFeatures {
 		register(context, AMETHYST_CRISTAL, ModFeatures.CRISTAL_FORMATION.get(),
 				new CristalFormationConfiguration(13, 5, 10,
 						Blocks.AMETHYST_BLOCK.defaultBlockState(),
-						Blocks.LARGE_AMETHYST_BUD.defaultBlockState()));
+						Blocks.AMETHYST_CLUSTER.defaultBlockState()));
 
 		register(context, MALACHITE_VEIN, ModFeatures.CRISTAL_VEIN.get(),
 				new CristalVeinConfiguration(5, 2, 4,
@@ -175,7 +175,7 @@ public class ModConfiguredFeatures {
 		register(context, AMETHYST_VEIN, ModFeatures.CRISTAL_VEIN.get(),
 				new CristalVeinConfiguration(5, 2, 4,
 						Blocks.AMETHYST_BLOCK.defaultBlockState(),
-						Blocks.LARGE_AMETHYST_BUD.defaultBlockState()));
+						Blocks.AMETHYST_CLUSTER.defaultBlockState()));
     }
 	
 	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int p_195204_) {

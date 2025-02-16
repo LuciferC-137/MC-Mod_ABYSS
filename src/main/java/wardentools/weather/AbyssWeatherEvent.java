@@ -4,7 +4,8 @@ package wardentools.weather;
 import com.mojang.brigadier.context.CommandContextBuilder;
 import com.mojang.brigadier.context.ParsedArgument;
 import com.mojang.brigadier.context.ParsedCommandNode;
-import net.minecraft.world.level.Level;
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,14 +15,27 @@ import wardentools.worldgen.dimension.ModDimensions;
 
 import java.util.List;
 
+/**
+ * This class register all the weather ticks and is in charge of client/server sync.
+ */
+
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public class AbyssWeatherEvent {
 	public static final AbyssWeatherManager WEATHER_MANAGER = new AbyssWeatherManager();
+	public static final AbyssFogClientHandler CLIENT_WEATHER = new AbyssFogClientHandler();
 	
 	@SubscribeEvent
-	public static void onLevelTickEvent(TickEvent.LevelTickEvent event) {
-		if (event.level.dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
-		WEATHER_MANAGER.tick(event.level);
+	public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
+		ServerLevel abyssLevel = event.getServer().getLevel(ModDimensions.ABYSS_LEVEL_KEY);
+		if (abyssLevel == null) return;
+		WEATHER_MANAGER.tick(abyssLevel);
+	}
+
+	@SubscribeEvent
+	public static void onClientLevelTickEvent(TickEvent.ClientTickEvent event) {
+		Minecraft minecraft = Minecraft.getInstance();
+		if (minecraft.level == null || minecraft.player == null) return;
+		CLIENT_WEATHER.updateFogDistanceOnTick(minecraft.level);
 	}
 
 	@SubscribeEvent
@@ -33,7 +47,7 @@ public class AbyssWeatherEvent {
         }
 	}
 
-	private static void handleWeatherCommand(CommandContextBuilder<?> context, Level level) {
+	private static void handleWeatherCommand(CommandContextBuilder<?> context, ServerLevel level) {
 		List<? extends ParsedCommandNode<?>> nodes = context.getNodes();
 		if (nodes.size() < 2) return;
 		String subCommand = nodes.get(1).getNode().getName();

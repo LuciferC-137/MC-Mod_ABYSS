@@ -67,8 +67,8 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 	
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 3.0D, true));
-	    this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 3.0D, 32.0F));
+		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 2D, true));
+	    this.goalSelector.addGoal(2, new MoveTowardsTargetGoal(this, 2D, 32.0F));
 	    this.goalSelector.addGoal(3, new ReturnToInvokerGoal(this, 1.0D, true));
 		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 4f));

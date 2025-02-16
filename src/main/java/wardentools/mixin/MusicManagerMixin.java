@@ -29,8 +29,10 @@ public abstract class MusicManagerMixin {
                 && !(ModMusics.INCARNATION_THEME.getEvent().is(this.currentMusic.getLocation()))) {
             if (!music.getEvent().value().getLocation().equals(this.currentMusic.getLocation())
                     && music.replaceCurrentMusic()) {
-                this.minecraft.getSoundManager().stop(this.currentMusic);
-                this.nextSongDelay = Mth.nextInt(this.random, 0, music.getMinDelay() / 2);
+                if (!ModMusics.isAbyssMusic(music) || !ModMusics.isAbyssMusic(this.currentMusic)) {
+                    this.minecraft.getSoundManager().stop(this.currentMusic);
+                    this.nextSongDelay = Mth.nextInt(this.random, 0, music.getMinDelay() / 2);
+                }
             }
             if (!this.minecraft.getSoundManager().isActive(this.currentMusic)) {
                 this.currentMusic = null;
@@ -49,4 +51,5 @@ public abstract class MusicManagerMixin {
         }
         ci.cancel();
     }
+
 }

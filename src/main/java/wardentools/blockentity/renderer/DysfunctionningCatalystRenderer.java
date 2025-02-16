@@ -24,7 +24,6 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
 	private static final float averageRotationSpeed = 3.0f;
     private static final float speedAmplifier = 10.0f;
     private static final float scaleAmplifier = 1.6f;
-    private static final float particleSpawnRadius = 2f;
     private static final DysfunctionningCatalystInterior model =
 			new DysfunctionningCatalystInterior(DysfunctionningCatalystInterior.createBodyLayer().bakeRoot());
     private static final ResourceLocation INTERIOR_TEXTURE
@@ -42,25 +41,8 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
         if (level == null) return;
 
         renderInterior(blockEntity.getBlockPos(), poseStack, level, partialTick, buffer, packedOverlay);
-        addParticle(level, blockEntity);
     }
 
-    private static void addParticle(Level level, DysfunctionningCatalystBlockEntity blockEntity){
-        if (level.getGameTime()%10 == level.getRandom().nextInt(10)){
-            Vec3 center = blockEntity.getBlockPos().getCenter();
-            float x =  (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-            float y = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-            float z = (level.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-            float norm = Mth.sqrt(x*x + y*y + z*z) / 0.2f;
-            level.addParticle(ParticleRegistry.CORRUPTION.get(),
-                    (float)center.x + x,
-                    (float)center.y + y,
-                    (float)center.z + z,
-                    -x / norm,
-                    -y / norm,
-                    -z / norm);
-        }
-    }
 
     private static void renderInterior(BlockPos pos, PoseStack poseStack, Level level, float partialTick,
                                        MultiBufferSource buffer, int packedOverlay){
