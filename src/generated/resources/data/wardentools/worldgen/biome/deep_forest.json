@@ -15,7 +15,7 @@
     "music": {
       "max_delay": 12000,
       "min_delay": 6000,
-      "replace_current_music": true,
+      "replace_current_music": false,
       "sound": "wardentools:deep_forest_music"
     },
     "particle": {

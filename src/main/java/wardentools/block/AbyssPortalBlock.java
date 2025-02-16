@@ -25,6 +25,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.portal.TeleportTransition;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -171,5 +173,11 @@ public class AbyssPortalBlock extends Block implements EntityBlock, Portal {
         }
         BlockPos validSpawn = ModTeleporter.findValidSpawn(targetLevel, structurePos, true);
         return ModTeleporter.getTeleportTransition(targetLevel, entity, validSpawn.getCenter());
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean canBeReplaced(@NotNull BlockState state, @NotNull Fluid fluid) {
+        return false;
     }
 }

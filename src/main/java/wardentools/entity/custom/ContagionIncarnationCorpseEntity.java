@@ -48,29 +48,34 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
     public void tick() {
         super.tick();
         if (this.level().isClientSide) {
-            int particleCount = (PARTICLE_EFFECT_DURATION - this.tickCount) / 10;
+            int particleCount = (int)(((float)PARTICLE_EFFECT_DURATION - (float)this.tickCount) / 2f);
             if (particleCount > 0) {
-                renderParticles(this, particleCount);
-            } else if (this.tickCount <= 3 * PARTICLE_EFFECT_DURATION && this.tickCount % 10 == 0) {
-                renderParticles(this, 1);
+                renderParticles(particleCount);
+            } else if (this.tickCount <= 5 * PARTICLE_EFFECT_DURATION) {
+                renderParticles(1);
             }
         }
     }
 
-    private void renderParticles(ContagionIncarnationCorpseEntity entity, int particleCountMax) {
-        double minX = entity.getBoundingBox().minX;
-        double minY = entity.getBoundingBox().minY;
-        double minZ = entity.getBoundingBox().minZ - 2d;
-        double maxX = entity.getBoundingBox().maxX;
-        double maxY = entity.getBoundingBox().maxY;
-        double maxZ = entity.getBoundingBox().maxZ + 1d;
-        int particleCount = entity.getRandom()
-                .nextInt(0, particleCountMax);
-        for (int j = 0; j < particleCount; j++) {
-            double x = minX + (maxX - minX) * entity.getRandom().nextDouble();
-            double y = minY + (maxY - minY) * entity.getRandom().nextDouble();
-            double z = minZ + (maxZ - minZ) * entity.getRandom().nextDouble();
-            entity.level().addParticle(ParticleRegistry.CORRUPTION.get(), x, y, z,
+    private void renderParticles(int particleCountMax) {
+        double minX = this.getBoundingBox().minX - this.getX();
+        double minY = this.getBoundingBox().minY;
+        double minZ = this.getBoundingBox().minZ - this.getZ() - 2d;
+        double maxX = this.getBoundingBox().maxX - this.getX();
+        double maxY = this.getBoundingBox().maxY;
+        double maxZ = this.getBoundingBox().maxZ - this.getZ() + 1d;
+        float yawRad = (float) Math.toRadians(this.getYRot());
+        int particleCount = this.getRandom().nextInt(0, particleCountMax);
+        for (int j = 0; j <= particleCount; j++) {
+            double localX = minX + (maxX - minX) * this.getRandom().nextDouble();
+            double y = minY + (maxY - minY) * this.getRandom().nextDouble();
+            double localZ = minZ + (maxZ - minZ) * this.getRandom().nextDouble();
+            double rotatedX = localX * Math.cos(yawRad) - localZ * Math.sin(yawRad);
+            double rotatedZ = localX * Math.sin(yawRad) + localZ * Math.cos(yawRad);
+            double x = this.getX() + rotatedX;
+            double z = this.getZ() + rotatedZ;
+
+            this.level().addParticle(ParticleRegistry.CORRUPTION.get(), x, y, z,
                     0, -0.1, 0);
         }
     }

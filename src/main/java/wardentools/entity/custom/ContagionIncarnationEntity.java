@@ -112,6 +112,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         this.overrideDefaultParameters();
         this.moveControl = new IncarnationMoveControl(this);
         this.setHasBeenSummonedByCatalyst(false);
+        this.noCulling = true;
 	}
 
 	@Override
@@ -139,7 +140,6 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MAX_HEALTH, 1000D)
 	            .add(Attributes.MOVEMENT_SPEED, MOV_SPEED)
-	            .add(Attributes.JUMP_STRENGTH, 3.0D)
 	            .add(Attributes.ATTACK_DAMAGE, 10.0D)
 	            .add(Attributes.KNOCKBACK_RESISTANCE, 1.0F)
                 .add(Attributes.FOLLOW_RANGE, 80.0D);
@@ -513,6 +513,11 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 
     @Override
     protected boolean canRide(@NotNull Entity entity) {
+        return false;
+    }
+
+    @Override
+    public boolean isInWall() {
         return false;
     }
 

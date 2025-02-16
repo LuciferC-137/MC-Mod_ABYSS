@@ -468,7 +468,7 @@ public class ModRecipesGenerator extends RecipeProvider implements IConditionBui
         }
         if (chestboat != null && boat != null) {
             shapeless(RecipeCategory.TRANSPORTATION, chestboat, 1)
-                    .requires(boat).requires(Items.CHEST)
+                    .requires(boat)
                     .requires(Items.CHEST)
                     .unlockedBy("has_item", has(boat))
                     .save(recipeOutput);

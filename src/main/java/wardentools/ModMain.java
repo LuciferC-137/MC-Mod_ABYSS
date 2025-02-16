@@ -27,7 +27,7 @@ import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 public class ModMain {
 	public static final String MOD_ID = "wardentools";
 	public static final String MODNAME = "ABYSS";
-	public static final String VERSION = "1.0.0";
+	public static final String VERSION = "1.0.2";
 	
 	public ModMain() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

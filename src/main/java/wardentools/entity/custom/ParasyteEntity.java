@@ -74,19 +74,17 @@ public class ParasyteEntity extends CorruptionMonster {
 	@Override
 	public void tick() {
 		this.idleAnimation.animateWhen(!this.walkAnimation.isMoving(), this.tickCount);
-		if (this.level().isClientSide) animateParticleClient();
-		super.tick();
-	}
-
-	private void animateParticleClient() {
-		if (this.tickCount%10 == this.level().getRandom().nextInt(0, 10)){
-			Vec3 particlePos = this.getPosition(1f);
-			this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
-					particlePos.x, particlePos.y, particlePos.z,
-					this.level().getRandom().nextFloat() * 0.04f,
-					this.level().getRandom().nextFloat() * 0.1f,
-					this.level().getRandom().nextFloat() * 0.04f);
+		if (this.level().isClientSide) {
+			if (this.tickCount%5 == this.level().getRandom().nextInt(5)){
+				Vec3 particlePos = this.getPosition(1f);
+				this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
+						particlePos.x, particlePos.y, particlePos.z,
+						this.level().getRandom().nextFloat() * 0.04f,
+						this.level().getRandom().nextFloat() * 0.1f,
+						this.level().getRandom().nextFloat() * 0.04f);
+			}
 		}
+		super.tick();
 	}
 
     public static boolean canSpawn(EntityType<ParasyteEntity> entityType, ServerLevelAccessor level,

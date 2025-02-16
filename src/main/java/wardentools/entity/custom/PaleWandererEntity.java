@@ -58,7 +58,6 @@ public class PaleWandererEntity extends Animal {
 		return Animal.createLivingAttributes()
 				.add(Attributes.MAX_HEALTH, 10D)
 				.add(Attributes.MOVEMENT_SPEED, 0.12f)
-				.add(Attributes.JUMP_STRENGTH, 1D)
 				.add(Attributes.FOLLOW_RANGE, 15D)
 				.add(Attributes.TEMPT_RANGE, 15D)
 				.add(Attributes.ATTACK_DAMAGE, 2f);

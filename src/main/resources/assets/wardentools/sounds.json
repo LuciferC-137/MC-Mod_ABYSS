@@ -186,5 +186,13 @@
 		"sounds": [
 			"wardentools:whistle"
 		]
+	},
+	"wind_whispers": {
+		"subtitles": "sounds.wardentools.wind_whispers",
+		"sounds": [
+			"wardentools:wind_whispers_1",
+			"wardentools:wind_whispers_2",
+			"wardentools:wind_whispers_3"
+		]
 	}
 }

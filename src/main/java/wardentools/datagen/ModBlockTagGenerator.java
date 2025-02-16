@@ -47,6 +47,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .add(BlockRegistry.DEEP_CRISTAL.get())
             .add(BlockRegistry.DEEPBLOCK.get())
+			.add(BlockRegistry.ABYSSALITE_DEEP_ORE.get())
+			.add(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get())
+			.add(BlockRegistry.ABYSSALITE_LAPIS_ORE.get())
+			.add(BlockRegistry.ABYSSALITE_COAL_ORE.get())
             .add(BlockRegistry.RADIANCE_CRISTAL.get())
             .add(BlockRegistry.ABYSSALITE.get())
             .add(BlockRegistry.CHISELED_ABYSSALITE.get())
@@ -59,6 +63,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.CITRINE.get())
 			.add(BlockRegistry.ECHO_BLOCK.get())
 			.add(BlockRegistry.ECHO_CRISTAL.get())
+			.add(BlockRegistry.PALE_CRISTAL.get())
+			.add(BlockRegistry.PALE_CRISTAL_BLOCK.get())
 			.add(BlockRegistry.RUBY_BLOCK.get())
 			.add(BlockRegistry.RUBY.get())
 			.add(BlockRegistry.MALACHITE_BLOCK.get())
@@ -84,6 +90,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL)
         	.add(BlockRegistry.DEEP_CRISTAL.get())
+			.add(BlockRegistry.ABYSSALITE_DEEP_ORE.get())
         	.add(BlockRegistry.DEEPBLOCK.get())
         	.add(BlockRegistry.RADIANCE_CRISTAL.get())
 			.add(BlockRegistry.SOLID_CORRUPTION.get());
@@ -99,7 +106,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.MALACHITE.get())
 			.add(BlockRegistry.PALE_CRISTAL_BLOCK.get())
 			.add(BlockRegistry.PALE_CRISTAL.get())
-			.add(BlockRegistry.BLACK_LANTERN.get());
+			.add(BlockRegistry.BLACK_LANTERN.get())
+			.add(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get())
+			.add(BlockRegistry.ABYSSALITE_LAPIS_ORE.get())
+			.add(BlockRegistry.ABYSSALITE_COAL_ORE.get());
         
         this.tag(BlockTags.LOGS_THAT_BURN)
 	        .add(BlockRegistry.DARKTREE_LOG.get())

@@ -127,7 +127,7 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 			this.idleAnimation.animateWhen(this.isAlmostIdle() && this.getWalkToIdleTicks() <= 0
 					&& !this.isStasis(), this.tickCount);
 			this.stasisAnimation.animateWhen(this.isStasis(), this.tickCount);
-			this.animateParticleClient();
+			this.animateParticleTick();
 		}
 		if (this.isStasis()) this.doStasisTick(); else this.setNoGravity(false);
 		if (!this.isStasis() && this.getTarget() == null) {
@@ -138,6 +138,40 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 			}
 		} else {
 			outOfStasisTicks = 0;
+		}
+	}
+
+	public void animateParticleTick() {
+		float particleSpawnRadius = (float) this.getBoundingBox().getXsize() * 4f;
+		Vec3 center = this.getBoundingBox().getCenter();
+		if (this.isStasis()) {
+			if (this.tickCount%5 == this.getRandom().nextInt(5)) {
+				float x =  (this.getRandom().nextFloat() - 0.5f) * 1.2f
+						*  (float)this.getBoundingBox().getXsize();
+				float y = (this.getRandom().nextFloat() - 0.5f) * 1.2f
+						* (float)this.getBoundingBox().getYsize();
+				float z = (this.getRandom().nextFloat() - 0.5f) * 1.2f
+						* (float)this.getBoundingBox().getZsize();
+				this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
+						(float)center.x + x,
+						(float)center.y + y,
+						(float)center.z + z,
+						0, -0.2, 0);
+			}
+		} else {
+			if (this.tickCount%10 == this.getRandom().nextInt(10)){
+				float x =  (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+				float y = (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+				float z = (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
+				float norm = Mth.sqrt(x*x + y*y + z*z) / (0.1f * particleSpawnRadius) ;
+				this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
+						(float)center.x + x,
+						(float)center.y + y,
+						(float)center.z + z,
+						-x / norm,
+						-y / norm,
+						-z / norm);
+			}
 		}
 	}
 
@@ -186,6 +220,20 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	}
 
 	@Override
+	public void playerTouch(@NotNull Player player) {
+		if (!this.level().isClientSide) {
+			this.setStasis(false);
+		}
+		super.playerTouch(player);
+	}
+
+	@Override
+	public boolean hurtServer(@NotNull ServerLevel level, @NotNull DamageSource source, float v) {
+		this.setStasis(false);
+		return super.hurtServer(level, source, v);
+	}
+
+	@Override
 	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
 		super.defineSynchedData(entityData);
 		entityData.define(IS_STASIS, false);
@@ -214,40 +262,6 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 					.resultOrPartial(LOGGER::error).ifPresent((data) -> {
 				this.vibrationData = data;
 			});
-		}
-	}
-
-	private void animateParticleClient() {
-		float particleSpawnRadius = this.getBbWidth() * 4f;
-		Vec3 center = this.getBoundingBox().getCenter();
-		if (this.isStasis()) {
-			if (this.tickCount%10 == this.getRandom().nextInt(10)) {
-				float x =  (this.getRandom().nextFloat() - 0.5f) * 1.2f
-						*  (float)this.getBoundingBox().getXsize();
-				float y = (this.getRandom().nextFloat() - 0.5f) * 1.2f
-						* (float)this.getBoundingBox().getYsize();
-				float z = (this.getRandom().nextFloat() - 0.5f) * 1.2f
-						* (float)this.getBoundingBox().getZsize();
-				this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
-						(float)center.x + x,
-						(float)center.y + y,
-						(float)center.z + z,
-						0, -0.2, 0);
-			}
-		} else {
-			if (this.tickCount%10 == this.getRandom().nextInt(10)){
-				float x =  (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-				float y = (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-				float z = (this.getRandom().nextFloat() * 2 - 1f) * particleSpawnRadius;
-				float norm = Mth.sqrt(x*x + y*y + z*z) / (0.1f * particleSpawnRadius) ;
-				this.level().addParticle(ParticleRegistry.CORRUPTION.get(),
-						(float)center.x + x,
-						(float)center.y + y,
-						(float)center.z + z,
-						-x / norm,
-						-y / norm,
-						-z / norm);
-			}
 		}
 	}
 
