@@ -107,12 +107,12 @@ public class ClientModEvents {
 		translucent(BlockRegistry.REINFORCED_GLASS);
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("removal")
 	public static void cutout(RegistryObject<? extends Block> block) {
 		ItemBlockRenderTypes.setRenderLayer(block.get(), RenderType.cutout());
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("removal")
 	public static void translucent(RegistryObject<? extends Block> block) {
 		ItemBlockRenderTypes.setRenderLayer(block.get(), RenderType.translucent());
 	}

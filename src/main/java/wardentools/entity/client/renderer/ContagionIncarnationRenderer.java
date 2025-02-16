@@ -97,6 +97,11 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 	}
 
 	@Override
+	protected boolean affectedByCulling(@NotNull ContagionIncarnationEntity entity) {
+		return false;
+	}
+
+	@Override
 	public void render(ContagionIncarnationRenderState state,
 					   @NotNull PoseStack pMatrixStack,
 					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {

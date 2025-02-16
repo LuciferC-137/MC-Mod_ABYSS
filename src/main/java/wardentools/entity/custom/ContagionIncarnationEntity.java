@@ -112,7 +112,6 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         this.overrideDefaultParameters();
         this.moveControl = new IncarnationMoveControl(this);
         this.setHasBeenSummonedByCatalyst(false);
-        this.noCulling = true;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-// 1.21.3	2025-01-29T21:44:32.3134221	Tags for minecraft:block mod id wardentools
+// 1.21.3	2025-02-16T18:23:22.8834407	Tags for minecraft:block mod id wardentools
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/ancient_city_replaceable.json
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/block/animals_spawnable_on.json
 fe0dfed652c709c1c46de9234483b847471a0111 data/minecraft/tags/block/dirt.json
@@ -8,10 +8,10 @@ aa1a853c7ebdc7617fc951ed87bde709518e78df data/minecraft/tags/block/fences.json
 fd8eb08f938bf92ef328db40c3c4d43af55e707d data/minecraft/tags/block/fence_gates.json
 e43039466b443e6e2090b89b06ff5884f78e3251 data/minecraft/tags/block/logs_that_burn.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/lush_ground_replaceable.json
-5e1179df8b1af8186d291d378a841efb99b194b5 data/minecraft/tags/block/mineable/pickaxe.json
+2305d60faeeafded180b69647f613bc2f192db1f data/minecraft/tags/block/mineable/pickaxe.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/moss_replaceable.json
-8f15f91af507bb39ac5f553a20c07d4780150b28 data/minecraft/tags/block/needs_diamond_tool.json
-99234b3dad21cc152f50f0ef11f01e0e987f5082 data/minecraft/tags/block/needs_iron_tool.json
+7fc8c03b6f02832173e4219f6d2c1848f440d65a data/minecraft/tags/block/needs_diamond_tool.json
+4bed531a1cc06797b8d355685a78879db1365cdd data/minecraft/tags/block/needs_iron_tool.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/overworld_carver_replaceables.json
 31e2d784730c13e14e28ca0d2bb0202d9e774b0e data/minecraft/tags/block/planks.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/sculk_replaceable.json

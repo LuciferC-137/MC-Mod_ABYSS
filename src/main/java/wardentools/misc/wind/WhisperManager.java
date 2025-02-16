@@ -65,6 +65,6 @@ public class WhisperManager {
     }
 
     private static void sendMessage(Player player, String message) {
-        player.sendSystemMessage(Component.literal(message));
+        player.displayClientMessage(Component.literal(message), false);
     }
 }

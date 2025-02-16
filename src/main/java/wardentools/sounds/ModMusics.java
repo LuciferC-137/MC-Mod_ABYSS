@@ -44,8 +44,8 @@ public class ModMusics {
             = new Music(ABYSS_THEME_SOUND, ONE_SECOND, THIRTY_SECONDS / 2, true);
 
     public static  boolean isAbyssMusic(Music music) {
-        return ModMusics.DEEP_FOREST.getEvent().is(music.getEvent().value().getLocation()) ||
-                ModMusics.WHITE_FOREST.getEvent().is(music.getEvent().value().getLocation());
+        return ModMusics.DEEP_FOREST.getEvent().is(music.getEvent().value().location()) ||
+                ModMusics.WHITE_FOREST.getEvent().is(music.getEvent().value().location());
     }
 
     public static  boolean isAbyssMusic(SoundInstance music) {

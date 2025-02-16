@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -88,7 +89,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 		if (level.isClientSide()) return;
 		BlockPos spawnPos = findSpawnPosition(level, pos);
 		if (spawnPos != null) {
-			ProtectorEntity protec = ModEntities.PROTECTOR.get().create(level);
+			ProtectorEntity protec = ModEntities.PROTECTOR.get().create(level, EntitySpawnReason.SPAWNER);
 			if (protec != null) {
 				protec.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
 						spawnPos.getZ() + 0.5, level.random.nextFloat() * 360F, 0);
