@@ -7,12 +7,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.WindWhisperSound;
 import wardentools.weather.lightning.AbyssLightningEntity;
 import wardentools.weather.network.SendFogDistanceToClient;
 
@@ -125,14 +125,20 @@ public class AbyssWeatherManager {
         this.isStorming = true;
         this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
-                .forEach(player -> player.sendSystemMessage(stormMessage));
+                .forEach((player) -> {
+                    player.sendSystemMessage(stormMessage);
+                    PacketHandler.sendToClient(new WindWhisperSound(), player);
+                });
     }
 
-    private void stopStorm(Level level) {
+    private void stopStorm(ServerLevel level) {
         this.isStorming = false;
         this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
-                .forEach(player -> player.sendSystemMessage(stormEndMessage));
+                .forEach((player) -> {
+                    player.sendSystemMessage(stormEndMessage);
+                    PacketHandler.sendToClient(new WindWhisperSound(), player);
+                });
         this.timeSinceStormBegin = 0;
     }
 

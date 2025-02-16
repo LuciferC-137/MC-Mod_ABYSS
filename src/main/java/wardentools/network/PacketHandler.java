@@ -129,6 +129,16 @@ public class PacketHandler {
 				.decoder(RequestFogDistanceUpdateFromServer::new)
 				.consumerMainThread(RequestFogDistanceUpdateFromServer::handle)
 				.add();
+		INSTANCE.messageBuilder(WindWhisperMessageAndSound.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(WindWhisperMessageAndSound::encode)
+				.decoder(WindWhisperMessageAndSound::new)
+				.consumerMainThread(WindWhisperMessageAndSound::handle)
+				.add();
+		INSTANCE.messageBuilder(WindWhisperSound.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(WindWhisperSound::encode)
+				.decoder(WindWhisperSound::new)
+				.consumerMainThread(WindWhisperSound::handle)
+				.add();
 
 	}
 

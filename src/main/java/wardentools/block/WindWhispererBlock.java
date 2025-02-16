@@ -1,10 +1,8 @@
 package wardentools.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,10 +11,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import wardentools.misc.wind.WhisperManager;
-import wardentools.misc.wind.WindWhispers;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleContagionImplosion;
-import wardentools.worldgen.dimension.ModDimensions;
 
 public class WindWhispererBlock extends Block {
 
