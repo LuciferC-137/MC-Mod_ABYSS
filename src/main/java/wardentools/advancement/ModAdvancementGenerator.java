@@ -15,6 +15,7 @@ import wardentools.ModMain;
 import wardentools.advancement.criteria.AbyssPortalCriteria;
 import wardentools.advancement.criteria.CorruptionVesselCriteria;
 import wardentools.advancement.criteria.RadianceBringerCriteria;
+import wardentools.advancement.criteria.SummonProtectorCriteria;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.effect.ModEffects;
 import wardentools.entity.ModEntities;
@@ -208,8 +209,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         false
                 )
                 .addCriterion("protector",
-                        SummonedEntityTrigger.TriggerInstance.summonedEntity(
-                                EntityPredicate.Builder.entity().of(ModEntities.PROTECTOR.get())))
+                        SummonProtectorCriteria.TriggerInstance.summonProtector())
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector"));
 
         AdvancementHolder deepCristal = Advancement.Builder.advancement()

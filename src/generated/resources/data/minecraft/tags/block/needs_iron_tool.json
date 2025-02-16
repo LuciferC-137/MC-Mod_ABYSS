@@ -10,6 +10,9 @@
     "wardentools:malachite",
     "wardentools:pale_cristal_block",
     "wardentools:pale_cristal",
-    "wardentools:black_lantern"
+    "wardentools:black_lantern",
+    "wardentools:abyssalite_diamond_ore",
+    "wardentools:abyssalite_lapis_ore",
+    "wardentools:abyssalite_coal_ore"
   ]
 }

@@ -42,8 +42,14 @@ public class SoulSpawner extends Block implements EntityBlock {
             if (spawnPos == null) return;
             ShadowEntity shadow = new ShadowEntity(ModEntities.SHADOW.get(), level);
             shadow.setStasis(true);
+            float rot = random.nextFloat() * 360F;
+            shadow.setYRot(rot);
+            shadow.setYBodyRot(rot);
+            shadow.setYHeadRot(rot);
             shadow.moveTo(spawnPos.getX() + 0.5, spawnPos.getY(),
-                    spawnPos.getZ() + 0.5, 0.0F, 0.0F);
+                    spawnPos.getZ() + 0.5,
+                    0.0F,
+                    0.0F);
             level.addFreshEntityWithPassengers(shadow);
         }
     }

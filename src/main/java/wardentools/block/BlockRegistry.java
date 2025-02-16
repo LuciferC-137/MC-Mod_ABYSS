@@ -14,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -470,11 +469,10 @@ public class BlockRegistry {
 
 	public static final RegistryObject<AbyssPortalBlock> ABYSS_PORTAL_BLOCK
 			= REGISTAR.register("abyss_portal",
-			() -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
+			() -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.END_PORTAL)
 					.noCollission()
-					.pushReaction(PushReaction.BLOCK)
-					.lightLevel((state) -> 10)
-					.strength(-1.0F, 1.0F)));
+					.forceSolidOn()
+					.lightLevel((state) -> 10)));
 
 	public static final RegistryObject<Block> SOLID_CORRUPTION
 			= REGISTAR.register("solid_corruption",
@@ -486,6 +484,7 @@ public class BlockRegistry {
 			= REGISTAR.register("dysfunctionning_catalyst",
 			() -> new DysfunctionningCatalystBlock(BlockBehaviour.Properties
 					.ofFullCopy(BlockRegistry.RADIANCE_CATALYST.get())
+					.strength(-1f)
 					.lightLevel((state) -> 3)));
 
 	public static final RegistryObject<Block> BLACK_LANTERN
@@ -531,7 +530,7 @@ public class BlockRegistry {
 	public static final RegistryObject<Block> SOUL_SPAWNER
 			= REGISTAR.register("soul_spawner",
 			() -> new SoulSpawner(BlockBehaviour.Properties.ofFullCopy(Blocks.SPAWNER)
-					.strength(7.0F)
+					.strength(3.0F)
 					.noOcclusion()
 					.randomTicks()
 					.lightLevel((state) -> 2)));
