@@ -10,6 +10,8 @@ import net.minecraftforge.network.SimpleChannel;
 import net.minecraftforge.network.PacketDistributor;
 import wardentools.ModMain;
 import wardentools.network.ParticulesSoundsEffects.*;
+import wardentools.weather.network.RequestFogDistanceUpdateFromServer;
+import wardentools.weather.network.SendFogDistanceToClient;
 
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -116,6 +118,16 @@ public class PacketHandler {
 				.encoder(StartPlayingIncarnationTheme::encode)
 				.decoder(StartPlayingIncarnationTheme::new)
 				.consumerMainThread(StartPlayingIncarnationTheme::handle)
+				.add();
+		INSTANCE.messageBuilder(SendFogDistanceToClient.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(SendFogDistanceToClient::encode)
+				.decoder(SendFogDistanceToClient::new)
+				.consumerMainThread(SendFogDistanceToClient::handle)
+				.add();
+		INSTANCE.messageBuilder(RequestFogDistanceUpdateFromServer.class, NetworkDirection.PLAY_TO_SERVER)
+				.encoder(RequestFogDistanceUpdateFromServer::encode)
+				.decoder(RequestFogDistanceUpdateFromServer::new)
+				.consumerMainThread(RequestFogDistanceUpdateFromServer::handle)
 				.add();
 
 	}
