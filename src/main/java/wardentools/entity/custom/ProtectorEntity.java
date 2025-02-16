@@ -82,7 +82,6 @@ public class ProtectorEntity extends AbstractGolem {
 				.add(Attributes.MAX_HEALTH, MAX_HEALTH)
 				.add(Attributes.MOVEMENT_SPEED, 0.2D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 1.0f)
-				.add(Attributes.JUMP_STRENGTH, 1D)
 				.add(Attributes.FOLLOW_RANGE, 30D)
 				.add(Attributes.ATTACK_DAMAGE, 30.0D);
 	}
