@@ -112,6 +112,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         this.overrideDefaultParameters();
         this.moveControl = new IncarnationMoveControl(this);
         this.setHasBeenSummonedByCatalyst(false);
+        this.noCulling = true;
 	}
 
 	@Override
@@ -525,6 +526,11 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 
     @Override
     protected boolean canRide(@NotNull Entity entity) {
+        return false;
+    }
+
+    @Override
+    public boolean isInWall() {
         return false;
     }
 

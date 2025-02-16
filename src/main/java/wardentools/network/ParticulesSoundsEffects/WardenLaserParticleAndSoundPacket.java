@@ -2,10 +2,11 @@ package wardentools.network.ParticulesSoundsEffects;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.network.CustomPayloadEvent;
@@ -39,7 +40,6 @@ public class WardenLaserParticleAndSoundPacket {
 
     public static void handle(WardenLaserParticleAndSoundPacket packet, CustomPayloadEvent.Context context) {
         context.enqueueWork(() -> {
-            @SuppressWarnings("resource")
             ClientLevel level = Minecraft.getInstance().level;
             if (level != null) {
                 Vec3 startPosition = packet.startPosition;
@@ -49,11 +49,9 @@ public class WardenLaserParticleAndSoundPacket {
                     level.addParticle(ParticleTypes.SONIC_BOOM, false,
                             particlePosition.x, particlePosition.y, particlePosition.z, 0.0D, 0.0D, 0.0D);
                 }
-                @SuppressWarnings("resource")
-				LocalPlayer player = Minecraft.getInstance().player;
-                if (player != null) {
-                    player.playSound(SoundEvents.WARDEN_SONIC_BOOM, 3.0F, 1.0F);
-                }
+				level.playLocalSound(new BlockPos((int)startPosition.x, (int)startPosition.y, (int)startPosition.z),
+                        SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS,
+                        1.0F, 1.0F, false);
             }
         });
         context.setPacketHandled(true);

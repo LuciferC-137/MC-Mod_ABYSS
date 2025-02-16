@@ -28,14 +28,6 @@ public class ParasyteRenderer extends MobRenderer<ParasyteEntity, Parasyte>{
 	@Override
 	public void render(@NotNull ParasyteEntity parasyte, float pEntityYaw, float pPartialTicks,
 					   @NotNull PoseStack pMatrixStack, @NotNull MultiBufferSource pBuffer, int pPackedLight) {
-		if (parasyte.tickCount%10 == parasyte.level().getRandom().nextInt(0, 10)){
-			Vec3 particlePos = parasyte.getPosition(1f);
-			parasyte.level().addParticle(ParticleRegistry.CORRUPTION.get(),
-					particlePos.x, particlePos.y, particlePos.z,
-					parasyte.level().getRandom().nextFloat() * 0.04f,
-					parasyte.level().getRandom().nextFloat() * 0.1f,
-					parasyte.level().getRandom().nextFloat() * 0.04f);
-		}
 		super.render(parasyte, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
 	}
 
