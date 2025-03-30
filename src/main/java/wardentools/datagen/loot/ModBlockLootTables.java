@@ -295,7 +295,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),
 				BlockRegistry.SOUL_SPAWNER.get()
     	);
-    	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
+    	List<Block> knownBlocks = BlockRegistry.BLOCKS.getEntries().stream()
     	        .map(RegistryObject::get)
     	        .filter(block -> !blocksToIgnore.contains(block))
     	        .collect(Collectors.toList());

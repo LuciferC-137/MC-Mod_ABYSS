@@ -1,10 +1,9 @@
 package wardentools;
 
-
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 import wardentools.gui.MenuRegistry;
 import wardentools.gui.ModCreativeTabs;
 import wardentools.items.armors.ArmorRegistry;
@@ -29,12 +28,11 @@ public class ModMain {
 	public static final String MODNAME = "ABYSS";
 	public static final String VERSION = "1.0.2";
 	
-	public ModMain() {
-		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+	public ModMain(IEventBus bus, ModContainer container) {
 
-		ArmorRegistry.REGISTAR.register(bus);
-		ItemRegistry.REGISTAR.register(bus);
-		BlockRegistry.REGISTAR.register(bus);
+		ArmorRegistry.ARMORS.register(bus);
+		ItemRegistry.ITEMS.register(bus);
+		BlockRegistry.BLOCKS.register(bus);
 		BlockEntityRegistry.BLOCK_ENTITIES.register(bus);
 		ModTrunkPlacerTypes.TRUNK_PLACER.register(bus);
 		ModFoliagePlacers.FOLIAGE_PLACERS.register(bus);
@@ -48,8 +46,8 @@ public class ModMain {
 		ModEffects.MOB_EFFECTS.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 
-		MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);
+		NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(WardenLootTableModifier.class);
         
 	}
 }

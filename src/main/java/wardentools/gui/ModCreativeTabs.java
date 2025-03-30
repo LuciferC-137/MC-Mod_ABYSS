@@ -3,9 +3,8 @@ package wardentools.gui;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import wardentools.ModMain;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.ItemRegistry;
@@ -174,7 +173,7 @@ public class ModCreativeTabs {
     }
 
     // Creating the tabs here
-    public static final RegistryObject<CreativeModeTab> ALL
+    public static final Supplier<CreativeModeTab> ALL
             = CREATIVE_MODE_TABS.register("all",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DARKGRASS_BLOCK.get()))
                     .title(Component.translatable("creativetab.all"))
@@ -182,7 +181,7 @@ public class ModCreativeTabs {
                         ALL_ITEMS.forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> BLOCKS
+    public static final Supplier<CreativeModeTab> BLOCKS
             = CREATIVE_MODE_TABS.register("blocks",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.ABYSSALITE.get()))
                     .title(Component.translatable("creativetab.blocks"))
@@ -193,7 +192,7 @@ public class ModCreativeTabs {
                         getItemsByTag("building").forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> VEGETATION
+    public static final Supplier<CreativeModeTab> VEGETATION
             = CREATIVE_MODE_TABS.register("vegetation",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.BLUE_GLOW_BERRIES.get()))
                     .title(Component.translatable("creativetab.vegetation"))
@@ -202,7 +201,7 @@ public class ModCreativeTabs {
                         getItemsByTag("white_vegetal").forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> DARKTREE
+    public static final Supplier<CreativeModeTab> DARKTREE
             = CREATIVE_MODE_TABS.register("darktree",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DARKTREE_LOG.get()))
                     .title(Component.translatable("creativetab.darktree"))
@@ -210,7 +209,7 @@ public class ModCreativeTabs {
                         getItemsByTag("darktree").forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> WHITETREE
+    public static final Supplier<CreativeModeTab> WHITETREE
             = CREATIVE_MODE_TABS.register("whitetree",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.WHITETREE_LOG.get()))
                     .title(Component.translatable("creativetab.whitetree"))
@@ -218,7 +217,7 @@ public class ModCreativeTabs {
                         getItemsByTag("whitetree").forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> TOOLS
+    public static final Supplier<CreativeModeTab> TOOLS
             = CREATIVE_MODE_TABS.register("tools",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get()))
                     .title(Component.translatable("creativetab.tools"))
@@ -229,7 +228,7 @@ public class ModCreativeTabs {
                         getItemsByTag("weapons").forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> CRYSTALS
+    public static final Supplier<CreativeModeTab> CRYSTALS
             = CREATIVE_MODE_TABS.register("crystals",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.CITRINE_FRAGMENT.get()))
                     .title(Component.translatable("creativetab.crystals"))
@@ -237,7 +236,7 @@ public class ModCreativeTabs {
                         getItemsByTag("crystals").forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> MISC
+    public static final Supplier<CreativeModeTab> MISC
             = CREATIVE_MODE_TABS.register("misc",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.CORRUPTED_ESSENCE.get()))
                     .title(Component.translatable("creativetab.misc"))
@@ -248,7 +247,7 @@ public class ModCreativeTabs {
                         getItemsByTag("misc").forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> EGG
+    public static final Supplier<CreativeModeTab> EGG
             = CREATIVE_MODE_TABS.register("egg",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DEEPLURKER_EGG.get()))
                     .title(Component.translatable("creativetab.egg"))
@@ -275,10 +274,10 @@ public class ModCreativeTabs {
     public static void addAllItemsFromRegistry() {
         Field[] fields = ItemRegistry.class.getDeclaredFields();
         for (Field field : fields) {
-            if (RegistryObject.class.isAssignableFrom(field.getType())) {
+            if (Supplier.class.isAssignableFrom(field.getType())) {
                 try {
                     @SuppressWarnings("unchecked")
-                    RegistryObject<Item> registryObject = (RegistryObject<Item>) field.get(null);
+                    Supplier<Item> registryObject = (Supplier<Item>) field.get(null);
                     addItemToAll(registryObject);
                 } catch (IllegalAccessException e) {
                     System.out.println("Error while adding all items to creative tabs");

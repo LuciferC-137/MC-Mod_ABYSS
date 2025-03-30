@@ -1,31 +1,29 @@
 package wardentools.fluid;
 
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
-import wardentools.items.ItemRegistry;
+
+import java.util.function.Supplier;
 
 public class FluidRegistry {
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(ForgeRegistries.FLUIDS, ModMain.MOD_ID);
+            DeferredRegister.create(BuiltInRegistries.FLUID, ModMain.MOD_ID);
 
-    public static final RegistryObject<FlowingFluid> SOURCE_LIQUID_CORRUPTION
+    public static final Supplier<BaseFlowingFluid> SOURCE_LIQUID_CORRUPTION
             = FLUIDS.register("liquid_corruption",
                 () -> new LiquidCorruptionFluid.Source(FluidRegistry.LIQUID_CORRUPTION_PROPERTIES));
 
-    public static final RegistryObject<FlowingFluid> FLOWING_LIQUID_CORRUPTION
+    public static final Supplier<BaseFlowingFluid> FLOWING_LIQUID_CORRUPTION
             = FLUIDS.register("flowing_liquid_corruption",
                 () -> new LiquidCorruptionFluid.Flowing(FluidRegistry.LIQUID_CORRUPTION_PROPERTIES));
 
-    public static final ForgeFlowingFluid.Properties LIQUID_CORRUPTION_PROPERTIES
-                = new ForgeFlowingFluid.Properties(
+    public static final BaseFlowingFluid.Properties LIQUID_CORRUPTION_PROPERTIES
+                = new BaseFlowingFluid.Properties(
                     ModFluidTypes.LIQUID_CORRUPTION, SOURCE_LIQUID_CORRUPTION, FLOWING_LIQUID_CORRUPTION)
                     .slopeFindDistance(4)
                     .levelDecreasePerBlock(1)

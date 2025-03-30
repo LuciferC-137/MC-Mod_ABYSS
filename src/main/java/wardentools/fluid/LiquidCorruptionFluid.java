@@ -5,16 +5,17 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import org.jetbrains.annotations.NotNull;
 
-public class LiquidCorruptionFluid extends ForgeFlowingFluid {
+public class LiquidCorruptionFluid extends BaseFlowingFluid {
 
     public LiquidCorruptionFluid(Properties prop){
         super(prop);
     }
 
     @Override
-    public boolean isSource(FluidState state) {
+    public boolean isSource(@NotNull FluidState state) {
         return false;
     }
 
@@ -23,7 +24,7 @@ public class LiquidCorruptionFluid extends ForgeFlowingFluid {
         return state.getValue(LEVEL);
     }
 
-    public Item getBucket() {
+    public @NotNull Item getBucket() {
         return Items.AIR;
     }
 
@@ -35,7 +36,7 @@ public class LiquidCorruptionFluid extends ForgeFlowingFluid {
         public int getAmount(FluidState state) {
             return 8;
         }
-        public boolean isSource(FluidState state) {
+        public boolean isSource(@NotNull FluidState state) {
             return true;
         }
     }
@@ -46,15 +47,10 @@ public class LiquidCorruptionFluid extends ForgeFlowingFluid {
             super(properties);
             registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
         }
-        protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {
+        protected void createFluidStateDefinition(StateDefinition.@NotNull Builder<Fluid, FluidState> builder) {
             super.createFluidStateDefinition(builder);
             builder.add(LEVEL);
         }
-        public int getAmount(FluidState state) {
-            return state.getValue(LEVEL);
-        }
-        public boolean isSource(FluidState state) {
-            return false;
-        }
+
     }
 }
