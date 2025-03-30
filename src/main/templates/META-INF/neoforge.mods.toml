@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+[[mods]]
+modId="wardentools"
+version="1.0.2"
+displayName="Dive Into The Abyss"
+authors="Lucifer C-137"
+logoFile= "../../resources/logo.png"
+description='''Explore a new dimension and the history of the ancient civilization.'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.wardentools]]
+modId="neoforge"
+type="required"
+versionRange="${neo_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.wardentools]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
