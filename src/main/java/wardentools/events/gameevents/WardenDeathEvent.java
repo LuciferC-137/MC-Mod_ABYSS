@@ -2,6 +2,7 @@ package wardentools.events.gameevents;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -9,10 +10,10 @@ import net.minecraft.world.entity.monster.warden.Warden;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.ParticleWardenDeathPacket;
+import wardentools.network.PayloadsRecords.ParticlesSounds.WardenDeathParticle;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
 public class WardenDeathEvent {
@@ -23,9 +24,12 @@ public class WardenDeathEvent {
         	Level level = event.getEntity().level();
         	BlockPos pos = event.getEntity().blockPosition();
    
-        	if (!level.isClientSide) {
-        		        	
-        		ModPackets.sendToAllClient(new ParticleWardenDeathPacket(pos));
+        	if (level instanceof ServerLevel serverLevel) {
+                PacketDistributor.sendToPlayersTrackingChunk(
+                        serverLevel,
+                        serverLevel.getChunkAt(pos).getPos(),
+                        new WardenDeathParticle(pos.getCenter().toVector3f())
+                );
         	        		   	        		
         		BlockPos deathPos = event.getEntity().blockPosition();
         		int radius = 6;

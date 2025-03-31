@@ -13,12 +13,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.effect.ModEffects;
 import wardentools.misc.WardenLaserAttack;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;
+import wardentools.network.PayloadsRecords.ParticlesSounds.WardenLaserParticleSound;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class WardenHeartItem extends Item {
@@ -39,15 +39,17 @@ public class WardenHeartItem extends Item {
 		if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
 				if (isCorruptionVessel(player))  {
 					player.getCooldowns().addCooldown(this, 120);
-			            long gameTime = serverLevel.getGameTime();
-			            Vec3 startPosition = player.position().add(0.0D, 1.0F, 0.0D);
-			            Vec3 direction = player.getLookAngle();
-			            //Trigger laser
-			            laserAttack.tick(serverLevel, player, gameTime, startPosition, direction, laserLength);
-			            //Send packet for sound and visuals
-			            ModPackets.sendToAllClient(
-			            		new WardenLaserParticleAndSoundPacket(startPosition, direction, laserLength));
-						return InteractionResultHolder.success(player.getItemInHand(interactionHand));
+					long gameTime = serverLevel.getGameTime();
+					Vec3 startPosition = player.position().add(0.0D, 1.0F, 0.0D);
+					Vec3 direction = player.getLookAngle();
+					//Trigger laser
+					laserAttack.tick(serverLevel, player, gameTime, startPosition, direction, laserLength);
+					//Send packet for sound and visuals
+					PacketDistributor.sendToPlayersTrackingChunk(
+							serverLevel,
+							serverLevel.getChunkAt(player.getOnPos()).getPos(),
+							new WardenLaserParticleSound(startPosition.toVector3f(), direction.toVector3f(), laserLength));
+					return InteractionResultHolder.success(player.getItemInHand(interactionHand));
 			    }
 		}
 	    return InteractionResultHolder.fail(player.getItemInHand(interactionHand));

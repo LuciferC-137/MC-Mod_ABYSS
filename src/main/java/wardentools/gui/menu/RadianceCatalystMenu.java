@@ -95,7 +95,7 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 				return ItemStack.EMPTY;
 			}
 		} else {
-			System.err.println("Invalid slot index: " + index);
+			System.err.println("Invalid slot bossId: " + index);
 			return ItemStack.EMPTY;
 		}
 		fromSlot.setChanged();

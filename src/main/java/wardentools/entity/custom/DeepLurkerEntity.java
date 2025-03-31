@@ -139,7 +139,7 @@ public class DeepLurkerEntity extends Animal {
     public static boolean canSpawn(EntityType<DeepLurkerEntity> entityType, ServerLevelAccessor level,
             MobSpawnType spawnType, BlockPos pos, RandomSource random) {
         return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
-        // Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
+        // Animal.checkMobSpawnRules(entityType, level, spawnType, startPos, random);
     }
     
     @Override

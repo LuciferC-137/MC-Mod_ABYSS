@@ -10,10 +10,10 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.WindWhisperMessageAndSound;
+import wardentools.network.PayloadsRecords.ParticlesSounds.WindWhispererMessageSound;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.dimension.ModDimensions;
 
@@ -46,7 +46,7 @@ public class WhisperManager {
     }
 
     public void sendRandomWhisperToPlayer(@NotNull ServerPlayer player) {
-        ModPackets.sendToClient(new WindWhisperMessageAndSound(), player);
+        PacketDistributor.sendToPlayer(player, new WindWhispererMessageSound());
     }
 
     // This method must only be called externally by packets since this class should only work on server

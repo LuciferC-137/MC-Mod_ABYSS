@@ -37,6 +37,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
@@ -46,9 +47,8 @@ import wardentools.entity.utils.IncarnationBodyRotationControl;
 import wardentools.entity.utils.IncarnationMoveControl;
 import wardentools.entity.utils.goal.IncarnationAttackGoal;
 import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.StartPlayingIncarnationTheme;
-import wardentools.network.SyncBossEventPacket;
+import wardentools.network.PayloadsRecords.BossEventSynchronize;
+import wardentools.network.PayloadsRecords.ParticlesSounds.ThemeIncarnationStart;
 import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
 
@@ -149,15 +149,15 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossEvent.addPlayer(player);
-        ModPackets.sendToClient(new SyncBossEventPacket(this.getId(), true), player);
-        ModPackets.sendToClient(new StartPlayingIncarnationTheme(), player);
+        PacketDistributor.sendToPlayer(player, new BossEventSynchronize(this.getId(), true));
+        PacketDistributor.sendToPlayer(player, new ThemeIncarnationStart());
     }
 
     @Override
     public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossEvent.removePlayer(player);
-        ModPackets.sendToClient(new SyncBossEventPacket(this.getId(), false), player);
+        PacketDistributor.sendToPlayer(player, new BossEventSynchronize(this.getId(), false));
     }
 
     @Override

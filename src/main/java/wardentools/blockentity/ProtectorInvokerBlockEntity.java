@@ -1,6 +1,7 @@
 package wardentools.blockentity;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -9,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,8 +30,7 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ProtectorHeartItem;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceExplosion;
+import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceParticleExplosion;
 
 import java.util.Objects;
 
@@ -95,7 +96,12 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 				}
 				protec.makeSpawnAnimation();
 				Vec3 particleSource = spawnPos.above().getCenter();
-				ModPackets.sendToAllClient(new ParticleRadianceExplosion(particleSource));
+				PacketDistributor.sendToPlayersTrackingChunk(
+						(ServerLevel) level,
+						level.getChunkAt(spawnPos).getPos(),
+						new RadianceParticleExplosion(particleSource.toVector3f(),
+								1.1F, 1F, 100, false)
+				);
 				level.addFreshEntity(protec);
 				invoker.protectorSuccessfullyInvoked = true;
 			}

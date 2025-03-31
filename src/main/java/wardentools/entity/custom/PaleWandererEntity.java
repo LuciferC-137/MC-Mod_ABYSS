@@ -93,7 +93,7 @@ public class PaleWandererEntity extends Animal {
 	
     public static boolean canSpawn(EntityType<PaleWandererEntity> entityType, ServerLevelAccessor level,
             MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);// Animal.checkMobSpawnRules(entityType, level, spawnType, pos, random);
+        return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);// Animal.checkMobSpawnRules(entityType, level, spawnType, startPos, random);
     }
 
     @Override

@@ -9,10 +9,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.misc.wind.WhisperManager;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.ParticleContagionImplosion;
+import wardentools.network.PayloadsRecords.ParticlesSounds.ContagionParticleExplosion;
 
 public class WindWhispererBlock extends Block {
 
@@ -31,7 +31,9 @@ public class WindWhispererBlock extends Block {
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (WhisperManager.INSTANCE.sendRandomWhisperToAllPlayers(level)) {
-            ModPackets.sendToAllClient(new ParticleContagionImplosion(blockPos.getCenter()));
+            PacketDistributor.sendToPlayersTrackingChunk(level, level.getChunkAt(blockPos).getPos(),
+                    new ContagionParticleExplosion(blockPos.getCenter().toVector3f(), 5f,
+                            0.5f, 100, true));
         }
     }
 }

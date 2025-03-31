@@ -1,160 +1,178 @@
 package wardentools.network;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.MainThreadPayloadHandler;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import wardentools.ModMain;
-import wardentools.network.ParticulesSoundsEffects.*;
-import wardentools.weather.network.RequestFogDistanceUpdateFromServer;
-import wardentools.weather.network.SendFogDistanceToClient;
+import wardentools.network.PayloadsRecords.*;
+import wardentools.network.PayloadsRecords.ParticlesSounds.*;
 
 
-@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class ModPackets {
-    
-    public static final PacketHandler INSTANCE = ChannelBuilder.named(
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "main"))
-    		.serverAcceptedVersions((status, version)->true)
-    		.clientAcceptedVersions((status, version)->true)
-    		.networkProtocolVersion(1)
-    		.simpleChannel();
 
-    public static void register() {
-        INSTANCE.messageBuilder(ParticleWardenDeathPacket.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleWardenDeathPacket::encode)
-				.decoder(ParticleWardenDeathPacket::new)
-				.consumerMainThread(ParticleWardenDeathPacket::handle)
-				.add();
-        INSTANCE.messageBuilder(WardenLaserParticleAndSoundPacket.class, NetworkDirection.PLAY_TO_CLIENT)
-        		.encoder(WardenLaserParticleAndSoundPacket::encode)
-        		.decoder(WardenLaserParticleAndSoundPacket::new)
-        		.consumerMainThread(WardenLaserParticleAndSoundPacket::handle)
-        		.add();
-        INSTANCE.messageBuilder(ParticleRadianceCatalystCharged.class, NetworkDirection.PLAY_TO_CLIENT)
-        		.encoder(ParticleRadianceCatalystCharged::encode)
-        		.decoder(ParticleRadianceCatalystCharged::new)
-        		.consumerMainThread(ParticleRadianceCatalystCharged::handle)
-        		.add();
-        INSTANCE.messageBuilder(ParticleRadianceCatalystPurifying.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleRadianceCatalystPurifying::encode)
-				.decoder(ParticleRadianceCatalystPurifying::new)
-				.consumerMainThread(ParticleRadianceCatalystPurifying::handle)
-				.add();
-        INSTANCE.messageBuilder(ParticleRadianceCatalystCharging.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleRadianceCatalystCharging::encode)
-				.decoder(ParticleRadianceCatalystCharging::new)
-				.consumerMainThread(ParticleRadianceCatalystCharging::handle)
-				.add();
-		INSTANCE.messageBuilder(ParticleRadianceExplosion.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleRadianceExplosion::encode)
-				.decoder(ParticleRadianceExplosion::new)
-				.consumerMainThread(ParticleRadianceExplosion::handle)
-				.add();
-		INSTANCE.messageBuilder(ParticleContagionImplosion.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleContagionImplosion::encode)
-				.decoder(ParticleContagionImplosion::new)
-				.consumerMainThread(ParticleContagionImplosion::handle)
-				.add();
-		INSTANCE.messageBuilder(ParticleRadianceImplosion.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleRadianceImplosion::encode)
-				.decoder(ParticleRadianceImplosion::new)
-				.consumerMainThread(ParticleRadianceImplosion::handle)
-				.add();
-		INSTANCE.messageBuilder(TeleportPlayerTo.class, NetworkDirection.PLAY_TO_SERVER)
-				.encoder(TeleportPlayerTo::encode)
-				.decoder(TeleportPlayerTo::new)
-				.consumerMainThread(TeleportPlayerTo::handle)
-				.add();
-		INSTANCE.messageBuilder(ShowWinScreen.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ShowWinScreen::encode)
-				.decoder(ShowWinScreen::new)
-				.consumerMainThread(ShowWinScreen::handle)
-				.add();
-		INSTANCE.messageBuilder(SwitchAchievement.class, NetworkDirection.PLAY_TO_SERVER)
-				.encoder(SwitchAchievement::encode)
-				.decoder(SwitchAchievement::new)
-				.consumerMainThread(SwitchAchievement::handle)
-				.add();
-		INSTANCE.messageBuilder(ParticleContagionExplosion.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleContagionExplosion::encode)
-				.decoder(ParticleContagionExplosion::new)
-				.consumerMainThread(ParticleContagionExplosion::handle)
-				.add();
-		INSTANCE.messageBuilder(AncientLaboratoryGateSound.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(AncientLaboratoryGateSound::encode)
-				.decoder(AncientLaboratoryGateSound::new)
-				.consumerMainThread(AncientLaboratoryGateSound::handle)
-				.add();
-		INSTANCE.messageBuilder(ContagionIncarnationEmergeSound.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ContagionIncarnationEmergeSound::encode)
-				.decoder(ContagionIncarnationEmergeSound::new)
-				.consumerMainThread(ContagionIncarnationEmergeSound::handle)
-				.add();
-		INSTANCE.messageBuilder(ParticleDarktreeFenceDestroyed.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ParticleDarktreeFenceDestroyed::encode)
-				.decoder(ParticleDarktreeFenceDestroyed::new)
-				.consumerMainThread(ParticleDarktreeFenceDestroyed::handle)
-				.add();
-		INSTANCE.messageBuilder(ContagionIncarnationSonicStrikeSound.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ContagionIncarnationSonicStrikeSound::encode)
-				.decoder(ContagionIncarnationSonicStrikeSound::new)
-				.consumerMainThread(ContagionIncarnationSonicStrikeSound::handle)
-				.add();
-		INSTANCE.messageBuilder(ContagionIncarnationScream.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(ContagionIncarnationScream::encode)
-				.decoder(ContagionIncarnationScream::new)
-				.consumerMainThread(ContagionIncarnationScream::handle)
-				.add();
-		INSTANCE.messageBuilder(SyncBossEventPacket.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(SyncBossEventPacket::encode)
-				.decoder(SyncBossEventPacket::new)
-				.consumerMainThread(SyncBossEventPacket::handle)
-				.add();
-		INSTANCE.messageBuilder(StartPlayingIncarnationTheme.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(StartPlayingIncarnationTheme::encode)
-				.decoder(StartPlayingIncarnationTheme::new)
-				.consumerMainThread(StartPlayingIncarnationTheme::handle)
-				.add();
-		INSTANCE.messageBuilder(SendFogDistanceToClient.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(SendFogDistanceToClient::encode)
-				.decoder(SendFogDistanceToClient::new)
-				.consumerMainThread(SendFogDistanceToClient::handle)
-				.add();
-		INSTANCE.messageBuilder(RequestFogDistanceUpdateFromServer.class, NetworkDirection.PLAY_TO_SERVER)
-				.encoder(RequestFogDistanceUpdateFromServer::encode)
-				.decoder(RequestFogDistanceUpdateFromServer::new)
-				.consumerMainThread(RequestFogDistanceUpdateFromServer::handle)
-				.add();
-		INSTANCE.messageBuilder(WindWhisperMessageAndSound.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(WindWhisperMessageAndSound::encode)
-				.decoder(WindWhisperMessageAndSound::new)
-				.consumerMainThread(WindWhisperMessageAndSound::handle)
-				.add();
-		INSTANCE.messageBuilder(WindWhisperSound.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(WindWhisperSound::encode)
-				.decoder(WindWhisperSound::new)
-				.consumerMainThread(WindWhisperSound::handle)
-				.add();
-		INSTANCE.messageBuilder(SynchronizeProtectorHeart.class, NetworkDirection.PLAY_TO_CLIENT)
-				.encoder(SynchronizeProtectorHeart::encode)
-				.decoder(SynchronizeProtectorHeart::new)
-				.consumerMainThread(SynchronizeProtectorHeart::handle)
-				.add();
+	@SubscribeEvent
+	public static void registerClient(final RegisterPayloadHandlersEvent event) {
+		final PayloadRegistrar registrar = event.registrar("1");
 
+		// ------------------ CLIENT SPECIAL EFFECTS PACKETS --------------------------
+		registrar.playToClient(
+				AncientLaboratoryGateSound.TYPE,
+				AncientLaboratoryGateSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::ancientLaboratoryGateSound
+				)
+		);
+		registrar.playToClient(
+				IncarnationEmergeSound.TYPE,
+				IncarnationEmergeSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::incarnationEmergeSound
+				)
+		);
+		registrar.playToClient(
+				IncarnationScreamSound.TYPE,
+				IncarnationScreamSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::incarnationScreamSound
+				)
+		);
+		registrar.playToClient(
+				IncarnationSonicStrikeSound.TYPE,
+				IncarnationSonicStrikeSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::incarnationSonicStrikeSound
+				)
+		);
+		registrar.playToClient(
+				ContagionParticleExplosion.TYPE,
+				ContagionParticleExplosion.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::contagionParticleExplosion
+				)
+		);
+		registrar.playToClient(
+				ParticleDarktreeFenceDestroy.TYPE,
+				ParticleDarktreeFenceDestroy.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::particleDarktreeFenceDestroy
+				)
+		);
+		registrar.playToClient(
+				RadianceCatalystChargedParticleSound.TYPE,
+				RadianceCatalystChargedParticleSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::radianceCatalystChargedParticleSound
+				)
+		);
+		registrar.playToClient(
+				RadianceCatalystChargingParticleSound.TYPE,
+				RadianceCatalystChargingParticleSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::radianceCatalystChargingParticleSound
+				)
+		);
+		registrar.playToClient(
+				RadianceCatalystPurifyingParticleSound.TYPE,
+				RadianceCatalystPurifyingParticleSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::radianceCatalystPurifyingParticleSound
+				)
+		);
+		registrar.playToClient(
+				RadianceParticleExplosion.TYPE,
+				RadianceParticleExplosion.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::radianceParticleExplosion
+				)
+		);
+		registrar.playToClient(
+				WardenDeathParticle.TYPE,
+				WardenDeathParticle.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::wardenDeathParticle
+				)
+		);
+		registrar.playToClient(
+				ThemeIncarnationStart.TYPE,
+				ThemeIncarnationStart.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::themeIncarnationStart
+				)
+		);
+		registrar.playToClient(
+				ProtectorHeartSynchronize.TYPE,
+				ProtectorHeartSynchronize.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::protectorHeartSynchronize
+				)
+		);
+		registrar.playToClient(
+				WardenLaserParticleSound.TYPE,
+				WardenLaserParticleSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::wardenLaserParticleSound
+				)
+		);
+		registrar.playToClient(
+				WindWhispererMessageSound.TYPE,
+				WindWhispererMessageSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::windWhispererMessageSound
+				)
+		);
+		registrar.playToClient(
+				WindWhisperSound.TYPE,
+				WindWhisperSound.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientSpecialEffectPayloadHandler::windWhisperSound
+				)
+		);
+		// ----------------------- CLIENT GAME PACKETS -----------------------------
+		registrar.playToClient(
+				ShowWinScreen.TYPE,
+				ShowWinScreen.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientMechanicsPayloadHandler::showWinScreen
+				)
+		);
+		registrar.playToClient(
+				BossEventSynchronize.TYPE,
+				BossEventSynchronize.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientMechanicsPayloadHandler::bossEventSynchronize
+				)
+		);
+		registrar.playToClient(
+				SendFogDistanceToClient.TYPE,
+				SendFogDistanceToClient.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ClientMechanicsPayloadHandler::updateFogDistance
+				)
+		);
+		// -------------------------- SERVER PACKETS -------------------------------
+		registrar.playToServer(
+				TeleportPlayerTo.TYPE,
+				TeleportPlayerTo.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ServerPayloadHandler::teleportPlayerTo
+				)
+		);
+		registrar.playToServer(
+				SwitchAchievement.TYPE,
+				SwitchAchievement.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ServerPayloadHandler::switchAchievement
+				)
+		);
+		registrar.playToServer(
+				RequestFogDistanceFromServer.TYPE,
+				RequestFogDistanceFromServer.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						ServerPayloadHandler::sendServerFogDistanceToPlayer
+				)
+		);
 	}
-
-    public static void sendToServer(Object msg) {
-    	INSTANCE.send(msg, PacketDistributor.SERVER.noArg());
-    }
-    
-    public static void sendToAllClient(Object msg) {
-    	INSTANCE.send(msg, PacketDistributor.ALL.noArg());
-    }
-
-	public static void sendToClient(Object msg, ServerPlayer player) {
-		INSTANCE.send(msg, PacketDistributor.PLAYER.with(player));
-	}
-    
-    
 }

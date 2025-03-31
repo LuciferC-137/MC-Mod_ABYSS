@@ -9,12 +9,12 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.entity.custom.ParasyteEntity;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationScream;
-import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationSonicStrikeSound;
+import wardentools.network.PayloadsRecords.ParticlesSounds.IncarnationEmergeSound;
+import wardentools.network.PayloadsRecords.ParticlesSounds.IncarnationSonicStrikeSound;
 
 import javax.annotation.Nullable;
 
@@ -56,14 +56,20 @@ public class IncarnationSonicStrikeAttackGoal extends Goal {
 
     @Override
     public void tick() {
-        if (!this.incarnation.level().isClientSide) {
+        if (this.incarnation.level() instanceof ServerLevel serverLevel) {
             if (this.incarnation.getSonicStrikeTick()
                     == ContagionIncarnationEntity.SONIC_STRIKE_DURATION - SCREAM_SOUND_DELAY) {
-                ModPackets.sendToAllClient(new ContagionIncarnationScream(this.incarnation.position()));
+                PacketDistributor.sendToPlayersTrackingChunk(
+                        serverLevel,
+                        serverLevel.getChunkAt(this.incarnation.blockPosition()).getPos(),
+                        new IncarnationEmergeSound(this.incarnation.position().toVector3f()));
             }
             if (this.incarnation.getSonicStrikeTick()
                     == ContagionIncarnationEntity.SONIC_STRIKE_EFFECT_TICK + SONIC_SOUND_ADVANCE_TICK) {
-                ModPackets.sendToAllClient(new ContagionIncarnationSonicStrikeSound(this.incarnation.position()));
+                PacketDistributor.sendToPlayersTrackingChunk(
+                        serverLevel,
+                        serverLevel.getChunkAt(this.incarnation.blockPosition()).getPos(),
+                        new IncarnationSonicStrikeSound(this.incarnation.position().toVector3f()));
             }
             if (this.incarnation.getSonicStrikeTick() == ContagionIncarnationEntity.SONIC_STRIKE_EFFECT_TICK) {
                 applyBlindnessAndSummonParasyte();

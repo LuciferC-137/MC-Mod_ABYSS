@@ -27,14 +27,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import wardentools.entity.utils.goal.ChooseMonsterTargetGoal;
 import wardentools.entity.utils.goal.ReturnToInvokerGoal;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceImplosion;
-import wardentools.network.ParticulesSoundsEffects.SynchronizeProtectorHeart;
+import wardentools.network.PayloadsRecords.ParticlesSounds.ProtectorHeartSynchronize;
+import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceParticleExplosion;
 import wardentools.sounds.ModSounds;
 
 public class ProtectorEntity extends AbstractGolem {
@@ -176,8 +176,13 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 
 	private void deathParticleEffect() {
-		ModPackets.sendToAllClient(new ParticleRadianceImplosion(this.getPosition(1f)
-				.add(0, 1f, 0)));
+		if (this.level() instanceof ServerLevel level) {
+			PacketDistributor.sendToPlayersTrackingChunk(level,
+					level.getChunkAt(this.blockPosition()).getPos(),
+					new RadianceParticleExplosion(this.getPosition(1f).add(0, 1, 0).toVector3f(),
+							5.0F, 0.2F, 100, true)
+					);
+		}
 	}
 
 	@Override
@@ -268,7 +273,8 @@ public class ProtectorEntity extends AbstractGolem {
 	@Override
 	public boolean hurt(@NotNull DamageSource source, float amount) {
 		if (this.invokerPos != null){
-			ModPackets.sendToAllClient(new SynchronizeProtectorHeart(this.invokerPos, this.getHealth()));
+			PacketDistributor.sendToAllPlayers(
+					new ProtectorHeartSynchronize(this.invokerPos.getCenter().toVector3f(), this.getHealth()));
 			if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker) {
 				invoker.saveHealth(this);
 			}

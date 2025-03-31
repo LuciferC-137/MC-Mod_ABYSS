@@ -13,9 +13,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.ParticleContagionImplosion;
+import wardentools.network.PayloadsRecords.ParticlesSounds.ContagionParticleExplosion;
 import wardentools.tags.ModTags;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
@@ -36,10 +36,13 @@ public class AbyssDiverItem extends Item {
 
         if (clickedBlockState.is(ModTags.Blocks.ABYSS_TELEPORTABLE)) {
         	context.getItemInHand().hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-        	if (player.level() instanceof ServerLevel) {
-                ModPackets.sendToAllClient(
-                        new ParticleContagionImplosion(player.getPosition(0.1f)
-                                .add(0, 1, 0)));
+        	if (player.level() instanceof ServerLevel serverLevel) {
+                PacketDistributor.sendToPlayersTrackingChunk(serverLevel,
+                        serverLevel.getChunkAt(player.getOnPos()).getPos(),
+                        new ContagionParticleExplosion(
+                                player.getPosition(0.1f).add(0, 1, 1).toVector3f(),
+                                5F, 0.2F, 100, true)
+                );
                 teleportPlayer(player);
             }
             return InteractionResult.SUCCESS;

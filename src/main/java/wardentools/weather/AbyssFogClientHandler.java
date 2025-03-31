@@ -5,8 +5,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import wardentools.network.ModPackets;
-import wardentools.weather.network.RequestFogDistanceUpdateFromServer;
+import net.neoforged.neoforge.network.PacketDistributor;
+import wardentools.network.PayloadsRecords.RequestFogDistanceFromServer;
 
 /**
 This class allows to interpolate visually the fog during storms.
@@ -38,7 +38,7 @@ public class AbyssFogClientHandler {
     }
 
     public void initializeFogDistance() {
-        ModPackets.sendToServer(new RequestFogDistanceUpdateFromServer());
+        PacketDistributor.sendToServer(new RequestFogDistanceFromServer());
         this.serverFogDistance = AbyssWeatherManager.MAX_FOG_DISTANCE;
         // The line above is to prevent absurd fog distance if the server has too much delay to answer.
     }

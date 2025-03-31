@@ -17,7 +17,6 @@ import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
-import wardentools.network.ModPackets;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.custom.*;
 
@@ -26,7 +25,6 @@ public class CommonModEvents {
 	
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-		event.enqueueWork(ModPackets::register);
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);

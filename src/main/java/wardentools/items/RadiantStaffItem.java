@@ -14,10 +14,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.advancement.ModCriteriaTriggers;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceExplosion;
+import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceParticleExplosion;
 import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 
 public class RadiantStaffItem extends Item {
@@ -44,7 +44,9 @@ public class RadiantStaffItem extends Item {
                 if (portal.place(serverLevel, serverLevel.getChunkSource().getGenerator(),
                         serverLevel.random, abovePos)){
                     ModCriteriaTriggers.ABYSS_PORTAL_OPEN.trigger((ServerPlayer)player);
-                    ModPackets.sendToAllClient(new ParticleRadianceExplosion(context.getClickLocation()));
+                    PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunkAt(abovePos).getPos(),
+                            new RadianceParticleExplosion(abovePos.getCenter().toVector3f(),
+                                    1.1f, 1f, 100, false));
                     context.getItemInHand()
                             .hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                     return InteractionResult.SUCCESS;

@@ -8,13 +8,13 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.WindWhisperSound;
+import wardentools.network.PayloadsRecords.ParticlesSounds.WindWhisperSound;
+import wardentools.network.PayloadsRecords.SendFogDistanceToClient;
 import wardentools.weather.lightning.AbyssLightningEntity;
-import wardentools.weather.network.SendFogDistanceToClient;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -127,7 +127,7 @@ public class AbyssWeatherManager {
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
                     player.sendSystemMessage(stormMessage);
-                    ModPackets.sendToClient(new WindWhisperSound(), player);
+                    PacketDistributor.sendToPlayer(player, new WindWhisperSound());
                 });
     }
 
@@ -137,7 +137,7 @@ public class AbyssWeatherManager {
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
                     player.sendSystemMessage(stormEndMessage);
-                    ModPackets.sendToClient(new WindWhisperSound(), player);
+                    PacketDistributor.sendToPlayer(player, new WindWhisperSound());
                 });
         this.timeSinceStormBegin = 0;
     }
@@ -147,11 +147,11 @@ public class AbyssWeatherManager {
     }
 
     public void sendServerFogDistanceToAllClients() {
-        ModPackets.sendToAllClient(new SendFogDistanceToClient(this.getFogDistance()));
+        PacketDistributor.sendToAllPlayers(new SendFogDistanceToClient(this.getFogDistance()));
     }
 
     public void sendServerFogDistanceToClient(ServerPlayer player) {
-        ModPackets.sendToClient(new SendFogDistanceToClient(this.getFogDistance()), player);
+        PacketDistributor.sendToPlayer(player, new SendFogDistanceToClient(this.getFogDistance()));
     }
 }
 

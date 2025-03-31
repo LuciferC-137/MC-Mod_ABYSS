@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -22,8 +23,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.util.TickableBlockEntity;
@@ -31,11 +34,10 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
 import wardentools.items.ItemRegistry;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.AncientLaboratoryGateSound;
-import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationEmergeSound;
-import wardentools.network.ParticulesSoundsEffects.ParticleContagionExplosion;
-import wardentools.network.ParticulesSoundsEffects.ParticleDarktreeFenceDestroyed;
+import wardentools.network.PayloadsRecords.ParticlesSounds.AncientLaboratoryGateSound;
+import wardentools.network.PayloadsRecords.ParticlesSounds.ContagionParticleExplosion;
+import wardentools.network.PayloadsRecords.ParticlesSounds.IncarnationEmergeSound;
+import wardentools.network.PayloadsRecords.ParticlesSounds.ParticleDarktreeFenceDestroy;
 import wardentools.particle.ParticleRegistry;
 
 import java.util.List;
@@ -261,7 +263,10 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         contagionIncarnation.initiateSpawnAnimation();
         contagionIncarnation.setCatalystPos(this.worldPosition);
         this.level.addFreshEntity(contagionIncarnation);
-        ModPackets.sendToAllClient(new ContagionIncarnationEmergeSound());
+        PacketDistributor.sendToPlayersTrackingChunk(
+                (ServerLevel)this.level,
+                this.level.getChunkAt(this.worldPosition).getPos(),
+                new IncarnationEmergeSound(this.worldPosition.below(12).getCenter().toVector3f()));
     }
 
     public void clientTick() {
@@ -273,7 +278,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
             List<BlockPos> fencePos = this.getFencePosByLevel(this.fence_level);
             if (fencePos != null) {
                 for (BlockPos pos : this.getFenceSoundPos()) {
-                    this.sendGateClosingSoundEffectToClient(pos.getCenter());
+                    this.sendGateClosingSoundEffectToClient(pos.getCenter().toVector3f());
                 }
                 for (BlockPos pos : fencePos) {
                     this.level.setBlockAndUpdate(pos, BlockRegistry.DARKTREE_FENCE.get().defaultBlockState());
@@ -290,7 +295,11 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                     for (BlockPos pos : fencePos) {
                         if (this.level.getBlockState(pos).getBlock() == BlockRegistry.DARKTREE_FENCE.get()) {
                             this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                            ModPackets.sendToAllClient(new ParticleDarktreeFenceDestroyed(pos.getCenter()));
+                            PacketDistributor.sendToPlayersTrackingChunk(
+                                    (ServerLevel)this.level,
+                                    this.level.getChunkAt(pos).getPos(),
+                                    new ParticleDarktreeFenceDestroy(pos.getCenter().toVector3f())
+                            );
                         }
                     }
                 }
@@ -308,8 +317,12 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         return this.isContagionDefeated;
     }
 
-    private void sendGateClosingSoundEffectToClient(Vec3 source) {
-        ModPackets.sendToAllClient(new AncientLaboratoryGateSound(source));
+    private void sendGateClosingSoundEffectToClient(Vector3f source) {
+        if (this.level != null && this.level.isClientSide) return;
+        PacketDistributor.sendToPlayersTrackingChunk(
+                (ServerLevel)this.level,
+                this.level.getChunkAt(this.worldPosition).getPos(),
+                new AncientLaboratoryGateSound(source));
     }
 
     private void handleParticleEffects() {
@@ -483,8 +496,12 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     public void hugeParticleExplosion() {
-        ModPackets.sendToAllClient(new ParticleContagionExplosion(
-                this.worldPosition.getCenter(), 1f, 2f, 800));
+        PacketDistributor.sendToPlayersTrackingChunk(
+                (ServerLevel)this.level,
+                this.level.getChunkAt(this.worldPosition).getPos(),
+                new ContagionParticleExplosion(this.worldPosition.getCenter().toVector3f(),
+                        1f, 2f, 800, false)
+        );
     }
 
     public List<BlockPos> getFenceSoundPos() {

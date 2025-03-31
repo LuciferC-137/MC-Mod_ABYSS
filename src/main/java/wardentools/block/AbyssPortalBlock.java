@@ -22,10 +22,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.AbyssPortalBlockEntity;
-import wardentools.network.ModPackets;
-import wardentools.network.ShowWinScreen;
+import wardentools.network.PayloadsRecords.ShowWinScreen;
 import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
@@ -194,7 +194,7 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
 
     private void sendScreenPacket(Player player, BlockPos pos){
         ((ServerLevel)player.level()).removePlayerImmediately((ServerPlayer)player, Entity.RemovalReason.CHANGED_DIMENSION);
-        ModPackets.sendToClient(new ShowWinScreen(pos), (ServerPlayer) player);
+        PacketDistributor.sendToPlayer((ServerPlayer) player, new ShowWinScreen(pos.getCenter().toVector3f()));
     }
 
     @Override

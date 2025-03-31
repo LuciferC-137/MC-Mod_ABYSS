@@ -2,7 +2,9 @@ package wardentools.blockentity;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,10 +29,9 @@ import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.util.CustomEnergyStorage;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.items.ItemRegistry;
-import wardentools.network.ModPackets;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharging;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
-import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystPurifying;
+import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystChargedParticleSound;
+import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystChargingParticleSound;
+import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystPurifyingParticleSound;
 import wardentools.particle.ParticleRegistry;
 
 
@@ -130,7 +131,11 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 					}
 				} else {
 					// is burning
-					ModPackets.sendToAllClient(new ParticleRadianceCatalystCharging(this.getBlockPos()));
+					PacketDistributor.sendToPlayersTrackingChunk(
+							(ServerLevel) this.level,
+							this.level.getChunkAt(this.getBlockPos()).getPos(),
+							new RadianceCatalystChargingParticleSound(this.getBlockPos().getCenter().toVector3f())
+					);
 					this.burnTime--;
 					this.energy.addEnergy(1);
 					sendUpdate();
@@ -143,7 +148,11 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 						this.purifyingTime = 0;
 						sendUpdate();
 					} else {
-						ModPackets.sendToAllClient(new ParticleRadianceCatalystPurifying(this.getBlockPos()));
+						PacketDistributor.sendToPlayersTrackingChunk(
+								(ServerLevel) this.level,
+								this.level.getChunkAt(this.getBlockPos()).getPos(),
+								new RadianceCatalystPurifyingParticleSound(this.getBlockPos().getCenter().toVector3f())
+						);
 						this.purifyingTime++;
 						if (this.purifyingTime>=purifyTime) {
 							this.purifyingTime = 0;
@@ -172,7 +181,11 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 					this.purifyingTime++;
 					sendUpdate();
 				} else if (this.tickFractionner%5==1){
-					ModPackets.sendToAllClient(new ParticleRadianceCatalystCharged(this.getBlockPos()));
+					PacketDistributor.sendToPlayersTrackingChunk(
+							(ServerLevel) this.level,
+							this.level.getChunkAt(this.getBlockPos()).getPos(),
+							new RadianceCatalystChargedParticleSound(this.getBlockPos().getCenter().toVector3f())
+					);
 				}
 			}
 		}
