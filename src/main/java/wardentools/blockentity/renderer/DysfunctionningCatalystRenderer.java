@@ -13,13 +13,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.client.model.DysfunctionningCatalystInterior;
-import wardentools.particle.ParticleRegistry;
 
+@OnlyIn(Dist.CLIENT)
 public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<DysfunctionningCatalystBlockEntity> {
 	private static final float averageRotationSpeed = 3.0f;
     private static final float speedAmplifier = 10.0f;

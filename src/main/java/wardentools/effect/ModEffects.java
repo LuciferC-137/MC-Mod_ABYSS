@@ -7,7 +7,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wardentools.ModMain;
 
-import java.util.function.Supplier;
 
 public class ModEffects {
     public static DeferredRegister<MobEffect> MOB_EFFECTS

@@ -4,8 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,7 +34,6 @@ public class SoulSpawner extends Block implements EntityBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (level.isClientSide()) return;
@@ -103,9 +104,9 @@ public class SoulSpawner extends Block implements EntityBlock {
     }
 
     @Override
-    public int getExpDrop(BlockState state, LevelReader world,
-                          RandomSource randomSource, BlockPos pos, int fortune, int silktouch) {
-        return 15 + randomSource.nextInt(15) + randomSource.nextInt(15);
+    public int getExpDrop(@NotNull BlockState state, LevelAccessor level, @NotNull BlockPos pos,
+                          @Nullable BlockEntity blockEntity, @Nullable Entity breaker, @NotNull ItemStack tool) {
+        return 15 + level.getRandom().nextInt(15) + level.getRandom().nextInt(15);
     }
 
     @Override

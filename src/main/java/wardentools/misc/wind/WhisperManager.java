@@ -7,17 +7,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.WindWhisperMessageAndSound;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.dimension.ModDimensions;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class WhisperManager {
     public static final WhisperManager INSTANCE = new WhisperManager();
     public static final WindWhispers WHISPERS = new WindWhispers();
@@ -26,7 +26,7 @@ public class WhisperManager {
     private int timeSinceLastWhisper = 0;
 
     @SubscribeEvent
-    public static void onServerTick(TickEvent.ServerTickEvent event) {
+    public static void onServerTick(ServerTickEvent event) {
         INSTANCE.tick();
     }
 
@@ -46,7 +46,7 @@ public class WhisperManager {
     }
 
     public void sendRandomWhisperToPlayer(@NotNull ServerPlayer player) {
-        PacketHandler.sendToClient(new WindWhisperMessageAndSound(), player);
+        ModPackets.sendToClient(new WindWhisperMessageAndSound(), player);
     }
 
     // This method must only be called externally by packets since this class should only work on server

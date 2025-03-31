@@ -26,7 +26,7 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
+	protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
 		renderTransparentBackground(guiGraphics);
 		guiGraphics.blit(TEXTURE, this.leftPos,this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 			

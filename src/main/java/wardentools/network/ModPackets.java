@@ -2,22 +2,18 @@ package wardentools.network;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.ChannelBuilder;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.SimpleChannel;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.common.EventBusSubscriber;
 import wardentools.ModMain;
 import wardentools.network.ParticulesSoundsEffects.*;
 import wardentools.weather.network.RequestFogDistanceUpdateFromServer;
 import wardentools.weather.network.SendFogDistanceToClient;
 
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class PacketHandler {
+@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class ModPackets {
     
-    public static final SimpleChannel INSTANCE = ChannelBuilder.named(
+    public static final PacketHandler INSTANCE = ChannelBuilder.named(
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "main"))
     		.serverAcceptedVersions((status, version)->true)
     		.clientAcceptedVersions((status, version)->true)

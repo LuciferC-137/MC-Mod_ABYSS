@@ -8,19 +8,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.effect.ModEffects;
 import wardentools.misc.WardenLaserAttack;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class WardenHeartItem extends Item {
 	
 	private final WardenLaserAttack laserAttack;
@@ -30,7 +30,7 @@ public class WardenHeartItem extends Item {
 	public WardenHeartItem(Properties properties) {
 		super(properties);
 		this.laserAttack = new WardenLaserAttack();
-		MinecraftForge.EVENT_BUS.register(this);
+		NeoForge.EVENT_BUS.register(this);
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class WardenHeartItem extends Item {
 			            //Trigger laser
 			            laserAttack.tick(serverLevel, player, gameTime, startPosition, direction, laserLength);
 			            //Send packet for sound and visuals
-			            PacketHandler.sendToAllClient(
+			            ModPackets.sendToAllClient(
 			            		new WardenLaserParticleAndSoundPacket(startPosition, direction, laserLength));
 						return InteractionResultHolder.success(player.getItemInHand(interactionHand));
 			    }
@@ -54,15 +54,15 @@ public class WardenHeartItem extends Item {
 	}
 	
 	@SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		this.currentPlayer = event.player;
+    public void onPlayerTick(PlayerTickEvent event) {
+		this.currentPlayer = event.getEntity();
     }
 	
 	private static boolean isCorruptionVessel(Player player) {
 		if (player==null) {
 			return false;
 		}
-		return player.getEffect(ModEffects.CORRUPTION_VESSEL.getHolder().get()) != null;
+		return player.getEffect(ModEffects.CORRUPTION_VESSEL) != null;
 	}
 	
 	@Override

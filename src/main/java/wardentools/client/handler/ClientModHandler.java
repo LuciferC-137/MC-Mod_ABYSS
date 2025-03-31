@@ -1,11 +1,10 @@
 package wardentools.client.handler;
 
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import wardentools.ModMain;
 import wardentools.blockentity.renderer.DysfunctionningCatalystRenderer;
 import wardentools.client.DysfunctionningCatalystScreen;
@@ -18,17 +17,15 @@ import wardentools.blockentity.renderer.ContagionIncarnationSkullRenderer;
 import wardentools.blockentity.renderer.SoulSpawnerRenderer;
 import wardentools.client.RadianceCatalystScreen;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModHandler {
 	
 	@SubscribeEvent
-	public static void clientSetUp(FMLClientSetupEvent event) {
-		event.enqueueWork(() -> {
-			MenuScreens.register(MenuRegistry.RADIANCE_CATALYST_MENU.get(),
+	public static void clientSetUp(RegisterMenuScreensEvent event) {
+		event.register(MenuRegistry.RADIANCE_CATALYST_MENU.get(),
 					RadianceCatalystScreen::new);
-			MenuScreens.register(MenuRegistry.DYSFUNCTIONNING_CATALYST_MENU.get(),
+		event.register(MenuRegistry.DYSFUNCTIONNING_CATALYST_MENU.get(),
 					DysfunctionningCatalystScreen::new);
-		});
 	}
 	
 	@SubscribeEvent

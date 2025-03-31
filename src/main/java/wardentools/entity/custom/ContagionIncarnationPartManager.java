@@ -11,6 +11,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.entity.PartEntity;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.interfaces.CorruptionMonster;
 
@@ -350,7 +351,7 @@ public class ContagionIncarnationPartManager extends CorruptionMonster implement
     }
 
     @Override
-    public net.minecraftforge.entity.PartEntity<?>[] getParts() {
+    public PartEntity<?> @NotNull [] getParts() {
         return this.subEntities;
     }
 

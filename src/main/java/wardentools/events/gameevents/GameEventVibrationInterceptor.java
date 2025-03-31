@@ -10,13 +10,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.event.VanillaGameEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.VanillaGameEvent;
 import wardentools.ModMain;
 import wardentools.items.enchantment.EnchantmentRegistry;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class GameEventVibrationInterceptor {
 
     @SubscribeEvent
@@ -31,17 +31,17 @@ public class GameEventVibrationInterceptor {
                 event.setCanceled(true);
                 return;
             }
-            if (event.getVanillaEvent() == GameEvent.HIT_GROUND.get()) {
+            if (event.getVanillaEvent() == GameEvent.HIT_GROUND) {
                 if (isStealthEnchanted(player, leggings)) {
                     event.setCanceled(true);
                 }
-            } else if (event.getVanillaEvent() == GameEvent.BLOCK_PLACE.get()
-                    || event.getVanillaEvent() == GameEvent.BLOCK_DESTROY.get()
-                    || event.getVanillaEvent() == GameEvent.BLOCK_CHANGE.get()) {
+            } else if (event.getVanillaEvent() == GameEvent.BLOCK_PLACE
+                    || event.getVanillaEvent() == GameEvent.BLOCK_DESTROY
+                    || event.getVanillaEvent() == GameEvent.BLOCK_CHANGE) {
                 if (isStealthEnchanted(player, chestplate)) {
                     event.setCanceled(true);
                 }
-            } else if (event.getVanillaEvent() == GameEvent.STEP.get()) {
+            } else if (event.getVanillaEvent() == GameEvent.STEP) {
                 if (isStealthEnchanted(player, boots)) {
                     event.setCanceled(true);
                 }

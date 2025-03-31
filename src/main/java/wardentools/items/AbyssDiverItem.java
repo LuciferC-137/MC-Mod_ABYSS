@@ -14,7 +14,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.ParticleContagionImplosion;
 import wardentools.tags.ModTags;
 import wardentools.worldgen.dimension.ModDimensions;
@@ -37,7 +37,7 @@ public class AbyssDiverItem extends Item {
         if (clickedBlockState.is(ModTags.Blocks.ABYSS_TELEPORTABLE)) {
         	context.getItemInHand().hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
         	if (player.level() instanceof ServerLevel) {
-                PacketHandler.sendToAllClient(
+                ModPackets.sendToAllClient(
                         new ParticleContagionImplosion(player.getPosition(0.1f)
                                 .add(0, 1, 0)));
                 teleportPlayer(player);

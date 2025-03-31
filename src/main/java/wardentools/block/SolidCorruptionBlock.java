@@ -21,7 +21,6 @@ public class SolidCorruptionBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (noLiquidNeighbor(level, blockPos)) {
@@ -34,7 +33,7 @@ public class SolidCorruptionBlock extends Block {
                        @NotNull BlockState blockState, @NotNull Entity entity) {
         super.stepOn(level, blockPos, blockState, entity);
         if (entity instanceof LivingEntity entity1){
-            entity1.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.getHolder().get(),
+            entity1.addEffect(new MobEffectInstance(ModEffects.CORRUPTED,
                     40, 0, false, false));
         }
     }

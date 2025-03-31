@@ -6,18 +6,18 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import wardentools.ModMain;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class FallIntoVoidEvent {
 	
 	@SubscribeEvent
-	public static void playerFallIntoVoid(LivingDamageEvent event) {
+	public static void playerFallIntoVoid(LivingDamageEvent.Pre event) {
 		if ((event.getEntity() instanceof Player)) {
 			if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD)) {
 				if (event.getEntity().level() instanceof ServerLevel serverlevel) {

@@ -1,9 +1,9 @@
 package wardentools.block;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.item.component.CustomData;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.ItemStackHandler;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 import wardentools.items.ItemRegistry;

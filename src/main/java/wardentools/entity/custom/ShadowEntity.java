@@ -38,7 +38,7 @@ import net.minecraft.world.level.gameevent.*;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -246,8 +246,8 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 		tag.putBoolean("isStasis", this.isStasis());
 		tag.putInt("walkToIdleTicks", this.getWalkToIdleTicks());
 		VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, this.vibrationData)
-				.resultOrPartial(LOGGER::error).ifPresent((p_219418_) -> {
-			tag.put("listener", p_219418_);
+				.resultOrPartial(LOGGER::error).ifPresent((tag1) -> {
+			tag.put("listener", tag1);
 		});
 	}
 
@@ -293,7 +293,7 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	}
 
 	@Override
-	public boolean canDrownInFluidType(FluidType type) {
+	public boolean canDrownInFluidType(@NotNull FluidType type) {
 		return false;
 	}
 

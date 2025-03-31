@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
@@ -47,20 +48,20 @@ public class DysfunctionningCatalystMenu extends AbstractContainerMenu {
 	}
 
 	private void createBlockEntityInventory(DysfunctionningCatalystBlockEntity be) {
-		be.getInventoryOptional().ifPresent(inventory -> {
-			addSlot(new CristalFragmentSlot(inventory, 0, 15, 15,
-					CristalFragmentSlot.CristalType.CITRINE));
-			addSlot(new CristalFragmentSlot(inventory, 1, 15, 42,
-					CristalFragmentSlot.CristalType.AMETHYST));
-			addSlot(new CristalFragmentSlot(inventory, 2, 15, 70,
-					CristalFragmentSlot.CristalType.PALE_SHARD));
-			addSlot(new CristalFragmentSlot(inventory, 3, 145, 15,
-					CristalFragmentSlot.CristalType.RUBY));
-			addSlot(new CristalFragmentSlot(inventory, 4, 145, 42,
-					CristalFragmentSlot.CristalType.MALACHITE));
-			addSlot(new CristalFragmentSlot(inventory, 5, 145, 70,
-					CristalFragmentSlot.CristalType.ECHO_SHARD));
-		});
+		ItemStackHandler inventory = be.getInventory();
+		if (inventory == null) return;
+		addSlot(new CristalFragmentSlot(inventory, 0, 15, 15,
+				CristalFragmentSlot.CristalType.CITRINE));
+		addSlot(new CristalFragmentSlot(inventory, 1, 15, 42,
+				CristalFragmentSlot.CristalType.AMETHYST));
+		addSlot(new CristalFragmentSlot(inventory, 2, 15, 70,
+				CristalFragmentSlot.CristalType.PALE_SHARD));
+		addSlot(new CristalFragmentSlot(inventory, 3, 145, 15,
+				CristalFragmentSlot.CristalType.RUBY));
+		addSlot(new CristalFragmentSlot(inventory, 4, 145, 42,
+				CristalFragmentSlot.CristalType.MALACHITE));
+		addSlot(new CristalFragmentSlot(inventory, 5, 145, 70,
+				CristalFragmentSlot.CristalType.ECHO_SHARD));
 	}
 
 	private void createPlayerInventory(Inventory playerInventory) {

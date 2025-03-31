@@ -12,7 +12,7 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.entity.custom.ParasyteEntity;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationScream;
 import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationSonicStrikeSound;
 
@@ -59,11 +59,11 @@ public class IncarnationSonicStrikeAttackGoal extends Goal {
         if (!this.incarnation.level().isClientSide) {
             if (this.incarnation.getSonicStrikeTick()
                     == ContagionIncarnationEntity.SONIC_STRIKE_DURATION - SCREAM_SOUND_DELAY) {
-                PacketHandler.sendToAllClient(new ContagionIncarnationScream(this.incarnation.position()));
+                ModPackets.sendToAllClient(new ContagionIncarnationScream(this.incarnation.position()));
             }
             if (this.incarnation.getSonicStrikeTick()
                     == ContagionIncarnationEntity.SONIC_STRIKE_EFFECT_TICK + SONIC_SOUND_ADVANCE_TICK) {
-                PacketHandler.sendToAllClient(new ContagionIncarnationSonicStrikeSound(this.incarnation.position()));
+                ModPackets.sendToAllClient(new ContagionIncarnationSonicStrikeSound(this.incarnation.position()));
             }
             if (this.incarnation.getSonicStrikeTick() == ContagionIncarnationEntity.SONIC_STRIKE_EFFECT_TICK) {
                 applyBlindnessAndSummonParasyte();

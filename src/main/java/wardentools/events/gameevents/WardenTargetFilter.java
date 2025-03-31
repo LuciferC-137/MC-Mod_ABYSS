@@ -4,18 +4,18 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.ModMain;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class WardenTargetFilter {
 
 	@SubscribeEvent
-    public static void onLivingUpdate(LivingTickEvent event) {
+    public static void onLivingUpdate(LivingEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof Warden warden) {
             Entity target = warden.getTarget();

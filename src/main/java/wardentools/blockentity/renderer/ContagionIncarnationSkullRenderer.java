@@ -13,12 +13,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.ContagionIncarnationSkullBlockEntity;
 import wardentools.client.model.ContagionIncarnationSkull;
 
+@OnlyIn(Dist.CLIENT)
 public class ContagionIncarnationSkullRenderer implements BlockEntityRenderer<ContagionIncarnationSkullBlockEntity> {
     private static final ContagionIncarnationSkull model =
 			new ContagionIncarnationSkull(ContagionIncarnationSkull.createBodyLayer().bakeRoot());

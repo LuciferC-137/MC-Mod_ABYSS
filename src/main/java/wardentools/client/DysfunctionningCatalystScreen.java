@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.block.DysfunctionningCatalystBlock;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
 

@@ -46,7 +46,7 @@ public class ShowWinScreen {
     public static void handlePacket(ShowWinScreen msg) {
         Minecraft minecraft = Minecraft.getInstance();
         CustomWinScreen winScreen = new CustomWinScreen(true, () -> {
-            PacketHandler.sendToServer(
+            ModPackets.sendToServer(
                     new TeleportPlayerTo(msg.x, msg.y, msg.z));
             minecraft.setScreen((Screen)null);
         });

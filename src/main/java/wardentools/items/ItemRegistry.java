@@ -2,6 +2,7 @@ package wardentools.items;
 
 
 import net.minecraft.world.item.*;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wardentools.ModMain;
@@ -130,7 +131,7 @@ public class ItemRegistry {
 	
 	public static final DeferredItem<Item> DEEPLURKER_EGG =
 			ITEMS.register("deeplurker_spawn_egg",
-			() -> new CustomSpawnEggItem(ModEntities.DEEPLURKER, 0x005693,
+			() -> new DeferredSpawnEggItem(ModEntities.DEEPLURKER, 0x005693,
 					0x00ebff, new Item.Properties()));
 	
 	public static final DeferredItem<Item> DEEP_FRUIT =
@@ -249,7 +250,7 @@ public class ItemRegistry {
 	
 	public static final DeferredItem<Item> PALEWANDERER_EGG =
 			ITEMS.register("pale_wanderer_spawn_egg",
-			() -> new CustomSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
+			() -> new DeferredSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
 					0x00ebff, new Item.Properties()));
 	
 	public static final DeferredItem<Item> WHITE_GRASS =
@@ -461,7 +462,7 @@ public class ItemRegistry {
 
 	public static final DeferredItem<Item> TEMPER_EGG =
 			ITEMS.register("temper_spawn_egg",
-					() -> new CustomSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
+					() -> new DeferredSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
 							0x72c8cc, new Item.Properties()));
 
 	public static final DeferredItem<Item> RADIANT_STAFF =
@@ -480,22 +481,22 @@ public class ItemRegistry {
 
 	public static final DeferredItem<Item> PARASYTE_EGG =
 			ITEMS.register("parasyte_spawn_egg",
-					() -> new CustomSpawnEggItem(ModEntities.PARASYTE, 0x319473,
+					() -> new DeferredSpawnEggItem(ModEntities.PARASYTE, 0x319473,
 							0x30ab9c, new Item.Properties()));
 
 	public static final DeferredItem<Item> PROTECTOR_EGG =
 			ITEMS.register("protector_spawn_egg",
-					() -> new CustomSpawnEggItem(ModEntities.PROTECTOR, 0xbad3d4,
+					() -> new DeferredSpawnEggItem(ModEntities.PROTECTOR, 0xbad3d4,
 							0x3bedf5, new Item.Properties()));
 
 	public static final DeferredItem<Item> CONTAGION_INCARNATION_EGG =
 			ITEMS.register("contagion_incarnation_spawn_egg",
-					() -> new CustomSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
+					() -> new DeferredSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
 							0xbdbd8a, new Item.Properties()));
 
 	public static final DeferredItem<Item> NOCTILURE_EGG =
 			ITEMS.register("noctilure_spawn_egg",
-					() -> new CustomSpawnEggItem(ModEntities.NOCTILURE, 0x08155c, 0xcad4fc,
+					() -> new DeferredSpawnEggItem(ModEntities.NOCTILURE, 0x08155c, 0xcad4fc,
 							new Item.Properties()));
 
 	public static final DeferredItem<Item> DYSFUNCTIONNING_CATALYST =
@@ -534,7 +535,7 @@ public class ItemRegistry {
 
 	public static final DeferredItem<Item> SHADOW_EGG =
 			ITEMS.register("shadow_spawn_egg",
-					() -> new CustomSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
+					() -> new DeferredSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
 							new Item.Properties()));
 	
 	public static final DeferredItem<Item> CONTAGION_INCARNATION_SKULL =

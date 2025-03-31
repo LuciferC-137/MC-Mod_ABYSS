@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,17 +22,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ProtectorHeartItem;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceExplosion;
 
 import java.util.Objects;
@@ -51,7 +48,6 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
             }
 		}
 	};
-	private final LazyOptional<ItemStackHandler> inventoryOptional = LazyOptional.of(() -> this.inventory);
 
 	public ProtectorInvokerBlockEntity(BlockPos pos, BlockState state) {
 		super(BlockEntityRegistry.PROTECTOR_INVOKER_BLOCK_ENTITY.get(), pos, state);
@@ -99,7 +95,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 				}
 				protec.makeSpawnAnimation();
 				Vec3 particleSource = spawnPos.above().getCenter();
-				PacketHandler.sendToAllClient(new ParticleRadianceExplosion(particleSource));
+				ModPackets.sendToAllClient(new ParticleRadianceExplosion(particleSource));
 				level.addFreshEntity(protec);
 				invoker.protectorSuccessfullyInvoked = true;
 			}
@@ -190,21 +186,6 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	}
 
 	@Override
-	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap){
-		if (cap == ForgeCapabilities.ITEM_HANDLER) {
-			return this.inventoryOptional.cast();
-		}
-		return super.getCapability(cap);
-	}
-	
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		this.inventoryOptional.invalidate();
-	}
-
-
-	@Override
 	public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
 		CompoundTag nbt = super.getUpdateTag(provider);
 		this.saveAdditional(nbt, provider);
@@ -239,11 +220,6 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	public ItemStackHandler getInventory() {
 		return this.inventory;
 	}
-	
-	public LazyOptional<ItemStackHandler> getInventoryOptional() {
-        return this.inventoryOptional;
-    }
-
 
 	public boolean isProtectorValid(ProtectorEntity protector) {
 		if (!this.inventory.getStackInSlot(0).isEmpty()) {

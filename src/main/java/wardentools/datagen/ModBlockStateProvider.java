@@ -1,13 +1,13 @@
 package wardentools.datagen;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 
@@ -125,56 +125,56 @@ public class ModBlockStateProvider extends BlockStateProvider {
         
     }
 
-    private void registerCrossCutoutBlock(RegistryObject<Block> blockRegistryObject) {
+    private void registerCrossCutoutBlock(DeferredBlock<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
-                models().cross(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                models().cross(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
 
-    private void registerCutoutBlock(RegistryObject<Block> blockRegistryObject) {
+    private void registerCutoutBlock(DeferredBlock<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
-                models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         blockTexture(blockRegistryObject.get())).renderType("cutout"));
         simpleBlockItem(blockRegistryObject.get(), models().getExistingFile(blockTexture(blockRegistryObject.get())));
     }
 
-    private void registerTranslucentBlock(RegistryObject<Block> blockRegistryObject) {
+    private void registerTranslucentBlock(DeferredBlock<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
-                models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         blockTexture(blockRegistryObject.get())).renderType("translucent"));
         simpleBlockItem(blockRegistryObject.get(), models().getExistingFile(blockTexture(blockRegistryObject.get())));
     }
 
-    private void registerLeavesBlock(RegistryObject<Block> blockRegistryObject) {
+    private void registerLeavesBlock(DeferredBlock<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(),
-                models().singleTexture(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                models().singleTexture(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         ResourceLocation.withDefaultNamespace("block/leaves"),
                         "all", blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
     
 
-    private void registerBlockWithItem(RegistryObject<Block> blockRegistryObject) {
+    private void registerBlockWithItem(DeferredBlock<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 
     private void registerDropExperienceBlockWithItem(
-            RegistryObject<DropExperienceBlock> blockRegistryObject) {
+            DeferredBlock<DropExperienceBlock> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
     
-    private void registerDarkGrassBlock(RegistryObject<Block> blockRegistryObject) {
+    private void registerDarkGrassBlock(DeferredBlock<Block> blockRegistryObject) {
         ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darkgrass_block_side");
         ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/darkgrass_block_top");
         ResourceLocation bottomTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darkdirt");
         ModelFile modelFile = models().cubeBottomTop(
-        		ForgeRegistries.BLOCKS.getKey(
+        		BuiltInRegistries.BLOCK.getKey(
         				blockRegistryObject.get()).getPath(), sideTexture, bottomTexture, topTexture);
         simpleBlockWithItem(blockRegistryObject.get(), modelFile);
     }
     
-    private void registerFromLocation(RegistryObject<Block> blockRegistryObject, String location) {
+    private void registerFromLocation(DeferredBlock<Block> blockRegistryObject, String location) {
         	simpleBlockWithItem(blockRegistryObject.get(),
-        	    models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+        	    models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
         	    		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, location)));
     }
 }

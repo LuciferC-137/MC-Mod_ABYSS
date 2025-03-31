@@ -2,6 +2,7 @@ package wardentools.blockentity;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleOptions;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,20 +18,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
 import wardentools.ModMain;
 import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.util.CustomEnergyStorage;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.items.ItemRegistry;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharging;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystCharged;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceCatalystPurifying;
@@ -49,11 +46,10 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		}
 	};
 	private int tickFractionner = 0;
-	private final LazyOptional<ItemStackHandler> inventoryOptional = LazyOptional.of(() -> this.inventory);
-	
-	private final CustomEnergyStorage energy = new CustomEnergyStorage(1000, 0, 100, 0); //capacity, maxReceive, maxExtract, defaultEnergy
-	private final LazyOptional<CustomEnergyStorage> energyOptional = LazyOptional.of(() -> this.energy);
-	
+
+	private final CustomEnergyStorage energy = new CustomEnergyStorage(1000, 0,
+			100, 0); //capacity, maxReceive, maxExtract, defaultEnergy
+
 	private int burnTime, maxBurnTime = 0;
 	public final static int purifyTime = 200;
 	private int purifyingTime = 0;
@@ -134,7 +130,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 					}
 				} else {
 					// is burning
-					PacketHandler.sendToAllClient(new ParticleRadianceCatalystCharging(this.getBlockPos()));
+					ModPackets.sendToAllClient(new ParticleRadianceCatalystCharging(this.getBlockPos()));
 					this.burnTime--;
 					this.energy.addEnergy(1);
 					sendUpdate();
@@ -147,7 +143,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 						this.purifyingTime = 0;
 						sendUpdate();
 					} else {
-						PacketHandler.sendToAllClient(new ParticleRadianceCatalystPurifying(this.getBlockPos()));
+						ModPackets.sendToAllClient(new ParticleRadianceCatalystPurifying(this.getBlockPos()));
 						this.purifyingTime++;
 						if (this.purifyingTime>=purifyTime) {
 							this.purifyingTime = 0;
@@ -176,27 +172,10 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 					this.purifyingTime++;
 					sendUpdate();
 				} else if (this.tickFractionner%5==1){
-					PacketHandler.sendToAllClient(new ParticleRadianceCatalystCharged(this.getBlockPos()));
+					ModPackets.sendToAllClient(new ParticleRadianceCatalystCharged(this.getBlockPos()));
 				}
 			}
 		}
-	}
-
-	@Override
-	public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap){
-		if (cap == ForgeCapabilities.ITEM_HANDLER) {
-			return this.inventoryOptional.cast();
-		} else if (cap == ForgeCapabilities.ENERGY) {
-			return this.energyOptional.cast();
-		}
-		return super.getCapability(cap);
-	}
-	
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		this.inventoryOptional.invalidate();
-		this.energyOptional.invalidate();
 	}
 
 	@Override
@@ -277,20 +256,12 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		return this.inventory;
 	}
 	
-	public LazyOptional<ItemStackHandler> getInventoryOptional() {
-        return this.inventoryOptional;
-    }
-	
 	public CustomEnergyStorage getEnergy() {
 		return this.energy;
 	}
 	
 	public void setEnergy(int energy) {
         this.energy.setEnergy(energy);
-    }
-	
-	public LazyOptional<CustomEnergyStorage> getEnergyOptional() {
-        return this.energyOptional;
     }
 	
 	public int getPurifyingTime() {

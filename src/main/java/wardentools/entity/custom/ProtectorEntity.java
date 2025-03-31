@@ -7,7 +7,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AnimationState;
@@ -33,7 +32,7 @@ import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import wardentools.entity.utils.goal.ChooseMonsterTargetGoal;
 import wardentools.entity.utils.goal.ReturnToInvokerGoal;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceImplosion;
 import wardentools.network.ParticulesSoundsEffects.SynchronizeProtectorHeart;
 import wardentools.sounds.ModSounds;
@@ -177,7 +176,7 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 
 	private void deathParticleEffect() {
-		PacketHandler.sendToAllClient(new ParticleRadianceImplosion(this.getPosition(1f)
+		ModPackets.sendToAllClient(new ParticleRadianceImplosion(this.getPosition(1f)
 				.add(0, 1f, 0)));
 	}
 
@@ -269,7 +268,7 @@ public class ProtectorEntity extends AbstractGolem {
 	@Override
 	public boolean hurt(@NotNull DamageSource source, float amount) {
 		if (this.invokerPos != null){
-			PacketHandler.sendToAllClient(new SynchronizeProtectorHeart(this.invokerPos, this.getHealth()));
+			ModPackets.sendToAllClient(new SynchronizeProtectorHeart(this.invokerPos, this.getHealth()));
 			if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker) {
 				invoker.saveHealth(this);
 			}

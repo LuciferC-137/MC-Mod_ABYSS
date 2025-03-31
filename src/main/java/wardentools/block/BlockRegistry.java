@@ -315,6 +315,7 @@ public class BlockRegistry {
 			() -> new RadianceCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEACON)
 					.strength(5.0f, 15.0f)
 					.noOcclusion()
+					.noLootTable()
 					.lightLevel((state) -> 10)));
 	
 	public static final DeferredBlock<Block> DEEPFLOWER = BLOCKS.register("deepflower",
@@ -389,7 +390,7 @@ public class BlockRegistry {
 	public static final DeferredBlock<LiquidCorruptionBlock> LIQUID_CORRUPTION_BLOCK
 			= BLOCKS.register("liquid_corruption_block",
 				() -> new LiquidCorruptionBlock(FluidRegistry.SOURCE_LIQUID_CORRUPTION,
-						BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA).speedFactor(0.5f)));
+						BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA).speedFactor(0.5f).noLootTable()));
 
 	public static final DeferredBlock<Block> PALE_CRISTAL
 			= BLOCKS.register("pale_cristal",
@@ -471,6 +472,7 @@ public class BlockRegistry {
 			() -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.END_PORTAL)
 					.noCollission()
 					.forceSolidOn()
+					.noLootTable()
 					.lightLevel((state) -> 10)));
 
 	public static final DeferredBlock<Block> SOLID_CORRUPTION
@@ -484,6 +486,7 @@ public class BlockRegistry {
 			() -> new DysfunctionningCatalystBlock(BlockBehaviour.Properties
 					.ofFullCopy(BlockRegistry.RADIANCE_CATALYST.get())
 					.strength(-1f)
+					.noLootTable()
 					.lightLevel((state) -> 3)));
 
 	public static final DeferredBlock<Block> BLACK_LANTERN
@@ -532,5 +535,6 @@ public class BlockRegistry {
 					.strength(3.0F)
 					.noOcclusion()
 					.randomTicks()
+					.noLootTable()
 					.lightLevel((state) -> 2)));
 }

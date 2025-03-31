@@ -15,13 +15,13 @@ public class ModMusics {
     public static final int TEN_MINUTES = 12000;
     public static final int FIVE_MINUTES = 6000;
     private static final ResourceKey<SoundEvent> DEEP_FOREST_KEY = ResourceKey.create(Registries.SOUND_EVENT,
-            ModSounds.DEEP_FOREST.getId());
+            ModSounds.DEEP_FOREST.get().getLocation());
     private static final ResourceKey<SoundEvent> WHITE_FOREST_KEY = ResourceKey.create(Registries.SOUND_EVENT,
-            ModSounds.WHITE_FOREST.getId());
+            ModSounds.WHITE_FOREST.get().getLocation());
     private static final ResourceKey<SoundEvent> INCARNATION_KEY = ResourceKey.create(Registries.SOUND_EVENT,
-            ModSounds.INCARNATION_THEME.getId());
+            ModSounds.INCARNATION_THEME.get().getLocation());
     private static final ResourceKey<SoundEvent> ABYSS_KEY = ResourceKey.create(Registries.SOUND_EVENT,
-            ModSounds.ABYSS_THEME.getId());
+            ModSounds.ABYSS_THEME.get().getLocation());
 
     private static final Holder<SoundEvent> DEEP_FOREST_SOUND
             = BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(DEEP_FOREST_KEY);

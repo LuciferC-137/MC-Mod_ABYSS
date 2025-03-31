@@ -3,9 +3,9 @@ package wardentools.weather;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import wardentools.network.PacketHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import wardentools.network.ModPackets;
 import wardentools.weather.network.RequestFogDistanceUpdateFromServer;
 
 /**
@@ -38,7 +38,7 @@ public class AbyssFogClientHandler {
     }
 
     public void initializeFogDistance() {
-        PacketHandler.sendToServer(new RequestFogDistanceUpdateFromServer());
+        ModPackets.sendToServer(new RequestFogDistanceUpdateFromServer());
         this.serverFogDistance = AbyssWeatherManager.MAX_FOG_DISTANCE;
         // The line above is to prevent absurd fog distance if the server has too much delay to answer.
     }

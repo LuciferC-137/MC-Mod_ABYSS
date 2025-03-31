@@ -11,6 +11,7 @@ import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
+import org.jetbrains.annotations.NotNull;
 import wardentools.worldgen.tree.ModFoliagePlacers;
 
 public class DarktreeFoliagePlacer extends FoliagePlacer {
@@ -26,15 +27,15 @@ public class DarktreeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    protected FoliagePlacerType<?> type() {
+    protected @NotNull FoliagePlacerType<?> type() {
         return ModFoliagePlacers.DARKTREE_FOLIAGE_PLACER.get();
     }
 
     @Override
-    protected void createFoliage(LevelSimulatedReader pLevel, FoliageSetter pBlockSetter,
-    		RandomSource pRandom, TreeConfiguration pConfig,
-            int pMaxFreeTreeHeight, FoliageAttachment pAttachment,
-            int pFoliageHeight, int pFoliageRadius, int pOffset) {
+    protected void createFoliage(@NotNull LevelSimulatedReader pLevel, @NotNull FoliageSetter pBlockSetter,
+								 RandomSource pRandom, @NotNull TreeConfiguration pConfig,
+								 int pMaxFreeTreeHeight, @NotNull FoliageAttachment pAttachment,
+								 int pFoliageHeight, int pFoliageRadius, int pOffset) {
     	
     	int variation = pRandom.nextInt(-2, 3);
     	int layers = pFoliageHeight;
@@ -67,12 +68,14 @@ public class DarktreeFoliagePlacer extends FoliagePlacer {
     }
 
     @Override
-    public int foliageHeight(RandomSource pRandom, int pHeight, TreeConfiguration pConfig) {
+    public int foliageHeight(@NotNull RandomSource pRandom, int pHeight,
+							 @NotNull TreeConfiguration pConfig) {
         return this.height;
     }
 
     @Override
-    protected boolean shouldSkipLocation(RandomSource pRandom, int pLocalX, int pLocalY, int pLocalZ, int pRange, boolean pLarge) {
+    protected boolean shouldSkipLocation(@NotNull RandomSource pRandom, int pLocalX, int pLocalY,
+										 int pLocalZ, int pRange, boolean pLarge) {
         return false;
     }
 

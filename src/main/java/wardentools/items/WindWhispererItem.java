@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.MinecraftForge;
+import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.NotNull;
 import wardentools.misc.wind.WhisperManager;
 import wardentools.worldgen.dimension.ModDimensions;
@@ -22,7 +22,7 @@ public class WindWhispererItem extends BlockItem {
 	public WindWhispererItem(Block block, Properties prop) {
 		super(block, prop);
 	    this.rand = RandomSource.create();
-	    MinecraftForge.EVENT_BUS.register(this);
+	    NeoForge.EVENT_BUS.register(this);
 	}
 
 	@Override

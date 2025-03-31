@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.WindWhisperSound;
 import wardentools.weather.lightning.AbyssLightningEntity;
 import wardentools.weather.network.SendFogDistanceToClient;
@@ -127,7 +127,7 @@ public class AbyssWeatherManager {
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
                     player.sendSystemMessage(stormMessage);
-                    PacketHandler.sendToClient(new WindWhisperSound(), player);
+                    ModPackets.sendToClient(new WindWhisperSound(), player);
                 });
     }
 
@@ -137,7 +137,7 @@ public class AbyssWeatherManager {
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
                     player.sendSystemMessage(stormEndMessage);
-                    PacketHandler.sendToClient(new WindWhisperSound(), player);
+                    ModPackets.sendToClient(new WindWhisperSound(), player);
                 });
         this.timeSinceStormBegin = 0;
     }
@@ -147,11 +147,11 @@ public class AbyssWeatherManager {
     }
 
     public void sendServerFogDistanceToAllClients() {
-        PacketHandler.sendToAllClient(new SendFogDistanceToClient(this.getFogDistance()));
+        ModPackets.sendToAllClient(new SendFogDistanceToClient(this.getFogDistance()));
     }
 
     public void sendServerFogDistanceToClient(ServerPlayer player) {
-        PacketHandler.sendToClient(new SendFogDistanceToClient(this.getFogDistance()), player);
+        ModPackets.sendToClient(new SendFogDistanceToClient(this.getFogDistance()), player);
     }
 }
 

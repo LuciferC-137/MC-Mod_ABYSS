@@ -30,7 +30,7 @@ public class LevelRendererMixin {
 	
 	@Inject(method = "renderSky", at = @At("HEAD"))
 	private void onRenderSky(Matrix4f pose, Matrix4f matrix,
-			float f, Camera cam, boolean bool, Runnable runnable, CallbackInfo ci) {
+			float partialTick, Camera cam, boolean bool, Runnable runnable, CallbackInfo ci) {
         if (cam.getEntity().level().dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
         int BRIGHTNESS = (int)(230f
 				* (AbyssWeatherEvent.WEATHER_MANAGER.getFogDistance() / AbyssWeatherManager.MAX_FOG_DISTANCE));
@@ -40,7 +40,7 @@ public class LevelRendererMixin {
         ClientLevel level = mc.level;
 		if (level == null) return;
 		if (level.effects().renderSky(level, levelRenderer.getTicks(),
-				f, cam, pose, bool, runnable)) {
+				partialTick, matrix, cam, pose, bool, runnable)) {
 			return;
 		}
 		runnable.run();

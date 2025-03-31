@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.BlockEntityRegistry;
@@ -53,16 +53,12 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 													   @NotNull Level level, @NotNull BlockPos pos,
 													   @NotNull Player player, @NotNull InteractionHand hand,
 													   @NotNull BlockHitResult hitResult) {
-		switch (this.use(level, pos, player)) {
-			case InteractionResult.SUCCESS:
-				return ItemInteractionResult.SUCCESS;
-			case InteractionResult.FAIL:
-				return ItemInteractionResult.FAIL;
-			case InteractionResult.PASS:
-				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-	}
+        return switch (this.use(level, pos, player)) {
+            case InteractionResult.SUCCESS -> ItemInteractionResult.SUCCESS;
+            case InteractionResult.FAIL -> ItemInteractionResult.FAIL;
+            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        };
+    }
 
 	public @NotNull InteractionResult use(Level level, @NotNull BlockPos pos,
 										  @NotNull Player player) {

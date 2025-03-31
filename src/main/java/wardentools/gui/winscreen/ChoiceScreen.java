@@ -10,12 +10,11 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
-import net.minecraft.world.entity.vehicle.Minecart;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.SwitchAchievement;
 import wardentools.sounds.ModMusics;
 
@@ -93,12 +92,12 @@ public class ChoiceScreen extends Screen {
    private void respawn() {this.onFinished.run();}
 
    private void onRadianceClicked() {
-      PacketHandler.sendToServer(new SwitchAchievement(0));
+      ModPackets.sendToServer(new SwitchAchievement(0));
       this.respawn();
    }
 
    private void onContagionClicked() {
-      PacketHandler.sendToServer(new SwitchAchievement(1));
+      ModPackets.sendToServer(new SwitchAchievement(1));
       this.respawn();
    }
 

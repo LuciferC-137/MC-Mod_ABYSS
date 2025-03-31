@@ -21,9 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.ModMain;
@@ -33,7 +31,7 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
 import wardentools.items.ItemRegistry;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.AncientLaboratoryGateSound;
 import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationEmergeSound;
 import wardentools.network.ParticulesSoundsEffects.ParticleContagionExplosion;
@@ -51,7 +49,6 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
             DysfunctionningCatalystBlockEntity.this.setChanged();
         }
     };
-    private final LazyOptional<ItemStackHandler> inventoryOptional = LazyOptional.of(() -> this.inventory);
     private static final Component TITLE =
             Component.translatable("container." + ModMain.MOD_ID + ".dysfunctionning_catalyst");
     private final ContainerData containerData = new ContainerData() {
@@ -264,7 +261,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         contagionIncarnation.initiateSpawnAnimation();
         contagionIncarnation.setCatalystPos(this.worldPosition);
         this.level.addFreshEntity(contagionIncarnation);
-        PacketHandler.sendToAllClient(new ContagionIncarnationEmergeSound());
+        ModPackets.sendToAllClient(new ContagionIncarnationEmergeSound());
     }
 
     public void clientTick() {
@@ -293,7 +290,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                     for (BlockPos pos : fencePos) {
                         if (this.level.getBlockState(pos).getBlock() == BlockRegistry.DARKTREE_FENCE.get()) {
                             this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                            PacketHandler.sendToAllClient(new ParticleDarktreeFenceDestroyed(pos.getCenter()));
+                            ModPackets.sendToAllClient(new ParticleDarktreeFenceDestroyed(pos.getCenter()));
                         }
                     }
                 }
@@ -312,7 +309,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     private void sendGateClosingSoundEffectToClient(Vec3 source) {
-        PacketHandler.sendToAllClient(new AncientLaboratoryGateSound(source));
+        ModPackets.sendToAllClient(new AncientLaboratoryGateSound(source));
     }
 
     private void handleParticleEffects() {
@@ -379,17 +376,6 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                     speedMultiplier,
                     0);
         }
-    }
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap){
-        return this.inventoryOptional.cast();
-    }
-
-    @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.inventoryOptional.invalidate();
     }
 
     @Override
@@ -497,7 +483,7 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     public void hugeParticleExplosion() {
-        PacketHandler.sendToAllClient(new ParticleContagionExplosion(
+        ModPackets.sendToAllClient(new ParticleContagionExplosion(
                 this.worldPosition.getCenter(), 1f, 2f, 800));
     }
 
@@ -653,7 +639,4 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         return this.inventory;
     }
 
-    public LazyOptional<ItemStackHandler> getInventoryOptional() {
-        return this.inventoryOptional;
-    }
 }

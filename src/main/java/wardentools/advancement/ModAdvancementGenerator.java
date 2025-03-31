@@ -8,8 +8,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.advancement.criteria.AbyssPortalCriteria;
@@ -24,7 +24,7 @@ import wardentools.worldgen.dimension.ModDimensions;
 
 import java.util.function.Consumer;
 
-public class ModAdvancementGenerator implements ForgeAdvancementProvider.AdvancementGenerator {
+public class ModAdvancementGenerator implements AdvancementProvider.AdvancementGenerator {
     @Override
     public void generate(HolderLookup.@NotNull Provider registries,
                          @NotNull Consumer<AdvancementHolder> saver,
@@ -42,7 +42,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 // Advancement criterion
                 .addCriterion("has_sculk", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SCULK))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyss"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyss"), existingFileHelper);
 
         // Second advancement triggering after abyss
         AdvancementHolder corruptedHeart = Advancement.Builder.advancement()
@@ -59,7 +59,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("has_warden_heart",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_HEART.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted_heart"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted_heart"), existingFileHelper);
 
         AdvancementHolder abyssdiver = Advancement.Builder.advancement()
                 .parent(corruptedHeart)
@@ -75,7 +75,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("has_abyssdiver",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ABYSS_DIVER.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdiver"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdiver"), existingFileHelper);
 
         AdvancementHolder windwhisperer = Advancement.Builder.advancement()
                 .parent(corruptedHeart)
@@ -91,7 +91,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("windwhisperer",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WIND_WHISPERER.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "windwhisperer"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "windwhisperer"), existingFileHelper);
 
         AdvancementHolder theAbyss = Advancement.Builder.advancement()
                 .parent(abyss)
@@ -107,7 +107,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("to_the_abyss",
                         ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.ABYSS_LEVEL_KEY))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "the_abyss"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "the_abyss"), existingFileHelper);
 
         AdvancementHolder cristals = Advancement.Builder.advancement()
                 .parent(theAbyss)
@@ -129,7 +129,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                                 ItemRegistry.CITRINE_BLOCK.get(),
                                 ItemRegistry.MALACHITE_BLOCK.get(),
                                 Items.AMETHYST_BLOCK))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristals"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristals"), existingFileHelper);
 
         AdvancementHolder radiance = Advancement.Builder.advancement()
                 .parent(theAbyss)
@@ -145,7 +145,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("radiance",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RADIANCE_FRAGMENT.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance"), existingFileHelper);
 
         AdvancementHolder radianceCatalyst = Advancement.Builder.advancement()
                 .parent(radiance)
@@ -161,7 +161,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("radiance_catalyst",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RADIANCE_CATALYST.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_catalyst"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_catalyst"), existingFileHelper);
 
         AdvancementHolder radiantArmor = Advancement.Builder.advancement()
                 .parent(radianceCatalyst)
@@ -177,8 +177,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("radiant_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.getHolder().get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_armor"));
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER)))
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_armor"), existingFileHelper);
 
         AdvancementHolder protectorInvoker = Advancement.Builder.advancement()
                 .parent(radiance)
@@ -194,7 +194,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("protector_invoker",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.PROTECTOR_INVOKER.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector_invoker"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector_invoker"), existingFileHelper);
 
         AdvancementHolder protector = Advancement.Builder.advancement()
                 .parent(protectorInvoker)
@@ -210,7 +210,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("protector",
                         SummonProtectorCriteria.TriggerInstance.summonProtector())
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector"), existingFileHelper);
 
         AdvancementHolder deepCristal = Advancement.Builder.advancement()
                 .parent(theAbyss)
@@ -226,7 +226,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("deepcristal",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DEEPCRISTAL.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal"), existingFileHelper);
 
         AdvancementHolder deepArmor = Advancement.Builder.advancement()
                 .parent(deepCristal)
@@ -242,8 +242,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("deep_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.getHolder().get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_armor"));
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL)))
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_armor"), existingFileHelper);
 
         AdvancementHolder incarnation = Advancement.Builder.advancement()
                 .parent(deepCristal)
@@ -260,7 +260,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 .addCriterion("kill_contagion_incarnation",
                         KilledTrigger.TriggerInstance.playerKilledEntity(
                                 EntityPredicate.Builder.entity().of(ModEntities.CONTAGION_INCARNATION.get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "incarnation"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "incarnation"), existingFileHelper);
 
         AdvancementHolder corruption_vessel = Advancement.Builder.advancement()
                 .parent(incarnation)
@@ -276,7 +276,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("corruption_vessel",
                         CorruptionVesselCriteria.TriggerInstance.choseCorruption())
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel"), existingFileHelper);
 
         AdvancementHolder radiance_bringer = Advancement.Builder.advancement()
                 .parent(incarnation)
@@ -292,7 +292,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("radiance_bringer",
                         RadianceBringerCriteria.TriggerInstance.choseRadiance())
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer"), existingFileHelper);
 
         AdvancementHolder corrupted = Advancement.Builder.advancement()
                 .parent(deepCristal)
@@ -308,8 +308,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("corrupted",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.getHolder().get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted"));
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED)))
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted"), existingFileHelper);
 
         AdvancementHolder escape = Advancement.Builder.advancement()
                 .parent(abyssdiver)
@@ -324,6 +324,6 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         false
                 )
                 .addCriterion("escape", AbyssPortalCriteria.TriggerInstance.openPortal())
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "escape"));
+                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "escape"), existingFileHelper);
     }
 }

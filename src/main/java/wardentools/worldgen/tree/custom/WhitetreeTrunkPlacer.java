@@ -19,6 +19,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.FoliageAttachment;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
+import org.jetbrains.annotations.NotNull;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 
 public class WhitetreeTrunkPlacer extends TrunkPlacer  {
@@ -33,24 +34,24 @@ public class WhitetreeTrunkPlacer extends TrunkPlacer  {
 	}
 
 	@Override
-	protected TrunkPlacerType<?> type() {
+	protected @NotNull TrunkPlacerType<?> type() {
 		return ModTrunkPlacerTypes.WHITETREE_TRUNK_PLACER.get();
 	}
 
 	@Override
-	public List<FoliageAttachment> placeTrunk(LevelSimulatedReader pLevel,
-			BiConsumer<BlockPos, BlockState> pBlockSetter,
-			RandomSource pRandom, int pFreeTreeHeight, BlockPos pPos,
-			TreeConfiguration pConfig) {
+	public @NotNull List<FoliageAttachment> placeTrunk(@NotNull LevelSimulatedReader pLevel,
+													   @NotNull BiConsumer<BlockPos, BlockState> pBlockSetter,
+													   @NotNull RandomSource pRandom, int pFreeTreeHeight,
+													   BlockPos pPos, @NotNull TreeConfiguration pConfig) {
 		setDirtAt(pLevel, pBlockSetter, pRandom, pPos.below(), pConfig);
 		
 		List<BlockPos> listTrunk = new ArrayList<BlockPos>();
 		List<BlockPos> listTrunkNS = new ArrayList<BlockPos>();
 		List<BlockPos> listTrunkWE = new ArrayList<BlockPos>();
 		List<FoliageAttachment> foliagePositions = new ArrayList<>();
-				
+
 		int treeHeight = pFreeTreeHeight;
-		
+
 		boolean doubleTrunk = false; //Deciding if the tree will have 2x2 tunk
 		if (treeHeight > 9) {
 			doubleTrunk = true;
@@ -74,15 +75,15 @@ public class WhitetreeTrunkPlacer extends TrunkPlacer  {
 		foliagePositions.add(new FoliageAttachment(pPos, 0, doubleTrunk));
 		
 		//Create the trunk
-		for (int i=0; i<listTrunk.size();i++) {
-			this.placeLog(pLevel, pBlockSetter, pRandom, listTrunk.get(i), pConfig);							
-		}
-		for (int i=0; i<listTrunkNS.size();i++) {
-			this.placeLog(pLevel, pBlockSetter, pRandom, listTrunkNS.get(i), pConfig, Direction.EAST);							
-		}
-		for (int i=0; i<listTrunkWE.size();i++) {
-			this.placeLog(pLevel, pBlockSetter, pRandom, listTrunkWE.get(i), pConfig, Direction.NORTH);							
-		}
+        for (BlockPos pos : listTrunk) {
+            this.placeLog(pLevel, pBlockSetter, pRandom, pos, pConfig);
+        }
+        for (BlockPos listTrunkN : listTrunkNS) {
+            this.placeLog(pLevel, pBlockSetter, pRandom, listTrunkN, pConfig, Direction.EAST);
+        }
+        for (BlockPos pos : listTrunkWE) {
+            this.placeLog(pLevel, pBlockSetter, pRandom, pos, pConfig, Direction.NORTH);
+        }
 		return foliagePositions;
 	}
 	
@@ -134,8 +135,8 @@ public class WhitetreeTrunkPlacer extends TrunkPlacer  {
 	}
 	
 	@Override
-	protected boolean placeLog(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter,
-			RandomSource pRandom, BlockPos pos, TreeConfiguration pConfig) {
+	protected boolean placeLog(@NotNull LevelSimulatedReader pLevel, @NotNull BiConsumer<BlockPos, BlockState> pBlockSetter,
+							   @NotNull RandomSource pRandom, @NotNull BlockPos pos, @NotNull TreeConfiguration pConfig) {
 	    return this.placeLog(pLevel, pBlockSetter, pRandom, pos, pConfig, Direction.UP);
 	}
 

@@ -10,11 +10,15 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 import wardentools.gui.MenuRegistry;
 import wardentools.gui.menu.slot.RadianceFragmentSlot;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
+
+import java.util.Objects;
 
 public class RadianceCatalystMenu extends AbstractContainerMenu {
 	private final RadianceCatalystBlockEntity blockEntity;
@@ -37,7 +41,8 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 					.formatted(blockEntity.getClass().getCanonicalName()));
 		}
 		
-		this.levelAccess = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
+		this.levelAccess = ContainerLevelAccess.create(Objects.requireNonNull(blockEntity.getLevel()),
+				blockEntity.getBlockPos());
 		this.data = data;
 		
 		createPlayerHotbar(playerInventory);
@@ -48,11 +53,11 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 	}
 
 	private void createBlockEntityInventory(RadianceCatalystBlockEntity be) {
-		be.getInventoryOptional().ifPresent(inventory -> {
-			addSlot(new RadianceFragmentSlot(inventory, 0, 44, 36));
-			addSlot(new SlotItemHandler(inventory, 1, 111, 19));
-			addSlot(new SlotItemHandler(inventory, 2, 111, 54));
-		});
+		ItemStackHandler inventory = be.getInventory();
+		if (inventory == null) return;
+		addSlot(new RadianceFragmentSlot(inventory, 0, 44, 36));
+		addSlot(new SlotItemHandler(inventory, 1, 111, 19));
+		addSlot(new SlotItemHandler(inventory, 2, 111, 54));
 	}
 
 	private void createPlayerInventory(Inventory playerInventory) {
@@ -71,7 +76,7 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(Player player, int index) {
+	public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
 		Slot fromSlot = getSlot(index);
 		ItemStack fromStack = fromSlot.getItem();
 		if (fromStack.getCount() <= 0) {
@@ -100,7 +105,7 @@ public class RadianceCatalystMenu extends AbstractContainerMenu {
 	}
 
 	@Override
-	public boolean stillValid(Player player) {
+	public boolean stillValid(@NotNull Player player) {
 		return stillValid(this.levelAccess, player, BlockRegistry.RADIANCE_CATALYST.get());
 	}
 	

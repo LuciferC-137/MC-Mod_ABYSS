@@ -34,7 +34,7 @@ public class LiquidCorruptionBlock extends LiquidBlock {
 
     public LiquidCorruptionBlock(java.util.function.Supplier<? extends FlowingFluid> supplier,
                                  BlockBehaviour.Properties properties) {
-        super(supplier, properties);
+        super(supplier.get(), properties);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class LiquidCorruptionBlock extends LiquidBlock {
         if (!entity.level().isClientSide
                 && entity instanceof LivingEntity living
                 && living.level().getGameTime()%20==1) {
-            living.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.getHolder().get(),
+            living.addEffect(new MobEffectInstance(ModEffects.CORRUPTED,
                         400, 1, false, false));
             Holder<DamageType> corruptedDamageTypeHolder = living.level().registryAccess()
                     .registryOrThrow(Registries.DAMAGE_TYPE)

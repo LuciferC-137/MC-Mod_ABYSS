@@ -46,7 +46,7 @@ import wardentools.entity.utils.IncarnationBodyRotationControl;
 import wardentools.entity.utils.IncarnationMoveControl;
 import wardentools.entity.utils.goal.IncarnationAttackGoal;
 import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.StartPlayingIncarnationTheme;
 import wardentools.network.SyncBossEventPacket;
 import wardentools.sounds.ModMusics;
@@ -149,15 +149,15 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossEvent.addPlayer(player);
-        PacketHandler.sendToClient(new SyncBossEventPacket(this.getId(), true), player);
-        PacketHandler.sendToClient(new StartPlayingIncarnationTheme(), player);
+        ModPackets.sendToClient(new SyncBossEventPacket(this.getId(), true), player);
+        ModPackets.sendToClient(new StartPlayingIncarnationTheme(), player);
     }
 
     @Override
     public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossEvent.removePlayer(player);
-        PacketHandler.sendToClient(new SyncBossEventPacket(this.getId(), false), player);
+        ModPackets.sendToClient(new SyncBossEventPacket(this.getId(), false), player);
     }
 
     @Override
@@ -324,7 +324,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
                 if (this.random.nextInt(CHANCE_TO_CORRUPT_ON_HIT) == 0) {
                     this.getTarget().addEffect(
                             new MobEffectInstance(
-                                    ModEffects.CORRUPTED.getHolder().get(), 100, 0));
+                                    ModEffects.CORRUPTED, 100, 0));
                 }
             }
         }

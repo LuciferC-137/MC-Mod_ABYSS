@@ -21,16 +21,14 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
     public ModBlockLootTables(CompletableFuture<HolderLookup.Provider> lookupProvider) throws ExecutionException, InterruptedException {
@@ -164,13 +162,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				block -> createReinforcedGlassItemDrop(BlockRegistry.REINFORCED_GLASS));
     }
 
-    private void addDropSelf(RegistryObject<Block> block) {
-        if (block.isPresent()) {
-            this.dropSelf(block.get());
-        }
+    private void addDropSelf(DeferredBlock<Block> block) {
+		this.dropSelf(block.get());
     }
     
-    private LootTable.Builder createDoubleBlockSingleItemDrop(RegistryObject<Item> item) {
+    private LootTable.Builder createDoubleBlockSingleItemDrop(DeferredItem<Item> item) {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
@@ -178,7 +174,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                                 .when(LootItemRandomChanceCondition.randomChance(0.5f))));
     }
 
-	private LootTable.Builder createBlackLanternItemDrop(RegistryObject<Block> block) {
+	private LootTable.Builder createBlackLanternItemDrop(DeferredBlock<Block> block) {
 		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return LootTable.lootTable()
 				.withPool(
@@ -208,7 +204,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				);
 	}
 
-	private LootTable.Builder createReinforcedGlassItemDrop(RegistryObject<Block> block) {
+	private LootTable.Builder createReinforcedGlassItemDrop(DeferredBlock<Block> block) {
 		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return LootTable.lootTable()
 				.withPool(
@@ -286,19 +282,5 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		return this.hasShearsOrSilkTouch().invert();
 	}
 
-	@Override
-    protected @NotNull Iterable<Block> getKnownBlocks() {
-    	Set<Block> blocksToIgnore = Set.of(
-    	        BlockRegistry.RADIANCE_CATALYST.get(),
-				BlockRegistry.LIQUID_CORRUPTION_BLOCK.get(),
-				BlockRegistry.ABYSS_PORTAL_BLOCK.get(),
-				BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),
-				BlockRegistry.SOUL_SPAWNER.get()
-    	);
-    	List<Block> knownBlocks = BlockRegistry.BLOCKS.getEntries().stream()
-    	        .map(RegistryObject::get)
-    	        .filter(block -> !blocksToIgnore.contains(block))
-    	        .collect(Collectors.toList());
-        return knownBlocks;
-    }
+
 }

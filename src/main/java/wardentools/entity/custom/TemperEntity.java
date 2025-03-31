@@ -106,7 +106,7 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 
 	private void dispawnIfOwnerNotRadianceBringer(){
 		if (this.getOwner() == null) {return;}
-		if (this.getOwner().getEffect(ModEffects.RADIANCE_BRINGER.getHolder().get()) == null){
+		if (this.getOwner().getEffect(ModEffects.RADIANCE_BRINGER) == null){
 			this.remove(RemovalReason.DISCARDED);
 		}
 	}

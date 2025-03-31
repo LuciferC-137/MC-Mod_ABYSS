@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import org.jetbrains.annotations.NotNull;
 import wardentools.advancement.ModCriteriaTriggers;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.ParticleRadianceExplosion;
 import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 
@@ -44,7 +44,7 @@ public class RadiantStaffItem extends Item {
                 if (portal.place(serverLevel, serverLevel.getChunkSource().getGenerator(),
                         serverLevel.random, abovePos)){
                     ModCriteriaTriggers.ABYSS_PORTAL_OPEN.trigger((ServerPlayer)player);
-                    PacketHandler.sendToAllClient(new ParticleRadianceExplosion(context.getClickLocation()));
+                    ModPackets.sendToAllClient(new ParticleRadianceExplosion(context.getClickLocation()));
                     context.getItemInHand()
                             .hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                     return InteractionResult.SUCCESS;

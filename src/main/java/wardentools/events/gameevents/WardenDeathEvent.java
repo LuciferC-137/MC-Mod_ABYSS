@@ -6,15 +6,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.entity.monster.warden.Warden;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.ParticleWardenDeathPacket;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class WardenDeathEvent {
 	
 	@SubscribeEvent
@@ -25,7 +25,7 @@ public class WardenDeathEvent {
    
         	if (!level.isClientSide) {
         		        	
-        		PacketHandler.sendToAllClient(new ParticleWardenDeathPacket(pos));
+        		ModPackets.sendToAllClient(new ParticleWardenDeathPacket(pos));
         	        		   	        		
         		BlockPos deathPos = event.getEntity().blockPosition();
         		int radius = 6;

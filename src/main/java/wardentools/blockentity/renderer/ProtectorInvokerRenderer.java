@@ -1,5 +1,7 @@
 package wardentools.blockentity.renderer;
 
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -27,6 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.items.ItemRegistry;
 
+@OnlyIn(Dist.CLIENT)
 public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorInvokerBlockEntity> {
 	private final BlockEntityRendererProvider.Context context;
 	private boolean sentParticle = false;

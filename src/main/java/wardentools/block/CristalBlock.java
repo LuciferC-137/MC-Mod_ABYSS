@@ -72,7 +72,6 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
 	      this.aabbOffset = length;
 	   }
 
-	@SuppressWarnings("deprecation")
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter,
 										@NotNull BlockPos pos, @NotNull CollisionContext ctx) {
 	      Direction direction = state.getValue(FACING);
@@ -86,14 +85,12 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
         };
 	   }
 
-	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 	      Direction direction = state.getValue(FACING);
 	      BlockPos blockpos = pos.relative(direction.getOpposite());
 	      return level.getBlockState(blockpos).isFaceSturdy(level, blockpos, direction);
 	}
 
-	@SuppressWarnings("deprecation")
 	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction,
 										   @NotNull BlockState state1, @NotNull LevelAccessor level,
 										   @NotNull BlockPos pos, @NotNull BlockPos pos1) {
@@ -115,7 +112,6 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
                           .getType() == Fluids.WATER).setValue(FACING, ctx.getClickedFace());
 	}
 
-	@SuppressWarnings("deprecation")
 	public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
 	      return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
@@ -123,9 +119,8 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
 	@SuppressWarnings("deprecation")
 	public @NotNull BlockState mirror(BlockState state, Mirror mirror) {
 	      return state.rotate(mirror.getRotation(state.getValue(FACING)));
-	   }
+	}
 
-	  @SuppressWarnings("deprecation")
 	public @NotNull FluidState getFluidState(BlockState state) {
 	      return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false)
 				  : super.getFluidState(state);

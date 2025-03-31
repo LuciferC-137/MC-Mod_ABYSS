@@ -22,10 +22,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.AbyssPortalBlockEntity;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ShowWinScreen;
 import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
@@ -158,7 +157,8 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public void onNeighborChange(BlockState state, LevelReader level, BlockPos pos, BlockPos neighbor) {
+    public void onNeighborChange(@NotNull BlockState state, @NotNull LevelReader level,
+                                 @NotNull BlockPos pos, @NotNull BlockPos neighbor) {
         super.onNeighborChange(state, level, pos, neighbor);
         if (!isValidNeighbor(level, neighbor)) {
             if (level instanceof Level) {
@@ -194,11 +194,10 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
 
     private void sendScreenPacket(Player player, BlockPos pos){
         ((ServerLevel)player.level()).removePlayerImmediately((ServerPlayer)player, Entity.RemovalReason.CHANGED_DIMENSION);
-        PacketHandler.sendToClient(new ShowWinScreen(pos), (ServerPlayer) player);
+        ModPackets.sendToClient(new ShowWinScreen(pos), (ServerPlayer) player);
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public boolean canBeReplaced(@NotNull BlockState state, @NotNull Fluid fluid) {
         return false;
     }

@@ -11,7 +11,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import wardentools.misc.wind.WhisperManager;
-import wardentools.network.PacketHandler;
+import wardentools.network.ModPackets;
 import wardentools.network.ParticulesSoundsEffects.ParticleContagionImplosion;
 
 public class WindWhispererBlock extends Block {
@@ -21,7 +21,6 @@ public class WindWhispererBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world,
                                         @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return Shapes.box(0.2, 0.0, 0.2,
@@ -29,11 +28,10 @@ public class WindWhispererBlock extends Block {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
         if (WhisperManager.INSTANCE.sendRandomWhisperToAllPlayers(level)) {
-            PacketHandler.sendToAllClient(new ParticleContagionImplosion(blockPos.getCenter()));
+            ModPackets.sendToAllClient(new ParticleContagionImplosion(blockPos.getCenter()));
         }
     }
 }
