@@ -26,14 +26,14 @@ public class AbyssWeatherEvent {
 	public static final AbyssFogClientHandler CLIENT_WEATHER = new AbyssFogClientHandler();
 	
 	@SubscribeEvent
-	public static void onServerTickEvent(ServerTickEvent event) {
+	public static void onServerTickEvent(ServerTickEvent.Pre event) {
 		ServerLevel abyssLevel = event.getServer().getLevel(ModDimensions.ABYSS_LEVEL_KEY);
 		if (abyssLevel == null) return;
 		WEATHER_MANAGER.tick(abyssLevel);
 	}
 
 	@SubscribeEvent
-	public static void onClientLevelTickEvent(ClientTickEvent event) {
+	public static void onClientLevelTickEvent(ClientTickEvent.Pre event) {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (minecraft.level == null || minecraft.player == null) return;
 		CLIENT_WEATHER.updateFogDistanceOnTick(minecraft.level);

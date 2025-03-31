@@ -15,7 +15,7 @@ import wardentools.ModMain;
 public class WardenTargetFilter {
 
 	@SubscribeEvent
-    public static void onLivingUpdate(LivingEvent event) {
+    public static void onLivingUpdate(LivingEvent.LivingVisibilityEvent event) {
         Entity entity = event.getEntity();
         if (entity instanceof Warden warden) {
             Entity target = warden.getTarget();

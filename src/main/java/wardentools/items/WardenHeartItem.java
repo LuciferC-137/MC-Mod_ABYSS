@@ -8,29 +8,21 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
-import wardentools.ModMain;
 import wardentools.effect.ModEffects;
 import wardentools.misc.WardenLaserAttack;
 import wardentools.network.PayloadsRecords.ParticlesSounds.WardenLaserParticleSound;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class WardenHeartItem extends Item {
 	
 	private final WardenLaserAttack laserAttack;
 	private static final int laserLength = 14;
-	private Player currentPlayer;
 
 	public WardenHeartItem(Properties properties) {
 		super(properties);
 		this.laserAttack = new WardenLaserAttack();
-		NeoForge.EVENT_BUS.register(this);
 	}
 	
 	@Override
@@ -54,12 +46,7 @@ public class WardenHeartItem extends Item {
 		}
 	    return InteractionResultHolder.fail(player.getItemInHand(interactionHand));
 	}
-	
-	@SubscribeEvent
-    public void onPlayerTick(PlayerTickEvent event) {
-		this.currentPlayer = event.getEntity();
-    }
-	
+
 	private static boolean isCorruptionVessel(Player player) {
 		if (player==null) {
 			return false;
@@ -69,6 +56,6 @@ public class WardenHeartItem extends Item {
 	
 	@Override
     public boolean isFoil(@NotNull ItemStack stack) {
-        return isCorruptionVessel(this.currentPlayer);
+		return false; //TODO fix this
     }
 }

@@ -26,7 +26,7 @@ public class WhisperManager {
     private int timeSinceLastWhisper = 0;
 
     @SubscribeEvent
-    public static void onServerTick(ServerTickEvent event) {
+    public static void onServerTick(ServerTickEvent.Pre event) {
         INSTANCE.tick();
     }
 

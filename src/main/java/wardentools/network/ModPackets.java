@@ -10,11 +10,11 @@ import wardentools.network.PayloadsRecords.*;
 import wardentools.network.PayloadsRecords.ParticlesSounds.*;
 
 
-@EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModPackets {
 
 	@SubscribeEvent
-	public static void registerClient(final RegisterPayloadHandlersEvent event) {
+	public static void register(final RegisterPayloadHandlersEvent event) {
 		final PayloadRegistrar registrar = event.registrar("1");
 
 		// ------------------ CLIENT SPECIAL EFFECTS PACKETS --------------------------

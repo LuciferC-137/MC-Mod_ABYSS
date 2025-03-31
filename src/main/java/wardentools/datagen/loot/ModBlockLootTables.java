@@ -3,6 +3,7 @@ package wardentools.datagen.loot;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.core.Holder;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -23,17 +24,16 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
+import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
-    public ModBlockLootTables(CompletableFuture<HolderLookup.Provider> lookupProvider) throws ExecutionException, InterruptedException {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookupProvider.get());
-    }
+	protected ModBlockLootTables(HolderLookup.Provider registries) {
+		super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
+	}
 
     @Override
     protected void generate() {
@@ -282,5 +282,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		return this.hasShearsOrSilkTouch().invert();
 	}
 
-
+	@Override
+	protected @NotNull Iterable<Block> getKnownBlocks() {
+		return BlockRegistry.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+	}
 }

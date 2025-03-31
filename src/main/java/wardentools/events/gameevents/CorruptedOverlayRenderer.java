@@ -30,7 +30,7 @@ public class CorruptedOverlayRenderer {
     private static final float transparentMax = 0.9f;
 
     @SubscribeEvent
-    public static void onRenderOverlay(CustomizeGuiOverlayEvent event) {
+    public static void onRenderOverlay(CustomizeGuiOverlayEvent.DebugText event) {
            Player player = Minecraft.getInstance().player;
            if (player != null && player.hasEffect(ModEffects.CORRUPTED)) {
                MobEffectInstance effectInstance = player.getEffect(ModEffects.CORRUPTED);

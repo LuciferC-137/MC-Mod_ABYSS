@@ -12,6 +12,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.block.BlockRegistry;
@@ -22,6 +23,11 @@ import wardentools.particle.custom.*;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class CommonModEvents {
+
+	@SubscribeEvent
+	public static void registerEvent(RegisterEvent event) {
+		ModCriteriaTriggers.init();
+	}
 	
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
@@ -29,7 +35,6 @@ public class CommonModEvents {
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
 		});
-		ModCriteriaTriggers.init();
     }
     
     @SubscribeEvent
