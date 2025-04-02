@@ -46,7 +46,10 @@ public class RadiantStaffItem extends Item {
                     ModCriteriaTriggers.ABYSS_PORTAL_OPEN.trigger((ServerPlayer)player);
                     PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunkAt(abovePos).getPos(),
                             new RadianceParticleExplosion(abovePos.getCenter().toVector3f(),
-                                    1.1f, 1f, 100, false));
+                                    1.5f, 0.1f, 100, false));
+                    PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunkAt(abovePos).getPos(),
+                            new RadianceParticleExplosion(abovePos.getCenter().toVector3f(),
+                                    2.5f, 0.15f, 100, false));
                     context.getItemInHand()
                             .hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                     return InteractionResult.SUCCESS;

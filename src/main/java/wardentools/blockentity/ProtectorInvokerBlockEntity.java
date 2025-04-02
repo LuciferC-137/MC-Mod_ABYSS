@@ -100,7 +100,7 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 						(ServerLevel) level,
 						level.getChunkAt(spawnPos).getPos(),
 						new RadianceParticleExplosion(particleSource.toVector3f(),
-								1.1F, 1F, 100, false)
+								1F, 0.2F, 100, false)
 				);
 				level.addFreshEntity(protec);
 				invoker.protectorSuccessfullyInvoked = true;

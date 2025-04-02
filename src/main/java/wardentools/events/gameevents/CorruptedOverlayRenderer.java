@@ -1,6 +1,5 @@
 package wardentools.events.gameevents;
 
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -10,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
+import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import wardentools.ModMain;
 import wardentools.effect.ModEffects;
@@ -30,7 +29,7 @@ public class CorruptedOverlayRenderer {
     private static final float transparentMax = 0.9f;
 
     @SubscribeEvent
-    public static void onRenderOverlay(CustomizeGuiOverlayEvent.DebugText event) {
+    public static void onRenderOverlay(RenderGuiLayerEvent.Pre event) {
            Player player = Minecraft.getInstance().player;
            if (player != null && player.hasEffect(ModEffects.CORRUPTED)) {
                MobEffectInstance effectInstance = player.getEffect(ModEffects.CORRUPTED);
@@ -56,9 +55,8 @@ public class CorruptedOverlayRenderer {
                        alpha * transparentMax); // RGBA
 
                GuiGraphics guiGraphics = event.getGuiGraphics();
-               Window window = event.getWindow();
-               int screenWidth = window.getGuiScaledWidth();
-               int screenHeight = window.getGuiScaledHeight();
+               int screenWidth = guiGraphics.guiWidth();
+               int screenHeight =guiGraphics.guiHeight();
                guiGraphics.blit(CORRUPTED_OVERLAY, 0, 0,
                        0, 0, screenWidth, screenHeight, screenWidth, screenHeight);
 

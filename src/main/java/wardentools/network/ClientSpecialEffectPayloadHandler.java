@@ -214,19 +214,28 @@ public class ClientSpecialEffectPayloadHandler {
                                           float speed, int particleNumber, SimpleParticleType particle,
                                           boolean implosion) {
         for (int i = 0; i < particleNumber; i++) {
-            double offsetX = (level.random.nextDouble() - 0.5) * radius;
-            double offsetY = (level.random.nextDouble() - 0.5) * radius;
-            double offsetZ = (level.random.nextDouble() - 0.5) * radius;
-            double norm = Math.sqrt(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ);
-            speed = speed / (float)norm;
-            if (implosion) speed = -speed;
+            double theta = level.random.nextFloat() * Math.PI * 2;
+            double phi = Math.acos(1 - 2 * level.random.nextFloat());
+
+            float offsetX = (float) (radius * Math.sin(phi) * Math.cos(theta));
+            float offsetY = (float) (radius * Math.cos(phi));
+            float offsetZ = (float) (radius * Math.sin(phi) * Math.sin(theta));
+
+            float norm = (float) Math.sqrt(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ);
+            if (norm == 0) continue;
+            float adjustedSpeed = speed / norm * ((level.random.nextFloat() + 4F) / 5F);
+            if (implosion) adjustedSpeed = -adjustedSpeed;
+
             level.addParticle(particle,
                     pos.x + offsetX,
                     pos.y + offsetY,
                     pos.z + offsetZ,
-                    offsetX * speed, offsetY * speed, offsetZ * speed);
+                    offsetX * adjustedSpeed, offsetY * adjustedSpeed, offsetZ * adjustedSpeed);
         }
     }
+
+
+
 
     private static void handleDataOnNetwork(Runnable run, final IPayloadContext ctx) {
         ctx.enqueueWork(run)

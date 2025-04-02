@@ -180,7 +180,7 @@ public class ProtectorEntity extends AbstractGolem {
 			PacketDistributor.sendToPlayersTrackingChunk(level,
 					level.getChunkAt(this.blockPosition()).getPos(),
 					new RadianceParticleExplosion(this.getPosition(1f).add(0, 1, 0).toVector3f(),
-							5.0F, 0.2F, 100, true)
+							3.0F, 0.2F, 100, true)
 					);
 		}
 	}
