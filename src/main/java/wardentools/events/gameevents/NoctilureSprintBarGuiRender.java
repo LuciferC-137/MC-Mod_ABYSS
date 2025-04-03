@@ -1,30 +1,27 @@
-package wardentools.mixin;
+package wardentools.events.gameevents;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import wardentools.ModMain;
 import wardentools.entity.custom.NoctilureEntity;
 
-@Mixin(Gui.class)
-public class GuiRenderingMixin {
-    @Unique private static final ResourceLocation SPRINT_BAR_BACKGROUND
+@EventBusSubscriber(modid = ModMain.MOD_ID)
+public class NoctilureSprintBarGuiRender {
+    private static final ResourceLocation SPRINT_BAR_BACKGROUND
             = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
             "textures/gui/sprint_bar/noctilure_background.png");
-    @Unique private static final ResourceLocation SPRINT_BAR_PROGRESS
+    private static final ResourceLocation SPRINT_BAR_PROGRESS
             = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
             "textures/gui/sprint_bar/noctilure_progress.png");
 
-    @Inject(method = "renderHotbarAndDecorations", at = @At("TAIL"))
-    private void onGuiRendering(GuiGraphics graphics, DeltaTracker tracker, CallbackInfo ci) {
+    @SubscribeEvent
+    private static void onRenderGuiLayers(RenderGuiEvent.Post event) {
+        GuiGraphics graphics = event.getGuiGraphics();
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.player.getVehicle() != null) {
             int screenWidth = minecraft.getWindow().getGuiScaledWidth();
@@ -38,11 +35,13 @@ public class GuiRenderingMixin {
                 int barHeight = 5;
                 int y = screenHeight - 29;
                 int x = screenWidth / 2 - barWidth / 2;
+                RenderSystem.enableBlend();
                 graphics.blit(SPRINT_BAR_BACKGROUND, x, y,
                             0, 0, barWidth, barHeight, barWidth, barHeight);
                 graphics.blit(SPRINT_BAR_PROGRESS,x, y,
-                                0, 0, barWidth - progress,
+                            0, 0, barWidth - progress,
                                 barHeight, barWidth, barHeight);
+                RenderSystem.disableBlend();
                 minecraft.getProfiler().pop();
             }
         }

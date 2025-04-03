@@ -35,7 +35,7 @@ public class WhistleItem extends Item {
                                                            @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         player.startUsingItem(hand);
-        play(level, player);
+        this.play(level, player);
         player.getCooldowns().addCooldown(this, USE_DURATION);
         player.awardStat(Stats.ITEM_USED.get(this));
         if (!level.isClientSide) callForTamedNoctilure(level, player);
@@ -43,10 +43,12 @@ public class WhistleItem extends Item {
     }
 
     @Override
-    public void onStopUsing(@NotNull ItemStack stack, LivingEntity entity, int count) {
-        entity.stopUsingItem();
-        Minecraft minecraft = Minecraft.getInstance();
-        minecraft.getSoundManager().stop(this.lastSoundInstance);
+    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
+        return USE_DURATION;
+    }
+
+    @Override
+    public void onStopUsing(@NotNull ItemStack stack, @NotNull LivingEntity entity, int count) {
         super.onStopUsing(stack, entity, count);
     }
 
@@ -64,16 +66,11 @@ public class WhistleItem extends Item {
         });
     }
 
-    public int getUseDuration(@NotNull ItemStack stack) {
-        return USE_DURATION;
-    }
-
     private void play(Level level, Player player) {
         if (level.isClientSide) {
-            this.lastSoundInstance
-                    = new EntityBoundSoundInstance(SOUND, SoundSource.PLAYERS,
+            this.lastSoundInstance = new EntityBoundSoundInstance(SOUND, SoundSource.PLAYERS,
                     0.8f, 1.0F, player, 1L);
-            Minecraft.getInstance().getSoundManager().play(lastSoundInstance);
+            Minecraft.getInstance().getSoundManager().play(this.lastSoundInstance);
         }
         level.gameEvent(GameEvent.INSTRUMENT_PLAY, player.position(), GameEvent.Context.of(player));
     }
