@@ -24,7 +24,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.WHITETREE_PLANKS);
         registerBlockWithItem(BlockRegistry.DEEPBLOCK);
         registerBlockWithItem(BlockRegistry.DARKDIRT);
-        registerBlockWithItem(BlockRegistry.ABYSSALITE);
         registerBlockWithItem(BlockRegistry.ABYSSALITE_BRICKS);
         registerBlockWithItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
         registerBlockWithItem(BlockRegistry.PALE_CRISTAL_BLOCK);
@@ -34,22 +33,31 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.MALACHITE_BLOCK);
         registerBlockWithItem(BlockRegistry.SOLID_CORRUPTION);
 
+        // Registering blocks with top and bottom textures (no Orientation)
+        registerTopBottomSideBlock(BlockRegistry.CHISELED_ABYSSALITE,
+                "chiseled_abyssalite", "chiseled_abyssalite_top", "chiseled_abyssalite_top");
+        registerTopBottomSideBlock(BlockRegistry.ABYSSALITE,
+                "abyssalite", "abyssalite_top", "abyssalite_top");
+        registerTopBottomSideBlock(BlockRegistry.DARKGRASS_BLOCK,
+                "darkgrass_block_side", "darkgrass_block_top", "darkdirt");
+        registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_COAL_ORE, "abyssalite_coal_ore",
+                "abyssalite_coal_ore_top", "abyssalite_coal_ore_top");
+        registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_LAPIS_ORE,
+                "abyssalite_lapis_ore", "abyssalite_lapis_ore_top", "abyssalite_lapis_ore_top");
+        registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_DIAMOND_ORE,
+                "abyssalite_diamond_ore", "abyssalite_diamond_ore_top", "abyssalite_diamond_ore_top");
+        registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_DEEP_ORE,
+                "abyssalite_deep_ore", "abyssalite_deep_ore_top", "abyssalite_deep_ore_top");
+
         // Register simple transparent blocks with item model
         registerCutoutBlock(BlockRegistry.SOUL_SPAWNER);
         registerTranslucentBlock(BlockRegistry.REINFORCED_GLASS);
-
-        // Registering ores blocks with item models
-        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_COAL_ORE);
-        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_LAPIS_ORE);
-        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_DIAMOND_ORE);
-        registerDropExperienceBlockWithItem(BlockRegistry.ABYSSALITE_DEEP_ORE);
 
         // Registering specific block models
         registerLeavesBlock(BlockRegistry.DARKTREE_LEAVES);
         registerLeavesBlock(BlockRegistry.WHITETREE_LEAVES);
         registerCrossCutoutBlock(BlockRegistry.DARKTREE_SAPLING);
         registerCrossCutoutBlock(BlockRegistry.WHITETREE_SAPLING);
-        registerDarkGrassBlock(BlockRegistry.DARKGRASS_BLOCK);
         registerCrossCutoutBlock(BlockRegistry.WHITE_GRASS);
         registerCrossCutoutBlock(BlockRegistry.WHITE_TORCHFLOWER);
         registerCrossCutoutBlock(BlockRegistry.BLUE_BUSH);
@@ -157,15 +165,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 
-    private void registerDropExperienceBlockWithItem(
-            RegistryObject<DropExperienceBlock> blockRegistryObject) {
-        simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
-    }
-    
-    private void registerDarkGrassBlock(RegistryObject<Block> blockRegistryObject) {
-        ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darkgrass_block_side");
-        ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/darkgrass_block_top");
-        ResourceLocation bottomTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darkdirt");
+    private void registerTopBottomSideBlock(RegistryObject<? extends Block> blockRegistryObject,
+                                            String side, String top, String bottom) {
+        ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + side);
+        ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top);
+        ResourceLocation bottomTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + bottom);
         ModelFile modelFile = models().cubeBottomTop(
         		ForgeRegistries.BLOCKS.getKey(
         				blockRegistryObject.get()).getPath(), sideTexture, bottomTexture, topTexture);
