@@ -24,7 +24,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.WHITETREE_PLANKS);
         registerBlockWithItem(BlockRegistry.DEEPBLOCK);
         registerBlockWithItem(BlockRegistry.DARKDIRT);
-        registerBlockWithItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
         registerBlockWithItem(BlockRegistry.PALE_CRISTAL_BLOCK);
         registerBlockWithItem(BlockRegistry.CITRINE_BLOCK);
         registerBlockWithItem(BlockRegistry.ECHO_BLOCK);
@@ -49,6 +48,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 "abyssalite_deep_ore", "abyssalite_deep_ore_top", "abyssalite_deep_ore_top");
         registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_BRICKS,
                 "abyssalite_bricks", "abyssalite_bricks_top", "abyssalite_bricks_top");
+        registerTopBottomSideBlock(BlockRegistry.CRACKED_ABYSSALITE_BRICKS,
+                "cracked_abyssalite_bricks", "cracked_abyssalite_bricks_top", "cracked_abyssalite_bricks_top");
 
         // Register simple transparent blocks with item model
         registerCutoutBlock(BlockRegistry.SOUL_SPAWNER);
