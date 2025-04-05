@@ -35,6 +35,15 @@ public class WindWhispers {
         addWhisper("Nobody came for so long...", "Personne n'est venu depuis si longtemps...", Tag.SMALL_TALK);
         addWhisper("So it is true that you can hear us...", "Il est donc vrai que tu peux nous entendre dorénavant...", Tag.SMALL_TALK);
         addWhisper("The sun hasn't shed a light on the wind for so long down here...", "Le moindre rayon de soleil n'a pas éclairé le vent depuis si longtemps ici-bas...", Tag.SMALL_TALK);
+        addWhisper("Do you miss someone ?", "Quelqu’un te manque ?", Tag.SMALL_TALK);
+        addWhisper("You remind me of someone I used to know...", "Tu me rappelles quelqu’un que j’ai connu autrefois...", Tag.SMALL_TALK);
+        addWhisper("Why are you still moving ?", "Pourquoi tu bouges encore ?", Tag.SMALL_TALK);
+        addWhisper("The silence here… it’s not empty.", "Le silence ici… il n’est pas vide.", Tag.SMALL_TALK);
+        addWhisper("I think you’re not supposed to be here.", "Je crois que tu n’es pas censé être ici.", Tag.SMALL_TALK);
+        addWhisper("You don’t belong here, but it doesn't matter.", "Tu n’as pas ta place ici, mais ça n’a plus d’importance.", Tag.SMALL_TALK);
+        addWhisper("You're not alone. Not really.", "Tu n'es pas seul. Pas vraiment.", Tag.SMALL_TALK);
+        addWhisper("Have you left something behind ?", "Tu as laissé quelque chose derrière toi ?", Tag.SMALL_TALK);
+
 
         // ------------------------- GENERIC ---------------------------
 
@@ -46,6 +55,11 @@ public class WindWhispers {
         addWhisper("Silence ! He is listening !", "Silence ! Il nous écoute !", Tag.GENERIC);
         addWhisper("No hope. No light. Only infinite nothingness, watched by aimless wardens.", "Pas d'espoir. Pas de lumière. Seulement l'infini Néant, surveillé par des gardiens sans but.", Tag.GENERIC);
         addWhisper("I fly in the sky, I dive into caves, I hurl on the Void, and yet, you are more free than I will ever be.", "Je vole dans le ciel, je plonge dans les cavernes, je rugis dans le Néant et pourtant, pourtant tu es plus libre que je ne le serai jamais.", Tag.GENERIC);
+        addWhisper("It watches you, always.", "Il t’observe. Toujours.", Tag.GENERIC);
+        addWhisper("The deeper you go, the quieter it gets.", "Plus tu descends, plus c’est silencieux.", Tag.GENERIC);
+        addWhisper("We all disappear eventually.", "Nous disparaissons tous, tôt ou tard.", Tag.GENERIC);
+        addWhisper("What once lived here no longer remembers it.", "Ce qui vivait ici ne s’en souvient même plus.", Tag.GENERIC);
+
 
         // --------------------------- LORE ----------------------------
 
@@ -55,6 +69,12 @@ public class WindWhispers {
 		addWhisper("Who we are ? Some kind of ghosts I guess... But you are no different. You have seen it, don't you ? The Great Void ?", "Qui sommes nous ? Des sortes de fantômes, j'imagine... Mais nous ne sommes pas différents. Tu l'as déjà vu, n'est-ce pas ? Le Grand Néant ?", Tag.LORE);
         addWhisper("Were we alive some day ? I don't remember...", "Etions-nous en vie à un moment ? Je ne me souviens plus...", Tag.LORE);
         addWhisper("I couldn't imagine that the corruption would also reach the sky itself...", "Je ne pouvais pas imaginer que la corruption gagnerait le ciel lui-même...", Tag.LORE);
+        addWhisper("We thought knowledge would save us. It only opened the gate.", "Nous pensions que le savoir nous sauverait. Il n’a fait qu’ouvrir la porte.", Tag.LORE);
+        addWhisper("The more they feared it, the more powerful it became.", "Plus ils le craignaient, plus il devenait puissant.", Tag.LORE);
+        addWhisper("Their final ritual tore the earth open. That was the beginning of the end.", "Leur dernier rituel a éventré la terre. Ce fut le début de la fin.", Tag.LORE);
+        addWhisper("We were warned. Over and over. We just refused to listen.", "On nous a prévenus. Encore et encore. On a juste refusé d’écouter.", Tag.LORE);
+        addWhisper("The music held us together. It used to be joyful, but I like it also as it is now.", "La musique nous unissait. Elle était joyeuse, mais je l'aime aussi comme ça maintenant.", Tag.LORE);
+
 
         // ------------------------- DEEP LORE --------------------------
 
@@ -71,6 +91,10 @@ public class WindWhispers {
 		addWhisper("They thought they could control it. They thought they could be safe in their underground Citadel.", "Ils pensaient pouvoir la contrôler. Ils pensaient être en sécurité dans leur Citadelle souterraine.", Tag.ANCIENT_CITADEL);
 		addWhisper("Crystals were growing everywhere. They were beautiful, but they were also dangerous.", "Les cristaux poussaient partout. Ils étaient beaux, mais ils étaient aussi dangereux.", Tag.ANCIENT_CITADEL);
 		addWhisper("Entire cities would run thanks to the energy of the crystals.", "Des villes entières fonctionnaient grâce à l'énergie des cristaux.", Tag.ANCIENT_CITADEL);
+        addWhisper("They buried the catalyst under layers of fear and crystal.", "Ils ont enfoui le catalyseur sous des couches de peur et de cristal.", Tag.ANCIENT_CITADEL);
+        addWhisper("The citadel had rules. The corruption had none.", "La citadelle avait des règles. La corruption, aucune.", Tag.ANCIENT_CITADEL);
+        addWhisper("The deeper halls were always off-limits. For a reason.", "Les salles les plus profondes étaient interdites. Et ce n’était pas pour rien.", Tag.ANCIENT_CITADEL);
+        addWhisper("Slowly, all rules broke, fanaticism spread, and the corruption took over.", "Peu à peu, toutes les règles se brisèrent, le fanatisme se répandit et la corruption prit le dessus.", Tag.ANCIENT_CITADEL);
 
         // ----------------------- DEEP FOREST --------------------------
 
@@ -104,7 +128,8 @@ public class WindWhispers {
         addWhisper("If you listen carefully, you could here the black ones whispering promises of eternal life.", "Si tu écoutes attentivement, tu pourrais entendre les noires chuchoter des promesses de vie éternelle.", Tag.CRYSTAL_CAVES);
         addWhisper("The white ones also promised something, but they were more about an eternal bliss.", "Les blanches promettaient aussi quelque chose, mais elles parlaient plutôt d'une béatitude.", Tag.CRYSTAL_CAVES);
         addWhisper("If you want my opinion, none of the power crystals whispered anything good.", "Si tu veux mon avis, aucun des cristaux de pouvoir ne chuchotait quoi que ce soit de bon.", Tag.CRYSTAL_CAVES);
-        addWhisper("The ancient always wanted more.", "Les anciens en voulaient toujours plus.", Tag.CRYSTAL_CAVES);
+        addWhisper("The ancients always wanted more.", "Les anciens en voulaient toujours plus.", Tag.CRYSTAL_CAVES);
+        addWhisper("Each crystal you break changes the world just a little.", "Chaque cristal brisé change un peu le monde.", Tag.CRYSTAL_CAVES);
 
 
 	}
@@ -112,7 +137,7 @@ public class WindWhispers {
 	private void addWhisper(String whisperEn, String whisperFr, WhisperTags.Tag... tags) {
 		lastId++;
         Whisper whisper = new Whisper(whisperEn, whisperFr, lastId);
-		this.whispers.put(whisper.getId(), whisper);
+		this.whispers.put(whisper.id(), whisper);
         for (WhisperTags.Tag tag : tags) {
             this.whisperTags.addTag(tag, whisper);
         }
@@ -123,7 +148,7 @@ public class WindWhispers {
         List<Whisper> availableWhispers = new ArrayList<>();
         Minecraft.getInstance().player.getCapability(KnownWhispersDataProvider.PLAYER_DATA).ifPresent(data -> {
             for (Whisper whisper : whispers.values()) {
-                if (!data.knowsWhisper(whisper.getId())) {
+                if (!data.knowsWhisper(whisper.id())) {
                     availableWhispers.add(whisper);
                 }
             }
@@ -146,8 +171,8 @@ public class WindWhispers {
         if (Minecraft.getInstance().player != null) {
             Minecraft.getInstance().player.getCapability(
                     KnownWhispersDataProvider.PLAYER_DATA).ifPresent(data -> {
-                if (!data.knowsWhisper(whisper.getId())) {
-                    data.addKnownWhisper(whisper.getId());
+                if (!data.knowsWhisper(whisper.id())) {
+                    data.addKnownWhisper(whisper.id());
                 }
             });
         }
@@ -155,11 +180,11 @@ public class WindWhispers {
 
 	public String getWhisperEn() {
         Whisper whisper = getNewRandomWhisper();
-		return whisper == null ? getRandomWhisper().getWhisper() : whisper.getWhisper();
+		return whisper == null ? getRandomWhisper().whisper() : whisper.whisper();
 	}
 
 	public String getWhisperFr() {
         Whisper whisper = getNewRandomWhisper();
-        return whisper == null ? getRandomWhisper().getWhisper() : whisper.getWhisper_fr();
+        return whisper == null ? getRandomWhisper().whisper() : whisper.whisper_fr();
 	}
 }
