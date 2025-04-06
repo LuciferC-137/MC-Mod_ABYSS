@@ -34,6 +34,10 @@ public class WhisperTags {
         DEEP_LORE,
         DEEPFOREST,
         WHITE_FOREST,
-        CRYSTAL_CAVES
+        CRYSTAL_CAVES;
+
+        public String getName() {
+            return name().toLowerCase().replace('_', ' ');
+        }
     }
 }
