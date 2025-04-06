@@ -12,6 +12,8 @@ public class KnownWhispers {
     private static final String whisperDataId = "knownWhispers";
     private final Set<Integer> whispers = new HashSet<>();
 
+    public KnownWhispers() {}
+
     public boolean knowsWhisper(int id) {
         return whispers.contains(id);
     }
@@ -37,6 +39,4 @@ public class KnownWhispers {
         this.whispers.clear();
         this.whispers.addAll(Arrays.stream(nbt.getIntArray(whisperDataId)).boxed().toList());
     }
-
-
 }

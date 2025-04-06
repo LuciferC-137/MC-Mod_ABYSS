@@ -10,6 +10,8 @@ import net.minecraftforge.network.SimpleChannel;
 import net.minecraftforge.network.PacketDistributor;
 import wardentools.ModMain;
 import wardentools.network.ParticulesSoundsEffects.*;
+import wardentools.playerdata.WhisperDataSyncClientPacket;
+import wardentools.playerdata.WhisperDataSyncServerPacket;
 import wardentools.weather.network.RequestFogDistanceUpdateFromServer;
 import wardentools.weather.network.SendFogDistanceToClient;
 
@@ -144,6 +146,16 @@ public class PacketHandler {
 				.encoder(SynchronizeProtectorHeart::encode)
 				.decoder(SynchronizeProtectorHeart::new)
 				.consumerMainThread(SynchronizeProtectorHeart::handle)
+				.add();
+		INSTANCE.messageBuilder(WhisperDataSyncServerPacket.class, NetworkDirection.PLAY_TO_SERVER)
+				.encoder(WhisperDataSyncServerPacket::encode)
+				.decoder(WhisperDataSyncServerPacket::new)
+				.consumerMainThread(WhisperDataSyncServerPacket::handle)
+				.add();
+		INSTANCE.messageBuilder(WhisperDataSyncClientPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(WhisperDataSyncClientPacket::encode)
+				.decoder(WhisperDataSyncClientPacket::new)
+				.consumerMainThread(WhisperDataSyncClientPacket::handle)
 				.add();
 
 	}

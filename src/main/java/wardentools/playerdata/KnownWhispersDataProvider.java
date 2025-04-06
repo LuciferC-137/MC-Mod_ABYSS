@@ -13,16 +13,17 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
 public class KnownWhispersDataProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    public static final Capability<KnownWhispers> PLAYER_DATA = CapabilityManager.get(new CapabilityToken<>() {});
-    private final LazyOptional<KnownWhispers> instance = LazyOptional.of(KnownWhispers::new);
+    public static final Capability<KnownWhispers> WHISPERS_CAPABILITY
+            = CapabilityManager.get(new CapabilityToken<>() {});
+    private final LazyOptional<KnownWhispers> instance = LazyOptional.of(this::getOrCreateKnownWhispers);
     private KnownWhispers knownWhispers = null;
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
-        return cap == PLAYER_DATA ? instance.cast() : LazyOptional.empty();
+        return cap == WHISPERS_CAPABILITY ? instance.cast() : LazyOptional.empty();
     }
 
-    public KnownWhispers createKnownWhispers() {
+    public KnownWhispers getOrCreateKnownWhispers() {
         if (this.knownWhispers == null) {
             this.knownWhispers = new KnownWhispers();
         }
@@ -32,12 +33,12 @@ public class KnownWhispersDataProvider implements ICapabilityProvider, INBTSeria
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
-        createKnownWhispers().saveNBTData(tag);
-        return null;
+        getOrCreateKnownWhispers().saveNBTData(tag);
+        return tag;
     }
 
     @Override
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
-        createKnownWhispers().loadNBTData(tag);
+        getOrCreateKnownWhispers().loadNBTData(tag);
     }
 }

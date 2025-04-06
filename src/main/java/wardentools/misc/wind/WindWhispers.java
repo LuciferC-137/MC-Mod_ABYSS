@@ -1,8 +1,10 @@
 package wardentools.misc.wind;
 
 import net.minecraft.client.Minecraft;
+import wardentools.network.PacketHandler;
 import wardentools.playerdata.KnownWhispersDataProvider;
 import wardentools.misc.wind.WhisperTags.Tag;
+import wardentools.playerdata.WhisperDataSyncServerPacket;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -146,7 +148,7 @@ public class WindWhispers {
     public @Nullable Whisper getNewRandomWhisper() {
         if (Minecraft.getInstance().player == null) return null;
         List<Whisper> availableWhispers = new ArrayList<>();
-        Minecraft.getInstance().player.getCapability(KnownWhispersDataProvider.PLAYER_DATA).ifPresent(data -> {
+        Minecraft.getInstance().player.getCapability(KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
             for (Whisper whisper : whispers.values()) {
                 if (!data.knowsWhisper(whisper.id())) {
                     availableWhispers.add(whisper);
@@ -170,11 +172,12 @@ public class WindWhispers {
     public static void addWhisperIdToPlayer(Whisper whisper) {
         if (Minecraft.getInstance().player != null) {
             Minecraft.getInstance().player.getCapability(
-                    KnownWhispersDataProvider.PLAYER_DATA).ifPresent(data -> {
+                    KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
                 if (!data.knowsWhisper(whisper.id())) {
                     data.addKnownWhisper(whisper.id());
                 }
             });
+            PacketHandler.sendToServer(new WhisperDataSyncServerPacket(whisper.id()));
         }
     }
 
@@ -187,4 +190,8 @@ public class WindWhispers {
         Whisper whisper = getNewRandomWhisper();
         return whisper == null ? getRandomWhisper().whisper() : whisper.whisper_fr();
 	}
+
+    public Whisper getWhisper(int id) {
+        return this.whispers.get(id);
+    }
 }

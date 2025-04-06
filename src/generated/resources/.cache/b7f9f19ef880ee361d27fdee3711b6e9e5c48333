@@ -1,4 +1,4 @@
-// 1.21.1	2025-02-16T16:14:20.7875482	Item Models: wardentools
+// 1.21.1	2025-04-06T10:44:26.6311838	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -168,4 +168,5 @@ c7530c3852dc236fd7b9b95e6342ec77cfe613cc assets/wardentools/models/item/whitetre
 47cce41962cb1181704ad2e7a743d26caa74e098 assets/wardentools/models/item/white_grass.json
 20a39cfae8d48feccea1c06397bde96de69805ff assets/wardentools/models/item/white_seed.json
 e2cf8e585be27ee77d9e063df22e240d125f7332 assets/wardentools/models/item/white_torchflower.json
+7f8b9e2eec9baddb416f63e0b865a0a9ce29a3b3 assets/wardentools/models/item/wind_journal.json
 a3d05db92e4f0bff003e1d385472849de2427cca assets/wardentools/models/item/wind_whisperer.json

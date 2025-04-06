@@ -596,4 +596,8 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> WHISTLE =
 			REGISTAR.register("whistle",
 					() -> new WhistleItem(new Item.Properties().stacksTo(1)));
+
+	public static final RegistryObject<Item> WIND_JOURNAL =
+			REGISTAR.register("wind_journal",
+					() -> new WindJournal(new Item.Properties().stacksTo(1)));
 }
