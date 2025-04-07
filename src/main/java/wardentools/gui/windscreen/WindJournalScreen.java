@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -37,6 +38,7 @@ public class WindJournalScreen extends Screen {
     public static final int PAGE_TEXT_Y_OFFSET = 30;
     public static final ResourceLocation JOURNAL_TEXTURE
             = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal.png");
+    public static final ChatFormatting TEXT_COLOR = ChatFormatting.DARK_RED;
     protected static final int TOP_MARGIN = 10;
     protected static final int TEXTURE_WIDTH = 292;
     protected static final int TEXTURE_HEIGHT = 180;
@@ -169,10 +171,8 @@ public class WindJournalScreen extends Screen {
             this.cachedLeftPageIndex = this.currentLeftPageIndex;
             int maxPages = Math.max(this.getTotalPageCount(), 1);
             maxPages += maxPages % 2;
-            this.leftPageIndicatorText = Component.literal(
-                    (this.currentLeftPageIndex + 1) + "/" + maxPages);
-            this.rightPageIndicatorText = Component.literal(
-                    (this.currentLeftPageIndex + 2) + "/" + maxPages);
+            this.leftPageIndicatorText = baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
+            this.rightPageIndicatorText = baseText((this.currentLeftPageIndex + 2) + "/" + maxPages);
         }
     }
 
@@ -202,7 +202,7 @@ public class WindJournalScreen extends Screen {
             Font currentFont = this.font;
             Objects.requireNonNull(this.font);
             graphics.drawString(currentFont, line,
-                    textX + TEXT_WIDTH + 2 * PAGE_TEXT_X_OFFSET - 4,
+                    textX + TEXT_WIDTH + 2 * PAGE_TEXT_X_OFFSET - 8,
                     PAGE_TEXT_Y_OFFSET + lineIndex * LINE_HEIGHT, 0, false);
         }
     }
@@ -210,10 +210,10 @@ public class WindJournalScreen extends Screen {
     private void renderPageNumbers(GuiGraphics graphics) {
         int footerYPosition = TOP_MARGIN + TEXTURE_HEIGHT - 23;
         graphics.drawString(this.font, this.leftPageIndicatorText,
-                leftMargin() + TEXTURE_WIDTH / 2 - 39,
+                leftMargin() + TEXTURE_WIDTH / 2 - 34,
                 footerYPosition, 0, false);
         graphics.drawString(this.font, this.rightPageIndicatorText,
-                leftMargin() + TEXTURE_WIDTH / 2 + 18,
+                leftMargin() + TEXTURE_WIDTH / 2 + 11,
                 footerYPosition, 0, false);
 
     }
@@ -267,6 +267,10 @@ public class WindJournalScreen extends Screen {
         if (this.minecraft != null) this.minecraft.setScreen(null);
     }
 
+    private static Component baseText(String text) {
+        return Component.literal(text).withStyle(TEXT_COLOR);
+    }
+
     public static @Nullable Style getStyleUnderMouse(Font font, List<FormattedCharSequence> lines,
                                                      double mouseX, double mouseY,
                                                      int textStartX, int textStartY,
@@ -315,7 +319,7 @@ public class WindJournalScreen extends Screen {
                         .append(pageNum++);
             }
 
-            pages.add(Component.literal(coverPage.toString()));
+            pages.add(WindJournalScreen.baseText(coverPage.toString()));
 
             // Add content pages
             for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
@@ -335,7 +339,7 @@ public class WindJournalScreen extends Screen {
                 page.append(whisper).append("\n\n");
             }
 
-            return Component.literal(page.toString());
+            return WindJournalScreen.baseText(page.toString());
         }
 
         private String getTagName(WhisperTags.Tag tag) {
