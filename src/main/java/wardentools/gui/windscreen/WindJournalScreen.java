@@ -36,8 +36,10 @@ import wardentools.playerdata.KnownWhispersDataProvider;
 public class WindJournalScreen extends Screen {
     public static final int PAGE_TEXT_X_OFFSET = 18;
     public static final int PAGE_TEXT_Y_OFFSET = 30;
+    public static final ResourceLocation JOURNAL_FIRST_PAGE_TEXTURE
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/wind_journal_first.png");
     public static final ResourceLocation JOURNAL_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal.png");
+            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/wind_journal.png");
     public static final ChatFormatting TEXT_COLOR = ChatFormatting.DARK_RED;
     protected static final int TOP_MARGIN = 10;
     protected static final int TEXTURE_WIDTH = 292;
@@ -96,15 +98,14 @@ public class WindJournalScreen extends Screen {
     }
 
     protected void createPageControlButtons() {
-        int yButtonPosition = TOP_MARGIN + TEXTURE_HEIGHT - 23;
         int buttonXMargin = 20;
         this.nextPageButton = this.addRenderableWidget(new PageButton(
                 leftMargin() + TEXTURE_WIDTH - 2 * buttonXMargin - 4,
-                yButtonPosition, true,
+                footerYPosition(), true,
                 (button) -> {this.goToNextPage();}, this.playSoundOnPageTurn));
         this.previousPageButton = this.addRenderableWidget(new PageButton(
                 leftMargin() + buttonXMargin,
-                yButtonPosition, false,
+                footerYPosition(), false,
                 (button) -> {this.goToPreviousPage();}, this.playSoundOnPageTurn));
         this.updatePageButtonVisibility();
     }
@@ -150,13 +151,15 @@ public class WindJournalScreen extends Screen {
 
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        this.updateCache();
         super.render(graphics, mouseX, mouseY, partialTick);
 
-        this.updateCache();
-
-        this.renderPageNumbers(graphics);
-        this.renderTextInPage(graphics);
-        this.renderHoverStyle(graphics, mouseX, mouseY);
+        if (this.cachedLeftPageIndex >= 1) {
+            this.renderPages(graphics);
+            this.renderHoverStyle(graphics, mouseX, mouseY);
+        } else if (this.cachedLeftPageIndex == 0) {
+            this.renderFirstPage(graphics);
+        }
 
         this.nextPageButton.setFocused(false);
         this.previousPageButton.setFocused(false);
@@ -164,15 +167,21 @@ public class WindJournalScreen extends Screen {
 
     private void updateCache() {
         if (this.cachedLeftPageIndex != this.currentLeftPageIndex) {
-            FormattedText rightPageContent = this.journalAccess.getPage(this.currentLeftPageIndex);
-            FormattedText leftPageContent = this.journalAccess.getPage(this.currentLeftPageIndex + 1);
-            this.cachedLeftPageLines = this.font.split(rightPageContent, TEXT_WIDTH);
-            this.cachedRightPageLines = this.font.split(leftPageContent, TEXT_WIDTH);
-            this.cachedLeftPageIndex = this.currentLeftPageIndex;
             int maxPages = Math.max(this.getTotalPageCount(), 1);
-            maxPages += maxPages % 2;
-            this.leftPageIndicatorText = baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
-            this.rightPageIndicatorText = baseText((this.currentLeftPageIndex + 2) + "/" + maxPages);
+            maxPages += 1 - maxPages % 2;
+            if (this.currentLeftPageIndex == 0) {
+                FormattedText rightPageContent = this.journalAccess.getPage(this.currentLeftPageIndex);
+                this.cachedRightPageLines = this.font.split(rightPageContent, TEXT_WIDTH);
+                this.rightPageIndicatorText = baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
+            } else {
+                FormattedText leftPageContent = this.journalAccess.getPage(this.currentLeftPageIndex - 1);
+                FormattedText rightPageContent = this.journalAccess.getPage(this.currentLeftPageIndex);
+                this.cachedLeftPageLines = this.font.split(leftPageContent, TEXT_WIDTH);
+                this.cachedRightPageLines = this.font.split(rightPageContent, TEXT_WIDTH);
+                this.leftPageIndicatorText = baseText((this.currentLeftPageIndex) + "/" + maxPages);
+                this.rightPageIndicatorText = baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
+            }
+            this.cachedLeftPageIndex = this.currentLeftPageIndex;
         }
     }
 
@@ -185,45 +194,50 @@ public class WindJournalScreen extends Screen {
         }
     }
 
-    private void renderTextInPage(GuiGraphics graphics) {
+    private void renderPages(GuiGraphics graphics) {
         Objects.requireNonNull(this.font);
-        int visibleLeftLines = Math.min(TEXT_HEIGHT / LINE_HEIGHT, this.cachedLeftPageLines.size());
-        int visibleRightLines = Math.min(TEXT_HEIGHT / LINE_HEIGHT, this.cachedRightPageLines.size());
+        this.renderPage(graphics, false);
+        this.renderPage(graphics, true);
+    }
+
+    private void renderFirstPage(GuiGraphics graphics) {
+        this.renderPage(graphics, true);
+    }
+
+    private void renderPage(GuiGraphics graphics, boolean isRightPage) {
+        List<FormattedCharSequence> pageLines = isRightPage ? this.cachedRightPageLines : this.cachedLeftPageLines;
+        int visibleRightLines = Math.min(TEXT_HEIGHT / LINE_HEIGHT, pageLines.size());
         int textX = leftMargin() + PAGE_TEXT_X_OFFSET;
-        for (int lineIndex = 0; lineIndex < visibleLeftLines; ++lineIndex) {
-            FormattedCharSequence line = this.cachedLeftPageLines.get(lineIndex);
+        if (isRightPage) textX += TEXT_WIDTH + 2 * PAGE_TEXT_X_OFFSET - 8;
+        for (int lineIndex = 0; lineIndex < visibleRightLines; ++lineIndex) {
+            FormattedCharSequence line = pageLines.get(lineIndex);
             Font currentFont = this.font;
             Objects.requireNonNull(this.font);
             graphics.drawString(currentFont, line, textX,
                     PAGE_TEXT_Y_OFFSET + lineIndex * LINE_HEIGHT, 0, false);
         }
-        for (int lineIndex = 0; lineIndex < visibleRightLines; ++lineIndex) {
-            FormattedCharSequence line = this.cachedRightPageLines.get(lineIndex);
-            Font currentFont = this.font;
-            Objects.requireNonNull(this.font);
-            graphics.drawString(currentFont, line,
-                    textX + TEXT_WIDTH + 2 * PAGE_TEXT_X_OFFSET - 8,
-                    PAGE_TEXT_Y_OFFSET + lineIndex * LINE_HEIGHT, 0, false);
-        }
+        this.renderPageIndex(graphics, isRightPage);
     }
 
-    private void renderPageNumbers(GuiGraphics graphics) {
-        int footerYPosition = TOP_MARGIN + TEXTURE_HEIGHT - 23;
-        graphics.drawString(this.font, this.leftPageIndicatorText,
-                leftMargin() + TEXTURE_WIDTH / 2 - 34,
-                footerYPosition, 0, false);
-        graphics.drawString(this.font, this.rightPageIndicatorText,
-                leftMargin() + TEXTURE_WIDTH / 2 + 11,
-                footerYPosition, 0, false);
-
+    private void renderPageIndex(GuiGraphics graphics, boolean isRightPage) {
+        Component pageIndicatorText = isRightPage ? this.rightPageIndicatorText : this.leftPageIndicatorText;
+        int xPosition = isRightPage ? leftMargin() + TEXTURE_WIDTH / 2 + 11  : leftMargin() + TEXTURE_WIDTH / 2 - 34;
+        graphics.drawString(this.font, pageIndicatorText, xPosition,
+                footerYPosition(), 0, false);
     }
 
     @Override
     public void renderBackground(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         this.renderTransparentBackground(graphics);
-        graphics.blit(JOURNAL_TEXTURE, leftMargin(), TOP_MARGIN,
-                0, 0, TEXTURE_WIDTH,
-                TEXTURE_HEIGHT , TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        if (this.cachedLeftPageIndex == 0) {
+            graphics.blit(JOURNAL_FIRST_PAGE_TEXTURE, leftMargin(), TOP_MARGIN,
+                    0, 0, TEXTURE_WIDTH,
+                    TEXTURE_HEIGHT , TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        } else {
+            graphics.blit(JOURNAL_TEXTURE, leftMargin(), TOP_MARGIN,
+                    0, 0, TEXTURE_WIDTH,
+                    TEXTURE_HEIGHT , TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        }
     }
 
     @Override
@@ -239,6 +253,8 @@ public class WindJournalScreen extends Screen {
     private int leftMargin() {
         return (this.width - TEXTURE_WIDTH) / 2;
     }
+
+    private int footerYPosition() {return TOP_MARGIN + TEXTURE_HEIGHT - 23;}
 
     public boolean handleComponentClicked(@Nullable Style style) {
         if (style == null) return false;
