@@ -1,9 +1,6 @@
 package wardentools.misc.wind;
 
-import java.util.List;
-import java.util.EnumMap;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 public class WhisperTags {
     private final Map<Tag, List<Whisper>> tagMap = new EnumMap<>(Tag.class);
@@ -27,17 +24,26 @@ public class WhisperTags {
     }
 
     public enum Tag {
-        GENERIC,
-        ANCIENT_CITADEL,
         SMALL_TALK,
+        GENERIC,
         LORE,
         DEEP_LORE,
+        ANCIENT_CITADEL,
         DEEPFOREST,
         WHITE_FOREST,
-        CRYSTAL_CAVES;
+        CRYSTAL_CAVE;
 
         public String getName() {
-            return name().toLowerCase().replace('_', ' ');
+            return switch (this) {
+                case GENERIC -> "==== Generic ====";
+                case ANCIENT_CITADEL -> "= Ancient Citadel =";
+                case SMALL_TALK ->  "=== Small Talk ===";
+                case LORE -> "===== Lore =====";
+                case DEEP_LORE -> "=== Deep Lore ===";
+                case DEEPFOREST -> "== Deep Forest ==";
+                case WHITE_FOREST -> "== White Forest ==";
+                case CRYSTAL_CAVE -> "= Crystal Cave =";
+            };
         }
     }
 }

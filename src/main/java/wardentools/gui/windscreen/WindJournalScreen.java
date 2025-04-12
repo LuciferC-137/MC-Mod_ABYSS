@@ -17,7 +17,6 @@ import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.ClickEvent.Action;
 import net.minecraft.resources.ResourceLocation;
@@ -47,6 +46,7 @@ public class WindJournalScreen extends Screen {
     protected static final int TEXT_WIDTH = 114;
     protected static final int TEXT_HEIGHT = 128;
     protected static final int LINE_HEIGHT = 9;
+    protected static final int MAX_LINES_PER_PAGE = TEXT_HEIGHT / LINE_HEIGHT;
     private final JournalAccess journalAccess;
     private int currentLeftPageIndex;
     private List<FormattedCharSequence> cachedLeftPageLines;
@@ -87,6 +87,7 @@ public class WindJournalScreen extends Screen {
     }
 
     protected void init() {
+        this.journalAccess.initPages(this.font);
         this.createMenuControls();
         this.createPageControlButtons();
     }
@@ -170,17 +171,13 @@ public class WindJournalScreen extends Screen {
             int maxPages = Math.max(this.getTotalPageCount(), 1);
             maxPages += 1 - maxPages % 2;
             if (this.currentLeftPageIndex == 0) {
-                FormattedText rightPageContent = this.journalAccess.getPage(this.currentLeftPageIndex);
-                this.cachedRightPageLines = this.font.split(rightPageContent, TEXT_WIDTH);
-                this.rightPageIndicatorText = baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
+                this.cachedRightPageLines = this.journalAccess.getPage(this.currentLeftPageIndex);
             } else {
-                FormattedText leftPageContent = this.journalAccess.getPage(this.currentLeftPageIndex - 1);
-                FormattedText rightPageContent = this.journalAccess.getPage(this.currentLeftPageIndex);
-                this.cachedLeftPageLines = this.font.split(leftPageContent, TEXT_WIDTH);
-                this.cachedRightPageLines = this.font.split(rightPageContent, TEXT_WIDTH);
+                this.cachedLeftPageLines = this.journalAccess.getPage(this.currentLeftPageIndex - 1);
+                this.cachedRightPageLines = this.journalAccess.getPage(this.currentLeftPageIndex);
                 this.leftPageIndicatorText = baseText((this.currentLeftPageIndex) + "/" + maxPages);
-                this.rightPageIndicatorText = baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
             }
+            this.rightPageIndicatorText = baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
             this.cachedLeftPageIndex = this.currentLeftPageIndex;
         }
     }
@@ -206,7 +203,7 @@ public class WindJournalScreen extends Screen {
 
     private void renderPage(GuiGraphics graphics, boolean isRightPage) {
         List<FormattedCharSequence> pageLines = isRightPage ? this.cachedRightPageLines : this.cachedLeftPageLines;
-        int visibleRightLines = Math.min(TEXT_HEIGHT / LINE_HEIGHT, pageLines.size());
+        int visibleRightLines = Math.min(MAX_LINES_PER_PAGE, pageLines.size());
         int textX = leftMargin() + PAGE_TEXT_X_OFFSET;
         if (isRightPage) textX += TEXT_WIDTH + 2 * PAGE_TEXT_X_OFFSET - 8;
         for (int lineIndex = 0; lineIndex < visibleRightLines; ++lineIndex) {
@@ -287,6 +284,16 @@ public class WindJournalScreen extends Screen {
         return Component.literal(text).withStyle(TEXT_COLOR);
     }
 
+    private static Component baseText(String text, boolean bold, boolean italic) {
+        if (bold && italic) {
+            return Component.literal(text).withStyle(TEXT_COLOR).withStyle(ChatFormatting.BOLD)
+                    .withStyle(ChatFormatting.ITALIC);
+        } else if (bold) {
+            return Component.literal(text).withStyle(TEXT_COLOR).withStyle(ChatFormatting.BOLD);
+        }
+        return Component.literal(text).withStyle(TEXT_COLOR).withStyle(ChatFormatting.ITALIC);
+    }
+
     public static @Nullable Style getStyleUnderMouse(Font font, List<FormattedCharSequence> lines,
                                                      double mouseX, double mouseY,
                                                      int textStartX, int textStartY,
@@ -306,85 +313,131 @@ public class WindJournalScreen extends Screen {
 
     @OnlyIn(Dist.CLIENT)
     private static class JournalAccess {
-        private final List<Component> pages;
+        private final List<List<Component>> sections;
+        private List<List<FormattedCharSequence>> pages = new ArrayList<>();
 
         public JournalAccess() {
-            this(new ArrayList<>());
+            this.sections = new ArrayList<>();
+            this.sections.addAll(buildSectionsList(Minecraft.getInstance()));
         }
 
-        public JournalAccess(List<Component> pages) {
-            this.pages = new ArrayList<>(pages);
-            this.pages.clear(); // Clear initial pages to build from scratch
-            this.pages.addAll(buildPageList(Minecraft.getInstance()));
+        public void initPages(@NotNull Font font) {
+            this.pages = this.buildPagesList(font);
         }
 
-        public List<Component> buildPageList(Minecraft minecraft) {
-            if (minecraft == null || minecraft.player == null) return List.of();
-            List<Component> pages = new ArrayList<>();
+        private List<List<FormattedCharSequence>> buildPagesList(Font font) {
+            List<List<FormattedCharSequence>> pages = new ArrayList<>();
+            List<Integer> sectionPageIndex = new ArrayList<>();
+            int pageIndex = 1;
+            for (List<Component> section : this.sections) {
+                // New page at the beginning of each section
+                List<FormattedCharSequence> currentPage = new ArrayList<>();
+                int currentLineCount = 0;
 
-            // Add cover page with all tags
-            StringBuilder coverPage = new StringBuilder();
-            coverPage.append("=== WIND JOURNAL ===\n\n");
-            coverPage.append("Table of Contents:\n");
-
-            int pageNum = 2; // Starting from page 2 (after cover)
-            for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
-                coverPage.append("\n")
-                        .append(getTagName(tag))
-                        .append(" - ")
-                        .append(pageNum++);
+                for (Component component : section) {
+                    List<FormattedCharSequence> lines = font.split(component, TEXT_WIDTH);
+                    for (FormattedCharSequence line : lines) {
+                        if (currentLineCount >= MAX_LINES_PER_PAGE) {
+                            if (!currentPage.isEmpty()) {
+                                pages.add(currentPage);
+                                pageIndex++;
+                            }
+                            currentPage = new ArrayList<>();
+                            currentLineCount = 0;
+                        }
+                        currentPage.add(line);
+                        currentLineCount++;
+                    }
+                }
+                if (!currentPage.isEmpty()) {
+                    pages.add(currentPage);
+                    pageIndex++;
+                }
+                sectionPageIndex.add(pageIndex);
             }
 
-            pages.add(WindJournalScreen.baseText(coverPage.toString()));
-
-            // Add content pages
-            for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
-                pages.add(createTagPage(minecraft, tag));
+            // Replace XX with page proper page index
+            int indexParsing = 0;
+            List<FormattedCharSequence> firstPage = pages.getFirst();
+            for (int k = 0; k < firstPage.size(); k++) {
+                FormattedCharSequence line = firstPage.get(k);
+                String lineText = extractText(line);
+                if (lineText.contains("XX") && indexParsing < sectionPageIndex.size()) {
+                    String newLine = lineText.replace("XX", sectionPageIndex.get(indexParsing) + "");
+                    firstPage.set(k, buildSimpleLine(newLine, font));
+                    indexParsing++;
+                }
             }
-
             return pages;
         }
 
-        private Component createTagPage(Minecraft minecraft, WhisperTags.Tag tag) {
-            // Create a page with header showing the tag name
-            StringBuilder page = new StringBuilder();
-            page.append("=== ").append(getTagName(tag)).append(" ===\n\n");
 
-            List<String> whispers = getWhispersTextByTag(minecraft, tag);
-            for (String whisper : whispers) {
-                page.append(whisper).append("\n\n");
+
+        public static String extractText(FormattedCharSequence sequence) {
+            StringBuilder builder = new StringBuilder();
+            sequence.accept((index, style, codePoint) -> {
+                builder.appendCodePoint(codePoint);
+                return true;
+            });
+            return builder.toString();
+        }
+
+        private List<List<Component>> buildSectionsList(Minecraft minecraft) {
+            if (minecraft == null || minecraft.player == null) return List.of();
+            List<List<Component>> sections = new ArrayList<>();
+
+            // Cover page
+            List<Component> indexSection = new ArrayList<>();
+            StringBuilder coverPage = new StringBuilder();
+            indexSection.add(baseText("= WIND JOURNAL =\n\n", true, false));
+            coverPage.append("Table of Contents:\n");
+            for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
+                coverPage.append("\n")
+                        .append(tag.getName().replace("=", ""))
+                        .append(" - ")
+                        .append("XX"); // Placeholder for index
+            }
+            indexSection.add(WindJournalScreen.baseText(coverPage.toString()));
+            sections.add(indexSection);
+
+            // One section per tag
+            for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
+                List<Component> section = new ArrayList<>();
+                section.add(baseText(tag.getName() + "\n\n", true, false));
+                section.addAll(getWhispersTextByTag(minecraft, tag));
+                sections.add(section);
             }
 
-            return WindJournalScreen.baseText(page.toString());
+            return sections;
         }
 
-        private String getTagName(WhisperTags.Tag tag) {
-            String name = tag.getName();
-            return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
-        }
 
-        public List<String> getWhispersTextByTag(Minecraft minecraft, WhisperTags.Tag tag){
+        private List<Component> getWhispersTextByTag(Minecraft minecraft, WhisperTags.Tag tag){
             if (minecraft == null || minecraft.player == null) return List.of();
-            List<String> whispers = new ArrayList<>();
+            List<Component> whispers = new ArrayList<>();
             minecraft.player.getCapability(KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
                 List<Whisper> whispersList = WhisperManager.WHISPERS.whisperTags.getWhispersWithTag(tag);
                 for (Whisper whisper : whispersList) {
                     if (data.knowsWhisper(whisper.id())) {
-                        whispers.add(whisper.whisper());
+                        whispers.add(baseText(whisper.id() + " - " + whisper.whisper() + "\n"));
                     } else {
-                        whispers.add(whisper.id() + " LOCKED");
+                        whispers.add(baseText(whisper.id() + " - LOCKED\n", false, true));
                     }
                 }
             });
             return whispers;
         }
 
+        private static FormattedCharSequence buildSimpleLine(String text, Font font) {
+            return font.split(baseText(text), TEXT_WIDTH + 10).getFirst();
+        }
+
         public int getPageCount() {
             return this.pages.size();
         }
 
-        public FormattedText getPage(int pageIndex) {
-            return pageIndex >= 0 && pageIndex < this.getPageCount() ? this.pages.get(pageIndex) : FormattedText.EMPTY;
+        public List<FormattedCharSequence> getPage(int pageIndex) {
+            return pageIndex >= 0 && pageIndex < this.getPageCount() ? this.pages.get(pageIndex) : List.of();
         }
     }
 }

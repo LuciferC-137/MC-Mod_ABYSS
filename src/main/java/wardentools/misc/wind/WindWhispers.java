@@ -119,19 +119,19 @@ public class WindWhispers {
         addWhisper("Creatures here are peaceful.", "Les créatures ici sont paisibles.", Tag.WHITE_FOREST);
 
         // ----------------------- CRYSTAL CAVES --------------------------
-        addWhisper("Those crystals are beautiful.", "Ces cristaux sont magnifiques.", Tag.CRYSTAL_CAVES);
-        addWhisper("Some are so sharp, even I could cut myself !", "Ils sont si aiguisés, même moi je pourrais me couper!", Tag.CRYSTAL_CAVES);
-        addWhisper("They were called neutral crystal.", "On les appelait les cristaux neutres", Tag.CRYSTAL_CAVES);
-        addWhisper("They were used to create the first machines.", "Ils étaient utilisés pour créer les premières machines.", Tag.CRYSTAL_CAVES);
-        addWhisper("Everyone one of those crystals had a unique power.", "Chacun de ces cristaux avait un pouvoir unique.", Tag.CRYSTAL_CAVES);
-        addWhisper("I guess their power could still be harvested...", "Je suppose que leur pouvoir pourrait encore être récolté...", Tag.CRYSTAL_CAVES);
-        addWhisper("Some of those crystals weren't neutral at all.", "Certains de ces cristaux n'étaient pas du tout neutres.", Tag.CRYSTAL_CAVES);
-        addWhisper("Some gems could almost speak.", "Certaines gemmes pouvaient presque parler.", Tag.CRYSTAL_CAVES);
-        addWhisper("If you listen carefully, you could here the black ones whispering promises of eternal life.", "Si tu écoutes attentivement, tu pourrais entendre les noires chuchoter des promesses de vie éternelle.", Tag.CRYSTAL_CAVES);
-        addWhisper("The white ones also promised something, but they were more about an eternal bliss.", "Les blanches promettaient aussi quelque chose, mais elles parlaient plutôt d'une béatitude.", Tag.CRYSTAL_CAVES);
-        addWhisper("If you want my opinion, none of the power crystals whispered anything good.", "Si tu veux mon avis, aucun des cristaux de pouvoir ne chuchotait quoi que ce soit de bon.", Tag.CRYSTAL_CAVES);
-        addWhisper("The ancients always wanted more.", "Les anciens en voulaient toujours plus.", Tag.CRYSTAL_CAVES);
-        addWhisper("Each crystal you break changes the world just a little.", "Chaque cristal brisé change un peu le monde.", Tag.CRYSTAL_CAVES);
+        addWhisper("Those crystals are beautiful.", "Ces cristaux sont magnifiques.", Tag.CRYSTAL_CAVE);
+        addWhisper("Some are so sharp, even I could cut myself !", "Ils sont si aiguisés, même moi je pourrais me couper!", Tag.CRYSTAL_CAVE);
+        addWhisper("They were called neutral crystal.", "On les appelait les cristaux neutres", Tag.CRYSTAL_CAVE);
+        addWhisper("They were used to create the first machines.", "Ils étaient utilisés pour créer les premières machines.", Tag.CRYSTAL_CAVE);
+        addWhisper("Everyone one of those crystals had a unique power.", "Chacun de ces cristaux avait un pouvoir unique.", Tag.CRYSTAL_CAVE);
+        addWhisper("I guess their power could still be harvested...", "Je suppose que leur pouvoir pourrait encore être récolté...", Tag.CRYSTAL_CAVE);
+        addWhisper("Some of those crystals weren't neutral at all.", "Certains de ces cristaux n'étaient pas du tout neutres.", Tag.CRYSTAL_CAVE);
+        addWhisper("Some gems could almost speak.", "Certaines gemmes pouvaient presque parler.", Tag.CRYSTAL_CAVE);
+        addWhisper("If you listen carefully, you could here the black ones whispering promises of eternal life.", "Si tu écoutes attentivement, tu pourrais entendre les noires chuchoter des promesses de vie éternelle.", Tag.CRYSTAL_CAVE);
+        addWhisper("The white ones also promised something, but they were more about an eternal bliss.", "Les blanches promettaient aussi quelque chose, mais elles parlaient plutôt d'une béatitude.", Tag.CRYSTAL_CAVE);
+        addWhisper("If you want my opinion, none of the power crystals whispered anything good.", "Si tu veux mon avis, aucun des cristaux de pouvoir ne chuchotait quoi que ce soit de bon.", Tag.CRYSTAL_CAVE);
+        addWhisper("The ancients always wanted more.", "Les anciens en voulaient toujours plus.", Tag.CRYSTAL_CAVE);
+        addWhisper("Each crystal you break changes the world just a little.", "Chaque cristal brisé change un peu le monde.", Tag.CRYSTAL_CAVE);
 
 
 	}
