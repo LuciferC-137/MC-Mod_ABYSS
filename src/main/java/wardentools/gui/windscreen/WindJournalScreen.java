@@ -14,10 +14,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.*;
 import net.minecraft.network.chat.ClickEvent.Action;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -56,6 +53,7 @@ public class WindJournalScreen extends Screen {
     private Component rightPageIndicatorText;
     private PageButton nextPageButton;
     private PageButton previousPageButton;
+    private Button firstPageButton;
     private final boolean playSoundOnPageTurn;
 
     public WindJournalScreen() {
@@ -72,8 +70,9 @@ public class WindJournalScreen extends Screen {
         this.playSoundOnPageTurn = playSoundOnPageTurn;
     }
 
-    public boolean setPage(int pageIndex) {
-        int clampedPageIndex = Mth.clamp(pageIndex, 0, this.journalAccess.getPageCount() - 1);
+    public boolean setPage(int doublePageIndex) {
+        doublePageIndex = doublePageIndex - doublePageIndex % 2; // Avoiding odd page index
+        int clampedPageIndex = Mth.clamp(doublePageIndex, 0, this.journalAccess.getPageCount() - 1);
         if (clampedPageIndex != this.currentLeftPageIndex) {
             this.currentLeftPageIndex = clampedPageIndex;
             this.updatePageButtonVisibility();
@@ -103,11 +102,16 @@ public class WindJournalScreen extends Screen {
         this.nextPageButton = this.addRenderableWidget(new PageButton(
                 leftMargin() + TEXTURE_WIDTH - 2 * buttonXMargin - 4,
                 footerYPosition(), true,
-                (button) -> {this.goToNextPage();}, this.playSoundOnPageTurn));
+                (button) -> this.goToNextPage(), this.playSoundOnPageTurn));
         this.previousPageButton = this.addRenderableWidget(new PageButton(
                 leftMargin() + buttonXMargin,
                 footerYPosition(), false,
-                (button) -> {this.goToPreviousPage();}, this.playSoundOnPageTurn));
+                (button) -> this.goToPreviousPage(), this.playSoundOnPageTurn));
+        this.firstPageButton = this.addRenderableWidget(Button.builder(
+                Component.literal(" <-"),
+                (button) -> this.setPage(0))
+                .bounds(TEXTURE_WIDTH + this.leftMargin() + 5, TOP_MARGIN + 2,
+                        12, 12).build());
         this.updatePageButtonVisibility();
     }
 
@@ -154,16 +158,15 @@ public class WindJournalScreen extends Screen {
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         this.updateCache();
         super.render(graphics, mouseX, mouseY, partialTick);
-
         if (this.cachedLeftPageIndex >= 1) {
             this.renderPages(graphics);
-            this.renderHoverStyle(graphics, mouseX, mouseY);
         } else if (this.cachedLeftPageIndex == 0) {
             this.renderFirstPage(graphics);
         }
-
+        this.renderHoverStyle(graphics, mouseX, mouseY);
         this.nextPageButton.setFocused(false);
         this.previousPageButton.setFocused(false);
+        this.firstPageButton.setFocused(false);
     }
 
     private void updateCache() {
@@ -183,12 +186,16 @@ public class WindJournalScreen extends Screen {
     }
 
     private void renderHoverStyle(GuiGraphics graphics, int mouseX, int mouseY) {
-        // DOES NOTHING FOR NOW
-        Style hoveredStyle = getStyleUnderMouse(this.font, this.cachedLeftPageLines, mouseX, mouseY,
-                leftMargin() + PAGE_TEXT_X_OFFSET, PAGE_TEXT_Y_OFFSET, TEXT_WIDTH, LINE_HEIGHT);
+        Style hoveredStyle = this.getStyleRightPage(mouseX, mouseY);
         if (hoveredStyle != null) {
             graphics.renderComponentHoverEffect(this.font, hoveredStyle, mouseX, mouseY);
         }
+    }
+
+    private Style getStyleRightPage(int mouseX, int mouseY) {
+        return (this.cachedLeftPageIndex == 0) ? getStyleUnderMouseOnFirstPage(mouseX, mouseY)
+                : getStyleUnderMouse(this.font, this.cachedLeftPageLines, mouseX, mouseY,
+                this.rightPageXStart(), PAGE_TEXT_Y_OFFSET, TEXT_WIDTH, LINE_HEIGHT);
     }
 
     private void renderPages(GuiGraphics graphics) {
@@ -204,8 +211,7 @@ public class WindJournalScreen extends Screen {
     private void renderPage(GuiGraphics graphics, boolean isRightPage) {
         List<FormattedCharSequence> pageLines = isRightPage ? this.cachedRightPageLines : this.cachedLeftPageLines;
         int visibleRightLines = Math.min(MAX_LINES_PER_PAGE, pageLines.size());
-        int textX = leftMargin() + PAGE_TEXT_X_OFFSET;
-        if (isRightPage) textX += TEXT_WIDTH + 2 * PAGE_TEXT_X_OFFSET - 8;
+        int textX = !isRightPage ? leftMargin() + PAGE_TEXT_X_OFFSET : this.rightPageXStart();
         for (int lineIndex = 0; lineIndex < visibleRightLines; ++lineIndex) {
             FormattedCharSequence line = pageLines.get(lineIndex);
             Font currentFont = this.font;
@@ -240,8 +246,7 @@ public class WindJournalScreen extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == 0) {
-            Style clickedStyle = getStyleUnderMouse(this.font, this.cachedLeftPageLines, mouseX, mouseY,
-                    leftMargin() + PAGE_TEXT_X_OFFSET, PAGE_TEXT_Y_OFFSET, TEXT_WIDTH, LINE_HEIGHT);
+            Style clickedStyle = this.getStyleRightPage((int)mouseX, (int)mouseY);
             if (clickedStyle != null && this.handleComponentClicked(clickedStyle)) return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -294,27 +299,42 @@ public class WindJournalScreen extends Screen {
         return Component.literal(text).withStyle(TEXT_COLOR).withStyle(ChatFormatting.ITALIC);
     }
 
+    public int rightPageXStart(){
+        return leftMargin() + TEXT_WIDTH + 3 * PAGE_TEXT_X_OFFSET - 8;
+    }
+
     public static @Nullable Style getStyleUnderMouse(Font font, List<FormattedCharSequence> lines,
                                                      double mouseX, double mouseY,
                                                      int textStartX, int textStartY,
                                                      int maxWidth, int lineHeight) {
         int relativeX = Mth.floor(mouseX - textStartX);
         int relativeY = Mth.floor(mouseY - textStartY);
-
         if (relativeX < 0 || relativeY < 0 || relativeX > maxWidth) return null;
-
         int lineIndex = relativeY / lineHeight;
         if (lineIndex >= lines.size()) return null;
-
         FormattedCharSequence line = lines.get(lineIndex);
         return font.getSplitter().componentStyleAtWidth(line, relativeX);
     }
+
+    private @Nullable Style getStyleUnderMouseOnFirstPage(double mouseX, double mouseY) {
+        List<Component> firstPageLines = this.journalAccess.getFirstPageComponents();
+        int relativeX = Mth.floor(mouseX - this.rightPageXStart());
+        int relativeY = Mth.floor(mouseY - 2.0 - PAGE_TEXT_Y_OFFSET - this.journalAccess.firstPageComponentYOffset);
+        if (relativeX < 0 || relativeY < 0 || relativeX > TEXT_WIDTH) return null;
+        int lineIndex = relativeY / LINE_HEIGHT;
+        if (lineIndex >= firstPageLines.size()) return null;
+        Component line = firstPageLines.get(lineIndex);
+        return this.font.getSplitter().componentStyleAtWidth(line.getVisualOrderText(), relativeX);
+    }
+
 
 
     @OnlyIn(Dist.CLIENT)
     private static class JournalAccess {
         private final List<List<Component>> sections;
         private List<List<FormattedCharSequence>> pages = new ArrayList<>();
+        private final List<Component> firstPageComponents = new ArrayList<>();
+        private int firstPageComponentYOffset = 0;
 
         public JournalAccess() {
             this.sections = new ArrayList<>();
@@ -326,6 +346,7 @@ public class WindJournalScreen extends Screen {
         }
 
         private List<List<FormattedCharSequence>> buildPagesList(Font font) {
+            firstPageComponents.clear();
             List<List<FormattedCharSequence>> pages = new ArrayList<>();
             List<Integer> sectionPageIndex = new ArrayList<>();
             int pageIndex = 1;
@@ -333,7 +354,6 @@ public class WindJournalScreen extends Screen {
                 // New page at the beginning of each section
                 List<FormattedCharSequence> currentPage = new ArrayList<>();
                 int currentLineCount = 0;
-
                 for (Component component : section) {
                     List<FormattedCharSequence> lines = font.split(component, TEXT_WIDTH);
                     for (FormattedCharSequence line : lines) {
@@ -355,25 +375,42 @@ public class WindJournalScreen extends Screen {
                 }
                 sectionPageIndex.add(pageIndex);
             }
+            return buildFirstPageIndex(font, pages, sectionPageIndex);
+        }
 
-            // Replace XX with page proper page index
+        public List<List<FormattedCharSequence>> buildFirstPageIndex(Font font, List<List<FormattedCharSequence>> pages,
+                                                                     List<Integer> sectionPageIndex) {
+            // Replace XX with page proper page index and adds links to it.
             int indexParsing = 0;
             List<FormattedCharSequence> firstPage = pages.getFirst();
             for (int k = 0; k < firstPage.size(); k++) {
                 FormattedCharSequence line = firstPage.get(k);
                 String lineText = extractText(line);
                 if (lineText.contains("XX") && indexParsing < sectionPageIndex.size()) {
-                    String newLine = lineText.replace("XX", sectionPageIndex.get(indexParsing) + "");
-                    firstPage.set(k, buildSimpleLine(newLine, font));
+                    if (indexParsing == 0) this.firstPageComponentYOffset = k * LINE_HEIGHT;
+                    int targetPage = sectionPageIndex.get(indexParsing);
+                    String label = lineText.replace("XX", String.valueOf(targetPage));
+                    Component clickableComponent = clikable(label, targetPage);
+                    this.firstPageComponents.add(clickableComponent);
+                    FormattedCharSequence clickableLine = font.split(clickableComponent,
+                            TEXT_WIDTH + 10).getFirst();
+                    firstPage.set(k, clickableLine);
                     indexParsing++;
                 }
             }
             return pages;
         }
 
+        private static Component clikable(String text, int pageIndex) {
+            return Component.literal(text).withStyle(Style.EMPTY
+                    .withColor(TEXT_COLOR)
+                    .withClickEvent(new ClickEvent(Action.CHANGE_PAGE, String.valueOf(pageIndex + 1)))
+                    .withHoverEvent(new HoverEvent(
+                            HoverEvent.Action.SHOW_TEXT,
+                            Component.literal("Go to page " + pageIndex).withStyle(ChatFormatting.GRAY))));
+        }
 
-
-        public static String extractText(FormattedCharSequence sequence) {
+        private static String extractText(FormattedCharSequence sequence) {
             StringBuilder builder = new StringBuilder();
             sequence.accept((index, style, codePoint) -> {
                 builder.appendCodePoint(codePoint);
@@ -438,6 +475,14 @@ public class WindJournalScreen extends Screen {
 
         public List<FormattedCharSequence> getPage(int pageIndex) {
             return pageIndex >= 0 && pageIndex < this.getPageCount() ? this.pages.get(pageIndex) : List.of();
+        }
+
+        public List<Component> getFirstPageComponents() {
+            return firstPageComponents;
+        }
+
+        public int getFirstPageComponentYOffset() {
+            return firstPageComponentYOffset;
         }
     }
 }
