@@ -1,4 +1,12 @@
 package wardentools.misc.wind;
 
-public record Whisper(String whisper, String whisper_fr, int id) {
+import net.minecraft.network.chat.Component;
+import wardentools.ModMain;
+
+public record Whisper(WhisperTags.Tag tag, int id, int globalId) {
+
+    public Component whisper() {
+        return Component.translatable("message." + ModMain.MOD_ID + ".whisper."
+                + this.tag.getTranslatableTag() + "." + id);
+    }
 }

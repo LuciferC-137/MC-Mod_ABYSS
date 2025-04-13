@@ -26,6 +26,7 @@ import wardentools.ModMain;
 import wardentools.misc.wind.Whisper;
 import wardentools.misc.wind.WhisperManager;
 import wardentools.misc.wind.WhisperTags;
+import wardentools.misc.wind.WindWhispers;
 import wardentools.playerdata.KnownWhispersDataProvider;
 
 @OnlyIn(Dist.CLIENT)
@@ -328,7 +329,6 @@ public class WindJournalScreen extends Screen {
     }
 
 
-
     @OnlyIn(Dist.CLIENT)
     private static class JournalAccess {
         private final List<List<Component>> sections;
@@ -390,7 +390,7 @@ public class WindJournalScreen extends Screen {
                     if (indexParsing == 0) this.firstPageComponentYOffset = k * LINE_HEIGHT;
                     int targetPage = sectionPageIndex.get(indexParsing);
                     String label = lineText.replace("XX", String.valueOf(targetPage));
-                    Component clickableComponent = clikable(label, targetPage);
+                    Component clickableComponent = clickable(label, targetPage);
                     this.firstPageComponents.add(clickableComponent);
                     FormattedCharSequence clickableLine = font.split(clickableComponent,
                             TEXT_WIDTH + 10).getFirst();
@@ -401,7 +401,7 @@ public class WindJournalScreen extends Screen {
             return pages;
         }
 
-        private static Component clikable(String text, int pageIndex) {
+        private static Component clickable(String text, int pageIndex) {
             return Component.literal(text).withStyle(Style.EMPTY
                     .withColor(TEXT_COLOR)
                     .withClickEvent(new ClickEvent(Action.CHANGE_PAGE, String.valueOf(pageIndex + 1)))
@@ -426,8 +426,9 @@ public class WindJournalScreen extends Screen {
             // Cover page
             List<Component> indexSection = new ArrayList<>();
             StringBuilder coverPage = new StringBuilder();
-            indexSection.add(baseText("= WIND JOURNAL =\n\n", true, false));
-            coverPage.append("Table of Contents:\n");
+            indexSection.add(Component.translatable("message.wardentools.wind_journal")
+                    .withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.DARK_RED));
+            coverPage.append(Component.translatable("message.wardentools.table_of_content").getString());
             for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
                 coverPage.append("\n")
                         .append(tag.getName().replace("=", ""))
@@ -455,18 +456,16 @@ public class WindJournalScreen extends Screen {
             minecraft.player.getCapability(KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
                 List<Whisper> whispersList = WhisperManager.WHISPERS.whisperTags.getWhispersWithTag(tag);
                 for (Whisper whisper : whispersList) {
-                    if (data.knowsWhisper(whisper.id())) {
-                        whispers.add(baseText(whisper.id() + " - " + whisper.whisper() + "\n"));
+                    if (data.knowsWhisper(whisper.globalId())) {
+                        whispers.add(baseText((whisper.globalId() + 1 ) + " - "
+                                + whisper.whisper().getString() + "\n"));
                     } else {
-                        whispers.add(baseText(whisper.id() + " - LOCKED\n", false, true));
+                        whispers.add(baseText((whisper.globalId() + 1)+  " - " +
+                                WindWhispers.getLockedString() + "\n", false, true));
                     }
                 }
             });
             return whispers;
-        }
-
-        private static FormattedCharSequence buildSimpleLine(String text, Font font) {
-            return font.split(baseText(text), TEXT_WIDTH + 10).getFirst();
         }
 
         public int getPageCount() {
@@ -481,8 +480,5 @@ public class WindJournalScreen extends Screen {
             return firstPageComponents;
         }
 
-        public int getFirstPageComponentYOffset() {
-            return firstPageComponentYOffset;
-        }
     }
 }

@@ -1,5 +1,7 @@
 package wardentools.misc.wind;
 
+import net.minecraft.network.chat.Component;
+
 import java.util.*;
 
 public class WhisperTags {
@@ -34,15 +36,32 @@ public class WhisperTags {
         CRYSTAL_CAVE;
 
         public String getName() {
+            return Component.translatable("message.wardentools.whisper." + this.getTranslatableTag()).getString();
+        }
+
+        public String getTranslatableTag() {
             return switch (this) {
-                case GENERIC -> "==== Generic ====";
-                case ANCIENT_CITADEL -> "= Ancient Citadel =";
-                case SMALL_TALK ->  "=== Small Talk ===";
-                case LORE -> "===== Lore =====";
-                case DEEP_LORE -> "=== Deep Lore ===";
-                case DEEPFOREST -> "== Deep Forest ==";
-                case WHITE_FOREST -> "== White Forest ==";
-                case CRYSTAL_CAVE -> "= Crystal Cave =";
+                case SMALL_TALK -> "small_talk";
+                case GENERIC -> "generic";
+                case LORE -> "lore";
+                case DEEP_LORE -> "deep_lore";
+                case ANCIENT_CITADEL -> "ancient_citadel";
+                case DEEPFOREST -> "deepforest";
+                case WHITE_FOREST -> "white_forest";
+                case CRYSTAL_CAVE -> "crystal_cave";
+            };
+        }
+
+        public int getNumberOfWhispers() {
+            return switch (this) {
+                case SMALL_TALK -> 28;
+                case GENERIC -> 12;
+                case LORE -> 11;
+                case DEEP_LORE -> 6;
+                case ANCIENT_CITADEL -> 8;
+                case DEEPFOREST -> 10;
+                case WHITE_FOREST -> 4;
+                case CRYSTAL_CAVE -> 13;
             };
         }
     }

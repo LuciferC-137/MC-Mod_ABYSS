@@ -1,8 +1,6 @@
 package wardentools.misc.wind;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,17 +49,11 @@ public class WhisperManager {
 
     // This method must only be called externally by packets since this class should only work on server
     public static void sendRandomWhisperToPlayer(@NotNull LocalPlayer player) {
-        Minecraft minecraft = Minecraft.getInstance();
-        LanguageManager languageManager = minecraft.getLanguageManager();
-        String currentLanguage = languageManager.getSelected();
         player.playSound(ModSounds.WIND_WHISPERS.get(), 5f,
                 (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.2F + 1.0F);
-        if ("fr_fr".equals(currentLanguage)) {
-            sendMessage(player, "<Vent> " + WhisperManager.WHISPERS.getWhisperFr());
-        }
-        else {
-            sendMessage(player, "<Wind> " + WhisperManager.WHISPERS.getWhisperEn());
-        }
+        Component whisper = WHISPERS.getWhisper();
+        Component windName = Component.translatable("message." + ModMain.MOD_ID + ".windname");
+        sendMessage(player, windName.getString() + " " + whisper.getString());
     }
 
     private static void sendMessage(Player player, String message) {
