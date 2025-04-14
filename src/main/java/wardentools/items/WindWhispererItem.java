@@ -1,6 +1,5 @@
 package wardentools.items;
 
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -32,7 +31,7 @@ public class WindWhispererItem extends BlockItem {
 			this.currentPlayer = null;
 		}
         super.inventoryTick(stack, level, entity, slot, selected);
-        if (entity instanceof LocalPlayer player) {
+        if (entity instanceof Player player) {
 	        if (player.level().isClientSide()) {
 	            if (isInHotbar(player) && isInAbyss(player)) {
 	                if (this.rand.nextInt(PROB_WHISPER) == 1) {

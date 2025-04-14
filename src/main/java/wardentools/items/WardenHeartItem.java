@@ -8,10 +8,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.effect.ModEffects;
+import wardentools.items.clientutils.WardenHeartFoilManager;
 import wardentools.misc.WardenLaserAttack;
 import wardentools.network.PayloadsRecords.ParticlesSounds.WardenLaserParticleSound;
 
@@ -48,14 +48,12 @@ public class WardenHeartItem extends Item {
 	}
 
 	private static boolean isCorruptionVessel(Player player) {
-		if (player==null) {
-			return false;
-		}
+		if (player==null) return false;
 		return player.getEffect(ModEffects.CORRUPTION_VESSEL) != null;
 	}
 	
 	@Override
     public boolean isFoil(@NotNull ItemStack stack) {
-		return false; //TODO fix this
+		return WardenHeartFoilManager.isFoil();
     }
 }

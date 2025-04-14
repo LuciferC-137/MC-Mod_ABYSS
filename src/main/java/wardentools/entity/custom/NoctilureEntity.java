@@ -1,7 +1,5 @@
 package wardentools.entity.custom;
 
-import net.minecraft.client.CameraType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -9,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
@@ -36,9 +35,11 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.entity.ModEntities;
+import wardentools.entity.utils.ClientNoctilureRidingControl;
 import wardentools.entity.utils.CustomFlyingPathNavigation;
 import wardentools.entity.utils.NoctilureFlyingMoveControl;
 import wardentools.entity.utils.goal.JoinOwnerGoal;
@@ -46,6 +47,7 @@ import wardentools.entity.utils.goal.LandGoal;
 import wardentools.entity.utils.goal.RandomFlyGoal;
 import wardentools.entity.utils.goal.TakeOffGoal;
 import wardentools.items.ItemRegistry;
+import wardentools.network.PayloadsRecords.SwitchCamera;
 import wardentools.sounds.ModSounds;
 
 import java.util.Optional;
@@ -95,7 +97,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	protected NoctilureFlyingMoveControl flyingMoveControl;
 	protected MoveControl groundMoveControl;
 	private Vec3 previousMovement = Vec3.ZERO;
-	private boolean energyWasZero = false;
+	public boolean energyWasZero = false;
 	@Nullable
 	private UUID persistentAngerTarget;
 
@@ -144,7 +146,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 		else if (!this.isVehicle() && !NoctilureEntity.this.getWantsToJoinOwner()) {
 			this.handleRandomFlyingLogic();
 		}
-		if (this.isVehicle())this.handlePlayerControl();
+		if (this.isVehicle() && this.level().isClientSide)this.handlePlayerControl();
 		super.tick();
 	}
 
@@ -169,32 +171,12 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 		}
 	}
 
+
 	private void handlePlayerControl() {
-		if (this.getWantsToLand()) {this.setWantsToLand(false);}
-		if (this.getWantsToTakeOff()) {this.setWantsToTakeOff(false);}
-		if (Minecraft.getInstance().options.keyDown.isDown()){
-			if (this.getIsFlying() && this.getHeightAboveGround() <= 1){
-				this.land();
-			}
-		}
-		if (this.getIsFlying()) {
-			if (Minecraft.getInstance().options.keySprint.isDown()) {
-				if (Minecraft.getInstance().options.keyUp.isDown()) this.lowerEnergy(10);
-				if (this.energyWasZero) this.setFlightSprinting(this.getSprintEnergy() > 10);
-				else this.setFlightSprinting(this.getSprintEnergy() > 0);
-			} else {
-				this.setFlightSprinting(false);
-			}
-			if (this.getSprintEnergy() < MAX_SPRINT_ENERGY) {
-				if (!Minecraft.getInstance().options.keyUp.isDown()) {
-					increaseEnergy(2);
-				} else if (!Minecraft.getInstance().options.keySprint.isDown()) {
-					increaseEnergy(1);
-				}
-			}
-		} else if (this.getSprintEnergy() < MAX_SPRINT_ENERGY) {
-			increaseEnergy(20);
-		}
+		if (!this.level().isClientSide || !this.isVehicle()) return;
+		ClientNoctilureRidingControl.handlePlayerControl(this);
+		if (this.getIsFlying() && this.getControllingPassenger() instanceof Player player)
+			ClientNoctilureRidingControl.noctilureMovement(this, player);
 	}
 
 	private void handleAnimation() {
@@ -315,7 +297,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 			} else if (this.isTamed() && player.getUUID().equals(this.getOwnerUUID())){
 				if (!this.level().isClientSide){
 					player.startRiding(this);
-					Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+					PacketDistributor.sendToPlayer((ServerPlayer) player, new SwitchCamera());
 				}
 				return InteractionResult.SUCCESS;
 			}
@@ -366,10 +348,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 			this.setRot(this.getYRot(), this.getXRot());
 			this.yBodyRot = this.getYRot();
 			this.yHeadRot = this.yBodyRot;
-			if (this.getIsFlying() && Minecraft.getInstance().options.keyUp.isDown()){
-				this.flyingTravel(player.getViewVector(1f).scale(
-						this.getFlightSprinting() ? 1.1f : 0.5f).scale(this.isInWater() ? 0.1f : 1f));
-			} else if (!this.getIsFlying()) {
+			if (!this.getIsFlying()) {
 				float forward = player.zza;
 				float strafe = player.xxa;
 				this.moveRelative(0.1F,
@@ -377,8 +356,6 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 				this.move(MoverType.SELF, this.getDeltaMovement());
 				this.setDeltaMovement(this.getDeltaMovement().scale(0.91F));
 				super.travel(travelVector);
-			} else {
-				this.flyingTravel(travelVector);
 			}
 		} else if (this.getIsFlying()){
 			this.flyingTravel(travelVector);
@@ -637,7 +614,9 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 
 	@Override
 	public @NotNull Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
-		Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
+		if (!passenger.level().isClientSide && passenger instanceof Player player) {
+			PacketDistributor.sendToPlayer((ServerPlayer)player, new SwitchCamera());
+		}
 		Vec3 vec3 = getCollisionHorizontalEscapeVector((double)this.getBbWidth(),
 				(double)passenger.getBbWidth(),
 				this.getYRot() + (passenger.getMainArm() == HumanoidArm.RIGHT ? 90.0F : -90.0F));

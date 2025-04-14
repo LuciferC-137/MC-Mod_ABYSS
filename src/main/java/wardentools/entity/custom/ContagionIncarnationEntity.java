@@ -1,7 +1,5 @@
 package wardentools.entity.custom;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -47,9 +45,8 @@ import wardentools.entity.utils.IncarnationBodyRotationControl;
 import wardentools.entity.utils.IncarnationMoveControl;
 import wardentools.entity.utils.goal.IncarnationAttackGoal;
 import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
-import wardentools.network.PayloadsRecords.BossEventSynchronize;
 import wardentools.network.PayloadsRecords.ParticlesSounds.ThemeIncarnationStart;
-import wardentools.sounds.ModMusics;
+import wardentools.network.PayloadsRecords.ParticlesSounds.ThemeIncarnationStop;
 import wardentools.sounds.ModSounds;
 
 import java.lang.reflect.Field;
@@ -99,7 +96,6 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     private BlockPos lastSonicStrikePos = new BlockPos(0, 0, 0);
     private int deferredSonicStrikeTick = 0;
     private int tickSinceLastMusicPlayed = 0;
-    private boolean isClientInBossEvent = false;
 
 	public ContagionIncarnationEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
@@ -149,7 +145,6 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossEvent.addPlayer(player);
-        PacketDistributor.sendToPlayer(player, new BossEventSynchronize(this.getId(), true));
         PacketDistributor.sendToPlayer(player, new ThemeIncarnationStart());
     }
 
@@ -157,7 +152,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossEvent.removePlayer(player);
-        PacketDistributor.sendToPlayer(player, new BossEventSynchronize(this.getId(), false));
+        PacketDistributor.sendToPlayer(player, new ThemeIncarnationStop());
     }
 
     @Override
@@ -189,10 +184,10 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 	@Override
 	public void tick() {
 		if (level().isClientSide()) {
-            if (this.hasBeenSummonedByCatalyst()) this.clientMusicManager();
 			this.handleAnimationStates();
             this.handleSonicStrikeParticleEffect();
 		} else {
+            if (this.hasBeenSummonedByCatalyst()) this.clientMusicManager();
             this.handleSpawnLogic();
             this.updateSynchronizedTicks();
             this.randomSonicAttackTrigger();
@@ -203,12 +198,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     private void clientMusicManager() {
         if (this.tickSinceLastMusicPlayed >= MUSIC_DURATION) {
             this.tickSinceLastMusicPlayed = 0;
-            LocalPlayer player = Minecraft.getInstance().player;
-            if (player != null && this.isClientInBossEvent) {
-                Minecraft.getInstance().getMusicManager().startPlaying(ModMusics.INCARNATION_THEME);
-            } else if (player != null) {
-                Minecraft.getInstance().getMusicManager().stopPlaying();
-            }
+            PacketDistributor.sendToPlayersTrackingEntity(this, new ThemeIncarnationStart());
         } else this.tickSinceLastMusicPlayed++;
     }
 
@@ -428,7 +418,6 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public boolean hasBeenSummonedByCatalyst() {return this.entityData.get(hasBeenSummonedByCatalyst);}
     private void setHasBeenSummonedByCatalyst(boolean hasBeenSummonedByCatalyst) {this.entityData.set(ContagionIncarnationEntity.hasBeenSummonedByCatalyst, hasBeenSummonedByCatalyst);}
 
-    public void setClientInBossEvent(boolean isClientInBossEvent) {this.isClientInBossEvent = isClientInBossEvent;}
 
     public static boolean canSpawn(EntityType<ContagionIncarnationEntity> entityType, ServerLevelAccessor level,
                                    MobSpawnType spawnType, BlockPos pos, RandomSource random) {

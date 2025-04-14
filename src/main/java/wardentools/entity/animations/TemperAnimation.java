@@ -4,7 +4,10 @@ import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class TemperAnimation {
 	public static final AnimationDefinition attack = AnimationDefinition.Builder.withLength(0.25F).looping()
 		.addAnimation("ARM_L", new AnimationChannel(AnimationChannel.Targets.ROTATION, 

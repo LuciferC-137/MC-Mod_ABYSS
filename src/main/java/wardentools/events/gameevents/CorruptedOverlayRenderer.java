@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
@@ -19,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
 public class CorruptedOverlayRenderer {
     private static final Map<UUID, Integer> effectTotalDurations = new HashMap<>();
     private static final ResourceLocation CORRUPTED_OVERLAY

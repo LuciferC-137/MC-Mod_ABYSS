@@ -4,7 +4,10 @@ import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ContagionIncarnationAnimation {
 	public static final AnimationDefinition walking = AnimationDefinition.Builder.withLength(2.25F).looping()
 		.addAnimation("LEG_LEFT_3", new AnimationChannel(AnimationChannel.Targets.ROTATION, 

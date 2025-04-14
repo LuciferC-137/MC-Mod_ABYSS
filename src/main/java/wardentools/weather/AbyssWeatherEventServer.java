@@ -4,11 +4,9 @@ package wardentools.weather;
 import com.mojang.brigadier.context.CommandContextBuilder;
 import com.mojang.brigadier.context.ParsedArgument;
 import com.mojang.brigadier.context.ParsedCommandNode;
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.event.CommandEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import wardentools.ModMain;
@@ -17,26 +15,18 @@ import wardentools.worldgen.dimension.ModDimensions;
 import java.util.List;
 
 /**
- * This class register all the weather ticks and is in charge of client/server sync.
+ * This class register all the weather ticks and is in charge of server sync.
  */
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
-public class AbyssWeatherEvent {
+public class AbyssWeatherEventServer {
 	public static final AbyssWeatherManager WEATHER_MANAGER = new AbyssWeatherManager();
-	public static final AbyssFogClientHandler CLIENT_WEATHER = new AbyssFogClientHandler();
-	
+
 	@SubscribeEvent
 	public static void onServerTickEvent(ServerTickEvent.Pre event) {
 		ServerLevel abyssLevel = event.getServer().getLevel(ModDimensions.ABYSS_LEVEL_KEY);
 		if (abyssLevel == null) return;
 		WEATHER_MANAGER.tick(abyssLevel);
-	}
-
-	@SubscribeEvent
-	public static void onClientLevelTickEvent(ClientTickEvent.Pre event) {
-		Minecraft minecraft = Minecraft.getInstance();
-		if (minecraft.level == null || minecraft.player == null) return;
-		CLIENT_WEATHER.updateFogDistanceOnTick(minecraft.level);
 	}
 
 	@SubscribeEvent

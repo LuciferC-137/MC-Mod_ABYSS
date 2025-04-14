@@ -1,6 +1,8 @@
 package wardentools.mixin;
 
 import com.mojang.blaze3d.vertex.*;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -19,10 +21,11 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.FogType;
 import wardentools.ModMain;
-import wardentools.weather.AbyssWeatherEvent;
+import wardentools.weather.AbyssWeatherEventServer;
 import wardentools.weather.AbyssWeatherManager;
 import wardentools.worldgen.dimension.ModDimensions;
 
+@OnlyIn(Dist.CLIENT)
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
 	@Unique private static final ResourceLocation ABYSS_SKY_LOCATION
@@ -33,7 +36,7 @@ public class LevelRendererMixin {
 			float partialTick, Camera cam, boolean bool, Runnable runnable, CallbackInfo ci) {
         if (cam.getEntity().level().dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
         int BRIGHTNESS = (int)(230f
-				* (AbyssWeatherEvent.WEATHER_MANAGER.getFogDistance() / AbyssWeatherManager.MAX_FOG_DISTANCE));
+				* (AbyssWeatherEventServer.WEATHER_MANAGER.getFogDistance() / AbyssWeatherManager.MAX_FOG_DISTANCE));
 		int FOG_COLOR_OVERLAY = (int)((float)BRIGHTNESS * ((float)255 / (float)230));
 		LevelRenderer levelRenderer = (LevelRenderer) (Object) this;
         Minecraft mc = Minecraft.getInstance();

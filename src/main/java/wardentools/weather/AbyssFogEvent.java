@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ViewportEvent;
@@ -20,7 +21,7 @@ import wardentools.worldgen.dimension.ModDimensions;
  Class only effective on the Client-side. Manage the fog in the abyss.
  */
 
-@EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
 public class AbyssFogEvent {
 	private static final int RADIUS_FOR_UNDER_SKY_CHECK = 15;
 
@@ -34,8 +35,8 @@ public class AbyssFogEvent {
 						|| isInLiquidCorruption(event.getCamera())) {
 					return;
 				}
-				event.setFarPlaneDistance(AbyssWeatherEvent.CLIENT_WEATHER.currentFogDistance());
-				event.setNearPlaneDistance(AbyssWeatherEvent.CLIENT_WEATHER.currentFogDistance() * 0.5f);
+				event.setFarPlaneDistance(AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance());
+				event.setNearPlaneDistance(AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance() * 0.5f);
 				event.setCanceled(true);
 			}
 		}

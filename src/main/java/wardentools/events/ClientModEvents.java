@@ -10,8 +10,6 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
-import wardentools.entity.custom.ModBoatEntity;
-import wardentools.entity.custom.ModChestBoatEntity;
 import wardentools.items.ModItemProperties;
 import wardentools.weather.lightning.AbyssLightningRenderer;
 
@@ -49,10 +47,10 @@ public class ClientModEvents {
 		event.registerLayerDefinition(PaleWanderer.LAYER_LOCATION, PaleWanderer::createBodyLayer);
 		event.registerLayerDefinition(Protector.LAYER_LOCATION, Protector::createBodyLayer);
 		event.registerLayerDefinition(ContagionIncarnation.LAYER_LOCATION, ContagionIncarnation::createBodyLayer);
-		event.registerLayerDefinition(ModBoatEntity.DARKTREE_BOAT_LAYER, BoatModel::createBodyModel);
-		event.registerLayerDefinition(ModChestBoatEntity.DARKTREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
-		event.registerLayerDefinition(ModBoatEntity.WHITETREE_BOAT_LAYER, BoatModel::createBodyModel);
-		event.registerLayerDefinition(ModChestBoatEntity.WHITETREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+		event.registerLayerDefinition(ModBoat.DARKTREE_BOAT_LAYER, BoatModel::createBodyModel);
+		event.registerLayerDefinition(ModBoat.DARKTREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+		event.registerLayerDefinition(ModBoat.WHITETREE_BOAT_LAYER, BoatModel::createBodyModel);
+		event.registerLayerDefinition(ModBoat.WHITETREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
 		event.registerLayerDefinition(Temper.LAYER_LOCATION, Temper::createBodyLayer);
 		event.registerLayerDefinition(Parasyte.LAYER_LOCATION, Parasyte::createBodyLayer);
 		event.registerLayerDefinition(Noctilure.LAYER_LOCATION, Noctilure::createBodyLayer);

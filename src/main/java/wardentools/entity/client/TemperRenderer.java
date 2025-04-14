@@ -7,10 +7,13 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.TemperEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class TemperRenderer extends MobRenderer<TemperEntity, Temper>{
 	private static final ResourceLocation TEMPER_TEXTURE =
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/temper.png");

@@ -9,12 +9,14 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.ParasyteAnimation;
 import wardentools.entity.custom.ParasyteEntity;
 
-@SuppressWarnings("unused")
+@OnlyIn(Dist.CLIENT)
 public class Parasyte extends HierarchicalModel<ParasyteEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
 			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "parasyte"), "main");

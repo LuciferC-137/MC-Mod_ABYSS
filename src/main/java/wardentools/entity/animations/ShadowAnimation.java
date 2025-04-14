@@ -4,7 +4,10 @@ import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ShadowAnimation {
 	public static final AnimationDefinition stasis = AnimationDefinition.Builder.withLength(8.0F).looping()
 		.addAnimation("LEG_L", new AnimationChannel(AnimationChannel.Targets.ROTATION,

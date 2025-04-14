@@ -2,8 +2,11 @@ package wardentools.items;
 
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import wardentools.ModMain;
 
+@OnlyIn(Dist.CLIENT)
 public class ModItemProperties {
     public static void addCustomProperties() {
         ItemProperties.register(ItemRegistry.WHISTLE.get(),

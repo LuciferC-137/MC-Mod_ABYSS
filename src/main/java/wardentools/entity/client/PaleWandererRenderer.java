@@ -6,9 +6,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.PaleWandererEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class PaleWandererRenderer extends MobRenderer<PaleWandererEntity, PaleWanderer>{
 	private static final ResourceLocation PALE_WANDERER_TEXTURE = 
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/pale_wanderer.png");
@@ -18,13 +22,13 @@ public class PaleWandererRenderer extends MobRenderer<PaleWandererEntity, PaleWa
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(PaleWandererEntity pEntity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull PaleWandererEntity pEntity) {
 		return PALE_WANDERER_TEXTURE;
 	}
 	
 	@Override
-	public void render(PaleWandererEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack,
-						MultiBufferSource pBuffer, int pPackedLight) {
+	public void render(PaleWandererEntity pEntity, float pEntityYaw, float pPartialTicks, @NotNull PoseStack pMatrixStack,
+					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {
 		if (pEntity.isBaby()) {
 			pMatrixStack.scale(0.5f, 0.5f, 0.5f);
 		}	

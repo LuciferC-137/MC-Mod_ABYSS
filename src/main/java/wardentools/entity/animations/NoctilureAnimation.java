@@ -4,7 +4,10 @@ import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class NoctilureAnimation {
 	public static final AnimationDefinition fly = AnimationDefinition.Builder.withLength(3.0F).looping()
 		.addAnimation("BODYWINGS", new AnimationChannel(AnimationChannel.Targets.ROTATION,

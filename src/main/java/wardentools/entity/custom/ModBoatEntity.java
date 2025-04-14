@@ -1,11 +1,9 @@
 package wardentools.entity.custom;
 
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.EntityType;
@@ -14,7 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
-import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.items.ItemRegistry;
@@ -22,10 +19,6 @@ import wardentools.items.ItemRegistry;
 import java.util.function.IntFunction;
 
 public class ModBoatEntity extends Boat {
-    public static final ModelLayerLocation DARKTREE_BOAT_LAYER = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "boat/darktree"), "main");
-    public static final ModelLayerLocation WHITETREE_BOAT_LAYER = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "boat/whitetree"), "main");
 
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE
             = SynchedEntityData.defineId(ModBoatEntity.class, EntityDataSerializers.INT);

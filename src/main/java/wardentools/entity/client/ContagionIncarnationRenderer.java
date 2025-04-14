@@ -2,6 +2,8 @@ package wardentools.entity.client;
 
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -21,6 +23,7 @@ import wardentools.block.BlockRegistry;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.particle.ParticleRegistry;
 
+@OnlyIn(Dist.CLIENT)
 public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnationEntity, ContagionIncarnation>{
 	private static final ResourceLocation CONTAGION_INCARNATION_TEXTURE = 
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/contagion_incarnation.png");

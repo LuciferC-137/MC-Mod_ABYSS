@@ -13,11 +13,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.ContagionIncarnationAnimation;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 
+@OnlyIn(Dist.CLIENT)
 @SuppressWarnings("unused")
 public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnationEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION

@@ -1,7 +1,6 @@
 package wardentools.misc.wind;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.LanguageManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -39,18 +38,26 @@ public class WhisperManager {
         if (this.timeSinceLastWhisper > nextMinTime) {
             this.timeSinceLastWhisper = 0;
             this.nextMinTime = MIN_TIME_BETWEEN_WHISPERS + level.random.nextInt(MIN_TIME_BETWEEN_WHISPERS);
-            level.players().forEach(this::sendRandomWhisperToPlayer);
+            level.players().forEach(WhisperManager::sendRandomWhisperToPlayer);
             return true;
         }
         return false;
     }
 
-    public void sendRandomWhisperToPlayer(@NotNull ServerPlayer player) {
-        PacketDistributor.sendToPlayer(player, new WindWhispererMessageSound());
+    public static void sendRandomWhisperToPlayer(@NotNull Player player) {
+        if (player.level().isClientSide) {
+            sendRandomWhisperToPlayerLocal(player);
+        } else {
+            sendRandomWhisperToPlayerServer(player);
+        }
+    }
+
+    public static void sendRandomWhisperToPlayerServer(@NotNull Player player) {
+        PacketDistributor.sendToPlayer((ServerPlayer)player, new WindWhispererMessageSound());
     }
 
     // This method must only be called externally by packets since this class should only work on server
-    public static void sendRandomWhisperToPlayer(@NotNull LocalPlayer player) {
+    public static void sendRandomWhisperToPlayerLocal(@NotNull Player player) {
         Minecraft minecraft = Minecraft.getInstance();
         LanguageManager languageManager = minecraft.getLanguageManager();
         String currentLanguage = languageManager.getSelected();

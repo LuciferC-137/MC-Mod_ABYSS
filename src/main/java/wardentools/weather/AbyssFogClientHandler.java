@@ -1,7 +1,7 @@
 package wardentools.weather;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -22,7 +22,7 @@ public class AbyssFogClientHandler {
 
     public void updateFogDistanceOnTick(Level level) {
         if (this.serverFogDistance == -1F) this.initializeFogDistance();
-        LocalPlayer player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         float targetFogDistance;
         if (player != null) {
             targetFogDistance = AbyssFogEvent.isPlayerOutside(player) ?

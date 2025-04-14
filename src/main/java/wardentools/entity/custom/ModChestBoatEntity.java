@@ -1,17 +1,14 @@
 package wardentools.entity.custom;
 
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.ChestBoat;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.items.ItemRegistry;
 
@@ -19,10 +16,6 @@ public class ModChestBoatEntity extends ChestBoat {
     private static final EntityDataAccessor<Integer> DATA_ID_TYPE =
             SynchedEntityData.defineId(ModChestBoatEntity.class, EntityDataSerializers.INT);
 
-    public static final ModelLayerLocation DARKTREE_CHEST_BOAT_LAYER = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chest_boat/darktree"), "main");
-    public static final ModelLayerLocation WHITETREE_CHEST_BOAT_LAYER = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chest_boat/whitetree"), "main");
 
     public ModChestBoatEntity(EntityType<? extends ChestBoat> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);

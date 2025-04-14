@@ -9,11 +9,14 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.NoctilureAnimation;
 import wardentools.entity.custom.NoctilureEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
 			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "noctilure"), "main");

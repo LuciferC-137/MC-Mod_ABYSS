@@ -1,26 +1,15 @@
 package wardentools.entity.interfaces;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
-import wardentools.entity.utils.RenderToBufferFunction;
-import wardentools.entity.utils.ScaleFunction;
-import wardentools.entity.utils.SetUpAnimFunction;
-import wardentools.entity.utils.getBobFunction;
-
-import java.lang.reflect.Method;
+import wardentools.entity.utils.*;
 
 public class MimicEntity extends CorruptionMonster {
     private LivingEntity mimicEntity = null;
@@ -84,78 +73,26 @@ public class MimicEntity extends CorruptionMonster {
     }
 
     public RenderToBufferFunction getRenderToBufferFunction() {
-        if (this.mimicEntity == null) return null;
-        EntityRenderer<? super LivingEntity> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-                .getRenderer(this.mimicEntity);
-        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-            return (poseStack, vertexConsumer, i, j)
-                    -> livingRenderer.getModel().renderToBuffer(poseStack, vertexConsumer, i, j);
-        }
-        return null;
+        if (!level().isClientSide || mimicEntity == null) return null;
+        return ClientMimicRenderingUtils.getRenderToBufferFunction(mimicEntity);
     }
 
     @SuppressWarnings("unchecked")
     public <T extends LivingEntity> SetUpAnimFunction<T> getSetUpAnimFunction() {
         if (this.mimicEntity == null) return null;
-        T deadEntityCasted = (T) this.mimicEntity;
-        EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-                .getRenderer(deadEntityCasted);
-        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-            return ((LivingEntityRenderer<T, ?>)livingRenderer).getModel()::setupAnim;
-        }
-        return null;
+        return ClientMimicRenderingUtils.getSetUpAnimFunction((T) this.mimicEntity);
     }
 
     @SuppressWarnings("unchecked")
     public <T extends LivingEntity> getBobFunction<T> getGetBobFunction() {
-        if (this.mimicEntity == null) return null;
-        T deadEntityCasted = (T) this.mimicEntity;
-        EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-                .getRenderer(deadEntityCasted);
-        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-            try {
-                Method getBobMethod = LivingEntityRenderer.class
-                        .getDeclaredMethod("getBob", LivingEntity.class, float.class);
-                getBobMethod.setAccessible(true);
-                return (getBobFunction<T>) (entity, partialTicks) -> {
-                    if (deadEntityCasted instanceof Chicken || deadEntityCasted instanceof Parrot) return 0.0f;
-                    try {
-                        return (float)getBobMethod.invoke(livingRenderer, entity, partialTicks);
-                    } catch (Exception e) {
-                        System.out.println("Error invoking getBob method");
-                        return 0.0f;
-                    }
-                };
-            } catch (NoSuchMethodException e) {
-                System.out.println("Error invoking getBob method: NoSuchMethodException");
-            }
-        }
-        return null;
+        if (!level().isClientSide || mimicEntity == null) return null;
+        return ClientMimicRenderingUtils.getGetBobFunction((T) this.mimicEntity);
     }
 
     @SuppressWarnings("unchecked")
     public <T extends LivingEntity> ScaleFunction<T> getScaleFunction() {
-        if (this.mimicEntity == null) return null;
-        T deadEntityCasted = (T) this.mimicEntity;
-        EntityRenderer<? super T> renderer = Minecraft.getInstance().getEntityRenderDispatcher()
-                .getRenderer(deadEntityCasted);
-        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-            try {
-                Method scaleMethod = LivingEntityRenderer.class
-                        .getDeclaredMethod("scale", LivingEntity.class, PoseStack.class, float.class);
-                scaleMethod.setAccessible(true);
-                return (ScaleFunction<T>) (entity, poseStack, v) -> {
-                    try {
-                        scaleMethod.invoke(livingRenderer, entity, poseStack, v);
-                    } catch (Exception e) {
-                        System.out.println("Error invoking scale method");
-                    }
-                };
-            } catch (NoSuchMethodException e) {
-                System.out.println("Error invoking getBob scale method: NoSuchMethodException");
-            }
-        }
-        return null;
+        if (!level().isClientSide || mimicEntity == null) return null;
+        return ClientMimicRenderingUtils.getScaleFunction((T) this.mimicEntity);
     }
 
     public LivingEntity getMimicEntity() {return mimicEntity;}

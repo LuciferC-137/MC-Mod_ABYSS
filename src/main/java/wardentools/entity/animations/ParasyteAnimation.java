@@ -4,7 +4,10 @@ import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
 import net.minecraft.client.animation.Keyframe;
 import net.minecraft.client.animation.KeyframeAnimations;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
+@OnlyIn(Dist.CLIENT)
 public class ParasyteAnimation {
 	public static final AnimationDefinition crawl = AnimationDefinition.Builder.withLength(1.0F).looping()
 		.addAnimation("BODY", new AnimationChannel(AnimationChannel.Targets.ROTATION,

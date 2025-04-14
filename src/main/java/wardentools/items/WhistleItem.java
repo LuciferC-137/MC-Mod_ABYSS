@@ -1,10 +1,5 @@
 package wardentools.items;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.EntityBoundSoundInstance;
-import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -18,13 +13,11 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.custom.NoctilureEntity;
-import wardentools.sounds.ModSounds;
+import wardentools.items.clientutils.WhistleSounds;
 
 public class WhistleItem extends Item {
     private static final int USE_DURATION = 100;
-    private static final SoundEvent SOUND = ModSounds.WHISTLE.get();
     private static final float callRange = 100f;
-    private SoundInstance lastSoundInstance;
 
     public WhistleItem(Properties properties) {
         super(properties);
@@ -53,8 +46,7 @@ public class WhistleItem extends Item {
     }
 
     public boolean isUsing() {
-        Minecraft minecraft = Minecraft.getInstance();
-        return minecraft.getSoundManager().isActive(this.lastSoundInstance);
+        return WhistleSounds.INSTANCE.isSoundActive();
     }
 
     private void callForTamedNoctilure(Level level, Player player) {
@@ -68,9 +60,7 @@ public class WhistleItem extends Item {
 
     private void play(Level level, Player player) {
         if (level.isClientSide) {
-            this.lastSoundInstance = new EntityBoundSoundInstance(SOUND, SoundSource.PLAYERS,
-                    0.8f, 1.0F, player, 1L);
-            Minecraft.getInstance().getSoundManager().play(this.lastSoundInstance);
+            WhistleSounds.INSTANCE.onPlay(player);
         }
         level.gameEvent(GameEvent.INSTRUMENT_PLAY, player.position(), GameEvent.Context.of(player));
     }

@@ -16,7 +16,7 @@ import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.network.PayloadsRecords.RequestFogDistanceFromServer;
 import wardentools.network.PayloadsRecords.SwitchAchievement;
 import wardentools.network.PayloadsRecords.TeleportPlayerTo;
-import wardentools.weather.AbyssWeatherEvent;
+import wardentools.weather.AbyssWeatherEventServer;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
@@ -69,7 +69,7 @@ public class ServerPayloadHandler {
     public static void sendServerFogDistanceToPlayer(RequestFogDistanceFromServer msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             if (ctx.player() instanceof ServerPlayer serverPlayer) {
-                AbyssWeatherEvent.WEATHER_MANAGER.sendServerFogDistanceToClient(serverPlayer);
+                AbyssWeatherEventServer.WEATHER_MANAGER.sendServerFogDistanceToClient(serverPlayer);
             }
         }, ctx);
     }

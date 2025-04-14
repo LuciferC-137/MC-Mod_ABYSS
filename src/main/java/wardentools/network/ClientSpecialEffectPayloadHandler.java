@@ -2,7 +2,6 @@ package wardentools.network;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,6 +12,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.joml.Vector3f;
 import wardentools.block.BlockRegistry;
@@ -24,6 +25,7 @@ import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
 
+@OnlyIn(Dist.CLIENT)
 public class ClientSpecialEffectPayloadHandler {
     private static final BlockParticleOption FENCE_PARTICLE
             = new BlockParticleOption(ParticleTypes.BLOCK,
@@ -44,7 +46,7 @@ public class ClientSpecialEffectPayloadHandler {
             SoundEvent soundEvent = ModSounds.CONTAGION_INCARNATION_EMERGE.get();
             Level level = ctx.player().level();
             level.playLocalSound(msg.pos().x, msg.pos().y, msg.pos().z,
-                    soundEvent, SoundSource.HOSTILE, 1.0f, 1.0f, false);
+                    soundEvent, SoundSource.HOSTILE, 7.0f, 1.0f, false);
         }, ctx);
     }
 
@@ -167,6 +169,12 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
+    public static void themeIncarnationStop(ThemeIncarnationStop msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            Minecraft.getInstance().getMusicManager().stopPlaying(ModMusics.INCARNATION_THEME);
+        }, ctx);
+    }
+
     public static void protectorHeartSynchronize(ProtectorHeartSynchronize msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
@@ -195,17 +203,17 @@ public class ClientSpecialEffectPayloadHandler {
 
     public static void windWhispererMessageSound(WindWhispererMessageSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            if (ctx.player() instanceof LocalPlayer player) {
-                WhisperManager.sendRandomWhisperToPlayer(player);
+            if (ctx.player().level().isClientSide()) {
+                WhisperManager.sendRandomWhisperToPlayer(ctx.player());
             }
         }, ctx);
     }
 
     public static void windWhisperSound(WindWhisperSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            if (ctx.player() instanceof LocalPlayer player) {
-                player.playSound(ModSounds.WIND_WHISPERS.get(), 5f,
-                        (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.2F + 1.0F);
+            if (ctx.player().level().isClientSide()) {
+                ctx.player().playSound(ModSounds.WIND_WHISPERS.get(), 5f,
+                        ( ctx.player().getRandom().nextFloat() -  ctx.player().getRandom().nextFloat()) * 0.2F + 1.0F);
             }
         }, ctx);
     }
@@ -233,9 +241,6 @@ public class ClientSpecialEffectPayloadHandler {
                     offsetX * adjustedSpeed, offsetY * adjustedSpeed, offsetZ * adjustedSpeed);
         }
     }
-
-
-
 
     private static void handleDataOnNetwork(Runnable run, final IPayloadContext ctx) {
         ctx.enqueueWork(run)

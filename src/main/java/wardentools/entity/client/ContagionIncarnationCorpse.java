@@ -9,10 +9,13 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.ContagionIncarnationCorpseEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class ContagionIncarnationCorpse extends HierarchicalModel<ContagionIncarnationCorpseEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
 			= new ModelLayerLocation(

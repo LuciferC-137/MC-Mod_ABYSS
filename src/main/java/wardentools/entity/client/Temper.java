@@ -15,11 +15,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.TemperAnimation;
 import wardentools.entity.custom.TemperEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class Temper extends HierarchicalModel<TemperEntity> implements ArmedModel {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "temper"), "main");
