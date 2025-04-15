@@ -1,7 +1,9 @@
 package wardentools.network;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,24 +16,62 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.joml.Vector3f;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
+import wardentools.gui.winscreen.CustomWinScreen;
 import wardentools.misc.wind.WhisperManager;
 import wardentools.network.PayloadsRecords.ParticlesSounds.*;
+import wardentools.network.PayloadsRecords.SendFogDistanceToClient;
+import wardentools.network.PayloadsRecords.ShowWinScreen;
+import wardentools.network.PayloadsRecords.SwitchCamera;
+import wardentools.network.PayloadsRecords.TeleportPlayerTo;
 import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
+import wardentools.weather.AbyssWeatherEventClient;
 
 @OnlyIn(Dist.CLIENT)
-public class ClientSpecialEffectPayloadHandler {
-    private static final BlockParticleOption FENCE_PARTICLE
+public class ClientPayloadHandler implements IClientPayloadHandler {
+    private  final BlockParticleOption FENCE_PARTICLE
             = new BlockParticleOption(ParticleTypes.BLOCK,
             BlockRegistry.DARKTREE_FENCE.get().defaultBlockState());
 
-    public static void ancientLaboratoryGateSound(AncientLaboratoryGateSound msg, final IPayloadContext ctx) {
+    public  void showWinScreen(ShowWinScreen msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            Minecraft minecraft = Minecraft.getInstance();
+            CustomWinScreen winScreen = new CustomWinScreen(true, () -> {
+                PacketDistributor.sendToServer(new TeleportPlayerTo(msg.respawnPos()));
+                minecraft.setScreen((Screen)null);
+            });
+            winScreen.init(minecraft, minecraft.getWindow().getGuiScaledWidth(),
+                    minecraft.getWindow().getGuiScaledHeight());
+            minecraft.setScreen(winScreen);
+        }, ctx);
+    }
+
+    public  void updateFogDistance(SendFogDistanceToClient msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            AbyssWeatherEventClient.CLIENT_WEATHER.setServerFogDistance(msg.fogDistance());
+        }, ctx);
+    }
+
+    public  void switchCamera(SwitchCamera msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            if (ctx.player().level().isClientSide()){
+                if (Minecraft.getInstance().options.getCameraType() == CameraType.THIRD_PERSON_BACK) {
+                    Minecraft.getInstance().options.setCameraType(CameraType.FIRST_PERSON);
+                } else if (Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON) {
+                    Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
+                }
+            }
+        }, ctx);
+    }
+
+    public  void ancientLaboratoryGateSound(AncientLaboratoryGateSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Vector3f source = msg.pos();
             Level level = ctx.player().level();
@@ -41,7 +81,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void incarnationEmergeSound(IncarnationEmergeSound msg, final IPayloadContext ctx) {
+    public  void incarnationEmergeSound(IncarnationEmergeSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             SoundEvent soundEvent = ModSounds.CONTAGION_INCARNATION_EMERGE.get();
             Level level = ctx.player().level();
@@ -50,7 +90,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void incarnationScreamSound(IncarnationScreamSound msg, final IPayloadContext ctx) {
+    public  void incarnationScreamSound(IncarnationScreamSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Vector3f source = msg.pos();
             Level level = ctx.player().level();
@@ -60,7 +100,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void incarnationSonicStrikeSound(IncarnationSonicStrikeSound msg, final IPayloadContext ctx) {
+    public  void incarnationSonicStrikeSound(IncarnationSonicStrikeSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Vector3f source = msg.pos();
             Level level = ctx.player().level();
@@ -70,7 +110,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void contagionParticleExplosion(ContagionParticleExplosion msg, final IPayloadContext ctx) {
+    public  void contagionParticleExplosion(ContagionParticleExplosion msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             particleExplosion(level, msg.pos(), msg.radius(),
@@ -78,7 +118,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void particleDarktreeFenceDestroy(ParticleDarktreeFenceDestroy msg, final IPayloadContext ctx) {
+    public  void particleDarktreeFenceDestroy(ParticleDarktreeFenceDestroy msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             for (int i = 0; i < 8; i++) {
@@ -91,7 +131,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void radianceCatalystChargedParticleSound(RadianceCatalystChargedParticleSound msg, final IPayloadContext ctx) {
+    public  void radianceCatalystChargedParticleSound(RadianceCatalystChargedParticleSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             int number = level.random.nextInt(3) + 1;
@@ -107,7 +147,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void radianceCatalystChargingParticleSound(RadianceCatalystChargingParticleSound msg, final IPayloadContext ctx) {
+    public  void radianceCatalystChargingParticleSound(RadianceCatalystChargingParticleSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             double speed = 1d / 15d;
@@ -124,7 +164,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void radianceCatalystPurifyingParticleSound(RadianceCatalystPurifyingParticleSound msg, final IPayloadContext ctx) {
+    public  void radianceCatalystPurifyingParticleSound(RadianceCatalystPurifyingParticleSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             int number = level.random.nextInt(3) + 1;
@@ -140,7 +180,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void radianceParticleExplosion(RadianceParticleExplosion msg, final IPayloadContext ctx) {
+    public  void radianceParticleExplosion(RadianceParticleExplosion msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             particleExplosion(level, msg.pos(), msg.radius(),
@@ -148,7 +188,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void wardenDeathParticle(WardenDeathParticle msg, final IPayloadContext ctx) {
+    public  void wardenDeathParticle(WardenDeathParticle msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             particleExplosion(level, msg.pos(), 0.1f, 0.6f, 100,
@@ -162,20 +202,20 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void themeIncarnationStart(ThemeIncarnationStart msg, final IPayloadContext ctx) {
+    public  void themeIncarnationStart(ThemeIncarnationStart msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Minecraft.getInstance().getMusicManager().stopPlaying();
             Minecraft.getInstance().getMusicManager().startPlaying(ModMusics.INCARNATION_THEME);
         }, ctx);
     }
 
-    public static void themeIncarnationStop(ThemeIncarnationStop msg, final IPayloadContext ctx) {
+    public  void themeIncarnationStop(ThemeIncarnationStop msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Minecraft.getInstance().getMusicManager().stopPlaying(ModMusics.INCARNATION_THEME);
         }, ctx);
     }
 
-    public static void protectorHeartSynchronize(ProtectorHeartSynchronize msg, final IPayloadContext ctx) {
+    public  void protectorHeartSynchronize(ProtectorHeartSynchronize msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             BlockPos pos = new BlockPos((int)msg.pos().x, (int)msg.pos().y, (int)msg.pos().z);
@@ -185,7 +225,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void wardenLaserParticleSound(WardenLaserParticleSound msg, final IPayloadContext ctx) {
+    public  void wardenLaserParticleSound(WardenLaserParticleSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             Level level = ctx.player().level();
             Vector3f startPosition = msg.startPos();
@@ -201,7 +241,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void windWhispererMessageSound(WindWhispererMessageSound msg, final IPayloadContext ctx) {
+    public  void windWhispererMessageSound(WindWhispererMessageSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             if (ctx.player().level().isClientSide()) {
                 WhisperManager.sendRandomWhisperToPlayer(ctx.player());
@@ -209,7 +249,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    public static void windWhisperSound(WindWhisperSound msg, final IPayloadContext ctx) {
+    public  void windWhisperSound(WindWhisperSound msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             if (ctx.player().level().isClientSide()) {
                 ctx.player().playSound(ModSounds.WIND_WHISPERS.get(), 5f,
@@ -218,7 +258,7 @@ public class ClientSpecialEffectPayloadHandler {
         }, ctx);
     }
 
-    private static void particleExplosion(Level level, Vector3f pos, float radius,
+    private  void particleExplosion(Level level, Vector3f pos, float radius,
                                           float speed, int particleNumber, SimpleParticleType particle,
                                           boolean implosion) {
         for (int i = 0; i < particleNumber; i++) {
@@ -242,7 +282,7 @@ public class ClientSpecialEffectPayloadHandler {
         }
     }
 
-    private static void handleDataOnNetwork(Runnable run, final IPayloadContext ctx) {
+    private  void handleDataOnNetwork(Runnable run, final IPayloadContext ctx) {
         ctx.enqueueWork(run)
                 .exceptionally(e -> {
                     LogUtils.getLogger().error("Dive Into the Abyss networking failed{}", e.getMessage());

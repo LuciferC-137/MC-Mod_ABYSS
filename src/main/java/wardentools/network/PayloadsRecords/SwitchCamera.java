@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.network.CodecBuilders;
 
-@OnlyIn(Dist.CLIENT)
 public record SwitchCamera() implements CustomPacketPayload {
 
     public static final Type<SwitchCamera> TYPE
