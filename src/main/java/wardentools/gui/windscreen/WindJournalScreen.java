@@ -1,6 +1,5 @@
 package wardentools.gui.windscreen;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +7,6 @@ import javax.annotation.Nullable;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.GameNarrator;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -23,11 +21,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.misc.wind.Whisper;
-import wardentools.misc.wind.WhisperManager;
-import wardentools.misc.wind.WhisperTags;
-import wardentools.misc.wind.WindWhispers;
-import wardentools.playerdata.KnownWhispersDataProvider;
 
 @OnlyIn(Dist.CLIENT)
 public class WindJournalScreen extends Screen {
@@ -46,9 +39,14 @@ public class WindJournalScreen extends Screen {
     protected static final int LINE_HEIGHT = 9;
     protected static final int MAX_LINES_PER_PAGE = TEXT_HEIGHT / LINE_HEIGHT;
     private final JournalAccess journalAccess;
+    private final TaskNoteAccess taskNoteAccess;
     private int currentLeftPageIndex;
     private List<FormattedCharSequence> cachedLeftPageLines;
     private List<FormattedCharSequence> cachedRightPageLines;
+    private List<TaskNoteAccess.Task> cachedRightTaskPage;
+    private List<TaskNoteAccess.Task> cachedLeftTaskPage;
+    private List<CheckButton> cachedLeftTaskButtons;
+    private List<CheckButton> cachedRightTaskButtons;
     private int cachedLeftPageIndex;
     private Component leftPageIndicatorText;
     private Component rightPageIndicatorText;
@@ -58,16 +56,17 @@ public class WindJournalScreen extends Screen {
     private final boolean playSoundOnPageTurn;
 
     public WindJournalScreen() {
-        this(new JournalAccess(), true);
+        this(new JournalAccess(), new TaskNoteAccess(), true);
     }
 
-    private WindJournalScreen(JournalAccess journalAccess, boolean playSoundOnPageTurn) {
+    private WindJournalScreen(JournalAccess journalAccess, TaskNoteAccess taskNoteAccess, boolean playSoundOnPageTurn) {
         super(GameNarrator.NO_TITLE);
         this.cachedLeftPageLines = Collections.emptyList();
         this.cachedRightPageLines = Collections.emptyList();
         this.cachedLeftPageIndex = -1;
         this.leftPageIndicatorText = CommonComponents.EMPTY;
         this.journalAccess = journalAccess;
+        this.taskNoteAccess = taskNoteAccess;
         this.playSoundOnPageTurn = playSoundOnPageTurn;
     }
 
@@ -117,7 +116,7 @@ public class WindJournalScreen extends Screen {
     }
 
     private int getTotalPageCount() {
-        return this.journalAccess.getPageCount();
+        return this.journalAccess.getPageCount() + this.taskNoteAccess.getPageCount();
     }
 
     protected void goToPreviousPage() {
@@ -159,10 +158,12 @@ public class WindJournalScreen extends Screen {
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         this.updateCache();
         super.render(graphics, mouseX, mouseY, partialTick);
-        if (this.cachedLeftPageIndex >= 1) {
-            this.renderPages(graphics);
-        } else if (this.cachedLeftPageIndex == 0) {
+        if (this.cachedLeftPageIndex == 0) {
             this.renderFirstPage(graphics);
+        } else if (this.currentLeftPageIndex <= this.journalAccess.getPageCount()) {
+            this.renderPages(graphics);
+        } else {
+            this.renderTaskPages(graphics, mouseX, mouseY, partialTick);
         }
         this.renderHoverStyle(graphics, mouseX, mouseY);
         this.nextPageButton.setFocused(false);
@@ -176,20 +177,37 @@ public class WindJournalScreen extends Screen {
             maxPages += 1 - maxPages % 2;
             if (this.currentLeftPageIndex == 0) {
                 this.cachedRightPageLines = this.journalAccess.getPage(this.currentLeftPageIndex);
-            } else {
+            } else if (this.currentLeftPageIndex <= this.journalAccess.getPageCount()) {
                 this.cachedLeftPageLines = this.journalAccess.getPage(this.currentLeftPageIndex - 1);
                 this.cachedRightPageLines = this.journalAccess.getPage(this.currentLeftPageIndex);
-                this.leftPageIndicatorText = baseText((this.currentLeftPageIndex) + "/" + maxPages);
+                this.leftPageIndicatorText = JournalAccess.baseText((this.currentLeftPageIndex) + "/" + maxPages);
+            } else { // Updating task cached if on a task page
+                int trunkIndex = this.currentLeftPageIndex - this.journalAccess.getPageCount();
+                this.cachedLeftTaskPage = this.taskNoteAccess.getTaskPage(trunkIndex - 1);
+                this.cachedRightTaskPage = this.taskNoteAccess.getTaskPage(trunkIndex);
+                this.cachedLeftTaskButtons = this.taskNoteAccess
+                        .getTaskButtons(trunkIndex - 1,
+                                this.leftMargin() + PAGE_TEXT_X_OFFSET,
+                                TOP_MARGIN + PAGE_TEXT_Y_OFFSET);
+                this.cachedRightTaskButtons = this.taskNoteAccess.
+                        getTaskButtons(trunkIndex,
+                                this.rightPageXStart() + PAGE_TEXT_X_OFFSET,
+                                TOP_MARGIN + PAGE_TEXT_Y_OFFSET);
+                this.leftPageIndicatorText = JournalAccess.baseText((this.currentLeftPageIndex) + "/" + maxPages);
             }
-            this.rightPageIndicatorText = baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
+            this.rightPageIndicatorText = JournalAccess.baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
             this.cachedLeftPageIndex = this.currentLeftPageIndex;
         }
     }
 
     private void renderHoverStyle(GuiGraphics graphics, int mouseX, int mouseY) {
-        Style hoveredStyle = this.getStyleRightPage(mouseX, mouseY);
-        if (hoveredStyle != null) {
-            graphics.renderComponentHoverEffect(this.font, hoveredStyle, mouseX, mouseY);
+        Style hoveredStyleRight = this.getStyleRightPage(mouseX, mouseY);
+        if (hoveredStyleRight != null) {
+            graphics.renderComponentHoverEffect(this.font, hoveredStyleRight, mouseX, mouseY);
+        }
+        Style hoveredStyleLeft = this.getStyleLeftPage(mouseX, mouseY);
+        if (hoveredStyleLeft != null) {
+            graphics.renderComponentHoverEffect(this.font, hoveredStyleLeft, mouseX, mouseY);
         }
     }
 
@@ -199,10 +217,19 @@ public class WindJournalScreen extends Screen {
                 this.rightPageXStart(), PAGE_TEXT_Y_OFFSET, TEXT_WIDTH, LINE_HEIGHT);
     }
 
+    private Style getStyleLeftPage(int mouseX, int mouseY) {
+        return getStyleUnderMouse(this.font, this.cachedRightPageLines, mouseX, mouseY,
+                leftMargin() + PAGE_TEXT_X_OFFSET, PAGE_TEXT_Y_OFFSET, TEXT_WIDTH, LINE_HEIGHT);
+    }
+
     private void renderPages(GuiGraphics graphics) {
         Objects.requireNonNull(this.font);
         this.renderPage(graphics, false);
         this.renderPage(graphics, true);
+    }
+    private void renderTaskPages(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        if (this.cachedLeftTaskPage != null) this.renderTaskPage(graphics, false, mouseX, mouseY, partialTick);
+        if (this.cachedRightTaskPage != null) this.renderTaskPage(graphics, true, mouseX, mouseY, partialTick);
     }
 
     private void renderFirstPage(GuiGraphics graphics) {
@@ -223,9 +250,32 @@ public class WindJournalScreen extends Screen {
         this.renderPageIndex(graphics, isRightPage);
     }
 
+    private void renderTaskPage(GuiGraphics graphics, boolean isRightPage,
+                                int mouseX, int mouseY, float partialTick) {
+        List<TaskNoteAccess.Task> pageTasks = isRightPage ? this.cachedRightTaskPage : this.cachedLeftTaskPage;
+        List<CheckButton> taskButtons = isRightPage ? this.cachedRightTaskButtons : this.cachedLeftTaskButtons;
+        int xPos = isRightPage ? this.rightPageXStart() : leftMargin() + PAGE_TEXT_X_OFFSET + 10;
+        for (int i = 0; i < pageTasks.size(); i++) {
+            TaskNoteAccess.Task task = pageTasks.get(i);
+            ResourceLocation icon = task.getIcon();
+            graphics.blit(icon, xPos,
+                    TOP_MARGIN + PAGE_TEXT_Y_OFFSET / 2
+                            + i * (TaskNoteAccess.HEIGHT_OF_ONE_TASK + TaskNoteAccess.Y_TASK_MARGIN),
+                    0, 0,
+                    TaskNoteAccess.LENGTH_OF_ONE_TASK, TaskNoteAccess.HEIGHT_OF_ONE_TASK,
+                    TaskNoteAccess.LENGTH_OF_ONE_TASK, TaskNoteAccess.HEIGHT_OF_ONE_TASK);
+        }
+        for (CheckButton button : taskButtons) {
+            this.taskNoteAccess.updateTaskButtonXPos(button, xPos);
+            button.render(graphics, mouseX, mouseY, partialTick);
+        }
+        this.renderPageIndex(graphics, isRightPage);
+    }
+
     private void renderPageIndex(GuiGraphics graphics, boolean isRightPage) {
         Component pageIndicatorText = isRightPage ? this.rightPageIndicatorText : this.leftPageIndicatorText;
-        int xPosition = isRightPage ? leftMargin() + TEXTURE_WIDTH / 2 + 11  : leftMargin() + TEXTURE_WIDTH / 2 - 34;
+        int xPosition = isRightPage ? leftMargin() + TEXTURE_WIDTH / 2 + 11 - (this.currentLeftPageIndex > 9 ? 5 : 0)
+                : leftMargin() + TEXTURE_WIDTH / 2 - 34;
         graphics.drawString(this.font, pageIndicatorText, xPosition,
                 footerYPosition(), 0, false);
     }
@@ -266,7 +316,6 @@ public class WindJournalScreen extends Screen {
             return false;
         } else if (clickEvent.getAction() == Action.CHANGE_PAGE) {
             String pageValue = clickEvent.getValue();
-
             try {
                 int pageIndex = Integer.parseInt(pageValue) - 1;
                 return this.forcePage(pageIndex);
@@ -284,20 +333,6 @@ public class WindJournalScreen extends Screen {
 
     protected void closeScreen() {
         if (this.minecraft != null) this.minecraft.setScreen(null);
-    }
-
-    private static Component baseText(String text) {
-        return Component.literal(text).withStyle(TEXT_COLOR);
-    }
-
-    private static Component baseText(String text, boolean bold, boolean italic) {
-        if (bold && italic) {
-            return Component.literal(text).withStyle(TEXT_COLOR).withStyle(ChatFormatting.BOLD)
-                    .withStyle(ChatFormatting.ITALIC);
-        } else if (bold) {
-            return Component.literal(text).withStyle(TEXT_COLOR).withStyle(ChatFormatting.BOLD);
-        }
-        return Component.literal(text).withStyle(TEXT_COLOR).withStyle(ChatFormatting.ITALIC);
     }
 
     public int rightPageXStart(){
@@ -329,156 +364,4 @@ public class WindJournalScreen extends Screen {
     }
 
 
-    @OnlyIn(Dist.CLIENT)
-    private static class JournalAccess {
-        private final List<List<Component>> sections;
-        private List<List<FormattedCharSequence>> pages = new ArrayList<>();
-        private final List<Component> firstPageComponents = new ArrayList<>();
-        private int firstPageComponentYOffset = 0;
-
-        public JournalAccess() {
-            this.sections = new ArrayList<>();
-            this.sections.addAll(buildSectionsList(Minecraft.getInstance()));
-        }
-
-        public void initPages(@NotNull Font font) {
-            this.pages = this.buildPagesList(font);
-        }
-
-        private List<List<FormattedCharSequence>> buildPagesList(Font font) {
-            firstPageComponents.clear();
-            List<List<FormattedCharSequence>> pages = new ArrayList<>();
-            List<Integer> sectionPageIndex = new ArrayList<>();
-            int pageIndex = 1;
-            for (List<Component> section : this.sections) {
-                // New page at the beginning of each section
-                List<FormattedCharSequence> currentPage = new ArrayList<>();
-                int currentLineCount = 0;
-                for (Component component : section) {
-                    List<FormattedCharSequence> lines = font.split(component, TEXT_WIDTH);
-                    for (FormattedCharSequence line : lines) {
-                        if (currentLineCount >= MAX_LINES_PER_PAGE) {
-                            if (!currentPage.isEmpty()) {
-                                pages.add(currentPage);
-                                pageIndex++;
-                            }
-                            currentPage = new ArrayList<>();
-                            currentLineCount = 0;
-                        }
-                        currentPage.add(line);
-                        currentLineCount++;
-                    }
-                }
-                if (!currentPage.isEmpty()) {
-                    pages.add(currentPage);
-                    pageIndex++;
-                }
-                sectionPageIndex.add(pageIndex);
-            }
-            return buildFirstPageIndex(font, pages, sectionPageIndex);
-        }
-
-        public List<List<FormattedCharSequence>> buildFirstPageIndex(Font font, List<List<FormattedCharSequence>> pages,
-                                                                     List<Integer> sectionPageIndex) {
-            // Replace XX with page proper page index and adds links to it.
-            int indexParsing = 0;
-            List<FormattedCharSequence> firstPage = pages.getFirst();
-            for (int k = 0; k < firstPage.size(); k++) {
-                FormattedCharSequence line = firstPage.get(k);
-                String lineText = extractText(line);
-                if (lineText.contains("XX") && indexParsing < sectionPageIndex.size()) {
-                    if (indexParsing == 0) this.firstPageComponentYOffset = k * LINE_HEIGHT;
-                    int targetPage = sectionPageIndex.get(indexParsing);
-                    String label = lineText.replace("XX", String.valueOf(targetPage));
-                    Component clickableComponent = clickable(label, targetPage);
-                    this.firstPageComponents.add(clickableComponent);
-                    FormattedCharSequence clickableLine = font.split(clickableComponent,
-                            TEXT_WIDTH + 10).getFirst();
-                    firstPage.set(k, clickableLine);
-                    indexParsing++;
-                }
-            }
-            return pages;
-        }
-
-        private static Component clickable(String text, int pageIndex) {
-            return Component.literal(text).withStyle(Style.EMPTY
-                    .withColor(TEXT_COLOR)
-                    .withClickEvent(new ClickEvent(Action.CHANGE_PAGE, String.valueOf(pageIndex + 1)))
-                    .withHoverEvent(new HoverEvent(
-                            HoverEvent.Action.SHOW_TEXT,
-                            Component.literal("Go to page " + pageIndex).withStyle(ChatFormatting.GRAY))));
-        }
-
-        private static String extractText(FormattedCharSequence sequence) {
-            StringBuilder builder = new StringBuilder();
-            sequence.accept((index, style, codePoint) -> {
-                builder.appendCodePoint(codePoint);
-                return true;
-            });
-            return builder.toString();
-        }
-
-        private List<List<Component>> buildSectionsList(Minecraft minecraft) {
-            if (minecraft == null || minecraft.player == null) return List.of();
-            List<List<Component>> sections = new ArrayList<>();
-
-            // Cover page
-            List<Component> indexSection = new ArrayList<>();
-            StringBuilder coverPage = new StringBuilder();
-            indexSection.add(Component.translatable("message.wardentools.wind_journal")
-                    .withStyle(ChatFormatting.BOLD).withStyle(ChatFormatting.DARK_RED));
-            coverPage.append(Component.translatable("message.wardentools.table_of_content").getString());
-            for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
-                coverPage.append("\n")
-                        .append(tag.getName().replace("=", ""))
-                        .append(" - ")
-                        .append("XX"); // Placeholder for index
-            }
-            indexSection.add(WindJournalScreen.baseText(coverPage.toString()));
-            sections.add(indexSection);
-
-            // One section per tag
-            for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
-                List<Component> section = new ArrayList<>();
-                section.add(baseText(tag.getName() + "\n\n", true, false));
-                section.addAll(getWhispersTextByTag(minecraft, tag));
-                sections.add(section);
-            }
-
-            return sections;
-        }
-
-
-        private List<Component> getWhispersTextByTag(Minecraft minecraft, WhisperTags.Tag tag){
-            if (minecraft == null || minecraft.player == null) return List.of();
-            List<Component> whispers = new ArrayList<>();
-            minecraft.player.getCapability(KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
-                List<Whisper> whispersList = WhisperManager.WHISPERS.whisperTags.getWhispersWithTag(tag);
-                for (Whisper whisper : whispersList) {
-                    if (data.knowsWhisper(whisper.globalId())) {
-                        whispers.add(baseText((whisper.globalId() + 1 ) + " - "
-                                + whisper.whisper().getString() + "\n"));
-                    } else {
-                        whispers.add(baseText((whisper.globalId() + 1)+  " - " +
-                                WindWhispers.getLockedString() + "\n", false, true));
-                    }
-                }
-            });
-            return whispers;
-        }
-
-        public int getPageCount() {
-            return this.pages.size();
-        }
-
-        public List<FormattedCharSequence> getPage(int pageIndex) {
-            return pageIndex >= 0 && pageIndex < this.getPageCount() ? this.pages.get(pageIndex) : List.of();
-        }
-
-        public List<Component> getFirstPageComponents() {
-            return firstPageComponents;
-        }
-
-    }
 }

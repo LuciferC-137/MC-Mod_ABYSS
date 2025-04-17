@@ -1,4 +1,4 @@
-package wardentools.playerdata;
+package wardentools.playerdata.whispers;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

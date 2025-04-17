@@ -1,4 +1,4 @@
-package wardentools.playerdata;
+package wardentools.playerdata.whispers;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;

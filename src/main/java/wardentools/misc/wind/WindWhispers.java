@@ -3,8 +3,8 @@ package wardentools.misc.wind;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import wardentools.network.PacketHandler;
-import wardentools.playerdata.KnownWhispersDataProvider;
-import wardentools.playerdata.WhisperDataSyncServerPacket;
+import wardentools.playerdata.whispers.KnownWhispersDataProvider;
+import wardentools.playerdata.whispers.WhisperDataSyncServerPacket;
 
 import javax.annotation.Nullable;
 import java.util.*;

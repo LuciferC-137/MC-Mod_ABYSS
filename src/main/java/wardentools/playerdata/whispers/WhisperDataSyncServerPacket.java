@@ -1,6 +1,5 @@
-package wardentools.playerdata;
+package wardentools.playerdata.whispers;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 
