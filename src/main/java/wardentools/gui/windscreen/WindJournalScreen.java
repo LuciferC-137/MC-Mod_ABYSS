@@ -53,6 +53,7 @@ public class WindJournalScreen extends Screen {
     private PageButton nextPageButton;
     private PageButton previousPageButton;
     private Button firstPageButton;
+    private Button jumpToTaskButton;
     private final boolean playSoundOnPageTurn;
 
     public WindJournalScreen() {
@@ -72,7 +73,7 @@ public class WindJournalScreen extends Screen {
 
     public boolean setPage(int doublePageIndex) {
         doublePageIndex = doublePageIndex - doublePageIndex % 2; // Avoiding odd page index
-        int clampedPageIndex = Mth.clamp(doublePageIndex, 0, this.journalAccess.getPageCount() - 1);
+        int clampedPageIndex = Mth.clamp(doublePageIndex, 0, this.getTotalPageCount() - 1);
         if (clampedPageIndex != this.currentLeftPageIndex) {
             this.currentLeftPageIndex = clampedPageIndex;
             this.updatePageButtonVisibility();
@@ -112,6 +113,9 @@ public class WindJournalScreen extends Screen {
                 (button) -> this.setPage(0))
                 .bounds(TEXTURE_WIDTH + this.leftMargin() + 5, TOP_MARGIN + 2,
                         12, 12).build());
+        this.jumpToTaskButton = this.addRenderableWidget(
+                new JumpToTaskButton(this.leftMargin() + 7, TOP_MARGIN + 78,
+                (button) -> this.setPage(this.journalAccess.getPageCount() + 2)));
         this.updatePageButtonVisibility();
     }
 
@@ -136,6 +140,7 @@ public class WindJournalScreen extends Screen {
     private void updatePageButtonVisibility() {
         this.nextPageButton.visible = this.currentLeftPageIndex < this.getTotalPageCount() - 1;
         this.previousPageButton.visible = this.currentLeftPageIndex > 0;
+        this.jumpToTaskButton.visible = this.currentLeftPageIndex == 0;
     }
 
     @Override
@@ -177,10 +182,14 @@ public class WindJournalScreen extends Screen {
             maxPages += 1 - maxPages % 2;
             if (this.currentLeftPageIndex == 0) {
                 this.cachedRightPageLines = this.journalAccess.getPage(this.currentLeftPageIndex);
+                this.removeAllButtons(this.cachedLeftTaskButtons);
+                this.removeAllButtons(this.cachedRightTaskButtons);
             } else if (this.currentLeftPageIndex <= this.journalAccess.getPageCount()) {
                 this.cachedLeftPageLines = this.journalAccess.getPage(this.currentLeftPageIndex - 1);
                 this.cachedRightPageLines = this.journalAccess.getPage(this.currentLeftPageIndex);
                 this.leftPageIndicatorText = JournalAccess.baseText((this.currentLeftPageIndex) + "/" + maxPages);
+                this.removeAllButtons(this.cachedLeftTaskButtons);
+                this.removeAllButtons(this.cachedRightTaskButtons);
             } else { // Updating task cached if on a task page
                 int trunkIndex = this.currentLeftPageIndex - this.journalAccess.getPageCount();
                 this.cachedLeftTaskPage = this.taskNoteAccess.getTaskPage(trunkIndex - 1);
@@ -194,32 +203,39 @@ public class WindJournalScreen extends Screen {
                                 this.rightPageXStart() + PAGE_TEXT_X_OFFSET,
                                 TOP_MARGIN + PAGE_TEXT_Y_OFFSET);
                 this.leftPageIndicatorText = JournalAccess.baseText((this.currentLeftPageIndex) + "/" + maxPages);
+                this.addAllButtons(this.cachedLeftTaskButtons);
+                this.addAllButtons(this.cachedRightTaskButtons);
             }
             this.rightPageIndicatorText = JournalAccess.baseText((this.currentLeftPageIndex + 1) + "/" + maxPages);
             this.cachedLeftPageIndex = this.currentLeftPageIndex;
         }
     }
 
-    private void renderHoverStyle(GuiGraphics graphics, int mouseX, int mouseY) {
-        Style hoveredStyleRight = this.getStyleRightPage(mouseX, mouseY);
-        if (hoveredStyleRight != null) {
-            graphics.renderComponentHoverEffect(this.font, hoveredStyleRight, mouseX, mouseY);
-        }
-        Style hoveredStyleLeft = this.getStyleLeftPage(mouseX, mouseY);
-        if (hoveredStyleLeft != null) {
-            graphics.renderComponentHoverEffect(this.font, hoveredStyleLeft, mouseX, mouseY);
+    private void addAllButtons(@Nullable List<CheckButton> checkButtons) {
+        if (checkButtons == null) return;
+        for (CheckButton button : checkButtons) {
+            this.addRenderableWidget(button);
         }
     }
 
-    private Style getStyleRightPage(int mouseX, int mouseY) {
+    private void removeAllButtons(@Nullable List<CheckButton> checkButtons) {
+        if (checkButtons == null) return;
+        for (CheckButton button : checkButtons) {
+            this.removeWidget(button);
+        }
+    }
+
+    private void renderHoverStyle(GuiGraphics graphics, int mouseX, int mouseY) {
+        Style stylePageAt = this.getStylePage(mouseX, mouseY);
+        if (stylePageAt != null) {
+            graphics.renderComponentHoverEffect(this.font, stylePageAt, mouseX, mouseY);
+        }
+    }
+
+    private Style getStylePage(int mouseX, int mouseY) {
         return (this.cachedLeftPageIndex == 0) ? getStyleUnderMouseOnFirstPage(mouseX, mouseY)
                 : getStyleUnderMouse(this.font, this.cachedLeftPageLines, mouseX, mouseY,
                 this.rightPageXStart(), PAGE_TEXT_Y_OFFSET, TEXT_WIDTH, LINE_HEIGHT);
-    }
-
-    private Style getStyleLeftPage(int mouseX, int mouseY) {
-        return getStyleUnderMouse(this.font, this.cachedRightPageLines, mouseX, mouseY,
-                leftMargin() + PAGE_TEXT_X_OFFSET, PAGE_TEXT_Y_OFFSET, TEXT_WIDTH, LINE_HEIGHT);
     }
 
     private void renderPages(GuiGraphics graphics) {
@@ -253,21 +269,21 @@ public class WindJournalScreen extends Screen {
     private void renderTaskPage(GuiGraphics graphics, boolean isRightPage,
                                 int mouseX, int mouseY, float partialTick) {
         List<TaskNoteAccess.Task> pageTasks = isRightPage ? this.cachedRightTaskPage : this.cachedLeftTaskPage;
-        List<CheckButton> taskButtons = isRightPage ? this.cachedRightTaskButtons : this.cachedLeftTaskButtons;
         int xPos = isRightPage ? this.rightPageXStart() : leftMargin() + PAGE_TEXT_X_OFFSET + 10;
         for (int i = 0; i < pageTasks.size(); i++) {
             TaskNoteAccess.Task task = pageTasks.get(i);
             ResourceLocation icon = task.getIcon();
-            graphics.blit(icon, xPos,
-                    TOP_MARGIN + PAGE_TEXT_Y_OFFSET / 2
-                            + i * (TaskNoteAccess.HEIGHT_OF_ONE_TASK + TaskNoteAccess.Y_TASK_MARGIN),
+            int yPos = TOP_MARGIN + PAGE_TEXT_Y_OFFSET / 2
+                    + i * (TaskNoteAccess.HEIGHT_OF_ONE_TASK + TaskNoteAccess.Y_TASK_MARGIN);
+            graphics.blit(icon, xPos,yPos,
                     0, 0,
                     TaskNoteAccess.LENGTH_OF_ONE_TASK, TaskNoteAccess.HEIGHT_OF_ONE_TASK,
                     TaskNoteAccess.LENGTH_OF_ONE_TASK, TaskNoteAccess.HEIGHT_OF_ONE_TASK);
-        }
-        for (CheckButton button : taskButtons) {
-            this.taskNoteAccess.updateTaskButtonXPos(button, xPos);
-            button.render(graphics, mouseX, mouseY, partialTick);
+            if (this.isHovering(xPos, yPos,
+                    TaskNoteAccess.LENGTH_OF_ONE_TASK, TaskNoteAccess.HEIGHT_OF_ONE_TASK,
+                    mouseX, mouseY)) {
+                graphics.renderComponentHoverEffect(this.font, task.getHoveredText().getStyle(), mouseX, mouseY);
+            }
         }
         this.renderPageIndex(graphics, isRightPage);
     }
@@ -297,7 +313,7 @@ public class WindJournalScreen extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == 0) {
-            Style clickedStyle = this.getStyleRightPage((int)mouseX, (int)mouseY);
+            Style clickedStyle = this.getStylePage((int)mouseX, (int)mouseY);
             if (clickedStyle != null && this.handleComponentClicked(clickedStyle)) return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -337,6 +353,11 @@ public class WindJournalScreen extends Screen {
 
     public int rightPageXStart(){
         return leftMargin() + TEXT_WIDTH + 3 * PAGE_TEXT_X_OFFSET - 8;
+    }
+
+    private boolean isHovering(int x1, int y1, int x2, int y2, int mouseX, int mouseY) {
+        return x1 <= mouseX && y1 <= mouseY &&
+                x1 + x2 >= mouseX && y1 + y2 >= mouseY;
     }
 
     public static @Nullable Style getStyleUnderMouse(Font font, List<FormattedCharSequence> lines,

@@ -251,6 +251,18 @@
 	"message.wardentools.wind_journal": "= Wind Journal =\n\n",
 	"message.wardentools.table_of_content": "Table of Content:\n",
 	"message.wardentools.locked": "LOCKED",
+	"message.wardentools.go_to": "Go to page ",
+	"message.wardentools.jump_to_task": "Jump to Task List",
+
+	"message.wardentools.wind_task.0": "Visit a Deep Forest",
+	"message.wardentools.wind_task.1": "Visit a White Forest",
+	"message.wardentools.wind_task.2": "Visit a Crystal Cave",
+	"message.wardentools.wind_task.3": "Visit a Waste Land",
+	"message.wardentools.wind_task.4": "Find an Ancient Citadel underground",
+	"message.wardentools.wind_task.5": "Fly a Noctilure",
+	"message.wardentools.wind_task.6": "Summon a Protector",
+	"message.wardentools.wind_task.7": "Fight a Contagion Incarnation",
+
 
 	"message.wardentools.whisper.small_talk": "=== Small Talk ===",
 	"message.wardentools.whisper.generic": "==== Generic ====",

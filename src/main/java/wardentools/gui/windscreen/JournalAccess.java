@@ -11,6 +11,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import wardentools.ModMain;
 import wardentools.misc.wind.Whisper;
 import wardentools.misc.wind.WhisperManager;
 import wardentools.misc.wind.WhisperTags;
@@ -98,7 +99,9 @@ public class JournalAccess {
                 .withClickEvent(new ClickEvent(ClickEvent.Action.CHANGE_PAGE, String.valueOf(pageIndex + 1)))
                 .withHoverEvent(new HoverEvent(
                         HoverEvent.Action.SHOW_TEXT,
-                        hoveredText("Go to page " + pageIndex))));
+                        hoveredText(Component
+                                .translatable( "message." + ModMain.MOD_ID + ".go_to").getString()
+                                + pageIndex))));
     }
 
     private static String extractText(FormattedCharSequence sequence) {

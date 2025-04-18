@@ -1,9 +1,12 @@
 package wardentools.gui.windscreen;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -33,8 +36,17 @@ public class TaskNoteAccess {
         tasks.put(1, new Task(1, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/whiteforest.png")));
         tasks.put(2, new Task(2, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/crystal_cave.png")));
+        tasks.put(3, new Task(3, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/waste_land.png")));
+        tasks.put(4, new Task(4, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/ancient_citadel.png")));
+        tasks.put(5, new Task(5, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/noctilure.png")));
+        tasks.put(6, new Task(6, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/protector.png")));
-        tasks.put(3, new Task(3));
+        tasks.put(7, new Task(7, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/incarnation.png")));
     }
 
 
@@ -120,12 +132,14 @@ public class TaskNoteAccess {
         public void switchState() {this.isOk = !this.isOk;}
 
         public Component getHoveredText() {
-            return JournalAccess.hoveredText(this.getLangName());
+            return Component.empty().withStyle(Style.EMPTY.withHoverEvent(new HoverEvent(
+                    HoverEvent.Action.SHOW_TEXT,
+                    hoveredTranslatableText(this.getLangName()))));
         }
 
         public ResourceLocation getIcon() {return this.icon;}
 
-        private String getLangName() {return ModMain.MOD_ID + ".wind_task." + this.id;}
+        private String getLangName() {return "message." + ModMain.MOD_ID + ".wind_task." + this.id;}
 
         public void defaultOnPress(Button button) {
             this.switchState();
@@ -139,6 +153,10 @@ public class TaskNoteAccess {
                 }
                 PacketHandler.sendToServer(new TaskDataSyncServerPacket(this.id));
             });
+        }
+
+        public static Component hoveredTranslatableText(String text) {
+            return Component.translatable(text).withStyle(ChatFormatting.GRAY);
         }
     }
 

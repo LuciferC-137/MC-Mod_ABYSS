@@ -54,11 +54,11 @@ public class WindWhispers {
         if (Minecraft.getInstance().player != null) {
             Minecraft.getInstance().player.getCapability(
                     KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
-                if (!data.knowsWhisper(whisper.id())) {
-                    data.addKnownWhisper(whisper.id());
+                if (!data.knowsWhisper(whisper.globalId())) {
+                    data.addKnownWhisper(whisper.globalId());
                 }
             });
-            PacketHandler.sendToServer(new WhisperDataSyncServerPacket(whisper.id()));
+            PacketHandler.sendToServer(new WhisperDataSyncServerPacket(whisper.globalId()));
         }
     }
 

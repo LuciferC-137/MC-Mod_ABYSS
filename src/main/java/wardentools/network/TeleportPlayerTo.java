@@ -90,7 +90,6 @@ public class TeleportPlayerTo {
         ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
         if (targetLevel == null) return;
         if (entity instanceof ServerPlayer serverPlayer) {
-            System.out.println("player is teleported to ancient city");
             serverPlayer.revive();
             serverPlayer.changeDimension(ModTeleporter.diveToAncientCity(targetLevel, targetPos, serverPlayer));
         } else if (!entity.level().isClientSide) {
