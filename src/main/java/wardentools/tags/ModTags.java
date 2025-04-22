@@ -1,8 +1,10 @@
 package wardentools.tags;
 
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import wardentools.ModMain;
 
@@ -15,5 +17,16 @@ public class ModTags {
             return BlockTags.create(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
         }
 
+    }
+
+    public static class Biomes {
+        public static final TagKey<Biome> IS_ABYSS = register("is_abyss");
+        public static final TagKey<Biome> WHITE_FOREST = register("white_forest");
+        public static final TagKey<Biome> DEEPFOREST = register("deepforest");
+        public static final TagKey<Biome> CRYSTAL_CAVES = register("crystal_caves");
+
+        private static TagKey<Biome> register(String name) {
+            return BiomeTags.create(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+        }
     }
 }

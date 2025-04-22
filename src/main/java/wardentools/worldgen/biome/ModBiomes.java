@@ -29,14 +29,14 @@ public class ModBiomes {
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "waste_land"));
 	public static final ResourceKey<Biome> WHITE_FOREST = ResourceKey.create(Registries.BIOME,
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "white_forest"));
-    public static final ResourceKey<Biome> CRISTAL_CAVE = ResourceKey.create(Registries.BIOME,
+    public static final ResourceKey<Biome> CRYSTAL_CAVE = ResourceKey.create(Registries.BIOME,
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristal_cave"));
 
     public static void bootstrap(BootstrapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));
         context.register(WASTE_LAND, wasteLand(context));
         context.register(WHITE_FOREST, whiteForest(context));
-        context.register(CRISTAL_CAVE, cristalCave(context));
+        context.register(CRYSTAL_CAVE, cristalCave(context));
     }
 
     public static Biome deepForest(BootstrapContext<Biome> context) {

@@ -1,10 +1,12 @@
 package wardentools.misc.wind;
 
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -51,7 +53,8 @@ public class WhisperManager {
     public static void sendRandomWhisperToPlayer(@NotNull LocalPlayer player) {
         player.playSound(ModSounds.WIND_WHISPERS.get(), 5f,
                 (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.2F + 1.0F);
-        Component whisper = WHISPERS.getWhisper();
+        Holder<Biome> biomeHolder = player.level().getBiome(player.blockPosition());
+        Component whisper = WHISPERS.getContextualWhisper(biomeHolder);
         Component windName = Component.translatable("message." + ModMain.MOD_ID + ".windname");
         sendMessage(player, windName.getString() + " " + whisper.getString());
     }

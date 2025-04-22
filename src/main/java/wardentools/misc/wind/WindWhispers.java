@@ -1,7 +1,9 @@
 package wardentools.misc.wind;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.biome.Biome;
 import wardentools.network.PacketHandler;
 import wardentools.playerdata.whispers.KnownWhispersDataProvider;
 import wardentools.playerdata.whispers.WhisperDataSyncServerPacket;
@@ -26,16 +28,17 @@ public class WindWhispers {
         }
 	}
 
-    public @Nullable Whisper getNewRandomWhisper() {
+    public @Nullable Whisper getNewRandomContextualWhisper(WhisperTags.Tag tag) {
         if (Minecraft.getInstance().player == null) return null;
         List<Whisper> availableWhispers = new ArrayList<>();
         Minecraft.getInstance().player.getCapability(KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
-            for (Whisper whisper : whispers.values()) {
-                if (!data.knowsWhisper(whisper.id())) {
+            for (Whisper whisper : whisperTags.getWhispersWithTag(tag)) {
+                if (!data.knowsWhisper(whisper.globalId())) {
                     availableWhispers.add(whisper);
                 }
             }
         });
+        if (availableWhispers.isEmpty()) return null;
         Random rand = new Random();
         Whisper whisper = availableWhispers.get(rand.nextInt(availableWhispers.size()));
         addWhisperIdToPlayer(whisper);
@@ -62,8 +65,8 @@ public class WindWhispers {
         }
     }
 
-    public Component getWhisper() {
-        Whisper whisper = getNewRandomWhisper();
+    public Component getContextualWhisper(Holder<Biome> biomeHolder) {
+        Whisper whisper = getNewRandomContextualWhisper(ContextualWind.getTagForBiome(biomeHolder));
         return whisper == null ? getRandomWhisper().whisper() : whisper.whisper();
     }
 

@@ -72,7 +72,7 @@ public class ModSurfaceRules {
         		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.DEEP_FOREST), abyssSurface),
         		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WASTE_LAND), wasteLandSurface),
         		SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WHITE_FOREST), abyssSurface),
-				SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CRISTAL_CAVE), abyssSurface)
+				SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CRYSTAL_CAVE), abyssSurface)
         		);
 
         return SurfaceRules.sequence(

@@ -139,6 +139,7 @@ public class WindJournalScreen extends Screen {
 
     private void updatePageButtonVisibility() {
         this.nextPageButton.visible = this.currentLeftPageIndex < this.getTotalPageCount() - 1;
+        this.firstPageButton.visible = this.currentLeftPageIndex != 0;
         this.previousPageButton.visible = this.currentLeftPageIndex > 0;
         this.jumpToTaskButton.visible = this.currentLeftPageIndex == 0;
     }

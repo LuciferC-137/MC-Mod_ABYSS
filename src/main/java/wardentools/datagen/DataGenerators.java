@@ -12,6 +12,7 @@ import wardentools.ModMain;
 import wardentools.advancement.ModAdvancementProvider;
 import wardentools.datagen.loot.ModGlobalLootModifiersProvider;
 import wardentools.datagen.loot.ModLootTableProvider;
+import wardentools.worldgen.biome.ModBiomeTagGenerator;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -29,10 +30,11 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(packOutput, lookupProvider, blockTagGenerator.contentsGetter(), existingFileHelper));
         generator.addProvider(event.includeServer(), new ModGlobalLootModifiersProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new ModRecipesGenerator(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new ModDataBuilderProvider(packOutput, lookupProvider));
+        ModDataBuilderProvider dataBuilder = new ModDataBuilderProvider(packOutput, lookupProvider);
+        generator.addProvider(event.includeServer(), dataBuilder);
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), ModAdvancementProvider.create(packOutput, lookupProvider, existingFileHelper));
-
+        generator.addProvider(event.includeServer(), new ModBiomeTagGenerator(packOutput, dataBuilder.getRegistryProvider()));
     }
 }

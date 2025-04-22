@@ -32,7 +32,7 @@ public class ModDataBuilderProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.NOISE_SETTINGS, CustomNoiseSettings::bootstrap)
             // Other Providers
             .add(Registries.ENCHANTMENT, EnchantmentGenerator::bootstrap)
-            .add(Registries.JUKEBOX_SONG, ModJukeBoxSongsGenerator::bootstrap);;
+            .add(Registries.JUKEBOX_SONG, ModJukeBoxSongsGenerator::bootstrap);
 
     public ModDataBuilderProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(ModMain.MOD_ID));
