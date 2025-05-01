@@ -15,14 +15,12 @@ public class ModLootTableProvider {
     public static LootTableProvider create(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         return new LootTableProvider(output, Set.of(), List.of(
                 new LootTableProvider.SubProviderEntry((provider) -> {
-                    try {
-                        return new ModBlockLootTables(lookupProvider);
-                    } catch (ExecutionException | InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    try {return new ModBlockLootTables(lookupProvider);}
+                    catch (ExecutionException | InterruptedException e) {throw new RuntimeException(e);}
                 }, LootContextParamSets.BLOCK),
                 new LootTableProvider.SubProviderEntry(ModAdvancementLootTables::new, LootContextParamSets.ADVANCEMENT_REWARD),
-                new LootTableProvider.SubProviderEntry(ModChestLootTables::new, LootContextParamSets.CHEST)
+                new LootTableProvider.SubProviderEntry(ModChestLootTables::new, LootContextParamSets.CHEST),
+                new LootTableProvider.SubProviderEntry(ModEntitiesLootTables::new, LootContextParamSets.ENTITY)
         ), lookupProvider);
     }
 }

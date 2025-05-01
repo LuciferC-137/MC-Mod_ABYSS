@@ -49,7 +49,7 @@ public class ModEntities {
 					.sized(1.375f, 0.5625f).build("mod_chest_boat"));
 	public static final RegistryObject<EntityType<TemperEntity>> TEMPER =
 			ENTITY_TYPES.register("temper",
-					()->EntityType.Builder.of(TemperEntity::new, MobCategory.MISC)
+					()->EntityType.Builder.of(TemperEntity::new, MobCategory.CREATURE)
 					.sized(0.5f, 0.5f)
 					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "temper").toString()));
 	public static final RegistryObject<EntityType<ParasyteEntity>> PARASYTE =
