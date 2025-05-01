@@ -50,6 +50,7 @@
 	"item.wardentools.music_disc_whiteforest": "Disque de l'Abyss",
 	"item.wardentools.whistle": "Sifflet",
 	"item.wardentools.wind_journal": "Journal du Vent",
+	"item.wardentools.noctilure_feather": "Plumme de Noctilure",
 
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -263,7 +264,8 @@
 	"message.wardentools.wind_task.4": "Trouver une Citadelle Ancienne souterraine",
 	"message.wardentools.wind_task.5": "Voler sur un Noctilure",
 	"message.wardentools.wind_task.6": "Invoquer un Protecteur",
-	"message.wardentools.wind_task.7": "Combattre une Incarnation de la Contagion",
+	"message.wardentools.wind_task.7": "Ouvrir le portail d'une cité ancienne",
+	"message.wardentools.wind_task.8": "Combattre une Incarnation de la Contagion",
 
 	"message.wardentools.whisper.small_talk": "== Bavardage ==",
 	"message.wardentools.whisper.generic": "==== General ====",

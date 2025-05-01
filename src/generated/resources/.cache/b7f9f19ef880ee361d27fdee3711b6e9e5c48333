@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-06T10:44:26.6311838	Item Models: wardentools
+// 1.21.1	2025-05-01T11:57:14.3792581	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -87,6 +87,7 @@ c3db8f02d0154624f37afeb3c1692f05bbb5c88b assets/wardentools/models/item/music_di
 a26b6cf4baca004908e2914b6aa7fdb72a91bb2d assets/wardentools/models/item/music_disc_deepforest.json
 369f26ecd1e606775e571cc088e63df037f964c5 assets/wardentools/models/item/music_disc_incarnation.json
 ee5b6224d21c52ca7bc92d86c1b9272fab1b6c68 assets/wardentools/models/item/music_disc_whiteforest.json
+6eae2890f4b699e8d3039d8eabfe817f8c0ae556 assets/wardentools/models/item/noctilure_feather.json
 0f94db5b85f1d9845939458efa9f750d8d70dc7f assets/wardentools/models/item/noctilure_treat.json
 d1f708f033601d63173c94f78141805351173aad assets/wardentools/models/item/pale_cristal.json
 ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_shard.json

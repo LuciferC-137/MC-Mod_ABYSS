@@ -26,13 +26,14 @@ public class WindWhispers {
                 whisperTags.addTag(tag, whisper);
             }
         }
+        whisperTags.initUnContextualWhispers();
 	}
 
     public @Nullable Whisper getNewRandomContextualWhisper(WhisperTags.Tag tag) {
         if (Minecraft.getInstance().player == null) return null;
         List<Whisper> availableWhispers = new ArrayList<>();
         Minecraft.getInstance().player.getCapability(KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
-            for (Whisper whisper : whisperTags.getWhispersWithTag(tag)) {
+            for (Whisper whisper : whisperTags.getContextualWhispers(tag)) {
                 if (!data.knowsWhisper(whisper.globalId())) {
                     availableWhispers.add(whisper);
                 }

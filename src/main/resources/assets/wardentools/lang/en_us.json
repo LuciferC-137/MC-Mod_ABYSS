@@ -50,6 +50,7 @@
 	"item.wardentools.music_disc_whiteforest": "Abyss Music Disc",
 	"item.wardentools.whistle": "Whistle",
 	"item.wardentools.wind_journal": "Wind Journal",
+	"item.wardentools.noctilure_feather": "Noctilure Feather",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
@@ -261,7 +262,8 @@
 	"message.wardentools.wind_task.4": "Find an Ancient Citadel underground",
 	"message.wardentools.wind_task.5": "Fly a Noctilure",
 	"message.wardentools.wind_task.6": "Summon a Protector",
-	"message.wardentools.wind_task.7": "Fight a Contagion Incarnation",
+	"message.wardentools.wind_task.7": "Open a portal of an ancient city",
+	"message.wardentools.wind_task.8": "Fight a Contagion Incarnation",
 
 
 	"message.wardentools.whisper.small_talk": "=== Small Talk ===",

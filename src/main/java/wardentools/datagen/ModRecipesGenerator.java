@@ -271,6 +271,14 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("LLL")
                 .unlockedBy("has_item", has(ItemRegistry.CORRUPTED_VESSEL.get()))
                 .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.WIND_JOURNAL.get())
+                .requires(ItemRegistry.NOCTILURE_FEATHER.get())
+                .requires(Items.BOOK)
+                .requires(ItemRegistry.DARKTREE_LEAVES.get())
+                .unlockedBy("has_item", has(ItemRegistry.NOCTILURE_FEATHER.get()))
+                .unlockedBy("has_item", has(ItemRegistry.DARKTREE_LEAVES.get()))
+                .save(recipeOutput);
     }
 
     protected void allStoneVariants(@NotNull RecipeOutput recipeOutput, String name,

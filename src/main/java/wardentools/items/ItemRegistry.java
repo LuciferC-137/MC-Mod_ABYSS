@@ -9,8 +9,6 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ModBoatEntity;
-import wardentools.sounds.ModMusics;
-import wardentools.sounds.ModSounds;
 
 public class ItemRegistry {
 	public static final DeferredRegister<Item> REGISTAR = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
@@ -600,4 +598,8 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> WIND_JOURNAL =
 			REGISTAR.register("wind_journal",
 					() -> new WindJournal(new Item.Properties().stacksTo(1)));
+
+	public static final RegistryObject<Item> NOCTILURE_FEATHER =
+			REGISTAR.register("noctilure_feather",
+					() -> new Item(new Item.Properties()));
 }

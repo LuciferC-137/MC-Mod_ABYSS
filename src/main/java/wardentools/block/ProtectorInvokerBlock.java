@@ -28,6 +28,13 @@ import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 
 public class ProtectorInvokerBlock extends Block implements EntityBlock {
+	private static final VoxelShape SHAPE_FOOT = Block.box(3.0, 0.0, 3.0, 13.0, 1.0, 13.0);
+	private static final VoxelShape SHAPE_BASE = Block.box(5.0, 1.0, 5.0, 11.0, 3.0, 11.0);
+	private static final VoxelShape SHAPE_STICK = Block.box(6.0, 3.0, 6.0, 10.0, 9.0, 10.0);
+	private static final VoxelShape SHAPE_SUPPORT = Block.box(4.0, 9.0, 4.0, 12.0, 10.0, 12.0);
+	private static final VoxelShape SHAPE_GLASS = Block.box(4.5, 10.0, 4.5, 11.5, 16.0, 11.5);
+	private static final VoxelShape SHAPE = Shapes.or(SHAPE_FOOT, SHAPE_BASE, SHAPE_STICK, SHAPE_SUPPORT, SHAPE_GLASS);
+
 
 	public ProtectorInvokerBlock(Properties prop) {
 		super(prop);
@@ -52,10 +59,14 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	}
 
 	@Override
+	protected boolean useShapeForLightOcclusion(@NotNull BlockState state) {
+		return true;
+	}
+
+	@Override
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world,
 										@NotNull BlockPos pos, @NotNull CollisionContext context) {
-		return Shapes.box(0.2, 0.0, 0.2,
-				0.8, 0.9, 0.8);
+		return SHAPE;
 	}
 
 	@Override

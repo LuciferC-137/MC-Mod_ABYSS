@@ -23,7 +23,6 @@ import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class TaskNoteAccess {
-    public static final int NUMBER_OF_TASKS = 10;
     public static final int HEIGHT_OF_ONE_TASK = 24;
     public static final int LENGTH_OF_ONE_TASK = 42;
     public static final int ICON_TO_BUTTON_MARGIN = 36;
@@ -46,6 +45,8 @@ public class TaskNoteAccess {
         tasks.put(6, new Task(6, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/protector.png")));
         tasks.put(7, new Task(7, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/portal.png")));
+        tasks.put(8, new Task(8, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/incarnation.png")));
     }
 
