@@ -15,7 +15,6 @@ import wardentools.ModMain;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.WindWhisperMessageAndSound;
 import wardentools.sounds.ModSounds;
-import wardentools.worldgen.dimension.ModDimensions;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public class WhisperManager {
@@ -35,7 +34,6 @@ public class WhisperManager {
     }
 
     public boolean sendRandomWhisperToAllPlayers(ServerLevel level) {
-        if (level.dimension() != ModDimensions.ABYSS_LEVEL_KEY) return false;
         if (this.timeSinceLastWhisper > nextMinTime) {
             this.timeSinceLastWhisper = 0;
             this.nextMinTime = MIN_TIME_BETWEEN_WHISPERS + level.random.nextInt(MIN_TIME_BETWEEN_WHISPERS);

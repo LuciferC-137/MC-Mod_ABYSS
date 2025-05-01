@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-30T16:28:25.2105826	Recipes
+// 1.21.1	2025-05-01T21:15:17.2102399	Recipes
 0413a6dbf7f1225ebfff9a57b839065d5afd3456 data/minecraft/advancement/recipes/misc/amethyst_shard.json
 a25cf481b3b1ae9dbf9a560e44ca623f96d32ff9 data/minecraft/advancement/recipes/misc/echo_shard.json
 38205a97fed929a8c61c6980bb2fb62a7a177f35 data/minecraft/recipe/amethyst_shard.json
@@ -161,7 +161,7 @@ e780cc2b4067fc6747a4e1b52a3bb65d8752f32a data/wardentools/recipe/pale_cristal.js
 334f9b156f4ba69a841b838accb8816c98d6d618 data/wardentools/recipe/pale_cristal_block.json
 13e1ffea1c7540fd935789367503d50cdb5421a1 data/wardentools/recipe/pale_shard.json
 8c42b8d1f6bd2bd0baffdda19c1d07b5d08ba8c7 data/wardentools/recipe/protector_heart.json
-13aed3e304e861e766a42fd16e150633a6e2597e data/wardentools/recipe/protector_invoker.json
+34fb5f0323e4f716ba15ee60ee8144ec3a13a3ef data/wardentools/recipe/protector_invoker.json
 ff739dcaa4089c5213a8be4faed01f141514e31f data/wardentools/recipe/radiance_catalyst.json
 3905a52ece82701944a163c029a6dc357577554c data/wardentools/recipe/radiance_cristal.json
 4e2e9ec70813373887c46fdeb1a1f39b9e425b3d data/wardentools/recipe/radiance_cristal_boots.json

@@ -229,9 +229,10 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .define('D', ItemRegistry.DARK_STICK.get())
                 .define('V', ItemRegistry.PURE_VESSEL.get())
                 .define('P', ItemRegistry.WHITETREE_PLANKS.get())
-                .pattern("D D")
-                .pattern(" V ")
-                .pattern("P P")
+                .define('G', Items.GLASS)
+                .pattern(" G ")
+                .pattern("DVD")
+                .pattern(" P ")
                 .unlockedBy("has_item", has(ItemRegistry.PURE_VESSEL.get()))
                 .save(recipeOutput);
 

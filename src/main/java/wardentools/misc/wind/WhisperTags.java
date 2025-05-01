@@ -31,6 +31,7 @@ public class WhisperTags {
     }
 
     public List<Whisper> getContextualWhispers(Tag tag) {
+        if (!tag.isContextual()) return unContextualWhispers;
         List<Whisper> contextualWhispers = new ArrayList<>();
         contextualWhispers.addAll(unContextualWhispers);
         contextualWhispers.addAll(tagMap.get(tag));
@@ -39,13 +40,12 @@ public class WhisperTags {
 
     public enum Tag {
         SMALL_TALK,
-        GENERIC,
         LORE,
-        DEEP_LORE,
         ANCIENT_CITADEL,
         DEEPFOREST,
         WHITE_FOREST,
-        CRYSTAL_CAVE;
+        CRYSTAL_CAVE,
+        OVERWORLD;
 
         public String getName() {
             return Component.translatable("message.wardentools.whisper." + this.getTranslatableTag()).getString();
@@ -54,32 +54,30 @@ public class WhisperTags {
         public String getTranslatableTag() {
             return switch (this) {
                 case SMALL_TALK -> "small_talk";
-                case GENERIC -> "generic";
                 case LORE -> "lore";
-                case DEEP_LORE -> "deep_lore";
                 case ANCIENT_CITADEL -> "ancient_citadel";
                 case DEEPFOREST -> "deepforest";
                 case WHITE_FOREST -> "white_forest";
                 case CRYSTAL_CAVE -> "crystal_cave";
+                case OVERWORLD -> "overworld";
             };
         }
 
         public int getNumberOfWhispers() {
             return switch (this) {
-                case SMALL_TALK -> 28;
-                case GENERIC -> 12;
-                case LORE -> 11;
-                case DEEP_LORE -> 6;
+                case SMALL_TALK -> 40;
+                case LORE -> 17;
                 case ANCIENT_CITADEL -> 8;
                 case DEEPFOREST -> 10;
                 case WHITE_FOREST -> 4;
                 case CRYSTAL_CAVE -> 13;
+                case OVERWORLD -> 19;
             };
         }
 
         public boolean isContextual() {
             return switch (this) {
-                case DEEPFOREST, WHITE_FOREST, CRYSTAL_CAVE -> true;
+                case DEEPFOREST, WHITE_FOREST, CRYSTAL_CAVE, OVERWORLD -> true;
                 default -> false;
             };
         }

@@ -1,6 +1,7 @@
 package wardentools.misc.wind;
 
 import net.minecraft.core.Holder;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,7 +17,8 @@ public class ContextualWind {
     private static final Map<TagKey<Biome>, WhisperTags.Tag> biomeToTagMap = Map.of(
             ModTags.Biomes.DEEPFOREST, WhisperTags.Tag.DEEPFOREST,
             ModTags.Biomes.WHITE_FOREST, WhisperTags.Tag.WHITE_FOREST,
-            ModTags.Biomes.CRYSTAL_CAVES, WhisperTags.Tag.CRYSTAL_CAVE
+            ModTags.Biomes.CRYSTAL_CAVES, WhisperTags.Tag.CRYSTAL_CAVE,
+            BiomeTags.IS_OVERWORLD, WhisperTags.Tag.OVERWORLD
     );
 
     public static WhisperTags.Tag getTagForBiome(Holder<Biome> biomeHolder) {
@@ -27,6 +29,6 @@ public class ContextualWind {
         return biome.map(biomeToTagMap::get)
                 .filter(Objects::nonNull)
                 .findFirst()
-                .orElse(WhisperTags.Tag.GENERIC);
+                .orElse(WhisperTags.Tag.SMALL_TALK);
     }
 }

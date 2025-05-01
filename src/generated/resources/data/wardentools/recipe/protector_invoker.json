@@ -5,6 +5,9 @@
     "D": {
       "item": "wardentools:dark_stick"
     },
+    "G": {
+      "item": "minecraft:glass"
+    },
     "P": {
       "item": "wardentools:whitetree_planks"
     },
@@ -13,9 +16,9 @@
     }
   },
   "pattern": [
-    "D D",
-    " V ",
-    "P P"
+    " G ",
+    "DVD",
+    " P "
   ],
   "result": {
     "count": 1,
