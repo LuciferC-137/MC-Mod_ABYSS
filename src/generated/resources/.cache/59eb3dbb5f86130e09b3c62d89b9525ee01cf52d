@@ -1,4 +1,5 @@
-// 1.21.1	2025-02-16T16:14:20.7915375	Loot Tables
+// 1.21.1	2025-05-01T20:04:23.9612052	Loot Tables
+ed2f8717d26fbcb60f0922c363ab315ba830ebe4 data/wardentools/loot_table/advancements/wind_journal.json
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_table/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_table/blocks/abyssalite_bricks.json
 31280d85caa9e63972007b215cf991cffc5c8b82 data/wardentools/loot_table/blocks/abyssalite_bricks_slab.json
@@ -72,3 +73,5 @@ e97f4a5e8c44d9e73a7f6803ca687a31c435c91d data/wardentools/loot_table/blocks/whit
 7a619d981ea86a2209da2b62aa1eb05385925175 data/wardentools/loot_table/blocks/white_grass.json
 51f30eea15653359410c5be9ece438d299c74d15 data/wardentools/loot_table/blocks/white_torchflower.json
 d247d2d64602e757939d58a35831db5fe1419b55 data/wardentools/loot_table/blocks/wind_whisperer.json
+8075ac9a8146bc0dd2131d6f24371e0023bb97c2 data/wardentools/loot_table/chests/abandoned_explorer_house.json
+01251880f911cec48d01339e2ce20dc26d41c131 data/wardentools/loot_table/chests/ancient_citadel.json

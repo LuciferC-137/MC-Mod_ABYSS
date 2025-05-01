@@ -1,4 +1,4 @@
-// 1.21.1	2025-02-16T16:14:20.8037346	Advancements
+// 1.21.1	2025-05-01T18:56:16.0360253	Advancements
 b9822a717d42eae9c5b5584d9932b24d562a3de0 data/wardentools/advancement/abyss.json
 828452939ea9cb08b825fb679d0381769cadc160 data/wardentools/advancement/abyssdiver.json
 6211e20d89111b673029a877462a738e4b128336 data/wardentools/advancement/corrupted.json
@@ -15,5 +15,5 @@ dc87cff2f2d57553bb1fccd180cac52f840d2751 data/wardentools/advancement/protector_
 cf349188077a511a2d426d7bdbad402ea4460a74 data/wardentools/advancement/radiance_bringer.json
 0a50ef0fd17069d2776808d4aedf56dff2178b76 data/wardentools/advancement/radiance_catalyst.json
 66142fff11088c8b12bff48671ee12bc0cbe1be4 data/wardentools/advancement/radiant_armor.json
-eacbd5a6d52f2a563cadf7732c5ae9e5daff9989 data/wardentools/advancement/the_abyss.json
+04f8e09acedcf43eca2a1a82627eb2c56c08fedd data/wardentools/advancement/the_abyss.json
 09b39d2cfe3dc6ead2e7552b2c601c556314ca5b data/wardentools/advancement/windwhisperer.json

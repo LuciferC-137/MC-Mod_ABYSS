@@ -25,5 +25,10 @@
       "to_the_abyss"
     ]
   ],
+  "rewards": {
+    "loot": [
+      "wardentools:advancements/wind_journal"
+    ]
+  },
   "sends_telemetry_event": true
 }

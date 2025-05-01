@@ -20,7 +20,9 @@ public class ModLootTableProvider {
                     } catch (ExecutionException | InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                }, LootContextParamSets.BLOCK)
+                }, LootContextParamSets.BLOCK),
+                new LootTableProvider.SubProviderEntry(ModAdvancementLootTables::new, LootContextParamSets.ADVANCEMENT_REWARD),
+                new LootTableProvider.SubProviderEntry(ModChestLootTables::new, LootContextParamSets.CHEST)
         ), lookupProvider);
     }
 }

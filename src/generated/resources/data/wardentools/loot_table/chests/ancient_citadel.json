@@ -2,71 +2,23 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "bonus_rolls": 0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 15.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "wardentools:malachite_fragment",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 15
-              },
-              "add": false
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "wardentools:ruby_fragment",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 15
-              },
-              "add": false
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "wardentools:citrine_fragment",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 15
-              },
-              "add": false
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "wardentools:pale_shard",
-          "weight": 3,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 15
-              },
-              "add": false
-            }
-          ]
+          "weight": 3
         },
         {
           "type": "minecraft:item",
@@ -75,8 +27,56 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2,
-                "min": 1
+                "max": 15.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "wardentools:ruby_fragment",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 15.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "wardentools:citrine_fragment",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 15.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "wardentools:pale_shard",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -94,14 +94,13 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1,
-                "max": 3
+                "max": 3.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
           ],
-          "name": "wardentools:corrupted_essence",
-          "weight": 1
+          "name": "wardentools:corrupted_essence"
         },
         {
           "type": "minecraft:item",
@@ -110,8 +109,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2,
-                "min": 1
+                "max": 2.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -129,14 +128,14 @@
           "functions": [
             {
               "add": false,
-              "count": 1,
+              "count": 1.0,
               "function": "minecraft:set_count"
             },
             {
               "add": false,
               "damage": {
                 "type": "minecraft:uniform",
-                "max": 1,
+                "max": 1.0,
                 "min": 0.8
               },
               "function": "minecraft:set_damage"
@@ -145,10 +144,10 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "max": 50,
-                "min": 30
+                "max": 50.0,
+                "min": 30.0
               },
-              "treasure": true
+              "options": "#minecraft:on_random_loot"
             }
           ],
           "name": "minecraft:diamond_hoe",
@@ -159,7 +158,7 @@
           "functions": [
             {
               "add": false,
-              "count": 1,
+              "count": 1.0,
               "function": "minecraft:set_count"
             }
           ],
@@ -171,7 +170,7 @@
           "functions": [
             {
               "add": false,
-              "count": 1,
+              "count": 1.0,
               "function": "minecraft:set_count"
             }
           ],
@@ -183,7 +182,7 @@
           "functions": [
             {
               "add": false,
-              "count": 1,
+              "count": 1.0,
               "function": "minecraft:set_count"
             }
           ],
@@ -192,13 +191,22 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:music_disc_13",
+          "name": "wardentools:music_disc_deepforest",
           "weight": 2
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:music_disc_cat",
+          "name": "wardentools:music_disc_abyss",
           "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "wardentools:music_disc_whiteforest",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "wardentools:music_disc_incarnation"
         },
         {
           "type": "minecraft:item",
@@ -207,10 +215,10 @@
               "function": "minecraft:enchant_with_levels",
               "levels": {
                 "type": "minecraft:uniform",
-                "max": 50,
-                "min": 30
+                "max": 50.0,
+                "min": 30.0
               },
-              "treasure": true
+              "options": "#minecraft:on_random_loot"
             }
           ],
           "name": "minecraft:diamond_leggings",
@@ -220,10 +228,8 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "enchantments": [
-                "minecraft:swift_sneak"
-              ],
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_randomly",
+              "options": "minecraft:swift_sneak"
             }
           ],
           "name": "minecraft:book",
@@ -236,8 +242,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 10,
-                "min": 4
+                "max": 10.0,
+                "min": 4.0
               },
               "function": "minecraft:set_count"
             }
@@ -252,8 +258,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
+                "max": 3.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -268,8 +274,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4,
-                "min": 1
+                "max": 4.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -284,8 +290,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 15,
-                "min": 1
+                "max": 15.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -300,8 +306,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
+                "max": 3.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -316,8 +322,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 15,
-                "min": 1
+                "max": 15.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -332,8 +338,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 15,
-                "min": 1
+                "max": 15.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -348,8 +354,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
+                "max": 3.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -364,8 +370,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
+                "max": 3.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             },
@@ -381,7 +387,8 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:enchant_randomly"
+              "function": "minecraft:enchant_randomly",
+              "options": "#minecraft:on_random_loot"
             }
           ],
           "name": "minecraft:book",
@@ -394,8 +401,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 10,
-                "min": 3
+                "max": 10.0,
+                "min": 3.0
               },
               "function": "minecraft:set_count"
             }
@@ -410,8 +417,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 15,
-                "min": 1
+                "max": 15.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -426,8 +433,8 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 3,
-                "min": 1
+                "max": 3.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }
@@ -437,89 +444,91 @@
         },
         {
           "type": "minecraft:item",
-          "name": "wardentools:reinforced_glass",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1,
-                "max": 5
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "wardentools:black_lantern",
-          "weight": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 3
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "wardentools:solid_corruption",
-          "weight": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 3
+                "max": 5.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
-          ]
+          ],
+          "name": "wardentools:reinforced_glass",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "name": "wardentools:deep_fragment",
-          "weight": 1,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1,
-                "max": 2
-              }
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
             }
-          ]
+          ],
+          "name": "wardentools:black_lantern",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "name": "wardentools:radiance_fragment",
-          "weight": 1,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1,
-                "max": 2
-              }
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
             }
-          ]
+          ],
+          "name": "wardentools:solid_corruption",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "wardentools:deep_fragment"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "wardentools:radiance_fragment"
         }
       ],
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 10,
-        "min": 5
+        "max": 10.0,
+        "min": 5.0
       }
     },
     {
-      "bonus_rolls": 0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:empty",
@@ -535,8 +544,8 @@
           "name": "minecraft:silence_armor_trim_smithing_template"
         }
       ],
-      "rolls": 1
+      "rolls": 1.0
     }
   ],
-  "random_sequence": "minecraft:chests/ancient_city"
+  "random_sequence": "wardentools:chests/ancient_citadel"
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:advancement_reward",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "wardentools:wind_journal"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "wardentools:advancements/wind_journal"
+}
