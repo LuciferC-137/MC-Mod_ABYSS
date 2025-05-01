@@ -78,11 +78,10 @@ public class CorruptedOverlayRenderer {
                 if (!effectTotalDurations.containsKey(player.getUUID())
                         || !player.hasEffect(ModEffects.CORRUPTED.getHolder().get())) {
                     effectTotalDurations.put(player.getUUID(), event.getEffectInstance().getDuration());
-                } else {
+                } else if (player.getEffect(ModEffects.CORRUPTED.getHolder().get()) != null) {
                     int totalDuration = event.getEffectInstance().getDuration() +
                             effectTotalDurations.get(player.getUUID())
-                            - Objects.requireNonNull(player
-                            .getEffect(ModEffects.CORRUPTED.getHolder().get())).getDuration();
+                            - player.getEffect(ModEffects.CORRUPTED.getHolder().get()).getDuration();
                     effectTotalDurations.put(player.getUUID(), totalDuration);
                 }
             }
@@ -91,7 +90,7 @@ public class CorruptedOverlayRenderer {
 
     @SubscribeEvent
     public static void onEffectRemoved(MobEffectEvent.Remove event) {
-        if (ModEffects.CORRUPTED.getHolder().isEmpty()) return;
+        if (ModEffects.CORRUPTED.getHolder().isEmpty()  || event.getEffectInstance() == null) return;
         if (Objects.requireNonNull(event.getEffectInstance()).getEffect()
                 == ModEffects.CORRUPTED.getHolder().get()) {
             LivingEntity entity = event.getEntity();
@@ -103,7 +102,7 @@ public class CorruptedOverlayRenderer {
 
     @SubscribeEvent
     public static void onEffectExpired(MobEffectEvent.Expired event) {
-        if (ModEffects.CORRUPTED.getHolder().isEmpty()) return;
+        if (ModEffects.CORRUPTED.getHolder().isEmpty() || event.getEffectInstance() == null) return;
         if (Objects.requireNonNull(event.getEffectInstance()).getEffect()
                 == ModEffects.CORRUPTED.getHolder().get()) {
             LivingEntity entity = event.getEntity();
