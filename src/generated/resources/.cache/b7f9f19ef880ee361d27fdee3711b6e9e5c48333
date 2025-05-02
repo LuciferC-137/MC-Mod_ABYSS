@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-01T11:57:14.3792581	Item Models: wardentools
+// 1.21.1	2025-05-02T23:17:49.017468	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -81,6 +81,7 @@ ac9bf287cd0d7c2f9eee8bea9ef75df5661acbc4 assets/wardentools/models/item/deep_fra
 3cb6654a7cb7ca4c5c4b425c32def2c69be6161a assets/wardentools/models/item/dying_protector_heart.json
 18cfb567ddc521e9cedccf8bd8a639c136da9450 assets/wardentools/models/item/dysfunctionning_catalyst.json
 e132a841ade458e1fba92f9890b565e60eb931b1 assets/wardentools/models/item/echo_cristal.json
+fb036611aae6281eceddf92a2985740cb47f0d01 assets/wardentools/models/item/gramophone.json
 feb0db5a59a7305c0a266a00acf1a05ca4dda78c assets/wardentools/models/item/malachite.json
 fe3b4dd8c8ed0ef2c3c07977353645e1483aec36 assets/wardentools/models/item/malachite_fragment.json
 c3db8f02d0154624f37afeb3c1692f05bbb5c88b assets/wardentools/models/item/music_disc_abyss.json

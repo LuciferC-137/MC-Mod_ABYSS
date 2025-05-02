@@ -87,8 +87,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITETREE_TRAPDOOR);
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
 
-    	this.dropSelf(BlockRegistry.PROTECTOR_INVOKER.get());
-		this.dropSelf(BlockRegistry.CONTAGION_INCARNATION_SKULL.get());
+    	this.addDropSelf(BlockRegistry.PROTECTOR_INVOKER);
+		this.addDropSelf(BlockRegistry.CONTAGION_INCARNATION_SKULL);
+		this.addDropSelf(BlockRegistry.GRAMOPHONE);
 
 		// Planks derivatives special drops
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 

@@ -602,4 +602,8 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> NOCTILURE_FEATHER =
 			REGISTAR.register("noctilure_feather",
 					() -> new Item(new Item.Properties()));
+
+	public static final RegistryObject<Item> GRAMOPHONE =
+			REGISTAR.register("gramophone",
+					() -> new BlockItem(BlockRegistry.GRAMOPHONE.get(), new Item.Properties()));
 }

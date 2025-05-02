@@ -145,6 +145,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(BlockRegistry.WHITETREE_FENCE_GATE.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/whitetree_fence_gate"));
 
+        withExistingParent(BlockRegistry.GRAMOPHONE.getId().getPath(),
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/gramophone"));
         withExistingParent(BlockRegistry.RADIANCE_CATALYST.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/radiance_catalyst"));
         withExistingParent(BlockRegistry.CHISELED_ABYSSALITE.getId().getPath(),

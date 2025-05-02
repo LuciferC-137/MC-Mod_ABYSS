@@ -534,4 +534,10 @@ public class BlockRegistry {
 					.noOcclusion()
 					.randomTicks()
 					.lightLevel((state) -> 2)));
+
+	public static final RegistryObject<Block> GRAMOPHONE
+			= REGISTAR.register("gramophone",
+			() -> new GramophoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX)
+					.strength(3.0F, 6.0F)
+					.noOcclusion()));
 }
