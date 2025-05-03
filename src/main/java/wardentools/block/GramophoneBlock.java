@@ -3,28 +3,36 @@ package wardentools.block;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.JukeboxPlayable;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
+import wardentools.blockentity.BlockEntityRegistry;
+import wardentools.blockentity.GramophoneBlockEntity;
 
 import javax.annotation.Nullable;
 
-public class GramophoneBlock extends HorizontalDirectionalBlock {
+public class GramophoneBlock extends HorizontalDirectionalBlock implements EntityBlock {
     public static final MapCodec<GramophoneBlock> CODEC = simpleCodec(GramophoneBlock::new);
     public static final EnumProperty<DoubleBlockHalf> HALF;
 
@@ -48,6 +56,89 @@ public class GramophoneBlock extends HorizontalDirectionalBlock {
             return doubleblockhalf == DoubleBlockHalf.LOWER && direction == Direction.DOWN && !state.canSurvive(accessor, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, direction, state1, accessor, pos, pos1);
         } else {
             return Blocks.AIR.defaultBlockState();
+        }
+    }
+
+    @Override
+    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+                                                       @NotNull Level level, @NotNull BlockPos pos,
+                                                       @NotNull Player player, @NotNull InteractionHand hand,
+                                                       @NotNull BlockHitResult hitResult) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            BlockState stateBelow = level.getBlockState(pos.below());
+            if (stateBelow.is(BlockRegistry.GRAMOPHONE.get())) {
+                return ((GramophoneBlock)stateBelow.getBlock())
+                        .publicUseItemOn(stack, stateBelow, level, pos.below(), player, hand, hitResult);
+            }
+            return ItemInteractionResult.FAIL;
+        }
+        return this.publicUseItemOn(stack, state, level, pos, player, hand, hitResult);
+    }
+
+    public @NotNull ItemInteractionResult publicUseItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+                                                          @NotNull Level level, @NotNull BlockPos pos,
+                                                          @NotNull Player player, @NotNull InteractionHand hand,
+                                                          @NotNull BlockHitResult hitResult) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof GramophoneBlockEntity gramophone) {
+            if (!gramophone.isEmpty()) {
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            } else {
+                ItemStack itemInHand = player.getItemInHand(hand);
+                ItemInteractionResult action = tryInsertIntoJukebox(level, pos, itemInHand, player);
+                return !action.consumesAction()
+                        ? ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION : action;
+            }
+        }
+        return ItemInteractionResult.FAIL;
+    }
+
+    @Override
+    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
+                                                        @NotNull BlockPos pos, @NotNull Player player,
+                                                        @NotNull BlockHitResult hitResult) {
+        if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            BlockState stateBelow = level.getBlockState(pos.below());
+            if (stateBelow.is(BlockRegistry.GRAMOPHONE.get())) {
+                return ((GramophoneBlock)stateBelow.getBlock())
+                        .publicUseWithoutItem(stateBelow, level, pos.below(), player, hitResult);
+            }
+            return InteractionResult.FAIL;
+        }
+        return this.publicUseWithoutItem(state, level, pos, player, hitResult);
+    }
+
+    public @NotNull InteractionResult publicUseWithoutItem(@NotNull BlockState state, @NotNull Level level,
+                                                           @NotNull BlockPos pos, @NotNull Player player,
+                                                           @NotNull BlockHitResult hitResult) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof GramophoneBlockEntity gramophone) {
+            gramophone.popOutTheItem();
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return InteractionResult.PASS;
+    }
+
+    public static ItemInteractionResult tryInsertIntoJukebox(Level level, BlockPos pos, ItemStack stack, Player player) {
+        JukeboxPlayable jukeboxPlayable = stack.get(DataComponents.JUKEBOX_PLAYABLE);
+        if (jukeboxPlayable == null) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        } else {
+            BlockState blockState = level.getBlockState(pos);
+            if (blockState.is(BlockRegistry.GRAMOPHONE.get())) {
+                if (!level.isClientSide) {
+                    ItemStack consumeAndReturn = stack.consumeAndReturn(1, player);
+                    BlockEntity blockEntity = level.getBlockEntity(pos);
+                    if (blockEntity instanceof GramophoneBlockEntity gramophone) {
+                        gramophone.setTheItem(consumeAndReturn);
+                        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockState));
+                    }
+                    player.awardStat(Stats.PLAY_RECORD);
+                }
+                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+            } else {
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            }
         }
     }
 
@@ -106,7 +197,6 @@ public class GramophoneBlock extends HorizontalDirectionalBlock {
                 dropResources(state, level, pos, (BlockEntity)null, player, player.getMainHandItem());
             }
         }
-
         return super.playerWillDestroy(level, pos, state, player);
     }
 
@@ -131,6 +221,17 @@ public class GramophoneBlock extends HorizontalDirectionalBlock {
         }
     }
 
+    protected void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                            BlockState state1, boolean b) {
+        if (!state.is(state1.getBlock())) {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof GramophoneBlockEntity gramophone) {
+                gramophone.popOutTheItem();
+            }
+            super.onRemove(state, level, pos, state1, b);
+        }
+    }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
         stateBuilder.add(HALF).add(FACING);
@@ -139,4 +240,10 @@ public class GramophoneBlock extends HorizontalDirectionalBlock {
     static {
         HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+        return BlockEntityRegistry.GRAMOPHONE_BLOCK_ENTITY.get().create(blockPos, blockState);
+    }
+
 }

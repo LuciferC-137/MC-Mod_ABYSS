@@ -11,11 +11,7 @@ import wardentools.blockentity.renderer.DysfunctionningCatalystRenderer;
 import wardentools.client.DysfunctionningCatalystScreen;
 import wardentools.gui.MenuRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
-import wardentools.blockentity.renderer.AbyssPortalBlockRenderer;
-import wardentools.blockentity.renderer.ProtectorInvokerRenderer;
-import wardentools.blockentity.renderer.RadianceCatalystRenderer;
-import wardentools.blockentity.renderer.ContagionIncarnationSkullRenderer;
-import wardentools.blockentity.renderer.SoulSpawnerRenderer;
+import wardentools.blockentity.renderer.*;
 import wardentools.client.RadianceCatalystScreen;
 
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -45,6 +41,8 @@ public class ClientModHandler {
 				ContagionIncarnationSkullRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.SOUL_SPAWNER_BLOCK_ENTITY.get(),
 				SoulSpawnerRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.GRAMOPHONE_BLOCK_ENTITY.get(),
+				GramophoneRenderer::new);
 	}
 
 }

@@ -49,4 +49,9 @@ public class BlockEntityRegistry {
 					() -> BlockEntityType.Builder.of(SoulSpawnerBlockEntity::new,
 							BlockRegistry.SOUL_SPAWNER.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<GramophoneBlockEntity>> GRAMOPHONE_BLOCK_ENTITY =
+			BLOCK_ENTITIES.register("gramophone_block_entity",
+					() -> BlockEntityType.Builder.of(GramophoneBlockEntity::new,
+							BlockRegistry.GRAMOPHONE.get()).build(null));
+
 }

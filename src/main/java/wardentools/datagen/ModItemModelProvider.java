@@ -109,6 +109,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.MALACHITE);
         blockItemWithItemModel(BlockRegistry.PALE_CRISTAL);
         blockItemWithItemModel(BlockRegistry.CONTAGION_INCARNATION_SKULL);
+        blockItemWithItemModel(BlockRegistry.GRAMOPHONE);
         
         //Blocks that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
@@ -145,8 +146,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(BlockRegistry.WHITETREE_FENCE_GATE.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/whitetree_fence_gate"));
 
-        withExistingParent(BlockRegistry.GRAMOPHONE.getId().getPath(),
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/gramophone"));
         withExistingParent(BlockRegistry.RADIANCE_CATALYST.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/radiance_catalyst"));
         withExistingParent(BlockRegistry.CHISELED_ABYSSALITE.getId().getPath(),
