@@ -1,22 +1,17 @@
 package wardentools.sounds;
 
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.item.JukeboxSong;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class ModSounds {
 	public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
@@ -68,6 +63,12 @@ public class ModSounds {
 			registerSoundEvents("whistle");
 	public static final RegistryObject<SoundEvent> WIND_WHISPERS =
 			registerSoundEvents("wind_whispers");
+	public static final RegistryObject<SoundEvent> VINYL_START =
+			registerSoundEvents("vinyl_start");
+	public static final RegistryObject<SoundEvent> VINYL_END =
+			registerSoundEvents("vinyl_end");
+	public static final RegistryObject<SoundEvent> VINYL_SCRATCH =
+			registerSoundEvents("vinyl_scratch");
 
 	//Musics
 	public static final RegistryObject<SoundEvent> DEEP_FOREST =
@@ -78,6 +79,8 @@ public class ModSounds {
 			registerSoundEvents("incarnation_theme");
 	public static final RegistryObject<SoundEvent> ABYSS_THEME =
 			registerSoundEvents("abyss_theme");
+	public static final RegistryObject<SoundEvent> REFLECTION =
+			registerSoundEvents("reflection_of_the_past_music");
 
 	// Music discs (lazy references)
 	public static Holder.Reference<SoundEvent> getDeepForestMusicDisc() {
@@ -95,6 +98,10 @@ public class ModSounds {
 	public static Holder.Reference<SoundEvent> getAbyssThemeMusicDisc() {
 		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
 				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.ABYSS_THEME.getId()));
+	}
+	public static Holder.Reference<SoundEvent> getReflectionMusicDisc() {
+		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.REFLECTION.getId()));
 	}
 
 	public static RegistryObject<SoundEvent> registerSoundEvents(String name){

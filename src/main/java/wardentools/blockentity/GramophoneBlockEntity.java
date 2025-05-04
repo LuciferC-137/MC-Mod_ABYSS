@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Clearable;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -23,6 +24,7 @@ import net.minecraft.world.ticks.ContainerSingleItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.util.TickableBlockEntity;
+import wardentools.sounds.ModSounds;
 
 import java.util.Optional;
 
@@ -30,9 +32,13 @@ public class GramophoneBlockEntity extends BlockEntity implements TickableBlockE
     public static final String SONG_ITEM_TAG_ID = "RecordItem";
     public static final String TICKS_SINCE_SONG_STARTED_TAG_ID = "ticks_since_song_started";
     public static final String IS_PLAYING_TAG_ID = "isPlaying";
+    private static final int TICKS_BEFORE_PLAY = 35;
+    private static final int TICKS_BEFORE_STOP = 50;
     private ItemStack item;
     private final JukeboxSongPlayer jukeboxSongPlayer;
     private boolean isPlaying = false;
+    private int countdownBeforePlay = 0;
+    private int countdownBeforeStop = 0;
 
     protected GramophoneBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -46,15 +52,38 @@ public class GramophoneBlockEntity extends BlockEntity implements TickableBlockE
 
     @Override
     public void tick() {
-        if (this.level == null) return;
-        this.jukeboxSongPlayer.tick(this.level, this.getBlockState());
-        boolean songFinished = this.jukeboxSongPlayer.getSong() != null
-                && this.jukeboxSongPlayer.getTicksSinceSongStarted()
-                    >= this.jukeboxSongPlayer.getSong().lengthInTicks();
-        if (this.isPlaying && songFinished) {
-            this.setPlaying(false);
-            this.update();
+        if (this.level == null || this.level.isClientSide) return;
+        if (this.countdownBeforePlay > 0) {
+            this.countdownBeforePlay--;
+            if (this.countdownBeforePlay == 0) {
+                this.updateJukeBoxPlayer();
+            }
+        } else {
+            this.jukeboxSongPlayer.tick(this.level, this.getBlockState());
+            if (this.countdownBeforeStop > 0) {
+                this.countdownBeforeStop--;
+                if (this.countdownBeforeStop == 0) {
+                    this.setPlaying(false);
+                    this.update();
+                }
+            }
+            if (this.jukeboxSongPlayer.getSong() != null
+                    && this.jukeboxSongPlayer.getTicksSinceSongStarted()
+                    == this.jukeboxSongPlayer.getSong().lengthInTicks()){
+                this.scheduleStop();
+            }
         }
+    }
+
+    public void schedulePlay() {
+        this.vinylStartSound();
+        this.setPlaying(true);
+        this.countdownBeforePlay = TICKS_BEFORE_PLAY;
+    }
+
+    public void scheduleStop() {
+        this.vinylEndSound();
+        this.countdownBeforeStop = TICKS_BEFORE_STOP;
     }
 
     public void clientTick() {
@@ -89,7 +118,6 @@ public class GramophoneBlockEntity extends BlockEntity implements TickableBlockE
     }
 
     public void onSongChanged() {
-        this.setPlaying(this.jukeboxSongPlayer.isPlaying());
         this.update();
     }
 
@@ -137,13 +165,25 @@ public class GramophoneBlockEntity extends BlockEntity implements TickableBlockE
     public void setTheItem(@NotNull ItemStack stack) {
         if (this.level == null) return;
         this.item = stack;
-        Optional<Holder<JukeboxSong>> jukeboxSongHolder = JukeboxSong.fromStack(this.level.registryAccess(), this.item);
+        if (!this.item.isEmpty()) this.schedulePlay();
+        else {
+            if (this.isPlaying) this.vinylScratchSound();
+            this.setPlaying(false);
+            this.updateJukeBoxPlayer();
+            this.countdownBeforePlay = 0;
+        }
+        this.update();
+    }
+
+    public void updateJukeBoxPlayer() {
+        if (this.level == null) return;
+        Optional<Holder<JukeboxSong>> jukeboxSongHolder
+                = JukeboxSong.fromStack(this.level.registryAccess(), this.item);
         if (!this.item.isEmpty() && jukeboxSongHolder.isPresent()) {
             this.jukeboxSongPlayer.play(this.level, jukeboxSongHolder.get());
         } else {
             this.jukeboxSongPlayer.stop(this.level, this.getBlockState());
         }
-        this.update();
     }
 
     @Override
@@ -165,6 +205,24 @@ public class GramophoneBlockEntity extends BlockEntity implements TickableBlockE
 
     public void setPlaying(boolean playing) {
         this.isPlaying = playing;
+    }
+
+    private void vinylStartSound() {
+        if (this.level == null || this.level.isClientSide) return;
+        this.level.playSound(null, this.getBlockPos(), ModSounds.VINYL_START.get(),
+                SoundSource.RECORDS, 1.0F, 1.0F);
+    }
+
+    private void vinylEndSound() {
+        if (this.level == null || this.level.isClientSide) return;
+        this.level.playSound(null, this.getBlockPos(), ModSounds.VINYL_END.get(),
+                SoundSource.RECORDS, 1.0F, 1.0F);
+    }
+
+    private void vinylScratchSound() {
+        if (this.level == null || this.level.isClientSide) return;
+        this.level.playSound(null, this.getBlockPos(), ModSounds.VINYL_SCRATCH.get(),
+                SoundSource.RECORDS, 1.0F, 1.0F);
     }
 
     @Override

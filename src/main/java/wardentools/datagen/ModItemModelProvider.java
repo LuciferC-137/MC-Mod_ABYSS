@@ -85,6 +85,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DEEP_FOREST_MUSIC_DISC);
         simpleItem(ItemRegistry.WHITE_FOREST_MUSIC_DISC);
         simpleItem(ItemRegistry.INCARNATION_MUSIC_DISC);
+        simpleItem(ItemRegistry.REFLECTION_MUSIC_DISC);
         simpleItem(ItemRegistry.WIND_JOURNAL);
         simpleItem(ItemRegistry.NOCTILURE_FEATHER);
         

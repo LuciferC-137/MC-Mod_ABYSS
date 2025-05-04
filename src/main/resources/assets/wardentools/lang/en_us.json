@@ -48,6 +48,7 @@
 	"item.wardentools.music_disc_incarnation": "Abyss Music Disc",
 	"item.wardentools.music_disc_deepforest": "Abyss Music Disc",
 	"item.wardentools.music_disc_whiteforest": "Abyss Music Disc",
+	"item.wardentools.music_disc_reflection": "Abyss Music Disc",
 	"item.wardentools.whistle": "Whistle",
 	"item.wardentools.wind_journal": "Wind Journal",
 	"item.wardentools.noctilure_feather": "Noctilure Feather",
@@ -194,6 +195,7 @@
 	"jukebox_song.wardentools.incarnation_theme": "Fenrir C137 - Incarnation Theme",
 	"jukebox_song.wardentools.deepforest_music": "Fenrir C137 - Deep Forest Music",
 	"jukebox_song.wardentools.whiteforest_music": "Fenrir C137 - White Forest Music",
+	"jukebox_song.wardentools.reflection_of_the_past_music": "Fenrir C137 - Reflection of the Past",
 
 	"painting.wardentools.quiet_life.title": "Quiet Life",
 	"painting.wardentools.quiet_life.author": "Lucifer C137",

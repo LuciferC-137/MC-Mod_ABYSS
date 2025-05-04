@@ -175,6 +175,20 @@
 			}
 		]
 	},
+	"reflection_of_the_past_music": {
+		"subtitles": "sounds.wardentools.music.reflection_of_the_past",
+		"sounds": [
+			"wardentools:music/reflection_of_the_past"
+		]
+	},
+	"reflection_of_the_past_music_disc": {
+		"sounds": [
+			{
+				"name": "wardentools:music/reflection_of_the_past",
+				"stream": true
+			}
+		]
+	},
 	"shockwave_thunder": {
 		"subtitles": "sounds.wardentools.shockwave_thunder",
 		"sounds": [
@@ -193,6 +207,24 @@
 			"wardentools:wind_whispers_1",
 			"wardentools:wind_whispers_2",
 			"wardentools:wind_whispers_3"
+		]
+	},
+	"vinyl_start": {
+		"subtitles": "sounds.wardentools.vinyl_start",
+		"sounds": [
+			"wardentools:vinyl_start"
+		]
+	},
+	"vinyl_end": {
+		"subtitles": "sounds.wardentools.vinyl_end",
+		"sounds": [
+			"wardentools:vinyl_end"
+		]
+	},
+	"vinyl_scratch": {
+		"subtitles": "sounds.wardentools.vinyl_scratch",
+		"sounds": [
+			"wardentools:vinyl_scratch"
 		]
 	}
 }

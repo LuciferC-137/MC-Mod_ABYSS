@@ -48,6 +48,7 @@
 	"item.wardentools.music_disc_incarnation": "Disque de l'Abyss",
 	"item.wardentools.music_disc_deepforest": "Disque de l'Abyss",
 	"item.wardentools.music_disc_whiteforest": "Disque de l'Abyss",
+	"item.wardentools.music_disc_reflection": "Disque de l'Abyss",
 	"item.wardentools.whistle": "Sifflet",
 	"item.wardentools.wind_journal": "Journal du Vent",
 	"item.wardentools.noctilure_feather": "Plumme de Noctilure",
@@ -196,6 +197,7 @@
 	"jukebox_song.wardentools.incarnation_theme": "Fenrir C137 - Incarnation Theme",
 	"jukebox_song.wardentools.deepforest_music": "Fenrir C137 - Deep Forest Music",
 	"jukebox_song.wardentools.whiteforest_music": "Fenrir C137 - White Forest Music",
+	"jukebox_song.wardentools.reflection_of_the_past_music": "Fenrir C137 - Reflection of the Past",
 
 	"painting.wardentools.quiet_life.title": "Vie Paisible",
 	"painting.wardentools.quiet_life.author": "Lucifer C137",

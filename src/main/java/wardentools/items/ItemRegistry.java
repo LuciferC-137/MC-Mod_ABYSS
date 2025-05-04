@@ -591,6 +591,11 @@ public class ItemRegistry {
 					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
 							.jukeboxPlayable(ModJukeBoxSongsGenerator.WHITEFOREST)));
 
+	public static final RegistryObject<Item> REFLECTION_MUSIC_DISC =
+			REGISTAR.register("music_disc_reflection",
+					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)
+							.jukeboxPlayable(ModJukeBoxSongsGenerator.REFLECTION)));
+
 	public static final RegistryObject<Item> WHISTLE =
 			REGISTAR.register("whistle",
 					() -> new WhistleItem(new Item.Properties().stacksTo(1)));

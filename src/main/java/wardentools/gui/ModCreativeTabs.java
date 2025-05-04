@@ -172,6 +172,7 @@ public class ModCreativeTabs {
         addItemToTag("disc", ItemRegistry.INCARNATION_MUSIC_DISC);
         addItemToTag("disc", ItemRegistry.DEEP_FOREST_MUSIC_DISC);
         addItemToTag("disc", ItemRegistry.WHITE_FOREST_MUSIC_DISC);
+        addItemToTag("disc", ItemRegistry.REFLECTION_MUSIC_DISC);
 
         addAllItemsFromRegistry();
     }
