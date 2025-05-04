@@ -13,11 +13,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.JukeboxPlayable;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -26,6 +29,8 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.GramophoneBlockEntity;
@@ -44,6 +49,14 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(HALF, DoubleBlockHalf.LOWER)
                 .setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter,
+                                           @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        return state.getValue(HALF) == DoubleBlockHalf.LOWER ?
+                Block.box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0):
+                Block.box(0.5, 0.0, 0.5, 15.5, 15.0, 15.5);
     }
 
     @Override
@@ -244,6 +257,16 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
     @Override
     public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
         return BlockEntityRegistry.GRAMOPHONE_BLOCK_ENTITY.get().create(blockPos, blockState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state,
+                                                                  @NotNull BlockEntityType<T> type){
+        if (!type.isValid(state)) return null;
+        return level.isClientSide() ?
+                (level0, pos0, state0, blockEntity) -> ((GramophoneBlockEntity)blockEntity).clientTick() :
+                (level0, pos0, state0, blockEntity) -> ((GramophoneBlockEntity)blockEntity).tick();
     }
 
 }

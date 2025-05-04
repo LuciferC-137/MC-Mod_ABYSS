@@ -3,18 +3,25 @@ package wardentools.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
-
+@OnlyIn(Dist.CLIENT)
 public class DiscModel extends Model {
+	private static final ResourceLocation DEFAULT_TEXTURE =
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+					"textures/models/disc_model/music_disc_default.png");
 	private final ModelPart root;
 
 	public DiscModel(ModelPart root) {
@@ -50,7 +57,12 @@ public class DiscModel extends Model {
 	public static ResourceLocation resourceForItem(ItemStack stack) {
 		String name = stack.getItem().getDescriptionId()
 				.substring(stack.getItem().getDescriptionId().lastIndexOf('.') + 1);
-		return ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+
+		ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
 				"textures/models/disc_model/" + name + ".png");
+
+		ResourceManager manager = Minecraft.getInstance().getResourceManager();
+		return manager.getResource(location).isPresent() ? location : DEFAULT_TEXTURE;
 	}
+
 }

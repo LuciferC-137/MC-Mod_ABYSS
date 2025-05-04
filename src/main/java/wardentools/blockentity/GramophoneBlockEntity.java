@@ -22,10 +22,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.ContainerSingleItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import wardentools.blockentity.util.TickableBlockEntity;
 
 import java.util.Optional;
 
-public class GramophoneBlockEntity extends BlockEntity implements Clearable, ContainerSingleItem.BlockContainerSingleItem {
+public class GramophoneBlockEntity extends BlockEntity implements TickableBlockEntity, Clearable, ContainerSingleItem.BlockContainerSingleItem {
     public static final String SONG_ITEM_TAG_ID = "RecordItem";
     public static final String TICKS_SINCE_SONG_STARTED_TAG_ID = "ticks_since_song_started";
     public static final String IS_PLAYING_TAG_ID = "isPlaying";
@@ -36,15 +37,28 @@ public class GramophoneBlockEntity extends BlockEntity implements Clearable, Con
     protected GramophoneBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         this.item = ItemStack.EMPTY;
-        this.jukeboxSongPlayer = new JukeboxSongPlayer(this::onSongChanged, this.getBlockPos());
+        this.jukeboxSongPlayer = new JukeboxSongPlayer(this::onSongChanged, this.getBlockPos().above());
     }
 
     public GramophoneBlockEntity(BlockPos pos, BlockState state) {
         this(BlockEntityRegistry.GRAMOPHONE_BLOCK_ENTITY.get(), pos, state);
     }
 
-    public JukeboxSongPlayer getSongPlayer() {
-        return this.jukeboxSongPlayer;
+    @Override
+    public void tick() {
+        if (this.level == null) return;
+        this.jukeboxSongPlayer.tick(this.level, this.getBlockState());
+        boolean songFinished = this.jukeboxSongPlayer.getSong() != null
+                && this.jukeboxSongPlayer.getTicksSinceSongStarted()
+                    >= this.jukeboxSongPlayer.getSong().lengthInTicks();
+        if (this.isPlaying && songFinished) {
+            this.setPlaying(false);
+            this.update();
+        }
+    }
+
+    public void clientTick() {
+
     }
 
     protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
@@ -59,8 +73,8 @@ public class GramophoneBlockEntity extends BlockEntity implements Clearable, Con
             });
         }
         if (tag.contains(IS_PLAYING_TAG_ID, 1)) {
-            this.isPlaying = tag.getBoolean(IS_PLAYING_TAG_ID);
-        } else this.isPlaying = false;
+            this.setPlaying(tag.getBoolean(IS_PLAYING_TAG_ID));
+        } else this.setPlaying(false);
     }
 
     protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
@@ -72,22 +86,21 @@ public class GramophoneBlockEntity extends BlockEntity implements Clearable, Con
             tag.putLong(TICKS_SINCE_SONG_STARTED_TAG_ID, this.jukeboxSongPlayer.getTicksSinceSongStarted());
         }
         tag.putBoolean(IS_PLAYING_TAG_ID, this.isPlaying);
-        if (this.jukeboxSongPlayer.getSong() != null) {
-            tag.putLong(TICKS_SINCE_SONG_STARTED_TAG_ID, this.jukeboxSongPlayer.getTicksSinceSongStarted());
-        }
-
     }
 
     public void onSongChanged() {
+        this.setPlaying(this.jukeboxSongPlayer.isPlaying());
+        this.update();
+    }
+
+    public void update() {
         if (this.level == null) return;
         this.level.updateNeighborsAt(this.getBlockPos(), this.getBlockState().getBlock());
-        this.isPlaying = this.jukeboxSongPlayer.isPlaying();
         if (!this.level.isClientSide) {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(),
                     this.getBlockState(), Block.UPDATE_ALL);
         }
         this.setChanged();
-
     }
 
     public void popOutTheItem() {
@@ -130,11 +143,7 @@ public class GramophoneBlockEntity extends BlockEntity implements Clearable, Con
         } else {
             this.jukeboxSongPlayer.stop(this.level, this.getBlockState());
         }
-        this.setChanged();
-        if (!this.level.isClientSide) {
-            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(),
-                    this.getBlockState(), Block.UPDATE_ALL);
-        }
+        this.update();
     }
 
     @Override

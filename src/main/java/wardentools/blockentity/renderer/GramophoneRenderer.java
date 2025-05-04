@@ -27,6 +27,8 @@ public class GramophoneRenderer implements BlockEntityRenderer<GramophoneBlockEn
     private static final float SCALE = 0.8F;
     private static final float rotationSpeed = 1.5f;
     private float lastRot = 0f;
+    private ItemStack cachedItem;
+    private ResourceLocation cachedTexture;
 
 
 	public GramophoneRenderer(BlockEntityRendererProvider.Context ctx) {
@@ -41,6 +43,10 @@ public class GramophoneRenderer implements BlockEntityRenderer<GramophoneBlockEn
         if (!block.is(BlockRegistry.GRAMOPHONE.get())) {return;}
         if (block.getValue(GramophoneBlock.HALF) != DoubleBlockHalf.LOWER) {return;}
         if (!gramophone.isEmpty()) {
+            if (this.cachedItem != gramophone.getTheItem()) {
+                this.cachedItem = gramophone.getTheItem();
+                this.cachedTexture = DiscModel.resourceForItem(this.cachedItem);
+            }
             this.renderDisc(gramophone, partialTick, poseStack, buffer, packedOverlay);
         }
     }
@@ -70,9 +76,8 @@ public class GramophoneRenderer implements BlockEntityRenderer<GramophoneBlockEn
                                  int packedOverlay, BlockPos pos, Level level) {
         int packedLight = LightTexture.pack(level.getBrightness(LightLayer.BLOCK, pos),
                 level.getBrightness(LightLayer.SKY, pos));
-        ResourceLocation texture = DiscModel.resourceForItem(stack);
 
-        VertexConsumer baseConsumer = buffer.getBuffer(RenderType.entityCutout(texture));
+        VertexConsumer baseConsumer = buffer.getBuffer(RenderType.entityCutout(this.cachedTexture));
         MODEL.render(poseStack, baseConsumer, packedLight, packedOverlay);
     }
 }
