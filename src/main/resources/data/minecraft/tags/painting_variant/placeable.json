@@ -2,6 +2,9 @@
   "values": [
     "wardentools:quiet_life",
     "wardentools:incarnation",
-    "wardentools:abyss"
+    "wardentools:abyss",
+    "wardentools:ancient_time",
+    "wardentools:dark_age",
+    "wardentools:forbidden_crystal"
   ]
 }
