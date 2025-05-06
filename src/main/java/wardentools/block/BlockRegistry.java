@@ -303,7 +303,7 @@ public class BlockRegistry {
 					.noOcclusion()
 					.noCollission()
 					.lightLevel((state) -> LIGHT_WHITE_TREE)));
-	@SuppressWarnings("deprecation")
+
 	public static final RegistryObject<Block> POTTED_WHITE_TORCHFLOWER = REGISTAR.register("potted_white_torchflower",
 			() -> new FlowerPotBlock(BlockRegistry.WHITE_TORCHFLOWER.get(),
 			BlockBehaviour.Properties.ofFullCopy(Blocks.POTTED_ALLIUM)
@@ -325,10 +325,11 @@ public class BlockRegistry {
 					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
 	
 	public static final RegistryObject<Block> BLUE_BUSH = REGISTAR.register("blue_bush",
-			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new BlueBush(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
 					.noOcclusion()
 					.noCollission()
-					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
+					.lightLevel((state) -> state.getValue(BlueBush.BERRY_STATE) == BlueBush.BerryState.BLUE_BERRY ?
+							LIGHT_WHITE_VEGETATION : LIGHT_DARK_VEGETATION)));
 	
 	public static final RegistryObject<Block> TALL_DARK_GRASS = REGISTAR.register("tall_dark_grass",
 			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)

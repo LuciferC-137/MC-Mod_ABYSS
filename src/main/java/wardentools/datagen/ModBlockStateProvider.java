@@ -10,6 +10,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.block.BlueBush;
 
 public class ModBlockStateProvider extends BlockStateProvider {
 
@@ -62,12 +63,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerCrossCutoutBlock(BlockRegistry.WHITETREE_SAPLING);
         registerCrossCutoutBlock(BlockRegistry.WHITE_GRASS);
         registerCrossCutoutBlock(BlockRegistry.WHITE_TORCHFLOWER);
-        registerCrossCutoutBlock(BlockRegistry.BLUE_BUSH);
         registerCrossCutoutBlock(BlockRegistry.DARK_GRASS);
         simpleBlockWithItem(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(), models()
         		.singleTexture("potted_white_torchflower",
                         ResourceLocation.withDefaultNamespace("flower_pot_cross"), "plant",
                 blockTexture(BlockRegistry.WHITE_TORCHFLOWER.get())).renderType("cutout"));
+        registerBlueBushBlock(BlockRegistry.BLUE_BUSH);
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
@@ -146,6 +147,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
                         blockTexture(blockRegistryObject.get())).renderType("cutout"));
         simpleBlockItem(blockRegistryObject.get(), models().getExistingFile(blockTexture(blockRegistryObject.get())));
+    }
+
+    public void registerBlueBushBlock(RegistryObject<Block> blockRegistryObject) {
+        getVariantBuilder(blockRegistryObject.get())
+                .partialState().with(BlueBush.BERRY_STATE, BlueBush.BerryState.NONE)
+                .modelForState().modelFile(models().cross(
+                        ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                        modLoc("block/blue_bush")).renderType("cutout")).addModel()
+                .partialState().with(BlueBush.BERRY_STATE, BlueBush.BerryState.BLUE_BERRY)
+                .modelForState().modelFile(models().cross(
+                        ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath() + "_berry",
+                        modLoc("block/blue_bush_berry")).renderType("cutout")).addModel();
     }
 
     private void registerTranslucentBlock(RegistryObject<Block> blockRegistryObject) {

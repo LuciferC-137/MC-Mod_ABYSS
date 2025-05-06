@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-02T23:17:49.047389	Loot Tables
+// 1.21.1	2025-05-06T16:54:06.8247748	Loot Tables
 ed2f8717d26fbcb60f0922c363ab315ba830ebe4 data/wardentools/loot_table/advancements/wind_journal.json
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_table/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_table/blocks/abyssalite_bricks.json
@@ -10,7 +10,7 @@ fb8e43223088b6b8159f98132e9a663d6c8cba48 data/wardentools/loot_table/blocks/abys
 93c824d7b33179c64475e64f4d2aa370ed4add15 data/wardentools/loot_table/blocks/abyssalite_diamond_ore.json
 07cba1e70b4a2a8ae950404a00eaa587e3150dea data/wardentools/loot_table/blocks/abyssalite_lapis_ore.json
 dca905438053e31014739c80596e7e0bbe3fb0e0 data/wardentools/loot_table/blocks/black_lantern.json
-9c67affb04a5106c00b9a1ffa5e829d4bddc36c4 data/wardentools/loot_table/blocks/blue_bush.json
+fd4f6cecf2964bdbfb7a1950696eb528a6c58abe data/wardentools/loot_table/blocks/blue_bush.json
 a5fe808bd30e20d796123dcb9ee5ade4750fb538 data/wardentools/loot_table/blocks/chiseled_abyssalite.json
 053b203c1762e8990914450ec170a534e4fba32a data/wardentools/loot_table/blocks/citrine.json
 2282072c79e53600a7c0f4cdadb5241a83491926 data/wardentools/loot_table/blocks/citrine_block.json

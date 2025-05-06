@@ -21,15 +21,18 @@
     },
     {
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "wardentools:blue_bush",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "berry_state": "blue_berry"
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "chance": 0.2,
-              "condition": "minecraft:random_chance"
-            }
-          ],
           "name": "wardentools:blue_glow_berries"
         }
       ],

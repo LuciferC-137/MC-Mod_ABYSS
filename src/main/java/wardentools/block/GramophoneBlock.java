@@ -204,11 +204,7 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
     public @NotNull BlockState playerWillDestroy(Level level, @NotNull BlockPos pos,
                                                  @NotNull BlockState state, @NotNull Player player) {
         if (!level.isClientSide) {
-            if (player.isCreative()) {
-                preventDropFromBottomPart(level, pos, state, player);
-            } else {
-                dropResources(state, level, pos, (BlockEntity)null, player, player.getMainHandItem());
-            }
+            preventDropFromBottomPart(level, pos, state, player);
         }
         return super.playerWillDestroy(level, pos, state, player);
     }

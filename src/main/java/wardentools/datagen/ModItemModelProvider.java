@@ -9,7 +9,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -88,8 +87,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.REFLECTION_MUSIC_DISC);
         simpleItem(ItemRegistry.WIND_JOURNAL);
         simpleItem(ItemRegistry.NOCTILURE_FEATHER);
+
+        //Forcing item models for block items that have a special blockstate registration process
+        blockItemWithItemModel(BlockRegistry.BLUE_BUSH);
         
-        //Blocks that use their item model when in hand rather than the block model
+        //Items that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
         blockItemWithItemModel(BlockRegistry.RADIANCE_CRISTAL);
         blockItemWithItemModel(BlockRegistry.DARKTREE_SAPLING);
@@ -100,7 +102,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.TALL_WHITE_GRASS);
         blockItemWithItemModel(BlockRegistry.WHITE_TORCHFLOWER);
         blockItemWithItemModel(BlockRegistry.DEEPFLOWER);
-        blockItemWithItemModel(BlockRegistry.BLUE_BUSH);
         blockItemWithItemModel(BlockRegistry.TALL_DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.PROTECTOR_INVOKER);
@@ -112,7 +113,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.CONTAGION_INCARNATION_SKULL);
         blockItemWithItemModel(BlockRegistry.GRAMOPHONE);
         
-        //Blocks that did not create their own item model in the blockstate generator
+        //Items that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darktree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_DARKTREE_WOOD.getId().getPath(),
@@ -164,7 +165,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.getId().getPath(),
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_slab"));
 
-        //Blocks that use custom methods
+        //Items that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);
         buttonItem(BlockRegistry.DARKTREE_BUTTON, BlockRegistry.DARKTREE_PLANKS);
         trapdoorItem(BlockRegistry.DARKTREE_TRAPDOOR);
@@ -175,18 +176,18 @@ public class ModItemModelProvider extends ItemModelProvider {
         wallItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL, BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
         
     }
-    
  
-    private ItemModelBuilder blockItemWithItemModel(RegistryObject<Block> item) {
-        return withExistingParent(item.getId().getPath(),
+    private <T extends Block> void blockItemWithItemModel(RegistryObject<T> item) {
+        withExistingParent(item.getId().getPath(),
                 ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"item/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "item/" + item.getId().getPath()))
+                ;
     }
     
-    private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
-        return withExistingParent(item.getId().getPath(),
+    private void simpleItem(RegistryObject<Item> item) {
+        withExistingParent(item.getId().getPath(),
                 ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"item/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "item/" + item.getId().getPath()));
     }
     
     public void trapdoorItem(RegistryObject<Block> block) {

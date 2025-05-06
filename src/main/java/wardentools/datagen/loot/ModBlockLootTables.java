@@ -1,5 +1,6 @@
 package wardentools.datagen.loot;
 
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
+import wardentools.block.BlueBush;
 import wardentools.items.ItemRegistry;
 
 import java.util.List;
@@ -108,12 +111,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     			block -> createDoublePlantShearsDrop(BlockRegistry.WHITE_GRASS.get()));
     	this.add(BlockRegistry.WHITE_GRASS.get(),
     			block -> createShearsOnlyDrop(BlockRegistry.WHITE_GRASS.get()));
-    	this.add(BlockRegistry.BLUE_BUSH.get(),
-			block -> createShearsOnlyDrop(BlockRegistry.BLUE_BUSH.get())
-				.withPool(LootPool.lootPool()
-					.setRolls(ConstantValue.exactly(1))
-					.add(LootItem.lootTableItem(ItemRegistry.BLUE_GLOW_BERRIES.get())
-						.when(LootItemRandomChanceCondition.randomChance(0.2f)))));
     	this.add(BlockRegistry.DEEPFLOWER.get(),
                 block -> createDoubleBlockSingleItemDrop(ItemRegistry.DEEPFLOWER));
     	this.add(BlockRegistry.TALL_DARK_GRASS.get(),
@@ -163,6 +160,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				block -> createBlackLanternItemDrop(BlockRegistry.BLACK_LANTERN));
 		this.add(BlockRegistry.REINFORCED_GLASS.get(),
 				block -> createReinforcedGlassItemDrop(BlockRegistry.REINFORCED_GLASS));
+		this.add(BlockRegistry.BLUE_BUSH.get(),
+				block -> createBlueBushLoot(BlockRegistry.BLUE_BUSH, ItemRegistry.BLUE_GLOW_BERRIES));
     }
 
     private void addDropSelf(RegistryObject<Block> block) {
@@ -178,6 +177,22 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                         .add(LootItem.lootTableItem(item.get())
                                 .when(LootItemRandomChanceCondition.randomChance(0.5f))));
     }
+
+	private LootTable.Builder createBlueBushLoot(RegistryObject<Block> bushBlock, RegistryObject<Item> berryItem) {
+		return LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(bushBlock.get()))
+						.when(HAS_SHEARS))
+
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(berryItem.get()))
+						.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(bushBlock.get())
+								.setProperties(StatePropertiesPredicate.Builder.properties()
+										.hasProperty(BlueBush.BERRY_STATE, BlueBush.BerryState.BLUE_BERRY))));
+	}
+
 
 	private LootTable.Builder createBlackLanternItemDrop(RegistryObject<Block> block) {
 		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);

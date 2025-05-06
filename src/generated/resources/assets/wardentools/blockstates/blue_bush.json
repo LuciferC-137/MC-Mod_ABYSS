@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "berry_state=blue_berry": {
+      "model": "wardentools:block/blue_bush_berry"
+    },
+    "berry_state=none": {
       "model": "wardentools:block/blue_bush"
     }
   }
