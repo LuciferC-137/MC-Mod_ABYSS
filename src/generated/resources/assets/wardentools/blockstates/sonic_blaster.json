@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "wardentools:block/sonic_blaster",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "wardentools:block/sonic_blaster",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "wardentools:block/sonic_blaster"
+    },
+    "facing=south": {
+      "model": "wardentools:block/sonic_blaster",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "wardentools:block/sonic_blaster",
+      "x": -90
+    },
+    "facing=west": {
+      "model": "wardentools:block/sonic_blaster",
+      "y": 270
+    }
+  }
+}

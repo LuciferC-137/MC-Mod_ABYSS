@@ -73,7 +73,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.BLACK_LANTERN.get())
 			.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get())
 			.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.get())
-			.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get());
+			.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get())
+			.add(BlockRegistry.SONIC_BLASTER.get());
 
 		this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
 			.add(BlockRegistry.ABYSSALITE.get());
@@ -109,7 +110,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 			.add(BlockRegistry.BLACK_LANTERN.get())
 			.add(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get())
 			.add(BlockRegistry.ABYSSALITE_LAPIS_ORE.get())
-			.add(BlockRegistry.ABYSSALITE_COAL_ORE.get());
+			.add(BlockRegistry.ABYSSALITE_COAL_ORE.get())
+			.add(BlockRegistry.SONIC_BLASTER.get());
         
         this.tag(BlockTags.LOGS_THAT_BURN)
 	        .add(BlockRegistry.DARKTREE_LOG.get())

@@ -1,9 +1,12 @@
 package wardentools.datagen;
 
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -69,6 +72,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         ResourceLocation.withDefaultNamespace("flower_pot_cross"), "plant",
                 blockTexture(BlockRegistry.WHITE_TORCHFLOWER.get())).renderType("cutout"));
         registerBlueBushBlock(BlockRegistry.BLUE_BUSH);
+        registerCustomSidesDirectionalBlock(BlockRegistry.SONIC_BLASTER,
+                "sonic_blaster_left", "sonic_blaster_right", "sonic_blaster_top", "sonic_blaster_top",
+                "sonic_blaster_top", "sonic_blaster_front");
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
@@ -190,7 +196,48 @@ public class ModBlockStateProvider extends BlockStateProvider {
         				blockRegistryObject.get()).getPath(), sideTexture, bottomTexture, topTexture);
         simpleBlockWithItem(blockRegistryObject.get(), modelFile);
     }
-    
+
+    private void registerCustomSidesDirectionalBlock(RegistryObject<? extends Block> block,
+                                                     String left, String right, String top,
+                                                     String bottom, String back, String front) {
+        String name = ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+
+        ResourceLocation leftTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + left);
+        ResourceLocation rightTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + right);
+        ResourceLocation topTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top);
+        ResourceLocation bottomTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + bottom);
+        ResourceLocation backTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + back);
+        ResourceLocation frontTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + front);
+
+        ModelFile model = models().cube(name, bottomTex, topTex, frontTex, backTex, leftTex, rightTex)
+                .texture("particle", frontTex);
+
+        getVariantBuilder(block.get())
+                .forAllStates(state -> {
+                    Direction facing = state.getValue(BlockStateProperties.FACING);
+                    int xRot = 0;
+                    int yRot = 0;
+
+                    switch (facing) {
+                        case DOWN -> xRot = 90;
+                        case UP -> xRot = -90;
+                        case NORTH -> yRot = 0;
+                        case SOUTH -> yRot = 180;
+                        case WEST -> yRot = 270;
+                        case EAST -> yRot = 90;
+                    }
+
+                    return ConfiguredModel.builder()
+                            .modelFile(model)
+                            .rotationX(xRot)
+                            .rotationY(yRot)
+                            .build();
+                });
+
+        itemModels().withExistingParent(name, modLoc("block/" + name));
+    }
+
+
     private void registerFromLocation(RegistryObject<Block> blockRegistryObject, String location) {
         	simpleBlockWithItem(blockRegistryObject.get(),
         	    models().cubeAll(ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),

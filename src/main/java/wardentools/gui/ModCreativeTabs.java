@@ -167,6 +167,7 @@ public class ModCreativeTabs {
         addItemToTag("misc", ItemRegistry.WIND_JOURNAL);
         addItemToTag("misc", ItemRegistry.NOCTILURE_FEATHER);
         addItemToTag("misc", ItemRegistry.GRAMOPHONE);
+        addItemToTag("misc", ItemRegistry.SONIC_BLASTER);
 
         addItemToTag("disc", ItemRegistry.ABYSS_MUSIC_DISC);
         addItemToTag("disc", ItemRegistry.INCARNATION_MUSIC_DISC);

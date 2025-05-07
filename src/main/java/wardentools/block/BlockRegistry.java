@@ -541,4 +541,10 @@ public class BlockRegistry {
 			() -> new GramophoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.JUKEBOX)
 					.strength(3.0F, 6.0F)
 					.noOcclusion()));
+
+	public static final RegistryObject<Block> SONIC_BLASTER
+			= REGISTAR.register("sonic_blaster",
+			() -> new SonicBlaster(BlockBehaviour.Properties.ofFullCopy(Blocks.DISPENSER)
+					.strength(5.5f)
+					.lightLevel((state) -> 3)));
 }
