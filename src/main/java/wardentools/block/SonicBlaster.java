@@ -23,6 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;
+import wardentools.tags.ModTags;
 
 import javax.annotation.Nullable;
 
@@ -30,6 +31,7 @@ import javax.annotation.Nullable;
 public class SonicBlaster extends DirectionalBlock {
     public static final MapCodec<SonicBlaster> CODEC = simpleCodec(SonicBlaster::new);
     public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     private static final int TRIGGER_DELAY = 4;
     private static final float LASER_LENGTH = 6f;
     private static final float PUSH_STRENGTH = 2.8f;
@@ -40,7 +42,7 @@ public class SonicBlaster extends DirectionalBlock {
     public SonicBlaster(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.NORTH).setValue(TRIGGERED, Boolean.FALSE));
+                .setValue(FACING, Direction.NORTH).setValue(TRIGGERED, Boolean.FALSE).setValue(POWERED, Boolean.FALSE));
     }
 
     @Nullable
@@ -53,8 +55,21 @@ public class SonicBlaster extends DirectionalBlock {
     }
 
     @Override
+    protected void onPlace(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                           @NotNull BlockState state1, boolean b) {
+        super.onPlace(state, level, pos, state1, b);
+        for (Direction direction : Direction.values()) {
+            BlockPos neighborPos = pos.relative(direction);
+            if (level.getBlockState(neighborPos).is(ModTags.Blocks.CRISTAL_BLOCK)) {
+                level.setBlock(pos, state.setValue(POWERED, true), Block.UPDATE_ALL);
+                break;
+            }
+        }
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-        stateBuilder.add(FACING).add(TRIGGERED);
+        stateBuilder.add(FACING).add(TRIGGERED).add(POWERED);
     }
 
     @Override
@@ -65,13 +80,31 @@ public class SonicBlaster extends DirectionalBlock {
 
     protected void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
                                    @NotNull Block block, @NotNull BlockPos posNeighbor, boolean b) {
-        boolean redstoneSignal = level.hasNeighborSignal(pos) || level.hasNeighborSignal(pos.above());
-        if (redstoneSignal && !state.getValue(TRIGGERED)) {
-            level.scheduleTick(pos, this, TRIGGER_DELAY);
-            state.setValue(TRIGGERED, true);
-        } else if (!redstoneSignal && state.getValue(TRIGGERED)) {
-            state.setValue(TRIGGERED, false);
+        if (level.getBlockState(posNeighbor).is(ModTags.Blocks.CRISTAL_BLOCK)) {
+            level.setBlock(pos, state.setValue(POWERED, true), Block.UPDATE_ALL);
+        } else {
+            turnOffIfNoCrystalNeighbor(state, level, pos);
         }
+        if (state.getValue(POWERED)) {
+            boolean redstoneSignal = level.hasNeighborSignal(pos) || level.hasNeighborSignal(pos.above());
+            if (redstoneSignal && !state.getValue(TRIGGERED)) {
+                level.scheduleTick(pos, this, TRIGGER_DELAY);
+                level.setBlock(pos, state.setValue(TRIGGERED, true), Block.UPDATE_ALL);
+            } else if (!redstoneSignal && state.getValue(TRIGGERED)) {
+                level.setBlock(pos, state.setValue(TRIGGERED, false), Block.UPDATE_ALL);
+            }
+        }
+    }
+
+    private void turnOffIfNoCrystalNeighbor(@NotNull BlockState state, Level level, @NotNull BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockPos neighborPos = pos.relative(direction);
+            if (level.getBlockState(neighborPos).is(ModTags.Blocks.CRISTAL_BLOCK)) {
+                return;
+            }
+        }
+        level.setBlock(pos, state.setValue(POWERED, false), Block.UPDATE_ALL);
+        level.setBlock(pos, state.setValue(TRIGGERED, false), Block.UPDATE_ALL);
     }
 
     private void sonicBoom(ServerLevel level, BlockPos pos, Direction facing) {

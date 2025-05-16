@@ -72,9 +72,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         ResourceLocation.withDefaultNamespace("flower_pot_cross"), "plant",
                 blockTexture(BlockRegistry.WHITE_TORCHFLOWER.get())).renderType("cutout"));
         registerBlueBushBlock(BlockRegistry.BLUE_BUSH);
-        registerCustomSidesDirectionalBlock(BlockRegistry.SONIC_BLASTER,
+        registerCustomSidesDirectionalPoweredBlock(BlockRegistry.SONIC_BLASTER,
                 "sonic_blaster_left", "sonic_blaster_right", "sonic_blaster_top", "sonic_blaster_top",
-                "sonic_blaster_top", "sonic_blaster_front");
+                "sonic_blaster_top", "sonic_blaster_front", "sonic_blaster_left_off", "sonic_blaster_left_off",
+                "sonic_blaster_top_off", "sonic_blaster_top_off", "sonic_blaster_top_off", "sonic_blaster_front_off");
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
@@ -88,7 +89,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         logBlock((RotatedPillarBlock) BlockRegistry.WHITETREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_WHITETREE_LOG.get());
         
-        // Registering block states for planks derivates
+        // Registering block states for planks derivatives
         stairsBlock(((StairBlock)BlockRegistry.DARKTREE_STAIR.get()),
         		blockTexture(BlockRegistry.DARKTREE_PLANKS.get()));
         slabBlock(((SlabBlock)BlockRegistry.DARKTREE_SLAB.get()),
@@ -229,6 +230,61 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
                     return ConfiguredModel.builder()
                             .modelFile(model)
+                            .rotationX(xRot)
+                            .rotationY(yRot)
+                            .build();
+                });
+
+        itemModels().withExistingParent(name, modLoc("block/" + name));
+    }
+
+    private void registerCustomSidesDirectionalPoweredBlock(RegistryObject<? extends Block> block,
+                                                            String left, String right, String top,
+                                                            String bottom, String back, String front,
+                                                            String left_off, String right_off,
+                                                            String top_off, String bottom_off,
+                                                            String back_off, String front_off) {
+        String name = ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+
+        ResourceLocation leftTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + left);
+        ResourceLocation rightTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + right);
+        ResourceLocation topTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top);
+        ResourceLocation bottomTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + bottom);
+        ResourceLocation backTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + back);
+        ResourceLocation frontTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + front);
+
+        ResourceLocation leftTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + left_off);
+        ResourceLocation rightTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + right_off);
+        ResourceLocation topTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top_off);
+        ResourceLocation bottomTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + bottom_off);
+        ResourceLocation backTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + back_off);
+        ResourceLocation frontTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + front_off);
+
+        ModelFile model = models().cube(name, bottomTex, topTex, frontTex, backTex, leftTex, rightTex)
+                .texture("particle", frontTex);
+
+        ModelFile model_off = models().cube(name + "_off", bottomTex_off, topTex_off,
+                frontTex_off, backTex_off, leftTex_off, rightTex_off).texture("particle", frontTex_off);
+
+        getVariantBuilder(block.get())
+                .forAllStates(state -> {
+                    Direction facing = state.getValue(BlockStateProperties.FACING);
+                    boolean powered = state.getValue(BlockStateProperties.POWERED);
+
+                    int xRot = 0;
+                    int yRot = 0;
+
+                    switch (facing) {
+                        case DOWN -> xRot = 90;
+                        case UP -> xRot = -90;
+                        case NORTH -> yRot = 0;
+                        case SOUTH -> yRot = 180;
+                        case WEST -> yRot = 270;
+                        case EAST -> yRot = 90;
+                    }
+
+                    return ConfiguredModel.builder()
+                            .modelFile(powered ? model : model_off)
                             .rotationX(xRot)
                             .rotationY(yRot)
                             .build();
