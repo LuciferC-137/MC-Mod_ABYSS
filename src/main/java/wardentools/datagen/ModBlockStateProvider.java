@@ -76,6 +76,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 "sonic_blaster_left", "sonic_blaster_right", "sonic_blaster_top", "sonic_blaster_top",
                 "sonic_blaster_top", "sonic_blaster_front", "sonic_blaster_left_off", "sonic_blaster_left_off",
                 "sonic_blaster_top_off", "sonic_blaster_top_off", "sonic_blaster_top_off", "sonic_blaster_front_off");
+        registerCrossCutoutBlockWithBerries(BlockRegistry.DEPTH_VINES,
+                "depth_vines", "depth_vines_lit");
+        registerCrossCutoutBlockWithBerries(BlockRegistry.DEPTH_VINES_PLANT,
+                "depth_vines_plant", "depth_vines_plant_lit");
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
@@ -236,6 +240,20 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 });
 
         itemModels().withExistingParent(name, modLoc("block/" + name));
+    }
+
+    private void registerCrossCutoutBlockWithBerries(RegistryObject<Block> blockRegistryObject,
+                                                     String noBerriesTexture,
+                                                     String berriesTexture) {
+        getVariantBuilder(blockRegistryObject.get())
+                .partialState().with(BlockStateProperties.BERRIES, false)
+                .modelForState().modelFile(models().cross(
+                        ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                        modLoc("block/" + noBerriesTexture)).renderType("cutout")).addModel()
+                .partialState().with(BlockStateProperties.BERRIES, true)
+                .modelForState().modelFile(models().cross(
+                        ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath() + "_berries",
+                        modLoc("block/" + berriesTexture)).renderType("cutout")).addModel();
     }
 
     private void registerCustomSidesDirectionalPoweredBlock(RegistryObject<? extends Block> block,

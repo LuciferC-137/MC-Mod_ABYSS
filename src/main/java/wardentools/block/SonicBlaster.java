@@ -122,7 +122,9 @@ public class SonicBlaster extends DirectionalBlock {
                 double knockbackResistance = 1.0D - livingEntity
                         .getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
                 double knockback = (double)PUSH_STRENGTH * knockbackResistance;
-
+                if (facing == Direction.DOWN || facing == Direction.UP) {
+                    knockback *= 0.3; // Reduce vertical knockback
+                }
                 livingEntity.push(
                         direction.x * knockback,
                         direction.y * knockback,

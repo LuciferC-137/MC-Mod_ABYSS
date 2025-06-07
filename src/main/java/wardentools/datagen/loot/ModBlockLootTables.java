@@ -310,7 +310,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				BlockRegistry.LIQUID_CORRUPTION_BLOCK.get(),
 				BlockRegistry.ABYSS_PORTAL_BLOCK.get(),
 				BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),
-				BlockRegistry.SOUL_SPAWNER.get()
+				BlockRegistry.SOUL_SPAWNER.get(),
+				BlockRegistry.DEPTH_VINES.get(),
+				BlockRegistry.DEPTH_VINES_PLANT.get()
     	);
     	List<Block> knownBlocks = BlockRegistry.REGISTAR.getEntries().stream()
     	        .map(RegistryObject::get)

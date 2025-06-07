@@ -615,4 +615,9 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> SONIC_BLASTER =
 			REGISTAR.register("sonic_blaster",
 					() -> new BlockItem(BlockRegistry.SONIC_BLASTER.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> DEPTH_BERRIES =
+			REGISTAR.register("depth_berries",
+					() -> new BlockItem(BlockRegistry.DEPTH_VINES.get(), new Item.Properties()
+							.food(ModFoods.GLOW_BERRY_PROPERTIES))); // TODO: make proper food effect
 }

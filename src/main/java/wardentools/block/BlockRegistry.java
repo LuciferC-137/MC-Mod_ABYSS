@@ -14,10 +14,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
+import wardentools.block.depthvines.DepthVines;
+import wardentools.block.depthvines.DepthVinesBlock;
+import wardentools.block.depthvines.DepthVinesPlantBlock;
 import wardentools.fluid.FluidRegistry;
 import wardentools.worldgen.features.ModConfiguredFeatures;
 
@@ -547,4 +552,25 @@ public class BlockRegistry {
 			() -> new SonicBlaster(BlockBehaviour.Properties.ofFullCopy(Blocks.DISPENSER)
 					.strength(5.5f)
 					.lightLevel((state) -> 3)));
+
+	public static final RegistryObject<Block> DEPTH_VINES
+			= REGISTAR.register("depth_vines",
+			() -> new DepthVinesBlock(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.PLANT)
+					.randomTicks()
+					.noCollission()
+					.lightLevel(DepthVines.emission(14))
+					.instabreak().sound(SoundType.CAVE_VINES)
+					.pushReaction(PushReaction.DESTROY)));
+
+	public static final RegistryObject<Block> DEPTH_VINES_PLANT
+			= REGISTAR.register("depth_vines_plant",
+			() -> new DepthVinesPlantBlock(BlockBehaviour.Properties.of()
+					.mapColor(MapColor.PLANT)
+					.noCollission()
+					.lightLevel(DepthVines.emission(14))
+					.instabreak()
+					.sound(SoundType.CAVE_VINES)
+					.pushReaction(PushReaction.DESTROY)));
+
 }

@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-06T16:35:37.8093947	Item Models: wardentools
+// 1.21.1	2025-06-07T21:04:37.795678	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -78,6 +78,7 @@ b133d2cfef508948acd5b01845a6ca9a4d6a2ecb assets/wardentools/models/item/deepcris
 c5601a628d3e815a6009f166c0a91ee346230c75 assets/wardentools/models/item/deepingots.json
 ac9bf287cd0d7c2f9eee8bea9ef75df5661acbc4 assets/wardentools/models/item/deep_fragment.json
 2a9e549dc648cc8057df5b206cea9d58fd8f403b assets/wardentools/models/item/deep_fruit.json
+da57ce161c1572d04fcb1d0381d4b9627cab4e37 assets/wardentools/models/item/depth_berries.json
 3cb6654a7cb7ca4c5c4b425c32def2c69be6161a assets/wardentools/models/item/dying_protector_heart.json
 18cfb567ddc521e9cedccf8bd8a639c136da9450 assets/wardentools/models/item/dysfunctionning_catalyst.json
 e132a841ade458e1fba92f9890b565e60eb931b1 assets/wardentools/models/item/echo_cristal.json
