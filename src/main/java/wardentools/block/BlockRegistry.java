@@ -324,7 +324,7 @@ public class BlockRegistry {
 					.lightLevel((state) -> 10)));
 	
 	public static final RegistryObject<Block> DEEPFLOWER = REGISTAR.register("deepflower",
-			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
 					.noOcclusion()
 					.noCollission()
 					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
@@ -337,7 +337,7 @@ public class BlockRegistry {
 							LIGHT_WHITE_VEGETATION : LIGHT_DARK_VEGETATION)));
 	
 	public static final RegistryObject<Block> TALL_DARK_GRASS = REGISTAR.register("tall_dark_grass",
-			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
 					.noOcclusion()
 					.noCollission()
 					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));

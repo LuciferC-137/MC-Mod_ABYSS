@@ -56,10 +56,10 @@
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
       "wardentools:darktree_placed",
-      "wardentools:deepflower",
+      "wardentools:dark_grass",
       "wardentools:blue_bush",
-      "wardentools:tall_dark_grass",
-      "wardentools:dark_grass"
+      "wardentools:deepflower",
+      "wardentools:tall_dark_grass"
     ]
   ],
   "has_precipitation": false,

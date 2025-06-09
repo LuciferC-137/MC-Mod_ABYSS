@@ -17,8 +17,10 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
@@ -178,9 +180,11 @@ public class ModConfiguredFeatures {
 						Blocks.AMETHYST_CLUSTER.defaultBlockState()));
     }
 	
-	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int p_195204_) {
-        return FeatureUtils.simpleRandomPatchConfiguration(p_195204_,
-        		PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(stateProvider)));
+	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int tries) {
+        return FeatureUtils.simpleRandomPatchConfiguration(tries,
+				PlacementUtils.filtered(Feature.SIMPLE_BLOCK,
+						new SimpleBlockConfiguration(stateProvider),
+						BlockPredicate.matchesBlocks(Blocks.AIR, Blocks.SCULK_VEIN)));
     }
 
 	public static OreConfiguration oreGeneration(int size, float discardChanceOnAirExposure,

@@ -1,6 +1,7 @@
-// 1.21.1	2025-05-07T13:52:21.1636969	Tags for minecraft:block mod id wardentools
+// 1.21.1	2025-06-09T16:53:26.6299091	Tags for minecraft:block mod id wardentools
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/ancient_city_replaceable.json
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/block/animals_spawnable_on.json
+18262857d4a34e6ee53557a03eea4ca89a3572f3 data/minecraft/tags/block/climbable.json
 fe0dfed652c709c1c46de9234483b847471a0111 data/minecraft/tags/block/dirt.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/dripstone_replaceable_blocks.json
 dca5d6350fefc209ba1b33589cc253144488e56f data/minecraft/tags/block/features_cannot_replace.json
@@ -18,4 +19,5 @@ f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/sculk_replace
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/sculk_replaceable_world_gen.json
 e765e739d51d03e31ad9e51980aa927df8fc8168 data/minecraft/tags/block/walls.json
 b7ddf86f32a045b5df5bdf6feec813425d8b5a94 data/wardentools/tags/block/abyss_teleportable.json
+3ba03686dd3181f31f8996deaa59c25af0c9546b data/wardentools/tags/block/can_sustain_abyss_plants.json
 521f8c37ea3a5978811057a14907b0a09a97af9c data/wardentools/tags/block/cristal_block.json
