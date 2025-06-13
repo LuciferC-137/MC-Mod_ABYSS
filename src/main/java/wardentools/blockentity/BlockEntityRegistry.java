@@ -54,4 +54,9 @@ public class BlockEntityRegistry {
 					() -> BlockEntityType.Builder.of(GramophoneBlockEntity::new,
 							BlockRegistry.GRAMOPHONE.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<SculkTendrilBlockEntity>> SCULK_TENDRIL_BLOCK_ENTITY =
+			BLOCK_ENTITIES.register("sculk_tendril_block_entity",
+					() -> BlockEntityType.Builder.of(SculkTendrilBlockEntity::new,
+							BlockRegistry.SCULK_TENDRIL_BLOCK.get()).build(null));
+
 }

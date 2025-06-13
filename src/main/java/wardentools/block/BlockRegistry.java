@@ -23,6 +23,7 @@ import wardentools.ModMain;
 import wardentools.block.depthvines.DepthVines;
 import wardentools.block.depthvines.DepthVinesBlock;
 import wardentools.block.depthvines.DepthVinesPlantBlock;
+import wardentools.block.sculktendril.SculkTendrilBlock;
 import wardentools.fluid.FluidRegistry;
 import wardentools.worldgen.features.ModConfiguredFeatures;
 
@@ -572,5 +573,14 @@ public class BlockRegistry {
 					.instabreak()
 					.sound(SoundType.CAVE_VINES)
 					.pushReaction(PushReaction.DESTROY)));
+
+	public static final RegistryObject<Block> SCULK_TENDRIL_BLOCK
+			= REGISTAR.register("sculk_tendril_block",
+			() -> new SculkTendrilBlock(UniformInt.of(3, 6),
+					BlockBehaviour.Properties.of()
+							.mapColor(MapColor.COLOR_BLACK)
+							.strength(0.2f)
+							.sound(SoundType.SCULK)
+							.pushReaction(PushReaction.DESTROY)));
 
 }
