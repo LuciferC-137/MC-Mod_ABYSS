@@ -16,18 +16,19 @@ import org.jetbrains.annotations.Nullable;
 import wardentools.block.sculktendril.TendrilNode;
 import wardentools.block.sculktendril.TendrilTree;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SculkTendrilBlockEntity extends BlockEntity {
-    private Map<Direction, Boolean> connections = Map.of(
-        Direction.NORTH, false,
-        Direction.SOUTH, false,
-        Direction.EAST, false,
-        Direction.WEST, false,
-        Direction.UP, false,
-        Direction.DOWN, false
-    );
-    private @Nullable TendrilTree tendrilTreeGraph = null;
+    private Map<Direction, Boolean> connections = new HashMap<>(Map.of(
+            Direction.NORTH, false,
+            Direction.SOUTH, false,
+            Direction.EAST, false,
+            Direction.WEST, false,
+            Direction.UP, false,
+            Direction.DOWN, false
+    ));
+    private @Nullable TendrilTree tendrilTreeGraph = null; // Only the origin knows the tree
     private BlockPos originPos;
 
     public SculkTendrilBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -43,7 +44,24 @@ public class SculkTendrilBlockEntity extends BlockEntity {
 
     public BlockPos getOrigin() {return originPos;}
 
+    public void setOrigin(BlockPos origin) {this.originPos = origin;}
+
     public @Nullable TendrilTree getTendrilTreeGraph() {return tendrilTreeGraph;}
+
+    public void setTendrilTreeGraph(@NotNull TendrilTree tendrilTreeGraph) {
+        this.tendrilTreeGraph = tendrilTreeGraph;
+        this.originPos = tendrilTreeGraph.getOrigin();
+        sendUpdate();
+    }
+
+    // This method must be called to retrieve information from the tree.
+    public @Nullable TendrilTree getRelativeTendrilTreeGraph() {
+        if (this.level == null) return null;
+        if (this.level.getBlockEntity(this.originPos) instanceof SculkTendrilBlockEntity originEntity) {
+            return originEntity.getTendrilTreeGraph();
+        }
+        return null;
+    }
 
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {

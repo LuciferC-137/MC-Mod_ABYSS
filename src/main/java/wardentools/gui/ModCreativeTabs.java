@@ -90,8 +90,7 @@ public class ModCreativeTabs {
         addItemToTag("darktree", ItemRegistry.DARKTREE_BOAT);
         addItemToTag("darktree", ItemRegistry.DARKTREE_CHEST_BOAT);
 
-        addItemToTag("depthcave", ItemRegistry.DEPTH_BERRIES);
-
+        addItemToTag("dark_vegetal", ItemRegistry.DEPTH_BERRIES);
         addItemToTag("dark_vegetal", ItemRegistry.BLUE_BUSH);
         addItemToTag("dark_vegetal", ItemRegistry.DEEPFLOWER);
         addItemToTag("dark_vegetal", ItemRegistry.TALL_DARK_GRASS);
@@ -159,6 +158,7 @@ public class ModCreativeTabs {
         addItemToTag("sculk", Items.SCULK_SENSOR);
         addItemToTag("sculk", Items.SCULK_SHRIEKER);
         addItemToTag("sculk", Items.SCULK_VEIN);
+        addItemToTag("sculk", ItemRegistry.SCULK_TENDRIL_BLOCK);
 
         addItemToTag("building", ItemRegistry.BLACK_LANTERN);
         addItemToTag("building", ItemRegistry.REINFORCED_GLASS);
@@ -206,7 +206,6 @@ public class ModCreativeTabs {
                     .title(Component.translatable("creativetab.vegetation"))
                     .displayItems((pParameters, event) -> {
                         getItemsByTag("dark_vegetal").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("depthcave").forEach(item -> event.accept(item.get()));
                         getItemsByTag("white_vegetal").forEach(item -> event.accept(item.get()));
                     }).build());
 

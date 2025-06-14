@@ -620,4 +620,8 @@ public class ItemRegistry {
 			REGISTAR.register("depth_berries",
 					() -> new BlockItem(BlockRegistry.DEPTH_VINES.get(), new Item.Properties()
 							.food(ModFoods.GLOW_BERRY_PROPERTIES))); // TODO: make proper food effect
+
+	public static final RegistryObject<Item> SCULK_TENDRIL_BLOCK =
+			REGISTAR.register("sculk_tendril_block",
+			() -> new BlockItem(BlockRegistry.SCULK_TENDRIL_BLOCK.get(), new Item.Properties()));
 }

@@ -31,7 +31,6 @@ public class TendrilTree {
                 nodes.put(node.getPosition(), node);
                 if (node.getParent() != null) {
                     addNode(node.getPosition(), node.getParent().getPosition());
-                    addChildToNode(node.getParent().getPosition(), node.getPosition());
                 } else {
                     addOrigin(node.getPosition());
                 }
@@ -91,12 +90,7 @@ public class TendrilTree {
         return tag;
     }
 
-    private void addOrigin(BlockPos origin) {
-        this.origin = origin;
-        nodes.put(origin, new TendrilNode(origin, null));
-    }
-
-    private void addNode(BlockPos pos, BlockPos parentPos) {
+    public void addNode(BlockPos pos, BlockPos parentPos) {
         if (nodes.containsKey(parentPos)) {
             if (!canHaveChildren(parentPos)) {
                 System.out.println("Parent node at " + parentPos + " cannot have more children.");
@@ -104,10 +98,16 @@ public class TendrilTree {
             }
             TendrilNode newNode = new TendrilNode(pos, nodes.get(parentPos));
             nodes.put(pos, newNode);
+            addChildToNode(parentPos, pos);
         } else {
             System.out.println("Tendril node at " + pos
                     + " cannot be added because parent node at " + parentPos + " does not exist.");
         }
+    }
+
+    private void addOrigin(BlockPos origin) {
+        this.origin = origin;
+        nodes.put(origin, new TendrilNode(origin, null));
     }
 
     private void addChildToNode(BlockPos parentPos, BlockPos childPos) {
