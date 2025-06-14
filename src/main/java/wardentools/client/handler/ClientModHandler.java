@@ -43,6 +43,8 @@ public class ClientModHandler {
 				SoulSpawnerRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.GRAMOPHONE_BLOCK_ENTITY.get(),
 				GramophoneRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.SCULK_TENDRIL_BLOCK_ENTITY.get(),
+				SculkTendrilBlockRenderer::new);
 	}
 
 }

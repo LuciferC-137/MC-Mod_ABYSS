@@ -8,6 +8,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,9 +19,10 @@ import wardentools.block.sculktendril.TendrilTree;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SculkTendrilBlockEntity extends BlockEntity {
-    private Map<Direction, Boolean> connections = new HashMap<>(Map.of(
+    private HashMap<Direction, Boolean> connections = new HashMap<>(Map.of(
             Direction.NORTH, false,
             Direction.SOUTH, false,
             Direction.EAST, false,
@@ -29,7 +31,10 @@ public class SculkTendrilBlockEntity extends BlockEntity {
             Direction.DOWN, false
     ));
     private @Nullable TendrilTree tendrilTreeGraph = null; // Only the origin knows the tree
-    private BlockPos originPos;
+    private BlockPos originPos; // But every member of the graph remembers the origin.
+    // This can lead to inconsistency, make sure to handle null or degenerated cases.
+
+    private int width = 0;
 
     public SculkTendrilBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -54,6 +59,8 @@ public class SculkTendrilBlockEntity extends BlockEntity {
         sendUpdate();
     }
 
+    public boolean getConnection(Direction direction) {return connections.get(direction);}
+
     // This method must be called to retrieve information from the tree.
     public @Nullable TendrilTree getRelativeTendrilTreeGraph() {
         if (this.level == null) return null;
@@ -63,6 +70,22 @@ public class SculkTendrilBlockEntity extends BlockEntity {
         return null;
     }
 
+    public int getWidth() {
+        if (this.width == 0) {
+            if (this.getRelativeTendrilTreeGraph() == null) return 8;
+            this.width = this.getRelativeTendrilTreeGraph().getWidth(this.worldPosition);
+        }
+        return this.width;
+    }
+
+    public void updateWidth() {
+        if (this.level == null || level.isClientSide) return;
+        if (this.getRelativeTendrilTreeGraph() == null) return;
+        this.width = this.getRelativeTendrilTreeGraph().getWidth(this.worldPosition);
+        this.updateConnections();
+        this.sendUpdate();
+    }
+
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
         super.saveAdditional(tag, provider);
@@ -70,6 +93,8 @@ public class SculkTendrilBlockEntity extends BlockEntity {
             tag.put("tendril_tree", tendrilTreeGraph.writeTreeToTag());
         }
         tag.put("origin_pos", TendrilNode.blockPosToTag(originPos));
+        tag.putInt("width", this.width);
+        this.saveConnectionsToTag(tag);
     }
 
     @Override
@@ -81,34 +106,45 @@ public class SculkTendrilBlockEntity extends BlockEntity {
         if (tag.contains("origin_pos")) {
             this.originPos = TendrilNode.blockPosFromTag(tag.getCompound("origin_pos"));
         }
-        loadConnections();
+        if (tag.contains("width")) {
+            this.width = tag.getInt("width");
+        } else this.width = 0;
+        this.loadConnectionsFromTag(tag);
     }
 
-    private void loadConnections() {
-        if (this.level != null && this.level.getBlockEntity(this.originPos) instanceof SculkTendrilBlockEntity originEntity) {
+    private void updateConnections() {
+        if (this.level != null && this.level.getBlockEntity(this.originPos)
+                instanceof SculkTendrilBlockEntity originEntity) {
             TendrilTree tendrilTree = originEntity.getTendrilTreeGraph();
             if (tendrilTree != null) {
-                for (BlockPos pos : tendrilTree.getChildrenOf(this.worldPosition)) {
-                    Direction direction = getDirectionFromBlockPos(pos);
-                    this.connections.put(direction, true);
-                }
-                BlockPos parentPos = tendrilTree.getParentOf(this.worldPosition);
-                if (parentPos != null) {
-                    Direction direction = getDirectionFromBlockPos(parentPos);
-                    this.connections.put(direction, true);
+                for (Direction direction : Direction.values()) {
+                    BlockPos neighborPos = this.worldPosition.relative(direction);
+                    boolean connected = tendrilTree.getChildrenOf(this.worldPosition).contains(neighborPos) ||
+                            (tendrilTree.getParentOf(this.worldPosition) != null &&
+                                    Objects.equals(tendrilTree.getParentOf(this.worldPosition), neighborPos)) ||
+                            this.level.getBlockState(neighborPos).is(Blocks.SCULK);
+                    this.connections.put(direction, connected);
                 }
             }
         }
     }
 
-    private Direction getDirectionFromBlockPos(BlockPos pos) {
-        if (pos.getX() < this.worldPosition.getX()) return Direction.WEST;
-        if (pos.getX() > this.worldPosition.getX()) return Direction.EAST;
-        if (pos.getY() < this.worldPosition.getY()) return Direction.DOWN;
-        if (pos.getY() > this.worldPosition.getY()) return Direction.UP;
-        if (pos.getZ() < this.worldPosition.getZ()) return Direction.NORTH;
-        if (pos.getZ() > this.worldPosition.getZ()) return Direction.SOUTH;
-        return Direction.UP; // Should not happen
+    private void saveConnectionsToTag(CompoundTag tag) {
+        for (Map.Entry<Direction, Boolean> entry : connections.entrySet()) {
+            if (entry.getValue()) {
+                tag.putBoolean(entry.getKey().getSerializedName(), true);
+            }
+        }
+    }
+
+    private void loadConnectionsFromTag(CompoundTag tag) {
+        for (Direction direction : Direction.values()) {
+            if (tag.contains(direction.getSerializedName())) {
+                connections.put(direction, tag.getBoolean(direction.getSerializedName()));
+            } else {
+                connections.put(direction, false);
+            }
+        }
     }
 
     @Override

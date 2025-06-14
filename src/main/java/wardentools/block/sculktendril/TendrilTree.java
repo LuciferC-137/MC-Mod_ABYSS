@@ -22,19 +22,46 @@ public class TendrilTree {
         if (tag.contains("origin")) {
             this.origin = TendrilNode.blockPosFromTag(tag.getCompound("origin"));
         }
+
         boolean stop = false;
         int i = 1;
-        while (!stop && i<= 100) {
+        while (!stop && i <= 100) {
             String key = getIndexedKey(i);
             if (tag.contains(key)) {
-                TendrilNode node = new TendrilNode(tag.getCompound(key));
-                nodes.put(node.getPosition(), node);
-                if (node.getParent() != null) {
-                    addNode(node.getPosition(), node.getParent().getPosition());
+                CompoundTag nodeTag = tag.getCompound(key);
+                BlockPos position = TendrilNode.blockPosFromTag(nodeTag.getCompound("position"));
+                int depth = nodeTag.getInt("depth");
+
+                TendrilNode node = new TendrilNode(position, depth);
+                nodes.put(position, node);
+            } else {
+                stop = true;
+            }
+            i++;
+        }
+
+        i = 1;
+        stop = false;
+        while (!stop && i <= 100) {
+            String key = getIndexedKey(i);
+            if (tag.contains(key)) {
+                CompoundTag nodeTag = tag.getCompound(key);
+                BlockPos position = TendrilNode.blockPosFromTag(nodeTag.getCompound("position"));
+                TendrilNode node = nodes.get(position);
+
+                if (nodeTag.contains("parent")) {
+                    BlockPos parentPos = TendrilNode.blockPosFromTag(nodeTag.getCompound("parent"));
+                    TendrilNode parent = nodes.get(parentPos);
+                    if (parent != null) {
+                        node.setParent(parent);
+                        parent.addChild(node);
+                    }
                 } else {
-                    addOrigin(node.getPosition());
+                    addOrigin(position);
                 }
-            } else stop = true;
+            } else {
+                stop = true;
+            }
             i++;
         }
     }
@@ -63,7 +90,7 @@ public class TendrilTree {
         float length = getLength(node.getPosition());
         float freeDepth = node.getDepth() - getFirstNexusParent(pos).getDepth() + 1;
         float width = (float) Math.ceil((float) MAX_LENGTH / (length + 1f) * (length - freeDepth + 1f));
-        return Math.max(1, Math.min(2 * MAX_LENGTH, (int) width)); // Width should be between 1 and 16
+        return 2 * Math.max(1, Math.min(MAX_LENGTH, (int) width)); // Width should be between 2 and 16
     }
 
     public boolean canHaveChildren(BlockPos pos) {
@@ -93,7 +120,6 @@ public class TendrilTree {
     public void addNode(BlockPos pos, BlockPos parentPos) {
         if (nodes.containsKey(parentPos)) {
             if (!canHaveChildren(parentPos)) {
-                System.out.println("Parent node at " + parentPos + " cannot have more children.");
                 return;
             }
             TendrilNode newNode = new TendrilNode(pos, nodes.get(parentPos));
@@ -103,6 +129,14 @@ public class TendrilTree {
             System.out.println("Tendril node at " + pos
                     + " cannot be added because parent node at " + parentPos + " does not exist.");
         }
+    }
+
+    public boolean hasNode(BlockPos pos) {return nodes.containsKey(pos);}
+
+    public int getTotalDepth(BlockPos pos) {
+        if (!nodes.containsKey(pos)) return 0; // Should be impossible
+        TendrilNode node = nodes.get(pos);
+        return node.getDepth();
     }
 
     private void addOrigin(BlockPos origin) {
@@ -125,7 +159,7 @@ public class TendrilTree {
         return getAscendingLength(node.getPosition()) + getDescendingLength(node.getPosition()) - 1;
     }
 
-    private int getAscendingLength(BlockPos pos) {
+    public int getAscendingLength(BlockPos pos) {
         if (!nodes.containsKey(pos)) return 0; // Should be impossible
         int length = 1;
 
@@ -138,7 +172,7 @@ public class TendrilTree {
         return length;
     }
 
-    private int getDescendingLength(BlockPos pos) {
+    public int getDescendingLength(BlockPos pos) {
         if (!nodes.containsKey(pos)) return 0; // Should be impossible
         int length = 1;
         TendrilNode currentNode = nodes.get(pos);

@@ -23,13 +23,10 @@ public class TendrilNode {
         }
     }
 
-    public TendrilNode(CompoundTag tag) {
-        this.position = blockPosFromTag(tag.getCompound("position"));
-        this.depth = tag.getInt("depth");
-        if (tag.contains("parent")) {
-            this.parent = new TendrilNode(blockPosFromTag(tag.getCompound("parent")), null);
-        }
-        this.children = new ArrayList<>(); // Children are not stored in the tag, they must be added later
+    public TendrilNode(BlockPos position, int depth) {
+        this.position = position;
+        this.depth = depth;
+        this.children = new ArrayList<>();
     }
 
     public int getDepth() {return depth;}
@@ -47,6 +44,8 @@ public class TendrilNode {
     }
 
     @Nullable public TendrilNode getParent() {return parent;}
+
+    public void setParent(@Nullable TendrilNode parent) {this.parent = parent;}
 
     public CompoundTag toTag() {
         CompoundTag tag = new CompoundTag();
