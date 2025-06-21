@@ -577,11 +577,9 @@ public class BlockRegistry {
 	public static final RegistryObject<Block> SCULK_TENDRIL_BLOCK
 			= REGISTAR.register("sculk_tendril_block",
 			() -> new SculkTendrilBlock(UniformInt.of(3, 6),
-					BlockBehaviour.Properties.of()
+					BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)
 							.noOcclusion()
-							.mapColor(MapColor.COLOR_BLACK)
-							.strength(0.2f)
-							.sound(SoundType.SCULK)
+							.dynamicShape().forceSolidOn()
 							.pushReaction(PushReaction.DESTROY)));
 
 }

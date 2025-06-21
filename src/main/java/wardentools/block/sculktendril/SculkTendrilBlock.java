@@ -12,10 +12,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DropExperienceBlock;
-import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -40,9 +37,24 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
         return BlockEntityRegistry.SCULK_TENDRIL_BLOCK_ENTITY.get().create(pos, state);
     }
 
+    public static VoxelShape makeShape(int width) {
+        float halfWidth = (float)width / 32f;
+        return Shapes.box(0.5f - halfWidth, 0.5f - halfWidth, 0.5f - halfWidth,
+                    0.5f + halfWidth, 0.5f + halfWidth, 0.5f + halfWidth);
+    }
+
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
                                         @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            int width = tendrilBlockEntity.getWidth();
+            return makeShape(width);
+        }
         return Shapes.block();
+    }
+
+    @Override
+    protected boolean useShapeForLightOcclusion(@NotNull BlockState state) {
+        return true;
     }
 
     @Override
@@ -65,24 +77,26 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
         // Retrieve the block position where the block is about to be placed
         BlockPos placePos = placeContext.getClickedPos().relative(placeContext.getClickedFace().getOpposite());
 
-        this.createCacheOnPlace(placeContext.getClickedPos(), placePos, placeContext.getLevel());
-        return super.getStateForPlacement(placeContext);
+        boolean success = this.createCacheOnPlace(placeContext.getClickedPos(), placePos, placeContext.getLevel());
+        return success ? super.getStateForPlacement(placeContext) : null;
     }
 
-    private void createCacheOnPlace(BlockPos placePos, BlockPos clickedBlock, Level level) {
+    private boolean createCacheOnPlace(BlockPos placePos, BlockPos clickedBlock, Level level) {
         if (level.getBlockEntity(clickedBlock) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
             BlockPos commonOrigin = tendrilBlockEntity.getOrigin();
             if (level.getBlockEntity(commonOrigin) instanceof SculkTendrilBlockEntity originEntity) {
                 this.cachedTendrilTree = originEntity.getTendrilTreeGraph();
-                updateGraphOnPlace(this.cachedTendrilTree, placePos, clickedBlock, level);
+                updateGraphOnPlace(this.cachedTendrilTree, placePos, clickedBlock);
+                return true;
             }
         } else if (level.getBlockState(clickedBlock).is(Blocks.SCULK)) {
             this.cachedTendrilTree = new TendrilTree(placePos);
+            return true;
         }
+        return false;
     }
 
-    private void updateGraphOnPlace(@Nullable TendrilTree tendrilTree, BlockPos myPos,
-                                    BlockPos parent, Level level) {
+    private void updateGraphOnPlace(@Nullable TendrilTree tendrilTree, BlockPos myPos, BlockPos parent) {
         if (tendrilTree == null) return;
         tendrilTree.addNode(myPos, parent);
     }
@@ -111,9 +125,12 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
         if (level.isClientSide) return;
         if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
             TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
-            if (tendrilTree == null || ! tendrilTree.hasNode(pos)) {
+            if (tendrilTree == null || !tendrilTree.hasNode(pos)) {
                 level.destroyBlock(pos, true, null);
             } else {
+                if (tendrilTree.getParentOf(pos) == null && !hasSculkNeighbor(pos, level)) {
+                    level.destroyBlock(pos, true, null);
+                }
                 tendrilBlockEntity.updateWidth();
                 this.recursiveWidthUpdate(level, pos, 1);
             }
@@ -171,31 +188,5 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
             }
         }
         super.onRemove(state, level, pos, state1, b);
-    }
-
-    @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
-                                                        @NotNull BlockPos pos, @NotNull Player player,
-                                                        @NotNull BlockHitResult hitResult) {
-        if (!level.isClientSide) {
-            if (level.getBlockEntity(pos) instanceof  SculkTendrilBlockEntity tendrilBlockEntity) {
-                TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
-                if (tendrilTree != null) {
-                    player.sendSystemMessage(Component
-                            .literal("Width: "
-                                    + tendrilBlockEntity.getRelativeTendrilTreeGraph().getWidth(pos)));
-                    player.sendSystemMessage(Component
-                            .literal("Depth: "
-                                    + tendrilBlockEntity.getRelativeTendrilTreeGraph().getTotalDepth(pos)));
-                    player.sendSystemMessage(Component
-                            .literal("Ascending Length: "
-                                    + tendrilBlockEntity.getRelativeTendrilTreeGraph().getAscendingLength(pos)));
-                    player.sendSystemMessage(Component
-                            .literal("Descending Length: "
-                                    + tendrilBlockEntity.getRelativeTendrilTreeGraph().getDescendingLength(pos)));
-                }
-            }
-        }
-        return super.useWithoutItem(state, level, pos, player, hitResult);
     }
 }

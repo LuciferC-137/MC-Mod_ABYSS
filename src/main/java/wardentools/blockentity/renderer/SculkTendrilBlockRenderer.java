@@ -19,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -151,5 +152,15 @@ public class SculkTendrilBlockRenderer implements BlockEntityRenderer<SculkTendr
         public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {
             root.render(poseStack, vertexConsumer, packedLight, packedOverlay);
         }
+    }
+
+    @Override
+    public boolean shouldRender(@NotNull SculkTendrilBlockEntity tendrilBlockEntity, @NotNull Vec3 cameraPos) {
+        BlockPos pos = tendrilBlockEntity.getBlockPos();
+        double dx = pos.getX() - cameraPos.x;
+        double dy = pos.getY() - cameraPos.y;
+        double dz = pos.getZ() - cameraPos.z;
+        // Use full block bounds (1x1x1) instead of the hitbox dimensions
+        return dx * dx + dy * dy + dz * dz < 64.0D * 64.0D;
     }
 }

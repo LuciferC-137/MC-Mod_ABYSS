@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.block.sculktendril.TendrilNode;
@@ -167,4 +168,15 @@ public class SculkTendrilBlockEntity extends BlockEntity {
         }
     }
 
+    @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(
+                this.worldPosition.getX() - 1F,
+                this.worldPosition.getY() - 1F,
+                this.worldPosition.getZ() - 1F,
+                this.worldPosition.getX() + 1F,
+                this.worldPosition.getY() + 1F,
+                this.worldPosition.getZ() + 1F
+        );
+    }
 }
