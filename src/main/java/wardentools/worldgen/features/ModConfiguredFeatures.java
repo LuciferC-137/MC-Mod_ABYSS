@@ -20,9 +20,9 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
-import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
+import wardentools.worldgen.features.custom.tendrils.SculkTendrilsEmergenceConfiguration;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
 import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;
@@ -60,6 +60,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ECHO_VEIN = registerKey("echo_vein");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> PALE_CRISTAL_VEIN = registerKey("pale_cristal_vein");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> AMETHYST_VEIN = registerKey("amethyst_vein");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> SCULK_TENDRIL_EMERGENCE = registerKey("sculk_tendril_emergence");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -178,6 +179,10 @@ public class ModConfiguredFeatures {
 				new CristalVeinConfiguration(5, 2, 4,
 						Blocks.AMETHYST_BLOCK.defaultBlockState(),
 						Blocks.AMETHYST_CLUSTER.defaultBlockState()));
+
+		register(context, SCULK_TENDRIL_EMERGENCE, ModFeatures.SCULK_TENDRILS_EMERGENCE.get(),
+				new SculkTendrilsEmergenceConfiguration(8, 0.2F,
+						4, 0.7F, 0.7F));
     }
 	
 	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int tries) {

@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-09T17:39:20.5691532	Registries
+// 1.21.1	2025-06-21T23:43:00.9315532	Registries
 cd53d11755a53b3f0b2795a7bc6e8a1703b1bb16 data/wardentools/dimension/abyssdim.json
 78abca31c24b948721b9b9f97a002c98b1cb0365 data/wardentools/dimension_type/abyssdim_type.json
 1c11a8f49d2df8e89a69dcab7725f1897a55fef4 data/wardentools/enchantment/stealth.json
@@ -33,6 +33,7 @@ c44b8b0bec19c7fc6cde2e41a4ce574429950abd data/wardentools/worldgen/configured_fe
 fe5816f0156e37d2df33a3217570481208fa0548 data/wardentools/worldgen/configured_feature/pale_cristal_vein.json
 bd815b8c7f4d06e02b5a5fc8f35b39ba8df7523f data/wardentools/worldgen/configured_feature/ruby_cristal.json
 ae33ff27dcce1afc047dd0bedbfc7fe46ed0ea8c data/wardentools/worldgen/configured_feature/ruby_vein.json
+278c710ade367df9ec22282ed3e6418db3575504 data/wardentools/worldgen/configured_feature/sculk_tendril_emergence.json
 90bbd48fca2fc565ff9ef5bc24c7c379718c156f data/wardentools/worldgen/configured_feature/sharp_rock.json
 fb8fded370cb3afd787dfc9ec82a6b86ade64ef8 data/wardentools/worldgen/configured_feature/tall_dark_grass.json
 07463fb19f4e4707e1119be1876178e0be0d6fc3 data/wardentools/worldgen/configured_feature/tall_white_grass.json
@@ -67,6 +68,7 @@ cc0b57ed18c16d0ced5804bf916e8c80d648f9d6 data/wardentools/worldgen/placed_featur
 41a4351aa7cff3d004bb7dfc8232a52b4e0dad44 data/wardentools/worldgen/placed_feature/ruby_cristal_dw_key.json
 d3ba9735725efb6b2a17e81b75f388f3281f804b data/wardentools/worldgen/placed_feature/ruby_cristal_key.json
 1a287218bfc48e982cad9ca47af435b5aa990dbe data/wardentools/worldgen/placed_feature/ruby_vein.json
+a346c7a4e91c13434aea1c1842b0482df3899982 data/wardentools/worldgen/placed_feature/sculk_tendril_emergence.json
 01287169b3a43617d33a0801741229ec66c397b2 data/wardentools/worldgen/placed_feature/sharp_rock.json
 10252d25fb3078f380edeadd11c8a2c398e1d110 data/wardentools/worldgen/placed_feature/tall_dark_grass.json
 8c9b0f8c9569eae0bc38ab5ce9efbd240c10e736 data/wardentools/worldgen/placed_feature/tall_white_grass.json

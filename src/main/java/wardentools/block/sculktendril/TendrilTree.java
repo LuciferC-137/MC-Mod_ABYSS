@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class TendrilTree {
@@ -66,9 +67,9 @@ public class TendrilTree {
         }
     }
 
-    public BlockPos getOrigin() {
-        return origin;
-    }
+    public BlockPos getOrigin() {return origin;}
+
+    public List<BlockPos> getAllNodes() {return this.nodes.keySet().stream().filter(Objects::nonNull).toList();}
 
     public List<BlockPos> getChildrenOf(BlockPos pos) {
         if (!nodes.containsKey(pos)) return List.of();
@@ -97,11 +98,16 @@ public class TendrilTree {
         return nodes.get(pos).getDepth() <= MAX_LENGTH;
     }
 
-    public void recursiveRemove(BlockPos pos) { // Deletes the node at pos and all its children
-        if (!nodes.containsKey(pos)) return;
+    public void recursiveRemove(BlockPos pos) {
+        // Deletes the node at pos and all its children
+        this.recursiveRemove(pos, 0);
+    }
+
+    public void recursiveRemove(BlockPos pos, int depth) {
+        if (!nodes.containsKey(pos) || depth > 100) return;
         TendrilNode node = nodes.get(pos);
         for (TendrilNode child : node.getChildren()) {
-            recursiveRemove(child.getPosition());
+            recursiveRemove(child.getPosition(), depth + 1);
         }
         nodes.remove(pos);
     }
@@ -173,14 +179,17 @@ public class TendrilTree {
     }
 
     public int getDescendingLength(BlockPos pos) {
-        if (!nodes.containsKey(pos)) return 0; // Should be impossible
+        return this.getDescendingLength(pos, 0);
+    }
+
+    private int getDescendingLength(BlockPos pos, int depth) {
+        if (!nodes.containsKey(pos) || depth > 100) return 0; // Should be impossible
         int length = 1;
         TendrilNode currentNode = nodes.get(pos);
 
         for (TendrilNode child : currentNode.getChildren()) {
-            length += getDescendingLength(child.getPosition());
+            length += getDescendingLength(child.getPosition(), depth + 1);
         }
-
         return length;
     }
 

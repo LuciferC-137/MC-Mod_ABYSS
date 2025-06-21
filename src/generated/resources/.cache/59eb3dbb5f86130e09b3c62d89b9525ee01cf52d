@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-07T14:06:08.8203813	Loot Tables
+// 1.21.1	2025-06-21T18:59:40.1820151	Loot Tables
 ed2f8717d26fbcb60f0922c363ab315ba830ebe4 data/wardentools/loot_table/advancements/wind_journal.json
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_table/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_table/blocks/abyssalite_bricks.json
@@ -51,6 +51,7 @@ e000bbb8369c0744f517a29abc68ff12ae9d60f3 data/wardentools/loot_table/blocks/mala
 cf2300d2b3f6d9098daa6d7626544f2c7bccedc7 data/wardentools/loot_table/blocks/reinforced_glass.json
 aabf4d47094e58c5af3afd0155df9061610a6090 data/wardentools/loot_table/blocks/ruby.json
 57a8144524b215b4ebbf694dbc5b0e3e7bb3d9c7 data/wardentools/loot_table/blocks/ruby_block.json
+91153dd82ccad86f820382e183cdeb7b291d7ad8 data/wardentools/loot_table/blocks/sculk_tendril_block.json
 fd2ac5aa4f74327ae0ad0118372ca4a824bafcba data/wardentools/loot_table/blocks/solid_corruption.json
 409d0398dfdfa9ca835d5dcfb7f154f51e8b4606 data/wardentools/loot_table/blocks/sonic_blaster.json
 22c5562d49c153eef742057e576bbd90d943acd0 data/wardentools/loot_table/blocks/stripped_darktree_log.json

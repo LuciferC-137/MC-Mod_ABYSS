@@ -56,6 +56,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> ECHO_VEIN_KEY = registerKey("echo_vein");
 	public static final ResourceKey<PlacedFeature> PALE_CRISTAL_VEIN_KEY = registerKey("pale_vein");
 	public static final ResourceKey<PlacedFeature> AMETHYST_VEIN_KEY = registerKey("amethyst_vein");
+	public static final ResourceKey<PlacedFeature> SCULK_TENDRIL_EMERGENCE_KEY = registerKey("sculk_tendril_emergence");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -252,6 +253,10 @@ public class ModPlacedFeatures {
 		register(context, AMETHYST_VEIN_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.AMETHYST_VEIN),
 				onCaveWallDown(3, 5));
+
+		register(context, SCULK_TENDRIL_EMERGENCE_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE),
+				List.of(CountPlacement.of(1)));
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {

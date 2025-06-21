@@ -163,6 +163,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				block -> createReinforcedGlassItemDrop(BlockRegistry.REINFORCED_GLASS));
 		this.add(BlockRegistry.BLUE_BUSH.get(),
 				block -> createBlueBushLoot(BlockRegistry.BLUE_BUSH, ItemRegistry.BLUE_GLOW_BERRIES));
+		this.add(BlockRegistry.SCULK_TENDRIL_BLOCK.get(),
+				createSilkTouchOnlyTable(ItemRegistry.SCULK_TENDRIL_BLOCK.get()));
     }
 
     private void addDropSelf(RegistryObject<Block> block) {

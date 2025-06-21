@@ -1,0 +1,9 @@
+{
+  "feature": "wardentools:sculk_tendril_emergence",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 1
+    }
+  ]
+}
