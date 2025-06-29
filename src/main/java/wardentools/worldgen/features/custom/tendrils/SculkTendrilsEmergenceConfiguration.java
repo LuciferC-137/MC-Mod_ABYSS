@@ -7,11 +7,11 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 
 
 public class SculkTendrilsEmergenceConfiguration implements FeatureConfiguration {
-    public final int maxLength;
-    public final float deviationStrength;
-    public final int maxDepth;
-    public final float heightReductionFactor;
-    public final float branchProbability;
+    public final int maxLength; // The length of the first branch
+    public final float deviationStrength; // Between 1 and 0.001. The higher, the more vertical.
+    public final int maxDepth; // Max number of consecutive branches
+    public final float heightReductionFactor; // The length is multiplied by this factor for each branch level
+    public final float branchProbability; // Probability of branching for each block. Is also reduced by branch level
 
     public static final Codec<SculkTendrilsEmergenceConfiguration> CODEC =
             RecordCodecBuilder.create(instance -> instance.group(

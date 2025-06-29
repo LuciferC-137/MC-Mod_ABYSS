@@ -113,17 +113,24 @@ public class SculkTendrilBlockEntity extends BlockEntity {
         this.loadConnectionsFromTag(tag);
     }
 
-    private void updateConnections() {
+    public void updateConnections() {
         if (this.level != null && this.level.getBlockEntity(this.originPos)
                 instanceof SculkTendrilBlockEntity originEntity) {
             TendrilTree tendrilTree = originEntity.getTendrilTreeGraph();
             if (tendrilTree != null) {
                 for (Direction direction : Direction.values()) {
                     BlockPos neighborPos = this.worldPosition.relative(direction);
-                    boolean connected = tendrilTree.getChildrenOf(this.worldPosition).contains(neighborPos) ||
-                            (tendrilTree.getParentOf(this.worldPosition) != null &&
-                                    Objects.equals(tendrilTree.getParentOf(this.worldPosition), neighborPos)) ||
-                            this.level.getBlockState(neighborPos).is(Blocks.SCULK);
+                    boolean connected = false;
+                    if (tendrilTree.getChildrenOf(this.worldPosition).contains(neighborPos)) {
+                        connected = true;
+                    }
+                    else if (tendrilTree.getParentOf(this.worldPosition) != null &&
+                            Objects.equals(tendrilTree.getParentOf(this.worldPosition), neighborPos)) {
+                        connected = true;
+                    }
+                    else if (this.level.getBlockState(neighborPos).is(Blocks.SCULK)) {
+                        connected = true;
+                    }
                     this.connections.put(direction, connected);
                 }
             }

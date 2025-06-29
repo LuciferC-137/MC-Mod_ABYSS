@@ -181,8 +181,8 @@ public class ModConfiguredFeatures {
 						Blocks.AMETHYST_CLUSTER.defaultBlockState()));
 
 		register(context, SCULK_TENDRIL_EMERGENCE, ModFeatures.SCULK_TENDRILS_EMERGENCE.get(),
-				new SculkTendrilsEmergenceConfiguration(8, 0.2F,
-						4, 0.7F, 0.7F));
+				new SculkTendrilsEmergenceConfiguration(15, 0.4F,
+						5, 0.7F, 0.3F));
     }
 	
 	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int tries) {

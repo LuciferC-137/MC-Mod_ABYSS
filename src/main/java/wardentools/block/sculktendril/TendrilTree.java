@@ -2,7 +2,9 @@ package wardentools.block.sculktendril;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.WorldGenLevel;
 import org.jetbrains.annotations.Nullable;
+import wardentools.blockentity.SculkTendrilBlockEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -103,11 +105,23 @@ public class TendrilTree {
         this.recursiveRemove(pos, 0);
     }
 
+    public void updateAllNodes(WorldGenLevel level) {
+        for (Map.Entry<BlockPos, TendrilNode> entry : nodes.entrySet()) {
+            TendrilNode node = entry.getValue();
+            if (level.getBlockEntity(node.getPosition()) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+                tendrilBlockEntity.updateConnections();
+                tendrilBlockEntity.updateWidth();
+            } else {
+                System.out.println("Tendril node at " + node.getPosition() + " does not have a block entity.");
+            }
+        }
+    }
+
     public void recursiveRemove(BlockPos pos, int depth) {
         if (!nodes.containsKey(pos) || depth > 100) return;
         TendrilNode node = nodes.get(pos);
         for (TendrilNode child : node.getChildren()) {
-            recursiveRemove(child.getPosition(), depth + 1);
+            this.recursiveRemove(child.getPosition(), depth + 1);
         }
         nodes.remove(pos);
     }
@@ -124,13 +138,14 @@ public class TendrilTree {
     }
 
     public void addNode(BlockPos pos, BlockPos parentPos) {
+        if (nodes.containsKey(pos)) return; // Node already exists
         if (nodes.containsKey(parentPos)) {
             if (!canHaveChildren(parentPos)) {
                 return;
             }
             TendrilNode newNode = new TendrilNode(pos, nodes.get(parentPos));
             nodes.put(pos, newNode);
-            addChildToNode(parentPos, pos);
+            this.addChildToNode(parentPos, pos);
         } else {
             System.out.println("Tendril node at " + pos
                     + " cannot be added because parent node at " + parentPos + " does not exist.");

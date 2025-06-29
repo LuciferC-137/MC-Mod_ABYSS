@@ -2,9 +2,12 @@ package wardentools.block.sculktendril;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -12,6 +15,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -129,6 +133,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
                 }
                 tendrilBlockEntity.updateWidth();
                 this.recursiveWidthUpdate(level, pos, 1);
+                tendrilBlockEntity.updateConnections();
             }
         }
     }
@@ -184,5 +189,18 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
             }
         }
         super.onRemove(state, level, pos, state1, b);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level,
+                                               BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendril && !level.isClientSide) {
+            player.sendSystemMessage(Component.literal("Origin: " + tendril.getOrigin()));
+            player.sendSystemMessage(Component.literal("Parent: " + tendril.getRelativeTendrilTreeGraph().getParentOf(pos)));
+            player.sendSystemMessage(Component.literal("Child: " + tendril.getRelativeTendrilTreeGraph().getChildrenOf(pos)));
+        }
+
+
+        return super.useWithoutItem(state, level, pos, player, hitResult);
     }
 }
