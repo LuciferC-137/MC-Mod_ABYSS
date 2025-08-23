@@ -1,4 +1,4 @@
-package wardentools.worldgen.features.custom.tendrils;
+package wardentools.worldgen.features.custom.sculk;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -11,6 +11,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
@@ -57,6 +58,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> PALE_CRISTAL_VEIN_KEY = registerKey("pale_vein");
 	public static final ResourceKey<PlacedFeature> AMETHYST_VEIN_KEY = registerKey("amethyst_vein");
 	public static final ResourceKey<PlacedFeature> SCULK_TENDRIL_EMERGENCE_KEY = registerKey("sculk_tendril_emergence");
+	public static final ResourceKey<PlacedFeature> ABYSS_SCULK_PATCH_KEY = registerKey("abyss_sculk_patch");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -257,6 +259,13 @@ public class ModPlacedFeatures {
 		register(context, SCULK_TENDRIL_EMERGENCE_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE),
 				List.of(CountPlacement.of(1)));
+
+		register(context, ABYSS_SCULK_PATCH_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.ABYSS_SCULK_PATCH),
+				List.of(CountPlacement.of(ConstantInt.of(256)),
+						InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+						BiomeFilter.biome())
+        );
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {

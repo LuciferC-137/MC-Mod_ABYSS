@@ -202,8 +202,8 @@ public class ModBiomes {
     }
 
     public static void defaultAbyssSculk(BiomeGenerationSettings.Builder builder){
-        builder.addFeature(SCULK_STEP, CavePlacements.SCULK_PATCH_DEEP_DARK);
-        builder.addFeature(SCULK_STEP, CavePlacements.SCULK_VEIN);
+        builder.addFeature(SCULK_STEP, ModPlacedFeatures.ABYSS_SCULK_PATCH_KEY);
+        //builder.addFeature(SCULK_STEP, CavePlacements.SCULK_VEIN);
     }
 
     public static BiomeSpecialEffects.Builder commonBiomeSpecialEffects(){

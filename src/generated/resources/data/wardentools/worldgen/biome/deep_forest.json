@@ -48,8 +48,7 @@
       "wardentools:deep_ore"
     ],
     [
-      "minecraft:sculk_patch_deep_dark",
-      "minecraft:sculk_vein"
+      "wardentools:abyss_sculk_patch"
     ],
     [],
     [

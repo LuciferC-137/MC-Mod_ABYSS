@@ -1,10 +1,11 @@
 package wardentools.block.sculktendril;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.WorldGenLevel;
 import org.jetbrains.annotations.Nullable;
-import wardentools.blockentity.SculkTendrilBlockEntity;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ public class TendrilTree {
     private static final int MAX_LENGTH = 8; // Maximum depth of the tendril tree. This is also used to compute the physical width.
     private BlockPos origin = null;
     private final Map<BlockPos, TendrilNode> nodes = new HashMap<>();
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     public TendrilTree(BlockPos origin) {
         this.addOrigin(origin);
@@ -108,12 +110,7 @@ public class TendrilTree {
     public void updateAllNodes(WorldGenLevel level) {
         for (Map.Entry<BlockPos, TendrilNode> entry : nodes.entrySet()) {
             TendrilNode node = entry.getValue();
-            if (level.getBlockEntity(node.getPosition()) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
-                tendrilBlockEntity.updateConnections();
-                tendrilBlockEntity.updateWidth();
-            } else {
-                System.out.println("Tendril node at " + node.getPosition() + " does not have a block entity.");
-            }
+            level.scheduleTick(node.getPosition(), level.getBlockState(node.getPosition()).getBlock(), 2);
         }
     }
 
@@ -147,8 +144,9 @@ public class TendrilTree {
             nodes.put(pos, newNode);
             this.addChildToNode(parentPos, pos);
         } else {
-            System.out.println("Tendril node at " + pos
-                    + " cannot be added because parent node at " + parentPos + " does not exist.");
+            LOGGER.warn("Tendril node at {} cannot be added because parent node at {} does not exist.",
+                    pos, parentPos);
+
         }
     }
 
@@ -167,8 +165,8 @@ public class TendrilTree {
 
     private void addChildToNode(BlockPos parentPos, BlockPos childPos) {
         if (!nodes.containsKey(parentPos) || !nodes.containsKey(childPos)) {
-            System.out.println("Cannot add child node at " + childPos + " to parent node at " + parentPos
-                    + " because one of them does not exist.");
+            LOGGER.warn("Cannot add child node at {} to parent node at {} because one of them does not exist.",
+                    childPos, parentPos);
             return;
         }
         nodes.get(parentPos).addChild(nodes.get(childPos));
