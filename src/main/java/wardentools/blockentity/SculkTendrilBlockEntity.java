@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -15,12 +16,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import wardentools.block.BlockRegistry;
 import wardentools.block.sculktendril.TendrilNode;
 import wardentools.block.sculktendril.TendrilTree;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class SculkTendrilBlockEntity extends BlockEntity {
     private HashMap<Direction, Boolean> connections = new HashMap<>(Map.of(
@@ -61,6 +64,8 @@ public class SculkTendrilBlockEntity extends BlockEntity {
     }
 
     public boolean getConnection(Direction direction) {return connections.get(direction);}
+
+    public Map<Direction, Boolean> getAllConnections() {return connections;}
 
     // This method must be called to retrieve information from the tree.
     public @Nullable TendrilTree getRelativeTendrilTreeGraph() {
@@ -114,14 +119,14 @@ public class SculkTendrilBlockEntity extends BlockEntity {
     }
 
     public void updateConnections() {
-        if (this.level != null && this.level.getBlockEntity(this.originPos)
-                instanceof SculkTendrilBlockEntity originEntity) {
-            TendrilTree tendrilTree = originEntity.getTendrilTreeGraph();
+        if (this.level != null) {
+            TendrilTree tendrilTree = this.getRelativeTendrilTreeGraph();
             if (tendrilTree != null) {
                 for (Direction direction : Direction.values()) {
                     BlockPos neighborPos = this.worldPosition.relative(direction);
                     boolean connected = false;
-                    if (tendrilTree.getChildrenOf(this.worldPosition).contains(neighborPos)) {
+                    if (tendrilTree.getChildrenOf(this.worldPosition).contains(neighborPos) &&
+                            level.getBlockState(neighborPos).is(BlockRegistry.SCULK_TENDRIL_BLOCK.get())) {
                         connected = true;
                     }
                     else if (tendrilTree.getParentOf(this.worldPosition) != null &&

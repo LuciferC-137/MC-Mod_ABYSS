@@ -2,12 +2,9 @@ package wardentools.block.sculktendril;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -15,7 +12,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -24,6 +20,7 @@ import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.SculkTendrilBlockEntity;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class SculkTendrilBlock extends DropExperienceBlock implements EntityBlock {
     private TendrilTree cachedTendrilTree = null;
@@ -37,17 +34,36 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
         return BlockEntityRegistry.SCULK_TENDRIL_BLOCK_ENTITY.get().create(pos, state);
     }
 
-    public static VoxelShape makeShape(int width) {
+    public static VoxelShape makeShape(int width, Map<Direction, Boolean> connections) {
         float halfWidth = (float)width / 32f;
-        return Shapes.box(0.5f - halfWidth, 0.5f - halfWidth, 0.5f - halfWidth,
-                    0.5f + halfWidth, 0.5f + halfWidth, 0.5f + halfWidth);
+        VoxelShape shape = Shapes.box(0.5f - halfWidth, 0.5f - halfWidth, 0.5f - halfWidth,
+                0.5f + halfWidth, 0.5f + halfWidth, 0.5f + halfWidth);
+        int branchLength = 8 - width / 2;
+        float branchHalfLength = (float)branchLength / 32f;
+        float centralHalfSize = halfWidth;
+        for (Direction dir : connections.keySet()) {
+            if (connections.get(dir)) {
+                // Calculate the center of the branch
+                float cx = 0.5f + dir.getStepX() * (centralHalfSize + branchHalfLength);
+                float cy = 0.5f + dir.getStepY() * (centralHalfSize + branchHalfLength);
+                float cz = 0.5f + dir.getStepZ() * (centralHalfSize + branchHalfLength);
+                float minX = cx - (dir.getAxis() == Direction.Axis.X ? branchHalfLength : halfWidth);
+                float maxX = cx + (dir.getAxis() == Direction.Axis.X ? branchHalfLength : halfWidth);
+                float minY = cy - (dir.getAxis() == Direction.Axis.Y ? branchHalfLength : halfWidth);
+                float maxY = cy + (dir.getAxis() == Direction.Axis.Y ? branchHalfLength : halfWidth);
+                float minZ = cz - (dir.getAxis() == Direction.Axis.Z ? branchHalfLength : halfWidth);
+                float maxZ = cz + (dir.getAxis() == Direction.Axis.Z ? branchHalfLength : halfWidth);
+                shape = Shapes.or(shape, Shapes.box(minX, minY, minZ, maxX, maxY, maxZ));
+            }
+        }
+        return shape;
     }
 
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
                                         @NotNull BlockPos pos, @NotNull CollisionContext context) {
         if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
             int width = tendrilBlockEntity.getWidth();
-            return makeShape(width);
+            return makeShape(width, tendrilBlockEntity.getAllConnections());
         }
         return Shapes.block();
     }
@@ -68,7 +84,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
             } else {
                 tendrilBlockEntity.setOrigin(this.cachedTendrilTree.getOrigin());
             }
-            this.recursiveWidthUpdate(level, pos, 1);
+            this.recursiveWidthUpdate(level, pos);
         }
     }
 
@@ -101,7 +117,22 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
         tendrilTree.addNode(myPos, parent);
     }
 
-    public void recursiveWidthUpdate(Level level, BlockPos pos, int depth) {
+    public void recursiveWidthUpdate(Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            level.scheduleTick(pos, this, 1);
+            TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
+            if (tendrilTree != null) {
+                BlockPos parentPos = tendrilTree.getParentOf(pos);
+                if (parentPos != null) {
+                    if (level.getBlockState(parentPos).getBlock() instanceof SculkTendrilBlock parentTendril) {
+                        parentTendril.recursiveWidthUpdate(level, tendrilTree.getParentOf(pos), pos, 1);
+                    }
+                }
+            }
+        }
+    }
+
+    private void recursiveWidthUpdate(Level level, BlockPos pos, BlockPos fromPos, int depth) {
         if (depth > 64) return;
         if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
             level.scheduleTick(pos, this, depth);
@@ -110,7 +141,28 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
                 BlockPos parentPos = tendrilTree.getParentOf(pos);
                 if (parentPos != null) {
                     if (level.getBlockState(parentPos).getBlock() instanceof SculkTendrilBlock parentTendril) {
-                        parentTendril.recursiveWidthUpdate(level, tendrilTree.getParentOf(pos), depth + 1);
+                        parentTendril.recursiveWidthUpdate(level, tendrilTree.getParentOf(pos), fromPos, depth + 1);
+                    }
+                }
+                for (BlockPos childPos : tendrilTree.getChildrenOf(pos)) {
+                    if (!blockEquals(childPos, fromPos)
+                            && level.getBlockState(childPos).getBlock() instanceof SculkTendrilBlock childTendril) {
+                        childTendril.recursiveWidthUpdateToChildren(level, childPos, depth + 1);
+                    }
+                }
+            }
+        }
+    }
+
+    private void recursiveWidthUpdateToChildren(Level level, BlockPos pos, int depth) {
+        if (depth > 64) return;
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            level.scheduleTick(pos, this, depth);
+            TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
+            if (tendrilTree != null) {
+                for (BlockPos childPos : tendrilTree.getChildrenOf(pos)) {
+                    if (level.getBlockState(childPos).getBlock() instanceof SculkTendrilBlock childTendril) {
+                        childTendril.recursiveWidthUpdateToChildren(level, childPos, depth + 1);
                     }
                 }
             }
@@ -131,9 +183,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
                 if (tendrilTree.getParentOf(pos) == null && !hasSculkNeighbor(pos, level)) {
                     level.destroyBlock(pos, true, null);
                 }
-                tendrilBlockEntity.updateWidth();
-                this.recursiveWidthUpdate(level, pos, 1);
-                tendrilBlockEntity.updateConnections();
+                this.recursiveWidthUpdate(level, pos);
             }
         }
     }
@@ -191,16 +241,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
         super.onRemove(state, level, pos, state1, b);
     }
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level,
-                                               BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendril && !level.isClientSide) {
-            player.sendSystemMessage(Component.literal("Origin: " + tendril.getOrigin()));
-            player.sendSystemMessage(Component.literal("Parent: " + tendril.getRelativeTendrilTreeGraph().getParentOf(pos)));
-            player.sendSystemMessage(Component.literal("Child: " + tendril.getRelativeTendrilTreeGraph().getChildrenOf(pos)));
-        }
-
-
-        return super.useWithoutItem(state, level, pos, player, hitResult);
+    private boolean blockEquals(BlockPos pos1, BlockPos pos2) {
+        return pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY() && pos1.getZ() == pos2.getZ();
     }
 }

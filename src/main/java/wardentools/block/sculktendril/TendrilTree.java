@@ -93,9 +93,8 @@ public class TendrilTree {
         if (!nodes.containsKey(pos)) return 0; // Should be impossible
         TendrilNode node = nodes.get(pos);
         float length = getLength(node.getPosition());
-        float freeDepth = node.getDepth() - getFirstNexusParent(pos).getDepth() + 1;
-        float width = (float) Math.ceil((float) MAX_LENGTH / (length + 1f) * (length - freeDepth + 1f));
-        return 2 * Math.max(1, Math.min(MAX_LENGTH, (int) width)); // Width should be between 2 and 16
+        float baseWidth = (float)MAX_LENGTH - (float)node.getDepth() + 1;
+        return Math.min(Math.max(1, (int)Math.ceil(baseWidth - (MAX_LENGTH - length) / 2F)), MAX_LENGTH) * 2;
     }
 
     public boolean canHaveChildren(BlockPos pos) {
@@ -152,12 +151,6 @@ public class TendrilTree {
 
     public boolean hasNode(BlockPos pos) {return nodes.containsKey(pos);}
 
-    public int getTotalDepth(BlockPos pos) {
-        if (!nodes.containsKey(pos)) return 0; // Should be impossible
-        TendrilNode node = nodes.get(pos);
-        return node.getDepth();
-    }
-
     private void addOrigin(BlockPos origin) {
         this.origin = origin;
         nodes.put(origin, new TendrilNode(origin, null));
@@ -172,6 +165,7 @@ public class TendrilTree {
         nodes.get(parentPos).addChild(nodes.get(childPos));
     }
 
+    // Length of the branch, from the origin to the tip of the longest branch
     private int getLength(BlockPos pos) {
         if (!nodes.containsKey(pos)) return 0; // Should be impossible
         TendrilNode node = nodes.get(pos);
@@ -183,7 +177,7 @@ public class TendrilTree {
         int length = 1;
 
         TendrilNode currentNode = nodes.get(pos);
-        while (currentNode.getParent() !=null && currentNode.getParent().getChildren().size() == 1) {
+        while (currentNode.getParent() != null) {
             length++;
             currentNode = currentNode.getParent();
         }
@@ -191,19 +185,22 @@ public class TendrilTree {
         return length;
     }
 
+    // Gets the length of the longest descending branch from this node
     public int getDescendingLength(BlockPos pos) {
         return this.getDescendingLength(pos, 0);
     }
 
     private int getDescendingLength(BlockPos pos, int depth) {
         if (!nodes.containsKey(pos) || depth > 100) return 0; // Should be impossible
-        int length = 1;
         TendrilNode currentNode = nodes.get(pos);
-
+        int maxLength = 0;
         for (TendrilNode child : currentNode.getChildren()) {
-            length += getDescendingLength(child.getPosition(), depth + 1);
+            int childLength = getDescendingLength(child.getPosition(), depth + 1);
+            if (childLength > maxLength) {
+                maxLength = childLength;
+            }
         }
-        return length;
+        return 1 + maxLength;
     }
 
     private TendrilNode getFirstNexusParent(BlockPos pos) {

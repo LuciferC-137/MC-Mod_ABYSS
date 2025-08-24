@@ -183,8 +183,8 @@ public class ModConfiguredFeatures {
 						Blocks.AMETHYST_CLUSTER.defaultBlockState()));
 
 		register(context, SCULK_TENDRIL_EMERGENCE, ModFeatures.SCULK_TENDRILS_EMERGENCE.get(),
-				new SculkTendrilsEmergenceConfiguration(15, 0.4F,
-						5, 0.7F, 0.3F));
+				new SculkTendrilsEmergenceConfiguration(15, 0.5F,
+						5, 0.95F, 0.4F));
 
 		register(context, ABYSS_SCULK_PATCH, ModFeatures.ABYSS_SCULK_PATCH.get(),
 				new AbyssSculkPatchConfiguration(10, 32, 64,

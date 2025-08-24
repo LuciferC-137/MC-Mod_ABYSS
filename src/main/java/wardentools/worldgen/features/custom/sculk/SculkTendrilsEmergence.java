@@ -44,8 +44,8 @@ public class SculkTendrilsEmergence extends Feature<SculkTendrilsEmergenceConfig
         // Placing initial origin holder
         this.setBlock(level, context.origin().below(), Blocks.SCULK.defaultBlockState());
 
-        recursiveTreeStructure(tree, context.origin(), deviationStrength,
-                0, maxDepth, maxLength, heightReductionFactor, branchProbability, level.getRandom(),
+         recursiveTreeStructure(tree, context.origin(), deviationStrength,
+                 0, maxDepth, maxLength, heightReductionFactor, branchProbability, level.getRandom(),
                 Direction.Plane.HORIZONTAL.getRandomDirection(level.getRandom()));
 
         if (tree.getAllNodes().size() > MAX_TOTAL_NODES) return false;
@@ -59,26 +59,35 @@ public class SculkTendrilsEmergence extends Feature<SculkTendrilsEmergenceConfig
 
     private void recursiveTreeStructure(TendrilTree tree, BlockPos origin, float deviationStrength,
                                         int depth, int maxDepth, int maxLength, float heightReductionFactor,
-                                        float branchProbability, RandomSource random, Direction directionToCenter) {
+                                        float branchProbability, RandomSource random, Direction directionToPrevious) {
         if (depth > maxDepth) return;
 
-        int lengthOfThisBranch = Math.max(1, (int)((float)maxLength * heightReductionFactor));
+        int currentMaxLength = Math.max(1, (int)((float)maxLength * heightReductionFactor));
         float currentBranchingProbability = Math.max(MIN_BRANCH_PROBABILITY, branchProbability * heightReductionFactor);
         List<Direction> currentBranch = new ArrayList<>();
-        Direction mainDirectionForThisBranch = getRandomHorizontalDirectionExcept(
-                directionToCenter, directionToCenter.getOpposite());
 
-        float x = 0;
-        float y = 0;
+        int length = random.nextInt(currentMaxLength / 4 + 1)
+                + random.nextInt(currentMaxLength / 4 + 1)
+                + random.nextInt(currentMaxLength / 4 + 1)
+                + random.nextInt(currentMaxLength / 4 + 1)+ 1;
 
-        for (int i = 0; i < lengthOfThisBranch; i++) {
-            float curve = x * x * deviationStrength;
-            if (curve > y) {
-                y++;
+        if (depth == 0) {
+            // Origin branch, only straight up
+            for (int i = 0; i < length; i++) {
                 currentBranch.add(Direction.UP);
-            } else {
-                x++;
-                currentBranch.add(mainDirectionForThisBranch);
+            }
+        } else {
+            Direction mainDirection = getRandomHorizontalDirectionExcept(directionToPrevious.getOpposite());
+            int horizontalLength = Math.max(1, (int)((float)length * deviationStrength));
+            for (int i = 0; i < horizontalLength; i++) {
+                if (random.nextFloat() < 0.8F) {
+                    currentBranch.add(mainDirection);
+                } else {
+                    currentBranch.add(getRandomHorizontalDirectionExcept(mainDirection.getOpposite(), mainDirection));
+                }
+            }
+            for (int i = horizontalLength; i < length; i++) {
+                currentBranch.add(Direction.UP);
             }
         }
 
@@ -87,14 +96,17 @@ public class SculkTendrilsEmergence extends Feature<SculkTendrilsEmergenceConfig
 
         for (BlockPos pos : branchingPos) {
             if (tree.hasNode(pos)) {
-                recursiveTreeStructure(tree, pos, deviationStrength, depth + 1, maxDepth, lengthOfThisBranch,
-                        heightReductionFactor, currentBranchingProbability, random, mainDirectionForThisBranch);
+                recursiveTreeStructure(tree, pos, deviationStrength, depth + 1, maxDepth, currentMaxLength,
+                        heightReductionFactor, currentBranchingProbability, random,
+                        getRandomHorizontalDirectionExcept(directionToPrevious.getOpposite()));
             } else {
                 LOGGER.warn("Trying to branch from non-existent node: {}", pos);
             }
         }
     }
 
+    // Adds a chain of positions to the tree starting from origin, following the given directions.
+    // Returns the list of positions where branching should occur.
     private List<BlockPos> addPosToTree(TendrilTree tree, BlockPos origin, List<Direction> directions,
                                         float branchingProbability, RandomSource random) {
         // Safety: origin must already be part of the tree
@@ -103,6 +115,8 @@ public class SculkTendrilsEmergence extends Feature<SculkTendrilsEmergenceConfig
         }
         List<BlockPos> branchingPos = new ArrayList<>();
         BlockPos currentPos = origin;
+        float localProbability = branchingProbability;
+        boolean hasBranchedLastBlock = false;
 
         for (Direction direction : directions) {
             // Parent must exist in the tree at each step
@@ -115,8 +129,13 @@ public class SculkTendrilsEmergence extends Feature<SculkTendrilsEmergenceConfig
                 break; // insertion refused (e.g., parent missing, duplicate, or constraints) -> stop chain
             }
 
-            if (random.nextFloat() < branchingProbability) {
+            if (random.nextFloat() < localProbability && !hasBranchedLastBlock) {
+                hasBranchedLastBlock = true;
                 branchingPos.add(nextPos);
+                localProbability *= 0.9F; // Decrease chance to branch next time
+            } else {
+                hasBranchedLastBlock = false;
+                localProbability *= 1.1F; // Increase chance to branch next time
             }
 
             currentPos = nextPos;
