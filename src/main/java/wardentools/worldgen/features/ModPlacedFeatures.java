@@ -59,6 +59,8 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> AMETHYST_VEIN_KEY = registerKey("amethyst_vein");
 	public static final ResourceKey<PlacedFeature> SCULK_TENDRIL_EMERGENCE_KEY = registerKey("sculk_tendril_emergence");
 	public static final ResourceKey<PlacedFeature> ABYSS_SCULK_PATCH_KEY = registerKey("abyss_sculk_patch");
+	public static final ResourceKey<PlacedFeature> TALL_DEPTH_VINES_KEY = registerKey("tall_depth_vines");
+	public static final ResourceKey<PlacedFeature> CAVE_SCULK_TENDRILS_KEY = registerKey("sculk_tendrils");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -266,6 +268,19 @@ public class ModPlacedFeatures {
 						InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
 						BiomeFilter.biome())
         );
+
+		register(context, TALL_DEPTH_VINES_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.TALL_DEPTH_VINE),
+				List.of(CountPlacement.of(UniformInt.of(6, 12)),
+						InSquarePlacement.spread(),
+						BiomeFilter.biome())
+		);
+
+		register(context, CAVE_SCULK_TENDRILS_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE),
+				onCaveWallDown(4, 8)
+		);
+
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {
@@ -284,7 +299,7 @@ public class ModPlacedFeatures {
 				InSquarePlacement.spread(),
 				HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
 				EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(),
-						BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+						BlockPredicate.ONLY_IN_AIR_PREDICATE, 20),
 				BlockPredicateFilter.forPredicate(BlockPredicate.not(
 						BlockPredicate.matchesTag(ModTags.Blocks.CRISTAL_BLOCK))),
 				BiomeFilter.biome()
@@ -297,7 +312,7 @@ public class ModPlacedFeatures {
 				InSquarePlacement.spread(),
 				HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
 				EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(),
-						BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+						BlockPredicate.ONLY_IN_AIR_PREDICATE, 20),
 				BlockPredicateFilter.forPredicate(BlockPredicate.not(
 						BlockPredicate.matchesTag(ModTags.Blocks.CRISTAL_BLOCK))),
 				BiomeFilter.biome()

@@ -217,6 +217,11 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .unlockedBy("has_item", has(ItemRegistry.BLUE_GLOW_BERRIES.get()))
                 .save(recipeOutput);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.SUGAR)
+                .requires(ItemRegistry.DEPTH_BERRIES.get())
+                .unlockedBy("has_item", has(ItemRegistry.DEPTH_BERRIES.get()))
+                .save(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PROTECTOR_HEART.get())
                 .define('E', ItemRegistry.PURE_ESSENCE.get())
                 .pattern("EEE")
@@ -279,6 +284,13 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .requires(ItemRegistry.DARKTREE_LEAVES.get())
                 .unlockedBy("has_item", has(ItemRegistry.NOCTILURE_FEATHER.get()))
                 .unlockedBy("has_item", has(ItemRegistry.DARKTREE_LEAVES.get()))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS,
+                        ItemRegistry.CORRUPTED_ABYSSALITE.get(), 2)
+                .requires(ItemRegistry.ABYSSALITE.get())
+                .requires(Items.SCULK)
+                .unlockedBy("has_item", has(ItemRegistry.ABYSSALITE.get()))
                 .save(recipeOutput);
     }
 

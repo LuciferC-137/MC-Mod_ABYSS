@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wardentools:depth_berries"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:sugar"
+  }
+}

@@ -20,6 +20,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.worldgen.features.custom.DepthVineConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
 import wardentools.worldgen.features.custom.sculk.AbyssSculkPatchConfiguration;
@@ -63,6 +64,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> AMETHYST_VEIN = registerKey("amethyst_vein");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SCULK_TENDRIL_EMERGENCE = registerKey("sculk_tendril_emergence");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_SCULK_PATCH = registerKey("abyss_sculk_patch");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DEPTH_VINE = registerKey("tall_depth_vine");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -190,6 +192,10 @@ public class ModConfiguredFeatures {
 				new AbyssSculkPatchConfiguration(10, 32, 64,
 						0, 1, ConstantInt.of(0), 0.5F,
 						true));
+
+		register(context, TALL_DEPTH_VINE, ModFeatures.DEPTH_VINE.get(),
+				new DepthVineConfiguration(true,10, 1, 100));
+
     }
 	
 	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int tries) {

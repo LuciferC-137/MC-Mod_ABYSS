@@ -931,6 +931,129 @@
                 }
               ]
             }
+          },
+          {
+            "type": "minecraft:condition",
+            "if_true": {
+              "type": "minecraft:biome",
+              "biome_is": [
+                "wardentools:blinding_depth"
+              ]
+            },
+            "then_run": {
+              "type": "minecraft:sequence",
+              "sequence": [
+                {
+                  "type": "minecraft:condition",
+                  "if_true": {
+                    "type": "minecraft:vertical_gradient",
+                    "false_at_and_above": {
+                      "above_bottom": 5
+                    },
+                    "random_name": "minecraft:bedrock_floor",
+                    "true_at_and_below": {
+                      "above_bottom": 0
+                    }
+                  },
+                  "then_run": {
+                    "type": "minecraft:block",
+                    "result_state": {
+                      "Name": "minecraft:bedrock"
+                    }
+                  }
+                },
+                {
+                  "type": "minecraft:sequence",
+                  "sequence": [
+                    {
+                      "type": "minecraft:condition",
+                      "if_true": {
+                        "type": "minecraft:stone_depth",
+                        "add_surface_depth": true,
+                        "offset": 0,
+                        "secondary_depth_range": 0,
+                        "surface_type": "ceiling"
+                      },
+                      "then_run": {
+                        "type": "minecraft:block",
+                        "result_state": {
+                          "Name": "wardentools:corrupted_abyssalite"
+                        }
+                      }
+                    },
+                    {
+                      "type": "minecraft:condition",
+                      "if_true": {
+                        "type": "minecraft:stone_depth",
+                        "add_surface_depth": true,
+                        "offset": 0,
+                        "secondary_depth_range": 0,
+                        "surface_type": "floor"
+                      },
+                      "then_run": {
+                        "type": "minecraft:block",
+                        "result_state": {
+                          "Name": "wardentools:corrupted_abyssalite"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "minecraft:sequence",
+                  "sequence": [
+                    {
+                      "type": "minecraft:condition",
+                      "if_true": {
+                        "type": "minecraft:not",
+                        "invert": {
+                          "type": "minecraft:y_above",
+                          "add_stone_depth": true,
+                          "anchor": {
+                            "above_bottom": 56
+                          },
+                          "surface_depth_multiplier": 0
+                        }
+                      },
+                      "then_run": {
+                        "type": "minecraft:block",
+                        "result_state": {
+                          "Name": "wardentools:abyssalite"
+                        }
+                      }
+                    },
+                    {
+                      "type": "minecraft:condition",
+                      "if_true": {
+                        "type": "minecraft:vertical_gradient",
+                        "false_at_and_above": {
+                          "above_bottom": 64
+                        },
+                        "random_name": "wardentools:abyssalite",
+                        "true_at_and_below": {
+                          "above_bottom": 56
+                        }
+                      },
+                      "then_run": {
+                        "type": "minecraft:block",
+                        "result_state": {
+                          "Name": "wardentools:abyssalite"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "minecraft:block",
+                  "result_state": {
+                    "Name": "minecraft:deepslate",
+                    "Properties": {
+                      "axis": "y"
+                    }
+                  }
+                }
+              ]
+            }
           }
         ]
       },

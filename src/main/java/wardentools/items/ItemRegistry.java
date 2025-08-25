@@ -632,4 +632,8 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> LURKER_EYE =
 			REGISTAR.register("lurker_eye",
 			() -> new Item(new Item.Properties()));
+
+	public static final RegistryObject<Item> CORRUPTED_ABYSSALITE =
+			REGISTAR.register("corrupted_abyssalite",
+			() -> new BlockItem(BlockRegistry.CORRUPTED_ABYSSALITE.get(), new Item.Properties()));
 }

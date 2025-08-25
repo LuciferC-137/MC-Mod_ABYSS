@@ -42,7 +42,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.DEEPBLOCK.get())
                 .add(BlockRegistry.SOLID_CORRUPTION.get())
                 .add(BlockRegistry.SOUL_SPAWNER.get())
-                .add(BlockRegistry.WIND_WHISPERER.get());
+                .add(BlockRegistry.WIND_WHISPERER.get())
+                .add(BlockRegistry.CORRUPTED_ABYSSALITE.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(BlockRegistry.DEEP_CRISTAL.get())
@@ -74,7 +75,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get())
                 .add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.get())
                 .add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get())
-                .add(BlockRegistry.SONIC_BLASTER.get());
+                .add(BlockRegistry.SONIC_BLASTER.get())
+                .add(BlockRegistry.CORRUPTED_ABYSSALITE.get());
 
         this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
                 .add(BlockRegistry.ABYSSALITE.get());
@@ -148,16 +150,19 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.DARKDIRT.get());
 
         this.tag(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
-                .add(BlockRegistry.ABYSSALITE.get());
+                .add(BlockRegistry.ABYSSALITE.get())
+                .add(BlockRegistry.CORRUPTED_ABYSSALITE.get());
 
         this.tag(BlockTags.ANCIENT_CITY_REPLACEABLE)
                 .add(BlockRegistry.ABYSSALITE.get());
 
         this.tag(BlockTags.SCULK_REPLACEABLE)
-                .add(BlockRegistry.ABYSSALITE.get());
+                .add(BlockRegistry.ABYSSALITE.get())
+                .add(BlockRegistry.CORRUPTED_ABYSSALITE.get());
 
         this.tag(BlockTags.SCULK_REPLACEABLE_WORLD_GEN)
-                .add(BlockRegistry.ABYSSALITE.get());
+                .add(BlockRegistry.ABYSSALITE.get())
+                .add(BlockRegistry.CORRUPTED_ABYSSALITE.get());
 
         this.tag(BlockTags.CLIMBABLE)
                 .add(BlockRegistry.DEPTH_VINES.get())

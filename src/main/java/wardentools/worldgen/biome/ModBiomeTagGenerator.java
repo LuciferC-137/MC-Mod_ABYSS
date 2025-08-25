@@ -23,7 +23,8 @@ public class ModBiomeTagGenerator extends TagsProvider<Biome> {
         this.tag(ModTags.Biomes.IS_ABYSS)
                 .add(biomeLookup.getOrThrow(ModBiomes.DEEP_FOREST).key())
                 .add(biomeLookup.getOrThrow(ModBiomes.WHITE_FOREST).key())
-                .add(biomeLookup.getOrThrow(ModBiomes.CRYSTAL_CAVE).key());
+                .add(biomeLookup.getOrThrow(ModBiomes.CRYSTAL_CAVE).key())
+                .add(biomeLookup.getOrThrow(ModBiomes.BLINDING_DEPTH).key());
         this.tag(ModTags.Biomes.DEEPFOREST)
                 .add(biomeLookup.getOrThrow(ModBiomes.DEEP_FOREST).key());
         this.tag(ModTags.Biomes.WHITE_FOREST)

@@ -54,6 +54,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 "abyssalite_bricks", "abyssalite_bricks_top", "abyssalite_bricks_top");
         registerTopBottomSideBlock(BlockRegistry.CRACKED_ABYSSALITE_BRICKS,
                 "cracked_abyssalite_bricks", "cracked_abyssalite_bricks_top", "cracked_abyssalite_bricks_top");
+        registerTopBottomSideBlock(BlockRegistry.CORRUPTED_ABYSSALITE,
+                "corrupted_abyssalite", "corrupted_abyssalite_top", "corrupted_abyssalite_top");
 
         // Register simple transparent blocks with item model
         registerCutoutBlock(BlockRegistry.SOUL_SPAWNER);

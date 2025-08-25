@@ -6,9 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.worldgen.features.custom.PlaceAbyssPortal;
-import wardentools.worldgen.features.custom.ReplaceAirBelowYFeature;
-import wardentools.worldgen.features.custom.SharpRock;
+import wardentools.worldgen.features.custom.*;
 import wardentools.worldgen.features.custom.cristals.CristalFormation;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVein;
@@ -47,4 +45,8 @@ public class ModFeatures {
     public static final RegistryObject<Feature<AbyssSculkPatchConfiguration>> ABYSS_SCULK_PATCH
             = FEATURES.register("abyss_sculk_patch",
             () -> new AbyssSculkPatch(AbyssSculkPatchConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<DepthVineConfiguration>> DEPTH_VINE
+            = FEATURES.register("depth_vine",
+            () -> new DepthVineFeature(DepthVineConfiguration.CODEC));
 }

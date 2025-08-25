@@ -20,6 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
+import wardentools.tags.ModTags;
 
 public class DepthVinesBlock extends GrowingPlantHeadBlock implements BonemealableBlock, DepthVines {
     public static final MapCodec<net.minecraft.world.level.block.CaveVinesBlock> CODEC = simpleCodec(net.minecraft.world.level.block.CaveVinesBlock::new);
@@ -89,7 +90,7 @@ public class DepthVinesBlock extends GrowingPlantHeadBlock implements Bonemealab
 
     @Override
     protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
-        return level.getBlockState(pos.above()).is(BlockRegistry.DARKTREE_LEAVES.get())
+        return DepthVines.canHangBelow(level.getBlockState(pos.above()), level, pos.above())
                 || super.canSurvive(state, level, pos);
     }
 

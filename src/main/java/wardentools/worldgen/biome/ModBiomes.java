@@ -31,12 +31,15 @@ public class ModBiomes {
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "white_forest"));
     public static final ResourceKey<Biome> CRYSTAL_CAVE = ResourceKey.create(Registries.BIOME,
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristal_cave"));
+    public static final ResourceKey<Biome> BLINDING_DEPTH = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "blinding_depth"));
 
     public static void bootstrap(BootstrapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));
         context.register(WASTE_LAND, wasteLand(context));
         context.register(WHITE_FOREST, whiteForest(context));
         context.register(CRYSTAL_CAVE, cristalCave(context));
+        context.register(BLINDING_DEPTH, blindingDepth(context));
     }
 
     public static Biome deepForest(BootstrapContext<Biome> context) {
@@ -182,6 +185,34 @@ public class ModBiomes {
                         .backgroundMusic(ModMusics.WHITE_FOREST)
                         .foliageColorOverride(0x57ab6a)
                         .grassColorOverride(0x57ab6a).build()).build();
+    }
+
+    public static Biome blindingDepth(BootstrapContext<Biome> context) {
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(
+                        context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        globalAbyssGeneration(biomeBuilder);
+        defaultAbyssCaves(biomeBuilder);
+        defaultAbyssOres(biomeBuilder);
+        defaultAbyssSculk(biomeBuilder);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
+                ModPlacedFeatures.TALL_DEPTH_VINES_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.CAVE_SCULK_TENDRILS_KEY);
+
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(false)
+                .downfall(0.8f)
+                .temperature(0.2f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects(commonBiomeSpecialEffects()
+                        .backgroundMusic(ModMusics.DEEP_FOREST).build()).build();
+
     }
 
     public static void globalAbyssGeneration(BiomeGenerationSettings.Builder builder) {

@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-09T16:53:26.6299091	Tags for minecraft:block mod id wardentools
+// 1.21.1	2025-08-25T18:26:21.462249	Tags for minecraft:block mod id wardentools
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/ancient_city_replaceable.json
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/block/animals_spawnable_on.json
 18262857d4a34e6ee53557a03eea4ca89a3572f3 data/minecraft/tags/block/climbable.json
@@ -9,15 +9,15 @@ aa1a853c7ebdc7617fc951ed87bde709518e78df data/minecraft/tags/block/fences.json
 fd8eb08f938bf92ef328db40c3c4d43af55e707d data/minecraft/tags/block/fence_gates.json
 e43039466b443e6e2090b89b06ff5884f78e3251 data/minecraft/tags/block/logs_that_burn.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/lush_ground_replaceable.json
-11c955dadd3aeadffce3e364e5ef2f529e78590c data/minecraft/tags/block/mineable/pickaxe.json
+8d349ba0e6c560dfc3392112a4218180ff6f51c8 data/minecraft/tags/block/mineable/pickaxe.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/moss_replaceable.json
 7fc8c03b6f02832173e4219f6d2c1848f440d65a data/minecraft/tags/block/needs_diamond_tool.json
 869f40744d0f42ab73df0ae9104cf064733029b4 data/minecraft/tags/block/needs_iron_tool.json
-f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/overworld_carver_replaceables.json
+50275ae7afa6078501bc0f44ff15f531f4834af6 data/minecraft/tags/block/overworld_carver_replaceables.json
 31e2d784730c13e14e28ca0d2bb0202d9e774b0e data/minecraft/tags/block/planks.json
-f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/sculk_replaceable.json
-f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/sculk_replaceable_world_gen.json
+50275ae7afa6078501bc0f44ff15f531f4834af6 data/minecraft/tags/block/sculk_replaceable.json
+50275ae7afa6078501bc0f44ff15f531f4834af6 data/minecraft/tags/block/sculk_replaceable_world_gen.json
 e765e739d51d03e31ad9e51980aa927df8fc8168 data/minecraft/tags/block/walls.json
-b7ddf86f32a045b5df5bdf6feec813425d8b5a94 data/wardentools/tags/block/abyss_teleportable.json
+80656ac4d8d86e2c764aeb11c573069e3a7b5476 data/wardentools/tags/block/abyss_teleportable.json
 3ba03686dd3181f31f8996deaa59c25af0c9546b data/wardentools/tags/block/can_sustain_abyss_plants.json
 521f8c37ea3a5978811057a14907b0a09a97af9c data/wardentools/tags/block/cristal_block.json

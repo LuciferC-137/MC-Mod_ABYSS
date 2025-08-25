@@ -582,4 +582,10 @@ public class BlockRegistry {
 							.dynamicShape().forceSolidOn()
 							.pushReaction(PushReaction.DESTROY)));
 
+	public static final RegistryObject<Block> CORRUPTED_ABYSSALITE
+			= REGISTAR.register("corrupted_abyssalite",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE)
+					.strength(4,7)
+			));
+
 }
