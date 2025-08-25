@@ -121,20 +121,23 @@ public class LevelRendererMixin {
 					RandomSource rand = RandomSource.create(1337L); // Fixed seed
 
 					renderStars(level, tesselator, rand, posestack,
-							100, List.of(Axis.XP, Axis.YP),
-							new float[]{1.3F, 0.1F}, 1.0F);
+							60, List.of(Axis.XP, Axis.YP),
+							new float[]{1.2F, 0.1F}, 1.0F);
+					renderStars(level, tesselator, rand, posestack,
+							60, List.of(Axis.XP, Axis.YP, Axis.ZP),
+							new float[]{-1.1F, 0.1F, 0.3F}, 1.0F);
 					renderStars(level, tesselator, rand, posestack,
 							120, List.of(Axis.YP, Axis.ZP),
 							new float[]{-1.0F, 0.3F}, 0.9F);
 					renderStars(level, tesselator, rand, posestack,
 							140, List.of(Axis.XP, Axis.ZP),
-							new float[]{0.4F, -0.7F}, 0.7F);
+							new float[]{0.4F, -0.7F}, 0.8F);
 					renderStars(level, tesselator, rand, posestack,
 							160, List.of(Axis.XP, Axis.YP, Axis.ZP),
-							new float[]{0.2F, -0.3F, 0.4F}, 0.5F);
+							new float[]{0.2F, -0.3F, 0.4F}, 0.7F);
 					renderStars(level, tesselator, rand, posestack,
 							180, List.of(Axis.XP, Axis.YP, Axis.ZP),
-							new float[]{-0.4F, 0.5F, -0.2F}, 0.3F);
+							new float[]{-0.4F, 0.5F, -0.2F}, 0.6F);
 
 					// POST
 					RenderSystem.enableCull();
