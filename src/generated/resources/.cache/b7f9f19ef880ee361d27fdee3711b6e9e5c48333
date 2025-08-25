@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-07T21:04:37.795678	Item Models: wardentools
+// 1.21.1	2025-08-25T16:24:00.9981655	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -83,6 +83,7 @@ da57ce161c1572d04fcb1d0381d4b9627cab4e37 assets/wardentools/models/item/depth_be
 18cfb567ddc521e9cedccf8bd8a639c136da9450 assets/wardentools/models/item/dysfunctionning_catalyst.json
 e132a841ade458e1fba92f9890b565e60eb931b1 assets/wardentools/models/item/echo_cristal.json
 4e89426c6145ff7a533571546c1cb79bec6866c9 assets/wardentools/models/item/gramophone.json
+f6a3e3ad9da7adcb633e8bb4c0ff74d860c58ce0 assets/wardentools/models/item/lurker_eye.json
 feb0db5a59a7305c0a266a00acf1a05ca4dda78c assets/wardentools/models/item/malachite.json
 fe3b4dd8c8ed0ef2c3c07977353645e1483aec36 assets/wardentools/models/item/malachite_fragment.json
 c3db8f02d0154624f37afeb3c1692f05bbb5c88b assets/wardentools/models/item/music_disc_abyss.json
@@ -155,6 +156,7 @@ a0e2c082ba9528515dbd1ba4dc641974c0709613 assets/wardentools/models/item/ruby.jso
 f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped_whitetree_wood.json
 0a97dffdd3ad150e8f5754c8e5a285b8d9424e24 assets/wardentools/models/item/tall_dark_grass.json
 6c32364d24d94cdf7cf4110c71b0502f0f641a6e assets/wardentools/models/item/tall_white_grass.json
+ba0ff94d006b7fd3340bdf4c6f6f5d5f84f58f29 assets/wardentools/models/item/wanderer_paw.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json
 d863dfe62fd973049057e6058c98b2308aded761 assets/wardentools/models/item/whitetree_boat.json
 e61691d51da15842832df57a056926f39474d0ff assets/wardentools/models/item/whitetree_button.json

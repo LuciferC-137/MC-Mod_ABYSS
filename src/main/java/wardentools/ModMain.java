@@ -9,6 +9,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import wardentools.gui.MenuRegistry;
 import wardentools.gui.ModCreativeTabs;
+import wardentools.items.PotionRegistry;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
@@ -51,6 +52,7 @@ public class ModMain {
 		ParticleRegistry.PARTICLE_TYPES.register(bus);
 		ModEffects.MOB_EFFECTS.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
+		PotionRegistry.POTIONS.register(bus);
 
 		MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);

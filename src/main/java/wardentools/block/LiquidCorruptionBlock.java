@@ -49,6 +49,8 @@ public class LiquidCorruptionBlock extends LiquidBlock {
         if (!entity.level().isClientSide
                 && entity instanceof LivingEntity living
                 && living.level().getGameTime()%20==1) {
+            if (ModEffects.PURIFIED.getHolder().isPresent()
+                    && living.hasEffect(ModEffects.PURIFIED.getHolder().get())) {return;}
             living.addEffect(new MobEffectInstance(ModEffects.CORRUPTED.getHolder().get(),
                         400, 1, false, false));
             Holder<DamageType> corruptedDamageTypeHolder = living.level().registryAccess()

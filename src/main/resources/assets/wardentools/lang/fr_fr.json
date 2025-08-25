@@ -52,6 +52,8 @@
 	"item.wardentools.whistle": "Sifflet",
 	"item.wardentools.wind_journal": "Journal du Vent",
 	"item.wardentools.noctilure_feather": "Plumme de Noctilure",
+	"item.wardentools.wanderer_paw": "Patte de Vagabond",
+	"item.wardentools.lurker_eye": "Oeil de Rôdeur",
 
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -129,12 +131,14 @@
 	"block.wardentools.white_grass": "Herbe blanche",
 	"block.wardentools.tall_white_grass": "Herbes hautes blanches",
 	"block.wardentools.white_torchflower": "Torche-fleur blanche",
+	"block.wardentools.depth_vines": "Depth Vines",
+	"block.wardentools.depth_vines_plant": "Depth Vines Plant",
 
 	"block.wardentools.blue_bush": "Buisson bleu",
 	"block.wardentools.tall_dark_grass": "Herbes hautes sombres",
 	"block.wardentools.dark_grass": "Herbe sombre",
 	"block.wardentools.deepflower": "Fleur des abîmes",
-	"block.Wardentools.sculk_tendril_block": "Block de vrille de sculk",
+	"block.wardentools.sculk_tendril_block": "Block de vrille de sculk",
 
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",
@@ -150,7 +154,7 @@
 
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",
-	"creativetab.vegetation": "Végétation",
+	"creativetab.nature": "Nature",
 	"creativetab.tools": "Outils",
 	"creativetab.crystals": "Cristals",
 	"creativetab.misc": "Divers",
@@ -216,6 +220,7 @@
 	"effect.wardentools.corrupted": "Corrompu",
 	"effect.wardentools.corruption_vessel": "Receptacle de Corruption",
 	"effect.wardentools.radiance_bringer": "Porteur de Radiance",
+	"effect.wardentools.purified": "Purifié",
 
 	"advancements.wardentools.abyss.title": "Venu de l'Abyss",
 	"advancements.wardentools.abyss.description": "Obtenez du sculk.",
@@ -403,7 +408,6 @@
 	"message.wardentools.whisper.overworld.17": "Tout ceci est trop bruyant. Trop… vivant.",
 	"message.wardentools.whisper.overworld.18": "On m’a enchaîné au silence. Mais la surface me parle, à nouveau.",
 	"message.wardentools.whisper.overworld.19": "Ce monde te chérit. Tu n’en saisis pas encore le prix."
-
 
 
 }

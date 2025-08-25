@@ -49,7 +49,9 @@ public class Corruption extends TextureSheetParticle {
         public Particle createParticle(@NotNull SimpleParticleType particleType, @NotNull ClientLevel level,
                                        double x, double y, double z,
                                        double dx, double dy, double dz) {
-            return new Corruption(level, x, y, z, this.sprites, dx, dy, dz);
+            Corruption corruption = new Corruption(level, x, y, z, this.sprites, dx, dy, dz);
+            corruption.pickSprite(this.sprites);
+            return corruption;
         }
     }
 }

@@ -96,7 +96,6 @@ public class ModCreativeTabs {
         addItemToTag("dark_vegetal", ItemRegistry.TALL_DARK_GRASS);
         addItemToTag("dark_vegetal", ItemRegistry.DARK_GRASS);
         addItemToTag("dark_vegetal", ItemRegistry.BLUE_GLOW_BERRIES);
-        addItemToTag("dark_vegetal", ItemRegistry.NOCTILURE_TREAT);
 
         addItemToTag("whitetree", ItemRegistry.WHITETREE_LOG);
         addItemToTag("whitetree", ItemRegistry.WHITETREE_WOOD);
@@ -120,6 +119,11 @@ public class ModCreativeTabs {
         addItemToTag("white_vegetal", ItemRegistry.WHITE_GRASS);
         addItemToTag("white_vegetal", ItemRegistry.TALL_WHITE_GRASS);
         addItemToTag("white_vegetal", ItemRegistry.WHITE_TORCHFLOWER);
+
+        addItemToTag("nature", ItemRegistry.NOCTILURE_FEATHER);
+        addItemToTag("nature", ItemRegistry.WANDERER_PAW);
+        addItemToTag("nature", ItemRegistry.NOCTILURE_TREAT);
+        addItemToTag("nature", ItemRegistry.LURKER_EYE);
 
         addItemToTag("dirt", ItemRegistry.DARKDIRT);
         addItemToTag("dirt", ItemRegistry.DARKGRASS_BLOCK);
@@ -167,7 +171,6 @@ public class ModCreativeTabs {
         addItemToTag("misc", ItemRegistry.SOUL_SPAWNER);
         addItemToTag("misc", ItemRegistry.WHISTLE);
         addItemToTag("misc", ItemRegistry.WIND_JOURNAL);
-        addItemToTag("misc", ItemRegistry.NOCTILURE_FEATHER);
         addItemToTag("misc", ItemRegistry.GRAMOPHONE);
         addItemToTag("misc", ItemRegistry.SONIC_BLASTER);
 
@@ -200,13 +203,14 @@ public class ModCreativeTabs {
                         getItemsByTag("building").forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> VEGETATION
-            = CREATIVE_MODE_TABS.register("vegetation",
+    public static final RegistryObject<CreativeModeTab> NATURE
+            = CREATIVE_MODE_TABS.register("nature",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.BLUE_GLOW_BERRIES.get()))
-                    .title(Component.translatable("creativetab.vegetation"))
+                    .title(Component.translatable("creativetab.nature"))
                     .displayItems((pParameters, event) -> {
                         getItemsByTag("dark_vegetal").forEach(item -> event.accept(item.get()));
                         getItemsByTag("white_vegetal").forEach(item -> event.accept(item.get()));
+                        getItemsByTag("nature").forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> DARKTREE

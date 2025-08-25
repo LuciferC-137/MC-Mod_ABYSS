@@ -17,5 +17,7 @@ public class ModEffects {
             () -> new CorruptionVesselEffect(MobEffectCategory.BENEFICIAL, 0x134d4c));
     public static final RegistryObject<MobEffect> RADIANCE_BRINGER = MOB_EFFECTS.register("radiance_bringer",
             () -> new RadianceBringerEffect(MobEffectCategory.BENEFICIAL, 0x78f8fa));
+    public static final RegistryObject<MobEffect> PURIFIED = MOB_EFFECTS.register("purified",
+            () -> new PurifiedEffect(MobEffectCategory.BENEFICIAL, 0x8ae1eb));
 
 }

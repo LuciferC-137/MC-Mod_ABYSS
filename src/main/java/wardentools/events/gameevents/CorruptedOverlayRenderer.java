@@ -33,7 +33,9 @@ public class CorruptedOverlayRenderer {
     public static void onRenderOverlay(CustomizeGuiOverlayEvent event) {
            Player player = Minecraft.getInstance().player;
            if (ModEffects.CORRUPTED.getHolder().isEmpty()) return;
-           if (player != null && player.hasEffect(ModEffects.CORRUPTED.getHolder().get())) {
+           if (ModEffects.PURIFIED.getHolder().isEmpty()) return;
+           if (player != null && player.hasEffect(ModEffects.CORRUPTED.getHolder().get())
+                   && !player.hasEffect(ModEffects.PURIFIED.getHolder().get())) {
                MobEffectInstance effectInstance = player.getEffect(ModEffects.CORRUPTED.getHolder().get());
                if (effectInstance == null){
                    return;

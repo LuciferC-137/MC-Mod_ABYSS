@@ -624,4 +624,12 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> SCULK_TENDRIL_BLOCK =
 			REGISTAR.register("sculk_tendril_block",
 			() -> new BlockItem(BlockRegistry.SCULK_TENDRIL_BLOCK.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> WANDERER_PAW =
+			REGISTAR.register("wanderer_paw",
+			() -> new Item(new Item.Properties()));
+
+	public static final RegistryObject<Item> LURKER_EYE =
+			REGISTAR.register("lurker_eye",
+			() -> new Item(new Item.Properties()));
 }

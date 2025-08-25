@@ -10,6 +10,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.ModEntities;
@@ -33,12 +34,16 @@ public class ModEntitiesLootTables extends EntityLootSubProvider {
 
         this.add(ModEntities.SHADOW.get(), LootTable.lootTable());
 
-        this.add(ModEntities.PALE_WANDERER.get(), LootTable.lootTable());
+        this.add(ModEntities.PALE_WANDERER.get(), LootTable.lootTable().withPool(
+                rareDropPool(ItemRegistry.WANDERER_PAW.get(), 1, 1, 0.5F)
+        ));
 
-        this.add(ModEntities.DEEPLURKER.get(), LootTable.lootTable());
+        this.add(ModEntities.DEEPLURKER.get(), LootTable.lootTable().withPool(
+                rareDropPool(ItemRegistry.LURKER_EYE.get(), 1, 2, 0.6F)
+        ));
 
         this.add(ModEntities.TEMPER.get(), LootTable.lootTable().withPool(
-                simpleLootPool(ItemRegistry.PALE_SHARD.get(), 0, 2)
+                simpleLootPool(ItemRegistry.PALE_SHARD.get(), 0, 3)
         ));
 
         this.add(ModEntities.PARASYTE.get(), LootTable.lootTable());
@@ -46,7 +51,7 @@ public class ModEntitiesLootTables extends EntityLootSubProvider {
         this.add(ModEntities.PROTECTOR.get(), LootTable.lootTable());
 
         this.add(ModEntities.NOCTILURE.get(), LootTable.lootTable().withPool(
-                simpleLootPool(ItemRegistry.NOCTILURE_FEATHER.get(), 0, 3)
+                simpleLootPool(ItemRegistry.NOCTILURE_FEATHER.get(), 1, 2)
         ));
     }
 
@@ -57,6 +62,16 @@ public class ModEntitiesLootTables extends EntityLootSubProvider {
                         .apply(SetItemCountFunction
                                 .setCount(UniformGenerator.between(minCount, maxCount)))
                 );
+    }
+
+    private LootPool.Builder rareDropPool(ItemLike item, int minCount, int maxCount, float dropChance) {
+        return LootPool.lootPool()
+                .add(LootItem.lootTableItem(item)
+                        .setWeight(1)
+                        .apply(SetItemCountFunction
+                                .setCount(UniformGenerator.between(minCount, maxCount)))
+                )
+                .when(LootItemRandomChanceCondition.randomChance(dropChance));
     }
 
     @Override

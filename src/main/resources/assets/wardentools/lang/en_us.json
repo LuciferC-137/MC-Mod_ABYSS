@@ -52,7 +52,12 @@
 	"item.wardentools.whistle": "Whistle",
 	"item.wardentools.wind_journal": "Wind Journal",
 	"item.wardentools.noctilure_feather": "Noctilure Feather",
-	"item.wardentools.depth_vines": "Depth Vines",
+	"item.wardentools.wanderer_paw": "Wanderer Paw",
+	"item.wardentools.lurker_eye": "Lurker Eye",
+
+	"item.minecraft.potion.effect.purified_potion": "Purified Potion",
+	"item.minecraft.splash_potion.effect.purified_potion": "Splash Purified Potion",
+	"item.minecraft.lingering_potion.effect.purified_potion": "Lingering Purified Potion",
 	
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Chiseled Abyssalite",
@@ -153,7 +158,7 @@
 	
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",
-	"creativetab.vegetation": "Vegetation",
+	"creativetab.nature": "Nature",
 	"creativetab.tools": "Tools",
 	"creativetab.crystals": "Crystals",
 	"creativetab.misc": "Miscellaneous",
@@ -217,6 +222,7 @@
 	"effect.wardentools.corrupted": "Corrupted",
 	"effect.wardentools.corruption_vessel": "Corruption Vessel",
 	"effect.wardentools.radiance_bringer": "Radiance Bringer",
+	"effect.wardentools.purified": "Purified",
 
 	"advancements.wardentools.abyss.title": "From the abyss",
 	"advancements.wardentools.abyss.description": "Obtain some sculk.",
