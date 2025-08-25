@@ -1,5 +1,10 @@
 {
   "textures": [
-    "wardentools:corruption"
+    "wardentools:corruption",
+    "wardentools:corruption_0",
+    "wardentools:corruption_1",
+    "wardentools:corruption_2",
+    "wardentools:corruption_3",
+    "wardentools:corruption_4"
   ]
 }
