@@ -588,4 +588,10 @@ public class BlockRegistry {
 					.strength(4,7)
 			));
 
+	public static final RegistryObject<Block> LIVING_SPROUT
+			= REGISTAR.register("living_sprout",
+			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)
+					.noOcclusion()
+			));
+
 }

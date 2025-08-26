@@ -636,4 +636,8 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> CORRUPTED_ABYSSALITE =
 			REGISTAR.register("corrupted_abyssalite",
 			() -> new BlockItem(BlockRegistry.CORRUPTED_ABYSSALITE.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> LIVING_SPROUT =
+			REGISTAR.register("living_sprout",
+			() -> new BlockItem(BlockRegistry.LIVING_SPROUT.get(), new Item.Properties()));
 }
