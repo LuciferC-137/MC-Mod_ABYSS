@@ -13,6 +13,7 @@ public class ModTags {
         public static final TagKey<Block> CRISTAL_BLOCK = register("cristal_block");
         public static final TagKey<Block> ABYSS_TELEPORTABLE = register("abyss_teleportable");
         public static final TagKey<Block> CAN_SUSTAIN_ABYSS_PLANTS = register("can_sustain_abyss_plants");
+        public static final TagKey<Block> CONNECT_TO_TENDRILS_BLOCKS = register("connect_to_tendrils_blocks");
 
         private static TagKey<Block> register(String name) {
             return BlockTags.create(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));

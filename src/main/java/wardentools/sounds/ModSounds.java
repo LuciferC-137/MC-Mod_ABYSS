@@ -69,6 +69,8 @@ public class ModSounds {
 			registerSoundEvents("vinyl_end");
 	public static final RegistryObject<SoundEvent> VINYL_SCRATCH =
 			registerSoundEvents("vinyl_scratch");
+	public static final RegistryObject<SoundEvent> HEART_BEAT =
+			registerSoundEvents("heart_beat");
 
 	//Musics
 	public static final RegistryObject<SoundEvent> DEEP_FOREST =

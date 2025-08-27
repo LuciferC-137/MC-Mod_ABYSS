@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-26T19:19:46.9896154	Loot Tables
+// 1.21.1	2025-08-27T21:03:53.1305917	Loot Tables
 ed2f8717d26fbcb60f0922c363ab315ba830ebe4 data/wardentools/loot_table/advancements/wind_journal.json
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_table/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_table/blocks/abyssalite_bricks.json
@@ -42,7 +42,7 @@ a914a7fbb431a333595b2c00bff53160587a3c13 data/wardentools/loot_table/blocks/deep
 9cb5e842af35b7c819b6f784f174b5fb3a070746 data/wardentools/loot_table/blocks/echo_block.json
 ecf4b0e88c94ab206f1b612761ed9a92ac39c15a data/wardentools/loot_table/blocks/echo_cristal.json
 cf2e222ad4ca03224fc6a6b9d9535ea038304e3e data/wardentools/loot_table/blocks/gramophone.json
-96e87eec6abf97611476580adcd0cbe5ef798708 data/wardentools/loot_table/blocks/living_sprout.json
+08e67f0cf727dd6a3e93caec01a690bdd958c290 data/wardentools/loot_table/blocks/living_sprout.json
 0d2b2a31530daa03b8657f1d22a448f0db3d0451 data/wardentools/loot_table/blocks/malachite.json
 e000bbb8369c0744f517a29abc68ff12ae9d60f3 data/wardentools/loot_table/blocks/malachite_block.json
 1aed9606cedd9c7578ff08bd910d74d8bd47fcb2 data/wardentools/loot_table/blocks/pale_cristal.json

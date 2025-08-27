@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.SculkSensorPhase;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -590,8 +591,11 @@ public class BlockRegistry {
 
 	public static final RegistryObject<Block> LIVING_SPROUT
 			= REGISTAR.register("living_sprout",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)
+			() -> new LivingSproutBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)
 					.noOcclusion()
+					.sound(SoundType.SCULK_SENSOR).lightLevel((state) -> 1)
+					.emissiveRendering((state, blockGetter, pos) -> LivingSproutBlock.getPhase(state)
+							== SculkSensorPhase.ACTIVE)
 			));
 
 }

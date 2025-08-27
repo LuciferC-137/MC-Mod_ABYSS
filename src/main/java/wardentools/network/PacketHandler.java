@@ -169,6 +169,11 @@ public class PacketHandler {
 				.decoder(TaskDataSyncClientPacket::new)
 				.consumerMainThread(TaskDataSyncClientPacket::handle)
 				.add();
+		INSTANCE.messageBuilder(LivingSproutBurstPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(LivingSproutBurstPacket::encode)
+				.decoder(LivingSproutBurstPacket::new)
+				.consumerMainThread(LivingSproutBurstPacket::handle)
+				.add();
 
 	}
 

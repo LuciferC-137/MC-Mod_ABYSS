@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.AbyssPortalBlockEntity;
 import wardentools.network.PacketHandler;

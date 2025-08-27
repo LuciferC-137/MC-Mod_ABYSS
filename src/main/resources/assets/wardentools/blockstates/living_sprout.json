@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "triggered=true": {
+      "model": "wardentools:block/living_sprout_triggered"
+    },
+    "triggered=false": {
       "model": "wardentools:block/living_sprout"
     }
   }

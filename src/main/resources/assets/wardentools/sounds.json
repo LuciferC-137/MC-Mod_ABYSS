@@ -226,5 +226,11 @@
 		"sounds": [
 			"wardentools:vinyl_scratch"
 		]
+	},
+	"heart_beat": {
+		"subtitles": "sounds.wardentools.heart_beat",
+		"sounds": [
+			"wardentools:heart_beat"
+		]
 	}
 }

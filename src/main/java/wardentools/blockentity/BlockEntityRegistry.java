@@ -59,4 +59,9 @@ public class BlockEntityRegistry {
 					() -> BlockEntityType.Builder.of(SculkTendrilBlockEntity::new,
 							BlockRegistry.SCULK_TENDRIL_BLOCK.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<LivingSproutBlockEntity>> LIVING_SPROUT_BLOCK_ENTITY =
+			BLOCK_ENTITIES.register("living_sprout_block_entity",
+					() -> BlockEntityType.Builder.of(LivingSproutBlockEntity::new,
+							BlockRegistry.LIVING_SPROUT.get()).build(null));
+
 }

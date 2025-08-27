@@ -95,7 +95,12 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.addDropSelf(BlockRegistry.GRAMOPHONE);
 		this.addDropSelf(BlockRegistry.SONIC_BLASTER);
 		this.addDropSelf(BlockRegistry.CORRUPTED_ABYSSALITE);
-		this.addDropSelf(BlockRegistry.LIVING_SPROUT);
+
+		// Blocks that drop only using silk touch
+		this.add(BlockRegistry.LIVING_SPROUT.get(),
+				createSilkTouchOnlyTable(BlockRegistry.LIVING_SPROUT.get()));
+		this.add(BlockRegistry.SCULK_TENDRIL_BLOCK.get(),
+				createSilkTouchOnlyTable(BlockRegistry.SCULK_TENDRIL_BLOCK.get()));
 
 		// Planks derivatives special drops
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
@@ -165,8 +170,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				block -> createReinforcedGlassItemDrop(BlockRegistry.REINFORCED_GLASS));
 		this.add(BlockRegistry.BLUE_BUSH.get(),
 				block -> createBlueBushLoot(BlockRegistry.BLUE_BUSH, ItemRegistry.BLUE_GLOW_BERRIES));
-		this.add(BlockRegistry.SCULK_TENDRIL_BLOCK.get(),
-				createSilkTouchOnlyTable(ItemRegistry.SCULK_TENDRIL_BLOCK.get()));
     }
 
     private void addDropSelf(RegistryObject<Block> block) {

@@ -49,10 +49,8 @@ public class ParticleWardenDeathPacket {
 				}
 				
 				for (int i=0; i<100; i++) {
-			    	double offsetX = (level.random.nextDouble() - 0.5) * 0.7;
-			        double offsetZ = (level.random.nextDouble() - 0.5) * 0.7;
-			    	offsetX = (level.random.nextDouble() - 0.5);
-			        offsetZ = (level.random.nextDouble() - 0.5);
+			    	double offsetX = (level.random.nextDouble() - 0.5);
+			        double offsetZ = (level.random.nextDouble() - 0.5);
 			        level.addParticle(ParticleRegistry.CORRUPTION.get(), false,
 							x, y+1, z, offsetX, 0, offsetZ);
 				}

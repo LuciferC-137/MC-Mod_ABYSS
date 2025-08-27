@@ -4,12 +4,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,11 +17,11 @@ import org.jetbrains.annotations.Nullable;
 import wardentools.block.BlockRegistry;
 import wardentools.block.sculktendril.TendrilNode;
 import wardentools.block.sculktendril.TendrilTree;
+import wardentools.tags.ModTags;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 public class SculkTendrilBlockEntity extends BlockEntity {
     private HashMap<Direction, Boolean> connections = new HashMap<>(Map.of(
@@ -133,7 +131,7 @@ public class SculkTendrilBlockEntity extends BlockEntity {
                             Objects.equals(tendrilTree.getParentOf(this.worldPosition), neighborPos)) {
                         connected = true;
                     }
-                    else if (this.level.getBlockState(neighborPos).is(Blocks.SCULK)) {
+                    else if (this.level.getBlockState(neighborPos).is(ModTags.Blocks.CONNECT_TO_TENDRILS_BLOCKS)) {
                         connected = true;
                     }
                     this.connections.put(direction, connected);

@@ -40,13 +40,12 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
                 0.5f + halfWidth, 0.5f + halfWidth, 0.5f + halfWidth);
         int branchLength = 8 - width / 2;
         float branchHalfLength = (float)branchLength / 32f;
-        float centralHalfSize = halfWidth;
         for (Direction dir : connections.keySet()) {
             if (connections.get(dir)) {
                 // Calculate the center of the branch
-                float cx = 0.5f + dir.getStepX() * (centralHalfSize + branchHalfLength);
-                float cy = 0.5f + dir.getStepY() * (centralHalfSize + branchHalfLength);
-                float cz = 0.5f + dir.getStepZ() * (centralHalfSize + branchHalfLength);
+                float cx = 0.5f + dir.getStepX() * (halfWidth + branchHalfLength);
+                float cy = 0.5f + dir.getStepY() * (halfWidth + branchHalfLength);
+                float cz = 0.5f + dir.getStepZ() * (halfWidth + branchHalfLength);
                 float minX = cx - (dir.getAxis() == Direction.Axis.X ? branchHalfLength : halfWidth);
                 float maxX = cx + (dir.getAxis() == Direction.Axis.X ? branchHalfLength : halfWidth);
                 float minY = cy - (dir.getAxis() == Direction.Axis.Y ? branchHalfLength : halfWidth);

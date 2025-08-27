@@ -171,5 +171,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 		this.tag(ModTags.Blocks.CAN_SUSTAIN_ABYSS_PLANTS)
 				.add(Blocks.SCULK);
 
+        this.tag(ModTags.Blocks.CONNECT_TO_TENDRILS_BLOCKS)
+                .add(Blocks.SCULK)
+                .add(Blocks.SCULK_CATALYST)
+                .add(BlockRegistry.LIVING_SPROUT.get());
+
     }
 }
