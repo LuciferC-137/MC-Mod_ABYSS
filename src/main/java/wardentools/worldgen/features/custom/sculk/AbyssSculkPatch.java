@@ -21,7 +21,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 public class AbyssSculkPatch extends Feature<AbyssSculkPatchConfiguration> {
     private static final SculkTendrilsEmergenceConfiguration TENDRIL_CONFIG =
             new SculkTendrilsEmergenceConfiguration(15, 0.4F,
-                    5, 0.7F, 0.3F);
+                    5, 0.7F, 0.3F, true);
 
     public AbyssSculkPatch(Codec<AbyssSculkPatchConfiguration> codec) {
         super(codec);

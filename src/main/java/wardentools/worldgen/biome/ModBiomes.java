@@ -203,6 +203,8 @@ public class ModBiomes {
                 ModPlacedFeatures.TALL_DEPTH_VINES_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
                 ModPlacedFeatures.CAVE_SCULK_TENDRILS_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.LIVING_SPROUT_EMERGENCE_KEY);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)

@@ -11,10 +11,7 @@ import wardentools.worldgen.features.custom.cristals.CristalFormation;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVein;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
-import wardentools.worldgen.features.custom.sculk.AbyssSculkPatch;
-import wardentools.worldgen.features.custom.sculk.AbyssSculkPatchConfiguration;
-import wardentools.worldgen.features.custom.sculk.SculkTendrilsEmergence;
-import wardentools.worldgen.features.custom.sculk.SculkTendrilsEmergenceConfiguration;
+import wardentools.worldgen.features.custom.sculk.*;
 
 public class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES
@@ -49,4 +46,8 @@ public class ModFeatures {
     public static final RegistryObject<Feature<DepthVineConfiguration>> DEPTH_VINE
             = FEATURES.register("depth_vine",
             () -> new DepthVineFeature(DepthVineConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<LivingSproutEmergenceConfiguration>> LIVING_SPROUT_EMERGENCE
+            = FEATURES.register("living_sprout_emergence",
+            () -> new LivingSproutEmergence(LivingSproutEmergenceConfiguration.CODEC));
 }

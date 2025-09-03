@@ -61,6 +61,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> ABYSS_SCULK_PATCH_KEY = registerKey("abyss_sculk_patch");
 	public static final ResourceKey<PlacedFeature> TALL_DEPTH_VINES_KEY = registerKey("tall_depth_vines");
 	public static final ResourceKey<PlacedFeature> CAVE_SCULK_TENDRILS_KEY = registerKey("sculk_tendrils");
+	public static final ResourceKey<PlacedFeature> LIVING_SPROUT_EMERGENCE_KEY = registerKey("living_sprout_emergence");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -279,6 +280,11 @@ public class ModPlacedFeatures {
 		register(context, CAVE_SCULK_TENDRILS_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE),
 				onCaveWallDown(4, 8)
+		);
+
+		register(context, LIVING_SPROUT_EMERGENCE_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.LIVING_SPROUT_EMERGENCE),
+				onCaveWallDown(6, 10)
 		);
 
     }

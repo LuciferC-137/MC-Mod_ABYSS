@@ -24,6 +24,7 @@ import wardentools.worldgen.features.custom.DepthVineConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
 import wardentools.worldgen.features.custom.sculk.AbyssSculkPatchConfiguration;
+import wardentools.worldgen.features.custom.sculk.LivingSproutEmergenceConfiguration;
 import wardentools.worldgen.features.custom.sculk.SculkTendrilsEmergenceConfiguration;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
@@ -65,6 +66,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SCULK_TENDRIL_EMERGENCE = registerKey("sculk_tendril_emergence");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_SCULK_PATCH = registerKey("abyss_sculk_patch");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DEPTH_VINE = registerKey("tall_depth_vine");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> LIVING_SPROUT_EMERGENCE = registerKey("living_sprout_emergence");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -186,7 +188,7 @@ public class ModConfiguredFeatures {
 
 		register(context, SCULK_TENDRIL_EMERGENCE, ModFeatures.SCULK_TENDRILS_EMERGENCE.get(),
 				new SculkTendrilsEmergenceConfiguration(15, 0.5F,
-						5, 0.95F, 0.4F));
+						5, 0.95F, 0.4F, true));
 
 		register(context, ABYSS_SCULK_PATCH, ModFeatures.ABYSS_SCULK_PATCH.get(),
 				new AbyssSculkPatchConfiguration(10, 32, 64,
@@ -195,6 +197,9 @@ public class ModConfiguredFeatures {
 
 		register(context, TALL_DEPTH_VINE, ModFeatures.DEPTH_VINE.get(),
 				new DepthVineConfiguration(true,10, 1, 100));
+
+		register(context, LIVING_SPROUT_EMERGENCE, ModFeatures.LIVING_SPROUT_EMERGENCE.get(),
+				new LivingSproutEmergenceConfiguration(1, 7, 0.2F, true));
 
     }
 	
