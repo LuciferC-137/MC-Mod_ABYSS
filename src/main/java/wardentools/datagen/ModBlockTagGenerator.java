@@ -176,5 +176,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(Blocks.SCULK_CATALYST)
                 .add(BlockRegistry.LIVING_SPROUT.get());
 
+        this.tag(ModTags.Blocks.SUSTAIN_LIVING_SPROUT)
+                .add(Blocks.SCULK)
+                .add(BlockRegistry.SCULK_TENDRIL_BLOCK.get())
+                .add(Blocks.SCULK_CATALYST);
+
     }
 }

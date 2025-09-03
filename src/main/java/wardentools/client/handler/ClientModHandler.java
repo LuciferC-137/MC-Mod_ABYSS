@@ -45,6 +45,8 @@ public class ClientModHandler {
 				GramophoneRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.SCULK_TENDRIL_BLOCK_ENTITY.get(),
 				SculkTendrilBlockRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.LIVING_SPROUT_BLOCK_ENTITY.get(),
+				LivingSproutRenderer::new);
 	}
 
 }

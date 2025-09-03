@@ -9,7 +9,9 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -18,8 +20,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
-import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.LivingSproutBlockEntity;
@@ -27,6 +30,7 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ParasyteEntity;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.LivingSproutBurstPacket;
+import wardentools.tags.ModTags;
 
 public class LivingSproutBlock extends Block implements EntityBlock {
     static {
@@ -44,6 +48,29 @@ public class LivingSproutBlock extends Block implements EntityBlock {
                 .setValue(PHASE, SculkSensorPhase.INACTIVE))
                 .setValue(TRIGGERED, false));
 
+    }
+
+    @Override
+    protected @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
+                                           @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        return Block.box(3, 4, 3, 13, 14, 13);
+    }
+
+    @Override
+    protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader levelReader,
+                                 @NotNull BlockPos pos) {
+        return levelReader.getBlockState(pos.below()).is(ModTags.Blocks.SUSTAIN_LIVING_SPROUT)
+                && super.canSurvive(state, levelReader, pos);
+    }
+
+    @Override
+    protected void neighborChanged(@NotNull BlockState state, @NotNull Level level,
+                                   @NotNull BlockPos pos, @NotNull Block block,
+                                   @NotNull BlockPos neighbor, boolean b) {
+        super.neighborChanged(state, level, pos, block, neighbor, b);
+        if (!this.canSurvive(state, level, pos)) {
+            level.destroyBlock(pos, true, null);
+        }
     }
 
     @Override
@@ -151,8 +178,6 @@ public class LivingSproutBlock extends Block implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state,
                                                                   @NotNull BlockEntityType<T> entityType) {
         return level.isClientSide ? null : (level0, pos, state0, blockEntity)
-                -> VibrationSystem.Ticker.tick(level0,
-                ((LivingSproutBlockEntity)blockEntity).getVibrationData(),
-                ((LivingSproutBlockEntity)blockEntity).getVibrationUser());
+                -> ((LivingSproutBlockEntity)blockEntity).tick();
     }
 }

@@ -7,10 +7,15 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,14 +34,13 @@ import javax.annotation.Nullable;
 public class LivingSproutBlockEntity extends BlockEntity implements GameEventListener.Provider<VibrationSystem.Listener>, VibrationSystem {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private static final int MAX_TRIGGERED_IN_A_ROW = 2;
-    private static final int COOLDOWN = 280;
+    private static final int COOLDOWN = 216;
 
     private VibrationSystem.Data vibrationData;
     private final VibrationSystem.Listener vibrationListener;
     private final VibrationSystem.User vibrationUser;
 
-    private int triggeredInARow = 0;
+    private boolean isPulsing = false;
     private int lastTimeHeard = 0;
     
     public LivingSproutBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
@@ -66,12 +70,18 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
     protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
         super.loadAdditional(tag, provider);
         RegistryOps<Tag> context = provider.createSerializationContext(NbtOps.INSTANCE);
-        if (tag.contains("listener", 10)) {
+        if (tag.contains("listener", CompoundTag.TAG_COMPOUND)) {
             Data.CODEC.parse(context, tag.getCompound("listener")).resultOrPartial((error) -> {
                 LOGGER.error("Failed to parse vibration listener for Living Sprout: '{}'", error);
             }).ifPresent((data) -> {
                 this.vibrationData = data;
             });
+        }
+        if (tag.contains("lastTimeHeard", CompoundTag.TAG_INT)) {
+            this.lastTimeHeard = tag.getInt("lastTimeHeard");
+        }
+        if (tag.contains("isPulsing", CompoundTag.TAG_BYTE)) {
+            this.isPulsing = tag.getBoolean("isPulsing");
         }
     }
 
@@ -83,19 +93,62 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
         }).ifPresent((tag1) -> {
             tag.put("listener", tag1);
         });
+        tag.putInt("lastTimeHeard", this.lastTimeHeard);
+        tag.putBoolean("isPulsing", this.isPulsing);
     }
+
+    public void tick() {
+        VibrationSystem.Ticker.tick(this.level, this.getVibrationData(), this.getVibrationUser());
+        if (level == null) return;
+        if (this.level.getGameTime() - this.lastTimeHeard >= COOLDOWN && this.isPulsing) {
+            this.calmDown();
+        }
+    }
+
+    public boolean isPulsing() {return this.isPulsing;}
+
+    public int getLastTimeHeard() {return this.lastTimeHeard;}
 
     public void trigger(int timeTick) {
         if (this.level == null) return;
         if (timeTick - this.lastTimeHeard < COOLDOWN) {
-            this.triggeredInARow ++;
+            if (this.isPulsing) {
+                this.level.destroyBlock(this.getBlockPos(), true);
+                return;
+            }
         } else {
-            this.triggeredInARow = 1;
-        }
-        if (triggeredInARow >= MAX_TRIGGERED_IN_A_ROW) {
-            this.level.destroyBlock(this.getBlockPos(), true);
+            this.isPulsing = true;
         }
         this.lastTimeHeard = timeTick;
+        this.update();
+    }
+
+    public void calmDown() {
+        this.isPulsing = false;
+        this.update();
+    }
+
+    public void update() {
+        if (this.level == null) return;
+        this.level.updateNeighborsAt(this.getBlockPos(), this.getBlockState().getBlock());
+        if (!this.level.isClientSide) {
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(),
+                    this.getBlockState(), Block.UPDATE_ALL);
+        }
+        this.setChanged();
+    }
+
+    @Override
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
+        CompoundTag nbt = super.getUpdateTag(provider);
+        saveAdditional(nbt, provider);
+        return nbt;
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket(){
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     protected class VibrationUser implements VibrationSystem.User {
@@ -120,7 +173,9 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
             return (!pos.equals(this.blockPos)
                     || !gameEventHolder.is(GameEvent.BLOCK_DESTROY)
                     && !gameEventHolder.is(GameEvent.BLOCK_PLACE))
-                    && LivingSproutBlock.canActivate(LivingSproutBlockEntity.this.getBlockState());
+                    && LivingSproutBlock.canActivate(LivingSproutBlockEntity.this.getBlockState())
+                    && context != null
+                    && (context.sourceEntity() instanceof Player player && !player.isCreative());
         }
 
         public void onReceiveVibration(@NotNull ServerLevel level, @NotNull BlockPos pos,
@@ -128,14 +183,19 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
                                        @Nullable Entity entity, @Nullable Entity entity1, float v) {
             BlockState state = LivingSproutBlockEntity.this.getBlockState();
             if (LivingSproutBlock.canActivate(state)) {
+                if (!LivingSproutBlockEntity.this.isPulsing()) {
+                    if (ModSounds.HEART_BEAT.getHolder().isPresent()) {
+                        BlockPos blockPos = LivingSproutBlockEntity.this.getBlockPos();
+                        level.playSeededSound(null, blockPos.getX(),
+                                blockPos.getY(), blockPos.getZ(),
+                                ModSounds.HEART_BEAT.getHolder().get(),
+                                SoundSource.BLOCKS, 5F, 1F, 1L);
+                    }
+                }
                 LivingSproutBlock.activate(level, LivingSproutBlockEntity.this.getBlockPos());
             }
             LivingSproutBlockEntity.this.trigger((int)level.getGameTime());
-            BlockPos blockPos = LivingSproutBlockEntity.this.getBlockPos();
-            if (ModSounds.HEART_BEAT.getHolder().isEmpty()) return;
-            level.playSeededSound(null, blockPos.getX(), blockPos.getY(), blockPos.getZ(),
-                    ModSounds.HEART_BEAT.getHolder().get(),
-                    SoundSource.BLOCKS, 5F, 1F, 1L);
+
         }
 
         public void onDataChanged() {LivingSproutBlockEntity.this.setChanged();}
