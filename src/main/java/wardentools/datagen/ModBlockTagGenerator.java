@@ -168,6 +168,12 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.DEPTH_VINES.get())
                 .add(BlockRegistry.DEPTH_VINES_PLANT.get());
 
+        this.tag(BlockTags.DAMPENS_VIBRATIONS)
+                .add(BlockRegistry.REINFORCED_GLASS.get());
+
+        this.tag(BlockTags.OCCLUDES_VIBRATION_SIGNALS)
+                .add(BlockRegistry.REINFORCED_GLASS.get());
+
 		this.tag(ModTags.Blocks.CAN_SUSTAIN_ABYSS_PLANTS)
 				.add(Blocks.SCULK);
 

@@ -524,8 +524,11 @@ public class BlockRegistry {
 
 	public static final RegistryObject<Block> REINFORCED_GLASS
 			= REGISTAR.register("reinforced_glass",
-			() -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
-					.strength(3.0F, 6.0F).noOcclusion()));
+			() -> new Block(BlockBehaviour.Properties.of()
+					.sound(SoundType.GLASS)
+					.mapColor(MapColor.COLOR_GRAY)
+					.strength(3.0F, 6.0F)
+					.noOcclusion()));
 
 	public static final RegistryObject<Block> WIND_WHISPERER
 			= REGISTAR.register("wind_whisperer",
@@ -597,5 +600,13 @@ public class BlockRegistry {
 					.emissiveRendering((state, blockGetter, pos) -> LivingSproutBlock.getPhase(state)
 							== SculkSensorPhase.ACTIVE)
 			));
+
+	private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
+		return false;
+	}
+
+	private static boolean always(BlockState state, BlockGetter level, BlockPos pos) {
+		return true;
+	}
 
 }

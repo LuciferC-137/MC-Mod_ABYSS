@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.items.ItemRegistry;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 
@@ -52,6 +53,8 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 		this.tag(ItemTags.DIRT)
 		 	 .add(BlockRegistry.DARKDIRT.get().asItem());
 
+		this.tag(ItemTags.DAMPENS_VIBRATIONS)
+				.add(ItemRegistry.REINFORCED_GLASS.get());
 
 		this.tag(ItemTags.FOOT_ARMOR)
 				.add(ArmorRegistry.DEEPCRISTAL_BOOTS.get())
