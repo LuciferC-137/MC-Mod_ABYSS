@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-03T13:22:03.1046047	Registries
+// 1.21.1	2025-09-05T20:21:53.7414249	Registries
 08141df77f48a8c5187be5642830ef41d6edb8b5 data/wardentools/dimension/abyssdim.json
 78abca31c24b948721b9b9f97a002c98b1cb0365 data/wardentools/dimension_type/abyssdim_type.json
 1c11a8f49d2df8e89a69dcab7725f1897a55fef4 data/wardentools/enchantment/stealth.json
@@ -64,7 +64,7 @@ ccbd6acd30b4c82554892808c038e4fb41b2edcb data/wardentools/worldgen/placed_featur
 e1bfb30d210ae1c47fbc211f77e04ab5b5b90714 data/wardentools/worldgen/placed_feature/echo_vein.json
 9376bcc7f940fa76593cb81e29f30960d2a5ef07 data/wardentools/worldgen/placed_feature/lapis_ore.json
 302a12d562ddc15d8b0bfdd3de621ae41a38ffc2 data/wardentools/worldgen/placed_feature/liquid_corruption_lake.json
-f0256bbb727c0dbac9bff342a7215391add40e8b data/wardentools/worldgen/placed_feature/living_sprout_emergence.json
+bba08811828e7f004dd0f81e3872bd43200e70a1 data/wardentools/worldgen/placed_feature/living_sprout_emergence.json
 f4b758b6d2facf50599e90b26923c498ec33cd02 data/wardentools/worldgen/placed_feature/malachite_cristal_dw_key.json
 29741bb398803f83c75068390063ed22db38b193 data/wardentools/worldgen/placed_feature/malachite_cristal_key.json
 37a15c2a02394de3cc58115ff2414b6502c1d4dd data/wardentools/worldgen/placed_feature/malachite_vein.json

@@ -29,12 +29,12 @@ public class SculkTendrilsEmergence extends Feature<SculkTendrilsEmergenceConfig
     @Override
     public boolean place(FeaturePlaceContext<SculkTendrilsEmergenceConfiguration> context) {
         WorldGenLevel level = context.level();
-        boolean upward = context.config().upward;
-        float deviationStrength = Math.min(1.0f, Math.max(0.001F, context.config().deviationStrength));
-        int maxDepth = Math.max(0, Math.min(10, context.config().maxDepth));
-        float heightReductionFactor = Math.max(0.1f, Math.min(0.9f, context.config().heightReductionFactor));
-        float branchProbability = Math.max(MIN_BRANCH_PROBABILITY, Math.min(0.8f, context.config().branchProbability));
-        int maxLength = Math.max(1, Math.min(20, context.config().maxLength));
+        boolean upward = context.config().upward();
+        float deviationStrength = Math.min(1.0f, Math.max(0.001F, context.config().deviationStrength()));
+        int maxDepth = Math.max(0, Math.min(10, context.config().maxDepth()));
+        float heightReductionFactor = Math.max(0.1f, Math.min(0.9f, context.config().heightReductionFactor()));
+        float branchProbability = Math.max(MIN_BRANCH_PROBABILITY, Math.min(0.8f, context.config().branchProbability()));
+        int maxLength = Math.max(1, Math.min(20, context.config().maxLength()));
 
         TendrilTree tree = new TendrilTree(context.origin());
 

@@ -1,0 +1,11 @@
+{
+  "type": "wardentools:radiance_catalyst",
+  "energy_cost": 600,
+  "ingredient": {
+    "item": "wardentools:dying_protector_heart"
+  },
+  "result": {
+    "count": 1,
+    "id": "wardentools:protector_heart"
+  }
+}

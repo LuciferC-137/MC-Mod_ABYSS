@@ -1,15 +1,19 @@
 package wardentools.datagen;
 
+import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.ModMain;
+import wardentools.datagen.utils.RadianceCatalystRecipeBuilder;
 import wardentools.items.ItemRegistry;
 import wardentools.items.armors.ArmorRegistry;
 
@@ -22,6 +26,9 @@ public class ModRecipesGenerator extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
+
+        buildRadianceCatalystRecipes(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.ABYSS_DIVER.get(), 1)
                 .define('D', ItemRegistry.DARK_STICK.get())
                 .define('V', ItemRegistry.CORRUPTED_VESSEL.get())
@@ -592,5 +599,39 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("M M")
                 .unlockedBy("has_item", has(material))
                 .save(recipeOutput);
+    }
+
+    private void buildRadianceCatalystRecipes(RecipeOutput recipeOutput) {
+        RadianceCatalystRecipeBuilder.catalyst(
+                Ingredient.of(ItemRegistry.CORRUPTED_VESSEL.get()),
+                new ItemStack(ItemRegistry.PURE_VESSEL.get()),
+                100
+        ).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "pure_vessel_catalyst"));
+
+        RadianceCatalystRecipeBuilder.catalyst(
+                Ingredient.of(ItemRegistry.CORRUPTED_ESSENCE.get()),
+                new ItemStack(ItemRegistry.PURE_ESSENCE.get()),
+                100
+        ).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "pure_essence_catalyst"));
+
+        RadianceCatalystRecipeBuilder.catalyst(
+                Ingredient.of(ItemRegistry.WARDEN_HEART.get()),
+                new ItemStack(ItemRegistry.PROTECTOR_HEART.get()),
+                900
+        ).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "protector_heart_catalyst"));
+
+        RadianceCatalystRecipeBuilder.catalyst(
+                Ingredient.of(ItemRegistry.DYING_PROTECTOR_HEART.get()),
+                new ItemStack(ItemRegistry.PROTECTOR_HEART.get()),
+                600
+        ).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "protector_heart_from_dying_catalyst"));
+    }
+
+    public static Criterion<?> hasItem(ItemLike item) {
+        return has(item);
     }
 }

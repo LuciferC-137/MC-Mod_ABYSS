@@ -6,13 +6,14 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 
 
 
-public class SculkTendrilsEmergenceConfiguration implements FeatureConfiguration {
-    public final int maxLength; // The length of the first branch
-    public final float deviationStrength; // Between 1 and 0.001. The higher, the more vertical.
-    public final int maxDepth; // Max number of consecutive branches
-    public final float heightReductionFactor; // The length is multiplied by this factor for each branch level
-    public final float branchProbability; // Probability of branching for each block. Is also reduced by branch level
-    public boolean upward; // Is upward (or downward)
+public record SculkTendrilsEmergenceConfiguration (int maxLength, // The length of the first branch
+                                                   float deviationStrength, // Between 1 and 0.001. The higher, the more vertical.
+                                                   int maxDepth, // Max number of consecutive branches
+                                                   float heightReductionFactor, // The length is multiplied by this factor for each branch level
+                                                   float branchProbability, // Probability of branching for each block. Is also reduced by branch level
+                                                   boolean upward // Is upward (or downward)
+                                                  ) implements FeatureConfiguration {
+
 
     public static final Codec<SculkTendrilsEmergenceConfiguration> CODEC =
             RecordCodecBuilder.create(instance -> instance.group(
@@ -23,17 +24,6 @@ public class SculkTendrilsEmergenceConfiguration implements FeatureConfiguration
                     Codec.FLOAT.fieldOf("branch_probability").forGetter(config -> config.branchProbability),
                     Codec.BOOL.fieldOf("upward").forGetter(config -> config.upward)
                     ).apply(instance, SculkTendrilsEmergenceConfiguration::new));
-
-    public SculkTendrilsEmergenceConfiguration(int maxLength, float deviationStrength,
-                                               int maxDepth, float heightReductionFactor,
-                                               float branchProbability, boolean upward) {
-        this.maxLength = maxLength;
-        this.deviationStrength = deviationStrength;
-        this.maxDepth = maxDepth;
-        this.heightReductionFactor = heightReductionFactor;
-        this.branchProbability = branchProbability;
-        this.upward = upward;
-    }
 
     public SculkTendrilsEmergenceConfiguration setDownward() {
         return new SculkTendrilsEmergenceConfiguration(this.maxLength,

@@ -10,36 +10,20 @@ public record AbyssSculkPatchConfiguration(int chargeCount, int amountPerCharge,
                                            int spreadAttempts, int growthRounds, int spreadRounds,
                                            IntProvider extraRareGrowths, float catalystChance,
                                            boolean canHaveTendril) implements FeatureConfiguration {
-    public static final Codec<AbyssSculkPatchConfiguration> CODEC = RecordCodecBuilder.create((instance) -> {
-        return instance.group(Codec.intRange(1, 32).fieldOf("charge_count")
-                    .forGetter(AbyssSculkPatchConfiguration::chargeCount),
-                Codec.intRange(1, 500).fieldOf("amount_per_charge")
-                    .forGetter(AbyssSculkPatchConfiguration::amountPerCharge),
-                Codec.intRange(1, 64).fieldOf("spread_attempts")
-                    .forGetter(AbyssSculkPatchConfiguration::spreadAttempts),
-                Codec.intRange(0, 8).fieldOf("growth_rounds")
-                    .forGetter(AbyssSculkPatchConfiguration::growthRounds),
-                Codec.intRange(0, 8).fieldOf("spread_rounds")
-                    .forGetter(AbyssSculkPatchConfiguration::spreadRounds),
-                IntProvider.CODEC.fieldOf("extra_rare_growths")
-                        .forGetter(AbyssSculkPatchConfiguration::extraRareGrowths),
-                Codec.floatRange(0.0F, 1.0F).fieldOf("catalyst_chance")
-                        .forGetter(AbyssSculkPatchConfiguration::catalystChance),
-                Codec.BOOL.fieldOf("can_have_tendril").forGetter(AbyssSculkPatchConfiguration::canHaveTendril)
-                ).apply(instance, AbyssSculkPatchConfiguration::new);
-    });
-
-    public AbyssSculkPatchConfiguration(int chargeCount, int amountPerCharge,
-                                        int spreadAttempts, int growthRounds, int spreadRounds,
-                                        IntProvider extraRareGrowths, float catalystChance,
-                                        boolean canHaveTendril) {
-        this.chargeCount = chargeCount;
-        this.amountPerCharge = amountPerCharge;
-        this.spreadAttempts = spreadAttempts;
-        this.growthRounds = growthRounds;
-        this.spreadRounds = spreadRounds;
-        this.extraRareGrowths = extraRareGrowths;
-        this.catalystChance = catalystChance;
-        this.canHaveTendril = canHaveTendril;
-    }
+    public static final Codec<AbyssSculkPatchConfiguration> CODEC = RecordCodecBuilder.create((instance) -> instance.group(Codec.intRange(1, 32).fieldOf("charge_count")
+                .forGetter(AbyssSculkPatchConfiguration::chargeCount),
+            Codec.intRange(1, 500).fieldOf("amount_per_charge")
+                .forGetter(AbyssSculkPatchConfiguration::amountPerCharge),
+            Codec.intRange(1, 64).fieldOf("spread_attempts")
+                .forGetter(AbyssSculkPatchConfiguration::spreadAttempts),
+            Codec.intRange(0, 8).fieldOf("growth_rounds")
+                .forGetter(AbyssSculkPatchConfiguration::growthRounds),
+            Codec.intRange(0, 8).fieldOf("spread_rounds")
+                .forGetter(AbyssSculkPatchConfiguration::spreadRounds),
+            IntProvider.CODEC.fieldOf("extra_rare_growths")
+                    .forGetter(AbyssSculkPatchConfiguration::extraRareGrowths),
+            Codec.floatRange(0.0F, 1.0F).fieldOf("catalyst_chance")
+                    .forGetter(AbyssSculkPatchConfiguration::catalystChance),
+            Codec.BOOL.fieldOf("can_have_tendril").forGetter(AbyssSculkPatchConfiguration::canHaveTendril)
+            ).apply(instance, AbyssSculkPatchConfiguration::new));
 }

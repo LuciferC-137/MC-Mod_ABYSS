@@ -18,6 +18,7 @@ import wardentools.entity.ModEntities;
 import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.ModFluidTypes;
 import wardentools.items.ItemRegistry;
+import wardentools.items.recipe.ModRecipes;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
@@ -53,6 +54,8 @@ public class ModMain {
 		ModEffects.MOB_EFFECTS.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 		PotionRegistry.POTIONS.register(bus);
+		ModRecipes.SERIALIZERS.register(bus);
+		ModRecipes.TYPES.register(bus);
 
 		MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);
