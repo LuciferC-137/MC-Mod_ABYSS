@@ -1,4 +1,4 @@
-// 1.21.1	2025-08-26T19:19:46.9896154	Item Models: wardentools
+// 1.21.1	2025-09-21T21:56:05.2603767	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -83,10 +83,12 @@ da57ce161c1572d04fcb1d0381d4b9627cab4e37 assets/wardentools/models/item/depth_be
 18cfb567ddc521e9cedccf8bd8a639c136da9450 assets/wardentools/models/item/dysfunctionning_catalyst.json
 e132a841ade458e1fba92f9890b565e60eb931b1 assets/wardentools/models/item/echo_cristal.json
 4e89426c6145ff7a533571546c1cb79bec6866c9 assets/wardentools/models/item/gramophone.json
+d2bba8fae90a771af2785d42d9fe71828f22e5b1 assets/wardentools/models/item/light_ornament.json
 4eed343ad56cdb6b1dd37d013734dd2a60f9a5a8 assets/wardentools/models/item/living_sprout.json
 f6a3e3ad9da7adcb633e8bb4c0ff74d860c58ce0 assets/wardentools/models/item/lurker_eye.json
 feb0db5a59a7305c0a266a00acf1a05ca4dda78c assets/wardentools/models/item/malachite.json
 fe3b4dd8c8ed0ef2c3c07977353645e1483aec36 assets/wardentools/models/item/malachite_fragment.json
+736730d4bde954129d0d2bc1a0402da42d4ff980 assets/wardentools/models/item/mind_tiara.json
 c3db8f02d0154624f37afeb3c1692f05bbb5c88b assets/wardentools/models/item/music_disc_abyss.json
 a26b6cf4baca004908e2914b6aa7fdb72a91bb2d assets/wardentools/models/item/music_disc_deepforest.json
 369f26ecd1e606775e571cc088e63df037f964c5 assets/wardentools/models/item/music_disc_incarnation.json
@@ -96,6 +98,7 @@ ee5b6224d21c52ca7bc92d86c1b9272fab1b6c68 assets/wardentools/models/item/music_di
 0f94db5b85f1d9845939458efa9f750d8d70dc7f assets/wardentools/models/item/noctilure_treat.json
 d1f708f033601d63173c94f78141805351173aad assets/wardentools/models/item/pale_cristal.json
 ca6c547b92d203477213ce42a3e1b595d5dbbb6b assets/wardentools/models/item/pale_shard.json
+576646ec392e84497a6f8c6aa7cce37f67fafd87 assets/wardentools/models/item/pendant_of_balance.json
 df6103769189e8270bb718f6da221cb40c2044b7 assets/wardentools/models/item/protector_heart.json
 d7c873bfbe569cf399dd7bdb2cb77a55dab7829c assets/wardentools/models/item/protector_invoker.json
 a211e3021be071d858d1d178572b1cc4763e29b1 assets/wardentools/models/item/pure_essence.json
@@ -149,8 +152,11 @@ b94669a3367a86fe340d36f4a1f2b9e4f30c1622 assets/wardentools/models/item/radiance
 e103ea05858cdd9ba9bb08409b2362353e01ce4b assets/wardentools/models/item/radiance_fragment.json
 44267bafcd378d81b8618e063c1f6fa1f3d57e0e assets/wardentools/models/item/radiance_ingots.json
 79b9b9007d2d61b7abd2b611933b7bd36995bb5d assets/wardentools/models/item/radiant_core.json
+bbad7122669ed0a024e4bac611102f604156d428 assets/wardentools/models/item/ring_of_will.json
 a0e2c082ba9528515dbd1ba4dc641974c0709613 assets/wardentools/models/item/ruby.json
 9fa6f6f8a8707a06140b5840c7b425f2c0fee059 assets/wardentools/models/item/ruby_fragment.json
+e0cc44edc967f7ca97ef213e9216a54d1a7a5f29 assets/wardentools/models/item/shadow_ornament.json
+b8df5fb1131e10a7db4c550a5b47f92b8c1058a5 assets/wardentools/models/item/strength_bracelet.json
 7a7d9fd169318dfa32e885c5db7cb5abbbccce3d assets/wardentools/models/item/stripped_darktree_log.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json
 980a11934130b33d9a8df5e91eaebc563aa907bd assets/wardentools/models/item/stripped_whitetree_log.json

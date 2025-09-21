@@ -645,4 +645,34 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> LIVING_SPROUT =
 			REGISTAR.register("living_sprout",
 			() -> new BlockItem(BlockRegistry.LIVING_SPROUT.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> MIND_TIARA =
+			REGISTAR.register("mind_tiara",
+			() -> new Item(new Item.Properties()
+					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
+	public static final RegistryObject<Item> RING_OF_WILL =
+			REGISTAR.register("ring_of_will",
+			() -> new Item(new Item.Properties()
+					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
+	public static final RegistryObject<Item> STRENGTH_BRACELET =
+			REGISTAR.register("strength_bracelet",
+			() -> new Item(new Item.Properties()
+					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
+	public static final RegistryObject<Item> PENDANT_OF_BALANCE =
+			REGISTAR.register("pendant_of_balance",
+			() -> new Item(new Item.Properties()
+					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
+	public static final RegistryObject<Item> SHADOW_ORNAMENT =
+			REGISTAR.register("shadow_ornament",
+			() -> new Item(new Item.Properties()
+					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
+	public static final RegistryObject<Item> LIGHT_ORNAMENT =
+			REGISTAR.register("light_ornament",
+			() -> new Item(new Item.Properties()
+					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 }

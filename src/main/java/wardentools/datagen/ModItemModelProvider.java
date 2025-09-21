@@ -90,6 +90,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DEPTH_BERRIES);
         simpleItem(ItemRegistry.WANDERER_PAW);
         simpleItem(ItemRegistry.LURKER_EYE);
+        simpleItem(ItemRegistry.MIND_TIARA);
+        simpleItem(ItemRegistry.RING_OF_WILL);
+        simpleItem(ItemRegistry.STRENGTH_BRACELET);
+        simpleItem(ItemRegistry.PENDANT_OF_BALANCE);
+        simpleItem(ItemRegistry.SHADOW_ORNAMENT);
+        simpleItem(ItemRegistry.LIGHT_ORNAMENT);
 
         //Forcing item models for block items that have a special blockstate registration process
         blockItemWithItemModel(BlockRegistry.BLUE_BUSH);

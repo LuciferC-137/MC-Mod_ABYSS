@@ -18,170 +18,177 @@ public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModMain.MOD_ID);
 
-    private static final Map<String, List<Supplier<Item>>> TAGGED_ITEMS = new HashMap<>();
+    private static final Map<Tag, List<Supplier<Item>>> TAGGED_ITEMS = new HashMap<>();
     private static final List<Supplier<Item>> ALL_ITEMS = new ArrayList<>();
 
     static  {
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE);
-        addItemToTag("abyssalite", ItemRegistry.CHISELED_ABYSSALITE);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_BRICKS);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_BRICKS_STAIRS);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_BRICKS_SLAB);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_BRICKS_WALL);
-        addItemToTag("abyssalite", ItemRegistry.CRACKED_ABYSSALITE_BRICKS);
-        addItemToTag("abyssalite", ItemRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR);
-        addItemToTag("abyssalite", ItemRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB);
-        addItemToTag("abyssalite", ItemRegistry.CRACKED_ABYSSALITE_BRICKS_WALL);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_COAL_ORE);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_LAPIS_ORE);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_REDSTONE_ORE);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_DIAMOND_ORE);
-        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_DEEP_ORE);
-        addItemToTag("abyssalite", ItemRegistry.CORRUPTED_ABYSSALITE);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.CHISELED_ABYSSALITE);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_BRICKS);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_BRICKS_STAIRS);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_BRICKS_SLAB);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_BRICKS_WALL);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.CRACKED_ABYSSALITE_BRICKS);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.CRACKED_ABYSSALITE_BRICKS_WALL);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_COAL_ORE);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_LAPIS_ORE);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_REDSTONE_ORE);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_DIAMOND_ORE);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_DEEP_ORE);
+        addItemToTag(Tag.ABYSSALITE, ItemRegistry.CORRUPTED_ABYSSALITE);
 
-        addItemToTag("crystals", ItemRegistry.DEEP_FRAGMENT);
-        addItemToTag("crystals", ItemRegistry.DEEPCRISTAL);
-        addItemToTag("crystals", ItemRegistry.DEEPINGOTS);
-        addItemToTag("crystals", ItemRegistry.DEEPBLOCK);
-        addItemToTag("crystals", ItemRegistry.RADIANCE_FRAGMENT);
-        addItemToTag("crystals", ItemRegistry.RADIANCE_CRISTAL);
-        addItemToTag("crystals", ItemRegistry.RADIANCE_INGOTS);
-        addItemToTag("crystals", ItemRegistry.CITRINE_FRAGMENT);
-        addItemToTag("crystals", ItemRegistry.CITRINE);
-        addItemToTag("crystals", ItemRegistry.CITRINE_BLOCK);
-        addItemToTag("crystals", Items.ECHO_SHARD);
-        addItemToTag("crystals", ItemRegistry.ECHO_CRISTAL);
-        addItemToTag("crystals", ItemRegistry.ECHO_BLOCK);
-        addItemToTag("crystals", ItemRegistry.RUBY_FRAGMENT);
-        addItemToTag("crystals", ItemRegistry.RUBY);
-        addItemToTag("crystals", ItemRegistry.RUBY_BLOCK);
-        addItemToTag("crystals", ItemRegistry.MALACHITE_FRAGMENT);
-        addItemToTag("crystals", ItemRegistry.MALACHITE);
-        addItemToTag("crystals", ItemRegistry.MALACHITE_BLOCK);
-        addItemToTag("crystals", ItemRegistry.PALE_SHARD);
-        addItemToTag("crystals", ItemRegistry.PALE_CRISTAL);
-        addItemToTag("crystals", ItemRegistry.PALE_CRISTAL_BLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.DEEP_FRAGMENT);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.DEEPCRISTAL);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.DEEPINGOTS);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.DEEPBLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RADIANCE_FRAGMENT);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RADIANCE_CRISTAL);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RADIANCE_INGOTS);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE_FRAGMENT);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE_BLOCK);
+        addItemToTag(Tag.CRYSTALS, Items.ECHO_SHARD);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.ECHO_CRISTAL);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.ECHO_BLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY_FRAGMENT);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY_BLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE_FRAGMENT);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE_BLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_SHARD);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_CRISTAL);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_CRISTAL_BLOCK);
 
-        addItemToTag("deep_armor", ArmorRegistry.DEEPCRISTAL_HELMET);
-        addItemToTag("deep_armor", ArmorRegistry.DEEPCRISTAL_CHESTPLATE);
-        addItemToTag("deep_armor", ArmorRegistry.DEEPCRISTAL_LEGGINGS);
-        addItemToTag("deep_armor", ArmorRegistry.DEEPCRISTAL_BOOTS);
+        addItemToTag(Tag.DEEP_ARMOR, ArmorRegistry.DEEPCRISTAL_HELMET);
+        addItemToTag(Tag.DEEP_ARMOR, ArmorRegistry.DEEPCRISTAL_CHESTPLATE);
+        addItemToTag(Tag.DEEP_ARMOR, ArmorRegistry.DEEPCRISTAL_LEGGINGS);
+        addItemToTag(Tag.DEEP_ARMOR, ArmorRegistry.DEEPCRISTAL_BOOTS);
 
-        addItemToTag("radiant_armor", ArmorRegistry.RADIANCE_CRISTAL_HELMET);
-        addItemToTag("radiant_armor", ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE);
-        addItemToTag("radiant_armor", ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS);
-        addItemToTag("radiant_armor", ArmorRegistry.RADIANCE_CRISTAL_BOOTS);
+        addItemToTag(Tag.RADIANT_ARMOR, ArmorRegistry.RADIANCE_CRISTAL_HELMET);
+        addItemToTag(Tag.RADIANT_ARMOR, ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE);
+        addItemToTag(Tag.RADIANT_ARMOR, ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS);
+        addItemToTag(Tag.RADIANT_ARMOR, ArmorRegistry.RADIANCE_CRISTAL_BOOTS);
 
-        addItemToTag("darktree", ItemRegistry.DARKTREE_LOG);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_WOOD);
-        addItemToTag("darktree", ItemRegistry.STRIPPED_DARKTREE_LOG);
-        addItemToTag("darktree", ItemRegistry.STRIPPED_DARKTREE_WOOD);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_PLANKS);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_LEAVES);
-        addItemToTag("darktree", ItemRegistry.DEEP_FRUIT);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_SAPLING);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_STAIRS);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_SLAB);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_FENCE);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_BUTTON);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_DOOR);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_TRAPDOOR);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_FENCE_GATE);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_PRESSURE_PLATE);
-        addItemToTag("darktree", ItemRegistry.DARK_STICK);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_BOAT);
-        addItemToTag("darktree", ItemRegistry.DARKTREE_CHEST_BOAT);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_LOG);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_WOOD);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.STRIPPED_DARKTREE_LOG);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.STRIPPED_DARKTREE_WOOD);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_PLANKS);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_LEAVES);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DEEP_FRUIT);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_SAPLING);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_STAIRS);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_SLAB);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_FENCE);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_BUTTON);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_DOOR);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_TRAPDOOR);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_FENCE_GATE);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_PRESSURE_PLATE);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARK_STICK);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_BOAT);
+        addItemToTag(Tag.DARKTREE, ItemRegistry.DARKTREE_CHEST_BOAT);
 
-        addItemToTag("dark_vegetal", ItemRegistry.DEPTH_BERRIES);
-        addItemToTag("dark_vegetal", ItemRegistry.BLUE_BUSH);
-        addItemToTag("dark_vegetal", ItemRegistry.DEEPFLOWER);
-        addItemToTag("dark_vegetal", ItemRegistry.TALL_DARK_GRASS);
-        addItemToTag("dark_vegetal", ItemRegistry.DARK_GRASS);
-        addItemToTag("dark_vegetal", ItemRegistry.BLUE_GLOW_BERRIES);
+        addItemToTag(Tag.DARK_VEGETAL, ItemRegistry.DEPTH_BERRIES);
+        addItemToTag(Tag.DARK_VEGETAL, ItemRegistry.BLUE_BUSH);
+        addItemToTag(Tag.DARK_VEGETAL, ItemRegistry.DEEPFLOWER);
+        addItemToTag(Tag.DARK_VEGETAL, ItemRegistry.TALL_DARK_GRASS);
+        addItemToTag(Tag.DARK_VEGETAL, ItemRegistry.DARK_GRASS);
+        addItemToTag(Tag.DARK_VEGETAL, ItemRegistry.BLUE_GLOW_BERRIES);
 
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_LOG);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_WOOD);
-        addItemToTag("whitetree", ItemRegistry.STRIPPED_WHITETREE_LOG);
-        addItemToTag("whitetree", ItemRegistry.STRIPPED_WHITETREE_WOOD);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_LEAVES);
-        addItemToTag("whitetree", ItemRegistry.WHITE_SEED);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_SAPLING);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_PLANKS);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_STAIRS);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_SLAB);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_FENCE);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_BUTTON);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_DOOR);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_TRAPDOOR);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_FENCE_GATE);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_PRESSURE_PLATE);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_BOAT);
-        addItemToTag("whitetree", ItemRegistry.WHITETREE_CHEST_BOAT);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_LOG);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_WOOD);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.STRIPPED_WHITETREE_LOG);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.STRIPPED_WHITETREE_WOOD);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_LEAVES);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITE_SEED);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_SAPLING);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_PLANKS);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_STAIRS);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_SLAB);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_FENCE);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_BUTTON);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_DOOR);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_TRAPDOOR);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_FENCE_GATE);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_PRESSURE_PLATE);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_BOAT);
+        addItemToTag(Tag.WHITETREE, ItemRegistry.WHITETREE_CHEST_BOAT);
 
-        addItemToTag("white_vegetal", ItemRegistry.WHITE_GRASS);
-        addItemToTag("white_vegetal", ItemRegistry.TALL_WHITE_GRASS);
-        addItemToTag("white_vegetal", ItemRegistry.WHITE_TORCHFLOWER);
+        addItemToTag(Tag.WHITE_VEGETAL, ItemRegistry.WHITE_GRASS);
+        addItemToTag(Tag.WHITE_VEGETAL, ItemRegistry.TALL_WHITE_GRASS);
+        addItemToTag(Tag.WHITE_VEGETAL, ItemRegistry.WHITE_TORCHFLOWER);
 
-        addItemToTag("nature", ItemRegistry.NOCTILURE_FEATHER);
-        addItemToTag("nature", ItemRegistry.WANDERER_PAW);
-        addItemToTag("nature", ItemRegistry.NOCTILURE_TREAT);
-        addItemToTag("nature", ItemRegistry.LURKER_EYE);
+        addItemToTag(Tag.NATURE, ItemRegistry.NOCTILURE_FEATHER);
+        addItemToTag(Tag.NATURE, ItemRegistry.WANDERER_PAW);
+        addItemToTag(Tag.NATURE, ItemRegistry.NOCTILURE_TREAT);
+        addItemToTag(Tag.NATURE, ItemRegistry.LURKER_EYE);
 
-        addItemToTag("dirt", ItemRegistry.DARKDIRT);
-        addItemToTag("dirt", ItemRegistry.DARKGRASS_BLOCK);
+        addItemToTag(Tag.DIRT, ItemRegistry.DARKDIRT);
+        addItemToTag(Tag.DIRT, ItemRegistry.DARKGRASS_BLOCK);
 
-        addItemToTag("egg", ItemRegistry.DEEPLURKER_EGG);
-        addItemToTag("egg", ItemRegistry.PALEWANDERER_EGG);
-        addItemToTag("egg", ItemRegistry.TEMPER_EGG);
-        addItemToTag("egg", ItemRegistry.PARASYTE_EGG);
-        addItemToTag("egg", ItemRegistry.PROTECTOR_EGG);
-        addItemToTag("egg", ItemRegistry.CONTAGION_INCARNATION_EGG);
-        addItemToTag("egg", ItemRegistry.NOCTILURE_EGG);
-        addItemToTag("egg", ItemRegistry.SHADOW_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.DEEPLURKER_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.PALEWANDERER_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.TEMPER_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.PARASYTE_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.PROTECTOR_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.CONTAGION_INCARNATION_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.NOCTILURE_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.SHADOW_EGG);
 
-        addItemToTag("corrupted", ItemRegistry.WARDEN_HEART);
-        addItemToTag("corrupted", ItemRegistry.CORRUPTED_ESSENCE);
-        addItemToTag("corrupted", ItemRegistry.CORRUPTED_VESSEL);
-        addItemToTag("corrupted", ItemRegistry.WIND_WHISPERER);
-        addItemToTag("corrupted", ItemRegistry.SOLID_CORRUPTION);
-        addItemToTag("corrupted", ItemRegistry.DYSFUNCTIONNING_CATALYST);
+        addItemToTag(Tag.CORRUPTED, ItemRegistry.WARDEN_HEART);
+        addItemToTag(Tag.CORRUPTED, ItemRegistry.CORRUPTED_ESSENCE);
+        addItemToTag(Tag.CORRUPTED, ItemRegistry.CORRUPTED_VESSEL);
+        addItemToTag(Tag.CORRUPTED, ItemRegistry.WIND_WHISPERER);
+        addItemToTag(Tag.CORRUPTED, ItemRegistry.SOLID_CORRUPTION);
+        addItemToTag(Tag.CORRUPTED, ItemRegistry.DYSFUNCTIONNING_CATALYST);
 
-        addItemToTag("radiant", ItemRegistry.RADIANCE_CATALYST);
-        addItemToTag("radiant", ItemRegistry.PURE_ESSENCE);
-        addItemToTag("radiant", ItemRegistry.PURE_VESSEL);
-        addItemToTag("radiant", ItemRegistry.PROTECTOR_HEART);
-        addItemToTag("radiant", ItemRegistry.DYING_PROTECTOR_HEART);
-        addItemToTag("radiant", ItemRegistry.PROTECTOR_INVOKER);
+        addItemToTag(Tag.RADIANT, ItemRegistry.RADIANCE_CATALYST);
+        addItemToTag(Tag.RADIANT, ItemRegistry.PURE_ESSENCE);
+        addItemToTag(Tag.RADIANT, ItemRegistry.PURE_VESSEL);
+        addItemToTag(Tag.RADIANT, ItemRegistry.PROTECTOR_HEART);
+        addItemToTag(Tag.RADIANT, ItemRegistry.DYING_PROTECTOR_HEART);
+        addItemToTag(Tag.RADIANT, ItemRegistry.PROTECTOR_INVOKER);
 
-        addItemToTag("staff", ItemRegistry.ABYSS_DIVER);
-        addItemToTag("staff", ItemRegistry.RADIANT_STAFF);
+        addItemToTag(Tag.STAFF, ItemRegistry.ABYSS_DIVER);
+        addItemToTag(Tag.STAFF, ItemRegistry.RADIANT_STAFF);
 
-        addItemToTag("weapons", ItemRegistry.ABYSSAL_SCYTHE);
-        addItemToTag("weapons", ItemRegistry.RADIANT_SPEAR);
+        addItemToTag(Tag.WEAPONS, ItemRegistry.ABYSSAL_SCYTHE);
+        addItemToTag(Tag.WEAPONS, ItemRegistry.RADIANT_SPEAR);
 
-        addItemToTag("sculk", Items.SCULK);
-        addItemToTag("sculk", Items.SCULK_CATALYST);
-        addItemToTag("sculk", Items.SCULK_SENSOR);
-        addItemToTag("sculk", Items.SCULK_SHRIEKER);
-        addItemToTag("sculk", Items.SCULK_VEIN);
-        addItemToTag("sculk", ItemRegistry.SCULK_TENDRIL_BLOCK);
-        addItemToTag("sculk", ItemRegistry.LIVING_SPROUT);
+        addItemToTag(Tag.SCULK, Items.SCULK);
+        addItemToTag(Tag.SCULK, Items.SCULK_CATALYST);
+        addItemToTag(Tag.SCULK, Items.SCULK_SENSOR);
+        addItemToTag(Tag.SCULK, Items.SCULK_SHRIEKER);
+        addItemToTag(Tag.SCULK, Items.SCULK_VEIN);
+        addItemToTag(Tag.SCULK, ItemRegistry.SCULK_TENDRIL_BLOCK);
+        addItemToTag(Tag.SCULK, ItemRegistry.LIVING_SPROUT);
 
-        addItemToTag("building", ItemRegistry.BLACK_LANTERN);
-        addItemToTag("building", ItemRegistry.REINFORCED_GLASS);
+        addItemToTag(Tag.BUILDING, ItemRegistry.BLACK_LANTERN);
+        addItemToTag(Tag.BUILDING, ItemRegistry.REINFORCED_GLASS);
 
-        addItemToTag("misc", ItemRegistry.CONTAGION_INCARNATION_SKULL);
-        addItemToTag("misc", ItemRegistry.SOUL_SPAWNER);
-        addItemToTag("misc", ItemRegistry.WHISTLE);
-        addItemToTag("misc", ItemRegistry.WIND_JOURNAL);
-        addItemToTag("misc", ItemRegistry.GRAMOPHONE);
-        addItemToTag("misc", ItemRegistry.SONIC_BLASTER);
+        addItemToTag(Tag.JEWELRY, ItemRegistry.MIND_TIARA);
+        addItemToTag(Tag.JEWELRY, ItemRegistry.RING_OF_WILL);
+        addItemToTag(Tag.JEWELRY, ItemRegistry.STRENGTH_BRACELET);
+        addItemToTag(Tag.JEWELRY, ItemRegistry.PENDANT_OF_BALANCE);
+        addItemToTag(Tag.JEWELRY, ItemRegistry.SHADOW_ORNAMENT);
+        addItemToTag(Tag.JEWELRY, ItemRegistry.LIGHT_ORNAMENT);
 
-        addItemToTag("disc", ItemRegistry.ABYSS_MUSIC_DISC);
-        addItemToTag("disc", ItemRegistry.INCARNATION_MUSIC_DISC);
-        addItemToTag("disc", ItemRegistry.DEEP_FOREST_MUSIC_DISC);
-        addItemToTag("disc", ItemRegistry.WHITE_FOREST_MUSIC_DISC);
-        addItemToTag("disc", ItemRegistry.REFLECTION_MUSIC_DISC);
+        addItemToTag(Tag.MISC, ItemRegistry.CONTAGION_INCARNATION_SKULL);
+        addItemToTag(Tag.MISC, ItemRegistry.SOUL_SPAWNER);
+        addItemToTag(Tag.MISC, ItemRegistry.WHISTLE);
+        addItemToTag(Tag.MISC, ItemRegistry.WIND_JOURNAL);
+        addItemToTag(Tag.MISC, ItemRegistry.GRAMOPHONE);
+        addItemToTag(Tag.MISC, ItemRegistry.SONIC_BLASTER);
+
+        addItemToTag(Tag.DISC, ItemRegistry.ABYSS_MUSIC_DISC);
+        addItemToTag(Tag.DISC, ItemRegistry.INCARNATION_MUSIC_DISC);
+        addItemToTag(Tag.DISC, ItemRegistry.DEEP_FOREST_MUSIC_DISC);
+        addItemToTag(Tag.DISC, ItemRegistry.WHITE_FOREST_MUSIC_DISC);
+        addItemToTag(Tag.DISC, ItemRegistry.REFLECTION_MUSIC_DISC);
 
         addAllItemsFromRegistry();
     }
@@ -200,10 +207,10 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.ABYSSALITE.get()))
                     .title(Component.translatable("creativetab.blocks"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("dirt").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("abyssalite").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("sculk").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("building").forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.DIRT).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.ABYSSALITE).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.SCULK).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.BUILDING).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> NATURE
@@ -211,9 +218,9 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.BLUE_GLOW_BERRIES.get()))
                     .title(Component.translatable("creativetab.nature"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("dark_vegetal").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("white_vegetal").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("nature").forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.DARK_VEGETAL).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.WHITE_VEGETAL).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.NATURE).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> DARKTREE
@@ -221,7 +228,7 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DARKTREE_LOG.get()))
                     .title(Component.translatable("creativetab.darktree"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("darktree").forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.WHITETREE).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> WHITETREE
@@ -229,7 +236,7 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.WHITETREE_LOG.get()))
                     .title(Component.translatable("creativetab.whitetree"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("whitetree").forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.WHITETREE).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> TOOLS
@@ -237,10 +244,10 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get()))
                     .title(Component.translatable("creativetab.tools"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("deep_armor").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("radiant_armor").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("staff").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("weapons").forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.DEEP_ARMOR).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.RADIANT_ARMOR).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.STAFF).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.WEAPONS).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> CRYSTALS
@@ -248,7 +255,8 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.CITRINE_FRAGMENT.get()))
                     .title(Component.translatable("creativetab.crystals"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("crystals").forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.CRYSTALS).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.JEWELRY).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> MISC
@@ -256,10 +264,10 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.CORRUPTED_ESSENCE.get()))
                     .title(Component.translatable("creativetab.misc"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("corrupted").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("radiant").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("disc").forEach(item -> event.accept(item.get()));
-                        getItemsByTag("misc").forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.CORRUPTED).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.RADIANT).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.DISC).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.MISC).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> EGG
@@ -267,22 +275,22 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DEEPLURKER_EGG.get()))
                     .title(Component.translatable("creativetab.egg"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag("egg").forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.EGG).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
     }
 
-    public static void addItemToTag(String tag, Supplier<Item> item) {
+    public static void addItemToTag(Tag tag, Supplier<Item> item) {
         TAGGED_ITEMS.computeIfAbsent(tag, k -> new ArrayList<>()).add(item);
     }
 
-    public static void addItemToTag(String tag, Item item) {
+    public static void addItemToTag(Tag tag, Item item) {
         addItemToTag(tag, () -> item);
     }
 
-    public static List<Supplier<Item>> getItemsByTag(String tag) {
+    public static List<Supplier<Item>> getItemsByTag(Tag tag) {
         return TAGGED_ITEMS.getOrDefault(tag, Collections.emptyList());
     }
 
@@ -303,6 +311,35 @@ public class ModCreativeTabs {
 
     public static void addItemToAll(Supplier<Item> item) {
         ALL_ITEMS.add(item);
+    }
+
+    public static enum Tag {
+        ABYSSALITE("abyssalite"),
+        CRYSTALS("crystals"),
+        DEEP_ARMOR("deep_armor"),
+        RADIANT_ARMOR("radiant_armor"),
+        DARKTREE("darktree"),
+        DARK_VEGETAL("dark_vegetal"),
+        WHITETREE("whitetree"),
+        WHITE_VEGETAL("white_vegetal"),
+        NATURE("nature"),
+        DIRT("dirt"),
+        EGG("egg"),
+        CORRUPTED("corrupted"),
+        RADIANT("radiant"),
+        STAFF("staff"),
+        WEAPONS("weapons"),
+        SCULK("sculk"),
+        BUILDING("building"),
+        JEWELRY("jewelry"),
+        MISC("misc"),
+        DISC("disc");
+
+        private final String key;
+
+        Tag(String key) {this.key = key;}
+
+        public String getKey() {return key;}
     }
 
 }
