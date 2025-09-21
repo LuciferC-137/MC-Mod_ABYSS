@@ -45,7 +45,8 @@
       "wardentools:coal_ore",
       "wardentools:lapis_ore",
       "wardentools:diamond_ore",
-      "wardentools:deep_ore"
+      "wardentools:deep_ore",
+      "wardentools:redstone_ore"
     ],
     [],
     [],

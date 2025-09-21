@@ -93,7 +93,7 @@ public class CorruptedOverlayRenderer {
     @SubscribeEvent
     public static void onEffectRemoved(MobEffectEvent.Remove event) {
         if (ModEffects.CORRUPTED.getHolder().isEmpty()  || event.getEffectInstance() == null) return;
-        if (Objects.requireNonNull(event.getEffectInstance()).getEffect()
+        if (event.getEffectInstance().getEffect()
                 == ModEffects.CORRUPTED.getHolder().get()) {
             LivingEntity entity = event.getEntity();
             if (entity instanceof Player player) {

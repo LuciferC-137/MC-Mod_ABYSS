@@ -136,6 +136,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.add(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
 				block -> this.createNumberBasedOreDrop(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
 						ItemRegistry.DEEP_FRAGMENT.get(), 1, 3));
+		this.add(BlockRegistry.ABYSSALITE_REDSTONE_ORE.get(),
+				block -> this.createRedstoneOreDrops(BlockRegistry.ABYSSALITE_REDSTONE_ORE.get()));
 
 		// Cristal drop
 		this.add(BlockRegistry.CITRINE.get(),

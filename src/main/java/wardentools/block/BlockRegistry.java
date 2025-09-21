@@ -395,6 +395,10 @@ public class BlockRegistry {
 			() -> new DropExperienceBlock(UniformInt.of(7,10),
 					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(6,9)));
 
+	public static final RegistryObject<RedStoneOreBlock> ABYSSALITE_REDSTONE_ORE = REGISTAR.register("abyssalite_redstone_ore",
+			() -> new RedStoneOreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_ORE)
+					.strength(5,8)));
+
 	public static final RegistryObject<LiquidCorruptionBlock> LIQUID_CORRUPTION_BLOCK
 			= REGISTAR.register("liquid_corruption_block",
 				() -> new LiquidCorruptionBlock(FluidRegistry.SOURCE_LIQUID_CORRUPTION,

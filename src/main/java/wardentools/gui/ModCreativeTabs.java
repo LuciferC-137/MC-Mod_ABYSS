@@ -34,6 +34,7 @@ public class ModCreativeTabs {
         addItemToTag("abyssalite", ItemRegistry.CRACKED_ABYSSALITE_BRICKS_WALL);
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_COAL_ORE);
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_LAPIS_ORE);
+        addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_REDSTONE_ORE);
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_DIAMOND_ORE);
         addItemToTag("abyssalite", ItemRegistry.ABYSSALITE_DEEP_ORE);
         addItemToTag("abyssalite", ItemRegistry.CORRUPTED_ABYSSALITE);

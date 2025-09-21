@@ -50,6 +50,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 "abyssalite_diamond_ore", "abyssalite_diamond_ore_top", "abyssalite_diamond_ore_top");
         registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_DEEP_ORE,
                 "abyssalite_deep_ore", "abyssalite_deep_ore_top", "abyssalite_deep_ore_top");
+        registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_REDSTONE_ORE,
+                "abyssalite_redstone_ore", "abyssalite_redstone_ore_top", "abyssalite_redstone_ore_top");
         registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_BRICKS,
                 "abyssalite_bricks", "abyssalite_bricks_top", "abyssalite_bricks_top");
         registerTopBottomSideBlock(BlockRegistry.CRACKED_ABYSSALITE_BRICKS,

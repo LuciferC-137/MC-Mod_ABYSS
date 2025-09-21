@@ -49,6 +49,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LAPIS_ORE = registerKey("lapis_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DIAMOND_ORE = registerKey("diamond_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEP_ORE = registerKey("deep_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> REDSTONE_ORE = registerKey("redstone_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIQUID_CORRUPTION_FLOOR = registerKey("liquid_corruption_floor");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SHARP_ROCK = registerKey("sharp_rock");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> MALACHITE_CRISTAL = registerKey("malachite_cristal");
@@ -120,6 +121,10 @@ public class ModConfiguredFeatures {
 		register(context, DEEP_ORE, Feature.ORE,
 				oreGeneration(5, 0.0F,
 						BlockRegistry.ABYSSALITE_DEEP_ORE.get()));
+
+		register(context, REDSTONE_ORE, Feature.ORE,
+				oreGeneration(7, 0.7F,
+						BlockRegistry.ABYSSALITE_REDSTONE_ORE.get(), Blocks.DEEPSLATE_REDSTONE_ORE));
 
 		register(context, LIQUID_CORRUPTION_FLOOR, ModFeatures.REPLACE_AIR_BELOW_Y.get(),
 					new NoneFeatureConfiguration());

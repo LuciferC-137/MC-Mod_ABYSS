@@ -37,6 +37,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> LAPIS_ORE_KEY = registerKey("lapis_ore");
 	public static final ResourceKey<PlacedFeature> DIAMOND_ORE_KEY = registerKey("diamond_ore");
 	public static final ResourceKey<PlacedFeature> DEEP_ORE_KEY = registerKey("deep_ore");
+	public static final ResourceKey<PlacedFeature> REDSTONE_ORE_KEY = registerKey("redstone_ore");
 	public static final ResourceKey<PlacedFeature> LIQUID_CORRUPTION_LAKE_KEY = registerKey("liquid_corruption_lake");
 	public static final ResourceKey<PlacedFeature> SHARP_ROCK_KEY = registerKey("sharp_rock");
 	public static final ResourceKey<PlacedFeature> MALACHITE_CRISTAL_KEY = registerKey("malachite_cristal_key");
@@ -129,49 +130,31 @@ public class ModPlacedFeatures {
 		register(context,
 				COAL_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.COAL_ORE),
-				List.of(
-						CountPlacement.of(20),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.triangle(
-								VerticalAnchor.absolute(-24), VerticalAnchor.absolute(192)),
-						BiomeFilter.biome()
-				)
+				oreGeneration(20, -24, 192)
 		);
 
 		register(context,
 				LAPIS_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.LAPIS_ORE),
-				List.of(
-						CountPlacement.of(10),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.triangle(
-								VerticalAnchor.absolute(-44), VerticalAnchor.absolute(54)),
-						BiomeFilter.biome()
-				)
+				oreGeneration(10, -44, 54)
 		);
 
 		register(context,
 				DIAMOND_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.DIAMOND_ORE),
-				List.of(
-						CountPlacement.of(9),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.triangle(
-								VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32)),
-						BiomeFilter.biome()
-				)
+				oreGeneration(9, -64, 32)
 		);
 
 		register(context,
 				DEEP_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.DEEP_ORE),
-				List.of(
-						CountPlacement.of(6),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.triangle(
-								VerticalAnchor.absolute(-80), VerticalAnchor.absolute(10)),
-						BiomeFilter.biome()
-				)
+				oreGeneration(6, -80, 10)
+		);
+
+		register(context,
+				REDSTONE_ORE_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.REDSTONE_ORE),
+				oreGeneration(10, -50, 50)
 		);
 
 		register(context, LIQUID_CORRUPTION_LAKE_KEY,
@@ -321,6 +304,15 @@ public class ModPlacedFeatures {
 						BlockPredicate.ONLY_IN_AIR_PREDICATE, 20),
 				BlockPredicateFilter.forPredicate(BlockPredicate.not(
 						BlockPredicate.matchesTag(ModTags.Blocks.CRISTAL_BLOCK))),
+				BiomeFilter.biome()
+		);
+	}
+
+	private static List<PlacementModifier> oreGeneration(int veinsPerChunk, int minHeight, int maxHeight){
+		return List.of(
+				CountPlacement.of(veinsPerChunk),
+				InSquarePlacement.spread(),
+				HeightRangePlacement.triangle(VerticalAnchor.absolute(minHeight), VerticalAnchor.absolute(maxHeight)),
 				BiomeFilter.biome()
 		);
 	}

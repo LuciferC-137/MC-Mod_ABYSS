@@ -52,6 +52,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get())
                 .add(BlockRegistry.ABYSSALITE_LAPIS_ORE.get())
                 .add(BlockRegistry.ABYSSALITE_COAL_ORE.get())
+                .add(BlockRegistry.ABYSSALITE_REDSTONE_ORE.get())
                 .add(BlockRegistry.RADIANCE_CRISTAL.get())
                 .add(BlockRegistry.ABYSSALITE.get())
                 .add(BlockRegistry.CHISELED_ABYSSALITE.get())
@@ -113,6 +114,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get())
                 .add(BlockRegistry.ABYSSALITE_LAPIS_ORE.get())
                 .add(BlockRegistry.ABYSSALITE_COAL_ORE.get())
+                .add(BlockRegistry.ABYSSALITE_REDSTONE_ORE.get())
                 .add(BlockRegistry.SONIC_BLASTER.get());
 
         this.tag(BlockTags.LOGS_THAT_BURN)

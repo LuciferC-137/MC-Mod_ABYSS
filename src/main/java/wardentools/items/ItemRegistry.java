@@ -387,6 +387,11 @@ public class ItemRegistry {
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
 							new Item.Properties().fireResistant()));
 
+	public static final RegistryObject<Item> ABYSSALITE_REDSTONE_ORE =
+			REGISTAR.register("abyssalite_redstone_ore",
+					() -> new BlockItem(BlockRegistry.ABYSSALITE_REDSTONE_ORE.get(),
+							new Item.Properties().fireResistant()));
+
 	public static final RegistryObject<Item> PALE_SHARD =
 			REGISTAR.register("pale_shard",
 					() -> new Item(new Item.Properties().fireResistant()));
