@@ -88,7 +88,13 @@ public class ModSurfaceRules {
                 SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WASTE_LAND), wasteLandSurface),
                 SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.WHITE_FOREST), abyssSurface),
                 SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CRYSTAL_CAVE), abyssSurface),
-                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.BLINDING_DEPTH), blindingDepthSurface)
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.BLINDING_DEPTH), blindingDepthSurface),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.AMETHYST_CAVE), abyssSurface),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.CITRINE_CAVE), abyssSurface),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.MALACHITE_CAVE), abyssSurface),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.RUBY_CAVE), abyssSurface),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.ECHO_CAVE), abyssSurface),
+                SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.PALE_CAVE), abyssSurface)
         );
 
         return SurfaceRules.sequence(

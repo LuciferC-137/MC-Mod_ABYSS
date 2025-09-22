@@ -2,7 +2,6 @@
   "carvers": {
     "air": "wardentools:abyss_cave"
   },
-  "creature_spawn_probability": 0.3,
   "downfall": 0.8,
   "effects": {
     "fog_color": 2844,
@@ -18,7 +17,7 @@
       "max_delay": 12000,
       "min_delay": 6000,
       "replace_current_music": false,
-      "sound": "wardentools:white_forest_music"
+      "sound": "wardentools:deep_forest_music"
     },
     "particle": {
       "options": {
@@ -35,7 +34,11 @@
       "wardentools:liquid_corruption_lake"
     ],
     [],
-    [],
+    [
+      "wardentools:pale_cristal_key",
+      "wardentools:pale_cristal_dw_key",
+      "wardentools:pale_vein"
+    ],
     [],
     [],
     [],
@@ -46,15 +49,19 @@
       "wardentools:deep_ore",
       "wardentools:redstone_ore"
     ],
-    [],
+    [
+      "wardentools:abyss_sculk_patch"
+    ],
     [],
     [
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
-      "wardentools:whitetree_placed",
-      "wardentools:white_grass",
-      "wardentools:tall_white_grass",
-      "wardentools:white_torchflower"
+      "wardentools:tall_depth_vines",
+      "minecraft:cave_vines",
+      "minecraft:lush_caves_clay",
+      "minecraft:lush_caves_vegetation",
+      "minecraft:spore_blossom",
+      "minecraft:classic_vines_cave_feature"
     ]
   ],
   "has_precipitation": false,
@@ -62,31 +69,12 @@
   "spawners": {
     "ambient": [],
     "axolotls": [],
-    "creature": [
-      {
-        "type": "minecraft:allay",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 10
-      },
-      {
-        "type": "wardentools:pale_wanderer",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 40
-      },
-      {
-        "type": "wardentools:noctilure",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 1
-      }
-    ],
+    "creature": [],
     "misc": [],
     "monster": [],
     "underground_water_creature": [],
     "water_ambient": [],
     "water_creature": []
   },
-  "temperature": 0.7
+  "temperature": 0.2
 }

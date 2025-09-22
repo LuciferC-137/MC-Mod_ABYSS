@@ -5,6 +5,7 @@ import java.util.OptionalLong;
 
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -27,6 +28,11 @@ import wardentools.worldgen.biome.ModBiomes;
 
 
 public class ModDimensions {
+
+    public static final float ABYSS_AMBIENT_LIGHT = 0.01F;
+    public static final float CRYSTAL_BIOMES_DEPTH = 0.7F;
+
+
 	public static final ResourceKey<LevelStem> ABYSS_KEY = ResourceKey.create(Registries.LEVEL_STEM,
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim"));
     public static final ResourceKey<Level> ABYSS_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
@@ -49,7 +55,7 @@ public class ModDimensions {
                 256, // logicalHeight
                 BlockTags.INFINIBURN_OVERWORLD, // infiniburn
                 BuiltinDimensionTypes.NETHER_EFFECTS, // Base effectsLocation
-                0.0f, // ambientLight
+                ABYSS_AMBIENT_LIGHT, // ambientLight
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
     }
 
@@ -59,25 +65,52 @@ public class ModDimensions {
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
 
         NoiseBasedChunkGenerator chunkGenerator = new NoiseBasedChunkGenerator(
-                MultiNoiseBiomeSource.createFromList(
-                        new Climate.ParameterList<>(List.of(
-                        		// Temperature(0,1), Humidity(0,1), Continentalness(0,1), Erosion(0,1), Depth(-1,1), Weirdness(0,1), Offset (0,1)
-                        		Pair.of(Climate.parameters(0.5F, 0.6F, 0.3F, 0.5F, 0.0F, 0.3F, 0.0F),
-                                        biomeRegistry.getOrThrow(ModBiomes.DEEP_FOREST)),
-                                Pair.of(Climate.parameters(0.9F, 0.2F, 0.7F, 0.2F, 0.0F, 0.5F, 0.0F),
-                                        biomeRegistry.getOrThrow(ModBiomes.WASTE_LAND)),
-                                Pair.of(Climate.parameters(0.3F, 0.6F, 0.5F, 0.8F, 0.0F, 0.8F, 0.0F),
-                                        biomeRegistry.getOrThrow(ModBiomes.WHITE_FOREST)),
-                                Pair.of(Climate.parameters(0.1F, 0.8F, 0.8F, 0.1F, 0.6F, 0.9F, 0.0F),
-                                        biomeRegistry.getOrThrow(ModBiomes.CRYSTAL_CAVE)),
-                                Pair.of(Climate.parameters(0.7F, 0.3F, 0.8F, 0.1F, 0.8F, 0.8F, 0.0F),
-                                        biomeRegistry.getOrThrow(ModBiomes.BLINDING_DEPTH))
-                        ))),
+                MultiNoiseBiomeSource.createFromList(biomes(biomeRegistry)),
                 noiseGenSettings.getOrThrow(CustomNoiseSettings.ABYSS_NOISE));
         
         //put here the selected preset
         LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimensions.ABYSS_DIM_TYPE), chunkGenerator);
 
         context.register(ABYSS_KEY, stem);
-    }    
+    }
+
+    public static Climate.ParameterList<Holder<Biome>> biomes(HolderGetter<Biome> biomeRegistry) {
+        return new Climate.ParameterList<>(List.of(
+                climate(0F, 0F, 0F, 0F, 0F, 0F,
+                        ModBiomes.DEEP_FOREST, biomeRegistry),
+                climate(0.5F, -0.2F, 0F, 0.5F, 0.0F, 0F,
+                        ModBiomes.WASTE_LAND, biomeRegistry),
+                climate(-0.5F, 0.1F, -0.5F, -0.5F, 0.0F, 0F,
+                        ModBiomes.WHITE_FOREST, biomeRegistry),
+                climate(0F, 0.5F, 0.6F, 0.1F, 0.8F, 0.3F,
+                        ModBiomes.CRYSTAL_CAVE, biomeRegistry),
+                climate(0F, 0F, 0.5F, 0F, 0.9F, 0F,
+                        ModBiomes.BLINDING_DEPTH, biomeRegistry),
+                climate(-0.1F, -0.6F, 0.8F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
+                        ModBiomes.AMETHYST_CAVE, biomeRegistry),
+                climate(0.5F, -0.1F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
+                        ModBiomes.CITRINE_CAVE, biomeRegistry),
+                climate(0.1F, 0.5F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
+                        ModBiomes.MALACHITE_CAVE, biomeRegistry),
+                climate(0.4F, -0.5F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
+                        ModBiomes.RUBY_CAVE, biomeRegistry),
+                climate(-0.5F, 0.3F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.1F,
+                        ModBiomes.ECHO_CAVE, biomeRegistry),
+                climate(-0.8F, 0.2F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.4F,
+                        ModBiomes.PALE_CAVE, biomeRegistry)
+        ));
+    }
+
+    // Helper method to create Climate.ParameterPoint with 6 parameters. Everyone is between -1 and 1.
+    public static Pair<Climate.ParameterPoint, Holder<Biome>> climate(float temperature,
+                                                                                float humidity,
+                                                                                float continentalness,
+                                                                                float erosion,
+                                                                                float depth,
+                                                                                float weirdness,
+                                                                                ResourceKey<Biome> biomeKey,
+                                                                                HolderGetter<Biome> biomeRegistry) {
+        return Pair.of(Climate.parameters(temperature, humidity, continentalness,
+                erosion, depth, weirdness, 0.0F), biomeRegistry.getOrThrow(biomeKey));
+    }
 }
