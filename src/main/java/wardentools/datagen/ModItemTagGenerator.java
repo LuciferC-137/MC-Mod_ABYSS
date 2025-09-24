@@ -80,6 +80,9 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 		this.tag(ItemTags.LEG_ARMOR_ENCHANTABLE)
 				.add(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get())
 				.add(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS.get());
+
+		this.tag(ItemTags.COMPASSES)
+			.add(ItemRegistry.CRYSTAL_RESONATOR.get());
 	}
 
 }

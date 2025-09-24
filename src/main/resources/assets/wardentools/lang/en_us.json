@@ -60,6 +60,7 @@
 	"item.wardentools.pendant_of_balance": "Pendant of Balance",
 	"item.wardentools.shadow_ornament": "Shadow Ornament",
 	"item.wardentools.light_ornament": "Light Ornament",
+	"item.wardentools.crystal_resonator": "Crystal Resonator",
 
 	"item.minecraft.potion.effect.purified_potion": "Purified Potion",
 	"item.minecraft.splash_potion.effect.purified_potion": "Splash Purified Potion",
@@ -111,6 +112,7 @@
 	"block.wardentools.sculk_tendril_block": "Sculk Tendril Block",
 	"block.wardentools.corrupted_abyssalite": "Corrupted Abyssalite",
 	"block.wardentools.living_sprout": "Living Sprout",
+	"block.wardentools.crystal_infuser": "Crystal Infuser",
 	
 	"block.wardentools.darktree_log": "Darktree Log",
 	"block.wardentools.darktree_leaves": "Darktree Leaves",

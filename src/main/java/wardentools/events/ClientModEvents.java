@@ -4,14 +4,19 @@ import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
+import wardentools.block.BlockRegistry;
+import wardentools.block.CrystalInfuserBlock;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.entity.custom.ModBoatEntity;
 import wardentools.entity.custom.ModChestBoatEntity;
+import wardentools.items.CrystalResonatorItem;
+import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;
 import wardentools.weather.lightning.AbyssLightningRenderer;
 
@@ -44,7 +49,7 @@ public class ClientModEvents {
 
 	
 	@SubscribeEvent
-	public 	static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
+	public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(DeepLurker.LAYER_LOCATION, DeepLurker::createBodyLayer);
 		event.registerLayerDefinition(PaleWanderer.LAYER_LOCATION, PaleWanderer::createBodyLayer);
 		event.registerLayerDefinition(Protector.LAYER_LOCATION, Protector::createBodyLayer);
@@ -59,5 +64,16 @@ public class ClientModEvents {
 		event.registerLayerDefinition(Shadow.LAYER_LOCATION, Shadow::createBodyLayer);
 		event.registerLayerDefinition(ContagionIncarnationCorpse.LAYER_LOCATION,
 				ContagionIncarnationCorpse::createBodyLayer);
+	}
+
+	@SubscribeEvent
+	public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+		event.register(CrystalInfuserBlock::getColor,
+				BlockRegistry.CRYSTAL_INFUSER.get());
+	}
+
+	@SubscribeEvent
+	public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+		event.register(CrystalResonatorItem::getColor, ItemRegistry.CRYSTAL_RESONATOR.get());
 	}
 }

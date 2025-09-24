@@ -60,6 +60,7 @@
 	"item.wardentools.pendant_of_balance": "Médaillon de l'Équilibre",
 	"item.wardentools.shadow_ornament": "Ornement d'Ombre",
 	"item.wardentools.light_ornament": "Ornement de Lumière",
+	"item.wardentools.crystal_resonator": "Résonateur de Cristal",
 
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -147,7 +148,8 @@
 	"block.wardentools.deepflower": "Fleur des abîmes",
 	"block.wardentools.sculk_tendril_block": "Block de vrille de sculk",
 	"block.wardentools.corrupted_abyssalite": "Abyssalite corrumpue",
-	"block.wardentools.living_sprout": "Germe vivante",
+	"block.wardentools.living_sprout": "Bourgeon vivante",
+	"block.wardentools.crystal_infuser": "Infuseur de Cristal",
 
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",

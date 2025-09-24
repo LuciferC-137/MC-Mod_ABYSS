@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "wardentools:item/crystal_resonator/crystal_resonator",
+    "layer1": "wardentools:item/crystal_resonator/crystal_resonator_04"
+  }
+}

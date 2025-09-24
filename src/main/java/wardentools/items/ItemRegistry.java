@@ -675,4 +675,15 @@ public class ItemRegistry {
 			REGISTAR.register("light_ornament",
 			() -> new Item(new Item.Properties()
 					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
+
+	public static final RegistryObject<Item> CRYSTAL_RESONATOR =
+			REGISTAR.register("crystal_resonator",
+			() -> new CrystalResonatorItem(new Item.Properties()
+					.stacksTo(1)
+					.rarity(Rarity.RARE).fireResistant()));
+
+	public static final RegistryObject<Item> CRYSTAL_INFUSER =
+			REGISTAR.register("crystal_infuser",
+			() -> new BlockItem(BlockRegistry.CRYSTAL_INFUSER.get(),
+					new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
 }

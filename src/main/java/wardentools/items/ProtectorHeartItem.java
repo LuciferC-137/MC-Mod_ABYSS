@@ -12,6 +12,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.custom.ProtectorEntity;
+import wardentools.items.utils.ItemUtils;
 
 import javax.annotation.Nullable;
 
@@ -22,7 +23,7 @@ public class ProtectorHeartItem extends Item {
 	}
 	
 	public void setProtector(ItemStack stack, ProtectorEntity protector) {
-        CompoundTag tag = this.customTag(stack);
+        CompoundTag tag = ItemUtils.customTag(stack);
         tag.putUUID("ProtectorUUID", protector.getUUID());
 		tag.putInt("ProtectorID", protector.getId());
 		stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
@@ -33,13 +34,13 @@ public class ProtectorHeartItem extends Item {
 	}
 
 	public void saveHealth(ItemStack stack, float health) {
-		CompoundTag tag = this.customTag(stack);
+		CompoundTag tag = ItemUtils.customTag(stack);
 		tag.putFloat("ProtectorHealth", health);
 		stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
 	}
 	
 	public float readHealth(ItemStack stack) {
-		CompoundTag tag = this.customTag(stack);
+		CompoundTag tag = ItemUtils.customTag(stack);
         if (tag.contains("ProtectorHealth")) {
             return tag.getFloat("ProtectorHealth");
         }
@@ -47,23 +48,17 @@ public class ProtectorHeartItem extends Item {
     }
 	
 	public @Nullable UUID getProtectorUUID(ItemStack stack) {
-		CompoundTag tag = this.customTag(stack);
+		CompoundTag tag = ItemUtils.customTag(stack);
         return tag.contains("ProtectorUUID") ? tag.getUUID("ProtectorUUID") : null;
     }
 
 	public int getProtectorID(ItemStack stack){
-		CompoundTag tag = this.customTag(stack);
+		CompoundTag tag = ItemUtils.customTag(stack);
 		return tag.contains("ProtectorID") ? tag.getInt("ProtectorID") : 0;
 	}
 	
 	public String getTextHealth(ItemStack stack) {
 		return(int)this.readHealth(stack) + "/" + (int)ProtectorEntity.MAX_HEALTH;
-	}
-
-	private CompoundTag customTag(ItemStack stack) {
-		CustomData data = stack.get(DataComponents.CUSTOM_DATA);
-		if (data == null) return new CompoundTag();
-		return data.copyTag();
 	}
 
 	@Override

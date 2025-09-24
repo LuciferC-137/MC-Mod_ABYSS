@@ -605,6 +605,12 @@ public class BlockRegistry {
 							== SculkSensorPhase.ACTIVE)
 			));
 
+	public static final RegistryObject<Block> CRYSTAL_INFUSER
+			= REGISTAR.register("crystal_infuser",
+			() -> new CrystalInfuserBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+					.noOcclusion()
+			));
+
 	private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
 		return false;
 	}

@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-21T21:56:05.2603767	Item Models: wardentools
+// 1.21.1	2025-09-24T15:57:35.8651453	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -14,6 +14,7 @@ d67bbbf9048e79b02e7557dd4baaf7d363caf0a1 assets/wardentools/models/item/corrupte
 e4a0e27e1f0fd8c69938bacd2b75669152662985 assets/wardentools/models/item/cracked_abyssalite_bricks_slab.json
 a65c533509296757326d41312eab3c4a6e224090 assets/wardentools/models/item/cracked_abyssalite_bricks_stair.json
 5dbc1a28d565f150413ede53fab47910b842c7df assets/wardentools/models/item/cracked_abyssalite_bricks_wall.json
+41d48175390c037a364df0058818befb91b4d81b assets/wardentools/models/item/crystal_infuser.json
 2db4f823d6a343d8a598793326fe6a661a1dae18 assets/wardentools/models/item/darktree_boat.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
 56691d71f6e26ed48bcd0dc29d2ef80ac9fffc15 assets/wardentools/models/item/darktree_chest_boat.json

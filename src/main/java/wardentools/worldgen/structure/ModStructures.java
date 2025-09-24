@@ -8,9 +8,12 @@ import wardentools.ModMain;
 
 public class ModStructures {
     public static final ResourceKey<Structure> SURFACE_ANCIENT_CITY
-            = createKey(ModMain.MOD_ID, "surface_ancient_city");
+            = createKey("surface_ancient_city");
+    public static final ResourceKey<Structure> ANCIENT_CITADEL
+            = createKey("ancient_citadel");
 
-    private static ResourceKey<Structure> createKey(String mod_id, String name) {
-        return ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(mod_id, name));
+    private static ResourceKey<Structure> createKey(String name) {
+        return ResourceKey.create(Registries.STRUCTURE,
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
     }
 }

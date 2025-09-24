@@ -30,6 +30,7 @@ import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 import wardentools.worldgen.structure.ModStructures;
+import wardentools.worldgen.structure.StructureUtils;
 
 import java.util.Objects;
 
@@ -123,13 +124,8 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
 
     private BlockPos findNearestStructure(ServerLevel level, ResourceKey<Structure> structureKey,
                                           BlockPos pos) {
-        // WARNING: if the dimension does not correspond to the wanted structure, this method returns 0,0,0
-        Holder<Structure> structureHolder = level.registryAccess()
-                .registryOrThrow(Registries.STRUCTURE).getHolderOrThrow(structureKey);
-        HolderSet<Structure> structureHolderSet = HolderSet.direct(structureHolder);
-        var result = level.getChunkSource().getGenerator()
-                .findNearestMapStructure(level, structureHolderSet, pos, 10000, false);
-        return result != null ? findSpawnOnPortalFrame(level, result.getFirst())
+        BlockPos nearestStructurePos = StructureUtils.findNearestStructure(level, structureKey, pos);
+        return nearestStructurePos != null ? findSpawnOnPortalFrame(level, nearestStructurePos)
                 : new BlockPos(0, 0, 0);
     }
 
@@ -197,7 +193,6 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
     public boolean canBeReplaced(@NotNull BlockState state, @NotNull Fluid fluid) {
         return false;
     }
