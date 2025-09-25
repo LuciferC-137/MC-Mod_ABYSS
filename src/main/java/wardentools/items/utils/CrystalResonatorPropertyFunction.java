@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class CrystalResonatorPropertyFunction implements ClampedItemPropertyFunction {
-    public static final int DEFAULT_ROTATION = 0;
+    public static final int ROTATION_NONE = -1;
     private final CompassWobble wobble = new CompassWobble();
     @Nullable public final CompassTarget compassTarget;
 
@@ -26,23 +26,31 @@ public class CrystalResonatorPropertyFunction implements ClampedItemPropertyFunc
         this.compassTarget = compassTarget;
     }
 
+    @Override
+    @SuppressWarnings("deprecation")
+    public float call(@NotNull ItemStack stack, @Nullable ClientLevel level,
+                      @Nullable LivingEntity entity, int tick) {
+        return unclampedCall(stack, level, entity, tick);
+    }
+
     public float unclampedCall(@NotNull ItemStack stack, @Nullable ClientLevel level,
                                @Nullable LivingEntity entity, int tick) {
         Entity stackEntity = entity != null ? entity : stack.getEntityRepresentation();
         if (stackEntity == null) {
-            return DEFAULT_ROTATION;
+            return ROTATION_NONE;
         } else {
             level = this.tryFetchLevelIfMissing(stackEntity, level);
-            return level == null ? DEFAULT_ROTATION : this.getCompassRotation(stack, level, stackEntity);
+            return level == null ? ROTATION_NONE : this.getCompassRotation(stack, level, stackEntity);
         }
     }
 
     private float getCompassRotation(ItemStack stack, ClientLevel level, Entity entity) {
-        if (this.compassTarget == null) return DEFAULT_ROTATION;
+        if (this.compassTarget == null) {
+            return ROTATION_NONE;
+        }
         GlobalPos pos = this.compassTarget.getPos(level, stack, entity);
         long time = level.getGameTime();
-        return !this.isValidCompassTargetPos(entity, pos) ?
-                DEFAULT_ROTATION :
+        return !this.isValidCompassTargetPos(entity, pos) ? ROTATION_NONE :
                 this.getRotationTowardsCompassTarget(entity, time, pos.pos());
     }
 

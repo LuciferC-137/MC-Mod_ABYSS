@@ -4,14 +4,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -21,6 +22,7 @@ import wardentools.worldgen.structure.ModStructures;
 import wardentools.worldgen.structure.StructureUtils;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class CrystalResonatorItem extends Item {
     public static final String NBT_TARGET_X = "target_x";
@@ -30,6 +32,21 @@ public class CrystalResonatorItem extends Item {
 
     public CrystalResonatorItem(Item.Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context,
+                                @NotNull List<Component> components, @NotNull TooltipFlag flag) {
+        if (ItemUtils.customTag(stack).contains(NBT_CRYSTAL_TYPE)) {
+            Crystal crystal = getCrystal(stack);
+            components.add(Component
+                    .translatable("tooltip.wardentools.crystal_resonator.infused")
+                    .append(Component.translatable("tooltip.wardentools.crystal_resonator."
+                                    + crystal.getSerializedName())
+                        .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(crystal.getColor()))))
+            );
+        }
+        super.appendHoverText(stack, context, components, flag);
     }
 
     public static @Nullable GlobalPos getTargetPosition(Level level, ItemStack stack) {
@@ -64,19 +81,10 @@ public class CrystalResonatorItem extends Item {
         return -1;
     }
 
-    public void setCrystal(ItemStack stack, Crystal crystal) {
+    public static void setCrystal(ItemStack stack, Crystal crystal) {
         CompoundTag tag = ItemUtils.customTag(stack);
         tag.putInt(NBT_CRYSTAL_TYPE, crystal.getIndex());
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-    }
-
-    @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level,
-                                                           @NotNull Player player,
-                                                           @NotNull InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        this.setCrystal(stack, Crystal.fromIndex((getCrystal(stack).getIndex() + 1) % 6));
-        return super.use(level, player, hand);
     }
 
     public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level,

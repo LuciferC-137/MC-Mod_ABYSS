@@ -176,12 +176,19 @@
 
 	"enchantment.wardentools.stealth": "Furtivité",
 
-
 	"gui.wardentools.radiance_catalyst_screen": "Catalyseur de Radiance",
 	"gui.wardentools.radiance_catalyst_screen.hover.corrupted": "matière corrompue",
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "matière purifiée",
 	"container.wardentools.radiance_catalyst_block": "Catalyseur de Radiance",
 	"container.wardentools.dysfunctionning_catalyst": "Catalyseur Dysfonctionnant",
+
+	"tooltip.wardentools.crystal_resonator.infused": "Infusé avec ",
+	"tooltip.wardentools.crystal_resonator.amethyst": "Amethyst",
+	"tooltip.wardentools.crystal_resonator.citrine": "Citrine",
+	"tooltip.wardentools.crystal_resonator.ruby": "Rubis",
+	"tooltip.wardentools.crystal_resonator.malachite": "Malachite",
+	"tooltip.wardentools.crystal_resonator.echo": "Cristal d'Echo",
+	"tooltip.wardentools.crystal_resonator.pale": "Cristal Pâle",
 
 	"sounds.wardentools.contagion_incarnation_crawl": "L'Incarnation de la Contagion rampe",
 	"sounds.wardentools.contagion_incarnation_scream": "L'Incarnation de la Contagion hurle",

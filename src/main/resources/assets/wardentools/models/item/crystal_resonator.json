@@ -4,6 +4,7 @@
         "layer0": "wardentools:crystal_resonator/crystal_resonator"
     },
     "overrides": [
+        { "predicate": { "angle": -1.00000 }, "model": "wardentools:item/crystal_resonator/crystal_resonator_empty"},
         { "predicate": { "angle": 0.000000 }, "model": "wardentools:item/crystal_resonator/crystal_resonator_16" },
         { "predicate": { "angle": 0.015625 }, "model": "wardentools:item/crystal_resonator/crystal_resonator_17" },
         { "predicate": { "angle": 0.046875 }, "model": "wardentools:item/crystal_resonator/crystal_resonator_18" },

@@ -184,6 +184,14 @@
 	"gui.wardentools.radiance_catalyst_screen.hover.pure": "Purified material",
 	"container.wardentools.radiance_catalyst_block": "Radiance Catalyst",
 	"container.wardentools.dysfunctionning_catalyst": "Dysfunctionning Catalyst",
+
+	"tooltip.wardentools.crystal_resonator.infused": "Infused with ",
+	"tooltip.wardentools.crystal_resonator.amethyst": "Amethyst",
+	"tooltip.wardentools.crystal_resonator.citrine": "Citrine",
+	"tooltip.wardentools.crystal_resonator.ruby": "Ruby",
+	"tooltip.wardentools.crystal_resonator.malachite": "Malachite",
+	"tooltip.wardentools.crystal_resonator.echo": "Echo crystal",
+	"tooltip.wardentools.crystal_resonator.pale": "Pale crystal",
 	
 	"sounds.wardentools.contagion_incarnation_crawl": "Contagion Incarnation Crawling",
 	"sounds.wardentools.contagion_incarnation_scream": "Contagion Incarnation Screams",

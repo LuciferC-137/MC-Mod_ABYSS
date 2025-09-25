@@ -47,6 +47,8 @@ public class ClientModHandler {
 				SculkTendrilBlockRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.LIVING_SPROUT_BLOCK_ENTITY.get(),
 				LivingSproutRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.CRYSTAL_INFUSER_BLOCK_ENTITY.get(),
+				CrystalInfuserRenderer::new);
 	}
 
 }

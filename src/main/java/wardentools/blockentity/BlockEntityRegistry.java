@@ -64,4 +64,9 @@ public class BlockEntityRegistry {
 					() -> BlockEntityType.Builder.of(LivingSproutBlockEntity::new,
 							BlockRegistry.LIVING_SPROUT.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<CrystalInfuserBlockEntity>> CRYSTAL_INFUSER_BLOCK_ENTITY =
+			BLOCK_ENTITIES.register("crystal_resonator_block_entity",
+					() -> BlockEntityType.Builder.of(CrystalInfuserBlockEntity::new,
+							BlockRegistry.CRYSTAL_INFUSER.get()).build(null));
+
 }

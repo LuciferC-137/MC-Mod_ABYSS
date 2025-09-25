@@ -21,5 +21,18 @@ public class ParticleRegistry {
             PARTICLE_TYPES.register("radiance", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> BLACK_CORRUPTION =
             PARTICLE_TYPES.register("black_corruption", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> AMETHYST_SHINE =
+            PARTICLE_TYPES.register("amethyst_shine", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> CITRINE_SHINE =
+            PARTICLE_TYPES.register("citrine_shine", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> RUBY_SHINE =
+            PARTICLE_TYPES.register("ruby_shine", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> MALACHITE_SHINE =
+            PARTICLE_TYPES.register("malachite_shine", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> ECHO_SHINE =
+            PARTICLE_TYPES.register("echo_shine", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> PALE_SHINE =
+            PARTICLE_TYPES.register("pale_shine", () -> new SimpleParticleType(true));
+
 
 }
