@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.ItemStackHandler;
@@ -25,14 +26,23 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.CrystalInfuserBlockEntity;
 import wardentools.misc.Crystal;
+import wardentools.network.PacketHandler;
+import wardentools.network.ParticulesSoundsEffects.ParticleShineExplosion;
+import wardentools.particle.options.ShineParticleOptions;
 
 public class CrystalInfuserBlock extends Block implements EntityBlock {
     public static final EnumProperty<Crystal> CRYSTAL;
+    private static final Vec3[] positions = new Vec3[] {
+            new Vec3(10.5F, 10F + 0.35F, 10.5F),
+            new Vec3(5.5F, 10F + 0.35F, 5.5F),
+            new Vec3(10.5F, 10F + 0.35F, 5.5F),
+            new Vec3(5.5F, 10F + 0.35F, 10.5F),
+            new Vec3(8F, 17F, 8F)
+    };
+    private static final float shineSpeed = 0.04F;
+    private static final float explosionSpeed = 0.07F;
 
-    static {
-        CRYSTAL = EnumProperty.create("crystal_index",
-                Crystal.class);
-    }
+    static {CRYSTAL = EnumProperty.create("crystal_index", Crystal.class);}
 
     public CrystalInfuserBlock(Properties properties) {
         super(properties);
@@ -126,6 +136,8 @@ public class CrystalInfuserBlock extends Block implements EntityBlock {
         if (level.getBlockEntity(pos) instanceof CrystalInfuserBlockEntity infuser) {
             if (infuser.isInfusing()) {
                 infuser.completeInfuse();
+            } else {
+                particleExplosion(state, pos, level);
             }
         }
         super.tick(state, level, pos, random);
@@ -136,20 +148,43 @@ public class CrystalInfuserBlock extends Block implements EntityBlock {
                             @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (level.getBlockEntity(pos) instanceof CrystalInfuserBlockEntity infuser) {
             if (infuser.isInfusing()) {
-                particleSpring(state, pos, level, random);
+                particleShine(state, pos, level, random);
             }
         }
         super.animateTick(state, level, pos, random);
     }
 
-    private static void particleSpring(BlockState state, BlockPos pos, Level level, RandomSource random) {
-        double px = pos.getX() + 0.5D + (random.nextDouble() - 0.5D) * 0.2D;
-        double py = pos.getY() + 1.0D + (random.nextDouble() - 0.5D) * 0.2D;
-        double pz = pos.getZ() + 0.5D + (random.nextDouble() - 0.5D) * 0.2D;
-        double vx = (random.nextDouble() - 0.5D) * 0.02D;
-        double vy = (random.nextDouble() - 0.5D) * 0.02D;
-        double vz = (random.nextDouble() - 0.5D) * 0.02D;
-        level.addParticle(state.getValue(CRYSTAL).getShineParticle(),
-                px, py, pz, vx, vy, vz);
+    private static void particleShine(BlockState state, BlockPos pos, Level level, RandomSource random) {
+
+        double baseX = pos.getX();
+        double baseY = pos.getY();
+        double baseZ = pos.getZ();
+
+        Vec3 center = positions[4].scale(1.0 / 16.0).add(baseX, baseY, baseZ);
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < random.nextInt(1, 4); j++) {
+                Vec3 from = positions[i].scale(1.0 / 16.0).add(baseX, baseY, baseZ);
+                Vec3 dir = center.subtract(from).normalize().scale(shineSpeed
+                        + (random.nextDouble() - 0.5D) * shineSpeed / 2D);
+
+                level.addParticle(new ShineParticleOptions(center, getCrystalColor(state)),
+                        from.x, from.y, from.z,
+                        dir.x, dir.y, dir.z
+                );
+            }
+        }
+    }
+
+    private static void particleExplosion(BlockState state, BlockPos pos, Level level) {
+        if (!level.isClientSide) {
+            double baseX = pos.getX();
+            double baseY = pos.getY();
+            double baseZ = pos.getZ();
+            Vec3 center = positions[4].scale(1.0 / 16.0).add(baseX, baseY, baseZ);
+            PacketHandler.sendToAllClient(new
+                    ParticleShineExplosion(center, 0.1F, explosionSpeed,
+                    40, getCrystalColor(state)));
+        }
     }
 }

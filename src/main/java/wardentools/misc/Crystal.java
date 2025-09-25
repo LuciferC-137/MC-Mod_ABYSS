@@ -1,6 +1,5 @@
 package wardentools.misc;
 
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -9,7 +8,6 @@ import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
-import wardentools.particle.ParticleRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,33 +17,27 @@ public enum Crystal implements StringRepresentable {
     AMETHYST(0, 0x8e42f6,
             () -> Blocks.AMETHYST_BLOCK,
             () -> Blocks.AMETHYST_CLUSTER,
-            () -> Items.AMETHYST_SHARD,
-            ParticleRegistry.AMETHYST_SHINE),
+            () -> Items.AMETHYST_SHARD),
     RUBY(1, 0xed2525,
             BlockRegistry.RUBY_BLOCK,
             BlockRegistry.RUBY,
-            ItemRegistry.RUBY_FRAGMENT,
-            ParticleRegistry.RUBY_SHINE),
+            ItemRegistry.RUBY_FRAGMENT),
     CITRINE(2, 0xffc200,
             BlockRegistry.CITRINE_BLOCK,
             BlockRegistry.CITRINE,
-            ItemRegistry.CITRINE_FRAGMENT,
-            ParticleRegistry.CITRINE_SHINE),
+            ItemRegistry.CITRINE_FRAGMENT),
     MALACHITE(3, 0x10b058,
             BlockRegistry.MALACHITE_BLOCK,
             BlockRegistry.MALACHITE,
-            ItemRegistry.MALACHITE_FRAGMENT,
-            ParticleRegistry.MALACHITE_SHINE),
+            ItemRegistry.MALACHITE_FRAGMENT),
     ECHO(4, 0x244b69,
             BlockRegistry.ECHO_BLOCK,
             BlockRegistry.ECHO_BLOCK,
-            () -> Items.ECHO_SHARD,
-            ParticleRegistry.ECHO_SHINE),
+            () -> Items.ECHO_SHARD),
     PALE(5, 0x1be4eb,
             BlockRegistry.PALE_CRISTAL_BLOCK,
             BlockRegistry.PALE_CRISTAL,
-            ItemRegistry.PALE_SHARD,
-            ParticleRegistry.PALE_SHINE);
+            ItemRegistry.PALE_SHARD);
 
     private static class LazyMaps {
         private static final Map<Integer, Crystal> BY_INDEX = buildIndexMap();
@@ -83,16 +75,14 @@ public enum Crystal implements StringRepresentable {
     private final Supplier<Block> crystalBlock;
     private final Supplier<Block> crystalBud;
     private final Supplier<Item> shard;
-    private final Supplier<SimpleParticleType> shineParticle;
 
     Crystal(int index, int color, Supplier<Block> block, Supplier<Block> bud,
-            Supplier<Item> shard, Supplier<SimpleParticleType> shineParticle) {
+            Supplier<Item> shard) {
         this.index = index;
         this.color = color;
         this.crystalBlock = block;
         this.crystalBud = bud;
         this.shard = shard;
-        this.shineParticle = shineParticle;
     }
 
     public Block getCrystalBlock() { return crystalBlock.get(); }
@@ -105,7 +95,6 @@ public enum Crystal implements StringRepresentable {
     public float getRed() {return ((color >> 16) & 0xFF) / 255F;}
     public float getGreen() {return ((color >> 8) & 0xFF) / 255F;}
     public float getBlue() {return (color & 0xFF) / 255F;}
-    public SimpleParticleType getShineParticle() { return shineParticle.get(); }
 
     public static Crystal fromIndex(int index) {
         return LazyMaps.BY_INDEX.getOrDefault(index, getDefault());

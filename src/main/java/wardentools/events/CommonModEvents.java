@@ -105,17 +105,7 @@ public class CommonModEvents {
 				Radiance.Provider::new);
 		Minecraft.getInstance().particleEngine.register(ParticleRegistry.BLACK_CORRUPTION.get(),
 				BlackCorruption.Provider::new);
-		Minecraft.getInstance().particleEngine.register(ParticleRegistry.AMETHYST_SHINE.get(),
-				AmethystShine.Provider::new);
-		Minecraft.getInstance().particleEngine.register(ParticleRegistry.CITRINE_SHINE.get(),
-				CitrineShine.Provider::new);
-		Minecraft.getInstance().particleEngine.register(ParticleRegistry.RUBY_SHINE.get(),
-				RubyShine.Provider::new);
-		Minecraft.getInstance().particleEngine.register(ParticleRegistry.MALACHITE_SHINE.get(),
-				MalachiteShine.Provider::new);
-		Minecraft.getInstance().particleEngine.register(ParticleRegistry.ECHO_SHINE.get(),
-				EchoShine.Provider::new);
-		Minecraft.getInstance().particleEngine.register(ParticleRegistry.PALE_SHINE.get(),
-				PaleShine.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.SHINE_PARTICLE.get(),
+				ShineParticle.Provider::new);
 	}
 }

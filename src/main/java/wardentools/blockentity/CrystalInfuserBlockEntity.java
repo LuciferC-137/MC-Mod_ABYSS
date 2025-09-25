@@ -139,6 +139,8 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
         }
         this.inventory.setStackInSlot(4, resonator);
         this.isInfusing = false;
+        if (this.level != null) this.level.scheduleTick(this.worldPosition,
+                this.getBlockState().getBlock(), 1);
         this.sendUpdate();
     }
 

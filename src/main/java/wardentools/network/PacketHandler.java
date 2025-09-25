@@ -174,6 +174,11 @@ public class PacketHandler {
 				.decoder(LivingSproutBurstPacket::new)
 				.consumerMainThread(LivingSproutBurstPacket::handle)
 				.add();
+		INSTANCE.messageBuilder(ParticleShineExplosion.class, NetworkDirection.PLAY_TO_CLIENT)
+				.encoder(ParticleShineExplosion::encode)
+				.decoder(ParticleShineExplosion::new)
+				.consumerMainThread(ParticleShineExplosion::handle)
+				.add();
 
 	}
 
