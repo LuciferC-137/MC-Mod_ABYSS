@@ -13,13 +13,10 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.ContagionIncarnationAnimation;
 import wardentools.entity.custom.ContagionIncarnationEntity;
-import wardentools.entity.custom.ContagionIncarnationPart;
 
 @SuppressWarnings("unused")
 public class ContagionIncarnation extends HierarchicalModel<ContagionIncarnationEntity> {

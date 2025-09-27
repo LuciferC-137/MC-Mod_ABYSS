@@ -61,6 +61,7 @@
 	"item.wardentools.shadow_ornament": "Shadow Ornament",
 	"item.wardentools.light_ornament": "Light Ornament",
 	"item.wardentools.crystal_resonator": "Crystal Resonator",
+	"item.wardentools.crystal_golem_spawn_egg": "Crystal Golem Spawn egg",
 
 	"item.minecraft.potion.effect.purified_potion": "Purified Potion",
 	"item.minecraft.splash_potion.effect.purified_potion": "Splash Purified Potion",
@@ -166,6 +167,7 @@
 	"entity.wardentools.noctilure": "Noctilure",
 	"entity.wardentools.shadow": "Shadow",
 	"entity.wardentools.contagion_incarnation_corpse": "Contagion Incarnation Corpse",
+	"entity.wardentools.crystal_golem": "Crystal Golem",
 	
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",

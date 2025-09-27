@@ -45,6 +45,7 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.CONTAGION_INCARNATION_CORPSE.get(),
 				ContagionIncarnationCorpseRenderer::new);
 		event.registerEntityRenderer(ModEntities.ABYSS_LIGHTNING.get(), AbyssLightningRenderer::new);
+		event.registerEntityRenderer(ModEntities.CRYSTAL_GOLEM.get(), CrystalGolemRenderer::new);
 	}
 
 	
@@ -64,6 +65,7 @@ public class ClientModEvents {
 		event.registerLayerDefinition(Shadow.LAYER_LOCATION, Shadow::createBodyLayer);
 		event.registerLayerDefinition(ContagionIncarnationCorpse.LAYER_LOCATION,
 				ContagionIncarnationCorpse::createBodyLayer);
+		event.registerLayerDefinition(CrystalGolem.LAYER_LOCATION, CrystalGolem::createBodyLayer);
 	}
 
 	@SubscribeEvent

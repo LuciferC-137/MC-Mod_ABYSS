@@ -37,15 +37,18 @@ public class CrystalResonatorItem extends Item {
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context,
                                 @NotNull List<Component> components, @NotNull TooltipFlag flag) {
+        Crystal crystal;
         if (ItemUtils.customTag(stack).contains(NBT_CRYSTAL_TYPE)) {
-            Crystal crystal = getCrystal(stack);
-            components.add(Component
-                    .translatable("tooltip.wardentools.crystal_resonator.infused")
-                    .append(Component.translatable("tooltip.wardentools.crystal_resonator."
-                                    + crystal.getSerializedName())
-                        .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(crystal.getColor()))))
-            );
+            crystal = getCrystal(stack);
+        } else {
+            crystal = Crystal.getDefault();
         }
+        components.add(Component
+                .translatable("tooltip.wardentools.crystal_resonator.infused")
+                .append(Component.translatable("tooltip.wardentools.crystal_resonator."
+                                + crystal.getSerializedName())
+                        .setStyle(Style.EMPTY.withColor(TextColor.fromRgb(crystal.getColor()))))
+        );
         super.appendHoverText(stack, context, components, flag);
     }
 

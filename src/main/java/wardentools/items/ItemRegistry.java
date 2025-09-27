@@ -686,4 +686,9 @@ public class ItemRegistry {
 			REGISTAR.register("crystal_infuser",
 			() -> new BlockItem(BlockRegistry.CRYSTAL_INFUSER.get(),
 					new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
+
+	public static final RegistryObject<Item> CRYSTAL_GOLEM_SPAWN_EGG =
+			REGISTAR.register("crystal_golem_spawn_egg",
+					() -> new CustomSpawnEggItem(ModEntities.CRYSTAL_GOLEM, 0x6e7474, 0x74673b,
+							new Item.Properties()));
 }

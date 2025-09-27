@@ -46,6 +46,7 @@ public class CommonModEvents {
 		event.put(ModEntities.SHADOW.get(), ShadowEntity.createAttribute().build());
 		event.put(ModEntities.CONTAGION_INCARNATION_CORPSE.get(),
 				ContagionIncarnationCorpseEntity.createAttribute().build());
+		event.put(ModEntities.CRYSTAL_GOLEM.get(), CrystalGolemEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
@@ -89,6 +90,11 @@ public class CommonModEvents {
 				SpawnPlacementTypes.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
 				ShadowEntity::canSpawn,
+				SpawnPlacementRegisterEvent.Operation.OR);
+		event.register(ModEntities.CRYSTAL_GOLEM.get(),
+				SpawnPlacementTypes.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING,
+				CrystalGolemEntity::canSpawn,
 				SpawnPlacementRegisterEvent.Operation.OR);
     }
 

@@ -61,6 +61,7 @@
 	"item.wardentools.shadow_ornament": "Ornement d'Ombre",
 	"item.wardentools.light_ornament": "Ornement de Lumière",
 	"item.wardentools.crystal_resonator": "Résonateur de Cristal",
+	"item.wardentools.crystal_golem_spawn_egg": "Oeuf d'apparition de Golem-Cristal",
 
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -162,6 +163,7 @@
 	"entity.wardentools.noctilure": "Noctilure",
 	"entity.wardentools.shadow": "Ombre",
 	"entity.wardentools.contagion_incarnation_corpse": "Cadavre de l'Incarnation de la Contagion",
+	"entity.wardentools.crystal_golem": "Golem-Cristal",
 
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",

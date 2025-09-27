@@ -138,6 +138,7 @@ public class ModCreativeTabs {
         addItemToTag(Tag.EGG, ItemRegistry.CONTAGION_INCARNATION_EGG);
         addItemToTag(Tag.EGG, ItemRegistry.NOCTILURE_EGG);
         addItemToTag(Tag.EGG, ItemRegistry.SHADOW_EGG);
+        addItemToTag(Tag.EGG, ItemRegistry.CRYSTAL_GOLEM_SPAWN_EGG);
 
         addItemToTag(Tag.CORRUPTED, ItemRegistry.WARDEN_HEART);
         addItemToTag(Tag.CORRUPTED, ItemRegistry.CORRUPTED_ESSENCE);
