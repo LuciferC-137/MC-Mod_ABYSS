@@ -93,9 +93,15 @@ public class CrystalGolem extends HierarchicalModel<CrystalGolemEntity> {
 	}
 
 	@Override
-	public void setupAnim(@NotNull CrystalGolemEntity entity, float limbSwing,
+	public void setupAnim(@NotNull CrystalGolemEntity golem, float limbSwing,
 						  float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
+
+		animate(golem.deactivatedState1, CrystalGolemAnimation.deactivate_1, ageInTicks);
+		animate(golem.deactivatedState2, CrystalGolemAnimation.deactivate_2, ageInTicks);
+		animate(golem.lightingState, CrystalGolemAnimation.lighting_candle, ageInTicks);
+		animate(golem.randomLookAround, CrystalGolemAnimation.look_around, ageInTicks);
+		animate(golem.reactivateFrom2, CrystalGolemAnimation.rise, ageInTicks);
 
 		animateWalk(CrystalGolemAnimation.walking, limbSwing * 10F, limbSwingAmount * 10F, 1F, 2.5F);
 	}
