@@ -21,9 +21,13 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import wardentools.entity.utils.CrystalGolemNavigation;
 import wardentools.entity.utils.goal.LightCandleGoal;
 import wardentools.misc.Crystal;
+import wardentools.particle.ModParticleUtils;
+import wardentools.particle.options.ShineParticleOptions;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -33,6 +37,10 @@ public class CrystalGolemEntity extends PathfinderMob {
 	private static final EntityDataAccessor<Integer> CRYSTAL =
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> STATE =
+			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<BlockPos> CURRENT_CANDLE_TARGET =
+			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.BLOCK_POS);
+	private static final EntityDataAccessor<Integer> LASER_TICK =
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.INT);
 
 	private final List<BlockPos> unlitCandles = new ArrayList<>();
@@ -57,6 +65,21 @@ public class CrystalGolemEntity extends PathfinderMob {
 
 	private static final int TURNING_ON_DURATION = 110;
 	private int turningOnTick = 0;
+	private boolean flickerState = false;
+	private int nextFlickerScheduledTick = 0;
+
+	private static final int FADING_DURATION = 60;
+	private int turningOffTick = 0;
+
+	private static final float PARTICLE_SPEED = 0.2F;
+
+	private GolemState previousState = GolemState.DEACTIVATED_2;
+	private static final int MAX_TIME_AWAKE_WITHOUT_GOAL = 1200;
+	private int timeAwakeWithoutGoal = 0;
+
+	public static final int LASER_DURATION = 80;
+	private static final float LASER_POSITION_MIN = 1.875F;
+	private static final float LASER_POSITION_MAX = 2.25F;
 
 	static {
 		for (int x = -CANDLE_RADIUS; x <= CANDLE_RADIUS; x++) {
@@ -70,6 +93,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 
 	public CrystalGolemEntity(EntityType<? extends PathfinderMob> entity, Level level) {
 		super(entity, level);
+		this.navigation = new CrystalGolemNavigation(this, level);
 	}
 
 	@Override
@@ -80,7 +104,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 	public static AttributeSupplier.Builder createAttribute(){
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MAX_HEALTH, 30.0D)
-				.add(Attributes.MOVEMENT_SPEED, 0.1D)
+				.add(Attributes.MOVEMENT_SPEED, 0.12D)
 				.add(Attributes.ATTACK_DAMAGE, 3.0D);
 	}
 
@@ -89,58 +113,197 @@ public class CrystalGolemEntity extends PathfinderMob {
 		super.defineSynchedData(builder);
 		builder.define(CRYSTAL, Crystal.getDefault().getIndex());
 		builder.define(STATE, GolemState.DEACTIVATED_2.getId());
+		builder.define(CURRENT_CANDLE_TARGET, BlockPos.ZERO);
+		builder.define(LASER_TICK, 0);
 	}
 
 	@Override
 	public void tick() {
 		if (!this.level().isClientSide) {
-			if (this.restPos == null) {
-				this.restPos = this.getOnPos();
-			}
-			for (int i = 0; i < CANDLE_CHECKS_PER_TICKS; i++) {
-				if (isCurrentCandlePosUnlit()) {
-					this.addUnlitCandle(this.getCurrentCheckBlockPos());
-				}
-				this.nextPosCheck();
-			}
+			this.handleTimeAwake();
+			this.handleCandleCheck();
+			this.laserTick();
 			if (LightCandleGoal.wouldLikeToStart(this) && !this.isActive()) {
 				this.setState(GolemState.TURNING_ON);
 			}
-			if (this.getState() == GolemState.TURNING_ON) {
-				if (this.turningOnTick == 0) {
-					this.turningOnTick = TURNING_ON_DURATION;
-				} else {
-					this.turningOnTick--;
-					if (this.turningOnTick == 0) {
-						this.setState(GolemState.TRAVELING);
-					}
+		} else {
+			this.handleAnimationStates();
+			this.animationTickDownAndRandomTrigger();
+			if (this.getState() == GolemState.LIGHT) {
+				this.lightingCandleParticleEffect();
+			}
+			if (this.getLaserTick() > 0) {
+				this.laserChargingParticleEffect();
+			}
+		}
+		this.handleTurningOffTick();
+		this.handleTurningOnTick();
+		super.tick();
+	}
+
+	private void laserTick() {
+		if (this.getState() == GolemState.CHARGING_LASER) {
+			if (this.getLaserTick() == 0) {
+				this.setLaserTick(LASER_DURATION);
+			} else {
+				this.setLaserTick(this.getLaserTick() - 1);
+				if (this.getLaserTick() == 0 && !this.level().isClientSide()) {
+					this.shootLaser();
+					this.setState(GolemState.TRAVELING);
 				}
 			}
 		} else {
-			this.deactivatedState1.animateWhen(
-					this.getState() == GolemState.DEACTIVATED_1, tickCount);
-			this.deactivatedState2.animateWhen(
-					this.getState() == GolemState.DEACTIVATED_2, tickCount);
-			this.lightingState.animateWhen(
-					this.getState() == GolemState.LIGHT, tickCount);
-			this.randomLookAround.animateWhen(this.lookAroundTickDown > 0, tickCount);
-			this.reactivateFrom2.animateWhen(
-					this.getState() == GolemState.TURNING_ON, tickCount);
-
-			this.animationTickDownAndRandomTrigger();
+			this.setLaserTick(0);
 		}
-		super.tick();
+	}
+
+	private void shootLaser() {
+		//TODO
+	}
+
+	private void handleTimeAwake() {
+		if (this.isActive() && !LightCandleGoal.wouldLikeToStart(this)) {
+			this.timeAwakeWithoutGoal++;
+			if (this.timeAwakeWithoutGoal > MAX_TIME_AWAKE_WITHOUT_GOAL) {
+				this.setState(GolemState.DEACTIVATED_1);
+				this.timeAwakeWithoutGoal = 0;
+			}
+		} else {
+			this.timeAwakeWithoutGoal = 0;
+		}
+	}
+
+	private void handleCandleCheck() {
+		if (this.restPos == null) {
+			this.restPos = this.getOnPos();
+		}
+		for (int i = 0; i < CANDLE_CHECKS_PER_TICKS; i++) {
+			if (isCurrentCandlePosUnlit()) {
+				this.addUnlitCandle(this.getCurrentCheckBlockPos());
+			}
+			this.nextPosCheck();
+		}
+	}
+
+	private void handleTurningOnTick() {
+		// Turning On Tick
+		if (this.turningOnTick > 0) {
+			this.turningOnTick--;
+			if (this.turningOnTick == 0 && !this.level().isClientSide()) {
+				this.setState(GolemState.TRAVELING);
+			}
+		}
+		// Flickering Logic
+		if (this.turningOnTick > 0) {
+			if (nextFlickerScheduledTick <= this.tickCount) {
+				this.flickerState = !this.flickerState;
+
+				if (this.flickerState) {
+					int flickerNumber = (TURNING_ON_DURATION - this.turningOnTick) / 5;
+					int onDuration = level().getRandom().nextInt(1, 3)
+							+ flickerNumber * level().getRandom().nextInt(1, 3);
+					this.nextFlickerScheduledTick = this.tickCount + onDuration;
+				} else {
+					this.nextFlickerScheduledTick = this.tickCount + 3;
+				}
+			}
+		} else {
+			this.flickerState = this.isActive() || this.turningOffTick > 0;
+		}
+	}
+
+	private void handleTurningOffTick() {
+		if (this.turningOffTick > 0) {
+			this.turningOffTick--;
+		}
+	}
+
+	private void handleAnimationStates() {
+		this.deactivatedState1.animateWhen(
+				this.getState() == GolemState.DEACTIVATED_1, tickCount);
+		this.deactivatedState2.animateWhen(
+				this.getState() == GolemState.DEACTIVATED_2, tickCount);
+		this.lightingState.animateWhen(
+				this.getState() == GolemState.LIGHT, tickCount);
+		this.randomLookAround.animateWhen(this.lookAroundTickDown > 0
+				&& this.isActive(), tickCount);
+		this.reactivateFrom2.animateWhen(
+				this.getState() == GolemState.TURNING_ON, tickCount);
 	}
 
 	private void animationTickDownAndRandomTrigger() {
 		if (this.lookAroundTickDown > 0) {
 			this.lookAroundTickDown--;
 		}
-		if (this.isActive()) {
+		if (this.isActive() && this.getState() != GolemState.CHARGING_LASER) {
 			if (this.level().getRandom().nextInt(LOOK_TICK_PER_PROB) == 0) {
 				this.lookAroundTickDown = LOOK_AROUND_DURATION;
 			}
 		}
+	}
+
+	public void laserChargingParticleEffect() {
+		if (this.level().isClientSide) {
+			Vec3 emissionPos = this.position()
+					.add(0, this.getLaserChargingPosition(), 0);
+			RandomSource random = this.level().getRandom();
+			for (int i = 0; i < (LASER_DURATION - this.getLaserTick()) / 7; i++) {
+				Vec3 direction = emissionPos.subtract(emissionPos
+								.offsetRandom(random, 1F)).normalize().scale(0.3F);
+				ModParticleUtils.addClientParticle(this.level(),
+						new ShineParticleOptions(direction, this.getCrystal().getColorARGB()),
+						emissionPos, direction);
+			}
+		}
+	}
+
+	public void lightingCandleParticleEffect() {
+		if (this.level().isClientSide) {
+			BlockPos targetPos = this.getCurrentCandleTarget();
+			if (!targetPos.equals(BlockPos.ZERO)) {
+				Vec3 target = targetPos.getCenter();
+				target = target.offsetRandom(this.level().getRandom(),
+						0.1F);
+				target.add(0, -0.1F, 0);
+				Vec3 emissionPos = this.position().add(0, 0.7F, 0);
+				emissionPos = emissionPos.offsetRandom(this.level().getRandom(),
+						0.2F);
+				// Adjust target slightly away from emission position
+				target = target.add(target.subtract(emissionPos).scale(0.1F));
+				ModParticleUtils.addClientParticle(this.level(),
+						new ShineParticleOptions(target, this.getCrystal().getColorARGB()),
+						emissionPos, target, PARTICLE_SPEED);
+			}
+		}
+	}
+
+	public int getFadedColor() {
+		if (this.turningOffTick > 0) {
+			float progress = (FADING_DURATION - this.turningOffTick) / (float)FADING_DURATION;
+			int alpha = (int)(255 * (1.0f - progress));
+			return this.getCrystal().getColorARGB() & 0x00FFFFFF | (alpha << 24);
+		}
+		return this.getCrystal().getColorARGB();
+	}
+
+	public float getLaserChargingPosition() {
+		return ((float)LASER_DURATION - (float)this.getLaserTick())
+				/ (float)LASER_DURATION * (LASER_POSITION_MAX - LASER_POSITION_MIN) + LASER_POSITION_MIN;
+	}
+
+	public boolean getFlickerState() {return this.flickerState;	}
+
+	public void onTurningOff() {
+		this.turningOffTick = FADING_DURATION;
+		this.nextFlickerScheduledTick = 0;
+		this.turningOnTick = 0;
+	}
+
+	public void onTurningOn() {
+		this.turningOnTick = TURNING_ON_DURATION;
+		this.turningOffTick = 0;
+		this.flickerState = true;
+		this.nextFlickerScheduledTick = this.tickCount + 1;
 	}
 
 	public List<BlockPos> getUnlitCandles() {
@@ -149,6 +312,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 
 	public void addUnlitCandle(BlockPos pos) {
 		if (!unlitCandles.contains(pos)) {
+			if (unlitCandles.isEmpty()) {
+				this.setCurrentCandleTarget(pos.immutable());
+			}
 			unlitCandles.add(pos.immutable());
 		}
 	}
@@ -156,6 +322,11 @@ public class CrystalGolemEntity extends PathfinderMob {
 	public void pollUnlitCandle() {
 		if (!unlitCandles.isEmpty()) {
 			unlitCandles.removeFirst();
+			if (!unlitCandles.isEmpty()) {
+				this.setCurrentCandleTarget(unlitCandles.getFirst());
+			} else {
+				this.setCurrentCandleTarget(BlockPos.ZERO);
+			}
 		}
 	}
 
@@ -164,14 +335,36 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	public boolean isActive() {
-		return this.getState() != GolemState.DEACTIVATED_1
-				&& this.getState() != GolemState.DEACTIVATED_2
+		return !isDeactivated(this.getState())
 				&& this.getState() != GolemState.TURNING_ON;
+	}
+
+	public static boolean isDeactivated(GolemState state) {
+		return state == GolemState.DEACTIVATED_1
+				|| state == GolemState.DEACTIVATED_2;
 	}
 
 	public BlockPos getRestPos() {return this.restPos == null ? BlockPos.ZERO : this.restPos;}
 
-	public void setState(GolemState state) {this.entityData.set(STATE, state.getId());}
+	public void setCurrentCandleTarget(BlockPos pos) {
+		this.entityData.set(CURRENT_CANDLE_TARGET, pos);
+	}
+
+	public BlockPos getCurrentCandleTarget() {
+		return this.entityData.get(CURRENT_CANDLE_TARGET);
+	}
+
+	public void setLaserTick(int tick) {
+		this.entityData.set(LASER_TICK, tick);
+	}
+
+	public int getLaserTick() {
+		return this.entityData.get(LASER_TICK);
+	}
+
+	public void setState(GolemState state) {
+		this.entityData.set(STATE, state.getId());
+	}
 
 	public GolemState getState() {return GolemState.fromId(this.entityData.get(STATE));}
 
@@ -195,7 +388,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		return restPos.offset(relativePos.getX(), relativePos.getY(), relativePos.getZ());
 	}
 
-	public void lightCandlePos() {
+	public void lightCandleAtPos() {
 		if (this.level().isClientSide) return;
 		if (!this.unlitCandles.isEmpty()) {
 			BlockState state = this.level().getBlockState(this.unlitCandles.getFirst());
@@ -217,13 +410,33 @@ public class CrystalGolemEntity extends PathfinderMob {
 	@Override
 	protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
 		this.setCrystalType(Crystal.fromIndex(this.getCrystal().getIndex() + 1));
+		this.setState(GolemState.CHARGING_LASER);
 		return InteractionResult.SUCCESS;
+	}
+
+	@Override
+	public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+
+		if (key.equals(STATE)) {
+			GolemState newState = this.getState();
+			if (newState != this.previousState) {
+				if (isDeactivated(newState) && !isDeactivated(this.previousState)) {
+					this.onTurningOff();
+				}
+				if (newState == GolemState.TURNING_ON && isDeactivated(this.previousState)) {
+					this.onTurningOn();
+				}
+				this.previousState = newState;
+			}
+		}
 	}
 
 	@Override
 	public void addAdditionalSaveData(@NotNull CompoundTag tag) {
 		tag.putInt("crystal_type", entityData.get(CRYSTAL));
 		tag.putInt("state", this.getState().getId());
+		tag.putInt("laser_tick", this.getLaserTick());
 		super.addAdditionalSaveData(tag);
 	}
 
@@ -233,9 +446,14 @@ public class CrystalGolemEntity extends PathfinderMob {
 			this.setCrystalType(Crystal.fromIndex(tag.getInt("crystal_type")));
 		}
 		if (tag.contains("state")) {
-			this.setState(GolemState.fromId(tag.getInt("state")));
+			this.previousState = GolemState.fromId(tag.getInt("state"));
+			this.setState(this.previousState);
+		}
+		if (tag.contains("laser_tick")) {
+			this.setLaserTick(tag.getInt("laser_tick"));
 		}
 		super.readAdditionalSaveData(tag);
+		this.flickerState = this.isActive();
 	}
 
 	public static boolean canSpawn(EntityType<CrystalGolemEntity> entityType, ServerLevelAccessor level,
@@ -269,7 +487,8 @@ public class CrystalGolemEntity extends PathfinderMob {
 		DEACTIVATED_2(1),
 		LIGHT(2),
 		TRAVELING(3),
-		TURNING_ON(4);
+		TURNING_ON(4),
+		CHARGING_LASER(5);
 
 		private final int id;
 		GolemState(int id) { this.id = id; }
@@ -279,7 +498,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 			for (GolemState s : values()) {
 				if (s.id == id) return s;
 			}
-			return DEACTIVATED_1;
+			return TRAVELING;
 		}
 	}
 

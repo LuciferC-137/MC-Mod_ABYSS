@@ -103,6 +103,7 @@ public class CrystalGolem extends HierarchicalModel<CrystalGolemEntity> {
 		animate(golem.randomLookAround, CrystalGolemAnimation.look_around, ageInTicks);
 		animate(golem.reactivateFrom2, CrystalGolemAnimation.rise, ageInTicks);
 
-		animateWalk(CrystalGolemAnimation.walking, limbSwing * 10F, limbSwingAmount * 10F, 1F, 2.5F);
+		animateWalk(CrystalGolemAnimation.walking, limbSwing * 11F,
+				limbSwingAmount * 11F, 1F, 2.5F);
 	}
 }

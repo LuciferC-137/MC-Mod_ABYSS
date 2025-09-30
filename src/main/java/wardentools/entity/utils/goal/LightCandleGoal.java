@@ -12,9 +12,13 @@ public class LightCandleGoal extends Goal {
     private final CrystalGolemEntity golem;
     public Phase phase = Phase.TRAVEL;
     private static final int LIGHT_PHASE_DURATION = 40;
+    private static final int TIME_TO_LIGHT = 30;
     private static final double SPEED = 1D;
-    private static final int POS_ACCURACY = 1;
-    private int light_tick = 0;
+    private static final int POS_ACCURACY = 0;
+    private int lightTick = 0;
+
+    private static final int TIMEOUT = 2000;
+    private int timeoutTick = 0;
 
     public LightCandleGoal(CrystalGolemEntity golem) {
         this.golem = golem;
@@ -22,10 +26,12 @@ public class LightCandleGoal extends Goal {
 
     @Override
     public void start() {
+        this.timeoutTick = 0;
         this.changePhaseTo(Phase.TRAVEL);
         BlockPos targetPos = golem.peekUnlitCandle();
         Vec3 target = targetPos.getCenter();
         if (!golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED)) {
+            golem.pollUnlitCandle();
             this.stop();
         }
     }
@@ -46,6 +52,10 @@ public class LightCandleGoal extends Goal {
 
     @Override
     public void tick() {
+        this.timeoutTick ++;
+        if (this.timeoutTick > TIMEOUT) {
+            this.stop();
+        }
         if (this.phase == Phase.TRAVEL && golem.getNavigation().isDone()) {
             BlockPos targetPos = golem.peekUnlitCandle();
             if (targetPos != BlockPos.ZERO) {
@@ -69,11 +79,13 @@ public class LightCandleGoal extends Goal {
             }
         }
         if (this.phase == Phase.LIGHT) {
-            this.light_tick++;
-            if (this.light_tick > LIGHT_PHASE_DURATION) {
-                this.golem.lightCandlePos();
+            this.lightTick++;
+            if (this.lightTick == TIME_TO_LIGHT) {
+                this.golem.lightCandleAtPos();
+            }
+            if (this.lightTick > LIGHT_PHASE_DURATION) {
                 this.golem.pollUnlitCandle();
-                this.light_tick = 0;
+                this.lightTick = 0;
                 if (!golem.getUnlitCandles().isEmpty()) {
                     this.changePhaseTo(Phase.TRAVEL);
                     BlockPos next = golem.peekUnlitCandle();
@@ -95,7 +107,10 @@ public class LightCandleGoal extends Goal {
 
     @Override
     public void stop() {
-        this.light_tick = 0;
+        this.lightTick = 0;
+        this.timeoutTick = 0;
+        this.phase = Phase.TRAVEL;
+        this.golem.getUnlitCandles().clear(); // For more safety
         this.golem.setState(CrystalGolemEntity.GolemState.DEACTIVATED_2);
     }
 
