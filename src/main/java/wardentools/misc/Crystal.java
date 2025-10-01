@@ -32,7 +32,7 @@ public enum Crystal implements StringRepresentable {
             ItemRegistry.MALACHITE_FRAGMENT),
     ECHO(4, 0x244b69,
             BlockRegistry.ECHO_BLOCK,
-            BlockRegistry.ECHO_BLOCK,
+            BlockRegistry.ECHO_CRISTAL,
             () -> Items.ECHO_SHARD),
     PALE(5, 0x1be4eb,
             BlockRegistry.PALE_CRISTAL_BLOCK,

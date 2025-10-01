@@ -12,10 +12,11 @@ import wardentools.particle.options.ShineParticleOptions;
 public class ShineParticle extends TextureSheetParticle {
     private final Vec3 goal;
     private final boolean emissive;
+    private final boolean hasGoal;
 
     protected ShineParticle(ClientLevel level, double x, double y, double z,
                             SpriteSet spriteSet, double xd, double yd, double zd,
-                            Vec3 goal, int color, boolean emissive) {
+                            Vec3 goal, int color, boolean emissive, boolean hasGoal) {
         super(level, x, y, z, xd, yd, zd);
         this.xd = xd;
         this.yd = yd;
@@ -25,6 +26,7 @@ public class ShineParticle extends TextureSheetParticle {
         this.lifetime = 40;
         this.goal = goal;
         this.emissive = emissive;
+        this.hasGoal = hasGoal;
         this.setSpriteFromAge(spriteSet);
         this.setColor(((color >> 16) & 0xFF) / 255F,
                 ((color >> 8) & 0xFF) / 255F,
@@ -39,11 +41,12 @@ public class ShineParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
-
-        double distanceSq = this.getPos().distanceToSqr(this.goal);
-        if (distanceSq < 0.005) {
-            this.remove();
-            return;
+        if (this.hasGoal) {
+            double distanceSq = this.getPos().distanceToSqr(this.goal);
+            if (distanceSq < 0.005) {
+                this.remove();
+                return;
+            }
         }
         this.fadeOut();
     }
@@ -66,7 +69,7 @@ public class ShineParticle extends TextureSheetParticle {
         public Particle createParticle(ShineParticleOptions opts, @NotNull ClientLevel level,
                                        double x, double y, double z, double dx, double dy, double dz) {
             ShineParticle p = new ShineParticle(level, x, y, z, this.sprites, dx, dy, dz,
-                    opts.goal(), opts.color(), opts.emissive());
+                    opts.goal(), opts.color(), opts.emissive(), opts.hasGoal());
             p.pickSprite(this.sprites);
             return p;
         }

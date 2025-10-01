@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import wardentools.entity.ModEntities;
 import wardentools.entity.utils.CrystalGolemNavigation;
 import wardentools.entity.utils.goal.LightCandleGoal;
 import wardentools.misc.Crystal;
@@ -158,7 +159,12 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	private void shootLaser() {
-		//TODO
+		CrystalLaserEntity laser = new CrystalLaserEntity(ModEntities.CRYSTAL_LASER.get(), this.level());
+		laser.setPos(this.getLaserFirePosition());
+		laser.setCrystalType(this.getCrystal());
+		laser.buildCrystalChain();
+		this.level().addFreshEntity(laser);
+
 	}
 
 	private void handleTimeAwake() {
@@ -289,6 +295,10 @@ public class CrystalGolemEntity extends PathfinderMob {
 	public float getLaserChargingPosition() {
 		return ((float)LASER_DURATION - (float)this.getLaserTick())
 				/ (float)LASER_DURATION * (LASER_POSITION_MAX - LASER_POSITION_MIN) + LASER_POSITION_MIN;
+	}
+
+	public Vec3 getLaserFirePosition() {
+		return this.position().add(0F, LASER_POSITION_MAX, 0F);
 	}
 
 	public boolean getFlickerState() {return this.flickerState;	}

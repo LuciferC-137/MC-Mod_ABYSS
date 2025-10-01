@@ -16,34 +16,12 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.client.RenderingUtils;
 import wardentools.entity.custom.CrystalGolemEntity;
 
 public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, CrystalGolem>{
 	private static final ResourceLocation CRYSTAL_GOLEM_TEXTURE =
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/crystal_golem.png");
-
-	protected static final RenderStateShard.TransparencyStateShard TRANSLUCENT_TRANSPARENCY = new RenderStateShard.TransparencyStateShard("translucent_transparency", () -> {
-		RenderSystem.enableBlend();
-		RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-	}, () -> {
-		RenderSystem.disableBlend();
-		RenderSystem.defaultBlendFunc();
-	});
-
-	private static final RenderType COLORED_CUBE = RenderType.create(
-			"colored_cube",
-			DefaultVertexFormat.POSITION_COLOR_NORMAL,
-			VertexFormat.Mode.QUADS,
-			256,
-			false,  // no culling
-			true,            // needs sorting if translucent
-			RenderType.CompositeState.builder()
-					.setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getPositionColorShader))
-					.setTransparencyState(TRANSLUCENT_TRANSPARENCY) // pour alpha
-					.setDepthTestState( new RenderStateShard.DepthTestStateShard("<=", 515))
-					.setCullState(new RenderStateShard.CullStateShard(false))
-					.createCompositeState(true)
-	);
 
 	private static final float MIN_CUBE_SIZE = 0.2F;
 	private static final float MAX_CUBE_SIZE = 0.5F;
@@ -74,7 +52,7 @@ public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, Crysta
 			float g = golem.getCrystal().getGreen();
 			float b = golem.getCrystal().getBlue();
 
-			VertexConsumer consumer = buffer.getBuffer(COLORED_CUBE);
+			VertexConsumer consumer = buffer.getBuffer(RenderingUtils.COLORED_CUBE);
 
 			float progress = ((float)CrystalGolemEntity.LASER_DURATION - (float)golem.getLaserTick())
 					/ (float)CrystalGolemEntity.LASER_DURATION;

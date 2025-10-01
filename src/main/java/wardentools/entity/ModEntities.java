@@ -87,6 +87,12 @@ public class ModEntities {
 					()->EntityType.Builder.of(CrystalGolemEntity::new, MobCategory.CREATURE)
 					.sized(0.6F, 1.625F)
 					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "crystal_golem").toString()));
+
+	public static final RegistryObject<EntityType<CrystalLaserEntity>> CRYSTAL_LASER =
+			ENTITY_TYPES.register("crystal_laser",
+					()->EntityType.Builder.of(CrystalLaserEntity::new, MobCategory.MISC)
+					.sized(0.5f, 0.5f)
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "crystal_laser").toString()));
 	
 	public static void register(IEventBus eventBus) {
 		ENTITY_TYPES.register(eventBus);

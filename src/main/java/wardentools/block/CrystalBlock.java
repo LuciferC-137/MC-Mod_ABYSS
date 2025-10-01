@@ -31,18 +31,19 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 
-public class CristalBlock extends Block implements SimpleWaterloggedBlock {
-	public static final MapCodec<CristalBlock> CODEC = RecordCodecBuilder.mapCodec((blockInstance) -> {
-	      return blockInstance.group(Codec.FLOAT.fieldOf("height").forGetter((block) -> {
-	         return block.height;
-	      }), Codec.FLOAT.fieldOf("aabb_offset").forGetter((block) -> {
-	         return block.aabbOffset;
-	      }), propertiesCodec()).apply(blockInstance, CristalBlock::new);
-	   });
+public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
+	public static final MapCodec<CrystalBlock> CODEC = RecordCodecBuilder
+			.mapCodec((blockInstance) -> blockInstance.group(
+					Codec.FLOAT.fieldOf("height").forGetter((block) -> block.height),
+					Codec.FLOAT.fieldOf("aabb_offset").forGetter((block) -> block.aabbOffset),
+					Codec.INT.fieldOf("base_light_level").forGetter((block) -> block.baseLightLevel),
+					propertiesCodec())
+				.apply(blockInstance, CrystalBlock::new));
 	
 	
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
+	public static final BooleanProperty OVERCHARGED;
 	protected final VoxelShape northAabb;
 	protected final VoxelShape southAabb;
 	protected final VoxelShape eastAabb;
@@ -52,30 +53,37 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
 	private final float height;
 	private final float aabbOffset;
 
-	public CristalBlock(float height, float length, BlockBehaviour.Properties properties) {
+	private final int baseLightLevel;
+
+	static {OVERCHARGED = BooleanProperty.create("overcharged");}
+
+	public CrystalBlock(float height, float length, int baseLightLevel, BlockBehaviour.Properties properties) {
 	      super(properties);
-	      this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.FALSE)
-				  .setValue(FACING, Direction.UP));
-	      this.upAabb = Block.box((double)length, 0.0D,
-				  (double)length, (double)(16.0F - length), (double)height, (double)(16.0F - length));
-	      this.downAabb = Block.box((double)length, (double)(16.0F - height),
-				  (double)length, (double)(16.0F - length), 16.0D, (double)(16.0F - length));
-	      this.northAabb = Block.box((double)length, (double)length, (double)(16.0F - height),
-				  (double)(16.0F - length), (double)(16.0F - length), 16.0D);
-	      this.southAabb = Block.box((double)length, (double)length, 0.0D,
-				  (double)(16.0F - length), (double)(16.0F - length), (double)height);
-	      this.eastAabb = Block.box(0.0D, (double)length, (double)length,
-				  (double)height, (double)(16.0F - length), (double)(16.0F - length));
-	      this.westAabb = Block.box((double)(16.0F - height), (double)length,
-				  (double)length, 16.0D, (double)(16.0F - length), (double)(16.0F - length));
+	      this.registerDefaultState(this.defaultBlockState()
+				  .setValue(WATERLOGGED, Boolean.FALSE)
+				  .setValue(FACING, Direction.UP)
+				  .setValue(OVERCHARGED, false));
+	      this.upAabb = Block.box(length, 0.0D,
+				  length, 16.0F - length, height, (16.0F - length));
+	      this.downAabb = Block.box(length, (16.0F - height),
+				  length, (16.0F - length), 16.0D, (16.0F - length));
+	      this.northAabb = Block.box(length, length, (16.0F - height),
+				  (16.0F - length), (16.0F - length), 16.0D);
+	      this.southAabb = Block.box(length, length, 0.0D,
+				  (16.0F - length), (16.0F - length), height);
+	      this.eastAabb = Block.box(0.0D, length, length,
+				  height, (16.0F - length), (16.0F - length));
+	      this.westAabb = Block.box((16.0F - height), length,
+				  length, 16.0D, (16.0F - length), (16.0F - length));
 	      this.height = height;
 	      this.aabbOffset = length;
+		  this.baseLightLevel = baseLightLevel;
+		  System.out.println("Construct CrystalBlock base="+baseLightLevel+" id="+this);
 	   }
 
-	@SuppressWarnings("deprecation")
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter,
 										@NotNull BlockPos pos, @NotNull CollisionContext ctx) {
-	      Direction direction = state.getValue(FACING);
+		Direction direction = state.getValue(FACING);
         return switch (direction) {
             case NORTH -> this.northAabb;
             case SOUTH -> this.southAabb;
@@ -86,14 +94,12 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
         };
 	   }
 
-	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 	      Direction direction = state.getValue(FACING);
 	      BlockPos blockpos = pos.relative(direction.getOpposite());
 	      return level.getBlockState(blockpos).isFaceSturdy(level, blockpos, direction);
 	}
 
-	@SuppressWarnings("deprecation")
 	public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction,
 										   @NotNull BlockState state1, @NotNull LevelAccessor level,
 										   @NotNull BlockPos pos, @NotNull BlockPos pos1) {
@@ -112,10 +118,11 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
 	      BlockPos blockpos = ctx.getClickedPos();
 	      return this.defaultBlockState()
 				  .setValue(WATERLOGGED, levelaccessor.getFluidState(blockpos)
-                          .getType() == Fluids.WATER).setValue(FACING, ctx.getClickedFace());
+                          .getType() == Fluids.WATER)
+				  .setValue(FACING, ctx.getClickedFace())
+				  .setValue(OVERCHARGED, false);
 	}
 
-	@SuppressWarnings("deprecation")
 	public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
 	      return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
@@ -125,19 +132,30 @@ public class CristalBlock extends Block implements SimpleWaterloggedBlock {
 	      return state.rotate(mirror.getRotation(state.getValue(FACING)));
 	   }
 
-	  @SuppressWarnings("deprecation")
 	public @NotNull FluidState getFluidState(BlockState state) {
 	      return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false)
 				  : super.getFluidState(state);
 	}
 
+	public static int getLightLevel(@NotNull BlockState state) {
+		return state.getValue(OVERCHARGED) ? 15 : 0;
+	}
+
+	@Override
+	public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+		if (state.getBlock() instanceof CrystalBlock) {
+			return state.getValue(OVERCHARGED) ? 15 : baseLightLevel;
+		}
+		return super.getLightEmission(state, level, pos);
+	}
+
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-	      stateBuilder.add(WATERLOGGED, FACING);
+	      stateBuilder.add(WATERLOGGED, FACING, OVERCHARGED);
 	}
 
 
 	@Override
-	protected @NotNull MapCodec<CristalBlock> codec() {
+	protected @NotNull MapCodec<CrystalBlock> codec() {
 	      return CODEC;
 	}
 	

@@ -18,4 +18,9 @@ public class ModParticleUtils {
                                          Vec3 origin, Vec3 direction) {
         addClientParticle(level, options, origin, origin.add(direction), (float)direction.length());
     }
+
+    public static void addStaticClientParticle(Level level, ParticleOptions options,
+                                           Vec3 position) {
+        addClientParticle(level, options, position, position, 0.0F);
+    }
 }

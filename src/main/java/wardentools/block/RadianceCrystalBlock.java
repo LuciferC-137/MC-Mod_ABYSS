@@ -8,12 +8,12 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.particle.ParticleRegistry;
 
-public class RadianceCristalBlock extends CristalBlock{
+public class RadianceCrystalBlock extends CrystalBlock {
     private static final double SPEED = 0.1;
     private static final int PERIOD = 40;
 
-    public RadianceCristalBlock(float height, float length, Properties properties) {
-        super(height, length, properties);
+    public RadianceCrystalBlock(float height, float length, Properties properties) {
+        super(height, length, 8, properties);
     }
 
     @Override
