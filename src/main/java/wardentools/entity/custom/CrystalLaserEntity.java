@@ -8,8 +8,10 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.CrystalBlock;
@@ -40,9 +42,12 @@ public class CrystalLaserEntity extends Entity {
     private static final EntityDataAccessor<Integer> ACTIVE_SEGMENT =
             SynchedEntityData.defineId(CrystalLaserEntity.class, EntityDataSerializers.INT);
 
-    private static final int TICK_BETWEEN_SEGMENT_CHANGE = 40;
+    private static final float DAMAGE = 15.0F;
+    private static final float LASER_THICKNESS = 0.5F;
+
+    private static final int TICK_BETWEEN_SEGMENT_CHANGE = 10;
     private static final int PARTICLE_PER_TICK = 5;
-    private static final int STATIC_PARTICLE_PER_TICK = 1;
+    private static final int STATIC_PARTICLE_PER_TICK = 2;
 
     private static final int SEARCH_RADIUS = 10;
     private static final int SEARCH_HEIGHT = 2;
@@ -58,7 +63,6 @@ public class CrystalLaserEntity extends Entity {
     }
 
     public void tick() {
-        super.tick();
         this.ticksExisted++;
         if (!firstCrystalHasBeenLit) {
             if (this.getTarget(0) != BlockPos.ZERO) {
@@ -76,8 +80,72 @@ public class CrystalLaserEntity extends Entity {
         }
         if (this.level().isClientSide) {
             this.handleParticleAnimation();
+        } else {
+            this.damageEntityInsideSegment();
+        }
+        super.tick();
+    }
+
+    private static double distanceSqPointToSegment(Vec3 p, Vec3 a, Vec3 b) {
+        Vec3 ab = b.subtract(a);
+        Vec3 ap = p.subtract(a);
+        double abLenSq = ab.lengthSqr();
+        if (abLenSq == 0) return ap.lengthSqr();
+        double t = ap.dot(ab) / abLenSq;
+        t = Math.max(0.0, Math.min(1.0, t));
+        Vec3 closest = a.add(ab.scale(t));
+        return p.subtract(closest).lengthSqr();
+    }
+
+    private void damageEntityInsideSegment() {
+        if (this.cachedTargets.isEmpty()) {this.getAllTargets();}
+        int activeSegment = this.getActiveSegment();
+        if (activeSegment >= this.getSize()) return;
+        if (activeSegment >= cachedTargets.size() - 1) return;
+
+        Vec3 start = cachedTargets.get(activeSegment);
+        Vec3 end = cachedTargets.get(activeSegment + 1);
+
+        AABB broad = new AABB(start, end).inflate(LASER_THICKNESS);
+
+        double radiusSq = LASER_THICKNESS * LASER_THICKNESS;
+
+        for (Entity entity : this.level().getEntities(this, broad)) {
+            if (entity instanceof CrystalGolemEntity) continue;
+            if (entity instanceof LivingEntity living) {
+
+                List<Vec3> testPoints = getPointsFromAABB(living);
+
+                boolean hit = false;
+                for (Vec3 p : testPoints) {
+                    if (distanceSqPointToSegment(p, start, end) <= radiusSq) {
+                        hit = true;
+                        break;
+                    }
+                }
+
+                if (hit) {
+                    living.hurt(this.damageSources().magic(), DAMAGE);
+                }
+            }
         }
     }
+
+    private static @NotNull List<Vec3> getPointsFromAABB(LivingEntity living) {
+        AABB box = living.getBoundingBox();
+        return List.of(
+                box.getCenter(),
+                new Vec3(box.minX, box.minY, box.minZ),
+                new Vec3(box.minX, box.minY, box.maxZ),
+                new Vec3(box.minX, box.maxY, box.minZ),
+                new Vec3(box.minX, box.maxY, box.maxZ),
+                new Vec3(box.maxX, box.minY, box.minZ),
+                new Vec3(box.maxX, box.minY, box.maxZ),
+                new Vec3(box.maxX, box.maxY, box.minZ),
+                new Vec3(box.maxX, box.maxY, box.maxZ)
+        );
+    }
+
 
     private void handleParticleAnimation() {
         int activeSegment = this.getActiveSegment();
