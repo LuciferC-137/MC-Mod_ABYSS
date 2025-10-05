@@ -1,0 +1,15 @@
+{
+  "name": "wardentools:crystal_temple/resonance_chamber",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:crystal_temple/resonance_chamber/ruby",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

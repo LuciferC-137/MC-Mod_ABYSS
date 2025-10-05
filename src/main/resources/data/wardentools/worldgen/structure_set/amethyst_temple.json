@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 62784218,
+    "separation": 30,
+    "spacing": 50
+  },
+  "structures": [
+    {
+      "structure": "wardentools:amethyst_temple",
+      "weight": 1
+    }
+  ]
+}
