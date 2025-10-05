@@ -186,6 +186,7 @@ public class ModCreativeTabs {
         addItemToTag(Tag.MISC, ItemRegistry.SONIC_BLASTER);
         addItemToTag(Tag.MISC, ItemRegistry.CRYSTAL_RESONATOR);
         addItemToTag(Tag.MISC, ItemRegistry.CRYSTAL_INFUSER);
+        addItemToTag(Tag.MISC, ItemRegistry.GOLEM_STONE);
 
         addItemToTag(Tag.DISC, ItemRegistry.ABYSS_MUSIC_DISC);
         addItemToTag(Tag.DISC, ItemRegistry.INCARNATION_MUSIC_DISC);
@@ -231,7 +232,7 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DARKTREE_LOG.get()))
                     .title(Component.translatable("creativetab.darktree"))
                     .displayItems((pParameters, event) -> {
-                        getItemsByTag(Tag.WHITETREE).forEach(item -> event.accept(item.get()));
+                        getItemsByTag(Tag.DARKTREE).forEach(item -> event.accept(item.get()));
                     }).build());
 
     public static final RegistryObject<CreativeModeTab> WHITETREE

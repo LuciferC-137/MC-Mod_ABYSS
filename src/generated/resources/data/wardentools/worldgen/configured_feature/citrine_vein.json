@@ -8,6 +8,7 @@
       "Name": "wardentools:citrine",
       "Properties": {
         "facing": "up",
+        "overcharged": "false",
         "waterlogged": "false"
       }
     },

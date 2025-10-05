@@ -84,6 +84,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 "depth_vines", "depth_vines_lit");
         registerCrossCutoutBlockWithBerries(BlockRegistry.DEPTH_VINES_PLANT,
                 "depth_vines_plant", "depth_vines_plant_lit");
+
+        horizontalBlock(BlockRegistry.GOLEM_STONE.get(),
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks"),
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks"),
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/golem_stone_top"));
         
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");

@@ -632,6 +632,11 @@ public class BlockRegistry {
                     .noOcclusion()
             ));
 
+    public static final RegistryObject<Block> GOLEM_STONE
+            = REGISTAR.register("golem_stone",
+            () -> new GolemStoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+            ));
+
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
         return false;
     }

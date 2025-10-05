@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "wardentools:block/abyssalite_bricks",
+    "side": "wardentools:block/abyssalite_bricks",
+    "top": "wardentools:block/golem_stone_top"
+  }
+}

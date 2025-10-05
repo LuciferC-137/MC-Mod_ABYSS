@@ -6,6 +6,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import wardentools.entity.custom.CrystalGolemEntity;
 
 public class LightCandleGoal extends Goal {
@@ -19,6 +20,8 @@ public class LightCandleGoal extends Goal {
 
     private static final int TIMEOUT = 2000;
     private int timeoutTick = 0;
+
+    private int turnAroundTick = 0;
 
     public LightCandleGoal(CrystalGolemEntity golem) {
         this.golem = golem;
@@ -47,7 +50,9 @@ public class LightCandleGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return super.canContinueToUse() || this.phase == Phase.COMEBACK;
+        return super.canContinueToUse()
+                || this.phase == Phase.COMEBACK
+                || this.phase == Phase.TURN_AROUND;
     }
 
     @Override
@@ -68,13 +73,13 @@ public class LightCandleGoal extends Goal {
                     golem.pollUnlitCandle();
                     if (golem.getUnlitCandles().isEmpty()) {
                         this.changePhaseTo(Phase.COMEBACK);
-                        Vec3 target = this.golem.getRestPos().getCenter();
+                        Vec3 target = this.golem.getGolemStonePos().getCenter();
                         golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
                     }
                 }
             } else {
                 this.changePhaseTo(Phase.COMEBACK);
-                Vec3 target = this.golem.getRestPos().getCenter();
+                Vec3 target = this.golem.getGolemStonePos().getCenter();
                 golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
             }
         }
@@ -93,13 +98,20 @@ public class LightCandleGoal extends Goal {
                     golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
                 } else {
                     this.changePhaseTo(Phase.COMEBACK);
-                    Vec3 target = this.golem.getRestPos().getCenter();
+                    Vec3 target = this.golem.getGolemStonePos().getCenter();
                     golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
                 }
             }
         }
         if (this.phase == Phase.COMEBACK) {
             if (this.golem.getNavigation().isDone()) {
+                this.turnAroundTick = this.golem.finalizeReturnToStone();
+                this.changePhaseTo(Phase.TURN_AROUND);
+            }
+        }
+        if (this.phase == Phase.TURN_AROUND) {
+            turnAroundTick--;
+            if (turnAroundTick <= 0) {
                 this.stop();
             }
         }
@@ -109,6 +121,7 @@ public class LightCandleGoal extends Goal {
     public void stop() {
         this.lightTick = 0;
         this.timeoutTick = 0;
+        this.turnAroundTick = 0;
         this.phase = Phase.TRAVEL;
         this.golem.getUnlitCandles().clear(); // For more safety
         this.golem.setState(CrystalGolemEntity.GolemState.DEACTIVATED_2);
@@ -122,16 +135,19 @@ public class LightCandleGoal extends Goal {
     public enum Phase {
         TRAVEL(CrystalGolemEntity.GolemState.TRAVELING),
         LIGHT(CrystalGolemEntity.GolemState.LIGHT),
-        COMEBACK(CrystalGolemEntity.GolemState.TRAVELING);
+        COMEBACK(CrystalGolemEntity.GolemState.TRAVELING),
+        TURN_AROUND(null);
 
         private final CrystalGolemEntity.GolemState state;
 
-        Phase(CrystalGolemEntity.GolemState associatedState) {
+        Phase(@Nullable CrystalGolemEntity.GolemState associatedState) {
             this.state = associatedState;
         }
 
         public void setAssociatedGolemState(CrystalGolemEntity golem) {
-            golem.setState(this.state);
+            if (this.state != null) {
+                golem.setState(this.state);
+            }
         }
     }
 }

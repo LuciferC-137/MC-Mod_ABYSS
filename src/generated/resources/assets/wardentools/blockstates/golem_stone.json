@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "crystal_index=amethyst,facing=east": {
+      "model": "wardentools:block/golem_stone",
+      "y": 90
+    },
+    "crystal_index=amethyst,facing=north": {
+      "model": "wardentools:block/golem_stone"
+    },
+    "crystal_index=amethyst,facing=south": {
+      "model": "wardentools:block/golem_stone",
+      "y": 180
+    },
+    "crystal_index=amethyst,facing=west": {
+      "model": "wardentools:block/golem_stone",
+      "y": 270
+    },
+    "crystal_index=citrine,facing=east": {
+      "model": "wardentools:block/golem_stone",
+      "y": 90
+    },
+    "crystal_index=citrine,facing=north": {
+      "model": "wardentools:block/golem_stone"
+    },
+    "crystal_index=citrine,facing=south": {
+      "model": "wardentools:block/golem_stone",
+      "y": 180
+    },
+    "crystal_index=citrine,facing=west": {
+      "model": "wardentools:block/golem_stone",
+      "y": 270
+    },
+    "crystal_index=echo,facing=east": {
+      "model": "wardentools:block/golem_stone",
+      "y": 90
+    },
+    "crystal_index=echo,facing=north": {
+      "model": "wardentools:block/golem_stone"
+    },
+    "crystal_index=echo,facing=south": {
+      "model": "wardentools:block/golem_stone",
+      "y": 180
+    },
+    "crystal_index=echo,facing=west": {
+      "model": "wardentools:block/golem_stone",
+      "y": 270
+    },
+    "crystal_index=malachite,facing=east": {
+      "model": "wardentools:block/golem_stone",
+      "y": 90
+    },
+    "crystal_index=malachite,facing=north": {
+      "model": "wardentools:block/golem_stone"
+    },
+    "crystal_index=malachite,facing=south": {
+      "model": "wardentools:block/golem_stone",
+      "y": 180
+    },
+    "crystal_index=malachite,facing=west": {
+      "model": "wardentools:block/golem_stone",
+      "y": 270
+    },
+    "crystal_index=pale,facing=east": {
+      "model": "wardentools:block/golem_stone",
+      "y": 90
+    },
+    "crystal_index=pale,facing=north": {
+      "model": "wardentools:block/golem_stone"
+    },
+    "crystal_index=pale,facing=south": {
+      "model": "wardentools:block/golem_stone",
+      "y": 180
+    },
+    "crystal_index=pale,facing=west": {
+      "model": "wardentools:block/golem_stone",
+      "y": 270
+    },
+    "crystal_index=ruby,facing=east": {
+      "model": "wardentools:block/golem_stone",
+      "y": 90
+    },
+    "crystal_index=ruby,facing=north": {
+      "model": "wardentools:block/golem_stone"
+    },
+    "crystal_index=ruby,facing=south": {
+      "model": "wardentools:block/golem_stone",
+      "y": 180
+    },
+    "crystal_index=ruby,facing=west": {
+      "model": "wardentools:block/golem_stone",
+      "y": 270
+    }
+  }
+}

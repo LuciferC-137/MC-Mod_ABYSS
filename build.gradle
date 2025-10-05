@@ -87,7 +87,7 @@ dependencies {
 
 mixin {
     config 'mixins.wardentools.json'
-    //add sourceSets.main, "mixins.wardentools.refmap.json" Not needed anymore
+    // add sourceSets.main, "mixins.wardentools.refmap.json" //Not needed anymore
     debug.verbose = true
     debug.export = true
 }

@@ -691,4 +691,8 @@ public class ItemRegistry {
 			REGISTAR.register("crystal_golem_spawn_egg",
 					() -> new CustomSpawnEggItem(ModEntities.CRYSTAL_GOLEM, 0x6e7474, 0x74673b,
 							new Item.Properties()));
+
+	public static final RegistryObject<Item> GOLEM_STONE =
+			REGISTAR.register("golem_stone",
+			() -> new BlockItem(BlockRegistry.GOLEM_STONE.get(), new Item.Properties()));
 }

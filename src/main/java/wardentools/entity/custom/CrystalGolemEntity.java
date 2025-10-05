@@ -1,10 +1,14 @@
 package wardentools.entity.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -21,14 +25,17 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.utils.CrystalGolemNavigation;
 import wardentools.entity.utils.goal.LightCandleGoal;
 import wardentools.misc.Crystal;
 import wardentools.particle.ModParticleUtils;
 import wardentools.particle.options.ShineParticleOptions;
+import wardentools.utils.SaveUtils;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -43,6 +50,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.BLOCK_POS);
 	private static final EntityDataAccessor<Integer> LASER_TICK =
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Float> SYNC_Y_ROT =
+			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.FLOAT);
+
 
 	private final List<BlockPos> unlitCandles = new ArrayList<>();
     private static final int CANDLE_CHECKS_PER_TICKS = 5;
@@ -56,7 +66,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 	public final AnimationState reactivateFrom2 = new AnimationState();
 
 	@Nullable
-	private BlockPos restPos = null;
+	private BlockPos golemStonePos = null;
 	private int currentCheckIndex = 0;
 	private static final List<BlockPos> relativePosToCheck = new ArrayList<>();
 
@@ -116,6 +126,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		builder.define(STATE, GolemState.DEACTIVATED_2.getId());
 		builder.define(CURRENT_CANDLE_TARGET, BlockPos.ZERO);
 		builder.define(LASER_TICK, 0);
+		builder.define(SYNC_Y_ROT, 0F);
 	}
 
 	@Override
@@ -180,8 +191,8 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	private void handleCandleCheck() {
-		if (this.restPos == null) {
-			this.restPos = this.getOnPos();
+		if (this.golemStonePos == null) {
+			this.golemStonePos = this.getOnPos();
 		}
 		for (int i = 0; i < CANDLE_CHECKS_PER_TICKS; i++) {
 			if (isCurrentCandlePosUnlit()) {
@@ -354,36 +365,39 @@ public class CrystalGolemEntity extends PathfinderMob {
 				|| state == GolemState.DEACTIVATED_2;
 	}
 
-	public BlockPos getRestPos() {return this.restPos == null ? BlockPos.ZERO : this.restPos;}
+	public BlockPos getGolemStonePos() {return this.golemStonePos == null ? BlockPos.ZERO : this.golemStonePos;}
 
-	public void setCurrentCandleTarget(BlockPos pos) {
-		this.entityData.set(CURRENT_CANDLE_TARGET, pos);
-	}
+	public void setCurrentCandleTarget(BlockPos pos) {this.entityData.set(CURRENT_CANDLE_TARGET, pos);}
 
-	public BlockPos getCurrentCandleTarget() {
-		return this.entityData.get(CURRENT_CANDLE_TARGET);
-	}
+	public BlockPos getCurrentCandleTarget() {return this.entityData.get(CURRENT_CANDLE_TARGET);}
 
-	public void setLaserTick(int tick) {
-		this.entityData.set(LASER_TICK, tick);
-	}
+	public void setLaserTick(int tick) {this.entityData.set(LASER_TICK, tick);}
 
-	public int getLaserTick() {
-		return this.entityData.get(LASER_TICK);
-	}
+	public int getLaserTick() {return this.entityData.get(LASER_TICK);}
 
-	public void setState(GolemState state) {
-		this.entityData.set(STATE, state.getId());
-	}
+	public void setSyncedYRot(float rot) {this.entityData.set(SYNC_Y_ROT, rot);}
+
+	public float getSyncedYRot() {return this.entityData.get(SYNC_Y_ROT);}
+
+	public void setState(GolemState state) {this.entityData.set(STATE, state.getId());}
 
 	public GolemState getState() {return GolemState.fromId(this.entityData.get(STATE));}
+
+	public void forceYRot(float rot) {
+		this.setYRot(rot);
+		this.yRotO = rot;
+		this.yBodyRot = rot;
+		this.yBodyRotO = rot;
+		this.yHeadRot = rot;
+		this.yHeadRotO = rot;
+	}
 
 	private void nextPosCheck() {
 		this.currentCheckIndex = (this.currentCheckIndex + 1) % relativePosToCheck.size();
 	}
 
 	private boolean isCurrentCandlePosUnlit() {
-		if (this.restPos == null) return false;
+		if (this.golemStonePos == null) return false;
 		BlockPos pos = this.getCurrentCheckBlockPos();
 		BlockState state = this.level().getBlockState(pos);
 		if (state.is(BlockTags.CANDLES) && state.hasProperty(CandleBlock.LIT)) {
@@ -393,9 +407,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	public BlockPos getCurrentCheckBlockPos() {
-		if (restPos == null) return BlockPos.ZERO;
+		if (golemStonePos == null) return BlockPos.ZERO;
 		BlockPos relativePos = relativePosToCheck.get(this.currentCheckIndex);
-		return restPos.offset(relativePos.getX(), relativePos.getY(), relativePos.getZ());
+		return golemStonePos.offset(relativePos.getX(), relativePos.getY(), relativePos.getZ());
 	}
 
 	public void lightCandleAtPos() {
@@ -416,6 +430,53 @@ public class CrystalGolemEntity extends PathfinderMob {
 	public void setCrystalType(Crystal crystal) {
 		this.entityData.set(CRYSTAL, crystal.getIndex());
 	}
+
+	public void setGolemStonePos(@Nullable BlockPos pos) {
+		this.golemStonePos = pos;
+	}
+
+	public int finalizeReturnToStone() {
+		if (this.level().isClientSide) return 30;
+		if (this.golemStonePos == null) return 1;
+		BlockState state = this.level().getBlockState(this.golemStonePos);
+		if (!state.is(BlockRegistry.GOLEM_STONE.get())) return 1;
+
+		this.moveTo(this.golemStonePos.getCenter().add(0, 0.5F, 0));
+
+		Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+		this.syncRotToFacing(facing);
+		return 30;
+	}
+
+	private void syncRotToFacing(Direction facing) {
+		if (this.level().isClientSide) return;
+
+		float yaw;
+		switch (facing) {
+			case NORTH -> yaw = 180f;
+			case SOUTH -> yaw = 0f;
+			case WEST  -> yaw = 90f;
+			case EAST  -> yaw = -90f;
+			default    -> yaw = 0f;
+		}
+
+		this.setYRot(yaw);
+		this.setXRot(0f);
+		this.yHeadRot = yaw;
+		this.yHeadRotO = yaw;
+		this.yBodyRot = yaw;
+
+		ServerLevel server = (ServerLevel) this.level();
+		byte yawByte = (byte)((int)(yaw * 256.0F / 360.0F));
+		byte pitchByte = 0;
+
+		server.getChunkSource().broadcast(this,
+				new ClientboundRotateHeadPacket(this, yawByte));
+		server.getChunkSource().broadcast(this,
+				new ClientboundMoveEntityPacket.Rot(this.getId(), yawByte, pitchByte, this.onGround()));
+	}
+
+
 
 	@Override
 	protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
@@ -440,6 +501,12 @@ public class CrystalGolemEntity extends PathfinderMob {
 				this.previousState = newState;
 			}
 		}
+		if (key.equals(SYNC_Y_ROT)) {
+			float newRot = this.getSyncedYRot();
+			if (newRot != this.getYRot()) {
+				this.forceYRot(newRot);
+			}
+		}
 	}
 
 	@Override
@@ -447,6 +514,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 		tag.putInt("crystal_type", entityData.get(CRYSTAL));
 		tag.putInt("state", this.getState().getId());
 		tag.putInt("laser_tick", this.getLaserTick());
+		if (this.golemStonePos != null) {
+			SaveUtils.putBlockPos(tag, "golem_stone_pos", this.golemStonePos);
+		}
 		super.addAdditionalSaveData(tag);
 	}
 
@@ -461,6 +531,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 		}
 		if (tag.contains("laser_tick")) {
 			this.setLaserTick(tag.getInt("laser_tick"));
+		}
+		if (tag.contains("golem_stone_pos")) {
+			this.golemStonePos = SaveUtils.readBlockPos(tag, "golem_stone_pos");
 		}
 		super.readAdditionalSaveData(tag);
 		this.flickerState = this.isActive();
