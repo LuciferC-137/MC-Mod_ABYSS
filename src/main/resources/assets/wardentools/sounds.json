@@ -232,5 +232,55 @@
 		"sounds": [
 			"wardentools:heart_beat"
 		]
+	},
+	"crystal_golem_turning_on": {
+		"subtitles": "sounds.wardentools.crystal_golem_turning_on",
+		"sounds": [
+			"wardentools:crystal_golem_turning_on"
+		]
+	},
+	"crystal_golem_turning_off": {
+	"subtitles": "sounds.wardentools.crystal_golem_turning_off",
+	"sounds": [
+		"wardentools:crystal_golem_turning_off"
+	]
+	},
+	"crystal_golem_ambient": {
+		"subtitles": "sounds.wardentools.crystal_golem_ambient",
+		"sounds": [
+			"wardentools:crystal_golem_ambient_1",
+			"wardentools:crystal_golem_ambient_2"
+		]
+	},
+	"crystal_golem_hurt": {
+		"subtitles": "sounds.wardentools.crystal_golem_hurt",
+		"sounds": [
+			"wardentools:crystal_golem_hurt_1",
+			"wardentools:crystal_golem_hurt_2"
+		]
+	},
+	"crystal_golem_death": {
+		"subtitles": "sounds.wardentools.crystal_golem_death",
+		"sounds": [
+			"wardentools:crystal_golem_death"
+		]
+	},
+	"crystal_golem_step": {
+		"subtitles": "sounds.wardentools.crystal_golem_step",
+		"sounds": [
+			"wardentools:crystal_golem_step"
+		]
+	},
+	"laser_charge": {
+		"subtitles": "sounds.wardentools.laser_charge",
+		"sounds": [
+			"wardentools:laser_charge"
+		]
+	},
+	"laser_shoot": {
+		"subtitles": "sounds.wardentools.laser_shoot",
+		"sounds": [
+			"wardentools:laser_shoot"
+		]
 	}
 }

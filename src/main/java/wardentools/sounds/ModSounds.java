@@ -71,6 +71,22 @@ public class ModSounds {
 			registerSoundEvents("vinyl_scratch");
 	public static final RegistryObject<SoundEvent> HEART_BEAT =
 			registerSoundEvents("heart_beat");
+	public static final RegistryObject<SoundEvent> CRYSTAL_GOLEM_AMBIENT =
+			registerSoundEvents("crystal_golem_ambient");
+	public static final RegistryObject<SoundEvent> CRYSTAL_GOLEM_TURNING_ON =
+			registerSoundEvents("crystal_golem_turning_on");
+	public static final RegistryObject<SoundEvent> CRYSTAL_GOLEM_TURNING_OFF =
+			registerSoundEvents("crystal_golem_turning_off");
+	public static final RegistryObject<SoundEvent> CRYSTAL_GOLEM_HURT =
+			registerSoundEvents("crystal_golem_hurt");
+	public static final RegistryObject<SoundEvent> CRYSTAL_GOLEM_DEATH =
+			registerSoundEvents("crystal_golem_death");
+	public static final RegistryObject<SoundEvent> CRYSTAL_GOLEM_STEP =
+			registerSoundEvents("crystal_golem_step");
+	public static final RegistryObject<SoundEvent> LASER_CHARGE =
+			registerSoundEvents("laser_charge");
+	public static final RegistryObject<SoundEvent> LASER_SHOOT =
+			registerSoundEvents("laser_shoot");
 
 	//Musics
 	public static final RegistryObject<SoundEvent> DEEP_FOREST =

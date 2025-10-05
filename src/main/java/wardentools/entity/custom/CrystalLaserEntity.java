@@ -18,6 +18,7 @@ import wardentools.block.CrystalBlock;
 import wardentools.misc.Crystal;
 import wardentools.particle.ModParticleUtils;
 import wardentools.particle.options.ShineParticleOptions;
+import wardentools.sounds.ModSounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,12 @@ public class CrystalLaserEntity extends Entity {
         this.noCulling = true;
     }
 
+    @Override
+    public void onAddedToWorld() {
+        this.playBlastSound();
+        super.onAddedToWorld();
+    }
+
     public void tick() {
         this.ticksExisted++;
         if (!firstCrystalHasBeenLit) {
@@ -75,6 +82,7 @@ public class CrystalLaserEntity extends Entity {
             return;
         }
         if (this.ticksExisted % TICK_BETWEEN_SEGMENT_CHANGE == 0) {
+            if (this.getActiveSegment() != this.getSize() - 1) this.playBlastSound();
             this.updateActiveSegment();
             this.litCrystals();
         }
@@ -84,6 +92,14 @@ public class CrystalLaserEntity extends Entity {
             this.damageEntityInsideSegment();
         }
         super.tick();
+    }
+
+    private void playBlastSound() {
+        this.level().playLocalSound(this.getX(), this.getY(), this.getZ(),
+                ModSounds.LASER_SHOOT.get(), this.getSoundSource(),
+                0.8F,
+                this.level().getRandom().nextFloat() * 0.2F + 0.9F,
+                false);
     }
 
     private static double distanceSqPointToSegment(Vec3 p, Vec3 a, Vec3 b) {
