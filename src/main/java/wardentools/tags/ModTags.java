@@ -27,6 +27,12 @@ public class ModTags {
         public static final TagKey<Biome> WHITE_FOREST = register("white_forest");
         public static final TagKey<Biome> DEEPFOREST = register("deepforest");
         public static final TagKey<Biome> CRYSTAL_CAVES = register("crystal_caves");
+        public static final TagKey<Biome> AMETHYST_CAVES = register("amethyst_caves");
+        public static final TagKey<Biome> RUBY_CAVES = register("ruby_caves");
+        public static final TagKey<Biome> CITRINE_CAVES = register("citrine_caves");
+        public static final TagKey<Biome> MALACHITE_CAVES = register("malachite_caves");
+        public static final TagKey<Biome> ECHO_CAVES = register("echo_caves");
+        public static final TagKey<Biome> PALE_CAVES = register("pale_caves");
 
         private static TagKey<Biome> register(String name) {
             return BiomeTags.create(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));

@@ -39,47 +39,44 @@ public class WhisperTags {
     }
 
     public enum Tag {
-        SMALL_TALK,
-        LORE,
-        ANCIENT_CITADEL,
-        DEEPFOREST,
-        WHITE_FOREST,
-        CRYSTAL_CAVE,
-        OVERWORLD;
+        SMALL_TALK("small_talk", 40, false),
+        LORE("lore", 17, false),
+        ANCIENT_CITADEL("ancient_citadel", 8, true),
+        DEEPFOREST("deepforest", 10, true),
+        WHITE_FOREST("white_forest", 4, true),
+        CRYSTAL_CAVE("crystal_cave", 13, true),
+        OVERWORLD("overworld", 19, true),
+        AMETHYST_CAVE("amethyst_cave", 18, true),
+        RUBY_CAVE("ruby_cave", 15, true),
+        CITRINE_CAVE("citrine_cave", 19, true),
+        MALACHITE_CAVE("malachite_cave", 17, true),
+        ECHO_CAVE("echo_cave", 20, true),
+        PALE_CAVE("pale_cave", 19, true),;
+
+        private final String key;
+        private final int numberOfWhispers;
+        private final boolean contextual;
+
+        Tag(String key, int numberOfWhispers, boolean contextual) {
+            this.key = key;
+            this.numberOfWhispers = numberOfWhispers;
+            this.contextual = contextual;
+        }
 
         public String getName() {
             return Component.translatable("message.wardentools.whisper." + this.getTranslatableTag()).getString();
         }
 
         public String getTranslatableTag() {
-            return switch (this) {
-                case SMALL_TALK -> "small_talk";
-                case LORE -> "lore";
-                case ANCIENT_CITADEL -> "ancient_citadel";
-                case DEEPFOREST -> "deepforest";
-                case WHITE_FOREST -> "white_forest";
-                case CRYSTAL_CAVE -> "crystal_cave";
-                case OVERWORLD -> "overworld";
-            };
+            return this.key;
         }
 
         public int getNumberOfWhispers() {
-            return switch (this) {
-                case SMALL_TALK -> 40;
-                case LORE -> 17;
-                case ANCIENT_CITADEL -> 8;
-                case DEEPFOREST -> 10;
-                case WHITE_FOREST -> 4;
-                case CRYSTAL_CAVE -> 13;
-                case OVERWORLD -> 19;
-            };
+            return this.numberOfWhispers;
         }
 
         public boolean isContextual() {
-            return switch (this) {
-                case DEEPFOREST, WHITE_FOREST, CRYSTAL_CAVE, OVERWORLD -> true;
-                default -> false;
-            };
+            return this.contextual;
         }
     }
 }

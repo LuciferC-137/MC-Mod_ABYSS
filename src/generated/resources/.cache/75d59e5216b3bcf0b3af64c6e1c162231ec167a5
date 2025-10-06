@@ -1,5 +1,11 @@
-// 1.21.1	2025-08-25T18:26:21.4466213	Tags for minecraft:worldgen/biome mod id vanilla
+// 1.21.1	2025-10-07T00:25:46.1922823	Tags for minecraft:worldgen/biome mod id vanilla
+5767af16e2fc8b0ecb39ff6cda4f49165ed56891 data/wardentools/tags/worldgen/biome/amethyst_caves.json
+1bc97d9dd86a7baa8059bb75c8c674e25b948bee data/wardentools/tags/worldgen/biome/citrine_caves.json
 eca3a32200ed7390310e4633445d48a1c2e7a8db data/wardentools/tags/worldgen/biome/crystal_caves.json
 f4ae48f3833638c5101a78b1ffc8501d4d3fb156 data/wardentools/tags/worldgen/biome/deepforest.json
-25cae77fc5498d2301e223efd45c7d659f744993 data/wardentools/tags/worldgen/biome/is_abyss.json
+f8987e72f5d0cc355d8f992ee949033aa452c6e6 data/wardentools/tags/worldgen/biome/echo_caves.json
+1126d1168ff0e39fbc601a554166ff350ed05ada data/wardentools/tags/worldgen/biome/is_abyss.json
+8e7f798a223506a99981a29d1bbb154e9145dd9e data/wardentools/tags/worldgen/biome/malachite_caves.json
+ef99cda308a6f3eb5e6e0abbb57d85b1d2b12515 data/wardentools/tags/worldgen/biome/pale_caves.json
+edb4f967b8b8cfc1f3765d11b0141da0801d455e data/wardentools/tags/worldgen/biome/ruby_caves.json
 7a8043abdfc7485544f749aaeb5b9fff48ea8d63 data/wardentools/tags/worldgen/biome/white_forest.json

@@ -24,12 +24,30 @@ public class ModBiomeTagGenerator extends TagsProvider<Biome> {
                 .add(biomeLookup.getOrThrow(ModBiomes.DEEP_FOREST).key())
                 .add(biomeLookup.getOrThrow(ModBiomes.WHITE_FOREST).key())
                 .add(biomeLookup.getOrThrow(ModBiomes.CRYSTAL_CAVE).key())
-                .add(biomeLookup.getOrThrow(ModBiomes.BLINDING_DEPTH).key());
+                .add(biomeLookup.getOrThrow(ModBiomes.BLINDING_DEPTH).key())
+                .add(biomeLookup.getOrThrow(ModBiomes.AMETHYST_CAVE).key())
+                .add(biomeLookup.getOrThrow(ModBiomes.RUBY_CAVE).key())
+                .add(biomeLookup.getOrThrow(ModBiomes.CITRINE_CAVE).key())
+                .add(biomeLookup.getOrThrow(ModBiomes.MALACHITE_CAVE).key())
+                .add(biomeLookup.getOrThrow(ModBiomes.ECHO_CAVE).key())
+                .add(biomeLookup.getOrThrow(ModBiomes.PALE_CAVE).key());
         this.tag(ModTags.Biomes.DEEPFOREST)
                 .add(biomeLookup.getOrThrow(ModBiomes.DEEP_FOREST).key());
         this.tag(ModTags.Biomes.WHITE_FOREST)
                 .add(biomeLookup.getOrThrow(ModBiomes.WHITE_FOREST).key());
         this.tag(ModTags.Biomes.CRYSTAL_CAVES)
                 .add(biomeLookup.getOrThrow(ModBiomes.CRYSTAL_CAVE).key());
+        this.tag(ModTags.Biomes.AMETHYST_CAVES)
+                .add(biomeLookup.getOrThrow(ModBiomes.AMETHYST_CAVE).key());
+        this.tag(ModTags.Biomes.RUBY_CAVES)
+                .add(biomeLookup.getOrThrow(ModBiomes.RUBY_CAVE).key());
+        this.tag(ModTags.Biomes.CITRINE_CAVES)
+                .add(biomeLookup.getOrThrow(ModBiomes.CITRINE_CAVE).key());
+        this.tag(ModTags.Biomes.MALACHITE_CAVES)
+                .add(biomeLookup.getOrThrow(ModBiomes.MALACHITE_CAVE).key());
+        this.tag(ModTags.Biomes.ECHO_CAVES)
+                .add(biomeLookup.getOrThrow(ModBiomes.ECHO_CAVE).key());
+        this.tag(ModTags.Biomes.PALE_CAVES)
+                .add(biomeLookup.getOrThrow(ModBiomes.PALE_CAVE).key());
     }
 }

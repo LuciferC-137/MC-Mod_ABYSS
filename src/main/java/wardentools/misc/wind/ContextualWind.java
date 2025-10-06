@@ -18,7 +18,13 @@ public class ContextualWind {
             ModTags.Biomes.DEEPFOREST, WhisperTags.Tag.DEEPFOREST,
             ModTags.Biomes.WHITE_FOREST, WhisperTags.Tag.WHITE_FOREST,
             ModTags.Biomes.CRYSTAL_CAVES, WhisperTags.Tag.CRYSTAL_CAVE,
-            BiomeTags.IS_OVERWORLD, WhisperTags.Tag.OVERWORLD
+            BiomeTags.IS_OVERWORLD, WhisperTags.Tag.OVERWORLD,
+            ModTags.Biomes.AMETHYST_CAVES, WhisperTags.Tag.AMETHYST_CAVE,
+            ModTags.Biomes.RUBY_CAVES, WhisperTags.Tag.RUBY_CAVE,
+            ModTags.Biomes.CITRINE_CAVES, WhisperTags.Tag.CITRINE_CAVE,
+            ModTags.Biomes.MALACHITE_CAVES, WhisperTags.Tag.MALACHITE_CAVE,
+            ModTags.Biomes.ECHO_CAVES, WhisperTags.Tag.ECHO_CAVE,
+            ModTags.Biomes.PALE_CAVES, WhisperTags.Tag.PALE_CAVE
     );
 
     public static WhisperTags.Tag getTagForBiome(Holder<Biome> biomeHolder) {

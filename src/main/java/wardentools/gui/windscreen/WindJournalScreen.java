@@ -234,7 +234,8 @@ public class WindJournalScreen extends Screen {
     }
 
     private Style getStylePage(int mouseX, int mouseY) {
-        return (this.cachedLeftPageIndex == 0) ? getStyleUnderMouseOnFirstPage(mouseX, mouseY)
+        return (this.cachedLeftPageIndex <= this.journalAccess.getTableOfContentLength()) ?
+                getStyleUnderMouseOnTableOfContentPage(mouseX, mouseY)
                 : getStyleUnderMouse(this.font, this.cachedLeftPageLines, mouseX, mouseY,
                 this.rightPageXStart(), PAGE_TEXT_Y_OFFSET, TEXT_WIDTH, LINE_HEIGHT);
     }
@@ -374,14 +375,34 @@ public class WindJournalScreen extends Screen {
         return font.getSplitter().componentStyleAtWidth(line, relativeX);
     }
 
-    private @Nullable Style getStyleUnderMouseOnFirstPage(double mouseX, double mouseY) {
-        List<Component> firstPageLines = this.journalAccess.getFirstPageComponents();
-        int relativeX = Mth.floor(mouseX - this.rightPageXStart());
-        int relativeY = Mth.floor(mouseY - 2.0 - PAGE_TEXT_Y_OFFSET - this.journalAccess.firstPageComponentYOffset);
+    private @Nullable Style getStyleUnderMouseOnTableOfContentPage(double mouseX, double mouseY) {
+        List<List<Component>> tocPages = this.journalAccess.getTableOfContentComponents();
+        if (tocPages == null || tocPages.isEmpty()) return null;
+
+        boolean overRightPage = mouseX >= this.rightPageXStart();
+
+        int tocPageIndex;
+        if (this.currentLeftPageIndex == 0) {
+            if (!overRightPage) return null;
+            tocPageIndex = 0;
+        } else {
+            tocPageIndex = overRightPage ? this.currentLeftPageIndex : this.currentLeftPageIndex - 1;
+        }
+
+        if (tocPageIndex < 0 || tocPageIndex >= tocPages.size()) return null;
+
+        List<Component> pageLines = tocPages.get(tocPageIndex);
+        int pageTextStartX = overRightPage ? this.rightPageXStart() : this.leftMargin() + PAGE_TEXT_X_OFFSET;
+        int relativeX = Mth.floor(mouseX - pageTextStartX);
+
+        int extraYOffset = (tocPageIndex == 0) ? this.journalAccess.tableOfContentComponentYOffset : 0;
+        int relativeY = Mth.floor(mouseY - PAGE_TEXT_Y_OFFSET - extraYOffset);
+
         if (relativeX < 0 || relativeY < 0 || relativeX > TEXT_WIDTH) return null;
         int lineIndex = relativeY / LINE_HEIGHT;
-        if (lineIndex >= firstPageLines.size()) return null;
-        Component line = firstPageLines.get(lineIndex);
+        if (lineIndex >= pageLines.size()) return null;
+
+        Component line = pageLines.get(lineIndex);
         return this.font.getSplitter().componentStyleAtWidth(line.getVisualOrderText(), relativeX);
     }
 

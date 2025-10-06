@@ -25,8 +25,9 @@ import java.util.List;
 public class JournalAccess {
     private final List<List<Component>> sections;
     private List<List<FormattedCharSequence>> pages = new ArrayList<>();
-    private final List<Component> firstPageComponents = new ArrayList<>();
-    public int firstPageComponentYOffset = 0;
+    private final List<List<Component>> tableOfContentComponents = new ArrayList<>();
+    public int tableOfContentComponentYOffset = 0;
+    private int lengthOfTableOfContent = 0;
 
     public JournalAccess() {
         this.sections = new ArrayList<>();
@@ -38,7 +39,6 @@ public class JournalAccess {
     }
 
     private List<List<FormattedCharSequence>> buildPagesList(Font font) {
-        firstPageComponents.clear();
         List<List<FormattedCharSequence>> pages = new ArrayList<>();
         List<Integer> sectionPageIndex = new ArrayList<>();
         int pageIndex = 1;
@@ -74,23 +74,34 @@ public class JournalAccess {
                                                                  List<Integer> sectionPageIndex) {
         // Replace XX with page proper page index and adds links to it.
         int indexParsing = 0;
-        List<FormattedCharSequence> firstPage = pages.getFirst();
-        for (int k = 0; k < firstPage.size(); k++) {
-            FormattedCharSequence line = firstPage.get(k);
-            String lineText = extractText(line);
-            if (lineText.contains("XX") && indexParsing < sectionPageIndex.size()) {
-                if (indexParsing == 0) this.firstPageComponentYOffset = k * WindJournalScreen.LINE_HEIGHT;
-                int targetPage = sectionPageIndex.get(indexParsing);
-                String label = lineText.replace("XX", String.valueOf(targetPage));
-                Component clickableComponent = clickable(label, targetPage);
-                this.firstPageComponents.add(clickableComponent);
-                FormattedCharSequence clickableLine = font.split(clickableComponent,
-                        WindJournalScreen.TEXT_WIDTH + 10).getFirst();
-                firstPage.set(k, clickableLine);
-                indexParsing++;
+        this.tableOfContentComponents.clear();
+        this.lengthOfTableOfContent = sectionPageIndex.getFirst() - 1;
+        for (int p = 0; p < this.lengthOfTableOfContent; p++) {
+            List<FormattedCharSequence> tocPage = pages.get(p);
+            for (int k = 0; k < tocPage.size(); k++) {
+                FormattedCharSequence line = tocPage.get(k);
+                String lineText = extractText(line);
+                if (lineText.contains("XX") && indexParsing < sectionPageIndex.size()) {
+                    if (indexParsing == 0) this.tableOfContentComponentYOffset = k * WindJournalScreen.LINE_HEIGHT;
+                    int targetPage = sectionPageIndex.get(indexParsing);
+                    String label = lineText.replace("XX", String.valueOf(targetPage));
+                    Component clickableComponent = clickable(label, targetPage);
+                    if (this.tableOfContentComponents.size() <= p) {
+                        this.tableOfContentComponents.add(new ArrayList<>());
+                    }
+                    this.tableOfContentComponents.get(p).add(clickableComponent);
+                    FormattedCharSequence clickableLine = font.split(clickableComponent,
+                            WindJournalScreen.TEXT_WIDTH + 10).getFirst();
+                    tocPage.set(k, clickableLine);
+                    indexParsing++;
+                }
             }
         }
         return pages;
+    }
+
+    public int getTableOfContentLength() {
+        return this.lengthOfTableOfContent;
     }
 
     private static Component clickable(String text, int pageIndex) {
@@ -170,8 +181,8 @@ public class JournalAccess {
         return pageIndex >= 0 && pageIndex < this.getPageCount() ? this.pages.get(pageIndex) : List.of();
     }
 
-    public List<Component> getFirstPageComponents() {
-        return firstPageComponents;
+    public List<List<Component>> getTableOfContentComponents() {
+        return tableOfContentComponents;
     }
 
     public static Component baseText(String text) {
