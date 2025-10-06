@@ -429,7 +429,16 @@
 	"message.wardentools.whisper.overworld.16": "Je me souviens du goût de la pluie. Elle n’a plus la même saveur.",
 	"message.wardentools.whisper.overworld.17": "Tout ceci est trop bruyant. Trop… vivant.",
 	"message.wardentools.whisper.overworld.18": "On m’a enchaîné au silence. Mais la surface me parle, à nouveau.",
-	"message.wardentools.whisper.overworld.19": "Ce monde te chérit. Tu n’en saisis pas encore le prix."
+	"message.wardentools.whisper.overworld.19": "Ce monde te chérit. Tu n’en saisis pas encore le prix.",
 
+	"book.wardentools.pilgrim_welcome": "Bienvenue, humble pelerin.\n\nPuissent vos prières être entendues.\n\nPuissent les Cristaux vous guider vers la lumière.",
+	"book.wardentools.amethyst_guidance": "Ici vous avez trouvé l'équilibre.\n\nCela consitue la première étape vers la force.\n\nSuivez le chemin du cristal rouge.",
+	"book.wardentools.crystal_psalm": "Les Cristaux nous guident\nLes Cristaux nous dispensent leur enseignement.\nLes Cristaux nous protègent.\nA leur lumière nous nous épanouissons\nDans leur bienveillance, nous nous réfugions.\nDevant leur sagesse, nous nous inclinons.\nNous existons pour les servir et nos vies leurs appartiennent.",
+
+	"book.wardentools.ancient_citadel_hallway.page_1": "La Grande Unification approche.",
+	"book.wardentools.ancient_citadel_hallway.page_2": "Bénie soit l'obscure radiance du cristal achevé.",
+	"book.wardentools.ancient_citadel_hallway.page_3": "Le nouveau Protecteur est assis au sommet. Adorons ses hurlements sacrés.",
+	"book.wardentools.ancient_citadel_hallway.page_4": "Les Cristaux révèlent l'éternité. Nous conquerront la mort.",
+	"book.wardentools.ancient_citadel_hallway.page_5": "Les Cristaux sont le pouvoir. Les Cristaux sont la lumière. Leur éclat est seulement terni par la vérité."
 
 }

@@ -434,7 +434,16 @@
 	"message.wardentools.whisper.overworld.16": "I remember the taste of rain. It no longer tastes the same.",
 	"message.wardentools.whisper.overworld.17": "All of this is too loud. Too… alive.",
 	"message.wardentools.whisper.overworld.18": "They chained me to silence. But the surface speaks to me once more.",
-	"message.wardentools.whisper.overworld.19": "This world cherishes you. You do not yet understand the cost."
+	"message.wardentools.whisper.overworld.19": "This world cherishes you. You do not yet understand the cost.",
 
 
+	"book.wardentools.pilgrim_welcome": "Welcome humble pilgrim.\n\nMay your prayers be answered.\n\nMay the crystals guide you to light.",
+	"book.wardentools.amethyst_guidance": "Here you found balance.\n\nIt is the first step to strength.\n\nFollow the path of the red crystal.",
+	"book.wardentools.crystal_psalm": "Crystals guide us.\nCrystals teach us.\nCrystals protect us.\nIn their light we thrive.\nIn their mercy we are sheltered.\nIn their wisdom we are humbled.\nWe live only to serve.\nOur lives are theirs.",
+
+	"book.wardentools.ancient_citadel_hallway.page_1": "The Great Unification is upon us.",
+	"book.wardentools.ancient_citadel_hallway.page_2": "Blessed be the dark radiance of the finished crystal.",
+	"book.wardentools.ancient_citadel_hallway.page_3": "The new Protector sits at the top. We worship its holy screams.",
+	"book.wardentools.ancient_citadel_hallway.page_4": "Crystals reveal eternity. We will conquer death.",
+	"book.wardentools.ancient_citadel_hallway.page_5": "Crystals are power. Crystals are light. Their brillance is tarnished only with truth."
 }
