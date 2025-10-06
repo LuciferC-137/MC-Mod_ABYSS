@@ -161,7 +161,10 @@ public class LightCandleGoal extends Goal {
         this.turnAroundTick = 0;
         this.phase = Phase.TRAVEL;
         this.golem.getUnlitCandles().clear(); // For more safety
-        this.golem.setState(CrystalGolemEntity.GolemState.DEACTIVATED_2);
+        this.golem.setState(this.golem.level().getRandom().nextBoolean() ?
+                CrystalGolemEntity.GolemState.DEACTIVATED_1 :
+                CrystalGolemEntity.GolemState.DEACTIVATED_2
+        );
     }
 
     private void changePhaseTo(Phase phase) {

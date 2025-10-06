@@ -66,6 +66,7 @@ public class CrystalGolemEntity extends PathfinderMob {
     private static final int CANDLE_CHECKS_PER_TICKS = 5;
 	private static final int CANDLE_RADIUS = 10;
 	private static final int CANDLE_HEIGHT = 4;
+	private static final int CHANCE_TO_UNLIT_CANDLE = 400;
 
 	public final AnimationState deactivatedState1 = new AnimationState();
 	public final AnimationState deactivatedState2 = new AnimationState();
@@ -221,7 +222,12 @@ public class CrystalGolemEntity extends PathfinderMob {
 		for (int i = 0; i < CANDLE_CHECKS_PER_TICKS; i++) {
 			if (isCurrentCandlePosUnlit()) {
 				this.addUnlitCandle(this.getCurrentCheckBlockPos());
+			} else if (isCurrentCandlePosLit()) {
+				if (this.level().getRandom().nextInt(CHANCE_TO_UNLIT_CANDLE) == 0) {
+					this.turnOffCandleAtPos(this.getCurrentCheckBlockPos());
+				}
 			}
+
 			this.nextPosCheck();
 		}
 	}
@@ -462,6 +468,16 @@ public class CrystalGolemEntity extends PathfinderMob {
 		return false;
 	}
 
+	private boolean isCurrentCandlePosLit() {
+		if (this.golemStonePos == null) return false;
+		BlockPos pos = this.getCurrentCheckBlockPos();
+		BlockState state = this.level().getBlockState(pos);
+		if (state.is(BlockTags.CANDLES) && state.hasProperty(CandleBlock.LIT)) {
+			return state.getValue(CandleBlock.LIT);
+		}
+		return false;
+	}
+
 	public BlockPos getCurrentCheckBlockPos() {
 		if (golemStonePos == null) return BlockPos.ZERO;
 		BlockPos relativePos = relativePosToCheck.get(this.currentCheckIndex);
@@ -477,6 +493,16 @@ public class CrystalGolemEntity extends PathfinderMob {
 						state.setValue(CandleBlock.LIT, true), Block.UPDATE_ALL);
 				this.playSound(SoundEvents.FIRECHARGE_USE, 0.2F, 1.0F);
 			}
+		}
+	}
+
+	public void turnOffCandleAtPos(BlockPos pos) {
+		if (this.level().isClientSide) return;
+		BlockState state = this.level().getBlockState(pos);
+		if (state.is(BlockTags.CANDLES) && state.hasProperty(CandleBlock.LIT)
+				&& state.getValue(CandleBlock.LIT)) {
+			this.level().setBlock(pos,
+					state.setValue(CandleBlock.LIT, false), Block.UPDATE_ALL);
 		}
 	}
 
