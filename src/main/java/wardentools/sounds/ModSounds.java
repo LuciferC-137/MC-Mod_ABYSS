@@ -83,6 +83,8 @@ public class ModSounds {
 			registerSoundEvents("crystal_golem_death");
 	public static final RegistryObject<SoundEvent> CRYSTAL_GOLEM_STEP =
 			registerSoundEvents("crystal_golem_step");
+	public static final RegistryObject<SoundEvent> CRYSTAL_GOLEM_AGGRESSION =
+			registerSoundEvents("crystal_golem_aggression");
 	public static final RegistryObject<SoundEvent> LASER_CHARGE =
 			registerSoundEvents("laser_charge");
 	public static final RegistryObject<SoundEvent> LASER_SHOOT =

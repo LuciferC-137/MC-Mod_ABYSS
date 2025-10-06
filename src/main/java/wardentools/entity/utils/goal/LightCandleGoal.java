@@ -45,7 +45,7 @@ public class LightCandleGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        return wouldLikeToStart(this.golem) && golem.isActive();
+        return wouldLikeToStart(this.golem) && golem.isActive() && !golem.hasGrief();
     }
 
     @Override

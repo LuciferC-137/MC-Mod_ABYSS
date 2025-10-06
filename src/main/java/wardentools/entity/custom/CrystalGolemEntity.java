@@ -18,6 +18,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -31,6 +32,7 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.utils.CrystalGolemNavigation;
+import wardentools.entity.utils.goal.CrystalGolemAttackGoal;
 import wardentools.entity.utils.goal.LightCandleGoal;
 import wardentools.misc.Crystal;
 import wardentools.particle.ModParticleUtils;
@@ -53,7 +55,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Float> SYNC_Y_ROT =
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.FLOAT);
-	private static final EntityDataAccessor<Boolean> IS_AGGRESSIVE =
+	private static final EntityDataAccessor<Boolean> GRIEF =
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.BOOLEAN);
 
 
@@ -112,14 +114,24 @@ public class CrystalGolemEntity extends PathfinderMob {
 
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new LightCandleGoal(this));
+		this.goalSelector.addGoal(1, new CrystalGolemAttackGoal(this, 2.0D));
+		this.goalSelector.addGoal(2, new LightCandleGoal(this));
+
+		this.targetSelector.addGoal(1,
+				new NearestAttackableTargetGoal<Player>(this, Player.class, true) {
+					@Override
+					public boolean canUse() {
+						return super.canUse() && CrystalGolemEntity.this.hasGrief();
+					}
+				});
 	}
 	
 	public static AttributeSupplier.Builder createAttribute(){
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MAX_HEALTH, 30.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.12D)
-				.add(Attributes.ATTACK_DAMAGE, 3.0D);
+				.add(Attributes.ATTACK_DAMAGE, 8.0D)
+				.add(Attributes.FOLLOW_RANGE, 32.0D);
 	}
 
 	@Override
@@ -130,7 +142,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		builder.define(CURRENT_CANDLE_TARGET, BlockPos.ZERO);
 		builder.define(LASER_TICK, 0);
 		builder.define(SYNC_Y_ROT, 0F);
-		builder.define(IS_AGGRESSIVE, false);
+		builder.define(GRIEF, false);
 	}
 
 	@Override
@@ -174,7 +186,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		}
 	}
 
-	private void shootLaser() {
+	public void shootLaser() {
 		CrystalLaserEntity laser = new CrystalLaserEntity(ModEntities.CRYSTAL_LASER.get(), this.level());
 		laser.setPos(this.getLaserFirePosition());
 		laser.setCrystalType(this.getCrystal());
@@ -183,7 +195,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	private void handleTimeAwake() {
-		if (this.isActive() && !LightCandleGoal.wouldLikeToStart(this)) {
+		if (this.isActive() && !LightCandleGoal.wouldLikeToStart(this) && this.getTarget() == null) {
 			this.timeAwakeWithoutGoal++;
 			if (this.timeAwakeWithoutGoal > MAX_TIME_AWAKE_WITHOUT_GOAL) {
 				this.setState(GolemState.DEACTIVATED_1);
@@ -256,7 +268,8 @@ public class CrystalGolemEntity extends PathfinderMob {
 		if (this.lookAroundTickDown > 0) {
 			this.lookAroundTickDown--;
 		}
-		if (this.isActive() && this.getState() != GolemState.CHARGING_LASER) {
+		if (this.isActive() && this.getState() != GolemState.CHARGING_LASER &&
+				!this.hasGrief()) {
 			if (this.level().getRandom().nextInt(LOOK_TICK_PER_PROB) == 0) {
 				this.lookAroundTickDown = LOOK_AROUND_DURATION;
 			}
@@ -322,6 +335,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		this.turningOffTick = FADING_DURATION;
 		this.nextFlickerScheduledTick = 0;
 		this.turningOnTick = 0;
+		this.setGrief(false);
 		this.makeSound(ModSounds.CRYSTAL_GOLEM_TURNING_OFF.get());
 	}
 
@@ -389,9 +403,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 
 	public GolemState getState() {return GolemState.fromId(this.entityData.get(STATE));}
 
-	public boolean isAggressive() {return this.entityData.get(IS_AGGRESSIVE);}
+	public boolean hasGrief() {return this.entityData.get(GRIEF);}
 
-	public void setAggressive(boolean aggressive) {this.entityData.set(IS_AGGRESSIVE, aggressive);}
+	public void setGrief(boolean grief) {this.entityData.set(GRIEF, grief);}
 
 	public void forceYRot(float rot) {
 		this.setYRot(rot);
@@ -486,7 +500,37 @@ public class CrystalGolemEntity extends PathfinderMob {
 				new ClientboundMoveEntityPacket.Rot(this.getId(), yawByte, pitchByte, this.onGround()));
 	}
 
+	public void choseViolence() {
+		this.setGrief(true);
+		this.setState(GolemState.TURNING_ON);
+		this.playSound(ModSounds.CRYSTAL_GOLEM_AGGRESSION.get(), this.getSoundVolume(),
+				this.level().getRandom().nextFloat() * 0.2F + 0.9F);
+	}
 
+	private void alertOthers() {
+		List<CrystalGolemEntity> list = this.level().getEntitiesOfClass(CrystalGolemEntity.class,
+				this.getBoundingBox().inflate(30.0D, 4.0D, 30.0D));
+		for (CrystalGolemEntity golem : list) {
+			if (golem != this && !golem.isActive()) {
+				golem.choseViolence();
+			}
+		}
+	}
+
+	@Override
+	public boolean hurt(@NotNull DamageSource source, float damage) {
+		if (source.getEntity() instanceof Player player){
+			if (player.isCreative()) {
+				return super.hurt(source, damage);
+			}
+		}
+		if (!this.hasGrief()) {
+			this.choseViolence();
+			this.alertOthers();
+			this.setState(GolemState.TRAVELING);
+		}
+		return super.hurt(source, damage);
+	}
 
 	@Override
 	protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
@@ -527,6 +571,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		if (this.golemStonePos != null) {
 			SaveUtils.putBlockPos(tag, "golem_stone_pos", this.golemStonePos);
 		}
+		tag.putBoolean("has_grief", this.hasGrief());
 		super.addAdditionalSaveData(tag);
 	}
 
@@ -544,6 +589,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 		}
 		if (tag.contains("golem_stone_pos")) {
 			this.golemStonePos = SaveUtils.readBlockPos(tag, "golem_stone_pos");
+		}
+		if (tag.contains("has_grief")) {
+			this.setGrief(tag.getBoolean("has_grief"));
 		}
 		super.readAdditionalSaveData(tag);
 		this.flickerState = this.isActive();

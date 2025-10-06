@@ -105,5 +105,9 @@ public class CrystalGolem extends HierarchicalModel<CrystalGolemEntity> {
 
 		animateWalk(CrystalGolemAnimation.walking, limbSwing * 11F,
 				limbSwingAmount * 11F, 1F, 2.5F);
+
+		head.xRot += headPitch * ((float)Math.PI / 180F);
+		head.yRot += netHeadYaw * ((float)Math.PI / 180F);
+
 	}
 }

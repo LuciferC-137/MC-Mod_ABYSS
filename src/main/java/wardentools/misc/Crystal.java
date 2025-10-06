@@ -17,33 +17,40 @@ public enum Crystal implements StringRepresentable {
     AMETHYST(0, 0x8e42f6,
             () -> Blocks.AMETHYST_BLOCK,
             () -> Blocks.AMETHYST_CLUSTER,
-            () -> Items.AMETHYST_SHARD),
+            () -> Items.AMETHYST_SHARD,
+            ItemRegistry.PENDANT_OF_BALANCE),
     RUBY(1, 0xed2525,
             BlockRegistry.RUBY_BLOCK,
             BlockRegistry.RUBY,
-            ItemRegistry.RUBY_FRAGMENT),
+            ItemRegistry.RUBY_FRAGMENT,
+            ItemRegistry.STRENGTH_BRACELET),
     CITRINE(2, 0xffc200,
             BlockRegistry.CITRINE_BLOCK,
             BlockRegistry.CITRINE,
-            ItemRegistry.CITRINE_FRAGMENT),
+            ItemRegistry.CITRINE_FRAGMENT,
+            ItemRegistry.MIND_TIARA),
     MALACHITE(3, 0x10b058,
             BlockRegistry.MALACHITE_BLOCK,
             BlockRegistry.MALACHITE,
-            ItemRegistry.MALACHITE_FRAGMENT),
+            ItemRegistry.MALACHITE_FRAGMENT,
+            ItemRegistry.RING_OF_WILL),
     ECHO(4, 0x244b69,
             BlockRegistry.ECHO_BLOCK,
             BlockRegistry.ECHO_CRISTAL,
-            () -> Items.ECHO_SHARD),
+            () -> Items.ECHO_SHARD,
+            ItemRegistry.SHADOW_ORNAMENT),
     PALE(5, 0x1be4eb,
             BlockRegistry.PALE_CRISTAL_BLOCK,
             BlockRegistry.PALE_CRISTAL,
-            ItemRegistry.PALE_SHARD);
+            ItemRegistry.PALE_SHARD,
+            ItemRegistry.LIGHT_ORNAMENT);
 
     private static class LazyMaps {
         private static final Map<Integer, Crystal> BY_INDEX = buildIndexMap();
         private static final Map<Block, Crystal> BY_BLOCK = buildBlockMap();
         private static final Map<Block, Crystal> BY_BUD   = buildBudMap();
         private static final Map<Item, Crystal>  BY_ITEM  = buildItemMap();
+        private static final Map<Item, Crystal> BY_JEWEL = buildJewelMap();
 
         private static Map<Integer, Crystal> buildIndexMap() {
             Map<Integer, Crystal> map = new HashMap<>();
@@ -68,6 +75,12 @@ public enum Crystal implements StringRepresentable {
             for (Crystal c : values()) map.put(c.getShard(), c);
             return map;
         }
+
+        private static Map<Item, Crystal> buildJewelMap() {
+            Map<Item, Crystal> map = new HashMap<>();
+            for (Crystal c : values()) map.put(c.getJewel(), c);
+            return map;
+        }
     }
 
     private final int index;
@@ -75,19 +88,22 @@ public enum Crystal implements StringRepresentable {
     private final Supplier<Block> crystalBlock;
     private final Supplier<Block> crystalBud;
     private final Supplier<Item> shard;
+    private final Supplier<Item> jewel;
 
     Crystal(int index, int color, Supplier<Block> block, Supplier<Block> bud,
-            Supplier<Item> shard) {
+            Supplier<Item> shard, Supplier<Item> jewel) {
         this.index = index;
         this.color = color;
         this.crystalBlock = block;
         this.crystalBud = bud;
         this.shard = shard;
+        this.jewel = jewel;
     }
 
     public Block getCrystalBlock() { return crystalBlock.get(); }
     public Block getCrystalBud() { return crystalBud.get(); }
     public Item getShard() { return shard.get(); }
+    public Item getJewel() { return jewel.get(); }
 
     public int getIndex() { return index; }
     public int getColor() { return color; }
@@ -108,8 +124,14 @@ public enum Crystal implements StringRepresentable {
     public static Crystal fromItem(Item item) {
         return LazyMaps.BY_ITEM.getOrDefault(item, getDefault());
     }
+    public static Crystal fromJewel(Item item) {
+        return LazyMaps.BY_JEWEL.getOrDefault(item, getDefault());
+    }
     public static boolean isCrystalItem(Item item) {
         return LazyMaps.BY_ITEM.containsKey(item);
+    }
+    public static boolean isCrystalJewel(Item item) {
+        return LazyMaps.BY_JEWEL.containsKey(item);
     }
 
     public static Crystal getDefault() { return AMETHYST; }

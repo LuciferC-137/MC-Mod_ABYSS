@@ -271,6 +271,12 @@
 			"wardentools:crystal_golem_step"
 		]
 	},
+	"crystal_golem_aggression": {
+		"subtitles": "sounds.wardentools.crystal_golem_aggression",
+		"sounds": [
+			"wardentools:crystal_golem_aggression"
+		]
+	},
 	"laser_charge": {
 		"subtitles": "sounds.wardentools.laser_charge",
 		"sounds": [
