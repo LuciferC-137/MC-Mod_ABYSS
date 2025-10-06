@@ -23,6 +23,8 @@ public class LightCandleGoal extends Goal {
 
     private int turnAroundTick = 0;
 
+    private static final int SAME_CANDLE_CHECK_EVERY_X_TICK = 40;
+
     public LightCandleGoal(CrystalGolemEntity golem) {
         this.golem = golem;
     }
@@ -30,6 +32,10 @@ public class LightCandleGoal extends Goal {
     @Override
     public void start() {
         this.timeoutTick = 0;
+        if (this.surroundingGolemHasSameTarget()) {
+            this.stop();
+            return;
+        }
         this.changePhaseTo(Phase.TRAVEL);
         BlockPos targetPos = golem.peekUnlitCandle();
         Vec3 target = targetPos.getCenter();
@@ -61,26 +67,31 @@ public class LightCandleGoal extends Goal {
         if (this.timeoutTick > TIMEOUT) {
             this.stop();
         }
-        if (this.phase == Phase.TRAVEL && golem.getNavigation().isDone()) {
-            BlockPos targetPos = golem.peekUnlitCandle();
-            if (targetPos != BlockPos.ZERO) {
-                BlockState state = golem.level().getBlockState(targetPos);
-                if (state.is(BlockTags.CANDLES)
-                        && state.hasProperty(CandleBlock.LIT)
-                        && !state.getValue(CandleBlock.LIT)) {
-                    this.changePhaseTo(Phase.LIGHT);
-                } else {
-                    golem.pollUnlitCandle();
-                    if (golem.getUnlitCandles().isEmpty()) {
-                        this.changePhaseTo(Phase.COMEBACK);
-                        Vec3 target = this.golem.getGolemStonePos().getCenter();
-                        golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
+        if (this.timeoutTick % SAME_CANDLE_CHECK_EVERY_X_TICK == 0) {
+            this.surroundingGolemHasSameTarget();
+        }
+        if (this.phase == Phase.TRAVEL) {
+            if (this.golem.getUnlitCandles().isEmpty()) {
+                this.goBack();
+            } else if (golem.getNavigation().isDone()) {
+                BlockPos targetPos = golem.peekUnlitCandle();
+                if (targetPos != BlockPos.ZERO) {
+                    BlockState state = golem.level().getBlockState(targetPos);
+                    if (state.is(BlockTags.CANDLES)
+                            && state.hasProperty(CandleBlock.LIT)
+                            && !state.getValue(CandleBlock.LIT)) {
+                        this.changePhaseTo(Phase.LIGHT);
+                    } else {
+                        golem.pollUnlitCandle();
+                        if (golem.getUnlitCandles().isEmpty()) {
+                            this.changePhaseTo(Phase.COMEBACK);
+                            Vec3 target = this.golem.getGolemStonePos().getCenter();
+                            golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
+                        }
                     }
+                } else {
+                    this.goBack();
                 }
-            } else {
-                this.changePhaseTo(Phase.COMEBACK);
-                Vec3 target = this.golem.getGolemStonePos().getCenter();
-                golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
             }
         }
         if (this.phase == Phase.LIGHT) {
@@ -97,9 +108,7 @@ public class LightCandleGoal extends Goal {
                     Vec3 target = next.getCenter();
                     golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
                 } else {
-                    this.changePhaseTo(Phase.COMEBACK);
-                    Vec3 target = this.golem.getGolemStonePos().getCenter();
-                    golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
+                    this.goBack();
                 }
             }
         }
@@ -115,6 +124,34 @@ public class LightCandleGoal extends Goal {
                 this.stop();
             }
         }
+    }
+
+    public void goBack() {
+        this.changePhaseTo(Phase.COMEBACK);
+        Vec3 target = this.golem.getGolemStonePos().getCenter();
+        golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
+    }
+
+    public boolean surroundingGolemHasSameTarget() {
+        return surroundingGolemHasSameTarget(this.golem);
+    }
+
+    // Checks if a surrounding golem has the same target candle, and if so,
+    // removes the target from this golem's list if the other golem is closer to it.
+    public static boolean surroundingGolemHasSameTarget(CrystalGolemEntity golem) {
+        BlockPos targetPos = golem.peekUnlitCandle();
+        if (targetPos != BlockPos.ZERO) {
+            for (CrystalGolemEntity otherGolem : golem.getNearbyGolems()) {
+                if (otherGolem != golem
+                        && !otherGolem.getUnlitCandles().isEmpty()
+                        && otherGolem.peekUnlitCandle().equals(targetPos)
+                        && golem.distanceToTarget() > otherGolem.distanceToTarget()) {
+                    golem.pollUnlitCandle();
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

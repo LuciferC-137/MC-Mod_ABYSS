@@ -26,13 +26,11 @@ public class CrystalGolemAttackGoal extends MeleeAttackGoal {
 
     @Override
     public void start() {
-        System.out.println("Starting attack goal");
         super.start();
     }
 
     @Override
     public void stop() {
-        System.out.println("Stopping attack goal");
         super.stop();
     }
 

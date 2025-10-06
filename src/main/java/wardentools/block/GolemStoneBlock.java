@@ -57,7 +57,9 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock {
 				pos.getZ() + 0.5, yRot, 0);
 		golem.setCrystalType(state.getValue(CRYSTAL));
 		golem.setGolemStonePos(pos);
-		golem.setState(CrystalGolemEntity.GolemState.DEACTIVATED_2);
+		golem.setState(level.getRandom().nextBoolean() ?
+				CrystalGolemEntity.GolemState.DEACTIVATED_1 :
+				CrystalGolemEntity.GolemState.DEACTIVATED_2);
 		level.addFreshEntity(golem);
 
 		super.onPlace(state, level, pos, state1, b);

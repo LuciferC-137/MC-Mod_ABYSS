@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.CrystalGolemAnimation;
@@ -102,9 +103,20 @@ public class CrystalGolem extends HierarchicalModel<CrystalGolemEntity> {
 		animate(golem.lightingState, CrystalGolemAnimation.lighting_candle, ageInTicks);
 		animate(golem.randomLookAround, CrystalGolemAnimation.look_around, ageInTicks);
 		animate(golem.reactivateFrom2, CrystalGolemAnimation.rise, ageInTicks);
+		animate(golem.reactivateFrom1, CrystalGolemAnimation.reactivate, ageInTicks);
 
 		animateWalk(CrystalGolemAnimation.walking, limbSwing * 11F,
 				limbSwingAmount * 11F, 1F, 2.5F);
+
+		float attackProgress = golem.getAttackAnim(ageInTicks);
+		if (attackProgress > 0f) {
+			float f = (float)Math.sin(attackProgress * Math.PI);
+			float f1 = (float)Math.sin((1 - (1 - attackProgress) * (1 - attackProgress)) * Math.PI);
+
+			arm_r.xRot -= f * 1.2F + f1 * 0.4F;
+			arm_r.yRot += Mth.sin(ageInTicks * 0.067F) * 0.05F;
+			arm_r.zRot += Mth.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+		}
 
 		head.xRot += headPitch * ((float)Math.PI / 180F);
 		head.yRot += netHeadYaw * ((float)Math.PI / 180F);

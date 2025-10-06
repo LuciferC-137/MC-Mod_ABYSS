@@ -10,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
@@ -58,6 +60,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 	private static final EntityDataAccessor<Boolean> GRIEF =
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.BOOLEAN);
 
+	private static final float NEARBY_ALLIED_RANGE = 20.0F;
 
 	private final List<BlockPos> unlitCandles = new ArrayList<>();
     private static final int CANDLE_CHECKS_PER_TICKS = 5;
@@ -69,6 +72,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 	public final AnimationState lightingState = new AnimationState();
 	public final AnimationState randomLookAround = new AnimationState();
 	public final AnimationState reactivateFrom2 = new AnimationState();
+	public final AnimationState reactivateFrom1 = new AnimationState();
 
 	@Nullable
 	private BlockPos golemStonePos = null;
@@ -90,6 +94,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 	private static final float PARTICLE_SPEED = 0.2F;
 
 	private GolemState previousState = GolemState.DEACTIVATED_2;
+	private GolemState previousDeactivatedState = GolemState.DEACTIVATED_2;
 	private static final int MAX_TIME_AWAKE_WITHOUT_GOAL = 1200;
 	private int timeAwakeWithoutGoal = 0;
 
@@ -152,7 +157,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 			this.handleCandleCheck();
 			this.laserTick();
 			if (LightCandleGoal.wouldLikeToStart(this) && !this.isActive()) {
-				this.setState(GolemState.TURNING_ON);
+				if (!LightCandleGoal.surroundingGolemHasSameTarget(this)) {
+					this.setState(GolemState.TURNING_ON);
+				}
 			}
 		} else {
 			this.handleAnimationStates();
@@ -164,6 +171,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 				this.laserChargingParticleEffect();
 			}
 		}
+		this.updateSwingTime();
 		this.handleTurningOffTick();
 		this.handleTurningOnTick();
 		super.tick();
@@ -260,8 +268,15 @@ public class CrystalGolemEntity extends PathfinderMob {
 				this.getState() == GolemState.LIGHT, tickCount);
 		this.randomLookAround.animateWhen(this.lookAroundTickDown > 0
 				&& this.isActive(), tickCount);
-		this.reactivateFrom2.animateWhen(
-				this.getState() == GolemState.TURNING_ON, tickCount);
+
+		if (this.getState() == GolemState.DEACTIVATED_2
+				|| this.getState() == GolemState.DEACTIVATED_1) {
+			this.previousDeactivatedState = this.getState();
+		}
+		this.reactivateFrom2.animateWhen(this.previousDeactivatedState == GolemState.DEACTIVATED_2
+				&& this.getState() == GolemState.TURNING_ON, tickCount);
+		this.reactivateFrom1.animateWhen(this.previousDeactivatedState == GolemState.DEACTIVATED_1
+						&& this.getState() == GolemState.TURNING_ON, tickCount);
 	}
 
 	private void animationTickDownAndRandomTrigger() {
@@ -303,7 +318,8 @@ public class CrystalGolemEntity extends PathfinderMob {
 				emissionPos = emissionPos.offsetRandom(this.level().getRandom(),
 						0.2F);
 				// Adjust target slightly away from emission position
-				target = target.add(target.subtract(emissionPos).scale(0.1F));
+				target = target.add(target.subtract(emissionPos).scale(0.15F));
+				emissionPos = emissionPos.add(target.subtract(emissionPos).scale(0.15F));
 				ModParticleUtils.addClientParticle(this.level(),
 						new ShineParticleOptions(target, this.getCrystal().getColorARGB()),
 						emissionPos, target, PARTICLE_SPEED);
@@ -375,6 +391,22 @@ public class CrystalGolemEntity extends PathfinderMob {
 		return unlitCandles.isEmpty() ? BlockPos.ZERO : unlitCandles.getFirst();
 	}
 
+	public float distanceToTarget() {
+		BlockPos targetPos = this.peekUnlitCandle();
+		if (targetPos != BlockPos.ZERO) {
+			Vec3 target = targetPos.getCenter();
+			return (float) this.position().distanceTo(target);
+		}
+		return Float.MAX_VALUE;
+	}
+
+	public List<CrystalGolemEntity> getNearbyGolems() {
+		if (this.level().isClientSide) return List.of();
+		AABB box = this.getBoundingBox().inflate(NEARBY_ALLIED_RANGE, 4.0D, NEARBY_ALLIED_RANGE);
+		return this.level().getEntitiesOfClass(CrystalGolemEntity.class, box, golem ->
+				golem != this && golem.isAlive());
+	}
+
 	public boolean isActive() {
 		return !isDeactivated(this.getState())
 				&& this.getState() != GolemState.TURNING_ON;
@@ -443,6 +475,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 			if (!state.getValue(CandleBlock.LIT)) {
 				this.level().setBlock(this.unlitCandles.getFirst(),
 						state.setValue(CandleBlock.LIT, true), Block.UPDATE_ALL);
+				this.playSound(SoundEvents.FIRECHARGE_USE, 0.2F, 1.0F);
 			}
 		}
 	}
@@ -508,9 +541,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	private void alertOthers() {
-		List<CrystalGolemEntity> list = this.level().getEntitiesOfClass(CrystalGolemEntity.class,
-				this.getBoundingBox().inflate(30.0D, 4.0D, 30.0D));
-		for (CrystalGolemEntity golem : list) {
+		for (CrystalGolemEntity golem : this.getNearbyGolems()) {
 			if (golem != this && !golem.isActive()) {
 				golem.choseViolence();
 			}
