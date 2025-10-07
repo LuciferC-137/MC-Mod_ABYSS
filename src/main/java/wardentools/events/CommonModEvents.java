@@ -113,5 +113,9 @@ public class CommonModEvents {
 				BlackCorruption.Provider::new);
 		Minecraft.getInstance().particleEngine.register(ParticleRegistry.SHINE_PARTICLE.get(),
 				ShineParticle.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.GLYPH_PARTICLE.get(),
+				GlyphParticle.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.GLYPH_PARTICLE_ROTATING.get(),
+				GlyphParticleRotating.Provider::new);
 	}
 }

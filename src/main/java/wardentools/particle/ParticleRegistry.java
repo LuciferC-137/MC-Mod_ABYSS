@@ -11,6 +11,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.particle.options.GlyphParticleOptions;
+import wardentools.particle.options.GlyphParticleRotatingOptions;
 import wardentools.particle.options.ShineParticleOptions;
 
 public class ParticleRegistry {
@@ -30,6 +32,10 @@ public class ParticleRegistry {
 
     public static final RegistryObject<ParticleType<ShineParticleOptions>> SHINE_PARTICLE =
             registerCustom("amethyst_shine", ShineParticleOptions.CODEC, ShineParticleOptions.STREAM_CODEC);
+    public static final RegistryObject<ParticleType<GlyphParticleOptions>> GLYPH_PARTICLE =
+            registerCustom("glyph", GlyphParticleOptions.CODEC, GlyphParticleOptions.STREAM_CODEC);
+    public static final RegistryObject<ParticleType<GlyphParticleRotatingOptions>> GLYPH_PARTICLE_ROTATING =
+            registerCustom("glyph_rotating", GlyphParticleRotatingOptions.CODEC, GlyphParticleRotatingOptions.STREAM_CODEC);
 
 
     private static <T extends ParticleOptions> RegistryObject<ParticleType<T>>

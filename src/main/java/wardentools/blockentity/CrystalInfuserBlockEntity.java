@@ -32,6 +32,7 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
     };
 
     private boolean isInfusing = false;
+    public boolean hasEmitedParticles = false;
 
     protected CrystalInfuserBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

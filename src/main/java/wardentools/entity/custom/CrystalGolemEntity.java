@@ -38,6 +38,7 @@ import wardentools.entity.utils.goal.CrystalGolemAttackGoal;
 import wardentools.entity.utils.goal.LightCandleGoal;
 import wardentools.misc.Crystal;
 import wardentools.particle.ModParticleUtils;
+import wardentools.particle.options.GlyphParticleOptions;
 import wardentools.particle.options.ShineParticleOptions;
 import wardentools.sounds.ModSounds;
 import wardentools.utils.SaveUtils;
@@ -308,6 +309,13 @@ public class CrystalGolemEntity extends PathfinderMob {
 				ModParticleUtils.addClientParticle(this.level(),
 						new ShineParticleOptions(direction, this.getCrystal().getColorARGB()),
 						emissionPos, direction);
+			}
+			if (this.getLaserTick() == LASER_DURATION - 3) {
+				ModParticleUtils.particleCircle(this.level(),
+						new GlyphParticleOptions(Vec3.ZERO, this.getCrystal().getColorARGB()),
+						emissionPos, 0.5F, 15,
+						new Vec3(this.getLookAngle().x, 0, this.getLookAngle().z),
+						new Vec3(0, 0.0065F, 0));
 			}
 		}
 	}

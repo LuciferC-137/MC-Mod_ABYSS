@@ -1,6 +1,8 @@
 package wardentools.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -8,11 +10,13 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -28,9 +32,13 @@ import wardentools.blockentity.CrystalInfuserBlockEntity;
 import wardentools.misc.Crystal;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleShineExplosion;
+import wardentools.particle.ModParticleUtils;
+import wardentools.particle.options.GlyphParticleRotatingOptions;
 import wardentools.particle.options.ShineParticleOptions;
 
-public class CrystalInfuserBlock extends Block implements EntityBlock {
+public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements EntityBlock {
+    private static final MapCodec<CrystalInfuserBlock> CODEC
+            = simpleCodec(CrystalInfuserBlock::new);
     public static final EnumProperty<Crystal> CRYSTAL;
     private static final Vec3[] positions = new Vec3[] {
             new Vec3(10.5F, 10F + 0.35F, 10.5F),
@@ -40,15 +48,19 @@ public class CrystalInfuserBlock extends Block implements EntityBlock {
             new Vec3(8F, 17F, 8F)
     };
     private static final float shineSpeed = 0.04F;
-    private static final float explosionSpeed = 0.07F;
+    private static final float explosionSpeed = 0.09F;
 
     static {CRYSTAL = EnumProperty.create("crystal_index", Crystal.class);}
 
     public CrystalInfuserBlock(Properties properties) {
         super(properties);
         this.registerDefaultState((this.stateDefinition.any())
-                .setValue(CRYSTAL, Crystal.getDefault()));
+                .setValue(CRYSTAL, Crystal.getDefault())
+                .setValue(FACING, Direction.NORTH));
     }
+
+    @Override
+    protected @NotNull MapCodec<CrystalInfuserBlock> codec() {return CODEC;}
 
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter,
                                         @NotNull BlockPos pos, @NotNull CollisionContext ctx) {
@@ -85,9 +97,14 @@ public class CrystalInfuserBlock extends Block implements EntityBlock {
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
+    @Nullable
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+    }
+
     @Override
     protected void createBlockStateDefinition(StateDefinition.@NotNull Builder<Block, BlockState> builder) {
-        builder.add(CRYSTAL);
+        builder.add(CRYSTAL, FACING);
         super.createBlockStateDefinition(builder);
     }
 
@@ -149,9 +166,40 @@ public class CrystalInfuserBlock extends Block implements EntityBlock {
         if (level.getBlockEntity(pos) instanceof CrystalInfuserBlockEntity infuser) {
             if (infuser.isInfusing()) {
                 particleShine(state, pos, level, random);
+                if (!infuser.hasEmitedParticles) {
+                    particleGlyph(state, pos, level);
+                    infuser.hasEmitedParticles = true;
+                }
+            } else{
+                infuser.hasEmitedParticles = false;
             }
         }
         super.animateTick(state, level, pos, random);
+    }
+
+    private static void particleGlyph(BlockState state, BlockPos pos, Level level) {
+        double baseX = pos.getX();
+        double baseY = pos.getY();
+        double baseZ = pos.getZ();
+        Vec3 center = positions[4].scale(1.0 / 16.0).add(baseX, baseY, baseZ);
+
+        Vec3 axis = state.getValue(FACING) == Direction.NORTH
+                || state.getValue(FACING) == Direction.SOUTH ?
+                new Vec3(0, 0, 1)
+                : new Vec3(1, 0, 0);
+
+        ModParticleUtils.particleCircle(level,
+                new GlyphParticleRotatingOptions(center, axis, 0.015F, getCrystalColor(state)),
+                center, 1.0F, 10, axis);
+
+        ModParticleUtils.particleCircle(level,
+                 new GlyphParticleRotatingOptions(center, axis, -0.017F, getCrystalColor(state)),
+                center, 1.4F, 12, axis);
+
+        ModParticleUtils.particleCircle(level,
+                new GlyphParticleRotatingOptions(center, axis, 0.019F, getCrystalColor(state)),
+                center, 1.8F, 14, axis);
+
     }
 
     private static void particleShine(BlockState state, BlockPos pos, Level level, RandomSource random) {
@@ -184,7 +232,7 @@ public class CrystalInfuserBlock extends Block implements EntityBlock {
             Vec3 center = positions[4].scale(1.0 / 16.0).add(baseX, baseY, baseZ);
             PacketHandler.sendToAllClient(new
                     ParticleShineExplosion(center, 0.1F, explosionSpeed,
-                    40, getCrystalColor(state)));
+                    100, getCrystalColor(state)));
         }
     }
 }
