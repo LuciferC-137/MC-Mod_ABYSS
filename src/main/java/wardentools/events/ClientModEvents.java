@@ -2,6 +2,8 @@ package wardentools.events;
 
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -11,6 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.CrystalInfuserBlock;
+import wardentools.block.DarkGrassBlock;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.entity.custom.ModBoatEntity;
@@ -73,6 +76,11 @@ public class ClientModEvents {
 	public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
 		event.register(CrystalInfuserBlock::getColor,
 				BlockRegistry.CRYSTAL_INFUSER.get());
+		event.register(DarkGrassBlock::getColor,
+				BlockRegistry.DARKGRASS_BLOCK.get());
+
+		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.DARKGRASS_BLOCK.get(),
+				RenderType.cutoutMipped());
 	}
 
 	@SubscribeEvent

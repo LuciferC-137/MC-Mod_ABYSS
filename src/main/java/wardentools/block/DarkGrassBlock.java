@@ -3,9 +3,11 @@ package wardentools.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class DarkGrassBlock extends Block {
 
@@ -19,6 +21,14 @@ public class DarkGrassBlock extends Block {
         if (level.getBlockState(blockPos.above()).isCollisionShapeFullBlock(level, blockPos.above())) {
             level.setBlockAndUpdate(blockPos, BlockRegistry.DARKDIRT.get().defaultBlockState());
         }
+    }
+
+    public static int getColor(@NotNull BlockState blockState,
+                               @Nullable BlockAndTintGetter blockAndTintGetter,
+                               @Nullable BlockPos blockPos, int index) {
+        if (index == 0) return 0x094b41;
+        if (index == 1 ) return 0x052a32;
+        return -1;
     }
 
 }

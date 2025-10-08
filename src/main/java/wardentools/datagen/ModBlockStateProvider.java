@@ -40,8 +40,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 "chiseled_abyssalite", "chiseled_abyssalite_top", "chiseled_abyssalite_top");
         registerTopBottomSideBlock(BlockRegistry.ABYSSALITE,
                 "abyssalite", "abyssalite_top", "abyssalite_top");
-        registerTopBottomSideBlock(BlockRegistry.DARKGRASS_BLOCK,
-                "darkgrass_block_side", "darkgrass_block_top", "darkdirt");
         registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_COAL_ORE, "abyssalite_coal_ore",
                 "abyssalite_coal_ore_top", "abyssalite_coal_ore_top");
         registerTopBottomSideBlock(BlockRegistry.ABYSSALITE_LAPIS_ORE,
