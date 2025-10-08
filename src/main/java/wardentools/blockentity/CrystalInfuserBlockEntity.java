@@ -7,18 +7,26 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import wardentools.block.BlockRegistry;
 import wardentools.block.CrystalInfuserBlock;
 import wardentools.items.CrystalResonatorItem;
 import wardentools.items.ItemRegistry;
 import wardentools.misc.Crystal;
+import wardentools.sounds.ModSounds;
+import wardentools.worldgen.structure.StructureUtils;
 
 public class CrystalInfuserBlockEntity extends BlockEntity {
     private final ItemStackHandler inventory = new ItemStackHandler(5) {
@@ -31,8 +39,16 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
         }
     };
 
+    private static final int INFUSING_TIME = 120;
     private boolean isInfusing = false;
     public boolean hasEmitedParticles = false;
+
+    private BlockPos cachedStainedGlassCenterPos = null;
+    private float nextTempleOrientation = -1F;
+
+    private static final int COMPASS_EFFECT_DURATION = 2400;
+    private int compassEffectTick = 0;
+
 
     protected CrystalInfuserBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -47,6 +63,8 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
         super.saveAdditional(tag, provider);
         tag.put("inventory", this.inventory.serializeNBT(provider));
         tag.putBoolean("is_infusing", this.isInfusing);
+        tag.putFloat("next_temple_orientation", this.nextTempleOrientation);
+        tag.putInt("compass_effect_tick", this.compassEffectTick);
     }
 
     @Override
@@ -60,6 +78,45 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
             }
         if (tag.contains("is_infusing", Tag.TAG_BYTE)) {
             this.isInfusing = tag.getBoolean("is_infusing");
+        }
+        if (tag.contains("next_temple_orientation", Tag.TAG_FLOAT)) {
+            this.nextTempleOrientation = tag.getFloat("next_temple_orientation");
+        }
+        if (tag.contains("compass_effect_tick", Tag.TAG_INT)) {
+            this.compassEffectTick = tag.getInt("compass_effect_tick");
+        }
+    }
+
+    public void triggerCompassEffect() {
+        this.compassEffectTick = COMPASS_EFFECT_DURATION;
+    }
+
+    public void tick() {
+        if (this.compassEffectTick > 0) {
+            this.compassEffectTick--;
+        }
+    }
+
+    public void clientTick() {
+        BlockState state = this.getBlockState();
+        if (this.level == null || !state.is(BlockRegistry.CRYSTAL_INFUSER.get())) return;
+        if (this.isInfusing()) {
+            CrystalInfuserBlock.particleShine(state, this.worldPosition, level, level.random);
+            if (!this.hasEmitedParticles) {
+                level.playLocalSound(this.worldPosition,
+                        ModSounds.INFUSER_CHARGING.get(),
+                        SoundSource.BLOCKS,
+                        1.0F, 1.0F, true);
+                CrystalInfuserBlock.particleGlyph(state, this.worldPosition, level);
+                this.hasEmitedParticles = true;
+            }
+        } else {
+            this.hasEmitedParticles = false;
+        }
+        if (this.compassEffectTick > 0) {
+            this.compassEffectTick--;
+            CrystalInfuserBlock.giantCompassParticle(state, level, this);
+            CrystalInfuserBlock.ambientParticles(state, this.worldPosition, level);
         }
     }
 
@@ -117,8 +174,9 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
             return;
         }
         if (this.level == null) return;
-        this.level.scheduleTick(this.worldPosition, this.getBlockState().getBlock(), 120);
+        this.level.scheduleTick(this.worldPosition, this.getBlockState().getBlock(), INFUSING_TIME);
         this.isInfusing = true;
+        this.getNextTempleOrientation(); // precompute next temple orientation for client
     }
 
     public void completeInfuse() {
@@ -140,9 +198,45 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
         }
         this.inventory.setStackInSlot(4, resonator);
         this.isInfusing = false;
+        this.triggerCompassEffect();
         if (this.level != null) this.level.scheduleTick(this.worldPosition,
                 this.getBlockState().getBlock(), 1);
         this.sendUpdate();
+    }
+
+    public BlockPos getStainedGlassCenterPos() {
+        if (this.cachedStainedGlassCenterPos == null) {
+            if (this.getBlockState().hasProperty(CrystalInfuserBlock.FACING)) {
+                this.cachedStainedGlassCenterPos =
+                        this.worldPosition.above(9)
+                                .relative(this.getBlockState()
+                                        .getValue(CrystalInfuserBlock.FACING), 4);
+            } else {
+                this.cachedStainedGlassCenterPos = this.worldPosition.above(9);
+            }
+        }
+        return this.cachedStainedGlassCenterPos;
+    }
+
+    public float getNextTempleOrientation() {
+        if (this.level == null) return 0F;
+        if (this.nextTempleOrientation < 0F) {
+            if (!this.level.isClientSide && this.getBlockState()
+                    .hasProperty(CrystalInfuserBlock.CRYSTAL)) {
+                /*ResourceKey<Structure> templeKey = this.getBlockState()
+                        .getValue(CrystalInfuserBlock.CRYSTAL).getNext().getTempleKey();
+                BlockPos nexTemplePos = StructureUtils.findNearestStructure((ServerLevel) this.level,
+                        templeKey, this.worldPosition);*/
+                BlockPos nexTemplePos = BlockPos.ZERO;
+                if (nexTemplePos != null) {
+                    Vec3 toTemple = Vec3.atCenterOf(nexTemplePos)
+                            .subtract(Vec3.atCenterOf(this.worldPosition));
+                    this.nextTempleOrientation = (float) Math.toDegrees(Math.atan2(toTemple.z, toTemple.x)) + 90F;
+                }
+            }
+            this.sendUpdate();
+        }
+        return this.nextTempleOrientation;
     }
 
     public boolean isInfusing() {

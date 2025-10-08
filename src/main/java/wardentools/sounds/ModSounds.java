@@ -89,6 +89,8 @@ public class ModSounds {
 			registerSoundEvents("laser_charge");
 	public static final RegistryObject<SoundEvent> LASER_SHOOT =
 			registerSoundEvents("laser_shoot");
+	public static final RegistryObject<SoundEvent> INFUSER_CHARGING =
+			registerSoundEvents("infuser_charging");
 
 	//Musics
 	public static final RegistryObject<SoundEvent> DEEP_FOREST =

@@ -26,7 +26,6 @@ public class ModParticleUtils {
 
     public static void particleCircle(Level level, ParticleOptions options,
                                       Vec3 center, float radius, int count, Vec3 normal) {
-        System.out.println("Creating particle circle at " + center + " with radius " + radius + " and count " + count);
         particleCircle(level, options, center, radius, count, normal, Vec3.ZERO);
     }
 

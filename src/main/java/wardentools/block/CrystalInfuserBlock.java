@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -18,6 +19,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -48,7 +51,7 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
             new Vec3(8F, 17F, 8F)
     };
     private static final float shineSpeed = 0.04F;
-    private static final float explosionSpeed = 0.09F;
+    private static final float explosionSpeed = 0.1F;
 
     static {CRYSTAL = EnumProperty.create("crystal_index", Crystal.class);}
 
@@ -67,7 +70,6 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
         return Block.box(1.0D, 0.0D, 1.0D,
                 15.0D, 12.0D, 15.0D);
     }
-
 
     @Override
     protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack,
@@ -99,7 +101,7 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
 
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, ctx.getHorizontalDirection());
     }
 
     @Override
@@ -163,21 +165,56 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
     @Override
     public void animateTick(@NotNull BlockState state, @NotNull Level level,
                             @NotNull BlockPos pos, @NotNull RandomSource random) {
-        if (level.getBlockEntity(pos) instanceof CrystalInfuserBlockEntity infuser) {
-            if (infuser.isInfusing()) {
-                particleShine(state, pos, level, random);
-                if (!infuser.hasEmitedParticles) {
-                    particleGlyph(state, pos, level);
-                    infuser.hasEmitedParticles = true;
-                }
-            } else{
-                infuser.hasEmitedParticles = false;
-            }
-        }
         super.animateTick(state, level, pos, random);
     }
 
-    private static void particleGlyph(BlockState state, BlockPos pos, Level level) {
+    public static void giantCompassParticle(BlockState state, Level level,
+                                             CrystalInfuserBlockEntity infuser) {
+        if (!state.hasProperty(FACING)) return;
+        Vec3 center = infuser.getStainedGlassCenterPos().getCenter();
+        float orientation = infuser.getNextTempleOrientation();
+        switch (infuser.getBlockState().getValue(FACING)) {
+            case NORTH, SOUTH -> orientation -= Mth.HALF_PI;
+            case WEST -> orientation += Mth.PI;
+            default -> {}
+        }
+        Vec3 dir;
+        if (state.getValue(FACING) == Direction.NORTH
+                || state.getValue(FACING) == Direction.SOUTH) {
+            dir = new Vec3(Mth.cos(orientation), Mth.sin(orientation), 0F).normalize();
+        } else {
+            dir = new Vec3(0F, Mth.sin(orientation), Mth.cos(orientation)).normalize();
+        }
+
+        for (int i = 0; i < 25; i++) {
+            Vec3 from = center.offsetRandom(level.random, 1.5F);
+            from = from.add(dir.scale(level.random.nextFloat() * 6F));
+            ModParticleUtils.addClientParticle(level,
+                    new ShineParticleOptions(Vec3.ZERO, getCrystalColor(state)),
+                    from, dir.scale(0.2F));
+        }
+    }
+
+    public static void ambientParticles(BlockState state, BlockPos pos, Level level) {
+        if (!state.hasProperty(FACING)) return;
+        Direction facing = state.getValue(FACING);
+        BlockPos minPos = pos.relative(facing.getOpposite(), 9)
+                .relative(facing.getClockWise(), 10).below(3);
+        BlockPos maxPos = pos.relative(facing, 3)
+                .relative(facing.getClockWise(), -10).above(8);
+        for (int i = 0; i < 22; i++) {
+            Vec3 partPos = new Vec3(
+                    level.random.nextFloat() * (maxPos.getX() - minPos.getX()) + minPos.getX(),
+                    level.random.nextFloat() * (maxPos.getY() - minPos.getY()) + minPos.getY(),
+                    level.random.nextFloat() * (maxPos.getZ() - minPos.getZ()) + minPos.getZ()
+            );
+            ModParticleUtils.addStaticClientParticle(level,
+                    new ShineParticleOptions(Vec3.ZERO, getCrystalColor(state)), partPos);
+        }
+    }
+
+    public static void particleGlyph(BlockState state, BlockPos pos, Level level) {
+        if (!state.hasProperty(FACING)) return;
         double baseX = pos.getX();
         double baseY = pos.getY();
         double baseZ = pos.getZ();
@@ -202,16 +239,16 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
 
     }
 
-    private static void particleShine(BlockState state, BlockPos pos, Level level, RandomSource random) {
+    public static void particleShine(BlockState state, BlockPos pos, Level level, RandomSource random) {
 
         double baseX = pos.getX();
         double baseY = pos.getY();
         double baseZ = pos.getZ();
 
-        Vec3 center = positions[4].scale(1.0 / 16.0).add(baseX, baseY, baseZ);
+        Vec3 center = positions[4].scale(1.0F / 16.0F).add(baseX, baseY, baseZ);
 
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < random.nextInt(1, 4); j++) {
+            for (int j = 0; j < random.nextInt(1, 2); j++) {
                 Vec3 from = positions[i].scale(1.0 / 16.0).add(baseX, baseY, baseZ);
                 Vec3 dir = center.subtract(from).normalize().scale(shineSpeed
                         + (random.nextDouble() - 0.5D) * shineSpeed / 2D);
@@ -224,15 +261,24 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
         }
     }
 
-    private static void particleExplosion(BlockState state, BlockPos pos, Level level) {
+    public static void particleExplosion(BlockState state, BlockPos pos, Level level) {
         if (!level.isClientSide) {
             double baseX = pos.getX();
             double baseY = pos.getY();
             double baseZ = pos.getZ();
-            Vec3 center = positions[4].scale(1.0 / 16.0).add(baseX, baseY, baseZ);
+            Vec3 center = positions[4].scale(1.0F / 16.0F).add(baseX, baseY, baseZ);
             PacketHandler.sendToAllClient(new
                     ParticleShineExplosion(center, 0.1F, explosionSpeed,
                     100, getCrystalColor(state)));
         }
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state,
+                                                                  @NotNull BlockEntityType<T> type){
+        return !level.isClientSide() ?
+                (level0, pos0, state0, blockEntity) -> ((CrystalInfuserBlockEntity)blockEntity).tick() :
+                (level0, pos0, state0, blockEntity) -> ((CrystalInfuserBlockEntity)blockEntity).clientTick();
     }
 }

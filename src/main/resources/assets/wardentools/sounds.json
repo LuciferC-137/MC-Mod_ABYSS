@@ -288,5 +288,11 @@
 		"sounds": [
 			"wardentools:laser_shoot"
 		]
+	},
+	"infuser_charging": {
+		"subtitles": "sounds.wardentools.infuser_charging",
+		"sounds": [
+			"wardentools:infuser_charging"
+		]
 	}
 }
