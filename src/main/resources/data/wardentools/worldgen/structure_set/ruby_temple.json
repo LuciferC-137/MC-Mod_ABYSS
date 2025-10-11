@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 10144915,
+    "separation": 30,
+    "spacing": 50
+  },
+  "structures": [
+    {
+      "structure": "wardentools:ruby_temple",
+      "weight": 1
+    }
+  ]
+}
