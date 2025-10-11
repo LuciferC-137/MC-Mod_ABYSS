@@ -1,5 +1,6 @@
 package wardentools.client.color;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraftforge.api.distmarker.Dist;
@@ -7,6 +8,7 @@ import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
 import wardentools.ModMain;
 
 import java.util.Iterator;
@@ -19,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Mod.EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
 public class AbyssBiomeColorCache {
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final Map<Long, CacheEntry> CACHE = new ConcurrentHashMap<>();
 
@@ -84,6 +87,8 @@ public class AbyssBiomeColorCache {
         // If the cache is still too large, do a full cleanup
         // TODO: use a client config option for this
         if (CACHE.size() > MAX_CACHE_SIZE * 1.5) {
+            LOGGER.debug("[AbyssBiomeColorCache] Forcing full cleanup: cache size{}/"
+                    + MAX_CACHE_SIZE + " (after removing {} in batch)", CACHE.size(), removed);
             System.out.println("[AbyssBiomeColorCache] Forcing full cleanup: " + CACHE.size());
             CACHE.entrySet().removeIf(e -> e.getValue().expireTick <= currentTick);
         }

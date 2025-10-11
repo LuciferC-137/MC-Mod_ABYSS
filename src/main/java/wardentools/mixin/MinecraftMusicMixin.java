@@ -18,7 +18,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import wardentools.sounds.ModMusics;
 import wardentools.worldgen.dimension.ModDimensions;
 
 import javax.annotation.Nullable;
@@ -37,7 +36,6 @@ public class MinecraftMusicMixin {
         if (music != null) {
             cir.setReturnValue(music);
             cir.cancel();
-            return;
         } else if (this.player != null) {
             Holder<Biome> holder = this.player.level().getBiome(this.player.blockPosition());
             if (this.player.level().dimension() == Level.END) {
@@ -58,12 +56,7 @@ public class MinecraftMusicMixin {
                 }
             }
             cir.cancel();
-            return;
-        } else {
-            // Here we are in the main menu
-            ((Minecraft)(Object)this).getMusicManager().stopPlaying(ModMusics.INCARNATION_THEME);
-            cir.setReturnValue(ModMusics.ABYSS_THEME);
         }
-        cir.cancel();
+        // Here we are in the main menu
     }
 }
