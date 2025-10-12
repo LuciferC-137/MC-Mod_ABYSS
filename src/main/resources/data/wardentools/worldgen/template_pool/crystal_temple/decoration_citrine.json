@@ -1,0 +1,24 @@
+{
+  "name": "wardentools:crystal_temple/decoration_citrine",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:crystal_temple/decoration/citrine/crystal",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:crystal_temple/decoration/citrine/lamp",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}
