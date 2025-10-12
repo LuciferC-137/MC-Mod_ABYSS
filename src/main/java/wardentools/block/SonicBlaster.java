@@ -34,6 +34,7 @@ public class SonicBlaster extends DirectionalBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     private static final int TRIGGER_DELAY = 4;
     private static final float LASER_LENGTH = 6f;
+    private static final float LASER_RADIUS = 1.5f;
     private static final float PUSH_STRENGTH = 2.8f;
 
     @Override
@@ -110,27 +111,28 @@ public class SonicBlaster extends DirectionalBlock {
 
     private void sonicBoom(ServerLevel level, BlockPos pos, Direction facing) {
         Vec3 origin = Vec3.atCenterOf(pos);
-        Vec3 direction = Vec3.directionFromRotation(facing.toYRot(), facing == Direction.UP ?
-                -90F : (facing == Direction.DOWN ? 90F : 0F));
+        Vec3 direction = Vec3.atLowerCornerOf(facing.getNormal()).normalize();
         Vec3 target = origin.add(direction.scale(LASER_LENGTH));
 
-        AABB aabb = new AABB(origin, target).inflate(3.0D);
+        AABB aabb = sonicHitBox(facing, origin, target);
+
         PacketHandler.sendToAllClient(new WardenLaserParticleAndSoundPacket(
-                origin, direction, (int)LASER_LENGTH));
+                origin, direction, (int) LASER_LENGTH));
 
         for (Entity entity : level.getEntities(null, aabb)) {
             if (entity instanceof LivingEntity livingEntity) {
-                double knockbackResistance = 1.0D - livingEntity
-                        .getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
-                double knockback = (double)PUSH_STRENGTH * knockbackResistance;
+                double knockbackResistance = 1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+                double knockback = (double) PUSH_STRENGTH * knockbackResistance;
                 if (facing == Direction.DOWN || facing == Direction.UP) {
-                    knockback *= 0.3; // Reduce vertical knockback
+                    knockback *= 0.3; // Reduction of vertical knockback
                 }
+
                 livingEntity.push(
                         direction.x * knockback,
                         direction.y * knockback,
                         direction.z * knockback
                 );
+
                 if (livingEntity instanceof ServerPlayer serverPlayer) {
                     serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
                             serverPlayer.getId(),
@@ -139,6 +141,38 @@ public class SonicBlaster extends DirectionalBlock {
                 }
             }
         }
+    }
+
+    private static @NotNull AABB sonicHitBox(Direction facing, Vec3 origin, Vec3 target) {
+        AABB aabb;
+        switch (facing) {
+            case UP, DOWN -> {
+                double minY = Math.min(origin.y, target.y);
+                double maxY = Math.max(origin.y, target.y);
+                aabb = new AABB(
+                        origin.x - LASER_RADIUS, minY, origin.z - LASER_RADIUS,
+                        origin.x + LASER_RADIUS, maxY, origin.z + LASER_RADIUS
+                );
+            }
+            case NORTH, SOUTH -> {
+                double minZ = Math.min(origin.z, target.z);
+                double maxZ = Math.max(origin.z, target.z);
+                aabb = new AABB(
+                        origin.x - LASER_RADIUS, origin.y - LASER_RADIUS, minZ,
+                        origin.x + LASER_RADIUS, origin.y + LASER_RADIUS, maxZ
+                );
+            }
+            case EAST, WEST -> {
+                double minX = Math.min(origin.x, target.x);
+                double maxX = Math.max(origin.x, target.x);
+                aabb = new AABB(
+                        minX, origin.y - LASER_RADIUS, origin.z - LASER_RADIUS,
+                        maxX, origin.y + LASER_RADIUS, origin.z + LASER_RADIUS
+                );
+            }
+            default -> throw new IllegalStateException("Unexpected facing: " + facing);
+        }
+        return aabb;
     }
 
 
