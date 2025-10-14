@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 27432819,
+    "separation": 30,
+    "spacing": 50
+  },
+  "structures": [
+    {
+      "structure": "wardentools:malachite_temple",
+      "weight": 1
+    }
+  ]
+}
