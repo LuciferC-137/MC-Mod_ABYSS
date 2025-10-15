@@ -26,6 +26,7 @@ import wardentools.block.depthvines.DepthVinesBlock;
 import wardentools.block.depthvines.DepthVinesPlantBlock;
 import wardentools.block.sculktendril.SculkTendrilBlock;
 import wardentools.fluid.FluidRegistry;
+import wardentools.misc.Crystal;
 import wardentools.worldgen.features.ModConfiguredFeatures;
 
 public class BlockRegistry {
@@ -41,7 +42,7 @@ public class BlockRegistry {
 
 
     public static final RegistryObject<Block> DEEP_CRISTAL = REGISTAR.register("deepcristal",
-            () -> new CrystalBlock(7.0F, 3.0F, 0,
+            () -> new CrystalBlock(7.0F, 3.0F, 0, Crystal.ECHO,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .mapColor(MapColor.COLOR_BLACK)
                             .requiresCorrectToolForDrops()
@@ -418,7 +419,7 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> PALE_CRISTAL
             = REGISTAR.register("pale_cristal",
-            () -> new CrystalBlock(11.0F, 4.0F, 8,
+            () -> new CrystalBlock(11.0F, 4.0F, 8, Crystal.PALE,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
                             .strength(3, 6)
@@ -435,7 +436,7 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> CITRINE
             = REGISTAR.register("citrine",
-            () -> new CrystalBlock(9.0F, 4.0F, 8,
+            () -> new CrystalBlock(9.0F, 4.0F, 8, Crystal.CITRINE,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
                             .strength(3, 6)
@@ -452,7 +453,7 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> ECHO_CRISTAL
             = REGISTAR.register("echo_cristal",
-            () -> new CrystalBlock(10.0F, 5.0F, 3,
+            () -> new CrystalBlock(10.0F, 5.0F, 3, Crystal.ECHO,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
                             .strength(3, 6)
@@ -469,7 +470,7 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> RUBY
             = REGISTAR.register("ruby",
-            () -> new CrystalBlock(7.0F, 3.0F, 6,
+            () -> new CrystalBlock(7.0F, 3.0F, 6, Crystal.RUBY,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
                             .strength(4, 7)
@@ -486,7 +487,7 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> MALACHITE
             = REGISTAR.register("malachite",
-            () -> new CrystalBlock(7.0F, 3.0F, 6,
+            () -> new CrystalBlock(7.0F, 3.0F, 6, Crystal.MALACHITE,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
                             .strength(4, 7)

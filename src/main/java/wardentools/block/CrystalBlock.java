@@ -9,8 +9,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -26,9 +28,13 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import wardentools.misc.Crystal;
+import wardentools.particle.ModParticleUtils;
+import wardentools.particle.options.ShineParticleOptions;
 
 
 public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
@@ -37,9 +43,9 @@ public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
 					Codec.FLOAT.fieldOf("height").forGetter((block) -> block.height),
 					Codec.FLOAT.fieldOf("aabb_offset").forGetter((block) -> block.aabbOffset),
 					Codec.INT.fieldOf("base_light_level").forGetter((block) -> block.baseLightLevel),
+					Codec.STRING.fieldOf("crystal_type").forGetter((block) -> block.crystalType.getSerializedName()),
 					propertiesCodec())
 				.apply(blockInstance, CrystalBlock::new));
-	
 	
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -54,10 +60,17 @@ public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
 	private final float aabbOffset;
 
 	private final int baseLightLevel;
+	public final Crystal crystalType;
 
 	static {OVERCHARGED = BooleanProperty.create("overcharged");}
 
-	public CrystalBlock(float height, float length, int baseLightLevel, BlockBehaviour.Properties properties) {
+	public CrystalBlock(float height, float length, int baseLightLevel,
+						String crystal, BlockBehaviour.Properties properties) {
+		this(height, length, baseLightLevel, Crystal.fromName(crystal), properties);
+	}
+
+	public CrystalBlock(float height, float length, int baseLightLevel,
+						Crystal crystal, BlockBehaviour.Properties properties) {
 	      super(properties);
 	      this.registerDefaultState(this.defaultBlockState()
 				  .setValue(WATERLOGGED, Boolean.FALSE)
@@ -78,7 +91,7 @@ public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
 	      this.height = height;
 	      this.aabbOffset = length;
 		  this.baseLightLevel = baseLightLevel;
-		  System.out.println("Construct CrystalBlock base="+baseLightLevel+" id="+this);
+		  this.crystalType = crystal;
 	   }
 
 	public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter getter,
@@ -153,6 +166,18 @@ public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
 	      stateBuilder.add(WATERLOGGED, FACING, OVERCHARGED);
 	}
 
+	@Override
+	public void animateTick(@NotNull BlockState state, @NotNull Level level,
+							@NotNull BlockPos pos, @NotNull RandomSource random) {
+		if (random.nextInt(4) == 0) {
+			ModParticleUtils.addStaticClientParticle(
+					level,
+					new ShineParticleOptions(Vec3.ZERO, crystalType.getColor()),
+					pos.getCenter().offsetRandom(random, 1F)
+					);
+		}
+		super.animateTick(state, level, pos, random);
+	}
 
 	@Override
 	protected @NotNull MapCodec<CrystalBlock> codec() {

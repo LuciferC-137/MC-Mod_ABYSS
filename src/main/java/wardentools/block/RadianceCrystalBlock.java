@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import wardentools.misc.Crystal;
 import wardentools.particle.ParticleRegistry;
 
 public class RadianceCrystalBlock extends CrystalBlock {
@@ -13,7 +14,7 @@ public class RadianceCrystalBlock extends CrystalBlock {
     private static final int PERIOD = 40;
 
     public RadianceCrystalBlock(float height, float length, Properties properties) {
-        super(height, length, 8, properties);
+        super(height, length, 8, Crystal.PALE, properties);
     }
 
     @Override

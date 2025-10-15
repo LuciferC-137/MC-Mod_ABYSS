@@ -60,6 +60,7 @@ public enum Crystal implements StringRepresentable {
         private static final Map<Block, Crystal> BY_BUD   = buildBudMap();
         private static final Map<Item, Crystal>  BY_ITEM  = buildItemMap();
         private static final Map<Item, Crystal> BY_JEWEL = buildJewelMap();
+        private static final Map<String, Crystal> BY_NAME = buildNameMap();
 
         private static Map<Integer, Crystal> buildIndexMap() {
             Map<Integer, Crystal> map = new HashMap<>();
@@ -88,6 +89,12 @@ public enum Crystal implements StringRepresentable {
         private static Map<Item, Crystal> buildJewelMap() {
             Map<Item, Crystal> map = new HashMap<>();
             for (Crystal c : values()) map.put(c.getJewel(), c);
+            return map;
+        }
+
+        private static Map<String, Crystal> buildNameMap() {
+            Map<String, Crystal> map = new HashMap<>();
+            for (Crystal c : values()) map.put(c.getSerializedName(), c);
             return map;
         }
     }
@@ -138,6 +145,9 @@ public enum Crystal implements StringRepresentable {
     }
     public static Crystal fromJewel(Item item) {
         return LazyMaps.BY_JEWEL.getOrDefault(item, getDefault());
+    }
+    public static Crystal fromName(String name) {
+        return LazyMaps.BY_NAME.getOrDefault(name.toLowerCase(), getDefault());
     }
     public static boolean isCrystalItem(Item item) {
         return LazyMaps.BY_ITEM.containsKey(item);
