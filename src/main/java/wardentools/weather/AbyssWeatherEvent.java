@@ -41,13 +41,14 @@ public class AbyssWeatherEvent {
 	@SubscribeEvent
 	public static void onWeatherCommand(CommandEvent event) {
 		CommandContextBuilder<?> context = event.getParseResults().getContext();
-		String command = context.getNodes().get(0).getNode().getName();
+		String command = context.getNodes().getFirst().getNode().getName();
         if (command.equals("weather")) {
             handleWeatherCommand(context, event.getParseResults().getContext().getSource().getLevel());
         }
 	}
 
 	private static void handleWeatherCommand(CommandContextBuilder<?> context, ServerLevel level) {
+		if (level.dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
 		List<? extends ParsedCommandNode<?>> nodes = context.getNodes();
 		if (nodes.size() < 2) return;
 		String subCommand = nodes.get(1).getNode().getName();
