@@ -18,6 +18,12 @@ import wardentools.worldgen.features.ModPlacedFeatures;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
 
 public class ModBiomes {
+    // COLOR 1 is encoded as the grass color
+    // COLOR 2 is encoded as the foliage color
+    public static final int DEEP_FOREST_1 = 0x094b41;
+    public static final int DEEP_FOREST_2 = 0x052a32;
+    public static final int WHITE_FOREST_1 = 0x77b1ac;
+    public static final int WHITE_FOREST_2 = 0x294d55;
 	private static final int FOG_COLOR = 0x000b1c;
 	private static final int WATER_COLOR = 0x0a4c5b;
     private static final GenerationStep.Decoration CRYSTAL_STEP = GenerationStep.Decoration.LOCAL_MODIFICATIONS;
@@ -168,6 +174,8 @@ public class ModBiomes {
                 .generationSettings(biomeBuilder.build())
                 .mobSpawnSettings(spawnBuilder.build())
                 .specialEffects(commonBiomeSpecialEffects()
+                        .grassColorOverride(WHITE_FOREST_1)
+                        .foliageColorOverride(WHITE_FOREST_2)
                         .backgroundMusic(ModMusics.WHITE_FOREST)
                         .build()).build();
     }
@@ -416,8 +424,8 @@ public class ModBiomes {
                 .waterColor(WATER_COLOR)
                 .waterFogColor(FOG_COLOR)
                 .skyColor(FOG_COLOR)
-                .grassColorOverride(0x147B75)
-                .foliageColorOverride(0x147B63)
+                .grassColorOverride(DEEP_FOREST_1)
+                .foliageColorOverride(DEEP_FOREST_2)
                 .fogColor(FOG_COLOR)
                 .ambientParticle(new AmbientParticleSettings(ParticleRegistry.ABYSS_AMBIENT.get(), 0.0025F))
                 .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS);

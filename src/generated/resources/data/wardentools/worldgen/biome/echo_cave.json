@@ -5,8 +5,8 @@
   "downfall": 0.8,
   "effects": {
     "fog_color": 2844,
-    "foliage_color": 1342307,
-    "grass_color": 1342325,
+    "foliage_color": 338482,
+    "grass_color": 609089,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2.0,
@@ -69,7 +69,14 @@
   "spawners": {
     "ambient": [],
     "axolotls": [],
-    "creature": [],
+    "creature": [
+      {
+        "type": "wardentools:shadow",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
+      }
+    ],
     "misc": [],
     "monster": [],
     "underground_water_creature": [],

@@ -5,8 +5,8 @@
   "downfall": 0.8,
   "effects": {
     "fog_color": 2844,
-    "foliage_color": 1342307,
-    "grass_color": 1342325,
+    "foliage_color": 338482,
+    "grass_color": 609089,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2.0,
@@ -49,9 +49,7 @@
       "wardentools:deep_ore",
       "wardentools:redstone_ore"
     ],
-    [
-      "wardentools:abyss_sculk_patch"
-    ],
+    [],
     [],
     [
       "minecraft:brown_mushroom_normal",
