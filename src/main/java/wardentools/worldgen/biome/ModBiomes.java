@@ -245,7 +245,6 @@ public class ModBiomes {
         globalAbyssGeneration(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
         defaultAbyssOres(biomeBuilder);
-        defaultAbyssSculk(biomeBuilder);
 
         amethystOnCaveWalls(biomeBuilder);
         abyssLushVegetationFeatures(biomeBuilder);
@@ -271,7 +270,6 @@ public class ModBiomes {
         globalAbyssGeneration(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
         defaultAbyssOres(biomeBuilder);
-        defaultAbyssSculk(biomeBuilder);
 
         citrineOnCaveWalls(biomeBuilder);
         abyssLushVegetationFeatures(biomeBuilder);
@@ -297,7 +295,6 @@ public class ModBiomes {
         globalAbyssGeneration(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
         defaultAbyssOres(biomeBuilder);
-        defaultAbyssSculk(biomeBuilder);
 
         malachiteOnCaveWalls(biomeBuilder);
         abyssLushVegetationFeatures(biomeBuilder);
@@ -323,7 +320,6 @@ public class ModBiomes {
         globalAbyssGeneration(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
         defaultAbyssOres(biomeBuilder);
-        defaultAbyssSculk(biomeBuilder);
 
         rubyOnCaveWalls(biomeBuilder);
         abyssLushVegetationFeatures(biomeBuilder);
@@ -345,6 +341,9 @@ public class ModBiomes {
         BiomeGenerationSettings.Builder biomeBuilder =
                 new BiomeGenerationSettings.Builder(
                         context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER));
+
+        spawnBuilder.addSpawn(MobCategory.CREATURE,
+                new MobSpawnSettings.SpawnerData(ModEntities.SHADOW.get(), 1, 1, 1));
 
         globalAbyssGeneration(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
@@ -375,7 +374,6 @@ public class ModBiomes {
         globalAbyssGeneration(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
         defaultAbyssOres(biomeBuilder);
-        defaultAbyssSculk(biomeBuilder);
 
         paleOnCaveWalls(biomeBuilder);
         abyssLushVegetationFeatures(biomeBuilder);

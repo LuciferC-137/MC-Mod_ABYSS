@@ -1,16 +1,9 @@
 package wardentools.entity.client;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +14,7 @@ import wardentools.entity.custom.CrystalGolemEntity;
 
 public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, CrystalGolem>{
 	private static final ResourceLocation CRYSTAL_GOLEM_TEXTURE =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/crystal_golem.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem.png");
 
 	private static final float MIN_CUBE_SIZE = 0.2F;
 	private static final float MAX_CUBE_SIZE = 0.5F;
@@ -29,6 +22,7 @@ public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, Crysta
 	public CrystalGolemRenderer(EntityRendererProvider.Context context) {
 		super(context, new CrystalGolem(context.bakeLayer(CrystalGolem.LAYER_LOCATION)), 0.5f);
 		this.addLayer(new CrystalGolemRustLayer(this));
+		this.addLayer(new CrystalGolemSculkLayer(this));
 		this.addLayer(new CrystalGolemCrystalLayer(this));
 	}
 

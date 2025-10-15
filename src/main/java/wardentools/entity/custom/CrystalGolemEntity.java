@@ -13,8 +13,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -59,6 +57,8 @@ public class CrystalGolemEntity extends PathfinderMob {
 	private static final EntityDataAccessor<Float> SYNC_Y_ROT =
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.FLOAT);
 	private static final EntityDataAccessor<Boolean> GRIEF =
+			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> SCULK =
 			SynchedEntityData.defineId(CrystalGolemEntity.class, EntityDataSerializers.BOOLEAN);
 
 	private static final float NEARBY_ALLIED_RANGE = 20.0F;
@@ -150,6 +150,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		builder.define(LASER_TICK, 0);
 		builder.define(SYNC_Y_ROT, 0F);
 		builder.define(GRIEF, false);
+		builder.define(SCULK, false);
 	}
 
 	@Override
@@ -453,6 +454,10 @@ public class CrystalGolemEntity extends PathfinderMob {
 
 	public void setGrief(boolean grief) {this.entityData.set(GRIEF, grief);}
 
+	public boolean hasSculk() {return this.entityData.get(SCULK);}
+
+	public void setSculk(boolean sculk) {this.entityData.set(SCULK, sculk);}
+
 	public void forceYRot(float rot) {
 		this.setYRot(rot);
 		this.yRotO = rot;
@@ -598,13 +603,6 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	@Override
-	protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-		this.setCrystalType(Crystal.fromIndex(this.getCrystal().getIndex() + 1));
-		this.setState(GolemState.CHARGING_LASER);
-		return InteractionResult.SUCCESS;
-	}
-
-	@Override
 	public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> key) {
 		super.onSyncedDataUpdated(key);
 
@@ -637,6 +635,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 			SaveUtils.putBlockPos(tag, "golem_stone_pos", this.golemStonePos);
 		}
 		tag.putBoolean("has_grief", this.hasGrief());
+		tag.putBoolean("has_sculk", this.hasSculk());
 		super.addAdditionalSaveData(tag);
 	}
 
@@ -657,6 +656,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 		}
 		if (tag.contains("has_grief")) {
 			this.setGrief(tag.getBoolean("has_grief"));
+		}
+		if (tag.contains("has_sculk")) {
+			this.setSculk(tag.getBoolean("has_sculk"));
 		}
 		super.readAdditionalSaveData(tag);
 		this.flickerState = this.isActive();

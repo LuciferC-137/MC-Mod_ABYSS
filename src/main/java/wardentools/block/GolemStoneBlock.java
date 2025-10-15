@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.ModEntities;
@@ -24,13 +25,17 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock {
 			= simpleCodec(GolemStoneBlock::new);
 
 	public static final EnumProperty<Crystal> CRYSTAL;
+	public static final BooleanProperty HAS_SCULK = BooleanProperty.create("has_sculk");
+
 	static {CRYSTAL = EnumProperty.create("crystal_index", Crystal.class);}
 
 
 	public GolemStoneBlock(Properties properties) {
 	      super(properties);
 	      this.registerDefaultState(this.defaultBlockState()
-				  .setValue(FACING, Direction.NORTH).setValue(CRYSTAL, Crystal.getDefault()));
+				  .setValue(FACING, Direction.NORTH)
+				  .setValue(CRYSTAL, Crystal.getDefault())
+				  .setValue(HAS_SCULK, false));
     }
 
 	@Override
@@ -44,7 +49,7 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock {
 	}
 
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-	      stateBuilder.add(FACING, CRYSTAL);
+	      stateBuilder.add(FACING, CRYSTAL, HAS_SCULK);
 	}
 
 	@Override
@@ -60,6 +65,7 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock {
 		golem.setState(level.getRandom().nextBoolean() ?
 				CrystalGolemEntity.GolemState.DEACTIVATED_1 :
 				CrystalGolemEntity.GolemState.DEACTIVATED_2);
+		golem.setSculk(state.getValue(HAS_SCULK));
 		level.addFreshEntity(golem);
 
 		super.onPlace(state, level, pos, state1, b);

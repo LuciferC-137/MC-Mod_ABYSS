@@ -285,7 +285,7 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 
 	public static boolean canSpawn(EntityType<ShadowEntity> entityType, ServerLevelAccessor level,
 								   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON);
+		return level.getBlockState(pos.below()).is(BlockTags.VALID_SPAWN);
     }
 
 	private boolean isAlmostIdle() {
