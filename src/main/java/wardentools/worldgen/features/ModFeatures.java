@@ -19,7 +19,7 @@ public class ModFeatures {
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> REPLACE_AIR_BELOW_Y
             = FEATURES.register("replace_air_below_y",
-                () -> new ReplaceAirBelowYFeature(NoneFeatureConfiguration.CODEC));
+                () -> new MakeLiquidCorruptionLake(NoneFeatureConfiguration.CODEC));
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> SHARP_ROCK
             = FEATURES.register("sharp_rock",

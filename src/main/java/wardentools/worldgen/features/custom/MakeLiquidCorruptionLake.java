@@ -3,6 +3,7 @@ package wardentools.worldgen.features.custom;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -10,11 +11,11 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import wardentools.block.BlockRegistry;
 
-public class ReplaceAirBelowYFeature extends Feature<NoneFeatureConfiguration> {
+public class MakeLiquidCorruptionLake extends Feature<NoneFeatureConfiguration> {
     private static final int Y_THRESHOLD = -54;
     private static final int WORLD_MIN_Y = -64;
 
-    public ReplaceAirBelowYFeature(Codec<NoneFeatureConfiguration> codec) {
+    public MakeLiquidCorruptionLake(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
     }
 
@@ -29,9 +30,10 @@ public class ReplaceAirBelowYFeature extends Feature<NoneFeatureConfiguration> {
                 for (int y = WORLD_MIN_Y; y <= Y_THRESHOLD; y++) {
                     BlockPos pos = new BlockPos(x, y, z);
                     BlockState currentState = worldGenLevel.getBlockState(pos);
-                    if (currentState.getBlock() == Blocks.AIR) {
+                    if (currentState.isAir() || currentState.is(Blocks.LAVA)) {
                         worldGenLevel.setBlock(pos,
-                                BlockRegistry.LIQUID_CORRUPTION_BLOCK.get().defaultBlockState(), 3);
+                                BlockRegistry.LIQUID_CORRUPTION_BLOCK.get().defaultBlockState(),
+                                Block.UPDATE_ALL);
                     }
                 }
             }

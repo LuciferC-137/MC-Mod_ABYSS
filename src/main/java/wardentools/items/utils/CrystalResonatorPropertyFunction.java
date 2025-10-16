@@ -80,7 +80,7 @@ public class CrystalResonatorPropertyFunction implements ClampedItemPropertyFunc
     }
 
     private boolean isValidCompassTargetPos(Entity entity, @Nullable GlobalPos pos) {
-        return pos != null && pos.dimension() == entity.level().dimension()
+        return pos != null && pos.pos() != BlockPos.ZERO && pos.dimension() == entity.level().dimension()
                 && !(pos.pos().distToCenterSqr(entity.position()) < 9.999999747378752E-6);
     }
 

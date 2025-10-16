@@ -23,6 +23,7 @@ import wardentools.loot.WardenLootTableModifier;
 import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.features.ModFeatures;
+import wardentools.worldgen.structure.ModStructureTypes;
 import wardentools.worldgen.tree.ModFoliagePlacers;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 
@@ -56,6 +57,7 @@ public class ModMain {
 		PotionRegistry.POTIONS.register(bus);
 		ModRecipes.SERIALIZERS.register(bus);
 		ModRecipes.TYPES.register(bus);
+		ModStructureTypes.STRUCTURE_TYPES.register(bus);
 
 		MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);

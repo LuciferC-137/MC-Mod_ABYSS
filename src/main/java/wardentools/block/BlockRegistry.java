@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.grower.TreeGrower;
@@ -36,6 +37,12 @@ public class BlockRegistry {
     private static final int LIGHT_WHITE_VEGETATION = 8;
     private static final int LIGHT_DARK_VEGETATION = 5;
 
+    private static final MapColor DARKTREE_COLOR = MapColor.TERRACOTTA_BLUE;
+    private static final MapColor DARKTREE_FOLIAGE_COLOR = MapColor.COLOR_CYAN;
+    private static final MapColor DARK_VEGETATION_COLOR = MapColor.COLOR_CYAN;
+    private static final MapColor WHITE_TREE_COLOR = MapColor.TERRACOTTA_CYAN;
+    private static final MapColor DARKGRASS_COLOR = MapColor.TERRACOTTA_GREEN;
+
     public static final RegistryObject<Block> DEEPBLOCK = REGISTAR.register("deepblock",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
             ));
@@ -62,6 +69,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> DARKTREE_LOG = REGISTAR.register("darktree_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.OAK_LOG)
+                    .mapColor(DARKTREE_COLOR)
                     .strength(4F)
                     .lightLevel((state) -> LIGHT_DARK_TREE))
     );
@@ -69,24 +77,28 @@ public class BlockRegistry {
     public static final RegistryObject<Block> DARKTREE_WOOD = REGISTAR.register("darktree_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.OAK_WOOD)
+                    .mapColor(DARKTREE_COLOR)
                     .strength(4F)
                     .lightLevel((state) -> LIGHT_DARK_TREE)));
 
     public static final RegistryObject<Block> STRIPPED_DARKTREE_LOG = REGISTAR.register("stripped_darktree_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.STRIPPED_OAK_LOG)
+                    .mapColor(DARKTREE_COLOR)
                     .strength(4F)
                     .lightLevel((state) -> LIGHT_DARK_TREE)));
 
     public static final RegistryObject<Block> STRIPPED_DARKTREE_WOOD = REGISTAR.register("stripped_darktree_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.STRIPPED_OAK_WOOD)
+                    .mapColor(DARKTREE_COLOR)
                     .strength(4F)
                     .lightLevel((state) -> LIGHT_DARK_TREE)));
 
     public static final RegistryObject<Block> DARKTREE_PLANKS = REGISTAR.register("darktree_planks",
             () -> new Block(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.OAK_PLANKS)
+                    .mapColor(DARKTREE_COLOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE)) {
 
                 @Override
@@ -110,44 +122,53 @@ public class BlockRegistry {
     public static final RegistryObject<Block> DARKTREE_STAIR = REGISTAR.register("darktree_stair",
             () -> new StairBlock(Blocks.OAK_STAIRS.defaultBlockState(),
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)
+                            .mapColor(DARKTREE_COLOR)
                             .lightLevel((state) -> LIGHT_DARK_TREE)));
 
     public static final RegistryObject<Block> DARKTREE_SLAB = REGISTAR.register("darktree_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)
+                    .mapColor(DARKTREE_COLOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE)));
 
     public static final RegistryObject<Block> DARKTREE_BUTTON = REGISTAR.register("darktree_button",
             () -> new ButtonBlock(BlockSetType.OAK, 10,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+                            .mapColor(DARKTREE_COLOR)
                             .lightLevel((state) -> LIGHT_DARK_TREE)
             ));
 
     public static final RegistryObject<Block> DARKTREE_PRESSURE_PLATE = REGISTAR.register("darktree_pressure_plate",
             () -> new PressurePlateBlock(BlockSetType.OAK,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)
+                            .mapColor(DARKTREE_COLOR)
                             .lightLevel((state) -> LIGHT_DARK_TREE)));
 
     public static final RegistryObject<Block> DARKTREE_FENCE = REGISTAR.register("darktree_fence",
             () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)
+                    .mapColor(DARKTREE_COLOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE)));
 
     public static final RegistryObject<Block> DARKTREE_FENCE_GATE = REGISTAR.register("darktree_fence_gate",
             () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)
+                    .mapColor(DARKTREE_COLOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE)));
 
     public static final RegistryObject<Block> DARKTREE_DOOR = REGISTAR.register("darktree_door",
             () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE)
+                    .mapColor(DARKTREE_COLOR)
                     .noOcclusion()));
 
     public static final RegistryObject<Block> DARKTREE_TRAPDOOR = REGISTAR.register("darktree_trapdoor",
             () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE)
+                    .mapColor(DARKTREE_COLOR)
                     .noOcclusion()));
 
 
     public static final RegistryObject<Block> DARKTREE_LEAVES = REGISTAR.register("darktree_leaves",
             () -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(DARKTREE_FOLIAGE_COLOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE + 2)) {
 
                 @Override
@@ -174,23 +195,27 @@ public class BlockRegistry {
                     Optional.of(ModConfiguredFeatures.DARKTREE_KEY),
                     Optional.of(ModConfiguredFeatures.DARKTREE_KEY)),
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+                            .mapColor(DARKTREE_COLOR)
                             .lightLevel((state) -> LIGHT_DARK_TREE)
             ));
 
 
     public static final RegistryObject<Block> DARKGRASS_BLOCK = REGISTAR.register("darkgrass_block",
             () -> new DarkGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
+                    .mapColor(DARKGRASS_COLOR)
                     .strength(0.9F)
                     .sound(SoundType.GRASS).randomTicks()
             ));
 
     public static final RegistryObject<Block> DARKDIRT = REGISTAR.register("darkdirt",
             () -> new DarkDirtBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
+                    .mapColor(MapColor.COLOR_BLACK)
                     .strength(0.8F).randomTicks()));
 
     public static final RegistryObject<Block> WHITETREE_LOG = REGISTAR.register("whitetree_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.OAK_LOG)
+                    .mapColor(WHITE_TREE_COLOR)
                     .strength(4F)
                     .lightLevel((state) -> LIGHT_WHITE_TREE))
     );
@@ -198,23 +223,27 @@ public class BlockRegistry {
     public static final RegistryObject<Block> WHITETREE_WOOD = REGISTAR.register("whitetree_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.OAK_WOOD)
+                    .mapColor(WHITE_TREE_COLOR)
                     .strength(4F)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
     public static final RegistryObject<Block> STRIPPED_WHITETREE_LOG = REGISTAR.register("stripped_whitetree_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.STRIPPED_OAK_LOG)
+                    .mapColor(WHITE_TREE_COLOR)
                     .strength(4F)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
     public static final RegistryObject<Block> STRIPPED_WHITETREE_WOOD = REGISTAR.register("stripped_whitetree_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.STRIPPED_OAK_WOOD)
+                    .mapColor(WHITE_TREE_COLOR)
                     .strength(4F)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
     public static final RegistryObject<Block> WHITETREE_LEAVES = REGISTAR.register("whitetree_leaves",
             () -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+                    .mapColor(DyeColor.WHITE)
                     .lightLevel((state) -> LIGHT_WHITE_TREE + 2)) {
 
                 @Override
@@ -241,12 +270,14 @@ public class BlockRegistry {
                     Optional.of(ModConfiguredFeatures.WHITETREE_KEY),
                     Optional.of(ModConfiguredFeatures.WHITETREE_KEY)),
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+                            .mapColor(WHITE_TREE_COLOR)
                             .lightLevel((state) -> 12)
             ));
 
     public static final RegistryObject<Block> WHITETREE_PLANKS = REGISTAR.register("whitetree_planks",
             () -> new Block(BlockBehaviour.Properties
                     .ofFullCopy(Blocks.OAK_PLANKS)
+                    .mapColor(WHITE_TREE_COLOR)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)) {
 
                 @Override
@@ -270,50 +301,60 @@ public class BlockRegistry {
     public static final RegistryObject<Block> WHITETREE_STAIR = REGISTAR.register("whitetree_stair",
             () -> new StairBlock(Blocks.OAK_STAIRS.defaultBlockState(),
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)
+                            .mapColor(WHITE_TREE_COLOR)
                             .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
     public static final RegistryObject<Block> WHITETREE_SLAB = REGISTAR.register("whitetree_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)
+                    .mapColor(WHITE_TREE_COLOR)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
     public static final RegistryObject<Block> WHITETREE_BUTTON = REGISTAR.register("whitetree_button",
             () -> new ButtonBlock(BlockSetType.OAK, 10,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+                            .mapColor(WHITE_TREE_COLOR)
                             .lightLevel((state) -> LIGHT_WHITE_TREE)
             ));
 
     public static final RegistryObject<Block> WHITETREE_PRESSURE_PLATE = REGISTAR.register("whitetree_pressure_plate",
             () -> new PressurePlateBlock(BlockSetType.OAK,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)
+                            .mapColor(WHITE_TREE_COLOR)
                             .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
     public static final RegistryObject<Block> WHITETREE_FENCE = REGISTAR.register("whitetree_fence",
             () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)
+                    .mapColor(WHITE_TREE_COLOR)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
     public static final RegistryObject<Block> WHITETREE_FENCE_GATE = REGISTAR.register("whitetree_fence_gate",
             () -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)
+                    .mapColor(WHITE_TREE_COLOR)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
     public static final RegistryObject<Block> WHITETREE_DOOR = REGISTAR.register("whitetree_door",
             () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)
+                    .mapColor(WHITE_TREE_COLOR)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)
                     .noOcclusion()));
 
     public static final RegistryObject<Block> WHITETREE_TRAPDOOR = REGISTAR.register("whitetree_trapdoor",
             () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties
                     .ofFullCopy(Blocks.OAK_TRAPDOOR)
+                    .mapColor(WHITE_TREE_COLOR)
                     .lightLevel((state) -> LIGHT_WHITE_TREE)
                     .noOcclusion()));
 
     public static final RegistryObject<Block> TALL_WHITE_GRASS = REGISTAR.register("tall_white_grass",
             () -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+                    .mapColor(DyeColor.WHITE)
                     .noOcclusion()
                     .noCollission()
                     .lightLevel((state) -> LIGHT_WHITE_VEGETATION)));
 
     public static final RegistryObject<Block> WHITE_GRASS = REGISTAR.register("white_grass",
             () -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+                    .mapColor(DyeColor.WHITE)
                     .noOcclusion()
                     .noCollission()
                     .lightLevel((state) -> LIGHT_WHITE_VEGETATION)));
@@ -321,6 +362,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> WHITE_TORCHFLOWER = REGISTAR.register("white_torchflower",
             () -> new FlowerBlock(MobEffects.LUCK, 5, BlockBehaviour.Properties.ofFullCopy(Blocks.TORCHFLOWER)
                     .noOcclusion()
+                    .mapColor(DyeColor.CYAN)
                     .noCollission()
                     .lightLevel((state) -> LIGHT_WHITE_TREE)));
 
@@ -335,17 +377,20 @@ public class BlockRegistry {
             REGISTAR.register("radiance_catalyst",
                     () -> new RadianceCatalystBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEACON)
                             .strength(5.0f, 15.0f)
+                            .mapColor(DyeColor.CYAN)
                             .noOcclusion()
                             .lightLevel((state) -> 10)));
 
     public static final RegistryObject<Block> DEEPFLOWER = REGISTAR.register("deepflower",
             () -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
                     .noOcclusion()
+                    .mapColor(DARK_VEGETATION_COLOR)
                     .noCollission()
                     .lightLevel((state) -> LIGHT_DARK_VEGETATION)));
 
     public static final RegistryObject<Block> BLUE_BUSH = REGISTAR.register("blue_bush",
             () -> new BlueBush(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+                    .mapColor(DARK_VEGETATION_COLOR)
                     .noOcclusion()
                     .noCollission()
                     .lightLevel((state) -> state.getValue(BlueBush.BERRY_STATE) == BlueBush.BerryState.BLUE_BERRY ?
@@ -353,12 +398,14 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> TALL_DARK_GRASS = REGISTAR.register("tall_dark_grass",
             () -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+                    .mapColor(DARK_VEGETATION_COLOR)
                     .noOcclusion()
                     .noCollission()
                     .lightLevel((state) -> LIGHT_DARK_VEGETATION)));
 
     public static final RegistryObject<Block> DARK_GRASS = REGISTAR.register("dark_grass",
             () -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+                    .mapColor(DARK_VEGETATION_COLOR)
                     .noOcclusion()
                     .noCollission()
                     .lightLevel((state) -> LIGHT_DARK_VEGETATION)));
@@ -366,6 +413,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> PROTECTOR_INVOKER = REGISTAR.register("protector_invoker",
             () -> new ProtectorInvokerBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEACON)
                     .strength(5.0f, 15.0f)
+                    .mapColor(DyeColor.CYAN)
                     .noOcclusion()
                     .lightLevel((state) -> 10)));
 
@@ -415,13 +463,16 @@ public class BlockRegistry {
     public static final RegistryObject<LiquidCorruptionBlock> LIQUID_CORRUPTION_BLOCK
             = REGISTAR.register("liquid_corruption_block",
             () -> new LiquidCorruptionBlock(FluidRegistry.SOURCE_LIQUID_CORRUPTION,
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA).speedFactor(0.5f)));
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.LAVA)
+                            .mapColor(MapColor.COLOR_BLACK)
+                            .speedFactor(0.5f)));
 
     public static final RegistryObject<Block> PALE_CRISTAL
             = REGISTAR.register("pale_cristal",
             () -> new CrystalBlock(11.0F, 4.0F, 8, Crystal.PALE,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
+                            .mapColor(MapColor.COLOR_LIGHT_BLUE)
                             .strength(3, 6)
                             .lightLevel(CrystalBlock::getLightLevel)
             ));
@@ -430,6 +481,7 @@ public class BlockRegistry {
             = REGISTAR.register("pale_cristal_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
                     .strength(4, 7)
+                    .mapColor(MapColor.COLOR_LIGHT_BLUE)
                     .requiresCorrectToolForDrops()
                     .lightLevel((state) -> 8)
             ));
@@ -439,6 +491,7 @@ public class BlockRegistry {
             () -> new CrystalBlock(9.0F, 4.0F, 8, Crystal.CITRINE,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
+                            .mapColor(MapColor.COLOR_YELLOW)
                             .strength(3, 6)
                             .lightLevel(CrystalBlock::getLightLevel)
             ));
@@ -447,6 +500,7 @@ public class BlockRegistry {
             = REGISTAR.register("citrine_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
                     .strength(3, 6)
+                    .mapColor(MapColor.COLOR_YELLOW)
                     .requiresCorrectToolForDrops()
                     .lightLevel((state) -> 8)
             ));
@@ -456,6 +510,7 @@ public class BlockRegistry {
             () -> new CrystalBlock(10.0F, 5.0F, 3, Crystal.ECHO,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
+                            .mapColor(MapColor.COLOR_BLACK)
                             .strength(3, 6)
 							.lightLevel(CrystalBlock::getLightLevel)
 			));
@@ -464,6 +519,7 @@ public class BlockRegistry {
             = REGISTAR.register("echo_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
                     .strength(3, 6)
+                    .mapColor(MapColor.COLOR_BLACK)
                     .requiresCorrectToolForDrops()
                     .lightLevel((state) -> 3)
 			));
@@ -473,6 +529,7 @@ public class BlockRegistry {
             () -> new CrystalBlock(7.0F, 3.0F, 6, Crystal.RUBY,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
+                            .mapColor(MapColor.COLOR_RED)
                             .strength(4, 7)
 							.lightLevel(CrystalBlock::getLightLevel)
 			));
@@ -481,6 +538,7 @@ public class BlockRegistry {
             = REGISTAR.register("ruby_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
                     .strength(3, 6)
+                    .mapColor(MapColor.COLOR_RED)
                     .requiresCorrectToolForDrops()
                     .lightLevel((state) -> 6)
 			));
@@ -490,6 +548,7 @@ public class BlockRegistry {
             () -> new CrystalBlock(7.0F, 3.0F, 6, Crystal.MALACHITE,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
+                            .mapColor(MapColor.COLOR_GREEN)
                             .strength(4, 7)
 							.lightLevel(CrystalBlock::getLightLevel)
 			));
@@ -498,6 +557,7 @@ public class BlockRegistry {
             = REGISTAR.register("malachite_block",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_BLOCK)
                     .strength(3, 6)
+                    .mapColor(MapColor.COLOR_GREEN)
                     .requiresCorrectToolForDrops()
                     .lightLevel((state) -> 6)));
 
@@ -506,18 +566,21 @@ public class BlockRegistry {
             () -> new AbyssPortalBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.END_PORTAL)
                     .noCollission()
                     .forceSolidOn()
+                    .mapColor(MapColor.COLOR_BLACK)
                     .lightLevel((state) -> 10)));
 
     public static final RegistryObject<Block> SOLID_CORRUPTION
             = REGISTAR.register("solid_corruption",
             () -> new SolidCorruptionBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
                     .lightLevel((state) -> 3)
+                    .mapColor(MapColor.COLOR_BLACK)
                     .randomTicks()));
 
     public static final RegistryObject<Block> DYSFUNCTIONNING_CATALYST
             = REGISTAR.register("dysfunctionning_catalyst",
             () -> new DysfunctionningCatalystBlock(BlockBehaviour.Properties
                     .ofFullCopy(BlockRegistry.RADIANCE_CATALYST.get())
+                    .mapColor(MapColor.TERRACOTTA_BLUE)
                     .strength(-1f)
                     .lightLevel((state) -> 3)));
 
@@ -526,6 +589,7 @@ public class BlockRegistry {
             () -> new BlackLanternBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SEA_LANTERN)
                     .lightLevel((state) -> state.getValue(BlockStateProperties.LIT) ? 15 : 5)
                     .strength(3.5F, 10F)
+                    .mapColor(MapColor.TERRACOTTA_CYAN)
                     .randomTicks()));
 
     public static final RegistryObject<Block> CRACKED_ABYSSALITE_BRICKS_STAIR

@@ -1,7 +1,8 @@
-// 1.21.1	2025-10-04T17:49:17.0186719	Item Models: wardentools
+// 1.21.1	2025-10-16T14:58:41.723355	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
+cfecb45b648fd2284b0b17768007640d9693016a assets/wardentools/models/item/ancient_citadel_map.json
 f2f5d925748b1563f00aaa87288d1c78d0ab469d assets/wardentools/models/item/black_lantern.json
 953870e2f0fd3ec8c1e95656a9f7e457d7ec61ca assets/wardentools/models/item/blue_bush.json
 a538888f5e66213ed3e668f9a6fd61cc12d7ae92 assets/wardentools/models/item/blue_glow_berries.json

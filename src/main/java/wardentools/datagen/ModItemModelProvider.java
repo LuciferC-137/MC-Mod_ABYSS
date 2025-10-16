@@ -96,6 +96,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.PENDANT_OF_BALANCE);
         simpleItem(ItemRegistry.SHADOW_ORNAMENT);
         simpleItem(ItemRegistry.LIGHT_ORNAMENT);
+        simpleItem(ItemRegistry.ANCIENT_CITADEL_MAP);
 
         //Forcing item models for block items that have a special blockstate registration process
         blockItemWithItemModel(BlockRegistry.BLUE_BUSH);

@@ -169,31 +169,35 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
     }
 
     public static void giantCompassParticle(BlockState state, Level level,
-                                             CrystalInfuserBlockEntity infuser) {
+                                            CrystalInfuserBlockEntity infuser) {
         if (!state.hasProperty(FACING)) return;
+
+        Direction facing = state.getValue(FACING);
         Vec3 center = infuser.getStainedGlassCenterPos().getCenter();
         float orientation = infuser.getNextTempleOrientation();
-        switch (infuser.getBlockState().getValue(FACING)) {
-            case NORTH, SOUTH -> orientation -= Mth.HALF_PI;
-            case WEST -> orientation += Mth.PI;
-            default -> {}
-        }
-        Vec3 dir;
-        if (state.getValue(FACING) == Direction.NORTH
-                || state.getValue(FACING) == Direction.SOUTH) {
-            dir = new Vec3(Mth.cos(orientation), Mth.sin(orientation), 0F).normalize();
-        } else {
-            dir = new Vec3(0F, Mth.sin(orientation), Mth.cos(orientation)).normalize();
-        }
+
+        float blockYaw = facing.toYRot() * Mth.DEG_TO_RAD;
+        float localAngle = orientation - blockYaw;
+
+        Vec3 forward = Vec3.atLowerCornerOf(facing.getNormal());
+        Vec3 up = new Vec3(0, 1, 0);                                     // vers le haut du monde
+        Vec3 right = forward.cross(up).normalize();
+        up = right.cross(forward).normalize();
+
+        Vec3 dir = right.scale(Mth.cos(localAngle))
+                .add(up.scale(Mth.sin(localAngle)))
+                .normalize();
 
         for (int i = 0; i < 25; i++) {
             Vec3 from = center.offsetRandom(level.random, 1.5F);
             from = from.add(dir.scale(level.random.nextFloat() * 6F));
+
             ModParticleUtils.addClientParticle(level,
                     new ShineParticleOptions(Vec3.ZERO, getCrystalColor(state)),
                     from, dir.scale(0.2F));
         }
     }
+
 
     public static void ambientParticles(BlockState state, BlockPos pos, Level level) {
         if (!state.hasProperty(FACING)) return;

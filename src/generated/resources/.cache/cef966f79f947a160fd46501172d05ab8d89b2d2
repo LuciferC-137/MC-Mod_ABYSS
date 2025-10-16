@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-05T21:55:48.5539336	Tags for minecraft:block mod id wardentools
+// 1.21.1	2025-10-16T14:58:41.7313565	Tags for minecraft:block mod id wardentools
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/ancient_city_replaceable.json
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/block/animals_spawnable_on.json
 18262857d4a34e6ee53557a03eea4ca89a3572f3 data/minecraft/tags/block/climbable.json
@@ -17,7 +17,7 @@ f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/moss_replacea
 2eb2235c54a005455813d83435e2f5d065ab95bd data/minecraft/tags/block/occludes_vibration_signals.json
 50275ae7afa6078501bc0f44ff15f531f4834af6 data/minecraft/tags/block/overworld_carver_replaceables.json
 31e2d784730c13e14e28ca0d2bb0202d9e774b0e data/minecraft/tags/block/planks.json
-50275ae7afa6078501bc0f44ff15f531f4834af6 data/minecraft/tags/block/sculk_replaceable.json
+9649f586c26fd5400cbd172db068a85f1c1dc429 data/minecraft/tags/block/sculk_replaceable.json
 50275ae7afa6078501bc0f44ff15f531f4834af6 data/minecraft/tags/block/sculk_replaceable_world_gen.json
 e765e739d51d03e31ad9e51980aa927df8fc8168 data/minecraft/tags/block/walls.json
 80656ac4d8d86e2c764aeb11c573069e3a7b5476 data/wardentools/tags/block/abyss_teleportable.json

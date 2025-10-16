@@ -695,4 +695,9 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> GOLEM_STONE =
 			REGISTAR.register("golem_stone",
 			() -> new BlockItem(BlockRegistry.GOLEM_STONE.get(), new Item.Properties()));
+
+	public static final RegistryObject<Item> ANCIENT_CITADEL_MAP =
+			REGISTAR.register("ancient_citadel_map",
+			() -> new AncientCitadelMap(new Item.Properties()
+					.rarity(Rarity.UNCOMMON)));
 }

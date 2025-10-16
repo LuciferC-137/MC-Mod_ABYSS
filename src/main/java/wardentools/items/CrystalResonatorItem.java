@@ -18,7 +18,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import wardentools.items.utils.ItemUtils;
 import wardentools.misc.Crystal;
-import wardentools.worldgen.structure.ModStructures;
 import wardentools.worldgen.structure.StructureUtils;
 
 import javax.annotation.Nullable;
@@ -64,9 +63,9 @@ public class CrystalResonatorItem extends Item {
         return null;
     }
 
-    public static @Nullable BlockPos getNearestTemplePos(ServerLevel level, BlockPos pos) {
-        return StructureUtils.findNearestStructure(level,
-                ModStructures.SURFACE_ANCIENT_CITY, pos);
+    public static @Nullable BlockPos getNearestTemplePos(ServerLevel level,
+                                                         Crystal crystal, BlockPos pos) {
+        return StructureUtils.findNearestStructure(level, crystal.getTempleKey(), pos);
     }
 
     public static Crystal getCrystal(ItemStack stack) {
@@ -95,11 +94,17 @@ public class CrystalResonatorItem extends Item {
         if ((int)level.getGameTime() % 100 != 0) return; // Check every 5 seconds
         if (level instanceof ServerLevel serverLevel) {
             CompoundTag tag = ItemUtils.customTag(stack);
-            BlockPos targetPos = getNearestTemplePos(serverLevel, entity.blockPosition());
-            if (targetPos == null) return;
-            tag.putInt(NBT_TARGET_X, targetPos.getX());
-            tag.putInt(NBT_TARGET_Y, targetPos.getY());
-            tag.putInt(NBT_TARGET_Z, targetPos.getZ());
+            Crystal crystal = getCrystal(stack);
+            BlockPos targetPos = getNearestTemplePos(serverLevel, crystal, entity.blockPosition());
+            if (targetPos == null) {
+                tag.putInt(NBT_TARGET_X, 0);
+                tag.putInt(NBT_TARGET_Y, 0);
+                tag.putInt(NBT_TARGET_Z, 0);
+            } else {
+                tag.putInt(NBT_TARGET_X, targetPos.getX());
+                tag.putInt(NBT_TARGET_Y, targetPos.getY());
+                tag.putInt(NBT_TARGET_Z, targetPos.getZ());
+            }
             stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
 
             if (entity instanceof ServerPlayer player) {

@@ -51,8 +51,8 @@ public class ModDimensions {
                 false, // bedWorks
                 false, // respawnAnchorWorks
                 -64, // minY
-                256, // height
-                256, // logicalHeight
+                384, // height
+                384, // logicalHeight
                 BlockTags.INFINIBURN_OVERWORLD, // infiniburn
                 BuiltinDimensionTypes.NETHER_EFFECTS, // Base effectsLocation
                 ABYSS_AMBIENT_LIGHT, // ambientLight
@@ -78,30 +78,40 @@ public class ModDimensions {
         return new Climate.ParameterList<>(List.of(
                 climate(0F, 0F, 0F, 0F, 0F, 0F,
                         ModBiomes.DEEP_FOREST, biomeRegistry),
-                climate(0.5F, -0.2F, 0F, 0.5F, 0.0F, 0F,
+
+                climate(0.6F, -0.4F, 0F, 0.5F, 0.0F, 0F,
                         ModBiomes.WASTE_LAND, biomeRegistry),
-                climate(-0.5F, 0.1F, -0.5F, -0.5F, 0.0F, 0F,
+
+                climate(-0.6F, 0.4F, -0.5F, -0.5F, 0.0F, 0F,
                         ModBiomes.WHITE_FOREST, biomeRegistry),
+
                 climate(0F, 0.5F, 0.6F, 0.1F, 0.8F, 0.3F,
                         ModBiomes.CRYSTAL_CAVE, biomeRegistry),
+
                 climate(0F, 0F, 0.5F, 0F, 0.9F, 0F,
                         ModBiomes.BLINDING_DEPTH, biomeRegistry),
-                climate(-0.1F, -0.6F, 0.8F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
+
+                climate(-0.1F, -0.6F, 0.0F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
                         ModBiomes.AMETHYST_CAVE, biomeRegistry),
-                climate(0.5F, -0.1F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
+
+                climate(0.5F, -0.1F, 0.0F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
                         ModBiomes.CITRINE_CAVE, biomeRegistry),
-                climate(0.1F, 0.5F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
+
+                climate(0.1F, 0.5F, 0.0F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
                         ModBiomes.MALACHITE_CAVE, biomeRegistry),
-                climate(0.4F, -0.5F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
+
+                climate(0.4F, -0.5F, 0.0F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.2F,
                         ModBiomes.RUBY_CAVE, biomeRegistry),
-                climate(-0.5F, 0.3F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.1F,
+
+                climate(-0.5F, 0.3F, 0.0F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.1F,
                         ModBiomes.ECHO_CAVE, biomeRegistry),
-                climate(-0.8F, 0.2F, 0.6F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.4F,
+
+                climate(-0.8F, 0.2F, 0.0F, 0.1F, CRYSTAL_BIOMES_DEPTH, 0.4F,
                         ModBiomes.PALE_CAVE, biomeRegistry)
         ));
     }
 
-    // Helper method to create Climate.ParameterPoint with 6 parameters. Everyone is between -1 and 1.
+    // Helper method to create Climate.ParameterPoint with 6 parameters. Every one is between -1 and 1.
     public static Pair<Climate.ParameterPoint, Holder<Biome>> climate(float temperature,
                                                                                 float humidity,
                                                                                 float continentalness,

@@ -38,10 +38,11 @@
     }
   },
   "start_height": {
-    "absolute": -42
+    "absolute": 0
   },
+  "project_start_to_heightmap": "WORLD_SURFACE_WG",
   "start_pool": "wardentools:crystal_temple/start_pool_pale",
-  "step": "underground_decoration",
-  "terrain_adaptation": "beard_box",
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
   "use_expansion_hack": false
 }

@@ -69,4 +69,9 @@ public class BlockEntityRegistry {
 					() -> BlockEntityType.Builder.of(CrystalInfuserBlockEntity::new,
 							BlockRegistry.CRYSTAL_INFUSER.get()).build(null));
 
+	public static final RegistryObject<BlockEntityType<GolemStoneBlockEntity>> GOLEM_STONE_BLOCK_ENTITY =
+			BLOCK_ENTITIES.register("golem_stone_block_entity",
+					() -> BlockEntityType.Builder.of(GolemStoneBlockEntity::new,
+							BlockRegistry.GOLEM_STONE.get()).build(null));
+
 }

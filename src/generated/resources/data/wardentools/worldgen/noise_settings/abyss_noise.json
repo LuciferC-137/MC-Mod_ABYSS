@@ -4,10 +4,7 @@
     "Name": "minecraft:stone"
   },
   "default_fluid": {
-    "Name": "minecraft:water",
-    "Properties": {
-      "level": "0"
-    }
+    "Name": "minecraft:air"
   },
   "disable_mob_generation": false,
   "legacy_random_source": false,
@@ -327,7 +324,7 @@
     }
   },
   "ore_veins_enabled": true,
-  "sea_level": -100,
+  "sea_level": 63,
   "spawn_target": [
     {
       "continentalness": [
