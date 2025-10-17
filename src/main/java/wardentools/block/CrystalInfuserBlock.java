@@ -168,21 +168,21 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
         super.animateTick(state, level, pos, random);
     }
 
-    public static void giantCompassParticle(BlockState state, Level level,
-                                            CrystalInfuserBlockEntity infuser) {
+    public static void giantCompassParticle(BlockState state, Level level, CrystalInfuserBlockEntity infuser) {
         if (!state.hasProperty(FACING)) return;
 
-        Direction facing = state.getValue(FACING);
+        Direction facing = state.getValue(FACING).getOpposite();
         Vec3 center = infuser.getStainedGlassCenterPos().getCenter();
         float orientation = infuser.getNextTempleOrientation();
 
         float blockYaw = facing.toYRot() * Mth.DEG_TO_RAD;
         float localAngle = orientation - blockYaw;
 
-        Vec3 forward = Vec3.atLowerCornerOf(facing.getNormal());
-        Vec3 up = new Vec3(0, 1, 0);                                     // vers le haut du monde
-        Vec3 right = forward.cross(up).normalize();
-        up = right.cross(forward).normalize();
+        Vec3 forward = Vec3.atLowerCornerOf(facing.getNormal()).normalize();
+        Vec3 up = new Vec3(0, 1, 0);                                         // vers le haut du monde
+
+        Vec3 right = up.cross(forward).normalize();
+        up = forward.cross(right).normalize();
 
         Vec3 dir = right.scale(Mth.cos(localAngle))
                 .add(up.scale(Mth.sin(localAngle)))
@@ -197,6 +197,7 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
                     from, dir.scale(0.2F));
         }
     }
+
 
 
     public static void ambientParticles(BlockState state, BlockPos pos, Level level) {

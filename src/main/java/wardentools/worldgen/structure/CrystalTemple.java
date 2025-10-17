@@ -35,27 +35,36 @@ public class CrystalTemple extends Structure {
                     ResourceKey.codec(Registries.TEMPLATE_POOL).fieldOf("start_pool").forGetter(s -> s.startPool),
                     ResourceLocation.CODEC.optionalFieldOf("start_jigsaw_name").forGetter(s -> s.startJigsawName),
                     Codec.intRange(0, 30).fieldOf("size").forGetter(s -> s.maxDepth),
-                    Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(s -> s.maxDistanceFromCenter)
+                    Codec.intRange(1, 128).fieldOf("max_distance_from_center").forGetter(s -> s.maxDistanceFromCenter),
+                    TagKey.hashedCodec(Registries.BIOME).optionalFieldOf("cave_biome_underneath").forGetter(s -> s.caveBiomeUnderneath)
             ).apply(instance, CrystalTemple::new)
     );
 
     public static final Codec<CrystalTemple> CODEC = MAP_CODEC.codec();
 
+    private static final TagKey<Biome> DEFAULT_CAVE_BIOME =
+            TagKey.create(Registries.BIOME,
+                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "amethyst_cave")
+            );
+
     private final ResourceKey<StructureTemplatePool> startPool;
     private final Optional<ResourceLocation> startJigsawName;
     private final int maxDepth;
     private final int maxDistanceFromCenter;
+    private final Optional<TagKey<Biome>> caveBiomeUnderneath;
 
     public CrystalTemple(StructureSettings settings,
                          ResourceKey<StructureTemplatePool> startPool,
                          Optional<ResourceLocation> startJigsawName,
                          int maxDepth,
-                         int maxDistanceFromCenter) {
+                         int maxDistanceFromCenter,
+                         Optional<TagKey<Biome>> caveBiomeUnderneath) {
         super(settings);
         this.startPool = startPool;
         this.startJigsawName = startJigsawName;
         this.maxDepth = maxDepth;
         this.maxDistanceFromCenter = maxDistanceFromCenter;
+        this.caveBiomeUnderneath = caveBiomeUnderneath;
     }
 
     @Override
@@ -64,13 +73,7 @@ public class CrystalTemple extends Structure {
         int x = chunkPos.getMiddleBlockX();
         int z = chunkPos.getMiddleBlockZ();
 
-        TagKey<Biome> undergroundBiomeTag = TagKey.create(
-                Registries.BIOME,
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
-                        "has_structure/has_amethyst_temple")
-        );
-
-        if (!biomeColumnCheck(context, undergroundBiomeTag)) {
+        if (!biomeColumnCheck(context, caveBiomeUnderneath.orElse(DEFAULT_CAVE_BIOME))) {
             return Optional.empty();
         }
 

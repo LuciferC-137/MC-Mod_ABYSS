@@ -1,6 +1,7 @@
 {
-  "type": "minecraft:jigsaw",
-  "biomes": "#wardentools:has_structure/has_ruby_temple",
+  "type": "wardentools:crystal_temple",
+  "biomes": "#wardentools:is_abyss",
+  "cave_biome_underneath": "#wardentools:has_structure/has_ruby_temple",
   "max_distance_from_center": 115,
   "size": 13,
   "spawn_overrides": {

@@ -224,13 +224,13 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
             if (!this.level.isClientSide && this.getBlockState()
                     .hasProperty(CrystalInfuserBlock.CRYSTAL)) {
                 ResourceKey<Structure> templeKey = this.getBlockState()
-                        .getValue(CrystalInfuserBlock.CRYSTAL).getNext().getTempleKey();
+                        .getValue(CrystalInfuserBlock.CRYSTAL).getTempleKey();
                 BlockPos nexTemplePos = StructureUtils.findNearestStructure((ServerLevel) this.level,
                         templeKey, this.worldPosition);
                 if (nexTemplePos != null) {
                     Vec3 toTemple = Vec3.atCenterOf(nexTemplePos)
                             .subtract(Vec3.atCenterOf(this.worldPosition));
-                    this.nextTempleOrientation = (float) Math.toDegrees(Math.atan2(toTemple.z, toTemple.x)) + 90F;
+                    this.nextTempleOrientation = (float) Math.atan2(toTemple.z, toTemple.x) / (2F * (float)Math.PI);
                 }
             }
             this.sendUpdate();
