@@ -179,7 +179,7 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
         float localAngle = orientation - blockYaw;
 
         Vec3 forward = Vec3.atLowerCornerOf(facing.getNormal()).normalize();
-        Vec3 up = new Vec3(0, 1, 0);                                         // vers le haut du monde
+        Vec3 up = new Vec3(0, 1, 0);
 
         Vec3 right = up.cross(forward).normalize();
         up = forward.cross(right).normalize();
@@ -197,7 +197,6 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
                     from, dir.scale(0.2F));
         }
     }
-
 
 
     public static void ambientParticles(BlockState state, BlockPos pos, Level level) {
