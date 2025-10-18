@@ -44,7 +44,7 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
     public boolean hasEmitedParticles = false;
 
     private BlockPos cachedStainedGlassCenterPos = null;
-    private float nextTempleOrientation = -1F;
+    private float nextTempleOrientation = -4F;
 
     private static final int COMPASS_EFFECT_DURATION = 2400;
     private int compassEffectTick = 0;
@@ -220,7 +220,7 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
 
     public float getNextTempleOrientation() {
         if (this.level == null) return 0F;
-        if (this.nextTempleOrientation < 0F) {
+        if (this.nextTempleOrientation == -4F) {
             if (!this.level.isClientSide && this.getBlockState()
                     .hasProperty(CrystalInfuserBlock.CRYSTAL)) {
                 ResourceKey<Structure> templeKey = this.getBlockState()
@@ -230,7 +230,11 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
                 if (nexTemplePos != null) {
                     Vec3 toTemple = Vec3.atCenterOf(nexTemplePos)
                             .subtract(Vec3.atCenterOf(this.worldPosition));
-                    this.nextTempleOrientation = (float) Math.atan2(toTemple.z, toTemple.x) / (2F * (float)Math.PI);
+                    this.nextTempleOrientation = (float) Math.atan2(toTemple.z, toTemple.x);
+                    System.out.println("Found nearest temple at " + nexTemplePos
+                            + ", setting next temple orientation to " + this.nextTempleOrientation);
+                    System.out.println("To temple vector: " + toTemple);
+                    System.out.println("Next temple orientation set to " + this.nextTempleOrientation);
                 }
             }
             this.sendUpdate();

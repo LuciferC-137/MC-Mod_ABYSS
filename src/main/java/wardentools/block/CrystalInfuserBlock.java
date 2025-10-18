@@ -171,22 +171,29 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
     public static void giantCompassParticle(BlockState state, Level level, CrystalInfuserBlockEntity infuser) {
         if (!state.hasProperty(FACING)) return;
 
-        Direction facing = state.getValue(FACING).getOpposite();
+        Direction facing = state.getValue(FACING);
         Vec3 center = infuser.getStainedGlassCenterPos().getCenter();
         float orientation = infuser.getNextTempleOrientation();
 
-        float blockYaw = facing.toYRot() * Mth.DEG_TO_RAD;
-        float localAngle = orientation - blockYaw;
+        Vec3 rightX;
+        switch (facing) {
+            case NORTH -> rightX = new Vec3(1, 0, 0);
+            case SOUTH -> rightX = new Vec3(-1, 0, 0);
+            case EAST -> rightX = new Vec3(0, 0, -1);
+            default -> rightX = new Vec3(0, 0, 1);
+        }
+        Vec3 upY = new Vec3(0, 1, 0);
 
-        Vec3 forward = Vec3.atLowerCornerOf(facing.getNormal()).normalize();
-        Vec3 up = new Vec3(0, 1, 0);
+        switch (facing) {
+            case NORTH -> orientation = -orientation;
+            case EAST -> orientation += Mth.HALF_PI;
+            case WEST -> orientation -= Mth.HALF_PI;
+            case SOUTH -> orientation = -orientation + Mth.PI;
+            default -> {}
+        }
 
-        Vec3 right = up.cross(forward).normalize();
-        up = forward.cross(right).normalize();
-
-        Vec3 dir = right.scale(Mth.cos(localAngle))
-                .add(up.scale(Mth.sin(localAngle)))
-                .normalize();
+        Vec3 dir = rightX.scale(Math.cos(orientation))
+                .add(upY.scale(Math.sin(orientation)));
 
         for (int i = 0; i < 25; i++) {
             Vec3 from = center.offsetRandom(level.random, 1.5F);
