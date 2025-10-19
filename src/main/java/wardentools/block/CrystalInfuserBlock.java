@@ -32,6 +32,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.CrystalInfuserBlockEntity;
+import wardentools.items.ItemRegistry;
 import wardentools.misc.Crystal;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.ParticleShineExplosion;
@@ -84,9 +85,11 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
                 ItemStack removedItem = infuser.removeItemInOrder();
                 if (!removedItem.isEmpty()) {
                     for (int i = 0; i < player.getInventory().items.size(); i++) {
-                        if (player.getInventory().items.get(i).is(removedItem.getItem())) {
-                            player.getInventory().items.get(i).grow(1);
-                            return ItemInteractionResult.SUCCESS;
+                        if (!removedItem.is(ItemRegistry.CRYSTAL_RESONATOR.get())) {
+                            if (player.getInventory().items.get(i).is(removedItem.getItem())) {
+                                player.getInventory().items.get(i).grow(1);
+                                return ItemInteractionResult.SUCCESS;
+                            }
                         }
                     }
                     player.setItemInHand(hand, removedItem);

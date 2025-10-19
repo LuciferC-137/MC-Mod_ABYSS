@@ -14,7 +14,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,7 +31,7 @@ import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
-import wardentools.items.ItemRegistry;
+import wardentools.misc.Crystal;
 import wardentools.network.PacketHandler;
 import wardentools.network.ParticulesSoundsEffects.AncientLaboratoryGateSound;
 import wardentools.network.ParticulesSoundsEffects.ContagionIncarnationEmergeSound;
@@ -60,10 +59,10 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
             return switch (index) {
                 case 0 -> DysfunctionningCatalystBlockEntity.this.citrine;
                 case 1 -> DysfunctionningCatalystBlockEntity.this.amethyst;
-                case 2 -> DysfunctionningCatalystBlockEntity.this.pale_shard;
+                case 2 -> DysfunctionningCatalystBlockEntity.this.pale;
                 case 3 -> DysfunctionningCatalystBlockEntity.this.ruby;
                 case 4 -> DysfunctionningCatalystBlockEntity.this.malachite;
-                case 5 -> DysfunctionningCatalystBlockEntity.this.echo_shard;
+                case 5 -> DysfunctionningCatalystBlockEntity.this.echo;
                 case 6 -> DysfunctionningCatalystBlockEntity.this.total_charge;
                 case 7 -> DysfunctionningCatalystBlockEntity.this.eye_progression;
                 default -> throw new IllegalStateException("Unexpected value: " + index);
@@ -74,10 +73,10 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
             switch (index) {
                 case 0 -> DysfunctionningCatalystBlockEntity.this.citrine = value;
                 case 1 -> DysfunctionningCatalystBlockEntity.this.amethyst = value;
-                case 2 -> DysfunctionningCatalystBlockEntity.this.pale_shard = value;
+                case 2 -> DysfunctionningCatalystBlockEntity.this.pale = value;
                 case 3 -> DysfunctionningCatalystBlockEntity.this.ruby = value;
                 case 4 -> DysfunctionningCatalystBlockEntity.this.malachite = value;
-                case 5 -> DysfunctionningCatalystBlockEntity.this.echo_shard = value;
+                case 5 -> DysfunctionningCatalystBlockEntity.this.echo = value;
                 case 6 -> DysfunctionningCatalystBlockEntity.this.total_charge = value;
                 case 7 -> DysfunctionningCatalystBlockEntity.this.eye_progression = value;
                 default -> throw new IllegalStateException("Unexpected value: " + index);
@@ -94,10 +93,10 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     private static final int UPDATE_INTERVAL = 5;
     private int citrine = 0;
     private int amethyst = 0;
-    private int pale_shard = 0;
+    private int pale = 0;
     private int ruby = 0;
     private int malachite = 0;
-    private int echo_shard = 0;
+    private int echo = 0;
     private int  total_charge = 0;
     private int eye_progression = 0;
     private int next_check = 0;
@@ -131,10 +130,10 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         }
         this.citrine = wardentoolsData.getInt("Citrine");
         this.amethyst = wardentoolsData.getInt("Amethyst");
-        this.pale_shard = wardentoolsData.getInt("PaleShard");
+        this.pale = wardentoolsData.getInt("PaleShard");
         this.ruby = wardentoolsData.getInt("Ruby");
         this.malachite = wardentoolsData.getInt("Malachite");
-        this.echo_shard = wardentoolsData.getInt("EchoShard");
+        this.echo = wardentoolsData.getInt("EchoShard");
         this.total_charge = wardentoolsData.getInt("TotalCharge");
         this.isContagionDefeated = wardentoolsData.getBoolean("IsContagionDefeated");
     }
@@ -146,10 +145,10 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         wardentoolsData.put("Inventory", this.inventory.serializeNBT(provider));
         wardentoolsData.putInt("Citrine", this.citrine);
         wardentoolsData.putInt("Amethyst", this.amethyst);
-        wardentoolsData.putInt("PaleShard", this.pale_shard);
+        wardentoolsData.putInt("PaleShard", this.pale);
         wardentoolsData.putInt("Ruby", this.ruby);
         wardentoolsData.putInt("Malachite", this.malachite);
-        wardentoolsData.putInt("EchoShard", this.echo_shard);
+        wardentoolsData.putInt("EchoShard", this.echo);
         wardentoolsData.putInt("TotalCharge", this.total_charge);
         wardentoolsData.putBoolean("IsContagionDefeated", this.isContagionDefeated);
         tag.put(ModMain.MOD_ID, wardentoolsData);
@@ -161,58 +160,58 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
             sendUpdate();
             if (this.next_check <= 0 && this.total_charge != MAX_TOTAL) {
                 this.next_check = UPDATE_INTERVAL;
-                if (this.inventory.getStackInSlot(0).is(ItemRegistry.CITRINE_FRAGMENT.get())
-                        && this.citrine < MAX_PROGRESSION) {
-                    this.citrine +=1;
-                    this.sendUpdate();
-                } else if (this.citrine > 0
-                        && !this.inventory.getStackInSlot(0).is(ItemRegistry.CITRINE_FRAGMENT.get())) {
-                    this.citrine -= 1;
-                    this.sendUpdate();
-                }
-                if (this.inventory.getStackInSlot(1).is(Items.AMETHYST_SHARD)
+                if (this.inventory.getStackInSlot(0).is(Crystal.AMETHYST.getJewel())
                         && this.amethyst < MAX_PROGRESSION) {
                     this.amethyst +=1;
                     this.sendUpdate();
                 } else if (this.amethyst > 0
-                        && !this.inventory.getStackInSlot(1).is(Items.AMETHYST_SHARD)) {
+                        && !this.inventory.getStackInSlot(0).is(Crystal.AMETHYST.getJewel())) {
                     this.amethyst -= 1;
                     this.sendUpdate();
                 }
-                if (this.inventory.getStackInSlot(2).is(ItemRegistry.PALE_SHARD.get())
-                        && this.pale_shard < MAX_PROGRESSION) {
-                    this.pale_shard +=1;
+                if (this.inventory.getStackInSlot(1).is(Crystal.CITRINE.getJewel())
+                        && this.citrine < MAX_PROGRESSION) {
+                    this.citrine +=1;
                     this.sendUpdate();
-                } else if (this.pale_shard > 0
-                        && !this.inventory.getStackInSlot(2).is(ItemRegistry.PALE_SHARD.get())) {
-                    this.pale_shard -= 1;
+                } else if (this.citrine > 0
+                        && !this.inventory.getStackInSlot(1).is(Crystal.CITRINE.getJewel())) {
+                    this.citrine -= 1;
                     this.sendUpdate();
                 }
-                if (this.inventory.getStackInSlot(3).is(ItemRegistry.RUBY_FRAGMENT.get())
+                if (this.inventory.getStackInSlot(2).is(Crystal.ECHO.getJewel())
+                        && this.echo < MAX_PROGRESSION) {
+                    this.echo +=1;
+                    this.sendUpdate();
+                } else if (this.echo > 0
+                        && !this.inventory.getStackInSlot(2).is(Crystal.ECHO.getJewel())) {
+                    this.echo -= 1;
+                    this.sendUpdate();
+                }
+                if (this.inventory.getStackInSlot(3).is(Crystal.RUBY.getJewel())
                         && this.ruby < MAX_PROGRESSION) {
                     this.ruby +=1;
                     this.sendUpdate();
                 } else if (this.ruby > 0
-                        && !this.inventory.getStackInSlot(3).is(ItemRegistry.RUBY_FRAGMENT.get())) {
+                        && !this.inventory.getStackInSlot(3).is(Crystal.RUBY.getJewel())) {
                     this.ruby -= 1;
                     this.sendUpdate();
                 }
-                if (this.inventory.getStackInSlot(4).is(ItemRegistry.MALACHITE_FRAGMENT.get())
+                if (this.inventory.getStackInSlot(4).is(Crystal.MALACHITE.getJewel())
                         && this.malachite < MAX_PROGRESSION) {
                     this.malachite +=1;
                     this.sendUpdate();
                 } else if (this.malachite > 0
-                        && !this.inventory.getStackInSlot(4).is(ItemRegistry.MALACHITE_FRAGMENT.get())) {
+                        && !this.inventory.getStackInSlot(4).is(Crystal.MALACHITE.getJewel())) {
                     this.malachite -= 1;
                     this.sendUpdate();
                 }
-                if (this.inventory.getStackInSlot(5).is(Items.ECHO_SHARD)
-                        && this.echo_shard < MAX_PROGRESSION) {
-                    this.echo_shard +=1;
+                if (this.inventory.getStackInSlot(5).is(Crystal.PALE.getJewel())
+                        && this.pale < MAX_PROGRESSION) {
+                    this.pale +=1;
                     this.sendUpdate();
-                } else if (this.echo_shard > 0
-                        && !this.inventory.getStackInSlot(5).is(Items.ECHO_SHARD)) {
-                    this.echo_shard -= 1;
+                } else if (this.pale > 0
+                        && !this.inventory.getStackInSlot(5).is(Crystal.PALE.getJewel())) {
+                    this.pale -= 1;
                     this.sendUpdate();
                 }
             } else {
@@ -421,23 +420,23 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
 
     public boolean crystalsFullyCharged() {
         return (this.citrine == MAX_PROGRESSION && this.amethyst == MAX_PROGRESSION
-                && this.pale_shard == MAX_PROGRESSION && this.ruby == MAX_PROGRESSION
-                && this.malachite == MAX_PROGRESSION && this.echo_shard == MAX_PROGRESSION);
+                && this.pale == MAX_PROGRESSION && this.ruby == MAX_PROGRESSION
+                && this.malachite == MAX_PROGRESSION && this.echo == MAX_PROGRESSION);
     }
 
     public boolean isChargingCrystals() {
-        return ( (this.inventory.getStackInSlot(0).is(ItemRegistry.CITRINE_FRAGMENT.get())
+        return ( (this.inventory.getStackInSlot(0).is(Crystal.AMETHYST.getJewel())
                   && this.citrine < MAX_PROGRESSION)
-                || (this.inventory.getStackInSlot(1).is(Items.AMETHYST_SHARD)
+                || (this.inventory.getStackInSlot(1).is(Crystal.CITRINE.getJewel())
                     && this.amethyst < MAX_PROGRESSION)
-                || (this.inventory.getStackInSlot(2).is(ItemRegistry.PALE_SHARD.get())
-                    && this.pale_shard < MAX_PROGRESSION)
-                || (this.inventory.getStackInSlot(3).is(ItemRegistry.RUBY_FRAGMENT.get())
+                || (this.inventory.getStackInSlot(2).is(Crystal.ECHO.getJewel())
+                    && this.pale < MAX_PROGRESSION)
+                || (this.inventory.getStackInSlot(3).is(Crystal.RUBY.getJewel())
                     && this.ruby < MAX_PROGRESSION)
-                || (this.inventory.getStackInSlot(4).is(ItemRegistry.MALACHITE_FRAGMENT.get())
+                || (this.inventory.getStackInSlot(4).is(Crystal.MALACHITE.getJewel())
                     && this.malachite < MAX_PROGRESSION)
-                || (this.inventory.getStackInSlot(5).is(Items.ECHO_SHARD)
-                    && this.echo_shard < MAX_PROGRESSION));
+                || (this.inventory.getStackInSlot(5).is(Crystal.PALE.getJewel())
+                    && this.echo < MAX_PROGRESSION));
     }
 
     public boolean isChargingTotal() {

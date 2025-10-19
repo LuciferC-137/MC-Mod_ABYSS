@@ -699,5 +699,6 @@ public class ItemRegistry {
 	public static final RegistryObject<Item> ANCIENT_CITADEL_MAP =
 			REGISTAR.register("ancient_citadel_map",
 			() -> new AncientCitadelMap(new Item.Properties()
+					.stacksTo(1)
 					.rarity(Rarity.UNCOMMON)));
 }

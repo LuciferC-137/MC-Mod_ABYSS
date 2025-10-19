@@ -231,10 +231,6 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
                     Vec3 toTemple = Vec3.atCenterOf(nexTemplePos)
                             .subtract(Vec3.atCenterOf(this.worldPosition));
                     this.nextTempleOrientation = (float) Math.atan2(toTemple.z, toTemple.x);
-                    System.out.println("Found nearest temple at " + nexTemplePos
-                            + ", setting next temple orientation to " + this.nextTempleOrientation);
-                    System.out.println("To temple vector: " + toTemple);
-                    System.out.println("Next temple orientation set to " + this.nextTempleOrientation);
                 }
             }
             this.sendUpdate();
