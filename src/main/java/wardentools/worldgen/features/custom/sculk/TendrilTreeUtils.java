@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import wardentools.block.BlockRegistry;
@@ -64,18 +63,25 @@ public class TendrilTreeUtils {
     }
 
     public static void placeBlocksWithoutUpdate(WorldGenLevel level, TendrilTree tree, BlockPos origin) {
+        List<BlockPos> toRemove = new ArrayList<>();
         for (BlockPos pos : tree.getAllNodes()) {
             if (Math.abs(origin.getX() - pos.getX()) <= MAX_ELONGATION &&
                     Math.abs(origin.getZ() - pos.getZ()) <= MAX_ELONGATION) {
-                if (level.getBlockState(pos).isAir()) {
-                    BlockState state = sculkTendril();
-                    level.setBlock(pos, state, Block.UPDATE_NONE);
-                } else {
-                    tree.recursiveRemove(pos);
+                if (!level.getBlockState(pos).isAir()) {
+                    toRemove.add(pos);
                 }
+            } else {
+                toRemove.add(pos);
             }
         }
+        for (BlockPos pos : toRemove) {
+            tree.recursiveRemove(pos);
+        }
+        for (BlockPos pos : tree.getAllNodes()) {
+            level.setBlock(pos, sculkTendril(), 3);
+        }
     }
+
 
     public static void configureBlockEntities(WorldGenLevel level, TendrilTree tree, BlockPos origin) {
         for (BlockPos pos : tree.getAllNodes()) {

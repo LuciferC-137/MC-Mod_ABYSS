@@ -84,6 +84,7 @@ public class CrystalTemple extends Structure {
                 context.heightAccessor(),
                 context.randomState()
         );
+        y++;
 
         BlockPos pos = new BlockPos(x, y, z);
 

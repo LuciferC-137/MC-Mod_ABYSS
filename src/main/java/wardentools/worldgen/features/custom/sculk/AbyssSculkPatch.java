@@ -1,6 +1,7 @@
 package wardentools.worldgen.features.custom.sculk;
 
 import com.mojang.serialization.Codec;
+
 import java.util.Objects;
 import java.util.stream.Stream;
 import net.minecraft.core.BlockPos;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import wardentools.worldgen.structure.StructureUtils;
 
 public class AbyssSculkPatch extends Feature<AbyssSculkPatchConfiguration> {
     private static final SculkTendrilsEmergenceConfiguration TENDRIL_CONFIG =
@@ -31,6 +33,9 @@ public class AbyssSculkPatch extends Feature<AbyssSculkPatchConfiguration> {
     public boolean place(FeaturePlaceContext<AbyssSculkPatchConfiguration> context) {
         WorldGenLevel level = context.level();
         BlockPos origin = context.origin();
+        if (StructureUtils.isInsideAnyCrystalTemple(level, origin)) {
+            return false;
+        }
         if (!this.canSpreadFrom(level, origin)) {
             return false;
         } else {
@@ -100,5 +105,6 @@ public class AbyssSculkPatch extends Feature<AbyssSculkPatchConfiguration> {
                     .anyMatch((pos1) -> level.getBlockState(pos1).isCollisionShapeFullBlock(level, pos1));
         }
     }
+
 }
 

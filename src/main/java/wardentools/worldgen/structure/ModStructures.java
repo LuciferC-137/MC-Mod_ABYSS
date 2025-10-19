@@ -28,4 +28,6 @@ public class ModStructures {
         return ResourceKey.create(Registries.STRUCTURE,
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
     }
+
+
 }
