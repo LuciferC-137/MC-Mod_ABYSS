@@ -65,6 +65,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> PALE_CRISTAL_VEIN = registerKey("pale_cristal_vein");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> AMETHYST_VEIN = registerKey("amethyst_vein");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SCULK_TENDRIL_EMERGENCE = registerKey("sculk_tendril_emergence");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> SCULK_TENDRIL_EMERGENCE_DOWN = registerKey("sculk_tendril_emergence_down");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_SCULK_PATCH = registerKey("abyss_sculk_patch");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DEPTH_VINE = registerKey("tall_depth_vine");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIVING_SPROUT_EMERGENCE = registerKey("living_sprout_emergence");
@@ -194,6 +195,10 @@ public class ModConfiguredFeatures {
 		register(context, SCULK_TENDRIL_EMERGENCE, ModFeatures.SCULK_TENDRILS_EMERGENCE.get(),
 				new SculkTendrilsEmergenceConfiguration(15, 0.5F,
 						5, 0.95F, 0.4F, true));
+
+		register(context, SCULK_TENDRIL_EMERGENCE_DOWN, ModFeatures.SCULK_TENDRILS_EMERGENCE.get(),
+				new SculkTendrilsEmergenceConfiguration(15, 0.5F,
+						5, 0.95F, 0.4F, false));
 
 		register(context, ABYSS_SCULK_PATCH, ModFeatures.ABYSS_SCULK_PATCH.get(),
 				new AbyssSculkPatchConfiguration(10, 32, 64,

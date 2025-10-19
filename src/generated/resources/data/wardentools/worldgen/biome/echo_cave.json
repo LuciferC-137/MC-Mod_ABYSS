@@ -50,7 +50,8 @@
       "wardentools:redstone_ore"
     ],
     [
-      "wardentools:abyss_sculk_patch"
+      "wardentools:abyss_sculk_patch",
+      "wardentools:sculk_tendril_emergence_down"
     ],
     [],
     [

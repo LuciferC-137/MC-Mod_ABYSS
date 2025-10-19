@@ -67,8 +67,12 @@ public class TendrilTreeUtils {
         for (BlockPos pos : tree.getAllNodes()) {
             if (Math.abs(origin.getX() - pos.getX()) <= MAX_ELONGATION &&
                     Math.abs(origin.getZ() - pos.getZ()) <= MAX_ELONGATION) {
-                BlockState state = sculkTendril();
-                level.setBlock(pos, state, Block.UPDATE_NONE);
+                if (level.getBlockState(pos).isAir()) {
+                    BlockState state = sculkTendril();
+                    level.setBlock(pos, state, Block.UPDATE_NONE);
+                } else {
+                    tree.recursiveRemove(pos);
+                }
             }
         }
     }

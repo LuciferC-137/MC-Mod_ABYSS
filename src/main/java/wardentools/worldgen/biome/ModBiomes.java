@@ -231,6 +231,8 @@ public class ModBiomes {
                 ModPlacedFeatures.CAVE_SCULK_TENDRILS_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
                 ModPlacedFeatures.LIVING_SPROUT_EMERGENCE_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.SCULK_TENDRIL_EMERGENCE_DOWN_KEY);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
@@ -359,6 +361,8 @@ public class ModBiomes {
         defaultAbyssSculk(biomeBuilder);
 
         echoOnCaveWalls(biomeBuilder);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION,
+                ModPlacedFeatures.SCULK_TENDRIL_EMERGENCE_DOWN_KEY);
         abyssLushVegetationFeatures(biomeBuilder);
 
         return new Biome.BiomeBuilder()

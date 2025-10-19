@@ -59,6 +59,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> PALE_CRISTAL_VEIN_KEY = registerKey("pale_vein");
 	public static final ResourceKey<PlacedFeature> AMETHYST_VEIN_KEY = registerKey("amethyst_vein");
 	public static final ResourceKey<PlacedFeature> SCULK_TENDRIL_EMERGENCE_KEY = registerKey("sculk_tendril_emergence");
+	public static final ResourceKey<PlacedFeature> SCULK_TENDRIL_EMERGENCE_DOWN_KEY = registerKey("sculk_tendril_emergence_down");
 	public static final ResourceKey<PlacedFeature> ABYSS_SCULK_PATCH_KEY = registerKey("abyss_sculk_patch");
 	public static final ResourceKey<PlacedFeature> TALL_DEPTH_VINES_KEY = registerKey("tall_depth_vines");
 	public static final ResourceKey<PlacedFeature> CAVE_SCULK_TENDRILS_KEY = registerKey("sculk_tendrils");
@@ -245,6 +246,10 @@ public class ModPlacedFeatures {
 		register(context, SCULK_TENDRIL_EMERGENCE_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE),
 				List.of(CountPlacement.of(1)));
+
+		register(context, SCULK_TENDRIL_EMERGENCE_DOWN_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE_DOWN),
+				onCaveWallUp(1, 3));
 
 		register(context, ABYSS_SCULK_PATCH_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.ABYSS_SCULK_PATCH),
