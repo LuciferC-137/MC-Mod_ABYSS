@@ -1,23 +1,29 @@
 package wardentools.datagen.loot;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.items.ItemRegistry;
+import wardentools.items.enchantment.EnchantmentRegistry;
+import wardentools.misc.Crystal;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +34,18 @@ public class ModChestLootTables implements LootTableSubProvider {
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/ancient_citadel"));
     public static final ResourceKey<LootTable> ABANDONED_EXPLORER_HOUSE = ResourceKey.create(Registries.LOOT_TABLE,
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/abandoned_explorer_house"));
+    public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_AMETHYST = ResourceKey.create(Registries.LOOT_TABLE,
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_amethyst"));
+    public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_RUBY = ResourceKey.create(Registries.LOOT_TABLE,
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_ruby"));
+    public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_CITRINE = ResourceKey.create(Registries.LOOT_TABLE,
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_citrine"));
+    public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_MALACHITE = ResourceKey.create(Registries.LOOT_TABLE,
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_malachite"));
+    public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_ECHO = ResourceKey.create(Registries.LOOT_TABLE,
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_echo"));
+    public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_PALE = ResourceKey.create(Registries.LOOT_TABLE,
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_pale"));
 
     private final Map<ResourceKey<LootTable>, LootTable.Builder> lootTables = new HashMap<>();
     protected final HolderLookup.Provider registries;
@@ -35,6 +53,66 @@ public class ModChestLootTables implements LootTableSubProvider {
 
     public ModChestLootTables(HolderLookup.Provider provider) {
         this.registries = provider;
+    }
+
+    private void generate() {
+        this.ancientCitadelChest();
+        this.abandonedExplorerHouseChest();
+        this.crystalTempleChest(CRYSTAL_TEMPLE_AMETHYST, Crystal.AMETHYST);
+        this.crystalTempleChest(CRYSTAL_TEMPLE_RUBY, Crystal.RUBY);
+        this.crystalTempleChest(CRYSTAL_TEMPLE_CITRINE, Crystal.CITRINE);
+        this.crystalTempleChest(CRYSTAL_TEMPLE_MALACHITE, Crystal.MALACHITE);
+        this.crystalTempleChest(CRYSTAL_TEMPLE_ECHO, Crystal.ECHO);
+        this.crystalTempleChest(CRYSTAL_TEMPLE_PALE, Crystal.PALE);
+    }
+
+    private void crystalTempleChest(ResourceKey<LootTable> key, Crystal crystal) {
+        LootPool.Builder pool = LootPool.lootPool()
+                .setRolls(UniformGenerator.between(4, 8))
+                .add(LootItem.lootTableItem(Items.BOOK)
+                        .apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)))
+                .add(LootItem.lootTableItem(Items.POTION)
+                        .setWeight(2)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetPotionFunction.setPotion(Potions.STRONG_REGENERATION)))
+                .add(LootItem.lootTableItem(Items.POTION)
+                        .setWeight(2)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetPotionFunction.setPotion(Potions.LONG_NIGHT_VISION)))
+                .add(LootItem.lootTableItem(Items.LINGERING_POTION)
+                        .setWeight(2)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                        .apply(SetPotionFunction.setPotion(Potions.HEALING)))
+
+                .add(LootItem.lootTableItem(Items.BOOK)
+                        .setWeight(3)
+                        .apply(EnchantRandomlyFunction.randomApplicableEnchantment(this.registries)
+                                .withEnchantment(this.registries.lookupOrThrow(Registries.ENCHANTMENT)
+                                        .getOrThrow(Enchantments.SWIFT_SNEAK))))
+                .add(this.stealthBook()
+                        .setWeight(3)
+                )
+
+                .add(LootItem.lootTableItem(crystal.getShard())
+                        .setWeight(10)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))))
+                .add(LootItem.lootTableItem(ItemRegistry.DEPTH_BERRIES.get())
+                        .setWeight(5)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))))
+                .add(LootItem.lootTableItem(Items.SOUL_TORCH)
+                        .setWeight(5)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 15))))
+                .add(LootItem.lootTableItem(Items.CANDLE)
+                        .setWeight(3)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 10))))
+                .add(LootItem.lootTableItem(Items.BOOK)
+                        .setWeight(5)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 10))))
+                .add(LootItem.lootTableItem(Items.BONE)
+                        .setWeight(5)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 15))));
+
+        this.addLootPools(key, pool);
     }
 
     private void ancientCitadelChest() {
@@ -157,7 +235,7 @@ public class ModChestLootTables implements LootTableSubProvider {
         LootPool.Builder pool = LootPool.lootPool()
                 .setRolls(UniformGenerator.between(5, 10))
                 .add(LootItem.lootTableItem(Items.MUSIC_DISC_OTHERSIDE))
-                .add(LootItem.lootTableItem(Items.COMPASS)
+                .add(LootItem.lootTableItem(ItemRegistry.CRYSTAL_RESONATOR.get())
                         .setWeight(2)
                         .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
                 .add(LootItem.lootTableItem(ItemRegistry.DEEPINGOTS.get())
@@ -197,6 +275,7 @@ public class ModChestLootTables implements LootTableSubProvider {
                 .add(LootItem.lootTableItem(ItemRegistry.DEEPCRISTAL.get())
                         .setWeight(3)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))))
+                .add(this.stealthBook().setWeight(3))
                 .add(LootItem.lootTableItem(Items.GLOW_BERRIES)
                         .setWeight(3)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 15))))
@@ -232,9 +311,15 @@ public class ModChestLootTables implements LootTableSubProvider {
         this.addLootPools(ABANDONED_EXPLORER_HOUSE, pool);
     }
 
-    private void generate() {
-        this.ancientCitadelChest();
-        this.abandonedExplorerHouseChest();
+    public LootPoolSingletonContainer.Builder<?> stealthBook() {
+        Holder.Reference<Enchantment> stealth = this.registries
+                .lookupOrThrow(Registries.ENCHANTMENT)
+                .getOrThrow(EnchantmentRegistry.STEALTH);
+
+        return LootItem.lootTableItem(Items.BOOK)
+                .apply(EnchantWithLevelsFunction
+                        .enchantWithLevels(this.registries, ConstantValue.exactly(1))
+                        .fromOptions(HolderSet.direct(stealth)));
     }
 
     public void addLootPools(ResourceKey<LootTable> key, LootPool.Builder lootTable1, LootPool.Builder lootTable2) {

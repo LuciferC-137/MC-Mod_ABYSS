@@ -17,7 +17,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:compass",
+          "name": "wardentools:crystal_resonator",
           "weight": 2
         },
         {
@@ -190,6 +190,18 @@
             }
           ],
           "name": "wardentools:deepcristal",
+          "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 1.0,
+              "options": "wardentools:stealth"
+            }
+          ],
+          "name": "minecraft:book",
           "weight": 3
         },
         {

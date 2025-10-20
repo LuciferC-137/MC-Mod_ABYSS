@@ -36,8 +36,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
-    public ModBlockLootTables(CompletableFuture<HolderLookup.Provider> lookupProvider) throws ExecutionException, InterruptedException {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookupProvider.get());
+    public ModBlockLootTables(HolderLookup.Provider lookupProvider) {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookupProvider);
     }
 
     @Override

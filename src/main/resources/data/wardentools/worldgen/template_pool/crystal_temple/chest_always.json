@@ -1,11 +1,11 @@
 {
-  "name": "wardentools:crystal_temple/decoration_amethyst",
+  "name": "wardentools:crystal_temple/chest_always",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:crystal_temple/decoration/amethyst/crystal",
+        "location": "wardentools:crystal_temple/chest/amethyst",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -14,7 +14,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:crystal_temple/decoration/amethyst/lamp",
+        "location": "wardentools:crystal_temple/chest/ruby",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -23,7 +23,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:crystal_temple/decoration/amethyst/small_shrine",
+        "location": "wardentools:crystal_temple/chest/citrine",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -32,7 +32,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:crystal_temple/decoration/amethyst/tree",
+        "location": "wardentools:crystal_temple/chest/ruby",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -41,7 +41,25 @@
     {
       "weight": 1,
       "element": {
-        "location": "wardentools:crystal_temple/decoration/amethyst/chest",
+        "location": "wardentools:crystal_temple/chest/malachite",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:crystal_temple/chest/echo",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "wardentools:crystal_temple/chest/pale",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

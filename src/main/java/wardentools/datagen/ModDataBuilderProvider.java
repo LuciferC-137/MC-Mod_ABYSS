@@ -1,6 +1,7 @@
 package wardentools.datagen;
 
 
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.core.registries.Registries;
 import wardentools.items.ModJukeBoxSongsGenerator;
 import wardentools.items.enchantment.EnchantmentGenerator;
@@ -16,7 +17,6 @@ import wardentools.worldgen.biome.ModBiomes;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
 import wardentools.worldgen.dimension.ModDimensions;
 
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -35,6 +35,7 @@ public class ModDataBuilderProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.JUKEBOX_SONG, ModJukeBoxSongsGenerator::bootstrap);
 
     public ModDataBuilderProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, BUILDER, Set.of(ModMain.MOD_ID));
+        super(output, registries, BUILDER, ImmutableSet.of(ModMain.MOD_ID, "minecraft"));
+
     }
 }

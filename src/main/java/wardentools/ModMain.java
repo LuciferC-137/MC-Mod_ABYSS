@@ -7,6 +7,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import wardentools.datagen.loot.ModLootModifiers;
 import wardentools.gui.MenuRegistry;
 import wardentools.gui.ModCreativeTabs;
 import wardentools.items.PotionRegistry;
@@ -19,7 +20,7 @@ import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.ModFluidTypes;
 import wardentools.items.ItemRegistry;
 import wardentools.items.recipe.ModRecipes;
-import wardentools.loot.WardenLootTableModifier;
+import wardentools.datagen.loot.LootTableModifiers;
 import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.features.ModFeatures;
@@ -32,7 +33,7 @@ import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 public class ModMain {
 	public static final String MOD_ID = "wardentools";
 	public static final String MODNAME = "ABYSS";
-	public static final String VERSION = "1.0.2";
+	public static final String VERSION = "1.1.0";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
 	@SuppressWarnings("removal")
@@ -58,9 +59,10 @@ public class ModMain {
 		ModRecipes.SERIALIZERS.register(bus);
 		ModRecipes.TYPES.register(bus);
 		ModStructureTypes.STRUCTURE_TYPES.register(bus);
+		ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
 
 		MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(WardenLootTableModifier.class);
+        MinecraftForge.EVENT_BUS.register(LootTableModifiers.class);
         
 	}
 }

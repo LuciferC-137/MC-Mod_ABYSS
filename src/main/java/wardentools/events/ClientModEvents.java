@@ -73,6 +73,7 @@ public class ClientModEvents {
 	}
 
 	@SubscribeEvent
+	@SuppressWarnings("removal")
 	public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
 		event.register(CrystalInfuserBlock::getColor,
 				BlockRegistry.CRYSTAL_INFUSER.get());
