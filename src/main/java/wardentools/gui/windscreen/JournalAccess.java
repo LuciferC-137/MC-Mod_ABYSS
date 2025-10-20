@@ -19,6 +19,7 @@ import wardentools.misc.wind.WindWhispers;
 import wardentools.playerdata.whispers.KnownWhispersDataProvider;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
@@ -28,6 +29,7 @@ public class JournalAccess {
     private final List<List<Component>> tableOfContentComponents = new ArrayList<>();
     public int tableOfContentComponentYOffset = 0;
     private int lengthOfTableOfContent = 0;
+    private int actualPageCount = 0;
 
     public JournalAccess() {
         this.sections = new ArrayList<>();
@@ -36,6 +38,7 @@ public class JournalAccess {
 
     public void initPages(@NotNull Font font) {
         this.pages = this.buildPagesList(font);
+        this.actualPageCount = this.pages.size();
     }
 
     private List<List<FormattedCharSequence>> buildPagesList(Font font) {
@@ -171,6 +174,10 @@ public class JournalAccess {
             }
         });
         return whispers;
+    }
+
+    public void addBlankPage() {
+        this.pages.add(Collections.emptyList());
     }
 
     public int getPageCount() {

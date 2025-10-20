@@ -39,6 +39,24 @@ public class ModCreativeTabs {
         addItemToTag(Tag.ABYSSALITE, ItemRegistry.ABYSSALITE_DEEP_ORE);
         addItemToTag(Tag.ABYSSALITE, ItemRegistry.CORRUPTED_ABYSSALITE);
 
+        addItemToTag(Tag.CRYSTALS, Items.AMETHYST_SHARD);
+        addItemToTag(Tag.CRYSTALS, Items.AMETHYST_CLUSTER);
+        addItemToTag(Tag.CRYSTALS, Items.AMETHYST_BLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY_FRAGMENT);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY_BLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE_FRAGMENT);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE_BLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE_FRAGMENT);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE_BLOCK);
+        addItemToTag(Tag.CRYSTALS, Items.ECHO_SHARD);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.ECHO_CRISTAL);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.ECHO_BLOCK);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_SHARD);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_CRISTAL);
+        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_CRISTAL_BLOCK);
         addItemToTag(Tag.CRYSTALS, ItemRegistry.DEEP_FRAGMENT);
         addItemToTag(Tag.CRYSTALS, ItemRegistry.DEEPCRISTAL);
         addItemToTag(Tag.CRYSTALS, ItemRegistry.DEEPINGOTS);
@@ -46,21 +64,6 @@ public class ModCreativeTabs {
         addItemToTag(Tag.CRYSTALS, ItemRegistry.RADIANCE_FRAGMENT);
         addItemToTag(Tag.CRYSTALS, ItemRegistry.RADIANCE_CRISTAL);
         addItemToTag(Tag.CRYSTALS, ItemRegistry.RADIANCE_INGOTS);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE_FRAGMENT);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.CITRINE_BLOCK);
-        addItemToTag(Tag.CRYSTALS, Items.ECHO_SHARD);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.ECHO_CRISTAL);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.ECHO_BLOCK);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY_FRAGMENT);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.RUBY_BLOCK);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE_FRAGMENT);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.MALACHITE_BLOCK);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_SHARD);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_CRISTAL);
-        addItemToTag(Tag.CRYSTALS, ItemRegistry.PALE_CRISTAL_BLOCK);
 
         addItemToTag(Tag.DEEP_ARMOR, ArmorRegistry.DEEPCRISTAL_HELMET);
         addItemToTag(Tag.DEEP_ARMOR, ArmorRegistry.DEEPCRISTAL_CHESTPLATE);

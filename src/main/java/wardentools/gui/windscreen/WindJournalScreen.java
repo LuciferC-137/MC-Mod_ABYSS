@@ -72,10 +72,10 @@ public class WindJournalScreen extends Screen {
     }
 
     public boolean setPage(int doublePageIndex) {
-        doublePageIndex = doublePageIndex - doublePageIndex % 2; // Avoiding odd page index
         int clampedPageIndex = Mth.clamp(doublePageIndex, 0, this.getTotalPageCount() - 1);
-        if (clampedPageIndex != this.currentLeftPageIndex) {
-            this.currentLeftPageIndex = clampedPageIndex;
+        int newPageIndex = clampedPageIndex - clampedPageIndex % 2; // Avoiding odd page index
+        if (newPageIndex != this.currentLeftPageIndex) {
+            this.currentLeftPageIndex = newPageIndex;
             this.updatePageButtonVisibility();
             this.cachedLeftPageIndex = -1;
             return true;
@@ -115,12 +115,20 @@ public class WindJournalScreen extends Screen {
                         12, 12).build());
         this.jumpToTaskButton = this.addRenderableWidget(
                 new JumpToTaskButton(this.leftMargin() + 7, TOP_MARGIN + 78,
-                (button) -> this.setPage(this.journalAccess.getPageCount() + 2)));
+                (button) -> this.setPage(this.getJournalPageCount() + 2)));
         this.updatePageButtonVisibility();
     }
 
     private int getTotalPageCount() {
-        return this.journalAccess.getPageCount() + this.taskNoteAccess.getPageCount();
+        return this.getJournalPageCount() + this.taskNoteAccess.getPageCount();
+    }
+
+    private int getJournalPageCount() {
+        int journalPages = this.journalAccess.getPageCount();
+        if (journalPages % 2 == 0) {
+            journalPages++;
+        }
+        return journalPages;
     }
 
     protected void goToPreviousPage() {
@@ -185,14 +193,15 @@ public class WindJournalScreen extends Screen {
                 this.cachedRightPageLines = this.journalAccess.getPage(this.currentLeftPageIndex);
                 this.removeAllButtons(this.cachedLeftTaskButtons);
                 this.removeAllButtons(this.cachedRightTaskButtons);
-            } else if (this.currentLeftPageIndex <= this.journalAccess.getPageCount()) {
+            } else if (this.currentLeftPageIndex <= this.getJournalPageCount()) {
                 this.cachedLeftPageLines = this.journalAccess.getPage(this.currentLeftPageIndex - 1);
                 this.cachedRightPageLines = this.journalAccess.getPage(this.currentLeftPageIndex);
                 this.leftPageIndicatorText = JournalAccess.baseText((this.currentLeftPageIndex) + "/" + maxPages);
                 this.removeAllButtons(this.cachedLeftTaskButtons);
                 this.removeAllButtons(this.cachedRightTaskButtons);
-            } else { // Updating task cached if on a task page
-                int trunkIndex = this.currentLeftPageIndex - this.journalAccess.getPageCount();
+            } else {
+                // Task section
+                int trunkIndex = this.currentLeftPageIndex - this.getJournalPageCount();
                 this.cachedLeftTaskPage = this.taskNoteAccess.getTaskPage(trunkIndex - 1);
                 this.cachedRightTaskPage = this.taskNoteAccess.getTaskPage(trunkIndex);
                 this.cachedLeftTaskButtons = this.taskNoteAccess
