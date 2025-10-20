@@ -84,7 +84,7 @@ public class CrystalTemple extends Structure {
                 context.heightAccessor(),
                 context.randomState()
         );
-        y++;
+        y+=2;
 
         BlockPos pos = new BlockPos(x, y, z);
 
@@ -104,7 +104,7 @@ public class CrystalTemple extends Structure {
                 Optional.empty(),
                 this.maxDistanceFromCenter,
                 PoolAliasLookup.EMPTY,
-                DimensionPadding.ZERO,
+                new DimensionPadding(1),
                 LiquidSettings.APPLY_WATERLOGGING
         ));
 
