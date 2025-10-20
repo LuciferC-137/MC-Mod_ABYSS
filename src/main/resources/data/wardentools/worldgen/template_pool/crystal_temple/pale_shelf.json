@@ -12,7 +12,7 @@
       }
     },
     {
-      "weight": 2,
+      "weight": 3,
       "element": {
         "location": "minecraft:empty",
         "processors": "minecraft:empty",

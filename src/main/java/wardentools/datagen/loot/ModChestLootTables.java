@@ -83,6 +83,9 @@ public class ModChestLootTables implements LootTableSubProvider {
                         .setWeight(2)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
                         .apply(SetPotionFunction.setPotion(Potions.HEALING)))
+                .add(LootItem.lootTableItem(Items.GOLDEN_APPLE)
+                        .setWeight(1)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))))
 
                 .add(LootItem.lootTableItem(Items.BOOK)
                         .setWeight(3)
