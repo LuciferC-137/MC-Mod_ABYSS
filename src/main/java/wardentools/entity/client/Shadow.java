@@ -81,10 +81,11 @@ public class Shadow extends HierarchicalModel<ShadowEntity> {
 		} else {
 			this.HEAD.xRot = this.HEAD.xRot + headPitch * ((float) Math.PI / 180F);
 			this.HEAD.yRot = this.HEAD.yRot + netHeadYaw * ((float) Math.PI / 180F);
-			animate(shadow.walkAnim, ShadowAnimation.walking, ageInTicks);
 			animate(shadow.idleAnimation, ShadowAnimation.idle, ageInTicks);
 			animate(shadow.stasisAnimation, ShadowAnimation.stasis, ageInTicks);
-			animate(shadow.walkToIdleAnimation, ShadowAnimation.walkToIdle, ageInTicks);
+			animateWalk(ShadowAnimation.walking,
+					limbSwing * 13F, limbSwingAmount * 13F,
+					1F, 2.5F);
 		}
 	}
 }

@@ -53,13 +53,8 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	private static final Logger LOGGER = LogUtils.getLogger();
 	public final AnimationState idleAnimation = new AnimationState();
 	public final AnimationState stasisAnimation = new AnimationState();
-	public final AnimationState walkAnim = new AnimationState();
-	public final AnimationState walkToIdleAnimation = new AnimationState();
-	private static final int WALK_TO_IDLE_TICKS = 5;
 	private static final EntityDataAccessor<Boolean> IS_STASIS =
 			SynchedEntityData.defineId(ShadowEntity.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Integer> walkToIdleTicks =
-			SynchedEntityData.defineId(ShadowEntity.class, EntityDataSerializers.INT);
 	private final VibrationSystem.User vibrationUser;
 	private VibrationSystem.Data vibrationData;
 	private final DynamicGameEventListener<Listener> dynamicGameEventListener;
@@ -115,17 +110,8 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 		if (!this.level().isClientSide) {
 			VibrationSystem.Ticker.tick(this.level(), this.vibrationData, this.vibrationUser);
 		}
-		if (this.getWalkToIdleTicks() > 0) this.setWalkToIdleTicks(this.getWalkToIdleTicks() - 1);
-		if (this.isAlmostIdle() && this.getDeltaMovement().lengthSqr() > 0
-				&& this.getWalkToIdleTicks() == 0 && !this.isStasis()) {
-			this.setWalkToIdleTicks(WALK_TO_IDLE_TICKS);
-		}
 		if (this.level().isClientSide) {
-			this.walkToIdleAnimation.animateWhen(this.getWalkToIdleTicks() > 0, this.tickCount);
-			this.walkAnim.animateWhen(!this.isAlmostIdle()
-					&& this.getWalkToIdleTicks() <= 0 && !this.isStasis(), this.tickCount);
-			this.idleAnimation.animateWhen(this.isAlmostIdle() && this.getWalkToIdleTicks() <= 0
-					&& !this.isStasis(), this.tickCount);
+			this.idleAnimation.animateWhen(!this.isStasis(), this.tickCount);
 			this.stasisAnimation.animateWhen(this.isStasis(), this.tickCount);
 			this.animateParticleTick();
 		}
@@ -237,14 +223,12 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
 		super.defineSynchedData(entityData);
 		entityData.define(IS_STASIS, false);
-		entityData.define(walkToIdleTicks, 0);
 	}
 
 	@Override
 	public void addAdditionalSaveData(@NotNull CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putBoolean("isStasis", this.isStasis());
-		tag.putInt("walkToIdleTicks", this.getWalkToIdleTicks());
 		VibrationSystem.Data.CODEC.encodeStart(NbtOps.INSTANCE, this.vibrationData)
 				.resultOrPartial(LOGGER::error).ifPresent((p_219418_) -> {
 			tag.put("listener", p_219418_);
@@ -255,7 +239,6 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	public void readAdditionalSaveData(@NotNull CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		this.setStasis(tag.getBoolean("isStasis"));
-		this.setWalkToIdleTicks(tag.getInt("walkToIdleTicks"));
 		if (tag.contains("listener", 10)) {
 			VibrationSystem.Data.CODEC.parse(
 					new Dynamic<>(NbtOps.INSTANCE, tag.getCompound("listener")))
@@ -268,10 +251,6 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	public boolean isStasis() {return this.entityData.get(IS_STASIS);}
 
 	public void setStasis(boolean stasis) {this.entityData.set(IS_STASIS, stasis);}
-
-	public int getWalkToIdleTicks() {return this.entityData.get(walkToIdleTicks);}
-
-	public void setWalkToIdleTicks(int ticks) {this.entityData.set(walkToIdleTicks, ticks);}
 
 	@Override
 	public @NotNull Data getVibrationData() {
@@ -287,10 +266,6 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 								   MobSpawnType spawnType, BlockPos pos, RandomSource random) {
 		return level.getBlockState(pos.below()).is(BlockTags.VALID_SPAWN);
     }
-
-	private boolean isAlmostIdle() {
-		return this.getDeltaMovement().lengthSqr() < 0.002;
-	}
 
 	@Override
 	public boolean canDrownInFluidType(FluidType type) {
