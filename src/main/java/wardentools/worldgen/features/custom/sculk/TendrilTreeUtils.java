@@ -2,6 +2,7 @@ package wardentools.worldgen.features.custom.sculk;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
@@ -67,7 +68,7 @@ public class TendrilTreeUtils {
         for (BlockPos pos : tree.getAllNodes()) {
             if (Math.abs(origin.getX() - pos.getX()) <= MAX_ELONGATION &&
                     Math.abs(origin.getZ() - pos.getZ()) <= MAX_ELONGATION) {
-                if (!level.getBlockState(pos).isAir()) {
+                if (!level.getBlockState(pos).is(BlockTags.SCULK_REPLACEABLE) && !level.getBlockState(pos).isAir()) {
                     toRemove.add(pos);
                 }
             } else {

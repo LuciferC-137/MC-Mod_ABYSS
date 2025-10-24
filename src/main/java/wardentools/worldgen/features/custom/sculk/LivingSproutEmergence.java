@@ -32,9 +32,12 @@ public class LivingSproutEmergence extends Feature<LivingSproutEmergenceConfigur
         BlockPos tip = context.origin();
         int length = random.nextInt(config.minLength(), config.maxLength());
         List<Direction> directions = new ArrayList<>();
-        level.setBlock(context.origin().below(), Blocks.SCULK.defaultBlockState(), Block.UPDATE_ALL);
 
         TendrilTree tree = new TendrilTree(context.origin());
+
+        this.setBlock(level,
+                config.upward() ? context.origin().below() : context.origin().above(),
+                Blocks.SCULK.defaultBlockState());
 
         for (int i=0; i<length; i++){
             directions.add(config.upward() ? Direction.UP : Direction.DOWN);
@@ -49,10 +52,14 @@ public class LivingSproutEmergence extends Feature<LivingSproutEmergenceConfigur
                 0.0F, level.getRandom());
         TendrilTreeUtils.placeBlocksWithoutUpdate(level, tree, context.origin());
         TendrilTreeUtils.configureBlockEntities(level, tree, context.origin());
+
         tree.updateAllNodes(level);
 
-        level.setBlock(config.upward() ? tip.above(): tip.below(),
-                BlockRegistry.LIVING_SPROUT.get().defaultBlockState(), Block.UPDATE_ALL);
+        if (tree.hasNode(tip)) {
+            level.setBlock(config.upward() ? tip.above(): tip.below(),
+                    BlockRegistry.LIVING_SPROUT.get().defaultBlockState(),
+                    Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE);
+        }
 
         return true;
     }
