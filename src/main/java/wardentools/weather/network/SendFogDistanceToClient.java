@@ -5,23 +5,23 @@ import net.minecraftforge.event.network.CustomPayloadEvent;
 import wardentools.weather.AbyssWeatherEvent;
 
 public class SendFogDistanceToClient {
-    private final float serverFogDistance;
+    private final boolean isStorming;
 
-    public SendFogDistanceToClient(float fogDistance) {
-        this.serverFogDistance = fogDistance;
+    public SendFogDistanceToClient(boolean isStorming) {
+        this.isStorming = isStorming;
     }
 
     public SendFogDistanceToClient(FriendlyByteBuf buffer) {
-        this.serverFogDistance = buffer.readFloat();
+        this.isStorming = buffer.readBoolean();
     }
 
     public void encode(FriendlyByteBuf buffer) {
-        buffer.writeFloat(serverFogDistance);
+        buffer.writeBoolean(isStorming);
     }
 
     public void handle(CustomPayloadEvent.Context context) {
         context.enqueueWork(() -> {
-            AbyssWeatherEvent.CLIENT_WEATHER.setServerFogDistance(serverFogDistance);
+            AbyssWeatherEvent.CLIENT_WEATHER.setIsStorming(isStorming);
         });
         context.setPacketHandled(true);
     }

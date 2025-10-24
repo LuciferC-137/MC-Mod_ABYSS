@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
-import wardentools.client.RenderingUtils;
+import wardentools.client.rendering.RenderingUtils;
 
 @OnlyIn(Dist.CLIENT)
 public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity> {

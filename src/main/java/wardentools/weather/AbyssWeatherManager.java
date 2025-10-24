@@ -30,7 +30,6 @@ public class AbyssWeatherManager {
     private static final int MAX_TICK_BETWEEN_EVENT = 48000; // two days
     private static final int MIN_TICK_BETWEEN_EVENT = 24000; // one day
     private static final int AVERAGE_TICK_BETWEEN_LIGHTNING_PER_CHUNK = 5000;
-    public static final float MAX_FOG_DISTANCE = 150f;
     public static final float MIN_FOG_DISTANCE = 20f;
     private int weatherTimer = RandomSource.create().nextInt(MIN_TICK_BETWEEN_EVENT, MAX_TICK_BETWEEN_EVENT);
     private int timeSinceStormBegin = 0;
@@ -142,16 +141,12 @@ public class AbyssWeatherManager {
         this.timeSinceStormBegin = 0;
     }
 
-    public float getFogDistance() {
-        return this.isStorming ? MIN_FOG_DISTANCE : MAX_FOG_DISTANCE;
-    }
-
     public void sendServerFogDistanceToAllClients() {
-        PacketHandler.sendToAllClient(new SendFogDistanceToClient(this.getFogDistance()));
+        PacketHandler.sendToAllClient(new SendFogDistanceToClient(this.isStorming));
     }
 
     public void sendServerFogDistanceToClient(ServerPlayer player) {
-        PacketHandler.sendToClient(new SendFogDistanceToClient(this.getFogDistance()), player);
+        PacketHandler.sendToClient(new SendFogDistanceToClient(this.isStorming), player);
     }
 }
 

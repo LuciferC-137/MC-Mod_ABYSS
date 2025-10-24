@@ -55,10 +55,8 @@ public class AbyssPortalBuilder {
 
     public static Matrix4f view(Camera camera) {
         Quaternionf q = camera.rotation().conjugate(new Quaternionf());
-        Vector3f p = camera.getPosition().toVector3f();
         return new Matrix4f()
-                .rotate(q)
-                .translate(p.negate());
+                .rotate(q);
     }
 
 }

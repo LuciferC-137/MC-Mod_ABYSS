@@ -1,4 +1,4 @@
-package wardentools.client;
+package wardentools.client.rendering;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;

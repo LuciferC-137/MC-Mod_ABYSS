@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.client.RenderingUtils;
+import wardentools.client.rendering.RenderingUtils;
 import wardentools.entity.custom.CrystalGolemEntity;
 
 public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, CrystalGolem>{
