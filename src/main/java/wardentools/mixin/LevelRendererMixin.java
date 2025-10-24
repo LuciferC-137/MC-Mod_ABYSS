@@ -1,6 +1,5 @@
 package wardentools.mixin;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.*;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,11 +8,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.world.level.material.FogType;
 import wardentools.weather.AbyssWeatherEvent;
@@ -42,30 +38,7 @@ public class LevelRendererMixin {
 	    FogType fogtype = cam.getFluidInCamera();
 	    if (fogtype != FogType.POWDER_SNOW && fogtype != FogType.LAVA) {
 	    	if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
-				PoseStack posestack = new PoseStack();
-				posestack.mulPose(pose);
-				Tesselator tesselator = Tesselator.getInstance();
-				VertexBuffer.unbind();
-				RenderSystem.enableBlend();
-				RenderSystem.setShader(GameRenderer::getPositionColorShader);
-				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-				renderSkyBackGround(posestack, tesselator, BRIGHTNESS);
-
-				RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-						GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-
-				float alpha = BRIGHTNESS / 255F;
-
-				if (alpha > 0.0F) {
-					renderMultipleStarLayers(level, alpha, posestack, tesselator);
-				}
-
-				// POST
-				RenderSystem.defaultBlendFunc();
-				posestack.popPose();
-				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-				RenderSystem.depthMask(true);
+				renderSky(level, pose, BRIGHTNESS);
 	    	}
 	    }
     }

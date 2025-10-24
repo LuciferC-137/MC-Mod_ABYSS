@@ -1,4 +1,3 @@
-// java
 package wardentools.client.rendering;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
@@ -7,10 +6,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 import org.lwjgl.opengl.GL11;
 
+@OnlyIn(Dist.CLIENT)
 public class AbyssPortalBuilder {
 
     public static final AbyssPortalBuilder INSTANCE = new AbyssPortalBuilder();
@@ -41,11 +44,7 @@ public class AbyssPortalBuilder {
         RenderSystem.clearColor(0f, 0f, 0f, 1f);
         RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
 
-        // View with camera translation only (rotation neutralized)
-        Matrix4f viewNoRot = viewWithoutRotation(camera);
-
-        // Render sky from the camera position, ignoring its rotation
-        LevelRendererUtils.renderSky(level, viewNoRot, 255);
+        LevelRendererUtils.renderSky(level, view(camera), 255);
 
         mc.getMainRenderTarget().bindWrite(true);
     }
@@ -54,10 +53,12 @@ public class AbyssPortalBuilder {
         return skyTarget != null ? skyTarget.getColorTextureId() : 0;
     }
 
-    private static Matrix4f viewWithoutRotation(Camera camera) {
-        Vec3 p = camera.getPosition();
-        // Standard view matrix is inverse of camera transform.
-        // No rotation, only translate by -position.
-        return new Matrix4f().translation((float)-p.x, (float)-p.y, (float)-p.z);
+    public static Matrix4f view(Camera camera) {
+        Quaternionf q = camera.rotation().conjugate(new Quaternionf());
+        Vector3f p = camera.getPosition().toVector3f();
+        return new Matrix4f()
+                .rotate(q)
+                .translate(p.negate());
     }
+
 }

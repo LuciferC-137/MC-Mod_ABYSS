@@ -36,7 +36,6 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
         Minecraft mc = Minecraft.getInstance();
         Camera camera = mc.gameRenderer.getMainCamera();
 
-        // 1) Update the shared full-screen sky texture once per frame
         AbyssPortalBuilder.INSTANCE.updateSkyTexture(level, camera, partialTicks);
         int skyTex = AbyssPortalBuilder.INSTANCE.getSkyTextureId();
         if (skyTex == 0) return;
@@ -45,10 +44,13 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
 
         RenderSystem.enableBlend();
         RenderSystem.disableCull();
+
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthMask(false);
+
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, skyTex);
 
-        // Use the same P and V that the shader uses to avoid drift
         Matrix4f projection = RenderSystem.getProjectionMatrix();
         Matrix4f view = RenderSystem.getModelViewMatrix();
         Matrix4f model = poseStack.last().pose();
@@ -94,6 +96,7 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
                                        Matrix4f proj, float x, float y, float z) {
         Vector4f v = new Vector4f(x, y, z, 1.0f);
         v.mul(model).mul(view).mul(proj);
+
         float w = (v.w != 0f) ? v.w : 1e-6f;
         float ndcX = v.x / w;
         float ndcY = v.y / w;
