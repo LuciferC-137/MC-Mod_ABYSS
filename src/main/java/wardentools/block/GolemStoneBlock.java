@@ -29,6 +29,7 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock implements Entit
 
 	public static final EnumProperty<Crystal> CRYSTAL;
 	public static final BooleanProperty HAS_SCULK = BooleanProperty.create("has_sculk");
+    public static final BooleanProperty HAS_SPAWNED_GOLEM = BooleanProperty.create("has_spawned_golem");
 
 	static {CRYSTAL = EnumProperty.create("crystal_index", Crystal.class);}
 
@@ -38,7 +39,8 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock implements Entit
 	      this.registerDefaultState(this.defaultBlockState()
 				  .setValue(FACING, Direction.NORTH)
 				  .setValue(CRYSTAL, Crystal.getDefault())
-				  .setValue(HAS_SCULK, false));
+				  .setValue(HAS_SCULK, false)
+                  .setValue(HAS_SPAWNED_GOLEM, false));
     }
 
 	@Override
@@ -52,17 +54,9 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock implements Entit
 	}
 
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
-	      stateBuilder.add(FACING, CRYSTAL, HAS_SCULK);
+	      stateBuilder.add(FACING, CRYSTAL, HAS_SCULK, HAS_SPAWNED_GOLEM);
 	}
 
-	@Override
-	protected void onPlace(@NotNull BlockState state, Level level,
-						   @NotNull BlockPos pos, @NotNull BlockState oldState, boolean moved) {
-		if (level.getBlockEntity(pos) instanceof GolemStoneBlockEntity be) {
-			be.markPlacedByPlayer();
-		}
-		super.onPlace(state, level, pos, oldState, moved);
-	}
 
 	public static void placeGolem(Level level, BlockPos pos, BlockState state) {
 		CrystalGolemEntity golem = new CrystalGolemEntity(ModEntities.CRYSTAL_GOLEM.get(), level);
