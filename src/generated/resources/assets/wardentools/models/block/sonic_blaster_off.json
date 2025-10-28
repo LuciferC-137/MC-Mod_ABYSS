@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "wardentools:block/sonic_blaster_top_off",
+    "east": "wardentools:block/sonic_blaster_left_off",
+    "north": "wardentools:block/sonic_blaster_front_off",
+    "particle": "wardentools:block/sonic_blaster_front_off",
+    "south": "wardentools:block/sonic_blaster_top_off",
+    "up": "wardentools:block/sonic_blaster_top_off",
+    "west": "wardentools:block/sonic_blaster_left_off"
+  }
+}

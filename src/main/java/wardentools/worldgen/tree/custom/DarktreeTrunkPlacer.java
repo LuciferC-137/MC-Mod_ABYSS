@@ -36,14 +36,15 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		return ModTrunkPlacerTypes.DARKTREE_TRUNK_PLACER.get();
 	}
 
-	@Override
-	public @NotNull List<FoliageAttachment> placeTrunk(@NotNull LevelSimulatedReader pLevel,
-													   @NotNull BiConsumer<BlockPos, BlockState> pBlockSetter,
-													   @NotNull RandomSource pRandom, int pFreeTreeHeight,
-													   BlockPos pPos, @NotNull TreeConfiguration pConfig) {
-		setDirtAt(pLevel, pBlockSetter, pRandom, pPos.below(), pConfig);
-		
-		int heightFirstBranch = pFreeTreeHeight + pRandom.nextInt(-2, 2);
+    @Override
+    public @NotNull List<FoliageAttachment> placeTrunk(@NotNull LevelSimulatedReader level,
+                                                       @NotNull BiConsumer<BlockPos, BlockState> setter,
+                                                       @NotNull RandomSource random,
+                                                       int freeTreeHeight, BlockPos pos,
+                                                       @NotNull TreeConfiguration config) {
+        setDirtAt(level, setter, random, pos.below(), config);
+
+        int heightFirstBranch = freeTreeHeight + random.nextInt(-2, 2);
 		List<BlockPos> listTrunk = new ArrayList<BlockPos>();
 		List<FoliageAttachment> foliagePositions = new ArrayList<>();
 		int branchLength = heightRandA;
@@ -57,17 +58,17 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		if (heightFirstBranch<5) {heightFirstBranch = 5;}
 		//Initial Trunk
 		for (int i=0; i<heightFirstBranch - 3;i++) {
-			listTrunk.add(pPos.above(i));
+			listTrunk.add(pos.above(i));
 		}	
 		
 		
-		BlockPos startPoint = pPos.above(heightFirstBranch);
+		BlockPos startPoint = pos.above(heightFirstBranch);
 		List<Integer> actualBranchStart = new ArrayList<Integer>();
 		
 		//Creating the four branches
-		branchCurvature = branchCurvatureMean*pRandom.nextDouble()*2;
-		branchLengthVariation = pRandom.nextInt(-3,3);
-		branchPosVariation = pRandom.nextInt(-4,0);
+		branchCurvature = branchCurvatureMean*random.nextDouble()*2;
+		branchLengthVariation = random.nextInt(-3,3);
+		branchPosVariation = random.nextInt(-4,0);
 		actualBranchStart.add(branchPosVariation);
 		for (int x = 0; x <= branchLength + branchLengthVariation; x++) {
             int y = (int) Math.round(branchCurvature * x * x) + branchPosVariation;
@@ -79,9 +80,9 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		listTrunk.add(listTrunk.getLast().offset(0, 1, 0));
 		foliagePositions.add(new FoliageAttachment(listTrunk.getLast(), -2, false));
 		
-		branchCurvature = branchCurvatureMean*pRandom.nextDouble()*2;
-		branchLengthVariation = pRandom.nextInt(-3,3);
-		branchPosVariation = pRandom.nextInt(-4,0);
+		branchCurvature = branchCurvatureMean*random.nextDouble()*2;
+		branchLengthVariation = random.nextInt(-3,3);
+		branchPosVariation = random.nextInt(-4,0);
 		actualBranchStart.add(branchPosVariation);
 		for (int z = 0; z <= branchLength + branchLengthVariation; z++) {
             int y = (int) Math.round(branchCurvature * z * z) + branchPosVariation;
@@ -93,9 +94,9 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		listTrunk.add(listTrunk.getLast().offset(0, 1, 0));
 		foliagePositions.add(new FoliageAttachment(listTrunk.getLast(), -2, false));
 		
-		branchCurvature = branchCurvatureMean*pRandom.nextDouble()*2;
-		branchLengthVariation = pRandom.nextInt(-3,3);
-		branchPosVariation = pRandom.nextInt(-4,0);
+		branchCurvature = branchCurvatureMean*random.nextDouble()*2;
+		branchLengthVariation = random.nextInt(-3,3);
+		branchPosVariation = random.nextInt(-4,0);
 		actualBranchStart.add(branchPosVariation);
 		for (int x = 0; x <= branchLength + branchLengthVariation; x++) {
             int y = (int) Math.round(branchCurvature * x * x) + branchPosVariation;
@@ -107,9 +108,9 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		listTrunk.add(listTrunk.getLast().offset(0, 1, 0));
 		foliagePositions.add(new FoliageAttachment(listTrunk.getLast(), -2, false));
 		
-		branchCurvature = branchCurvatureMean*pRandom.nextDouble()*2;
-		branchLengthVariation = pRandom.nextInt(-3,3);
-		branchPosVariation = pRandom.nextInt(-4,0);
+		branchCurvature = branchCurvatureMean*random.nextDouble()*2;
+		branchLengthVariation = random.nextInt(-3,3);
+		branchPosVariation = random.nextInt(-4,0);
 		actualBranchStart.add(branchPosVariation);
 		for (int z = 0; z <= branchLength+ branchLengthVariation; z++) {
             int y = (int) Math.round(branchCurvature * z * z) + branchPosVariation;
@@ -120,16 +121,15 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		}
 		listTrunk.add(listTrunk.getLast().offset(0, 1, 0));
 		foliagePositions.add(new FoliageAttachment(listTrunk.getLast(), -2, false));
-		
-		
+
 		//Complete the trunk
 		for (int i=heightFirstBranch-4; i<heightFirstBranch + Collections.max(actualBranchStart);i++) {
-			listTrunk.add(pPos.above(i));
+			listTrunk.add(pos.above(i));
 		}
 		
 		//Create the trunk
-        for (BlockPos pos : listTrunk) {
-            placeLog(pLevel, pBlockSetter, pRandom, pos, pConfig);
+        for (BlockPos blockPos : listTrunk) {
+            placeLog(level, setter, random, blockPos, config);
 
         }
 		

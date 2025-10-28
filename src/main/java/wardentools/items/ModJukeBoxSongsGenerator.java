@@ -17,12 +17,14 @@ public class ModJukeBoxSongsGenerator {
     public static final ResourceKey<JukeboxSong> INCARNATION = create("incarnation_theme");
     public static final ResourceKey<JukeboxSong> DEEPFOREST = create("deepforest_music");
     public static final ResourceKey<JukeboxSong> WHITEFOREST = create("whiteforest_music");
+    public static final ResourceKey<JukeboxSong> REFLECTION = create("reflection_of_the_past_music");
 
     public static void bootstrap(BootstrapContext<JukeboxSong> context) {
         register(context, ABYSS, ModSounds.getAbyssThemeMusicDisc(), 171, 1);
         register(context, INCARNATION, ModSounds.getIncarnationThemeMusicDisc(), 126, 2);
         register(context, DEEPFOREST, ModSounds.getDeepForestMusicDisc(), 121, 3);
         register(context, WHITEFOREST, ModSounds.getWhiteForestMusicDisc(), 103, 4);
+        register(context, REFLECTION, ModSounds.getReflectionMusicDisc(), 159, 5);
     }
 
     private static void register(BootstrapContext<JukeboxSong> context,

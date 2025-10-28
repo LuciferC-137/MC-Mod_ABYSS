@@ -17,10 +17,15 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.worldgen.features.custom.DepthVineConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
+import wardentools.worldgen.features.custom.sculk.AbyssSculkPatchConfiguration;
+import wardentools.worldgen.features.custom.sculk.LivingSproutEmergenceConfiguration;
+import wardentools.worldgen.features.custom.sculk.SculkTendrilsEmergenceConfiguration;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
 import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;
@@ -44,6 +49,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LAPIS_ORE = registerKey("lapis_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DIAMOND_ORE = registerKey("diamond_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEP_ORE = registerKey("deep_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> REDSTONE_ORE = registerKey("redstone_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIQUID_CORRUPTION_FLOOR = registerKey("liquid_corruption_floor");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SHARP_ROCK = registerKey("sharp_rock");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> MALACHITE_CRISTAL = registerKey("malachite_cristal");
@@ -58,6 +64,11 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ECHO_VEIN = registerKey("echo_vein");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> PALE_CRISTAL_VEIN = registerKey("pale_cristal_vein");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> AMETHYST_VEIN = registerKey("amethyst_vein");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> SCULK_TENDRIL_EMERGENCE = registerKey("sculk_tendril_emergence");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> SCULK_TENDRIL_EMERGENCE_DOWN = registerKey("sculk_tendril_emergence_down");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_SCULK_PATCH = registerKey("abyss_sculk_patch");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DEPTH_VINE = registerKey("tall_depth_vine");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> LIVING_SPROUT_EMERGENCE = registerKey("living_sprout_emergence");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -111,6 +122,10 @@ public class ModConfiguredFeatures {
 		register(context, DEEP_ORE, Feature.ORE,
 				oreGeneration(5, 0.0F,
 						BlockRegistry.ABYSSALITE_DEEP_ORE.get()));
+
+		register(context, REDSTONE_ORE, Feature.ORE,
+				oreGeneration(7, 0.7F,
+						BlockRegistry.ABYSSALITE_REDSTONE_ORE.get(), Blocks.DEEPSLATE_REDSTONE_ORE));
 
 		register(context, LIQUID_CORRUPTION_FLOOR, ModFeatures.REPLACE_AIR_BELOW_Y.get(),
 					new NoneFeatureConfiguration());
@@ -176,11 +191,33 @@ public class ModConfiguredFeatures {
 				new CristalVeinConfiguration(5, 2, 4,
 						Blocks.AMETHYST_BLOCK.defaultBlockState(),
 						Blocks.AMETHYST_CLUSTER.defaultBlockState()));
+
+		register(context, SCULK_TENDRIL_EMERGENCE, ModFeatures.SCULK_TENDRILS_EMERGENCE.get(),
+				new SculkTendrilsEmergenceConfiguration(15, 0.5F,
+						5, 0.95F, 0.4F, true));
+
+		register(context, SCULK_TENDRIL_EMERGENCE_DOWN, ModFeatures.SCULK_TENDRILS_EMERGENCE.get(),
+				new SculkTendrilsEmergenceConfiguration(15, 0.5F,
+						5, 0.95F, 0.4F, false));
+
+		register(context, ABYSS_SCULK_PATCH, ModFeatures.ABYSS_SCULK_PATCH.get(),
+				new AbyssSculkPatchConfiguration(10, 32, 64,
+						0, 1, ConstantInt.of(0), 0.5F,
+						true));
+
+		register(context, TALL_DEPTH_VINE, ModFeatures.DEPTH_VINE.get(),
+				new DepthVineConfiguration(true,10, 1, 100));
+
+		register(context, LIVING_SPROUT_EMERGENCE, ModFeatures.LIVING_SPROUT_EMERGENCE.get(),
+				new LivingSproutEmergenceConfiguration(1, 7, 0.2F, true));
+
     }
 	
-	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int p_195204_) {
-        return FeatureUtils.simpleRandomPatchConfiguration(p_195204_,
-        		PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(stateProvider)));
+	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int tries) {
+        return FeatureUtils.simpleRandomPatchConfiguration(tries,
+				PlacementUtils.filtered(Feature.SIMPLE_BLOCK,
+						new SimpleBlockConfiguration(stateProvider),
+						BlockPredicate.matchesBlocks(Blocks.AIR, Blocks.SCULK_VEIN)));
     }
 
 	public static OreConfiguration oreGeneration(int size, float discardChanceOnAirExposure,

@@ -7,6 +7,7 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 import wardentools.misc.CustomDamageType;
 
 public class CorruptedEffect extends MobEffect {
@@ -16,7 +17,11 @@ public class CorruptedEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
+    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+        if (ModEffects.PURIFIED.getHolder().isPresent() &&
+                entity.hasEffect(ModEffects.PURIFIED.getHolder().get())) {
+            return super.applyEffectTick(entity, amplifier);
+        }
         Holder<DamageType> corruptedDamageHolder
                 = entity.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolderOrThrow(CustomDamageType.CORRUPTED_KEY);

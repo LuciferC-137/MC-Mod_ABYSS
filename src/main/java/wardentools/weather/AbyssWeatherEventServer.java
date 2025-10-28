@@ -39,6 +39,7 @@ public class AbyssWeatherEventServer {
 	}
 
 	private static void handleWeatherCommand(CommandContextBuilder<?> context, ServerLevel level) {
+		if (level.dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
 		List<? extends ParsedCommandNode<?>> nodes = context.getNodes();
 		if (nodes.size() < 2) return;
 		String subCommand = nodes.get(1).getNode().getName();

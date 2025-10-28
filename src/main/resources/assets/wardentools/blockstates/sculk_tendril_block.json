@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "wardentools:block/sculk_tendril_block"
+    }
+  }
+}

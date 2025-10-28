@@ -5,13 +5,12 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wardentools.ModMain;
-import wardentools.worldgen.features.custom.PlaceAbyssPortal;
-import wardentools.worldgen.features.custom.ReplaceAirBelowYFeature;
-import wardentools.worldgen.features.custom.SharpRock;
+import wardentools.worldgen.features.custom.*;
 import wardentools.worldgen.features.custom.cristals.CristalFormation;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVein;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
+import wardentools.worldgen.features.custom.sculk.*;
 
 import java.util.function.Supplier;
 
@@ -21,7 +20,7 @@ public class ModFeatures {
 
     public static final Supplier<Feature<NoneFeatureConfiguration>> REPLACE_AIR_BELOW_Y
             = FEATURES.register("replace_air_below_y",
-                () -> new ReplaceAirBelowYFeature(NoneFeatureConfiguration.CODEC));
+                () -> new MakeLiquidCorruptionLake(NoneFeatureConfiguration.CODEC));
 
     public static final Supplier<Feature<NoneFeatureConfiguration>> SHARP_ROCK
             = FEATURES.register("sharp_rock",
@@ -36,4 +35,20 @@ public class ModFeatures {
 
     public static final Supplier<Feature<NoneFeatureConfiguration>> ABYSS_PORTAL
             = FEATURES.register("abyss_portal", () -> new PlaceAbyssPortal(NoneFeatureConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<SculkTendrilsEmergenceConfiguration>> SCULK_TENDRILS_EMERGENCE
+            = FEATURES.register("sculk_tendrils_emergence",
+                () -> new SculkTendrilsEmergence(SculkTendrilsEmergenceConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<AbyssSculkPatchConfiguration>> ABYSS_SCULK_PATCH
+            = FEATURES.register("abyss_sculk_patch",
+            () -> new AbyssSculkPatch(AbyssSculkPatchConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<DepthVineConfiguration>> DEPTH_VINE
+            = FEATURES.register("depth_vine",
+            () -> new DepthVineFeature(DepthVineConfiguration.CODEC));
+
+    public static final RegistryObject<Feature<LivingSproutEmergenceConfiguration>> LIVING_SPROUT_EMERGENCE
+            = FEATURES.register("living_sprout_emergence",
+            () -> new LivingSproutEmergence(LivingSproutEmergenceConfiguration.CODEC));
 }

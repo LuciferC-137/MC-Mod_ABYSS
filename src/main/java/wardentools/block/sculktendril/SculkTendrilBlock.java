@@ -1,0 +1,246 @@
+package wardentools.block.sculktendril;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
+import wardentools.blockentity.BlockEntityRegistry;
+import wardentools.blockentity.SculkTendrilBlockEntity;
+
+import javax.annotation.Nullable;
+import java.util.Map;
+
+public class SculkTendrilBlock extends DropExperienceBlock implements EntityBlock {
+    private TendrilTree cachedTendrilTree = null;
+
+    public SculkTendrilBlock(IntProvider intProvider, Properties properties) {
+        super(intProvider, properties);
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
+        return BlockEntityRegistry.SCULK_TENDRIL_BLOCK_ENTITY.get().create(pos, state);
+    }
+
+    public static VoxelShape makeShape(int width, Map<Direction, Boolean> connections) {
+        float halfWidth = (float)width / 32f;
+        VoxelShape shape = Shapes.box(0.5f - halfWidth, 0.5f - halfWidth, 0.5f - halfWidth,
+                0.5f + halfWidth, 0.5f + halfWidth, 0.5f + halfWidth);
+        int branchLength = 8 - width / 2;
+        float branchHalfLength = (float)branchLength / 32f;
+        for (Direction dir : connections.keySet()) {
+            if (connections.get(dir)) {
+                // Calculate the center of the branch
+                float cx = 0.5f + dir.getStepX() * (halfWidth + branchHalfLength);
+                float cy = 0.5f + dir.getStepY() * (halfWidth + branchHalfLength);
+                float cz = 0.5f + dir.getStepZ() * (halfWidth + branchHalfLength);
+                float minX = cx - (dir.getAxis() == Direction.Axis.X ? branchHalfLength : halfWidth);
+                float maxX = cx + (dir.getAxis() == Direction.Axis.X ? branchHalfLength : halfWidth);
+                float minY = cy - (dir.getAxis() == Direction.Axis.Y ? branchHalfLength : halfWidth);
+                float maxY = cy + (dir.getAxis() == Direction.Axis.Y ? branchHalfLength : halfWidth);
+                float minZ = cz - (dir.getAxis() == Direction.Axis.Z ? branchHalfLength : halfWidth);
+                float maxZ = cz + (dir.getAxis() == Direction.Axis.Z ? branchHalfLength : halfWidth);
+                shape = Shapes.or(shape, Shapes.box(minX, minY, minZ, maxX, maxY, maxZ));
+            }
+        }
+        return shape;
+    }
+
+    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
+                                        @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            int width = tendrilBlockEntity.getWidth();
+            return makeShape(width, tendrilBlockEntity.getAllConnections());
+        }
+        return Shapes.block();
+    }
+
+    @Override
+    protected boolean useShapeForLightOcclusion(@NotNull BlockState state) {
+        return true;
+    }
+
+    @Override
+    public void onPlace(@NotNull BlockState state, @NotNull Level level,
+                        @NotNull BlockPos pos, @NotNull BlockState oldState, boolean isMoving) {
+        super.onPlace(state, level, pos, oldState, isMoving);
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity && this.cachedTendrilTree != null) {
+            // Here, we only forward the tree to block entity if it's the origin block entity
+            if (pos == this.cachedTendrilTree.getOrigin()) {
+                tendrilBlockEntity.setTendrilTreeGraph(this.cachedTendrilTree);
+            } else {
+                tendrilBlockEntity.setOrigin(this.cachedTendrilTree.getOrigin());
+            }
+            this.recursiveWidthUpdate(level, pos);
+        }
+    }
+
+    @Override
+    public @Nullable BlockState getStateForPlacement(@NotNull BlockPlaceContext placeContext) {
+        // Retrieve the block position where the block is about to be placed
+        BlockPos placePos = placeContext.getClickedPos().relative(placeContext.getClickedFace().getOpposite());
+
+        boolean success = this.createCacheOnPlace(placeContext.getClickedPos(), placePos, placeContext.getLevel());
+        return success ? super.getStateForPlacement(placeContext) : null;
+    }
+
+    private boolean createCacheOnPlace(BlockPos placePos, BlockPos clickedBlock, Level level) {
+        if (level.getBlockEntity(clickedBlock) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            BlockPos commonOrigin = tendrilBlockEntity.getOrigin();
+            if (level.getBlockEntity(commonOrigin) instanceof SculkTendrilBlockEntity originEntity) {
+                this.cachedTendrilTree = originEntity.getTendrilTreeGraph();
+                updateGraphOnPlace(this.cachedTendrilTree, placePos, clickedBlock);
+                return true;
+            }
+        } else if (level.getBlockState(clickedBlock).is(Blocks.SCULK)) {
+            this.cachedTendrilTree = new TendrilTree(placePos);
+            return true;
+        }
+        return false;
+    }
+
+    private void updateGraphOnPlace(@Nullable TendrilTree tendrilTree, BlockPos myPos, BlockPos parent) {
+        if (tendrilTree == null) return;
+        tendrilTree.addNode(myPos, parent);
+    }
+
+    public void recursiveWidthUpdate(Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            level.scheduleTick(pos, this, 1);
+            TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
+            if (tendrilTree != null) {
+                BlockPos parentPos = tendrilTree.getParentOf(pos);
+                if (parentPos != null) {
+                    if (level.getBlockState(parentPos).getBlock() instanceof SculkTendrilBlock parentTendril) {
+                        parentTendril.recursiveWidthUpdate(level, tendrilTree.getParentOf(pos), pos, 1);
+                    }
+                }
+            }
+        }
+    }
+
+    private void recursiveWidthUpdate(Level level, BlockPos pos, BlockPos fromPos, int depth) {
+        if (depth > 64) return;
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            level.scheduleTick(pos, this, depth);
+            TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
+            if (tendrilTree != null) {
+                BlockPos parentPos = tendrilTree.getParentOf(pos);
+                if (parentPos != null) {
+                    if (level.getBlockState(parentPos).getBlock() instanceof SculkTendrilBlock parentTendril) {
+                        parentTendril.recursiveWidthUpdate(level, tendrilTree.getParentOf(pos), fromPos, depth + 1);
+                    }
+                }
+                for (BlockPos childPos : tendrilTree.getChildrenOf(pos)) {
+                    if (!blockEquals(childPos, fromPos)
+                            && level.getBlockState(childPos).getBlock() instanceof SculkTendrilBlock childTendril) {
+                        childTendril.recursiveWidthUpdateToChildren(level, childPos, depth + 1);
+                    }
+                }
+            }
+        }
+    }
+
+    private void recursiveWidthUpdateToChildren(Level level, BlockPos pos, int depth) {
+        if (depth > 64) return;
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            level.scheduleTick(pos, this, depth);
+            TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
+            if (tendrilTree != null) {
+                for (BlockPos childPos : tendrilTree.getChildrenOf(pos)) {
+                    if (level.getBlockState(childPos).getBlock() instanceof SculkTendrilBlock childTendril) {
+                        childTendril.recursiveWidthUpdateToChildren(level, childPos, depth + 1);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void neighborChanged(@NotNull BlockState state, @NotNull Level level,
+                                   @NotNull BlockPos pos, @NotNull Block block,
+                                   @NotNull BlockPos neighbor, boolean b) {
+        super.neighborChanged(state, level, pos, block, neighbor, b);
+        if (level.isClientSide) return;
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
+            if (tendrilTree == null || !tendrilTree.hasNode(pos)) {
+                level.destroyBlock(pos, true, null);
+            } else {
+                if (tendrilTree.getParentOf(pos) == null && !hasSculkNeighbor(pos, level)) {
+                    level.destroyBlock(pos, true, null);
+                }
+                this.recursiveWidthUpdate(level, pos);
+            }
+        }
+    }
+
+    @Override
+    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level,
+                        @NotNull BlockPos pos, @NotNull RandomSource random) {
+        super.tick(state, level, pos, random);
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            tendrilBlockEntity.updateWidth();
+        }
+    }
+
+    @Override
+    protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader levelReader,
+                                 @NotNull BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockPos supportPosition = pos.relative(direction);
+            if (anyTreeCanSupport(supportPosition, levelReader)) {
+                return true;
+            }
+        }
+        return hasSculkNeighbor(pos, levelReader);
+    }
+
+    private boolean anyTreeCanSupport(BlockPos supportPosition, LevelReader levelReader) {
+        if (levelReader.getBlockEntity(supportPosition) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
+            if (tendrilTree != null) {
+                return tendrilTree.canHaveChildren(supportPosition);
+            }
+        }
+        return false;
+    }
+
+    private boolean hasSculkNeighbor (BlockPos pos, LevelReader level) {
+        for (Direction direction : Direction.values()) {
+            BlockPos neighborPos = pos.relative(direction);
+            if (level.getBlockState(neighborPos).is(Blocks.SCULK)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void onRemove(@NotNull BlockState state, @NotNull Level level,
+                            @NotNull BlockPos pos, @NotNull BlockState state1, boolean b) {
+        if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
+            TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();
+            if (tendrilTree != null) {
+                tendrilTree.recursiveRemove(pos);
+            }
+        }
+        super.onRemove(state, level, pos, state1, b);
+    }
+
+    private boolean blockEquals(BlockPos pos1, BlockPos pos2) {
+        return pos1.getX() == pos2.getX() && pos1.getY() == pos2.getY() && pos1.getZ() == pos2.getZ();
+    }
+}

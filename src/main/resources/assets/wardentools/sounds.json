@@ -175,6 +175,20 @@
 			}
 		]
 	},
+	"reflection_of_the_past_music": {
+		"subtitles": "sounds.wardentools.music.reflection_of_the_past",
+		"sounds": [
+			"wardentools:music/reflection_of_the_past"
+		]
+	},
+	"reflection_of_the_past_music_disc": {
+		"sounds": [
+			{
+				"name": "wardentools:music/reflection_of_the_past",
+				"stream": true
+			}
+		]
+	},
 	"shockwave_thunder": {
 		"subtitles": "sounds.wardentools.shockwave_thunder",
 		"sounds": [
@@ -193,6 +207,92 @@
 			"wardentools:wind_whispers_1",
 			"wardentools:wind_whispers_2",
 			"wardentools:wind_whispers_3"
+		]
+	},
+	"vinyl_start": {
+		"subtitles": "sounds.wardentools.vinyl_start",
+		"sounds": [
+			"wardentools:vinyl_start"
+		]
+	},
+	"vinyl_end": {
+		"subtitles": "sounds.wardentools.vinyl_end",
+		"sounds": [
+			"wardentools:vinyl_end"
+		]
+	},
+	"vinyl_scratch": {
+		"subtitles": "sounds.wardentools.vinyl_scratch",
+		"sounds": [
+			"wardentools:vinyl_scratch"
+		]
+	},
+	"heart_beat": {
+		"subtitles": "sounds.wardentools.heart_beat",
+		"sounds": [
+			"wardentools:heart_beat"
+		]
+	},
+	"crystal_golem_turning_on": {
+		"subtitles": "sounds.wardentools.crystal_golem_turning_on",
+		"sounds": [
+			"wardentools:crystal_golem_turning_on"
+		]
+	},
+	"crystal_golem_turning_off": {
+	"subtitles": "sounds.wardentools.crystal_golem_turning_off",
+	"sounds": [
+		"wardentools:crystal_golem_turning_off"
+	]
+	},
+	"crystal_golem_ambient": {
+		"subtitles": "sounds.wardentools.crystal_golem_ambient",
+		"sounds": [
+			"wardentools:crystal_golem_ambient_1",
+			"wardentools:crystal_golem_ambient_2"
+		]
+	},
+	"crystal_golem_hurt": {
+		"subtitles": "sounds.wardentools.crystal_golem_hurt",
+		"sounds": [
+			"wardentools:crystal_golem_hurt_1",
+			"wardentools:crystal_golem_hurt_2"
+		]
+	},
+	"crystal_golem_death": {
+		"subtitles": "sounds.wardentools.crystal_golem_death",
+		"sounds": [
+			"wardentools:crystal_golem_death"
+		]
+	},
+	"crystal_golem_step": {
+		"subtitles": "sounds.wardentools.crystal_golem_step",
+		"sounds": [
+			"wardentools:crystal_golem_step"
+		]
+	},
+	"crystal_golem_aggression": {
+		"subtitles": "sounds.wardentools.crystal_golem_aggression",
+		"sounds": [
+			"wardentools:crystal_golem_aggression"
+		]
+	},
+	"laser_charge": {
+		"subtitles": "sounds.wardentools.laser_charge",
+		"sounds": [
+			"wardentools:laser_charge"
+		]
+	},
+	"laser_shoot": {
+		"subtitles": "sounds.wardentools.laser_shoot",
+		"sounds": [
+			"wardentools:laser_shoot"
+		]
+	},
+	"infuser_charging": {
+		"subtitles": "sounds.wardentools.infuser_charging",
+		"sounds": [
+			"wardentools:infuser_charging"
 		]
 	}
 }

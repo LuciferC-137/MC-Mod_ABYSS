@@ -44,13 +44,13 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 				this.imageWidth, this.imageHeight);
 
 		// LEFT bars
-		guiGraphics.fill(this.leftPos + 32 + menu.getCitrineProgression(),
+		guiGraphics.fill(this.leftPos + 32 + menu.getAmethystProgression(),
 				this.topPos + 22, this.leftPos + 32 + BAR_LENGTH,
 				this.topPos + 22 + 2, BG_COLOR);
-		guiGraphics.fill(this.leftPos + 32 + menu.getAmethystProgression(),
+		guiGraphics.fill(this.leftPos + 32 + menu.getCitrineProgression(),
 				this.topPos + 49, this.leftPos + 32 + BAR_LENGTH,
 				this.topPos + 49 + 2, BG_COLOR);
-		guiGraphics.fill(this.leftPos + 32 + menu.getPaleShardProgression(),
+		guiGraphics.fill(this.leftPos + 32 + menu.getEchoProgression(),
 				this.topPos + 77, this.leftPos + 32 + BAR_LENGTH,
 				this.topPos + 77 + 2, BG_COLOR);
 
@@ -62,7 +62,7 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 				this.leftPos + 116 + BAR_LENGTH- menu.getMalachiteProgression(),
 				this.topPos + 49 + 2, BG_COLOR);
 		guiGraphics.fill(this.leftPos + 116, this.topPos + 77,
-				this.leftPos + 116 + BAR_LENGTH - menu.getEchoShardProgression(),
+				this.leftPos + 116 + BAR_LENGTH - menu.getPaleProgression(),
 				this.topPos + 77 + 2, BG_COLOR);
 
 		// Center

@@ -48,6 +48,7 @@ import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
 import wardentools.network.PayloadsRecords.ParticlesSounds.ThemeIncarnationStart;
 import wardentools.network.PayloadsRecords.ParticlesSounds.ThemeIncarnationStop;
 import wardentools.sounds.ModSounds;
+import wardentools.utils.SaveUtils;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -373,15 +374,11 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("tickSpawn", this.getTickSpawn());
-        tag.putInt("catalystX", this.catalystPos.getX());
-        tag.putInt("catalystY", this.catalystPos.getY());
-        tag.putInt("catalystZ", this.catalystPos.getZ());
+        SaveUtils.putBlockPos(tag, "catalystPos", this.catalystPos);
         tag.putInt("rightSwingTick", this.getRightSwingTick());
         tag.putInt("leftSwingTick", this.getLeftSwingTick());
         tag.putInt("sonicStrikeTick", this.getSonicStrikeTick());
-        tag.putInt("lastSonicStrikeX", this.lastSonicStrikePos.getX());
-        tag.putInt("lastSonicStrikeY", this.lastSonicStrikePos.getY());
-        tag.putInt("lastSonicStrikeZ", this.lastSonicStrikePos.getZ());
+        SaveUtils.putBlockPos(tag, "lastSonicStrikePos", this.lastSonicStrikePos);
         tag.putBoolean("hasBeenSummonedByCatalyst", this.entityData.get(hasBeenSummonedByCatalyst));
     }
 
@@ -389,13 +386,11 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.setTickSpawn(tag.getInt("tickSpawn"));
-        this.catalystPos = new BlockPos(tag.getInt("catalystX"),
-                tag.getInt("catalystY"), tag.getInt("catalystZ"));
+        this.catalystPos = SaveUtils.readBlockPos(tag, "catalystPos");
         this.setRightSwingTick(tag.getInt("rightSwingTick"));
         this.setLeftSwingTick(tag.getInt("leftSwingTick"));
         this.setSonicStrikeTick(tag.getInt("sonicStrikeTick"));
-        this.lastSonicStrikePos = new BlockPos(tag.getInt("lastSonicStrikeX"),
-                tag.getInt("lastSonicStrikeY"), tag.getInt("lastSonicStrikeZ"));
+        this.lastSonicStrikePos = SaveUtils.readBlockPos(tag, "lastSonicStrikePos");
         this.entityData.set(hasBeenSummonedByCatalyst, tag.getBoolean("hasBeenSummonedByCatalyst"));
     }
 

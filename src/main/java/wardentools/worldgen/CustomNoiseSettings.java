@@ -32,8 +32,8 @@ public class CustomNoiseSettings {
     public static final ResourceKey<DensityFunction> FACTOR = createKey("overworld/factor");
     public static final ResourceKey<DensityFunction> DEPTH = createKey("overworld/depth");
     private static final ResourceKey<DensityFunction> SLOPED_CHEESE = createKey("overworld/sloped_cheese");
-    public static final ResourceKey<DensityFunction> CONTINENTS_LARGE = createKey("overworld/continents");
-    public static final ResourceKey<DensityFunction> EROSION_LARGE = createKey("overworld/erosion");
+    public static final ResourceKey<DensityFunction> CONTINENTS_LARGE = createKey("overworld/continents"); // Duplicated, but required for logic
+    public static final ResourceKey<DensityFunction> EROSION_LARGE = createKey("overworld/erosion"); // Duplicated, but required for logic
     private static final ResourceKey<DensityFunction> FACTOR_LARGE = createKey("overworld/factor");
     private static final ResourceKey<DensityFunction> DEPTH_LARGE = createKey("overworld/depth");
     private static final ResourceKey<DensityFunction> SLOPED_CHEESE_LARGE = createKey("overworld/sloped_cheese");
@@ -90,89 +90,72 @@ public class CustomNoiseSettings {
     }
     
     private static NoiseGeneratorSettings createAbyssNoiseSettings(
-            BootstrapContext<?> p_256460_, boolean amplified, boolean large){
+            BootstrapContext<?> context, boolean amplified, boolean large){
         return new NoiseGeneratorSettings(
                 NoiseSettings.create(-64, 384, 1, 2),
                 Blocks.STONE.defaultBlockState(),
-                Blocks.WATER.defaultBlockState(),
-                overworld(p_256460_.lookup(Registries.DENSITY_FUNCTION),
-                          p_256460_.lookup(Registries.NOISE), large, amplified),
+                Blocks.AIR.defaultBlockState(),
+                overworld(context.lookup(Registries.DENSITY_FUNCTION),
+                          context.lookup(Registries.NOISE), large, amplified),
                 ModSurfaceRules.makeRules(),
                 (new OverworldBiomeBuilder()).spawnTarget(),
-                -100,
+                63,
                 false,
                 false,
                 true,
                 false);
     }
 
-    protected static NoiseRouter overworld(HolderGetter<DensityFunction> densFunc,
-                                           HolderGetter<NormalNoise.NoiseParameters> noiseParam,
-                                           boolean large, boolean amplified) {
-        DensityFunction densityfunction
-                = DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_BARRIER), 0.5D);
-        DensityFunction densityfunction1
-                = DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS), 0.3D);
-        DensityFunction densityfunction2
-                = DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_SPREAD), 0.5D);
-        DensityFunction densityfunction3 = DensityFunctions.constant(0D);
-                //= DensityFunctions.noise(noiseParam.getOrThrow(Noises.AQUIFER_LAVA));
-        DensityFunction densityfunction4 = getFunction(densFunc, SHIFT_X);
-        DensityFunction densityfunction5 = getFunction(densFunc, SHIFT_Z);
-        DensityFunction densityfunction6
-                = DensityFunctions.shiftedNoise2d(densityfunction4, densityfunction5, 0.25D,
-                    noiseParam.getOrThrow(large ? Noises.TEMPERATURE_LARGE : Noises.TEMPERATURE));
-        DensityFunction densityfunction7
-                = DensityFunctions.shiftedNoise2d(densityfunction4, densityfunction5,
-                0.25D, noiseParam.getOrThrow(large ? Noises.VEGETATION_LARGE : Noises.VEGETATION));
-        DensityFunction densityfunction8
-                = getFunction(densFunc, large ? FACTOR_LARGE : (amplified ? FACTOR_AMPLIFIED : FACTOR));
-        DensityFunction densityfunction9 = getFunction(densFunc, large ? DEPTH_LARGE : (amplified ? DEPTH_AMPLIFIED : DEPTH));
-        DensityFunction densityfunction10 = noiseGradientDensity(DensityFunctions.cache2d(densityfunction8), densityfunction9);
-        DensityFunction densityfunction11
-                = getFunction(densFunc, large ? SLOPED_CHEESE_LARGE : (amplified ? SLOPED_CHEESE_AMPLIFIED : SLOPED_CHEESE));
-        DensityFunction densityfunction12
-                = DensityFunctions.min(densityfunction11, DensityFunctions.mul(DensityFunctions.constant(5.0D),
-                    getFunction(densFunc, ENTRANCES)));
-        DensityFunction densityfunction13
-                = DensityFunctions.rangeChoice(densityfunction11, -1000000.0D, 1.5625D,
-                densityfunction12, underground(densFunc, noiseParam, densityfunction11));
-        DensityFunction densityfunction14
-                = DensityFunctions.min(postProcess(slideOverworld(amplified, densityfunction13)),
-                getFunction(densFunc, NOODLE));
-        DensityFunction densityfunction15 = getFunction(densFunc, Y);
-        int i = Stream.of(VeinType.values()).mapToInt((p_224495_) -> {
-            return p_224495_.minY;
-        }).min().orElse(-DimensionType.MIN_Y * 2);
-        int j = Stream.of(VeinType.values()).mapToInt((p_224457_) -> {
-            return p_224457_.maxY;
-        }).max().orElse(-DimensionType.MIN_Y * 2);
-        DensityFunction densityfunction16
-                = yLimitedInterpolatable(densityfunction15,
-                    DensityFunctions.noise(noiseParam.getOrThrow(Noises.ORE_VEININESS),
-                        1.5D, 1.5D), i, j, 0);
-        float f = 4.0F;
-        DensityFunction densityfunction17
-                = yLimitedInterpolatable(densityfunction15,
-                    DensityFunctions.noise(noiseParam.getOrThrow(Noises.ORE_VEIN_A),
-                        4.0D, 4.0D), i, j, 0).abs();
-        DensityFunction densityfunction18
-                = yLimitedInterpolatable(densityfunction15,
-                    DensityFunctions.noise(noiseParam.getOrThrow(Noises.ORE_VEIN_B),
-                            4.0D, 4.0D), i, j, 0).abs();
-        DensityFunction densityfunction19
-                = DensityFunctions.add(DensityFunctions.constant((double)-0.08F),
-                    DensityFunctions.max(densityfunction17, densityfunction18));
-        DensityFunction densityfunction20 =
-                DensityFunctions.noise(noiseParam.getOrThrow(Noises.ORE_GAP));
-        return new NoiseRouter(densityfunction,
-                densityfunction1, densityfunction2, densityfunction3, densityfunction6,
-                densityfunction7, getFunction(densFunc, large ? CONTINENTS_LARGE : CONTINENTS),
-                getFunction(densFunc, large ? EROSION_LARGE : EROSION), densityfunction9,
-                getFunction(densFunc, RIDGES), slideOverworld(amplified,
-                DensityFunctions.add(densityfunction10,
-                        DensityFunctions.constant(-0.703125D)).clamp(-64.0D, 64.0D)),
-                densityfunction14, densityfunction16, densityfunction19, densityfunction20);
+    protected static NoiseRouter overworld(HolderGetter<DensityFunction> densityFunctionRegistry,
+                                           HolderGetter<NormalNoise.NoiseParameters> noiseParameterRegistry,
+                                           boolean isLarge, boolean isAmplified) {
+        DensityFunction aquiferBarrierNoise = DensityFunctions.noise(noiseParameterRegistry.getOrThrow(Noises.AQUIFER_BARRIER), 0.5D);
+        DensityFunction aquiferFloodednessNoise = DensityFunctions.noise(noiseParameterRegistry.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS), 0.3D);
+        DensityFunction aquiferSpreadNoise = DensityFunctions.noise(noiseParameterRegistry.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_SPREAD), 0.5D);
+        DensityFunction aquiferLavaNoise = DensityFunctions.constant(0D);
+        DensityFunction shiftX = getFunction(densityFunctionRegistry, SHIFT_X);
+        DensityFunction shiftZ = getFunction(densityFunctionRegistry, SHIFT_Z);
+        DensityFunction temperatureNoise = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25D,
+            noiseParameterRegistry.getOrThrow(isLarge ? Noises.TEMPERATURE_LARGE : Noises.TEMPERATURE));
+        DensityFunction vegetationNoise = DensityFunctions.shiftedNoise2d(shiftX, shiftZ, 0.25D,
+            noiseParameterRegistry.getOrThrow(isLarge ? Noises.VEGETATION_LARGE : Noises.VEGETATION));
+        DensityFunction factor = getFunction(densityFunctionRegistry, isLarge ? FACTOR_LARGE : (isAmplified ? FACTOR_AMPLIFIED : FACTOR));
+        DensityFunction depth = getFunction(densityFunctionRegistry, isLarge ? DEPTH_LARGE : (isAmplified ? DEPTH_AMPLIFIED : DEPTH));
+        DensityFunction gradientDensity = noiseGradientDensity(DensityFunctions.cache2d(factor), depth);
+        DensityFunction slopedCheese = getFunction(densityFunctionRegistry, isLarge ? SLOPED_CHEESE_LARGE : (isAmplified ? SLOPED_CHEESE_AMPLIFIED : SLOPED_CHEESE));
+        DensityFunction entrances = getFunction(densityFunctionRegistry, ENTRANCES);
+        DensityFunction minSlopedCheeseEntrances = DensityFunctions.min(slopedCheese, DensityFunctions.mul(DensityFunctions.constant(5.0D), entrances));
+        DensityFunction undergroundNoise = underground(densityFunctionRegistry, noiseParameterRegistry, slopedCheese);
+        DensityFunction rangeChoice = DensityFunctions.rangeChoice(slopedCheese, -1000000.0D, 1.5625D, minSlopedCheeseEntrances, undergroundNoise);
+        DensityFunction postProcessed = DensityFunctions.min(postProcess(slideOverworld(isAmplified, rangeChoice)), getFunction(densityFunctionRegistry, NOODLE));
+        DensityFunction yFunction = getFunction(densityFunctionRegistry, Y);
+        int minVeinY = Stream.of(VeinType.values()).mapToInt(vein -> vein.minY).min().orElse(-DimensionType.MIN_Y * 2);
+        int maxVeinY = Stream.of(VeinType.values()).mapToInt(vein -> vein.maxY).max().orElse(-DimensionType.MIN_Y * 2);
+        DensityFunction oreVeininess = yLimitedInterpolatable(yFunction,
+            DensityFunctions.noise(noiseParameterRegistry.getOrThrow(Noises.ORE_VEININESS), 1.5D, 1.5D), minVeinY, maxVeinY, 0);
+        DensityFunction oreVeinA = yLimitedInterpolatable(yFunction,
+            DensityFunctions.noise(noiseParameterRegistry.getOrThrow(Noises.ORE_VEIN_A), 4.0D, 4.0D), minVeinY, maxVeinY, 0).abs();
+        DensityFunction oreVeinB = yLimitedInterpolatable(yFunction,
+            DensityFunctions.noise(noiseParameterRegistry.getOrThrow(Noises.ORE_VEIN_B), 4.0D, 4.0D), minVeinY, maxVeinY, 0).abs();
+        DensityFunction oreVeinCombined = DensityFunctions.add(DensityFunctions.constant(-0.08F), DensityFunctions.max(oreVeinA, oreVeinB));
+        DensityFunction oreGap = DensityFunctions.noise(noiseParameterRegistry.getOrThrow(Noises.ORE_GAP));
+        return new NoiseRouter(
+            aquiferBarrierNoise,
+            aquiferFloodednessNoise,
+            aquiferSpreadNoise,
+            aquiferLavaNoise,
+            temperatureNoise,
+            vegetationNoise,
+            getFunction(densityFunctionRegistry, isLarge ? CONTINENTS_LARGE : CONTINENTS),
+            getFunction(densityFunctionRegistry, isLarge ? EROSION_LARGE : EROSION),
+            depth,
+            getFunction(densityFunctionRegistry, RIDGES),
+            slideOverworld(isAmplified, DensityFunctions.add(gradientDensity, DensityFunctions.constant(-0.703125D)).clamp(-64.0D, 64.0D)),
+            postProcessed,
+            oreVeininess,
+            oreVeinCombined,
+            oreGap
+        );
     }
 
     private static DensityFunction getFunction(HolderGetter<DensityFunction> p_256312_, ResourceKey<DensityFunction> p_256077_) {

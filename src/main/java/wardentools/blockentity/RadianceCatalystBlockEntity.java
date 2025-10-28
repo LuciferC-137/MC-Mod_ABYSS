@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -29,6 +30,9 @@ import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.util.CustomEnergyStorage;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.items.ItemRegistry;
+import wardentools.items.recipe.ModRecipes;
+import wardentools.items.recipe.RadianceCatalystRecipe;
+import wardentools.items.recipe.RadianceCatalystRecipeInput;
 import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystChargedParticleSound;
 import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystChargingParticleSound;
 import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystPurifyingParticleSound;
@@ -230,45 +234,41 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 		}
 		return 0;
 	}
-	
+
+	@Nullable
+	private RadianceCatalystRecipe getRecipeFor(ItemStack input) {
+		if (this.level == null) return null;
+		RecipeHolder<RadianceCatalystRecipe> recipe = this.level.getRecipeManager()
+				.getRecipeFor(ModRecipes.RADIANCE_RECIPE_TYPE.get(),
+						new RadianceCatalystRecipeInput(input), this.level)
+				.orElse(null);
+		return recipe != null ? recipe.value() : null;
+	}
+
+
 	public ItemStack getPurifiedVersion(ItemStack stack) {
-		if (stack.is(ItemRegistry.CORRUPTED_ESSENCE.get())) {
-			return new ItemStack(ItemRegistry.PURE_ESSENCE.get());
-		} else if (stack.is(ItemRegistry.WARDEN_HEART.get())) {
-			return new ItemStack(ItemRegistry.PROTECTOR_HEART.get());
-		} else if (stack.is(ItemRegistry.CORRUPTED_VESSEL.get())) {
-			return new ItemStack(ItemRegistry.PURE_VESSEL.get());
-		} else if (stack.is(ItemRegistry.DYING_PROTECTOR_HEART.get())) {
-			return new ItemStack(ItemRegistry.PROTECTOR_HEART.get());
-		}
-		return null;
+		RadianceCatalystRecipe recipe = getRecipeFor(stack);
+		return recipe != null ? recipe.output().copy() : ItemStack.EMPTY;
 	}
 
 	public int energyCost(ItemStack stack) {
-		if (stack.is(ItemRegistry.CORRUPTED_ESSENCE.get())) {
-			return 100;
-		} else if (stack.is(ItemRegistry.WARDEN_HEART.get())) {
-			return 900;
-		} else if (stack.is(ItemRegistry.CORRUPTED_VESSEL.get())) {
-			return 100;
-		} else if (stack.is(ItemRegistry.DYING_PROTECTOR_HEART.get())) {
-			return 600;
-		}
-		return this.energy.getMaxEnergyStored();
+		RadianceCatalystRecipe recipe = getRecipeFor(stack);
+		return recipe != null ? recipe.energyCost() : this.energy.getMaxEnergyStored();
 	}
+
 
 	public boolean canBurn(@NotNull ItemStack stack) {
 		return getBurnTime(stack) > 0;
 	}
-	
+
 	public boolean canPurify(@NotNull ItemStack stack) {
-		return getPurifiedVersion(stack)!=null;
+		return !stack.isEmpty() && getRecipeFor(stack) != null;
 	}
-	
+
 	public ItemStackHandler getInventory() {
 		return this.inventory;
 	}
-	
+
 	public CustomEnergyStorage getEnergy() {
 		return this.energy;
 	}
@@ -276,7 +276,7 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	public void setEnergy(int energy) {
         this.energy.setEnergy(energy);
     }
-	
+
 	public int getPurifyingTime() {
 		return this.purifyingTime;
 	}

@@ -63,6 +63,34 @@ public class ModSounds {
 			registerSoundEvents("whistle");
 	public static final Supplier<SoundEvent> WIND_WHISPERS =
 			registerSoundEvents("wind_whispers");
+	public static final Supplier<SoundEvent> VINYL_START =
+			registerSoundEvents("vinyl_start");
+	public static final Supplier<SoundEvent> VINYL_END =
+			registerSoundEvents("vinyl_end");
+	public static final Supplier<SoundEvent> VINYL_SCRATCH =
+			registerSoundEvents("vinyl_scratch");
+	public static final Supplier<SoundEvent> HEART_BEAT =
+			registerSoundEvents("heart_beat");
+	public static final Supplier<SoundEvent> CRYSTAL_GOLEM_AMBIENT =
+			registerSoundEvents("crystal_golem_ambient");
+	public static final Supplier<SoundEvent> CRYSTAL_GOLEM_TURNING_ON =
+			registerSoundEvents("crystal_golem_turning_on");
+	public static final Supplier<SoundEvent> CRYSTAL_GOLEM_TURNING_OFF =
+			registerSoundEvents("crystal_golem_turning_off");
+	public static final Supplier<SoundEvent> CRYSTAL_GOLEM_HURT =
+			registerSoundEvents("crystal_golem_hurt");
+	public static final Supplier<SoundEvent> CRYSTAL_GOLEM_DEATH =
+			registerSoundEvents("crystal_golem_death");
+	public static final Supplier<SoundEvent> CRYSTAL_GOLEM_STEP =
+			registerSoundEvents("crystal_golem_step");
+	public static final Supplier<SoundEvent> CRYSTAL_GOLEM_AGGRESSION =
+			registerSoundEvents("crystal_golem_aggression");
+	public static final Supplier<SoundEvent> LASER_CHARGE =
+			registerSoundEvents("laser_charge");
+	public static final Supplier<SoundEvent> LASER_SHOOT =
+			registerSoundEvents("laser_shoot");
+	public static final Supplier<SoundEvent> INFUSER_CHARGING =
+			registerSoundEvents("infuser_charging");
 
 	//Musics
 	public static final Supplier<SoundEvent> DEEP_FOREST =
@@ -73,6 +101,8 @@ public class ModSounds {
 			registerSoundEvents("incarnation_theme");
 	public static final Supplier<SoundEvent> ABYSS_THEME =
 			registerSoundEvents("abyss_theme");
+	public static final Supplier<SoundEvent> REFLECTION =
+			registerSoundEvents("reflection_of_the_past_music");
 
 	// Music discs (lazy references)
 	public static Holder.Reference<SoundEvent> getDeepForestMusicDisc() {
@@ -95,6 +125,10 @@ public class ModSounds {
 	private static ResourceKey<JukeboxSong> createSong(String name) {
 		return ResourceKey.create(Registries.JUKEBOX_SONG,
 				ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+	}
+	public static Holder.Reference<SoundEvent> getReflectionMusicDisc() {
+		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.REFLECTION.getId()));
 	}
 
 	private static Supplier<SoundEvent> registerSoundEvents(String name) {

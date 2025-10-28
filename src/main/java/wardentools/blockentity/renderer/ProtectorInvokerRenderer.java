@@ -38,6 +38,9 @@ public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorIn
 	private float previouspTick = 0;
 	private static final int RAY_NUMBER = 5;
 	private static final float RAY_SPEED = 0.2f; // In degrees per tick
+	private static final float ITEM_SCALE = 0.3f;
+	private static final float ITEM_OFFSET = 0.85f;
+	private static final float TEXT_OFFSET = 1.25f;
 	
 	public ProtectorInvokerRenderer(BlockEntityRendererProvider.Context ctx) {
 		this.context = ctx;
@@ -53,16 +56,14 @@ public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorIn
 	            return;
 	        BlockPos pos = blockEntity.getBlockPos().above();
 	        double relativeGameTime = level.getGameTime() + partialTick;
-	        double offset = 0.95;
 	        double rotation = relativeGameTime / 0.8;
-	        double scale = 0.5;
 			if (stack.is(ItemRegistry.PROTECTOR_HEART.get()) && blockEntity.protectorSuccessfullyInvoked) {
-				animateLight(partialTick, buffer, poseStack, offset);
+				animateLight(partialTick, buffer, poseStack, ITEM_OFFSET);
 			} else if (stack.is(ItemRegistry.DYING_PROTECTOR_HEART.get())) {
-				animateRedParticles(level, pos, offset);
+				animateRedParticles(level, pos, ITEM_OFFSET);
 			}
-	        renderItem(level, poseStack, stack, buffer, offset, scale, rotation);
-			renderText(level, pos, poseStack, offset, blockEntity, buffer);
+	        renderItem(level, poseStack, stack, buffer, ITEM_OFFSET, ITEM_SCALE, rotation);
+			renderText(level, pos, poseStack, TEXT_OFFSET, blockEntity, buffer);
         }
 		this.previouspTick = partialTick;
 	}
@@ -96,12 +97,12 @@ public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorIn
 					level.getBrightness(LightLayer.SKY, pos)
 			);
 			Vec3 playerPos = player.position();
-			double dx = playerPos.x - (pos.getX() + 0.5);
-			double dz = playerPos.z - (pos.getZ() + 0.5);
+			double dx = playerPos.x - (pos.getX() + 0.5f);
+			double dz = playerPos.z - (pos.getZ() + 0.5f);
 			float scaleTxt = 0.015f;
 
 			poseStack.pushPose();
-			poseStack.translate(0.5, offset + 0.35, 0.5);
+			poseStack.translate(0.5f, offset, 0.5f);
 			poseStack.scale(scaleTxt, -scaleTxt, scaleTxt);
 			if (dz<0) {
 				poseStack.mulPose(Axis.YP.rotation(3.1415f + (float)Math.atan(dx/dz)));

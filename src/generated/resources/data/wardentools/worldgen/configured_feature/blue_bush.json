@@ -8,7 +8,10 @@
           "to_place": {
             "type": "minecraft:simple_state_provider",
             "state": {
-              "Name": "wardentools:blue_bush"
+              "Name": "wardentools:blue_bush",
+              "Properties": {
+                "berry_state": "none"
+              }
             }
           }
         }
@@ -18,7 +21,10 @@
           "type": "minecraft:block_predicate_filter",
           "predicate": {
             "type": "minecraft:matching_blocks",
-            "blocks": "minecraft:air"
+            "blocks": [
+              "minecraft:air",
+              "minecraft:sculk_vein"
+            ]
           }
         }
       ]

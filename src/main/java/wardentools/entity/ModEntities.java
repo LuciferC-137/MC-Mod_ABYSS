@@ -50,7 +50,7 @@ public class ModEntities {
 					.sized(1.375f, 0.5625f).build("mod_chest_boat"));
 	public static final Supplier<EntityType<TemperEntity>> TEMPER =
 			ENTITY_TYPES.register("temper",
-					()->EntityType.Builder.of(TemperEntity::new, MobCategory.MISC)
+					()->EntityType.Builder.of(TemperEntity::new, MobCategory.CREATURE)
 					.sized(0.5f, 0.5f)
 					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "temper").toString()));
 	public static final Supplier<EntityType<ParasyteEntity>> PARASYTE =
@@ -82,6 +82,18 @@ public class ModEntities {
 					()->EntityType.Builder.of(AbyssLightningEntity::new, MobCategory.MISC)
 					.sized(0.5f, 0.5f)
 					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyss_lightning").toString()));
+
+	public static final RegistryObject<EntityType<CrystalGolemEntity>> CRYSTAL_GOLEM =
+			ENTITY_TYPES.register("crystal_golem",
+					()->EntityType.Builder.of(CrystalGolemEntity::new, MobCategory.CREATURE)
+					.sized(0.6F, 1.625F)
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "crystal_golem").toString()));
+
+	public static final RegistryObject<EntityType<CrystalLaserEntity>> CRYSTAL_LASER =
+			ENTITY_TYPES.register("crystal_laser",
+					()->EntityType.Builder.of(CrystalLaserEntity::new, MobCategory.MISC)
+					.sized(0.5f, 0.5f)
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "crystal_laser").toString()));
 	
 	public static void register(IEventBus eventBus) {
 		ENTITY_TYPES.register(eventBus);

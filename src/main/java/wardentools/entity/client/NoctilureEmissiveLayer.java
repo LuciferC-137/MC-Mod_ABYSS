@@ -2,6 +2,7 @@ package wardentools.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -16,7 +17,7 @@ import wardentools.entity.custom.NoctilureEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class NoctilureEmissiveLayer extends RenderLayer<NoctilureEntity, Noctilure> {
-    private static final RenderType EMISSIVE = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+    private static final RenderType EMISSIVE = RenderType.entityTranslucent(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
     		"textures/entity/noctilure_emissive.png"));
 
     public NoctilureEmissiveLayer(RenderLayerParent<NoctilureEntity, Noctilure> renderLayerParent) {
@@ -29,7 +30,7 @@ public class NoctilureEmissiveLayer extends RenderLayer<NoctilureEntity, Noctilu
                        float limbSwingAmount, float partialTicks, float ageInTicks,
                        float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
-        this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
+        this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT,
         		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
     }
 }

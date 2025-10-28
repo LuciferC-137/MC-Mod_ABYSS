@@ -17,7 +17,6 @@ import wardentools.effect.ModEffects;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
@@ -32,11 +31,11 @@ public class CorruptedOverlayRenderer {
     @SubscribeEvent
     public static void onRenderOverlay(RenderGuiLayerEvent.Pre event) {
            Player player = Minecraft.getInstance().player;
-           if (player != null && player.hasEffect(ModEffects.CORRUPTED)) {
+           if (player != null && player.hasEffect(ModEffects.CORRUPTED)
+               && !player.hasEffect(ModEffects.PURIFIED)) {
                MobEffectInstance effectInstance = player.getEffect(ModEffects.CORRUPTED);
-               if (effectInstance == null){
-                   return;
-               }
+               if (effectInstance == null) return;
+
                int duration = effectInstance.getDuration();
                int totalDuration = effectTotalDurations.getOrDefault(player.getUUID(), duration);
 
@@ -76,11 +75,10 @@ public class CorruptedOverlayRenderer {
                 if (!effectTotalDurations.containsKey(player.getUUID())
                         || !player.hasEffect(ModEffects.CORRUPTED)) {
                     effectTotalDurations.put(player.getUUID(), event.getEffectInstance().getDuration());
-                } else {
+                } else if (player.getEffect(ModEffects.CORRUPTED) != null) {
                     int totalDuration = event.getEffectInstance().getDuration() +
                             effectTotalDurations.get(player.getUUID())
-                            - Objects.requireNonNull(player
-                            .getEffect(ModEffects.CORRUPTED)).getDuration();
+                            - player.getEffect(ModEffects.CORRUPTED).getDuration();
                     effectTotalDurations.put(player.getUUID(), totalDuration);
                 }
             }
@@ -89,7 +87,8 @@ public class CorruptedOverlayRenderer {
 
     @SubscribeEvent
     public static void onEffectRemoved(MobEffectEvent.Remove event) {
-        if (Objects.requireNonNull(event.getEffectInstance()).getEffect()
+        if (event.getEffectInstance() == null) return;
+        if (event.getEffectInstance().getEffect()
                 == ModEffects.CORRUPTED) {
             LivingEntity entity = event.getEntity();
             if (entity instanceof Player player) {
@@ -100,7 +99,8 @@ public class CorruptedOverlayRenderer {
 
     @SubscribeEvent
     public static void onEffectExpired(MobEffectEvent.Expired event) {
-        if (Objects.requireNonNull(event.getEffectInstance()).getEffect()
+        if (event.getEffectInstance() == null) return;
+        if (event.getEffectInstance().getEffect()
                 == ModEffects.CORRUPTED) {
             LivingEntity entity = event.getEntity();
             if (entity instanceof Player player) {

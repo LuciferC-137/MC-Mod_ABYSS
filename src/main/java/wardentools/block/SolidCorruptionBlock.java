@@ -33,6 +33,8 @@ public class SolidCorruptionBlock extends Block {
                        @NotNull BlockState blockState, @NotNull Entity entity) {
         super.stepOn(level, blockPos, blockState, entity);
         if (entity instanceof LivingEntity entity1){
+            if (entity instanceof LivingEntity
+                    && ((LivingEntity)entity).hasEffect(ModEffects.PURIFIED)) {return;}
             entity1.addEffect(new MobEffectInstance(ModEffects.CORRUPTED,
                     40, 0, false, false));
         }

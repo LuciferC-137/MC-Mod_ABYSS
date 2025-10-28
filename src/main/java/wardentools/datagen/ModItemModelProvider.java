@@ -86,8 +86,24 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DEEP_FOREST_MUSIC_DISC);
         simpleItem(ItemRegistry.WHITE_FOREST_MUSIC_DISC);
         simpleItem(ItemRegistry.INCARNATION_MUSIC_DISC);
-        
-        //Blocks that use their item model when in hand rather than the block model
+        simpleItem(ItemRegistry.REFLECTION_MUSIC_DISC);
+        simpleItem(ItemRegistry.WIND_JOURNAL);
+        simpleItem(ItemRegistry.NOCTILURE_FEATHER);
+        simpleItem(ItemRegistry.DEPTH_BERRIES);
+        simpleItem(ItemRegistry.WANDERER_PAW);
+        simpleItem(ItemRegistry.LURKER_EYE);
+        simpleItem(ItemRegistry.MIND_TIARA);
+        simpleItem(ItemRegistry.RING_OF_WILL);
+        simpleItem(ItemRegistry.STRENGTH_BRACELET);
+        simpleItem(ItemRegistry.PENDANT_OF_BALANCE);
+        simpleItem(ItemRegistry.SHADOW_ORNAMENT);
+        simpleItem(ItemRegistry.LIGHT_ORNAMENT);
+        simpleItem(ItemRegistry.ANCIENT_CITADEL_MAP);
+
+        //Forcing item models for block items that have a special blockstate registration process
+        blockItemWithItemModel(BlockRegistry.BLUE_BUSH);
+
+        //Items that use their item model when in hand rather than the block model
         blockItemWithItemModel(BlockRegistry.DEEP_CRISTAL);
         blockItemWithItemModel(BlockRegistry.RADIANCE_CRISTAL);
         blockItemWithItemModel(BlockRegistry.DARKTREE_SAPLING);
@@ -98,7 +114,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.TALL_WHITE_GRASS);
         blockItemWithItemModel(BlockRegistry.WHITE_TORCHFLOWER);
         blockItemWithItemModel(BlockRegistry.DEEPFLOWER);
-        blockItemWithItemModel(BlockRegistry.BLUE_BUSH);
         blockItemWithItemModel(BlockRegistry.TALL_DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.DARK_GRASS);
         blockItemWithItemModel(BlockRegistry.PROTECTOR_INVOKER);
@@ -108,8 +123,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.MALACHITE);
         blockItemWithItemModel(BlockRegistry.PALE_CRISTAL);
         blockItemWithItemModel(BlockRegistry.CONTAGION_INCARNATION_SKULL);
-        
-        //Blocks that did not create their own item model in the blockstate generator
+        blockItemWithItemModel(BlockRegistry.GRAMOPHONE);
+
+        //Items that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darktree_wood"));
         withExistingParent(BlockRegistry.STRIPPED_DARKTREE_WOOD.getId().getPath(),
@@ -161,7 +177,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.getId().getPath(),
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_slab"));
 
-        //Blocks that use custom methods
+        withExistingParent(BlockRegistry.LIVING_SPROUT.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/living_sprout"));
+        withExistingParent(BlockRegistry.CRYSTAL_INFUSER.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/crystal_infuser"));
+        withExistingParent(BlockRegistry.GOLEM_STONE.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/golem_stone"));
+
+        //Items that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);
         buttonItem(BlockRegistry.DARKTREE_BUTTON, BlockRegistry.DARKTREE_PLANKS);
         trapdoorItem(BlockRegistry.DARKTREE_TRAPDOOR);
@@ -172,18 +195,17 @@ public class ModItemModelProvider extends ItemModelProvider {
         wallItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL, BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
         
     }
-    
  
     private ItemModelBuilder blockItemWithItemModel(DeferredBlock<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"item/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "item/" + item.getId().getPath()));
     }
     
     private ItemModelBuilder simpleItem(DeferredItem<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"item/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "item/" + item.getId().getPath()));
     }
     
     public void trapdoorItem(DeferredBlock<Block> block) {

@@ -10,11 +10,7 @@ import wardentools.blockentity.renderer.DysfunctionningCatalystRenderer;
 import wardentools.client.DysfunctionningCatalystScreen;
 import wardentools.gui.MenuRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
-import wardentools.blockentity.renderer.AbyssPortalBlockRenderer;
-import wardentools.blockentity.renderer.ProtectorInvokerRenderer;
-import wardentools.blockentity.renderer.RadianceCatalystRenderer;
-import wardentools.blockentity.renderer.ContagionIncarnationSkullRenderer;
-import wardentools.blockentity.renderer.SoulSpawnerRenderer;
+import wardentools.blockentity.renderer.*;
 import wardentools.client.RadianceCatalystScreen;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -42,6 +38,14 @@ public class ClientModHandler {
 				ContagionIncarnationSkullRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.SOUL_SPAWNER_BLOCK_ENTITY.get(),
 				SoulSpawnerRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.GRAMOPHONE_BLOCK_ENTITY.get(),
+				GramophoneRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.SCULK_TENDRIL_BLOCK_ENTITY.get(),
+				SculkTendrilBlockRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.LIVING_SPROUT_BLOCK_ENTITY.get(),
+				LivingSproutRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.CRYSTAL_INFUSER_BLOCK_ENTITY.get(),
+				CrystalInfuserRenderer::new);
 	}
 
 }

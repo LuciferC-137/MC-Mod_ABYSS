@@ -8,8 +8,15 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import wardentools.ModMain;
+import wardentools.block.BlockRegistry;
+import wardentools.block.CrystalInfuserBlock;
+import wardentools.block.DarkGrassBlock;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
+import wardentools.entity.custom.ModBoatEntity;
+import wardentools.entity.custom.ModChestBoatEntity;
+import wardentools.items.CrystalResonatorItem;
+import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;
 import wardentools.weather.lightning.AbyssLightningRenderer;
 
@@ -38,11 +45,13 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.CONTAGION_INCARNATION_CORPSE.get(),
 				ContagionIncarnationCorpseRenderer::new);
 		event.registerEntityRenderer(ModEntities.ABYSS_LIGHTNING.get(), AbyssLightningRenderer::new);
+		event.registerEntityRenderer(ModEntities.CRYSTAL_GOLEM.get(), CrystalGolemRenderer::new);
+		event.registerEntityRenderer(ModEntities.CRYSTAL_LASER.get(), CrystalLaserRenderer::new);
 	}
 
 	
 	@SubscribeEvent
-	public 	static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
+	public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(DeepLurker.LAYER_LOCATION, DeepLurker::createBodyLayer);
 		event.registerLayerDefinition(PaleWanderer.LAYER_LOCATION, PaleWanderer::createBodyLayer);
 		event.registerLayerDefinition(Protector.LAYER_LOCATION, Protector::createBodyLayer);
@@ -57,5 +66,23 @@ public class ClientModEvents {
 		event.registerLayerDefinition(Shadow.LAYER_LOCATION, Shadow::createBodyLayer);
 		event.registerLayerDefinition(ContagionIncarnationCorpse.LAYER_LOCATION,
 				ContagionIncarnationCorpse::createBodyLayer);
+		event.registerLayerDefinition(CrystalGolem.LAYER_LOCATION, CrystalGolem::createBodyLayer);
+	}
+
+	@SubscribeEvent
+	@SuppressWarnings("removal")
+	public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+		event.register(CrystalInfuserBlock::getColor,
+				BlockRegistry.CRYSTAL_INFUSER.get());
+		event.register(DarkGrassBlock::getColor,
+				BlockRegistry.DARKGRASS_BLOCK.get());
+
+		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.DARKGRASS_BLOCK.get(),
+				RenderType.cutoutMipped());
+	}
+
+	@SubscribeEvent
+	public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+		event.register(CrystalResonatorItem::getColor, ItemRegistry.CRYSTAL_RESONATOR.get());
 	}
 }

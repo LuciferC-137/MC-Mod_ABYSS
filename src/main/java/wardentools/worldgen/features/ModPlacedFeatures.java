@@ -11,6 +11,7 @@ import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
@@ -36,6 +37,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> LAPIS_ORE_KEY = registerKey("lapis_ore");
 	public static final ResourceKey<PlacedFeature> DIAMOND_ORE_KEY = registerKey("diamond_ore");
 	public static final ResourceKey<PlacedFeature> DEEP_ORE_KEY = registerKey("deep_ore");
+	public static final ResourceKey<PlacedFeature> REDSTONE_ORE_KEY = registerKey("redstone_ore");
 	public static final ResourceKey<PlacedFeature> LIQUID_CORRUPTION_LAKE_KEY = registerKey("liquid_corruption_lake");
 	public static final ResourceKey<PlacedFeature> SHARP_ROCK_KEY = registerKey("sharp_rock");
 	public static final ResourceKey<PlacedFeature> MALACHITE_CRISTAL_KEY = registerKey("malachite_cristal_key");
@@ -56,6 +58,12 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> ECHO_VEIN_KEY = registerKey("echo_vein");
 	public static final ResourceKey<PlacedFeature> PALE_CRISTAL_VEIN_KEY = registerKey("pale_vein");
 	public static final ResourceKey<PlacedFeature> AMETHYST_VEIN_KEY = registerKey("amethyst_vein");
+	public static final ResourceKey<PlacedFeature> SCULK_TENDRIL_EMERGENCE_KEY = registerKey("sculk_tendril_emergence");
+	public static final ResourceKey<PlacedFeature> SCULK_TENDRIL_EMERGENCE_DOWN_KEY = registerKey("sculk_tendril_emergence_down");
+	public static final ResourceKey<PlacedFeature> ABYSS_SCULK_PATCH_KEY = registerKey("abyss_sculk_patch");
+	public static final ResourceKey<PlacedFeature> TALL_DEPTH_VINES_KEY = registerKey("tall_depth_vines");
+	public static final ResourceKey<PlacedFeature> CAVE_SCULK_TENDRILS_KEY = registerKey("sculk_tendrils");
+	public static final ResourceKey<PlacedFeature> LIVING_SPROUT_EMERGENCE_KEY = registerKey("living_sprout_emergence");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -123,49 +131,31 @@ public class ModPlacedFeatures {
 		register(context,
 				COAL_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.COAL_ORE),
-				List.of(
-						CountPlacement.of(20),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.triangle(
-								VerticalAnchor.absolute(-24), VerticalAnchor.absolute(192)),
-						BiomeFilter.biome()
-				)
+				oreGeneration(20, -24, 192)
 		);
 
 		register(context,
 				LAPIS_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.LAPIS_ORE),
-				List.of(
-						CountPlacement.of(10),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.triangle(
-								VerticalAnchor.absolute(-44), VerticalAnchor.absolute(54)),
-						BiomeFilter.biome()
-				)
+				oreGeneration(10, -44, 54)
 		);
 
 		register(context,
 				DIAMOND_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.DIAMOND_ORE),
-				List.of(
-						CountPlacement.of(9),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.triangle(
-								VerticalAnchor.absolute(-64), VerticalAnchor.absolute(32)),
-						BiomeFilter.biome()
-				)
+				oreGeneration(9, -64, 32)
 		);
 
 		register(context,
 				DEEP_ORE_KEY,
 				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.DEEP_ORE),
-				List.of(
-						CountPlacement.of(6),
-						InSquarePlacement.spread(),
-						HeightRangePlacement.triangle(
-								VerticalAnchor.absolute(-80), VerticalAnchor.absolute(10)),
-						BiomeFilter.biome()
-				)
+				oreGeneration(6, -80, 10)
+		);
+
+		register(context,
+				REDSTONE_ORE_KEY,
+				context.lookup(Registries.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.REDSTONE_ORE),
+				oreGeneration(10, -50, 50)
 		);
 
 		register(context, LIQUID_CORRUPTION_LAKE_KEY,
@@ -252,6 +242,39 @@ public class ModPlacedFeatures {
 		register(context, AMETHYST_VEIN_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.AMETHYST_VEIN),
 				onCaveWallDown(3, 5));
+
+		register(context, SCULK_TENDRIL_EMERGENCE_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE),
+				List.of(CountPlacement.of(1)));
+
+		register(context, SCULK_TENDRIL_EMERGENCE_DOWN_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE_DOWN),
+				onCaveWallUp(1, 3));
+
+		register(context, ABYSS_SCULK_PATCH_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.ABYSS_SCULK_PATCH),
+				List.of(CountPlacement.of(ConstantInt.of(256)),
+						InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT,
+						BiomeFilter.biome())
+        );
+
+		register(context, TALL_DEPTH_VINES_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.TALL_DEPTH_VINE),
+				List.of(CountPlacement.of(UniformInt.of(6, 12)),
+						InSquarePlacement.spread(),
+						BiomeFilter.biome())
+		);
+
+		register(context, CAVE_SCULK_TENDRILS_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.SCULK_TENDRIL_EMERGENCE),
+				onCaveWallDown(4, 8)
+		);
+
+		register(context, LIVING_SPROUT_EMERGENCE_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.LIVING_SPROUT_EMERGENCE),
+				onCaveWallDown(6, 10)
+		);
+
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {
@@ -270,7 +293,7 @@ public class ModPlacedFeatures {
 				InSquarePlacement.spread(),
 				HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
 				EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(),
-						BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+						BlockPredicate.ONLY_IN_AIR_PREDICATE, 20),
 				BlockPredicateFilter.forPredicate(BlockPredicate.not(
 						BlockPredicate.matchesTag(ModTags.Blocks.CRISTAL_BLOCK))),
 				BiomeFilter.biome()
@@ -283,9 +306,18 @@ public class ModPlacedFeatures {
 				InSquarePlacement.spread(),
 				HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)),
 				EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.solid(),
-						BlockPredicate.ONLY_IN_AIR_PREDICATE, 12),
+						BlockPredicate.ONLY_IN_AIR_PREDICATE, 20),
 				BlockPredicateFilter.forPredicate(BlockPredicate.not(
 						BlockPredicate.matchesTag(ModTags.Blocks.CRISTAL_BLOCK))),
+				BiomeFilter.biome()
+		);
+	}
+
+	private static List<PlacementModifier> oreGeneration(int veinsPerChunk, int minHeight, int maxHeight){
+		return List.of(
+				CountPlacement.of(veinsPerChunk),
+				InSquarePlacement.spread(),
+				HeightRangePlacement.triangle(VerticalAnchor.absolute(minHeight), VerticalAnchor.absolute(maxHeight)),
 				BiomeFilter.biome()
 		);
 	}

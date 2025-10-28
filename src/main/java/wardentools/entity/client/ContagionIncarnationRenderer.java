@@ -26,7 +26,8 @@ import wardentools.particle.ParticleRegistry;
 @OnlyIn(Dist.CLIENT)
 public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnationEntity, ContagionIncarnation>{
 	private static final ResourceLocation CONTAGION_INCARNATION_TEXTURE = 
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/contagion_incarnation.png");
+			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+					"textures/entity/contagion_incarnation/contagion_incarnation.png");
 	private static final float HALF_SQRT_3 = (float)(Math.sqrt(3.0D) / 2.0D);
 	private static final float PARTICLE_DEATH_RADIUS = 2f;
 	private static final float PARTICLE_SPAWN_RADIUS = 4f;
@@ -36,6 +37,7 @@ public class ContagionIncarnationRenderer extends MobRenderer<ContagionIncarnati
 
 	public ContagionIncarnationRenderer(EntityRendererProvider.Context context) {
 		super(context, new ContagionIncarnation(context.bakeLayer(ContagionIncarnation.LAYER_LOCATION)), 3f);
+		this.addLayer(new ContagionIncarnationShellLayer(this));
 		this.addLayer(new ContagionIncarnationEmissiveLayer(this));
 	}
 

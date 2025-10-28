@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wardentools:noctilure_feather"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "wardentools:darktree_leaves"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:wind_journal"
+  }
+}

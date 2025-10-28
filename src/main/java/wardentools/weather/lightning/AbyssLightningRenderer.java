@@ -1,12 +1,7 @@
 package wardentools.weather.lightning;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -17,8 +12,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
-
-import java.util.Objects;
+import wardentools.client.rendering.RenderingUtils;
 
 @OnlyIn(Dist.CLIENT)
 public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity> {
@@ -26,44 +20,6 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity>
     private static final float GREEN = 0.7f;
     private static final float BLUE = 0.9f;
     private static final float OPACITY = 1.f;
-    protected static final RenderStateShard.ShaderStateShard RENDERTYPE_LIGHTNING_SHADER
-            = new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeLightningShader);
-    protected static final RenderStateShard.WriteMaskStateShard COLOR_DEPTH_WRITE
-            = new RenderStateShard.WriteMaskStateShard(true, true);
-    protected static final RenderStateShard.TransparencyStateShard LIGHTNING_TRANSPARENCY
-            = new RenderStateShard.TransparencyStateShard("lightning_transparency", () -> {
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-    }, () -> {
-        RenderSystem.disableBlend();
-        RenderSystem.defaultBlendFunc();
-    });
-    protected static final RenderStateShard.CullStateShard NO_CULL = new RenderStateShard.CullStateShard(false);
-    protected static final RenderStateShard.OutputStateShard WEATHER_TARGET
-            = new RenderStateShard.OutputStateShard("weather_target", () -> {
-        if (Minecraft.useShaderTransparency()) {
-            Objects.requireNonNull(Minecraft.getInstance().levelRenderer.getWeatherTarget()).bindWrite(false);
-        }
-    }, () -> {
-        if (Minecraft.useShaderTransparency()) {
-            Minecraft.getInstance().getMainRenderTarget().bindWrite(false);
-        }
-    });
-    protected static final RenderStateShard.LayeringStateShard NO_FOG_LAYERING
-            = new RenderStateShard.LayeringStateShard("no_fog", FogRenderer::setupNoFog, () -> {  });
-    
-
-    private static final RenderType LIGHTNING = RenderType.create("lightning",
-            DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS,
-            1536, false, true,
-            RenderType.CompositeState.builder().setShaderState(RENDERTYPE_LIGHTNING_SHADER)
-                    .setWriteMaskState(COLOR_DEPTH_WRITE)
-                    .setTransparencyState(LIGHTNING_TRANSPARENCY)
-                    .setOutputState(WEATHER_TARGET)
-                    .setLayeringState(NO_FOG_LAYERING)
-                    .setCullState(NO_CULL)
-                    .createCompositeState(false));
-
 
     public AbyssLightningRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
@@ -92,7 +48,7 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity>
             float xChild =  lengthChild / 2f * (float) Math.cos(angleChild);
             float zChild = lengthChild / 2f * (float) Math.sin(angleChild);
             drawRecursiveLightning(poseStack.last().pose(),
-                    bufferSource.getBuffer(LIGHTNING), randomGenerator,
+                    bufferSource.getBuffer(RenderingUtils.LIGHTNING), randomGenerator,
                     xChild, zChild, lengthChild, thicknessChild, angleChild, depth);
         }
     }
@@ -162,7 +118,7 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity>
             previousXOffset += (float)(randomGenerator.nextInt(11) - 5);
             previousZOffset += (float)(randomGenerator.nextInt(11) - 5);
         }
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(LIGHTNING);
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderingUtils.LIGHTNING);
         Matrix4f transformationMatrix = poseStack.last().pose();
         for (int branch = 0; branch < 4; ++branch) {
             RandomSource branchRandomGenerator = RandomSource.create(lightningEntity.seed);

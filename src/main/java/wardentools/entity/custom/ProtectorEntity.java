@@ -36,6 +36,7 @@ import wardentools.entity.utils.goal.ReturnToInvokerGoal;
 import wardentools.network.PayloadsRecords.ParticlesSounds.ProtectorHeartSynchronize;
 import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceParticleExplosion;
 import wardentools.sounds.ModSounds;
+import wardentools.utils.SaveUtils;
 
 public class ProtectorEntity extends AbstractGolem {
 	public int protectorDeathTime = 0;
@@ -247,22 +248,15 @@ public class ProtectorEntity extends AbstractGolem {
 	public void addAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		if (this.invokerPos != null) {
-			compound.putInt("InvokerPosX", this.invokerPos.getX());
-			compound.putInt("InvokerPosY", this.invokerPos.getY());
-			compound.putInt("InvokerPosZ", this.invokerPos.getZ());
+			SaveUtils.putBlockPos(compound, "InvokerPos", this.invokerPos);
 		}
 	}
 
 	@Override
 	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		if (compound.contains("InvokerPosX")
-				&& compound.contains("InvokerPosY")
-				&& compound.contains("InvokerPosZ")) {
-			int x = compound.getInt("InvokerPosX");
-			int y = compound.getInt("InvokerPosY");
-			int z = compound.getInt("InvokerPosZ");
-			this.invokerPos = new BlockPos(x, y, z);
+		if (compound.contains("InvokerPos")) {
+			this.invokerPos = SaveUtils.readBlockPos(compound, "InvokerPos");
 		}
 	}
 

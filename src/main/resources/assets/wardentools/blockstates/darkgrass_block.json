@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "wardentools:block/darkgrass_block"
+      },
+      {
+        "model": "wardentools:block/darkgrass_block",
+        "y": 90
+      },
+      {
+        "model": "wardentools:block/darkgrass_block",
+        "y": 180
+      },
+      {
+        "model": "wardentools:block/darkgrass_block",
+        "y": 270
+      }
+    ]
+  }
+}

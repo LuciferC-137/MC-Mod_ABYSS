@@ -8,8 +8,9 @@
   "client": [
     "LevelRendererMixin",
     "LocalPlayerMixin",
-    "LogoRendererMixin",
     "MinecraftMusicMixin",
+    "MusicManagerMixin",
+    "BookAccessMixin",
     "MusicManagerMixin"
   ]
 }

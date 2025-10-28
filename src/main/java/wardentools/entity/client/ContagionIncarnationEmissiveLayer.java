@@ -2,6 +2,7 @@ package wardentools.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -16,9 +17,9 @@ import wardentools.entity.custom.ContagionIncarnationEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class ContagionIncarnationEmissiveLayer extends RenderLayer<ContagionIncarnationEntity, ContagionIncarnation> {
-    private static final RenderType EMISSIVE = RenderType.eyes(
+    private static final RenderType SHELL = RenderType.entityTranslucent(
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
-    		"textures/entity/contagion_incarnation_emissive.png"));
+    		"textures/entity/contagion_incarnation/contagion_incarnation_emissive.png"));
 
     public ContagionIncarnationEmissiveLayer(RenderLayerParent<ContagionIncarnationEntity, ContagionIncarnation> renderLayerParent) {
         super(renderLayerParent);
@@ -29,8 +30,8 @@ public class ContagionIncarnationEmissiveLayer extends RenderLayer<ContagionInca
                        int packedLight, @NotNull ContagionIncarnationEntity entity, float limbSwing,
                        float limbSwingAmount, float partialTicks, float ageInTicks,
                        float netHeadYaw, float headPitch) {
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
-        this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(SHELL);
+        this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT,
         		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
     }
 }

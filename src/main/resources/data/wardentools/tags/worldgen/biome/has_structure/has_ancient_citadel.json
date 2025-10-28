@@ -3,6 +3,8 @@
   "values": [
     "wardentools:deep_forest",
     "wardentools:waste_land",
-    "wardentools:white_forest"
+    "wardentools:white_forest",
+    "wardentools:blinding_depth",
+    "wardentools:echo_cave"
   ]
 }

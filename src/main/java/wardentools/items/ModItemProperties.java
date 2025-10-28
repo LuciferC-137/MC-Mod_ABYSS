@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import wardentools.ModMain;
+import wardentools.items.utils.CrystalResonatorPropertyFunction;
 
 @OnlyIn(Dist.CLIENT)
 public class ModItemProperties {
@@ -13,5 +14,12 @@ public class ModItemProperties {
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "blowing"),
                 (stack, level, entity, seed) -> stack.is(ItemRegistry.WHISTLE.get())
                         && ((WhistleItem)stack.getItem()).isUsing() ? 1.0F : 0.0F);
+
+        ItemProperties.register(ItemRegistry.CRYSTAL_RESONATOR.get(),
+                ResourceLocation.withDefaultNamespace("angle"),
+                new CrystalResonatorPropertyFunction(
+                        (level, stack, entity) -> CrystalResonatorItem.getTargetPosition(level, stack)
+                )
+        );
     }
 }

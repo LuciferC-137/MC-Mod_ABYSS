@@ -11,7 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.gui.MenuRegistry;
-import wardentools.gui.menu.slot.CristalFragmentSlot;
+import wardentools.gui.menu.slot.CrystalFragmentSlot;
+import wardentools.misc.Crystal;
 
 import java.util.Objects;
 
@@ -48,20 +49,22 @@ public class DysfunctionningCatalystMenu extends AbstractContainerMenu {
 	}
 
 	private void createBlockEntityInventory(DysfunctionningCatalystBlockEntity be) {
-		ItemStackHandler inventory = be.getInventory();
-		if (inventory == null) return;
-		addSlot(new CristalFragmentSlot(inventory, 0, 15, 15,
-				CristalFragmentSlot.CristalType.CITRINE));
-		addSlot(new CristalFragmentSlot(inventory, 1, 15, 42,
-				CristalFragmentSlot.CristalType.AMETHYST));
-		addSlot(new CristalFragmentSlot(inventory, 2, 15, 70,
-				CristalFragmentSlot.CristalType.PALE_SHARD));
-		addSlot(new CristalFragmentSlot(inventory, 3, 145, 15,
-				CristalFragmentSlot.CristalType.RUBY));
-		addSlot(new CristalFragmentSlot(inventory, 4, 145, 42,
-				CristalFragmentSlot.CristalType.MALACHITE));
-		addSlot(new CristalFragmentSlot(inventory, 5, 145, 70,
-				CristalFragmentSlot.CristalType.ECHO_SHARD));
+        ItemStackHandler inventory = be.getInventory();
+        if (inventory == null) return;
+
+        addSlot(new CrystalFragmentSlot(inventory, 0, 15, 15,
+					Crystal.AMETHYST));
+			addSlot(new CrystalFragmentSlot(inventory, 1, 15, 42,
+					Crystal.CITRINE));
+			addSlot(new CrystalFragmentSlot(inventory, 2, 15, 70,
+					Crystal.ECHO));
+			addSlot(new CrystalFragmentSlot(inventory, 3, 145, 15,
+					Crystal.RUBY));
+			addSlot(new CrystalFragmentSlot(inventory, 4, 145, 42,
+					Crystal.MALACHITE));
+			addSlot(new CrystalFragmentSlot(inventory, 5, 145, 70,
+					Crystal.PALE));
+
 	}
 
 	private void createPlayerInventory(Inventory playerInventory) {
@@ -119,10 +122,10 @@ public class DysfunctionningCatalystMenu extends AbstractContainerMenu {
 
 	public int getCitrineProgression() {return this.data.get(0);}
 	public int getAmethystProgression() {return this.data.get(1);}
-	public int getPaleShardProgression() {return this.data.get(2);}
+	public int getPaleProgression() {return this.data.get(2);}
 	public int getRubyProgression() {return this.data.get(3);}
 	public int getMalachiteProgression() {return this.data.get(4);}
-	public int getEchoShardProgression() {return this.data.get(5);}
+	public int getEchoProgression() {return this.data.get(5);}
 	public int getTotalCharge() {return this.data.get(6);}
 	public int getEyeProgression() {return this.data.get(7);}
 	

@@ -2,6 +2,7 @@ package wardentools.advancement;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
@@ -16,6 +17,7 @@ import wardentools.advancement.criteria.AbyssPortalCriteria;
 import wardentools.advancement.criteria.CorruptionVesselCriteria;
 import wardentools.advancement.criteria.RadianceBringerCriteria;
 import wardentools.advancement.criteria.SummonProtectorCriteria;
+import wardentools.datagen.loot.ModAdvancementLootTables;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.effect.ModEffects;
 import wardentools.entity.ModEntities;
@@ -107,6 +109,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 )
                 .addCriterion("to_the_abyss",
                         ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.ABYSS_LEVEL_KEY))
+                .rewards(AdvancementRewards.Builder.loot(ModAdvancementLootTables.WIND_JOURNAL_LT))
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "the_abyss"), existingFileHelper);
 
         AdvancementHolder cristals = Advancement.Builder.advancement()

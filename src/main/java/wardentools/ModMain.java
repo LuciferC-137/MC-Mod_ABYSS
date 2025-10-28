@@ -8,8 +8,10 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
+import wardentools.datagen.loot.ModLootModifiers;
 import wardentools.gui.MenuRegistry;
 import wardentools.gui.ModCreativeTabs;
+import wardentools.items.PotionRegistry;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
@@ -18,10 +20,13 @@ import wardentools.entity.ModEntities;
 import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.ModFluidTypes;
 import wardentools.items.ItemRegistry;
+import wardentools.items.recipe.ModRecipes;
+import wardentools.datagen.loot.LootTableModifiers;
 import wardentools.loot.WardenLootTableModifier;
 import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.features.ModFeatures;
+import wardentools.worldgen.structure.ModStructureTypes;
 import wardentools.worldgen.tree.ModFoliagePlacers;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 
@@ -30,9 +35,9 @@ import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 public class ModMain {
 	public static final String MOD_ID = "wardentools";
 	public static final String MODNAME = "ABYSS";
-	public static final String VERSION = "1.0.3";
-	private static final Logger LOGGER = LogUtils.getLogger();
-	
+    public static final String VERSION = "1.1.0";
+    private static final Logger LOGGER = LogUtils.getLogger();
+
 	public ModMain(IEventBus bus, ModContainer container) {
 
 		ArmorRegistry.ARMORS.register(bus);
@@ -50,16 +55,21 @@ public class ModMain {
 		ParticleRegistry.PARTICLE_TYPES.register(bus);
 		ModEffects.MOB_EFFECTS.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
+		PotionRegistry.POTIONS.register(bus);
+		ModRecipes.SERIALIZERS.register(bus);
+		ModRecipes.TYPES.register(bus);
+		ModStructureTypes.STRUCTURE_TYPES.register(bus);
+		ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
 
-		NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(this);
         NeoForge.EVENT_BUS.register(WardenLootTableModifier.class);
-	}
+    }
 
-	@SubscribeEvent
-	public void onServerStarting(ServerStartingEvent event)
-	{
-		LOGGER.info("HELLO from server starting");
-	}
+    @SubscribeEvent
+    public void onServerStarting(ServerStartingEvent event)
+    {
+        LOGGER.info("HELLO from server starting");
+    }
 }
 
 

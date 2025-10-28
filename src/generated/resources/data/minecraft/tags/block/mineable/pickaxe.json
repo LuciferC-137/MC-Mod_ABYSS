@@ -6,6 +6,7 @@
     "wardentools:abyssalite_diamond_ore",
     "wardentools:abyssalite_lapis_ore",
     "wardentools:abyssalite_coal_ore",
+    "wardentools:abyssalite_redstone_ore",
     "wardentools:radiance_cristal",
     "wardentools:abyssalite",
     "wardentools:chiseled_abyssalite",
@@ -28,6 +29,8 @@
     "wardentools:black_lantern",
     "wardentools:cracked_abyssalite_bricks_slab",
     "wardentools:cracked_abyssalite_bricks_stair",
-    "wardentools:cracked_abyssalite_bricks_wall"
+    "wardentools:cracked_abyssalite_bricks_wall",
+    "wardentools:sonic_blaster",
+    "wardentools:corrupted_abyssalite"
   ]
 }

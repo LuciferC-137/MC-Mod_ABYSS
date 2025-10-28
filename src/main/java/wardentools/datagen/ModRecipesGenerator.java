@@ -1,15 +1,19 @@
 package wardentools.datagen;
 
+import net.minecraft.advancements.Criterion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.ModMain;
+import wardentools.datagen.utils.RadianceCatalystRecipeBuilder;
 import wardentools.items.ItemRegistry;
 import wardentools.items.armors.ArmorRegistry;
 
@@ -22,6 +26,9 @@ public class ModRecipesGenerator extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
+
+        buildRadianceCatalystRecipes(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.ABYSS_DIVER.get(), 1)
                 .define('D', ItemRegistry.DARK_STICK.get())
                 .define('V', ItemRegistry.CORRUPTED_VESSEL.get())
@@ -126,7 +133,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 ItemRegistry.ABYSSALITE_BRICKS_WALL.get(), ItemRegistry.CHISELED_ABYSSALITE.get());
 
         this.crackedStoneCrafts(recipeOutput, "cracked_abyssalite",
-                ItemRegistry.ABYSSALITE.get(), ItemRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
+                ItemRegistry.ABYSSALITE_BRICKS.get(), ItemRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
                 ItemRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get(),
                 ItemRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.get(),
                 ItemRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get());
@@ -217,6 +224,11 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .unlockedBy("has_item", has(ItemRegistry.BLUE_GLOW_BERRIES.get()))
                 .save(recipeOutput);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.SUGAR)
+                .requires(ItemRegistry.DEPTH_BERRIES.get())
+                .unlockedBy("has_item", has(ItemRegistry.DEPTH_BERRIES.get()))
+                .save(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.PROTECTOR_HEART.get())
                 .define('E', ItemRegistry.PURE_ESSENCE.get())
                 .pattern("EEE")
@@ -229,9 +241,10 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .define('D', ItemRegistry.DARK_STICK.get())
                 .define('V', ItemRegistry.PURE_VESSEL.get())
                 .define('P', ItemRegistry.WHITETREE_PLANKS.get())
-                .pattern("D D")
-                .pattern(" V ")
-                .pattern("P P")
+                .define('G', Items.GLASS)
+                .pattern(" G ")
+                .pattern("DVD")
+                .pattern(" P ")
                 .unlockedBy("has_item", has(ItemRegistry.PURE_VESSEL.get()))
                 .save(recipeOutput);
 
@@ -271,6 +284,32 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("LLL")
                 .unlockedBy("has_item", has(ItemRegistry.CORRUPTED_VESSEL.get()))
                 .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.WIND_JOURNAL.get())
+                .requires(ItemRegistry.NOCTILURE_FEATHER.get())
+                .requires(Items.BOOK)
+                .requires(ItemRegistry.DARKTREE_LEAVES.get())
+                .unlockedBy("has_item", has(ItemRegistry.NOCTILURE_FEATHER.get()))
+                .unlockedBy("has_item", has(ItemRegistry.DARKTREE_LEAVES.get()))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS,
+                        ItemRegistry.CORRUPTED_ABYSSALITE.get(), 2)
+                .requires(ItemRegistry.ABYSSALITE.get())
+                .requires(Items.SCULK)
+                .unlockedBy("has_item", has(ItemRegistry.ABYSSALITE.get()))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.CRYSTAL_RESONATOR.get())
+                .define('A', Items.AMETHYST_SHARD)
+                .define('C', Items.COMPASS)
+                .pattern(" A ")
+                .pattern("ACA")
+                .pattern(" A ")
+                .unlockedBy("has_item", has(Items.COMPASS))
+                .unlockedBy("has_item", has(Items.AMETHYST_SHARD))
+                .save(recipeOutput);
+
     }
 
     protected void allStoneVariants(@NotNull RecipeOutput recipeOutput, String name,
@@ -571,5 +610,39 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("M M")
                 .unlockedBy("has_item", has(material))
                 .save(recipeOutput);
+    }
+
+    private void buildRadianceCatalystRecipes(RecipeOutput recipeOutput) {
+        RadianceCatalystRecipeBuilder.catalyst(
+                Ingredient.of(ItemRegistry.CORRUPTED_VESSEL.get()),
+                new ItemStack(ItemRegistry.PURE_VESSEL.get()),
+                100
+        ).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "pure_vessel_catalyst"));
+
+        RadianceCatalystRecipeBuilder.catalyst(
+                Ingredient.of(ItemRegistry.CORRUPTED_ESSENCE.get()),
+                new ItemStack(ItemRegistry.PURE_ESSENCE.get()),
+                100
+        ).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "pure_essence_catalyst"));
+
+        RadianceCatalystRecipeBuilder.catalyst(
+                Ingredient.of(ItemRegistry.WARDEN_HEART.get()),
+                new ItemStack(ItemRegistry.PROTECTOR_HEART.get()),
+                900
+        ).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "protector_heart_catalyst"));
+
+        RadianceCatalystRecipeBuilder.catalyst(
+                Ingredient.of(ItemRegistry.DYING_PROTECTOR_HEART.get()),
+                new ItemStack(ItemRegistry.PROTECTOR_HEART.get()),
+                600
+        ).save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "protector_heart_from_dying_catalyst"));
+    }
+
+    public static Criterion<?> hasItem(ItemLike item) {
+        return has(item);
     }
 }

@@ -1,0 +1,74 @@
+{
+  "carvers": {
+    "air": "wardentools:abyss_cave"
+  },
+  "downfall": 0.8,
+  "effects": {
+    "fog_color": 2844,
+    "foliage_color": 338482,
+    "grass_color": 609089,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    },
+    "music": {
+      "max_delay": 12000,
+      "min_delay": 6000,
+      "replace_current_music": false,
+      "sound": "wardentools:deep_forest_music"
+    },
+    "particle": {
+      "options": {
+        "type": "wardentools:abyss_ambient"
+      },
+      "probability": 0.0025
+    },
+    "sky_color": 2844,
+    "water_color": 674907,
+    "water_fog_color": 2844
+  },
+  "features": [
+    [
+      "wardentools:liquid_corruption_lake"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "wardentools:coal_ore",
+      "wardentools:lapis_ore",
+      "wardentools:diamond_ore",
+      "wardentools:deep_ore",
+      "wardentools:redstone_ore"
+    ],
+    [
+      "wardentools:abyss_sculk_patch",
+      "wardentools:sculk_tendrils",
+      "wardentools:living_sprout_emergence",
+      "wardentools:sculk_tendril_emergence_down"
+    ],
+    [],
+    [
+      "minecraft:brown_mushroom_normal",
+      "minecraft:red_mushroom_normal",
+      "wardentools:tall_depth_vines"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.2
+}

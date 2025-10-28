@@ -28,7 +28,7 @@ public class CommonModEvents {
 	public static void registerEvent(RegisterEvent event) {
 		ModCriteriaTriggers.init();
 	}
-	
+
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
 		event.enqueueWork(()->{
@@ -49,6 +49,7 @@ public class CommonModEvents {
 		event.put(ModEntities.SHADOW.get(), ShadowEntity.createAttribute().build());
 		event.put(ModEntities.CONTAGION_INCARNATION_CORPSE.get(),
 				ContagionIncarnationCorpseEntity.createAttribute().build());
+		event.put(ModEntities.CRYSTAL_GOLEM.get(), CrystalGolemEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
@@ -93,6 +94,11 @@ public class CommonModEvents {
 				Heightmap.Types.MOTION_BLOCKING,
 				ShadowEntity::canSpawn,
 				RegisterSpawnPlacementsEvent.Operation.OR);
+		event.register(ModEntities.CRYSTAL_GOLEM.get(),
+				SpawnPlacementTypes.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING,
+				CrystalGolemEntity::canSpawn,
+                RegisterSpawnPlacementsEvent.Operation.OR);
     }
 
 	@SubscribeEvent
@@ -108,5 +114,11 @@ public class CommonModEvents {
 				Radiance.Provider::new);
 		Minecraft.getInstance().particleEngine.register(ParticleRegistry.BLACK_CORRUPTION.get(),
 				BlackCorruption.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.SHINE_PARTICLE.get(),
+				ShineParticle.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.GLYPH_PARTICLE.get(),
+				GlyphParticle.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.GLYPH_PARTICLE_ROTATING.get(),
+				GlyphParticleRotating.Provider::new);
 	}
 }

@@ -1,109 +1,111 @@
 package wardentools.blockentity.renderer;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
-import wardentools.ModMain;
+import org.joml.Vector4f;
 import wardentools.blockentity.AbyssPortalBlockEntity;
-
-import java.io.IOException;
+import wardentools.client.rendering.AbyssPortalBuilder;
 
 @OnlyIn(Dist.CLIENT)
 public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortalBlockEntity> {
-    // TEXTURES
-    public static final ResourceLocation ABYSS_ENV_LOCATION
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"textures/misc/abyss_portal_env.png");
-    public static final ResourceLocation ABYSS_PORTAL_LOCATION
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"textures/misc/abyss_portal.png");
 
-    // SHADER
-    public static final ResourceLocation shaderLocation
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "rendertype_abyss_portal");
-    public static final ShaderInstance shader;
-    static {
-        try {
-            shader = new ShaderInstance(Minecraft.getInstance().getResourceManager(),
-                    shaderLocation, DefaultVertexFormat.POSITION);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    protected static final RenderStateShard.ShaderStateShard RENDERTYPE_SHADER
-            = new RenderStateShard.ShaderStateShard(() -> shader);
-
-    // RENDER TYPE
-    private static final RenderType ABYSS_PORTAL
-            = RenderType.create("abyss_portal", DefaultVertexFormat.POSITION,
-            VertexFormat.Mode.QUADS, 1536, false,
-            false,RenderType.CompositeState.builder()
-                    .setShaderState(RENDERTYPE_SHADER)
-                    .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
-                            .add(ABYSS_ENV_LOCATION,
-                                    false, false)
-                            .add(ABYSS_PORTAL_LOCATION,
-                                    false, false).build())
-                    .createCompositeState(false));
-
-
-    public AbyssPortalBlockRenderer(BlockEntityRendererProvider.Context ctx) {
-    }
+    public AbyssPortalBlockRenderer(BlockEntityRendererProvider.Context ctx) {}
 
     @Override
-    public void render(@NotNull AbyssPortalBlockEntity entity, float f1, PoseStack poseStack, MultiBufferSource buffer, int i1, int i2) {
-        Matrix4f matrix4f = poseStack.last().pose();
-        this.renderCube(entity, matrix4f, buffer.getBuffer(this.renderType()));
-    }
+    public void render(@NotNull AbyssPortalBlockEntity entity, float partialTicks,
+                       @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer,
+                       int packedLight, int packedOverlay) {
+        if (entity.getLevel() == null) return;
 
-    private void renderCube(AbyssPortalBlockEntity entity, Matrix4f matrix4f, VertexConsumer consumer) {
-        float f = this.getOffsetDown();
-        float f1 = this.getOffsetUp();
-        this.renderFace(entity, matrix4f, consumer, 0.0F, 1.0F, 0.0F, 1.0F,
-                1.0F, 1.0F, 1.0F, 1.0F, Direction.SOUTH);
-        this.renderFace(entity, matrix4f, consumer, 0.0F, 1.0F, 1.0F, 0.0F,
-                0.0F, 0.0F, 0.0F, 0.0F, Direction.NORTH);
-        this.renderFace(entity, matrix4f, consumer, 1.0F, 1.0F, 1.0F, 0.0F,
-                0.0F, 1.0F, 1.0F, 0.0F, Direction.EAST);
-        this.renderFace(entity, matrix4f, consumer, 0.0F, 0.0F, 0.0F, 1.0F,
-                0.0F, 1.0F, 1.0F, 0.0F, Direction.WEST);
-        this.renderFace(entity, matrix4f, consumer, 0.0F, 1.0F, f, f,
-                0.0F, 0.0F, 1.0F, 1.0F, Direction.DOWN);
-        this.renderFace(entity, matrix4f, consumer, 0.0F, 1.0F, f1, f1,
-                1.0F, 1.0F, 0.0F, 0.0F, Direction.UP);
-    }
+        ClientLevel level = (ClientLevel) entity.getLevel();
+        Minecraft mc = Minecraft.getInstance();
+        Camera camera = mc.gameRenderer.getMainCamera();
 
-    private void renderFace(AbyssPortalBlockEntity blockEntity, Matrix4f matrix4f, VertexConsumer consumer,
-                            float x1, float x2, float y1, float y2, float z1, float z2, float z3, float z4,
-                            Direction direction) {
-        if (blockEntity.shouldRenderFace(direction)) {
-            consumer.addVertex(matrix4f, x1, y1, z1);
-            consumer.addVertex(matrix4f, x2, y1, z2);
-            consumer.addVertex(matrix4f, x2, y2, z3);
-            consumer.addVertex(matrix4f, x1, y2, z4);
+        AbyssPortalBuilder.INSTANCE.updateSkyTexture(level, camera, partialTicks);
+        int skyTex = AbyssPortalBuilder.INSTANCE.getSkyTextureId();
+        if (skyTex == 0) return;
+
+        poseStack.pushPose();
+
+        RenderSystem.enableBlend();
+        RenderSystem.disableCull();
+
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthMask(false);
+
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShaderTexture(0, skyTex);
+
+        Matrix4f projection = RenderSystem.getProjectionMatrix();
+        Matrix4f view = RenderSystem.getModelViewMatrix();
+        Matrix4f model = poseStack.last().pose();
+
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder bb = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+
+        for (Direction dir : Direction.values()) {
+            if (!entity.shouldRenderFace(dir)) continue;
+            emitFace(bb, model, view, projection, dir);
         }
 
+        BufferUploader.drawWithShader(bb.buildOrThrow());
+
+        RenderSystem.enableCull();
+        RenderSystem.disableBlend();
+        poseStack.popPose();
     }
 
-    protected float getOffsetUp() {
-        return 1.0F;
+    private static void emitFace(BufferBuilder bb, Matrix4f model, Matrix4f view, Matrix4f projection, Direction dir) {
+        float x0 = 0f, x1 = 1f, y0 = 0f, y1 = 1f, z0 = 0f, z1 = 1f;
+
+        float[][] corners;
+        switch (dir) {
+            case NORTH -> corners = new float[][] { {x0,y0,z0},{x1,y0,z0},{x1,y1,z0},{x0,y1,z0} };
+            case SOUTH -> corners = new float[][] { {x1,y0,z1},{x0,y0,z1},{x0,y1,z1},{x1,y1,z1} };
+            case WEST  -> corners = new float[][] { {x0,y0,z1},{x0,y0,z0},{x0,y1,z0},{x0,y1,z1} };
+            case EAST  -> corners = new float[][] { {x1,y0,z0},{x1,y0,z1},{x1,y1,z1},{x1,y1,z0} };
+            case DOWN  -> corners = new float[][] { {x0,y0,z0},{x1,y0,z0},{x1,y0,z1},{x0,y0,z1} };
+            case UP    -> corners = new float[][] { {x0,y1,z1},{x1,y1,z1},{x1,y1,z0},{x0,y1,z0} };
+            default    -> { return; }
+        }
+
+        for (float[] c : corners) {
+            float x = c[0], y = c[1], z = c[2];
+            float[] uv = projectToUv(model, view, projection, x, y, z); // UVs from P * V * M
+            bb.addVertex(model, x, y, z).setUv(uv[0], uv[1]).setColor(255, 255, 255, 255);
+        }
     }
 
-    protected float getOffsetDown() {
-        return 0.0F;
-    }
+    // UVs from the same clip transform the shader uses: clip = P * V * M * v
+    private static float[] projectToUv(Matrix4f model, Matrix4f view,
+                                       Matrix4f proj, float x, float y, float z) {
+        Vector4f v = new Vector4f(x, y, z, 1.0f);
+        v.mul(model).mul(view).mul(proj);
 
-    protected RenderType renderType() {
-        return ABYSS_PORTAL;
+        float w = (v.w != 0f) ? v.w : 1e-6f;
+        float ndcX = v.x / w;
+        float ndcY = v.y / w;
+        float u = 0.5f * (ndcX + 1.0f);
+        float vtex = 0.5f * (1.0f - ndcY);
+        if (u < 0f) u = 0f; if (u > 1f) u = 1f;
+        if (vtex < 0f) vtex = 0f; if (vtex > 1f) vtex = 1f;
+        return new float[] { u, vtex };
     }
-
 }
