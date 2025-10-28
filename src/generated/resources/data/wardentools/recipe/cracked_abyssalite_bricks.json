@@ -4,7 +4,7 @@
   "cookingtime": 100,
   "experience": 0.0,
   "ingredient": {
-    "item": "wardentools:abyssalite"
+    "item": "wardentools:abyssalite_bricks"
   },
   "result": {
     "id": "wardentools:cracked_abyssalite_bricks"

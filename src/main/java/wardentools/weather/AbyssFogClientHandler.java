@@ -50,7 +50,11 @@ public class AbyssFogClientHandler {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static float getMaxFogDistance() {
+        if (Minecraft.getInstance() == null || Minecraft.getInstance().options == null) {
+            return 256f;
+        }
         return Minecraft.getInstance().options.renderDistance().get().floatValue() * 16f;
     }
 

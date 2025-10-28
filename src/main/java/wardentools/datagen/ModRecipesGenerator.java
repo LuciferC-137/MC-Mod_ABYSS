@@ -133,7 +133,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 ItemRegistry.ABYSSALITE_BRICKS_WALL.get(), ItemRegistry.CHISELED_ABYSSALITE.get());
 
         this.crackedStoneCrafts(recipeOutput, "cracked_abyssalite",
-                ItemRegistry.ABYSSALITE.get(), ItemRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
+                ItemRegistry.ABYSSALITE_BRICKS.get(), ItemRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
                 ItemRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get(),
                 ItemRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.get(),
                 ItemRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get());
@@ -299,6 +299,17 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .requires(Items.SCULK)
                 .unlockedBy("has_item", has(ItemRegistry.ABYSSALITE.get()))
                 .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.CRYSTAL_RESONATOR.get())
+                .define('A', Items.AMETHYST_SHARD)
+                .define('C', Items.COMPASS)
+                .pattern(" A ")
+                .pattern("ACA")
+                .pattern(" A ")
+                .unlockedBy("has_item", has(Items.COMPASS))
+                .unlockedBy("has_item", has(Items.AMETHYST_SHARD))
+                .save(recipeOutput);
+
     }
 
     protected void allStoneVariants(@NotNull RecipeOutput recipeOutput, String name,
