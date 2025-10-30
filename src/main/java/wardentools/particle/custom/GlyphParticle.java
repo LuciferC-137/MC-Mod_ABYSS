@@ -33,6 +33,7 @@ public class GlyphParticle extends TextureSheetParticle {
         this.goal = goal;
         this.emissive = emissive;
         this.hasGoal = hasGoal;
+        this.pickSprite(spriteSet);
         this.setSpriteFromAge(this.sprites);
         this.setColor(((color >> 16) & 0xFF) / 255F,
                 ((color >> 8) & 0xFF) / 255F,

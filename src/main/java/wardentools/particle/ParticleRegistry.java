@@ -32,7 +32,7 @@ public class ParticleRegistry {
             PARTICLE_TYPES.register("black_corruption", () -> new SimpleParticleType(true));
 
     public static final Supplier<ParticleType<ShineParticleOptions>> SHINE_PARTICLE =
-            registerCustom("amethyst_shine", ShineParticleOptions.CODEC, ShineParticleOptions.STREAM_CODEC);
+            registerCustom("shine", ShineParticleOptions.CODEC, ShineParticleOptions.STREAM_CODEC);
     public static final Supplier<ParticleType<GlyphParticleOptions>> GLYPH_PARTICLE =
             registerCustom("glyph", GlyphParticleOptions.CODEC, GlyphParticleOptions.STREAM_CODEC);
     public static final Supplier<ParticleType<GlyphParticleRotatingOptions>> GLYPH_PARTICLE_ROTATING =
@@ -43,7 +43,7 @@ public class ParticleRegistry {
         registerCustom(String name, MapCodec<T> codec,
                        StreamCodec<RegistryFriendlyByteBuf, T> streamCodec) {
         return PARTICLE_TYPES.register(name, () ->
-                new ParticleType<T>(false) {
+                new ParticleType<T>(true) {
                     @Override
                     public @NotNull MapCodec<T> codec() {
                         return codec;
