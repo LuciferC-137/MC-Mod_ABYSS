@@ -41,7 +41,7 @@ public class WindWhispererBlock extends Block {
     @Override
     public void randomTick(@NotNull BlockState blockState, @NotNull ServerLevel level,
                            @NotNull BlockPos blockPos, @NotNull RandomSource random) {
-        if (WhisperManager.INSTANCE.sendRandomWhisperToAllPlayers(level)) {
+        if (WhisperManager.INSTANCE.sendRandomWhisperToAllPlayers(level, blockPos)) {
             PacketDistributor.sendToPlayersTrackingChunk(level, level.getChunkAt(blockPos).getPos(),
                     new ContagionParticleExplosion(blockPos.getCenter().toVector3f(), 5f,
                             0.5f, 100, true));

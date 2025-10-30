@@ -1,24 +1,20 @@
 package wardentools.misc.wind;
 
-import net.minecraft.core.Holder;
-import net.minecraft.network.chat.Component;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.biome.Biome;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.network.payloads.special_effects.WindWhispererMessageSound;
-import wardentools.sounds.ModSounds;
+import wardentools.network.payloads.special_effects.WindWhisperSendToClient;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
 public class WhisperManager {
     public static final WhisperManager INSTANCE = new WhisperManager();
-    public static final WindWhispers WHISPERS = new WindWhispers();
     private static final int MIN_TIME_BETWEEN_WHISPERS = 500;
     private int nextMinTime = MIN_TIME_BETWEEN_WHISPERS;
     private int timeSinceLastWhisper = 0;
@@ -32,39 +28,21 @@ public class WhisperManager {
         timeSinceLastWhisper++;
     }
 
-    public boolean sendRandomWhisperToAllPlayers(ServerLevel level) {
+    public boolean sendRandomWhisperToAllPlayers(ServerLevel level, BlockPos pos) {
         if (this.timeSinceLastWhisper > nextMinTime) {
             this.timeSinceLastWhisper = 0;
             this.nextMinTime = MIN_TIME_BETWEEN_WHISPERS + level.random.nextInt(MIN_TIME_BETWEEN_WHISPERS);
-            level.players().forEach(WhisperManager::sendRandomWhisperToPlayer);
+            PacketDistributor.sendToPlayersTrackingChunk(level, level.getChunkAt(pos).getPos(),
+                    new WindWhisperSendToClient());
             return true;
         }
         return false;
     }
 
     public static void sendRandomWhisperToPlayer(@NotNull Player player) {
-        if (player.level().isClientSide) {
-            sendRandomWhisperToPlayerLocal(player);
-        } else {
-            sendRandomWhisperToPlayerServer(player);
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return;
         }
-    }
-
-    public static void sendRandomWhisperToPlayerServer(@NotNull Player player) {
-        PacketDistributor.sendToPlayer((ServerPlayer)player, new WindWhispererMessageSound());
-    }
-
-    // This method must only be called externally by packets since this class should only work on server
-    public static void sendRandomWhisperToPlayerLocal(@NotNull Player player) {
-        player.playSound(ModSounds.WIND_WHISPERS.get(), 5f,
-                (player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.2F + 1.0F);
-        Holder<Biome> biomeHolder = player.level().getBiome(player.blockPosition());
-        Component whisper = WHISPERS.getContextualWhisper(biomeHolder);
-        Component windName = Component.translatable("message." + ModMain.MOD_ID + ".windname");
-        sendMessage(player, windName.getString() + " " + whisper.getString());
-    }
-
-    private static void sendMessage(Player player, String message) {
-        player.sendSystemMessage(Component.literal(message));
+        PacketDistributor.sendToPlayer(serverPlayer, new WindWhisperSendToClient());
     }
 }

@@ -19,6 +19,8 @@ import wardentools.network.payloads.TeleportPlayerTo;
 import wardentools.network.payloads.datasync.SyncDataTaskToServer;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
 import wardentools.playerdata.ModDataAttachments;
+import wardentools.playerdata.serializables.CompletedTasks;
+import wardentools.playerdata.serializables.KnownWindWhispers;
 import wardentools.weather.AbyssWeatherEventServer;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
@@ -79,21 +81,25 @@ public class ServerPayloadHandler {
 
     public static void syncTaskData(SyncDataTaskToServer msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
+            CompletedTasks data = ctx.player().getData(ModDataAttachments.COMPLETED_TASKS);
             if (msg.remove()) {
-                ctx.player().getData(ModDataAttachments.COMPLETED_TASKS).removeCompletedTask(msg.taskId());
+                data.removeCompletedTask(msg.taskId());
             } else {
-                ctx.player().getData(ModDataAttachments.COMPLETED_TASKS).addCompletedTask(msg.taskId());
+                data.addCompletedTask(msg.taskId());
             }
+            ctx.player().setData(ModDataAttachments.COMPLETED_TASKS, data);
         }, ctx);
     }
 
     public static void syncWindWhisperData(SyncKnownWhisperToServer msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
+            KnownWindWhispers data = ctx.player().getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
             if (msg.remove()) {
-                ctx.player().getData(ModDataAttachments.KNOWN_WIND_WHISPERS).removeKnownWhisper(msg.whisperId());
+                data.removeKnownWhisper(msg.whisperId());
             } else {
-                ctx.player().getData(ModDataAttachments.KNOWN_WIND_WHISPERS).addKnownWhisper(msg.whisperId());
+                data.addKnownWhisper(msg.whisperId());
             }
+            ctx.player().setData(ModDataAttachments.KNOWN_WIND_WHISPERS, data);
 
         }, ctx);
     }

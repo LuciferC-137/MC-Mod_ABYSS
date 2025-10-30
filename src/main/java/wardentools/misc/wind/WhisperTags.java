@@ -2,7 +2,11 @@ package wardentools.misc.wind;
 
 import net.minecraft.network.chat.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class WhisperTags {
     private final Map<Tag, List<Whisper>> tagMap = new EnumMap<>(Tag.class);

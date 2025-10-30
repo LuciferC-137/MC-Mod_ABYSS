@@ -24,7 +24,6 @@ import wardentools.block.BlockRegistry;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 import wardentools.gui.winscreen.CustomWinScreen;
-import wardentools.misc.wind.WhisperManager;
 import wardentools.misc.wind.WindWhispers;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
@@ -36,6 +35,7 @@ import wardentools.network.payloads.TeleportPlayerTo;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.options.ShineParticleOptions;
 import wardentools.playerdata.ModDataAttachments;
+import wardentools.playerdata.serializables.CompletedTasks;
 import wardentools.playerdata.serializables.KnownWindWhispers;
 import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
@@ -80,11 +80,13 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
 
     public void syncDataTask(SyncDataTaskToClient msg, IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
+            CompletedTasks data = ctx.player().getData(ModDataAttachments.COMPLETED_TASKS);
             if (msg.remove()) {
-                ctx.player().getData(ModDataAttachments.COMPLETED_TASKS).removeCompletedTask(msg.taskId());
+                data.removeCompletedTask(msg.taskId());
             } else {
-                ctx.player().getData(ModDataAttachments.COMPLETED_TASKS).addCompletedTask(msg.taskId());
+                data.addCompletedTask(msg.taskId());
             }
+            ctx.player().setData(ModDataAttachments.COMPLETED_TASKS, data);
         }, ctx);
     }
 
@@ -94,6 +96,7 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
             for (int i : msg.whisperIds()) {
                 data.addKnownWhisper(i);
             }
+            ctx.player().setData(ModDataAttachments.KNOWN_WIND_WHISPERS, data);
         }, ctx);
     }
 
@@ -256,21 +259,22 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
             Level level = ctx.player().level();
             Vector3f startPosition = msg.startPos();
             Vector3f direction = msg.direction();
+            level.playLocalSound(
+                    startPosition.x, startPosition.y, startPosition.z, SoundEvents.WARDEN_SONIC_BOOM,
+                    SoundSource.HOSTILE, 1.0F, 1.0F, false
+            );
             for (int i = 1; i < Mth.floor(direction.length()) + msg.laserLength(); ++i) {
                 Vector3f particlePosition = startPosition.add(direction.mul((float)i));
                 level.addParticle(ParticleTypes.SONIC_BOOM, false,
                         particlePosition.x, particlePosition.y, particlePosition.z, 0.0D, 0.0D, 0.0D);
             }
-            level.playLocalSound(new BlockPos((int)startPosition.x, (int)startPosition.y, (int)startPosition.z),
-                    SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS,
-                    1.0F, 1.0F, false);
         }, ctx);
     }
 
-    public  void windWhispererMessageSound(WindWhispererMessageSound msg, final IPayloadContext ctx) {
+    public  void sendWhisperToClient(WindWhisperSendToClient msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             if (ctx.player().level().isClientSide()) {
-                WhisperManager.sendRandomWhisperToPlayer(ctx.player());
+                WindWhispers.sendRandomWhisperToPlayer(ctx.player());
             }
         }, ctx);
     }

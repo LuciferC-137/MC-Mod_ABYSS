@@ -31,6 +31,10 @@ public class KnownWindWhispers implements INBTSerializable<CompoundTag> {
         return this.whispers;
     }
 
+    public int[] getAllAsArray() {
+        return this.whispers.stream().mapToInt(Integer::intValue).toArray();
+    }
+
     public void copy(KnownWindWhispers other) {
         this.whispers.clear();
         this.whispers.addAll(other.getAll());

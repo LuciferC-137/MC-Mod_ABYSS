@@ -4,15 +4,13 @@ import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import wardentools.tags.ModTags;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@OnlyIn(Dist.CLIENT)
+
 public class ContextualWind {
     private static final Map<TagKey<Biome>, WhisperTags.Tag> biomeToTagMap = Map.of(
             ModTags.Biomes.DEEPFOREST, WhisperTags.Tag.DEEPFOREST,

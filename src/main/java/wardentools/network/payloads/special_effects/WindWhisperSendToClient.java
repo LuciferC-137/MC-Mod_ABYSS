@@ -8,14 +8,14 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.network.CodecBuilders;
 
-public record WindWhispererMessageSound() implements CustomPacketPayload {
+public record WindWhisperSendToClient() implements CustomPacketPayload {
 
-    public static final Type<WindWhispererMessageSound> TYPE
+    public static final Type<WindWhisperSendToClient> TYPE
             = new Type<>(
-                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "wind_whisperer_message_sound"));
+                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "wind_whisper_send_to_client"));
 
-    public static final StreamCodec<ByteBuf, WindWhispererMessageSound> STREAM_CODEC
-            = CodecBuilders.emptyCodec(WindWhispererMessageSound::new);
+    public static final StreamCodec<ByteBuf, WindWhisperSendToClient> STREAM_CODEC
+            = CodecBuilders.emptyCodec(WindWhisperSendToClient::new);
 
     @Override
     public @NotNull Type<? extends CustomPacketPayload> type() {

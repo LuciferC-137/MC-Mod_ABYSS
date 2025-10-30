@@ -55,8 +55,6 @@ public interface IClientPayloadHandler {
 
     void wardenLaserParticleSound(WardenLaserParticleSound msg, final IPayloadContext ctx) ;
 
-    void windWhispererMessageSound(WindWhispererMessageSound msg, final IPayloadContext ctx) ;
-
     void windWhisperSound(WindWhisperSound msg, final IPayloadContext ctx) ;
 
     void particleShineExplosion(ParticleShineExplosion msg, final IPayloadContext ctx);
@@ -66,4 +64,6 @@ public interface IClientPayloadHandler {
     void syncDataTask(SyncDataTaskToClient msg, final IPayloadContext ctx);
 
     void syncKnownWhisper(SyncKnownWhisperToClient msg, final IPayloadContext ctx);
+
+    void sendWhisperToClient(WindWhisperSendToClient msg, final IPayloadContext ctx);
 }

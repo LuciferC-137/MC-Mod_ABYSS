@@ -9,7 +9,6 @@ import wardentools.ModMain;
 import wardentools.network.payloads.*;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
-import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
 import wardentools.network.payloads.special_effects.*;
 
 
@@ -127,13 +126,6 @@ public class ModClientPackets {
 				)
 		);
 		registrar.playToClient(
-				WindWhispererMessageSound.TYPE,
-				WindWhispererMessageSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::windWhispererMessageSound
-				)
-		);
-		registrar.playToClient(
 				WindWhisperSound.TYPE,
 				WindWhisperSound.STREAM_CODEC,
 				new MainThreadPayloadHandler<>(
@@ -190,5 +182,12 @@ public class ModClientPackets {
 						handler::switchCamera
 				)
 		);
+        registrar.playToClient(
+                WindWhisperSendToClient.TYPE,
+                WindWhisperSendToClient.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        handler::sendWhisperToClient
+                )
+        );
 	}
 }

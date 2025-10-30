@@ -153,6 +153,7 @@ public class TaskNoteAccess {
             } else {
                 data.removeCompletedTask(this.id);
             }
+            player.setData(ModDataAttachments.COMPLETED_TASKS, data);
             PacketDistributor.sendToServer(new SyncDataTaskToServer(this.id, remove));
         }
 

@@ -13,7 +13,6 @@ import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.misc.wind.Whisper;
-import wardentools.misc.wind.WhisperManager;
 import wardentools.misc.wind.WhisperTags;
 import wardentools.misc.wind.WindWhispers;
 import wardentools.playerdata.ModDataAttachments;
@@ -163,7 +162,7 @@ public class JournalAccess {
         if (minecraft == null || minecraft.player == null) return List.of();
         List<Component> whispers = new ArrayList<>();
         KnownWindWhispers data = minecraft.player.getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
-        List<Whisper> whispersList = WhisperManager.WHISPERS.whisperTags.getWhispersWithTag(tag);
+        List<Whisper> whispersList = WindWhispers.INSTANCE.whisperTags.getWhispersWithTag(tag);
         for (Whisper whisper : whispersList) {
             if (data.whisperKnown(whisper.globalId())) {
                 whispers.add(baseText((whisper.globalId() + 1 ) + " - "

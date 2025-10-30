@@ -47,8 +47,6 @@ public class DummyClientPayloadHandler implements IClientPayloadHandler {
 
     public void wardenLaserParticleSound(WardenLaserParticleSound msg, final IPayloadContext ctx) {}
 
-    public void windWhispererMessageSound(WindWhispererMessageSound msg, final IPayloadContext ctx) {}
-
     public void windWhisperSound(WindWhisperSound msg, final IPayloadContext ctx) {}
 
     public void particleShineExplosion(ParticleShineExplosion msg, final IPayloadContext ctx) {}
@@ -58,5 +56,7 @@ public class DummyClientPayloadHandler implements IClientPayloadHandler {
     public void syncDataTask(SyncDataTaskToClient msg, IPayloadContext ctx) {}
 
     public void syncKnownWhisper(SyncKnownWhisperToClient msg, IPayloadContext ctx) {}
+
+    public void sendWhisperToClient(WindWhisperSendToClient msg, IPayloadContext ctx) {}
 
 }
