@@ -16,15 +16,17 @@ public class PickUpItemEvent {
 
 	@SubscribeEvent
     public static void onItemPickUp(ItemEntityPickupEvent.Post event) {
-        ItemStack stack = event.getItemEntity().getItem();
+        ItemStack stack = event.getOriginalStack();
         if (stack.isEmpty()) return;
         if (Crystal.isCrystalJewel(stack.getItem())) {
-            Level level = event.getItemEntity().level();
+            Level level = event.getPlayer().level();
             if (!level.isClientSide) {
                 List<CrystalGolemEntity> list = level.getEntitiesOfClass(CrystalGolemEntity.class,
-                        event.getItemEntity().getBoundingBox().inflate(30.0D, 10.0D, 30.0D));
+                        event.getPlayer().getBoundingBox().inflate(30.0D, 10.0D, 30.0D));
                 for (CrystalGolemEntity golem : list) {
-                    golem.choseViolence();
+                    if (!golem.hasGrief()) {
+                        golem.choseViolence();
+                    }
                 }
             }
         }
