@@ -1,2 +1,3 @@
-// 1.21.1	2025-04-03T18:40:09.0231048	Global Loot Modifiers : wardentools
-bc4e4393d8ca5a7ad14dbefd9369539d91ea131a data/neoforge/loot_modifiers/global_loot_modifiers.json
+// 1.21.1	2025-10-30T12:47:45.608082347	Global Loot Modifiers : wardentools
+3e2a837198a7936be3f8b308b81d26e30309b90b data/neoforge/loot_modifiers/global_loot_modifiers.json
+8db3544566f36703139a114fed57cdc97f4679ae data/wardentools/loot_modifiers/stealth_book_from_ancient_city.json

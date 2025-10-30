@@ -382,7 +382,7 @@ public class BlockRegistry {
 					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
 
 	public static final DeferredBlock<Block> BLUE_BUSH = BLOCKS.register("blue_bush",
-			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new BlueBush(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
                     .mapColor(DARK_VEGETATION_COLOR)
                     .noOcclusion()
 					.noCollission()
@@ -668,7 +668,6 @@ public class BlockRegistry {
             () -> new SculkTendrilBlock(UniformInt.of(3, 6),
                     BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)
                             .noOcclusion()
-                            .noLootTable()
                             .dynamicShape().forceSolidOn()
                             .pushReaction(PushReaction.DESTROY)));
 
@@ -682,7 +681,6 @@ public class BlockRegistry {
             = BLOCKS.register("living_sprout",
             () -> new LivingSproutBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)
                     .noOcclusion()
-                    .noLootTable()
                     .sound(SoundType.SCULK_SENSOR).lightLevel((state) -> 1)
                     .emissiveRendering((state, blockGetter, pos) -> LivingSproutBlock.getPhase(state)
                             == SculkSensorPhase.ACTIVE)

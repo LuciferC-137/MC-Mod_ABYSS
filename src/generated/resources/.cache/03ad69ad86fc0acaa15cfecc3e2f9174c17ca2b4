@@ -1,5 +1,7 @@
-// 1.21.1	2025-04-03T18:40:08.9929244	Tags for minecraft:item mod id wardentools
+// 1.21.1	2025-10-30T12:47:45.598436229	Tags for minecraft:item mod id wardentools
 29ed2dcbd1599255607a303305709089499f8809 data/minecraft/tags/item/chest_armor.json
+c493ae2247ad88f06fcc010f8816380c5e3e5a68 data/minecraft/tags/item/compasses.json
+2eb2235c54a005455813d83435e2f5d065ab95bd data/minecraft/tags/item/dampens_vibrations.json
 b6ce86dae9c0863c20ed176110b5c8a0cbed91a6 data/minecraft/tags/item/dirt.json
 29ed2dcbd1599255607a303305709089499f8809 data/minecraft/tags/item/enchantable/chest_armor.json
 c316642b6cd32a31697290e026677e1ad6a653fd data/minecraft/tags/item/enchantable/foot_armor.json

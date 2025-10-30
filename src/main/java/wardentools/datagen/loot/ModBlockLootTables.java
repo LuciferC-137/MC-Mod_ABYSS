@@ -123,6 +123,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     			block -> createDoublePlantShearsDrop(BlockRegistry.DARK_GRASS.get()));
     	this.add(BlockRegistry.DARK_GRASS.get(),
     			block -> createShearsOnlyDrop(BlockRegistry.DARK_GRASS.get()));
+        this.add(BlockRegistry.DEPTH_VINES.get(),
+                block -> createShearsOnlyDrop(BlockRegistry.DEPTH_VINES.get()));
+        this.add(BlockRegistry.DEPTH_VINES_PLANT.get(),
+                block -> createShearsOnlyDrop(BlockRegistry.DEPTH_VINES_PLANT.get()));
 
 		// Ore drop
 		this.add(BlockRegistry.ABYSSALITE_COAL_ORE.get(),
