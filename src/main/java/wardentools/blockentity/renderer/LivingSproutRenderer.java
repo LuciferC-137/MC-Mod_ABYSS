@@ -12,11 +12,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.blockentity.LivingSproutBlockEntity;
 import wardentools.client.model.LivingSproutCoreModel;
 
+@OnlyIn(Dist.CLIENT)
 public class LivingSproutRenderer implements BlockEntityRenderer<LivingSproutBlockEntity> {
     private static final LivingSproutCoreModel model =
 			new LivingSproutCoreModel(LivingSproutCoreModel.createBodyLayer().bakeRoot());

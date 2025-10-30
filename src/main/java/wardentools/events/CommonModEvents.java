@@ -21,7 +21,7 @@ import wardentools.entity.custom.*;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.custom.*;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class CommonModEvents {
 
 	@SubscribeEvent

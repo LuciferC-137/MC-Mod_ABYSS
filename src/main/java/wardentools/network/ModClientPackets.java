@@ -12,7 +12,7 @@ import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
 import wardentools.network.payloads.special_effects.*;
 
 
-@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class ModClientPackets {
 
 	@SubscribeEvent

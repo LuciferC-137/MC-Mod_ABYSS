@@ -15,7 +15,7 @@ import wardentools.worldgen.biome.ModBiomeTagGenerator;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {

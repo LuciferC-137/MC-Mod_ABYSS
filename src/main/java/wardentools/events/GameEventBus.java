@@ -10,7 +10,7 @@ import wardentools.ModMain;
 import wardentools.items.ItemRegistry;
 import wardentools.items.PotionRegistry;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 
 public class GameEventBus {
 

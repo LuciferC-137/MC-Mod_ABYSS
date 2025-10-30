@@ -5,6 +5,7 @@ import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -21,7 +22,8 @@ import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;
 import wardentools.weather.lightning.AbyssLightningRenderer;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@OnlyIn(Dist.CLIENT)
+@EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
 public class ClientModEvents {
 
 	@SubscribeEvent

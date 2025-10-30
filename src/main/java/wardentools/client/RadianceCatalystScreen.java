@@ -1,5 +1,7 @@
 package wardentools.client;
 
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -11,6 +13,7 @@ import wardentools.ModMain;
 import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/radiance_catalyst_menu.png");

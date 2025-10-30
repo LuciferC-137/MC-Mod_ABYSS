@@ -7,11 +7,14 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.client.rendering.RenderingUtils;
 import wardentools.entity.custom.CrystalGolemEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, CrystalGolem>{
 	private static final ResourceLocation CRYSTAL_GOLEM_TEXTURE =
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem.png");

@@ -8,10 +8,13 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.CrystalGolemEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class CrystalGolemRustLayer extends RenderLayer<CrystalGolemEntity, CrystalGolem> {
     private static final RenderType RUST = RenderType.entityTranslucent(ResourceLocation
             .fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem_rust_overlay.png"));

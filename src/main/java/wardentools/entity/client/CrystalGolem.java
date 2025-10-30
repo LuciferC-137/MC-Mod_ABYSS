@@ -5,6 +5,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.animations.CrystalGolemAnimation;
@@ -18,6 +20,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 
+@OnlyIn(Dist.CLIENT)
 @SuppressWarnings("unused")
 public class CrystalGolem extends HierarchicalModel<CrystalGolemEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION

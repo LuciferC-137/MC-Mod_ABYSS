@@ -11,7 +11,7 @@ import wardentools.network.payloads.datasync.SyncDataTaskToServer;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
 
 
-@EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class ModPackets {
 
 	@SubscribeEvent

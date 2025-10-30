@@ -15,12 +15,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.block.GramophoneBlock;
 import wardentools.blockentity.GramophoneBlockEntity;
 import wardentools.client.model.DiscModel;
 
+@OnlyIn(Dist.CLIENT)
 public class GramophoneRenderer implements BlockEntityRenderer<GramophoneBlockEntity> {
     private static final DiscModel MODEL =
 			new DiscModel(DiscModel.createBodyLayer().bakeRoot());

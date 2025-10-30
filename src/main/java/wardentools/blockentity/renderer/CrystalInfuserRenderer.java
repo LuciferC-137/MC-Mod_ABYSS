@@ -10,10 +10,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.CrystalInfuserBlockEntity;
 import wardentools.items.ItemRegistry;
 
+@OnlyIn(Dist.CLIENT)
 public class CrystalInfuserRenderer implements BlockEntityRenderer<CrystalInfuserBlockEntity> {
 
     private static final float scale = 0.35F;

@@ -6,6 +6,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
@@ -13,6 +15,7 @@ import wardentools.gui.menu.DysfunctionningCatalystMenu;
 
 import java.util.Random;
 
+@OnlyIn(Dist.CLIENT)
 public class DysfunctionningCatalystScreen extends AbstractContainerScreen<DysfunctionningCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
