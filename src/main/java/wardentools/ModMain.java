@@ -21,9 +21,8 @@ import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.ModFluidTypes;
 import wardentools.items.ItemRegistry;
 import wardentools.items.recipe.ModRecipes;
-import wardentools.datagen.loot.LootTableModifiers;
-import wardentools.loot.WardenLootTableModifier;
 import wardentools.particle.ParticleRegistry;
+import wardentools.playerdata.ModDataAttachments;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.features.ModFeatures;
 import wardentools.worldgen.structure.ModStructureTypes;
@@ -60,9 +59,9 @@ public class ModMain {
 		ModRecipes.TYPES.register(bus);
 		ModStructureTypes.STRUCTURE_TYPES.register(bus);
 		ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
+        ModDataAttachments.ATTACHMENTS.register(bus);
 
         NeoForge.EVENT_BUS.register(this);
-        NeoForge.EVENT_BUS.register(WardenLootTableModifier.class);
     }
 
     @SubscribeEvent

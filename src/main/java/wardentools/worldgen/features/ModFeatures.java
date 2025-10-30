@@ -36,19 +36,19 @@ public class ModFeatures {
     public static final Supplier<Feature<NoneFeatureConfiguration>> ABYSS_PORTAL
             = FEATURES.register("abyss_portal", () -> new PlaceAbyssPortal(NoneFeatureConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<SculkTendrilsEmergenceConfiguration>> SCULK_TENDRILS_EMERGENCE
+    public static final Supplier<Feature<SculkTendrilsEmergenceConfiguration>> SCULK_TENDRILS_EMERGENCE
             = FEATURES.register("sculk_tendrils_emergence",
                 () -> new SculkTendrilsEmergence(SculkTendrilsEmergenceConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<AbyssSculkPatchConfiguration>> ABYSS_SCULK_PATCH
+    public static final Supplier<Feature<AbyssSculkPatchConfiguration>> ABYSS_SCULK_PATCH
             = FEATURES.register("abyss_sculk_patch",
             () -> new AbyssSculkPatch(AbyssSculkPatchConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<DepthVineConfiguration>> DEPTH_VINE
+    public static final Supplier<Feature<DepthVineConfiguration>> DEPTH_VINE
             = FEATURES.register("depth_vine",
             () -> new DepthVineFeature(DepthVineConfiguration.CODEC));
 
-    public static final RegistryObject<Feature<LivingSproutEmergenceConfiguration>> LIVING_SPROUT_EMERGENCE
+    public static final Supplier<Feature<LivingSproutEmergenceConfiguration>> LIVING_SPROUT_EMERGENCE
             = FEATURES.register("living_sprout_emergence",
             () -> new LivingSproutEmergence(LivingSproutEmergenceConfiguration.CODEC));
 }

@@ -8,10 +8,11 @@ import wardentools.block.BlockRegistry;
 
 import java.util.function.Supplier;
 
+
 public class BlockEntityRegistry {
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
 			DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, ModMain.MOD_ID);
-	
+
 	public static final Supplier<BlockEntityType<RadianceCatalystBlockEntity>> RADIANCE_CATALYST_BLOCK_ENTITY =
 			BLOCK_ENTITIES.register("radiance_catalyst_block_entity",
 					() -> BlockEntityType.Builder.of(RadianceCatalystBlockEntity::new,
@@ -50,27 +51,27 @@ public class BlockEntityRegistry {
 					() -> BlockEntityType.Builder.of(SoulSpawnerBlockEntity::new,
 							BlockRegistry.SOUL_SPAWNER.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<GramophoneBlockEntity>> GRAMOPHONE_BLOCK_ENTITY =
+	public static final Supplier<BlockEntityType<GramophoneBlockEntity>> GRAMOPHONE_BLOCK_ENTITY =
 			BLOCK_ENTITIES.register("gramophone_block_entity",
 					() -> BlockEntityType.Builder.of(GramophoneBlockEntity::new,
 							BlockRegistry.GRAMOPHONE.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<SculkTendrilBlockEntity>> SCULK_TENDRIL_BLOCK_ENTITY =
+	public static final Supplier<BlockEntityType<SculkTendrilBlockEntity>> SCULK_TENDRIL_BLOCK_ENTITY =
 			BLOCK_ENTITIES.register("sculk_tendril_block_entity",
 					() -> BlockEntityType.Builder.of(SculkTendrilBlockEntity::new,
 							BlockRegistry.SCULK_TENDRIL_BLOCK.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<LivingSproutBlockEntity>> LIVING_SPROUT_BLOCK_ENTITY =
+	public static final Supplier<BlockEntityType<LivingSproutBlockEntity>> LIVING_SPROUT_BLOCK_ENTITY =
 			BLOCK_ENTITIES.register("living_sprout_block_entity",
 					() -> BlockEntityType.Builder.of(LivingSproutBlockEntity::new,
 							BlockRegistry.LIVING_SPROUT.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<CrystalInfuserBlockEntity>> CRYSTAL_INFUSER_BLOCK_ENTITY =
+	public static final Supplier<BlockEntityType<CrystalInfuserBlockEntity>> CRYSTAL_INFUSER_BLOCK_ENTITY =
 			BLOCK_ENTITIES.register("crystal_resonator_block_entity",
 					() -> BlockEntityType.Builder.of(CrystalInfuserBlockEntity::new,
 							BlockRegistry.CRYSTAL_INFUSER.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<GolemStoneBlockEntity>> GOLEM_STONE_BLOCK_ENTITY =
+	public static final Supplier<BlockEntityType<GolemStoneBlockEntity>> GOLEM_STONE_BLOCK_ENTITY =
 			BLOCK_ENTITIES.register("golem_stone_block_entity",
 					() -> BlockEntityType.Builder.of(GolemStoneBlockEntity::new,
 							BlockRegistry.GOLEM_STONE.get()).build(null));

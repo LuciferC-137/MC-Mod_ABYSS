@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -176,17 +177,5 @@ public class SculkTendrilBlockEntity extends BlockEntity {
         if (this.level != null) {
             this.level.sendBlockUpdated(this.worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
-    }
-
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(
-                this.worldPosition.getX() - 1F,
-                this.worldPosition.getY() - 1F,
-                this.worldPosition.getZ() - 1F,
-                this.worldPosition.getX() + 1F,
-                this.worldPosition.getY() + 1F,
-                this.worldPosition.getZ() + 1F
-        );
     }
 }

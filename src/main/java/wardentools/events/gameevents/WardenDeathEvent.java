@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
-import wardentools.network.PayloadsRecords.ParticlesSounds.WardenDeathParticle;
+import wardentools.network.payloads.special_effects.WardenDeathParticle;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
 public class WardenDeathEvent {

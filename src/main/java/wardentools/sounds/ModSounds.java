@@ -122,13 +122,14 @@ public class ModSounds {
 				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.ABYSS_THEME.get().getLocation()));
 	}
 
+    public static Holder.Reference<SoundEvent> getReflectionMusicDisc() {
+        return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
+                ResourceKey.create(Registries.SOUND_EVENT, ModSounds.REFLECTION.get().getLocation()));
+    }
+
 	private static ResourceKey<JukeboxSong> createSong(String name) {
 		return ResourceKey.create(Registries.JUKEBOX_SONG,
 				ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
-	}
-	public static Holder.Reference<SoundEvent> getReflectionMusicDisc() {
-		return BuiltInRegistries.SOUND_EVENT.getHolderOrThrow(
-				ResourceKey.create(Registries.SOUND_EVENT, ModSounds.REFLECTION.getId()));
 	}
 
 	private static Supplier<SoundEvent> registerSoundEvents(String name) {

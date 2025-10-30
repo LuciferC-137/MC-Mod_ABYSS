@@ -6,7 +6,9 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.MainThreadPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import wardentools.ModMain;
-import wardentools.network.PayloadsRecords.*;
+import wardentools.network.payloads.*;
+import wardentools.network.payloads.datasync.SyncDataTaskToServer;
+import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
 
 
 @EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -32,11 +34,25 @@ public class ModPackets {
 				)
 		);
 		registrar.playToServer(
-				RequestFogDistanceFromServer.TYPE,
-				RequestFogDistanceFromServer.STREAM_CODEC,
+				RequestStormStateFromServer.TYPE,
+				RequestStormStateFromServer.STREAM_CODEC,
 				new MainThreadPayloadHandler<>(
 						ServerPayloadHandler::sendServerFogDistanceToPlayer
 				)
 		);
+        registrar.playToServer(
+                SyncDataTaskToServer.TYPE,
+                SyncDataTaskToServer.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        ServerPayloadHandler::syncTaskData
+                )
+        );
+        registrar.playToServer(
+                SyncKnownWhisperToServer.TYPE,
+                SyncKnownWhisperToServer.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        ServerPayloadHandler::syncWindWhisperData
+                )
+        );
 	}
 }

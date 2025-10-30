@@ -6,14 +6,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -24,12 +25,18 @@ import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 import wardentools.gui.winscreen.CustomWinScreen;
 import wardentools.misc.wind.WhisperManager;
-import wardentools.network.PayloadsRecords.ParticlesSounds.*;
-import wardentools.network.PayloadsRecords.SendFogDistanceToClient;
-import wardentools.network.PayloadsRecords.ShowWinScreen;
-import wardentools.network.PayloadsRecords.SwitchCamera;
-import wardentools.network.PayloadsRecords.TeleportPlayerTo;
+import wardentools.misc.wind.WindWhispers;
+import wardentools.network.payloads.datasync.SyncDataTaskToClient;
+import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
+import wardentools.network.payloads.special_effects.*;
+import wardentools.network.payloads.SendFogStateToClient;
+import wardentools.network.payloads.ShowWinScreen;
+import wardentools.network.payloads.SwitchCamera;
+import wardentools.network.payloads.TeleportPlayerTo;
 import wardentools.particle.ParticleRegistry;
+import wardentools.particle.options.ShineParticleOptions;
+import wardentools.playerdata.ModDataAttachments;
+import wardentools.playerdata.serializables.KnownWindWhispers;
 import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
 import wardentools.weather.AbyssWeatherEventClient;
@@ -53,9 +60,9 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
         }, ctx);
     }
 
-    public  void updateFogDistance(SendFogDistanceToClient msg, final IPayloadContext ctx) {
+    public  void updateFogDistance(SendFogStateToClient msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            AbyssWeatherEventClient.CLIENT_WEATHER.setServerFogDistance(msg.fogDistance());
+            AbyssWeatherEventClient.CLIENT_WEATHER.setIsStorming(msg.isStorming());
         }, ctx);
     }
 
@@ -67,6 +74,25 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
                 } else if (Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON) {
                     Minecraft.getInstance().options.setCameraType(CameraType.THIRD_PERSON_BACK);
                 }
+            }
+        }, ctx);
+    }
+
+    public void syncDataTask(SyncDataTaskToClient msg, IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            if (msg.remove()) {
+                ctx.player().getData(ModDataAttachments.COMPLETED_TASKS).removeCompletedTask(msg.taskId());
+            } else {
+                ctx.player().getData(ModDataAttachments.COMPLETED_TASKS).addCompletedTask(msg.taskId());
+            }
+        }, ctx);
+    }
+
+    public void syncKnownWhisper(SyncKnownWhisperToClient msg, IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            KnownWindWhispers data = ctx.player().getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
+            for (int i : msg.whisperIds()) {
+                data.addKnownWhisper(i);
             }
         }, ctx);
     }
@@ -258,8 +284,41 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
         }, ctx);
     }
 
+    public  void particleShineExplosion(ParticleShineExplosion msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            if (ctx.player().level().isClientSide()) {
+                Level level = ctx.player().level();
+                ShineParticleOptions particles = new ShineParticleOptions(Vec3.ZERO, msg.color(),
+                        true, false);
+                particleExplosion(level, msg.pos(), msg.radius(),
+                        msg.speed(), msg.particleNumber(), particles, false);
+            }
+        }, ctx);
+    }
+
+    public void livingSproutBurst(LivingSproutBurst msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            Level level = ctx.player().level();
+            BlockPos pos = new BlockPos((int)msg.pos().x, (int)msg.pos().y, (int)msg.pos().z);
+            // Spawn particle in the center
+            for (int i = 0; i < 10; i++) {
+                double offsetX = (level.random.nextFloat() - 0.5F) * 0.2F;
+                double offsetY = level.random.nextFloat() * 0.2F;
+                double offsetZ = (level.random.nextFloat() - 0.5F) * 0.2F;
+                level.addParticle(ParticleTypes.WHITE_ASH,
+                        (float)pos.getX() + 0.5F + offsetX,
+                        (float)pos.getY() + 0.5F + offsetY,
+                        (float)pos.getZ() + 0.5F + offsetZ,
+                        0F, 0.05F, 0F);
+            }
+            particleExplosion(level, msg.pos(),
+                    0.3F, 0.1F, 40,
+                    ParticleRegistry.CORRUPTION.get(), false);
+        }, ctx);
+    }
+
     private  void particleExplosion(Level level, Vector3f pos, float radius,
-                                          float speed, int particleNumber, SimpleParticleType particle,
+                                          float speed, int particleNumber, ParticleOptions particle,
                                           boolean implosion) {
         for (int i = 0; i < particleNumber; i++) {
             double theta = level.random.nextFloat() * Math.PI * 2;

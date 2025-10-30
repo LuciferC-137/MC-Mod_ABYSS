@@ -45,8 +45,8 @@ import wardentools.entity.utils.IncarnationBodyRotationControl;
 import wardentools.entity.utils.IncarnationMoveControl;
 import wardentools.entity.utils.goal.IncarnationAttackGoal;
 import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
-import wardentools.network.PayloadsRecords.ParticlesSounds.ThemeIncarnationStart;
-import wardentools.network.PayloadsRecords.ParticlesSounds.ThemeIncarnationStop;
+import wardentools.network.payloads.special_effects.ThemeIncarnationStart;
+import wardentools.network.payloads.special_effects.ThemeIncarnationStop;
 import wardentools.sounds.ModSounds;
 import wardentools.utils.SaveUtils;
 

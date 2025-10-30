@@ -2,7 +2,6 @@ package wardentools.items;
 
 
 import net.minecraft.world.item.*;
-import net.minecraftforge.registries.RegistryObject;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -691,7 +690,7 @@ public class ItemRegistry {
 
 	public static final DeferredItem<Item> CRYSTAL_GOLEM_SPAWN_EGG =
             ITEMS.register("crystal_golem_spawn_egg",
-					() -> new CustomSpawnEggItem(ModEntities.CRYSTAL_GOLEM, 0x6e7474, 0x74673b,
+					() -> new DeferredSpawnEggItem(ModEntities.CRYSTAL_GOLEM, 0x6e7474, 0x74673b,
 							new Item.Properties()));
 
 	public static final DeferredItem<Item> GOLEM_STONE =

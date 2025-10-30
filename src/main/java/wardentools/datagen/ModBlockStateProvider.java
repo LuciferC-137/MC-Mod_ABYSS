@@ -6,11 +6,8 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -174,11 +171,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(blockRegistryObject.get())
                 .partialState().with(BlueBush.BERRY_STATE, BlueBush.BerryState.NONE)
                 .modelForState().modelFile(models().cross(
-                        ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                        BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         modLoc("block/blue_bush")).renderType("cutout")).addModel()
                 .partialState().with(BlueBush.BERRY_STATE, BlueBush.BerryState.BLUE_BERRY)
                 .modelForState().modelFile(models().cross(
-                        ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath() + "_berry",
+                        BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath() + "_berry",
                         modLoc("block/blue_bush_berry")).renderType("cutout")).addModel();
     }
 
@@ -201,36 +198,21 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 
-    private void registerDropExperienceBlockWithItem(
-            DeferredBlock<DropExperienceBlock> blockRegistryObject) {
-        simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
-    }
-
     private void registerTopBottomSideBlock(DeferredBlock<? extends Block> blockRegistryObject,
                                             String side, String top, String bottom) {
         ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + side);
         ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top);
         ResourceLocation bottomTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + bottom);
         ModelFile modelFile = models().cubeBottomTop(
-                ForgeRegistries.BLOCKS.getKey(
+                BuiltInRegistries.BLOCK.getKey(
                         blockRegistryObject.get()).getPath(), sideTexture, bottomTexture, topTexture);
-        simpleBlockWithItem(blockRegistryObject.get(), modelFile);
-    }
-
-    private void registerDarkGrassBlock(DeferredBlock<Block> blockRegistryObject) {
-        ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darkgrass_block_side");
-        ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/darkgrass_block_top");
-        ResourceLocation bottomTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/darkdirt");
-        ModelFile modelFile = models().cubeBottomTop(
-        		BuiltInRegistries.BLOCK.getKey(
-        				blockRegistryObject.get()).getPath(), sideTexture, bottomTexture, topTexture);
         simpleBlockWithItem(blockRegistryObject.get(), modelFile);
     }
 
     private void registerCustomSidesDirectionalBlock(DeferredBlock<? extends Block> block,
                                                      String left, String right, String top,
                                                      String bottom, String back, String front) {
-        String name = ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+        String name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
 
         ResourceLocation leftTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + left);
         ResourceLocation rightTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + right);
@@ -273,11 +255,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(blockRegistryObject.get())
                 .partialState().with(BlockStateProperties.BERRIES, false)
                 .modelForState().modelFile(models().cross(
-                        ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath(),
+                        BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         modLoc("block/" + noBerriesTexture)).renderType("cutout")).addModel()
                 .partialState().with(BlockStateProperties.BERRIES, true)
                 .modelForState().modelFile(models().cross(
-                        ForgeRegistries.BLOCKS.getKey(blockRegistryObject.get()).getPath() + "_berries",
+                        BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath() + "_berries",
                         modLoc("block/" + berriesTexture)).renderType("cutout")).addModel();
     }
 
@@ -287,7 +269,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                                                             String left_off, String right_off,
                                                             String top_off, String bottom_off,
                                                             String back_off, String front_off) {
-        String name = ForgeRegistries.BLOCKS.getKey(block.get()).getPath();
+        String name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
 
         ResourceLocation leftTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + left);
         ResourceLocation rightTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + right);

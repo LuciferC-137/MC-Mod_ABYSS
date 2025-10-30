@@ -13,8 +13,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.entity.custom.ParasyteEntity;
-import wardentools.network.PayloadsRecords.ParticlesSounds.IncarnationEmergeSound;
-import wardentools.network.PayloadsRecords.ParticlesSounds.IncarnationSonicStrikeSound;
+import wardentools.network.payloads.special_effects.IncarnationEmergeSound;
+import wardentools.network.payloads.special_effects.IncarnationSonicStrikeSound;
 
 import javax.annotation.Nullable;
 

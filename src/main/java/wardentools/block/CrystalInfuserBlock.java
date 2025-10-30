@@ -28,14 +28,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.CrystalInfuserBlockEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.misc.Crystal;
-import wardentools.network.PacketHandler;
-import wardentools.network.ParticulesSoundsEffects.ParticleShineExplosion;
+import wardentools.network.payloads.special_effects.ParticleShineExplosion;
 import wardentools.particle.ModParticleUtils;
 import wardentools.particle.options.GlyphParticleRotatingOptions;
 import wardentools.particle.options.ShineParticleOptions;
@@ -281,9 +281,9 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
             double baseY = pos.getY();
             double baseZ = pos.getZ();
             Vec3 center = positions[4].scale(1.0F / 16.0F).add(baseX, baseY, baseZ);
-            PacketHandler.sendToAllClient(new
-                    ParticleShineExplosion(center, 0.1F, explosionSpeed,
-                    100, getCrystalColor(state)));
+            PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level, level.getChunkAt(pos).getPos(),
+                    new ParticleShineExplosion(center.toVector3f(), 0.1F, explosionSpeed,
+                            100, getCrystalColor(state)));
         }
     }
 

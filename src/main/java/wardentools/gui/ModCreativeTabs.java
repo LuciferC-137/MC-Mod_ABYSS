@@ -257,7 +257,7 @@ public class ModCreativeTabs {
                         getItemsByTag(Tag.WEAPONS).forEach(item -> event.accept(item.get()));
                     }).build());
 
-    public static final RegistryObject<CreativeModeTab> CRYSTALS
+    public static final Supplier<CreativeModeTab> CRYSTALS
             = CREATIVE_MODE_TABS.register("crystals",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.CITRINE_FRAGMENT.get()))
                     .title(Component.translatable("creativetab.crystals"))

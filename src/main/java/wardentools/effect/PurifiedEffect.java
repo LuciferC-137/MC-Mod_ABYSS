@@ -14,10 +14,8 @@ public class PurifiedEffect extends MobEffect {
     @Override
     public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
         if (!entity.level().isClientSide) {
-            if (ModEffects.CORRUPTED.getHolder().isPresent()) {
-                if (entity.hasEffect(ModEffects.CORRUPTED.getHolder().get())) {
-                    entity.removeEffect(ModEffects.CORRUPTED.getHolder().get());
-                }
+            if (entity.hasEffect(ModEffects.CORRUPTED)) {
+                entity.removeEffect(ModEffects.CORRUPTED);
             }
         }
         return super.applyEffectTick(entity, amplifier);

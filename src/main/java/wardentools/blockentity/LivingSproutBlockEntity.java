@@ -184,13 +184,11 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
             BlockState state = LivingSproutBlockEntity.this.getBlockState();
             if (LivingSproutBlock.canActivate(state)) {
                 if (!LivingSproutBlockEntity.this.isPulsing()) {
-                    if (ModSounds.HEART_BEAT.getHolder().isPresent()) {
-                        BlockPos blockPos = LivingSproutBlockEntity.this.getBlockPos();
-                        level.playSeededSound(null, blockPos.getX(),
-                                blockPos.getY(), blockPos.getZ(),
-                                ModSounds.HEART_BEAT.getHolder().get(),
-                                SoundSource.BLOCKS, 5F, 1F, 1L);
-                    }
+                    BlockPos blockPos = LivingSproutBlockEntity.this.getBlockPos();
+                    level.playSeededSound(null, blockPos.getX(),
+                            blockPos.getY(), blockPos.getZ(),
+                            ModSounds.HEART_BEAT.get(),
+                            SoundSource.BLOCKS, 5F, 1F, 1L);
                 }
                 LivingSproutBlock.activate(level, LivingSproutBlockEntity.this.getBlockPos());
             }

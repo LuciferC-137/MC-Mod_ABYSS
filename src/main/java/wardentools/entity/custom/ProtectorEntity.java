@@ -33,8 +33,8 @@ import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import wardentools.entity.utils.goal.ChooseMonsterTargetGoal;
 import wardentools.entity.utils.goal.ReturnToInvokerGoal;
-import wardentools.network.PayloadsRecords.ParticlesSounds.ProtectorHeartSynchronize;
-import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceParticleExplosion;
+import wardentools.network.payloads.special_effects.ProtectorHeartSynchronize;
+import wardentools.network.payloads.special_effects.RadianceParticleExplosion;
 import wardentools.sounds.ModSounds;
 import wardentools.utils.SaveUtils;
 

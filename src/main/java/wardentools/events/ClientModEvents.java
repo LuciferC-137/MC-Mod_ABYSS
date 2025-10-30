@@ -2,19 +2,20 @@ package wardentools.events;
 
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.CrystalInfuserBlock;
 import wardentools.block.DarkGrassBlock;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
-import wardentools.entity.custom.ModBoatEntity;
-import wardentools.entity.custom.ModChestBoatEntity;
 import wardentools.items.CrystalResonatorItem;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;
@@ -70,7 +71,7 @@ public class ClientModEvents {
 	}
 
 	@SubscribeEvent
-	@SuppressWarnings("removal")
+	@SuppressWarnings("deprecation")
 	public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
 		event.register(CrystalInfuserBlock::getColor,
 				BlockRegistry.CRYSTAL_INFUSER.get());

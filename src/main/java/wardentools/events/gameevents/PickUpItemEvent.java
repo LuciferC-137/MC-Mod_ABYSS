@@ -2,27 +2,27 @@ package wardentools.events.gameevents;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import wardentools.ModMain;
 import wardentools.entity.custom.CrystalGolemEntity;
 import wardentools.misc.Crystal;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
+@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class PickUpItemEvent {
 
 	@SubscribeEvent
-    public static void onItemPickUp(EntityItemPickupEvent event) {
-        ItemStack stack = event.getItem().getItem();
+    public static void onItemPickUp(ItemEntityPickupEvent.Post event) {
+        ItemStack stack = event.getItemEntity().getItem();
         if (stack.isEmpty()) return;
         if (Crystal.isCrystalJewel(stack.getItem())) {
-            Level level = event.getEntity().level();
+            Level level = event.getItemEntity().level();
             if (!level.isClientSide) {
                 List<CrystalGolemEntity> list = level.getEntitiesOfClass(CrystalGolemEntity.class,
-                        event.getItem().getBoundingBox().inflate(30.0D, 4.0D, 30.0D));
+                        event.getItemEntity().getBoundingBox().inflate(30.0D, 10.0D, 30.0D));
                 for (CrystalGolemEntity golem : list) {
                     golem.choseViolence();
                 }

@@ -22,9 +22,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
-import wardentools.network.PacketHandler;
-import wardentools.network.ParticulesSoundsEffects.WardenLaserParticleAndSoundPacket;
+import wardentools.network.payloads.special_effects.WardenLaserParticleSound;
 import wardentools.tags.ModTags;
 
 import javax.annotation.Nullable;
@@ -118,8 +118,9 @@ public class SonicBlaster extends DirectionalBlock {
 
         AABB aabb = sonicHitBox(facing, origin, target);
 
-        PacketHandler.sendToAllClient(new WardenLaserParticleAndSoundPacket(
-                origin, direction, (int) LASER_LENGTH));
+        PacketDistributor.sendToPlayersTrackingChunk(level,
+                level.getChunkAt(pos).getPos(),
+                new WardenLaserParticleSound(origin.toVector3f(), direction.toVector3f(), (int) LASER_LENGTH));
 
         for (Entity entity : level.getEntities(null, aabb)) {
             if (entity instanceof LivingEntity livingEntity) {

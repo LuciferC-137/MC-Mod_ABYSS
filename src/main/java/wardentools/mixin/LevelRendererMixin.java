@@ -15,7 +15,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.world.level.material.FogType;
 import wardentools.weather.AbyssFogClientHandler;
-import wardentools.weather.AbyssWeatherEvent;
+import wardentools.weather.AbyssWeatherEventClient;
 import wardentools.worldgen.dimension.ModDimensions;
 
 import static wardentools.client.rendering.LevelRendererUtils.*;
@@ -24,24 +24,24 @@ import static wardentools.client.rendering.LevelRendererUtils.*;
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
 	@Shadow private ClientLevel level;
+    @Shadow private int ticks;
 	
 	@Inject(method = "renderSky", at = @At("HEAD"))
-	private void onRenderSky(Matrix4f pose, Matrix4f matrix,
-			float time, Camera cam, boolean bool, Runnable runnable, CallbackInfo ci) {
+	private void onRenderSky(Matrix4f frustumMatrix, Matrix4f proj,
+			float partialTick, Camera cam, boolean isFoggy, Runnable skyFogSetup, CallbackInfo ci) {
         if (cam.getEntity().level().dimension() != ModDimensions.ABYSS_LEVEL_KEY) return;
-        int BRIGHTNESS = (int)(230f * AbyssWeatherEvent.CLIENT_WEATHER.currentFogDistance()
+        int BRIGHTNESS = (int)(230f * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
                 / AbyssFogClientHandler.getMaxFogDistance());
-		LevelRenderer levelRenderer = (LevelRenderer) (Object) this;
 		if (level == null) return;
-		if (level.effects().renderSky(level, levelRenderer.getTicks(),
-				time, cam, pose, bool, runnable)) {
+		if (this.level.effects().renderSky(this.level, this.ticks, partialTick,
+                frustumMatrix, cam, proj, isFoggy, skyFogSetup)) {
 			return;
 		}
-		runnable.run();
+		skyFogSetup.run();
 	    FogType fogtype = cam.getFluidInCamera();
 	    if (fogtype != FogType.POWDER_SNOW && fogtype != FogType.LAVA) {
 	    	if (level.dimension() == ModDimensions.ABYSS_LEVEL_KEY) {
-				renderSky(level, pose, BRIGHTNESS);
+				renderSky(level, frustumMatrix, BRIGHTNESS);
 	    	}
 	    }
     }

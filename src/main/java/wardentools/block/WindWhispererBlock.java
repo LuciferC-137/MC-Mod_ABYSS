@@ -12,7 +12,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.misc.wind.WhisperManager;
-import wardentools.network.PayloadsRecords.ParticlesSounds.ContagionParticleExplosion;
+import wardentools.network.payloads.special_effects.ContagionParticleExplosion;
 
 public class WindWhispererBlock extends Block {
     private static final VoxelShape SHAPE_BOTTOM = Block.box(4.5, 1.0, 4.5, 11.5, 2.0, 11.5);

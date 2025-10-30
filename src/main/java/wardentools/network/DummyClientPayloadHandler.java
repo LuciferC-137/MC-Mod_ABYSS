@@ -2,16 +2,18 @@ package wardentools.network;
 
 
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import wardentools.network.PayloadsRecords.ParticlesSounds.*;
-import wardentools.network.PayloadsRecords.SendFogDistanceToClient;
-import wardentools.network.PayloadsRecords.ShowWinScreen;
-import wardentools.network.PayloadsRecords.SwitchCamera;
+import wardentools.network.payloads.datasync.SyncDataTaskToClient;
+import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
+import wardentools.network.payloads.special_effects.*;
+import wardentools.network.payloads.SendFogStateToClient;
+import wardentools.network.payloads.ShowWinScreen;
+import wardentools.network.payloads.SwitchCamera;
 
 public class DummyClientPayloadHandler implements IClientPayloadHandler {
 
     public void showWinScreen(ShowWinScreen msg, final IPayloadContext ctx) {}
 
-    public void updateFogDistance(SendFogDistanceToClient msg, final IPayloadContext ctx) {}
+    public void updateFogDistance(SendFogStateToClient msg, final IPayloadContext ctx) {}
 
     public void switchCamera(SwitchCamera msg, final IPayloadContext ctx) {}
 
@@ -48,5 +50,13 @@ public class DummyClientPayloadHandler implements IClientPayloadHandler {
     public void windWhispererMessageSound(WindWhispererMessageSound msg, final IPayloadContext ctx) {}
 
     public void windWhisperSound(WindWhisperSound msg, final IPayloadContext ctx) {}
+
+    public void particleShineExplosion(ParticleShineExplosion msg, final IPayloadContext ctx) {}
+
+    public void livingSproutBurst(LivingSproutBurst msg, final IPayloadContext ctx) {}
+
+    public void syncDataTask(SyncDataTaskToClient msg, IPayloadContext ctx) {}
+
+    public void syncKnownWhisper(SyncKnownWhisperToClient msg, IPayloadContext ctx) {}
 
 }

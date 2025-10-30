@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.effect.ModEffects;
 import wardentools.items.clientutils.WardenHeartFoilManager;
 import wardentools.misc.WardenLaserAttack;
-import wardentools.network.PayloadsRecords.ParticlesSounds.WardenLaserParticleSound;
+import wardentools.network.payloads.special_effects.WardenLaserParticleSound;
 
 public class WardenHeartItem extends Item {
 	

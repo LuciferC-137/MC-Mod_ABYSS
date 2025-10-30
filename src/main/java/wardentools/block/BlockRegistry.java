@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SculkSensorPhase;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraftforge.registries.RegistryObject;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.world.level.material.MapColor;
@@ -50,14 +49,15 @@ public class BlockRegistry {
 
 
 	public static final DeferredBlock<Block> DEEP_CRISTAL = BLOCKS.register("deepcristal",
-			()->new CristalBlock(7.0F, 3.0F, BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+			()->new CrystalBlock(7.0F, 3.0F, 4, Crystal.ECHO,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 					.requiresCorrectToolForDrops()
                     .mapColor(MapColor.COLOR_BLACK)
                     .strength(30.0F, 900.0F)
 					));
 
 	public static final DeferredBlock<Block> RADIANCE_CRISTAL = BLOCKS.register("radiance_cristal",
-			() -> new RadianceCristalBlock(10.0F, 5.0F,
+			() -> new RadianceCrystalBlock(10.0F, 5.0F,
 					BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
 					.requiresCorrectToolForDrops()
 					.lightLevel((state) -> 11)
@@ -122,14 +122,16 @@ public class BlockRegistry {
                             .lightLevel((state) -> LIGHT_DARK_TREE)));
 	
 	public static final DeferredBlock<Block> DARKTREE_SLAB = BLOCKS.register("darktree_slab",
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)
                             .mapColor(DARKTREE_COLOR)
                             .lightLevel((state) -> LIGHT_DARK_TREE)));
 
 
 	public static final DeferredBlock<Block> DARKTREE_BUTTON = BLOCKS.register("darktree_button",
-                    .mapColor(DARKTREE_COLOR)
-                    .lightLevel((state) -> LIGHT_DARK_TREE)));
+            () -> new ButtonBlock(BlockSetType.OAK, 10,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+                            .mapColor(DARKTREE_COLOR)
+                            .lightLevel((state) -> LIGHT_DARK_TREE)));
 
 
 	
@@ -163,7 +165,7 @@ public class BlockRegistry {
  
 	public static final DeferredBlock<Block> DARKTREE_LEAVES = BLOCKS.register("darktree_leaves",
 			() -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
-                    .mapColor(DARKTREE_COLOR)
+                    .mapColor(DARKTREE_FOLIAGE_COLOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE + 2)) {
 
 				@Override
@@ -446,7 +448,7 @@ public class BlockRegistry {
 			() -> new DropExperienceBlock(UniformInt.of(7,10),
 					BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE).strength(6,9)));
 
-    public static final RegistryObject<RedStoneOreBlock> ABYSSALITE_REDSTONE_ORE = REGISTAR.register("abyssalite_redstone_ore",
+    public static final DeferredBlock<RedStoneOreBlock> ABYSSALITE_REDSTONE_ORE = BLOCKS.register("abyssalite_redstone_ore",
             () -> new RedStoneOreBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_ORE)
                     .strength(5, 8)));
 
@@ -533,8 +535,8 @@ public class BlockRegistry {
                     .requiresCorrectToolForDrops()
 					.lightLevel((state) -> 6)));
 
-	public static final RegistryObject<Block> MALACHITE
-            = REGISTAR.register("malachite",
+	public static final DeferredBlock<Block> MALACHITE
+            = BLOCKS.register("malachite",
             () -> new CrystalBlock(7.0F, 3.0F, 6, Crystal.MALACHITE,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
                             .requiresCorrectToolForDrops()
@@ -666,6 +668,7 @@ public class BlockRegistry {
             () -> new SculkTendrilBlock(UniformInt.of(3, 6),
                     BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)
                             .noOcclusion()
+                            .noLootTable()
                             .dynamicShape().forceSolidOn()
                             .pushReaction(PushReaction.DESTROY)));
 
@@ -679,6 +682,7 @@ public class BlockRegistry {
             = BLOCKS.register("living_sprout",
             () -> new LivingSproutBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SCULK)
                     .noOcclusion()
+                    .noLootTable()
                     .sound(SoundType.SCULK_SENSOR).lightLevel((state) -> 1)
                     .emissiveRendering((state, blockGetter, pos) -> LivingSproutBlock.getPhase(state)
                             == SculkSensorPhase.ACTIVE)

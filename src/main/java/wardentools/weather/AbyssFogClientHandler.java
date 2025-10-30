@@ -3,10 +3,10 @@ package wardentools.weather;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import wardentools.network.PacketHandler;
-import wardentools.weather.network.RequestFogDistanceUpdateFromServer;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
+import wardentools.network.payloads.RequestStormStateFromServer;
 
 /**
 This class allows to interpolate visually the fog during storms.
@@ -24,7 +24,7 @@ public class AbyssFogClientHandler {
 
     public void updateFogDistanceOnTick(Level level) {
         if (this.lastUpdate == 0) {
-            PacketHandler.sendToServer(new RequestFogDistanceUpdateFromServer());
+            PacketDistributor.sendToServer(new RequestStormStateFromServer());
             this.lastUpdate = UPDATE_INTERVAL;
         } else {
             this.lastUpdate--;

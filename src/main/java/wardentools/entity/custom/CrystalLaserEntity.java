@@ -64,9 +64,9 @@ public class CrystalLaserEntity extends Entity {
     }
 
     @Override
-    public void onAddedToWorld() {
+    public void onAddedToLevel() {
         this.playBlastSound();
-        super.onAddedToWorld();
+        super.onAddedToLevel();
     }
 
     public void tick() {
@@ -347,9 +347,9 @@ public class CrystalLaserEntity extends Entity {
     }
 
     @Override
-    public void onRemovedFromWorld() {
+    public void onRemovedFromLevel() {
         this.unlitAllCrystals();
-        super.onRemovedFromWorld();
+        super.onRemovedFromLevel();
     }
 
     @Override

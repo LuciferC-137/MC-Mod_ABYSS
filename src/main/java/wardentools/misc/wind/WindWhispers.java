@@ -4,13 +4,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.biome.Biome;
-import wardentools.network.PacketHandler;
-import wardentools.playerdata.whispers.KnownWhispersDataProvider;
-import wardentools.playerdata.whispers.WhisperDataSyncServerPacket;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
+import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
+import wardentools.playerdata.ModDataAttachments;
+import wardentools.playerdata.serializables.KnownWindWhispers;
 
 import javax.annotation.Nullable;
 import java.util.*;
 
+@OnlyIn(Dist.CLIENT)
 public class WindWhispers {
 	private final Map<Integer, Whisper> whispers = new HashMap<>();
     public final WhisperTags whisperTags = new WhisperTags();
@@ -32,13 +36,12 @@ public class WindWhispers {
     public @Nullable Whisper getNewRandomContextualWhisper(WhisperTags.Tag tag) {
         if (Minecraft.getInstance().player == null) return null;
         List<Whisper> availableWhispers = new ArrayList<>();
-        Minecraft.getInstance().player.getCapability(KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
-            for (Whisper whisper : whisperTags.getContextualWhispers(tag)) {
-                if (!data.knowsWhisper(whisper.globalId())) {
-                    availableWhispers.add(whisper);
-                }
+        KnownWindWhispers data = Minecraft.getInstance().player.getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
+        for (Whisper whisper : whisperTags.getContextualWhispers(tag)) {
+            if (!data.whisperKnown(whisper.globalId())) {
+                availableWhispers.add(whisper);
             }
-        });
+        }
         if (availableWhispers.isEmpty()) return null;
         Random rand = new Random();
         Whisper whisper = availableWhispers.get(rand.nextInt(availableWhispers.size()));
@@ -56,13 +59,11 @@ public class WindWhispers {
 
     public static void addWhisperIdToPlayer(Whisper whisper) {
         if (Minecraft.getInstance().player != null) {
-            Minecraft.getInstance().player.getCapability(
-                    KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
-                if (!data.knowsWhisper(whisper.globalId())) {
-                    data.addKnownWhisper(whisper.globalId());
-                }
-            });
-            PacketHandler.sendToServer(new WhisperDataSyncServerPacket(whisper.globalId()));
+            KnownWindWhispers data = Minecraft.getInstance().player.getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
+            if (!data.whisperKnown(whisper.globalId())) {
+                data.addKnownWhisper(whisper.globalId());
+            }
+            PacketDistributor.sendToServer(new SyncKnownWhisperToServer(whisper.globalId(), false));
         }
     }
 

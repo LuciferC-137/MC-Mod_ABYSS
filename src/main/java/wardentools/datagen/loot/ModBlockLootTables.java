@@ -184,7 +184,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                                 .when(LootItemRandomChanceCondition.randomChance(0.5f))));
     }
 
-	private LootTable.Builder createBlueBushLoot(RegistryObject<Block> bushBlock, RegistryObject<Item> berryItem) {
+	private LootTable.Builder createBlueBushLoot(DeferredBlock<Block> bushBlock, DeferredItem<Item> berryItem) {
 		return LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
@@ -200,7 +200,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 	}
 
 
-	private LootTable.Builder createBlackLanternItemDrop(RegistryObject<Block> block) {
+	private LootTable.Builder createBlackLanternItemDrop(DeferredBlock<Block> block) {
 		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return LootTable.lootTable()
 				.withPool(

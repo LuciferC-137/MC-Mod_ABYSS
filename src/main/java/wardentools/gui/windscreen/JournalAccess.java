@@ -8,15 +8,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.misc.wind.Whisper;
 import wardentools.misc.wind.WhisperManager;
 import wardentools.misc.wind.WhisperTags;
 import wardentools.misc.wind.WindWhispers;
-import wardentools.playerdata.whispers.KnownWhispersDataProvider;
+import wardentools.playerdata.ModDataAttachments;
+import wardentools.playerdata.serializables.KnownWindWhispers;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -161,18 +162,17 @@ public class JournalAccess {
     private List<Component> getWhispersTextByTag(Minecraft minecraft, WhisperTags.Tag tag){
         if (minecraft == null || minecraft.player == null) return List.of();
         List<Component> whispers = new ArrayList<>();
-        minecraft.player.getCapability(KnownWhispersDataProvider.WHISPERS_CAPABILITY).ifPresent(data -> {
-            List<Whisper> whispersList = WhisperManager.WHISPERS.whisperTags.getWhispersWithTag(tag);
-            for (Whisper whisper : whispersList) {
-                if (data.knowsWhisper(whisper.globalId())) {
-                    whispers.add(baseText((whisper.globalId() + 1 ) + " - "
-                            + whisper.whisper().getString() + "\n"));
-                } else {
-                    whispers.add(baseText((whisper.globalId() + 1)+  " - " +
-                            WindWhispers.getLockedString() + "\n", false, true));
-                }
+        KnownWindWhispers data = minecraft.player.getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
+        List<Whisper> whispersList = WhisperManager.WHISPERS.whisperTags.getWhispersWithTag(tag);
+        for (Whisper whisper : whispersList) {
+            if (data.whisperKnown(whisper.globalId())) {
+                whispers.add(baseText((whisper.globalId() + 1 ) + " - "
+                        + whisper.whisper().getString() + "\n"));
+            } else {
+                whispers.add(baseText((whisper.globalId() + 1)+  " - " +
+                        WindWhispers.getLockedString() + "\n", false, true));
             }
-        });
+        }
         return whispers;
     }
 

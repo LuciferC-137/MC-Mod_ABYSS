@@ -24,7 +24,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.AbyssPortalBlockEntity;
-import wardentools.network.PayloadsRecords.ShowWinScreen;
+import wardentools.network.payloads.ShowWinScreen;
 import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;

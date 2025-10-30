@@ -1,6 +1,6 @@
 package wardentools.tags;
 
-import net.minecraft.tags.BiomeTags;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +35,7 @@ public class ModTags {
         public static final TagKey<Biome> PALE_CAVES = register("pale_caves");
 
         private static TagKey<Biome> register(String name) {
-            return BiomeTags.create(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+            return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
         }
     }
 }

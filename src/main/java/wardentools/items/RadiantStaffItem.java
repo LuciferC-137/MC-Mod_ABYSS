@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.advancement.ModCriteriaTriggers;
-import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceParticleExplosion;
+import wardentools.network.payloads.special_effects.RadianceParticleExplosion;
 import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 
 public class RadiantStaffItem extends Item {

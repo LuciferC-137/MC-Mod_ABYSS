@@ -2,7 +2,6 @@ package wardentools.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -23,13 +22,13 @@ import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.LivingSproutBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ParasyteEntity;
-import wardentools.network.PacketHandler;
-import wardentools.network.ParticulesSoundsEffects.LivingSproutBurstPacket;
+import wardentools.network.payloads.special_effects.LivingSproutBurst;
 import wardentools.tags.ModTags;
 
 public class LivingSproutBlock extends Block implements EntityBlock {
@@ -145,11 +144,8 @@ public class LivingSproutBlock extends Block implements EntityBlock {
 
     public static void burst(Level level, BlockPos pos) {
         if (!level.isClientSide) {
-            level.players().stream().filter(player -> player.distanceToSqr(pos.getCenter()) < 32)
-                    .forEach((player) -> {
-                        PacketHandler.sendToClient(new LivingSproutBurstPacket(pos),
-                                (ServerPlayer)player);
-                    });
+            PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level, level.getChunkAt(pos).getPos(),
+                    new LivingSproutBurst(pos.getCenter().toVector3f()));
             int parasyteNumber = level.random.nextInt(2, 4);
             for (int i = 0; i < parasyteNumber; i++) {
                 ParasyteEntity parasyte = new ParasyteEntity(ModEntities.PARASYTE.get(), level);

@@ -30,7 +30,7 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ProtectorHeartItem;
-import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceParticleExplosion;
+import wardentools.network.payloads.special_effects.RadianceParticleExplosion;
 
 import java.util.Objects;
 

@@ -31,7 +31,7 @@ public class DataGenerators {
         ModDataBuilderProvider dataBuilder = new ModDataBuilderProvider(packOutput, lookupProvider);
         generator.addProvider(event.includeServer(), dataBuilder);
 
-        CompletableFuture<HolderLookup.Provider> combinedLookup = dataBuilder.getFullRegistries();
+        CompletableFuture<HolderLookup.Provider> combinedLookup = dataBuilder.getRegistryProvider();
 
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));

@@ -4,8 +4,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import wardentools.tags.ModTags;
 
 import java.util.Map;
@@ -28,7 +28,7 @@ public class ContextualWind {
     );
 
     public static WhisperTags.Tag getTagForBiome(Holder<Biome> biomeHolder) {
-        return getTagForBiome(biomeHolder.getTagKeys());
+        return getTagForBiome(biomeHolder.tags());
     }
 
     private static WhisperTags.Tag getTagForBiome(Stream<TagKey<Biome>> biome) {

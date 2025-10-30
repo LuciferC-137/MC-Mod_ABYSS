@@ -12,8 +12,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
-import wardentools.network.PayloadsRecords.ParticlesSounds.WindWhisperSound;
-import wardentools.network.PayloadsRecords.SendFogDistanceToClient;
+import wardentools.network.payloads.special_effects.WindWhisperSound;
+import wardentools.network.payloads.SendFogStateToClient;
 import wardentools.weather.lightning.AbyssLightningEntity;
 
 import java.util.HashSet;
@@ -142,11 +142,11 @@ public class AbyssWeatherManager {
     }
 
     public void sendServerFogDistanceToAllClients() {
-        PacketDistributor.sendToAllPlayers(new SendFogDistanceToClient(this.isStorming));
+        PacketDistributor.sendToAllPlayers(new SendFogStateToClient(this.isStorming));
     }
 
     public void sendServerFogDistanceToClient(ServerPlayer player) {
-        PacketDistributor.sendToPlayer(player, new SendFogDistanceToClient(this.isStorming));
+        PacketDistributor.sendToPlayer(player, new SendFogStateToClient(this.isStorming));
     }
 }
 

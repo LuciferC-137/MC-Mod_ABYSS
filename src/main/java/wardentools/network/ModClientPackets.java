@@ -6,8 +6,11 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.MainThreadPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import wardentools.ModMain;
-import wardentools.network.PayloadsRecords.*;
-import wardentools.network.PayloadsRecords.ParticlesSounds.*;
+import wardentools.network.payloads.*;
+import wardentools.network.payloads.datasync.SyncDataTaskToClient;
+import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
+import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
+import wardentools.network.payloads.special_effects.*;
 
 
 @EventBusSubscriber(modid = ModMain.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
@@ -137,6 +140,34 @@ public class ModClientPackets {
 						handler::windWhisperSound
 				)
 		);
+        registrar.playToClient(
+                ParticleShineExplosion.TYPE,
+                ParticleShineExplosion.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        handler::particleShineExplosion
+                )
+        );
+        registrar.playToClient(
+                LivingSproutBurst.TYPE,
+                LivingSproutBurst.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        handler::livingSproutBurst
+                )
+        );
+        registrar.playToClient(
+                SyncDataTaskToClient.TYPE,
+                SyncDataTaskToClient.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        handler::syncDataTask
+                )
+        );
+        registrar.playToClient(
+                SyncKnownWhisperToClient.TYPE,
+                SyncKnownWhisperToClient.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        handler::syncKnownWhisper
+                )
+        );
 		// ----------------------- CLIENT GAME PACKETS -----------------------------
 		registrar.playToClient(
 				ShowWinScreen.TYPE,
@@ -146,8 +177,8 @@ public class ModClientPackets {
 				)
 		);
 		registrar.playToClient(
-				SendFogDistanceToClient.TYPE,
-				SendFogDistanceToClient.STREAM_CODEC,
+				SendFogStateToClient.TYPE,
+				SendFogStateToClient.STREAM_CODEC,
 				new MainThreadPayloadHandler<>(
 						handler::updateFogDistance
 				)

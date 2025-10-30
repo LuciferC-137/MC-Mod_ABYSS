@@ -15,7 +15,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.network.PayloadsRecords.SwitchAchievement;
+import wardentools.network.payloads.SwitchAchievement;
 import wardentools.sounds.ModMusics;
 
 import java.util.Random;

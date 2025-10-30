@@ -13,9 +13,12 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
-import wardentools.network.PayloadsRecords.RequestFogDistanceFromServer;
-import wardentools.network.PayloadsRecords.SwitchAchievement;
-import wardentools.network.PayloadsRecords.TeleportPlayerTo;
+import wardentools.network.payloads.RequestStormStateFromServer;
+import wardentools.network.payloads.SwitchAchievement;
+import wardentools.network.payloads.TeleportPlayerTo;
+import wardentools.network.payloads.datasync.SyncDataTaskToServer;
+import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
+import wardentools.playerdata.ModDataAttachments;
 import wardentools.weather.AbyssWeatherEventServer;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
@@ -66,11 +69,32 @@ public class ServerPayloadHandler {
         }, ctx);
     }
 
-    public static void sendServerFogDistanceToPlayer(RequestFogDistanceFromServer msg, final IPayloadContext ctx) {
+    public static void sendServerFogDistanceToPlayer(RequestStormStateFromServer msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             if (ctx.player() instanceof ServerPlayer serverPlayer) {
                 AbyssWeatherEventServer.WEATHER_MANAGER.sendServerFogDistanceToClient(serverPlayer);
             }
+        }, ctx);
+    }
+
+    public static void syncTaskData(SyncDataTaskToServer msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            if (msg.remove()) {
+                ctx.player().getData(ModDataAttachments.COMPLETED_TASKS).removeCompletedTask(msg.taskId());
+            } else {
+                ctx.player().getData(ModDataAttachments.COMPLETED_TASKS).addCompletedTask(msg.taskId());
+            }
+        }, ctx);
+    }
+
+    public static void syncWindWhisperData(SyncKnownWhisperToServer msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            if (msg.remove()) {
+                ctx.player().getData(ModDataAttachments.KNOWN_WIND_WHISPERS).removeKnownWhisper(msg.whisperId());
+            } else {
+                ctx.player().getData(ModDataAttachments.KNOWN_WIND_WHISPERS).addKnownWhisper(msg.whisperId());
+            }
+
         }, ctx);
     }
 

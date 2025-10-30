@@ -33,9 +33,9 @@ import wardentools.items.ItemRegistry;
 import wardentools.items.recipe.ModRecipes;
 import wardentools.items.recipe.RadianceCatalystRecipe;
 import wardentools.items.recipe.RadianceCatalystRecipeInput;
-import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystChargedParticleSound;
-import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystChargingParticleSound;
-import wardentools.network.PayloadsRecords.ParticlesSounds.RadianceCatalystPurifyingParticleSound;
+import wardentools.network.payloads.special_effects.RadianceCatalystChargedParticleSound;
+import wardentools.network.payloads.special_effects.RadianceCatalystChargingParticleSound;
+import wardentools.network.payloads.special_effects.RadianceCatalystPurifyingParticleSound;
 import wardentools.particle.ParticleRegistry;
 
 

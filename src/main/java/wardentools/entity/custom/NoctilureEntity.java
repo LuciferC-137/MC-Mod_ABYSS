@@ -47,7 +47,7 @@ import wardentools.entity.utils.goal.LandGoal;
 import wardentools.entity.utils.goal.RandomFlyGoal;
 import wardentools.entity.utils.goal.TakeOffGoal;
 import wardentools.items.ItemRegistry;
-import wardentools.network.PayloadsRecords.SwitchCamera;
+import wardentools.network.payloads.SwitchCamera;
 import wardentools.sounds.ModSounds;
 
 import java.util.Optional;
