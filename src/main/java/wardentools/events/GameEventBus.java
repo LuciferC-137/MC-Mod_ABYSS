@@ -1,6 +1,8 @@
 package wardentools.events;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -18,9 +20,12 @@ public class GameEventBus {
     public static void registerBrewingRecipes(RegisterBrewingRecipesEvent event) {
         PotionBrewing.Builder builder = event.getBuilder();
 
+        Holder<Potion> purifiedPotionHolder = BuiltInRegistries.POTION
+                .wrapAsHolder(PotionRegistry.PURIFIED_POTION.get());
+
         builder.addMix(Potions.AWKWARD,
                 ItemRegistry.WANDERER_PAW.get(),
-                Holder.direct(PotionRegistry.PURIFIED_POTION.get()));
+                purifiedPotionHolder);
 
         builder.addMix(Potions.AWKWARD,
                 ItemRegistry.LURKER_EYE.get(),
