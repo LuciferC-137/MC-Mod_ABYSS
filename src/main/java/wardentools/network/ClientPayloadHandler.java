@@ -234,7 +234,7 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
 
     public  void themeIncarnationStart(ThemeIncarnationStart msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            AbyssMusicHelper.playPriorityMusicLooping(ModMusics.INCARNATION_THEME);//, 2505); // the music duration is 2520, -20 to avoid gap
+            AbyssMusicHelper.playPriorityMusicLooping(ModMusics.INCARNATION_THEME, 2505); // the music duration is 2520, -20 to avoid gap
         }, ctx);
     }
 

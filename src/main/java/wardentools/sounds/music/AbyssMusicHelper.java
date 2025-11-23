@@ -9,14 +9,14 @@ import wardentools.worldgen.dimension.ModDimensions;
 import javax.annotation.Nullable;
 
 /**
- * Classe utilitaire pour contrôler la musique dans la dimension Abyss depuis n'importe où dans le code.
+ * Utility class to control music in the Abyss dimension from anywhere in the code.
  */
 @OnlyIn(Dist.CLIENT)
 public class AbyssMusicHelper {
 
     /**
-     * Récupère l'instance d'AbyssMusicManager depuis le MusicManager via le mixin.
-     * Cette méthode utilise l'accessor créé par le mixin.
+     * Retrieves the AbyssMusicManager instance from the MusicManager via the mixin.
+     * This method uses the accessor created by the mixin.
      */
     @Nullable
     private static AbyssMusicManager getManager() {
@@ -28,7 +28,7 @@ public class AbyssMusicHelper {
     }
 
     /**
-     * Vérifie si le joueur est actuellement dans la dimension Abyss.
+     * Checks whether the player is currently in the Abyss dimension.
      */
     public static boolean isInAbyssDimension() {
         Minecraft mc = Minecraft.getInstance();
@@ -36,34 +36,34 @@ public class AbyssMusicHelper {
     }
 
     /**
-     * Lance une musique prioritaire avec fade-in.
-     * Cette musique interrompra la musique d'ambiance et jouera jusqu'à sa fin.
+     * Plays a priority music with fade-in.
+     * This music will interrupt ambient music and play until it ends.
      *
-     * @param music Le son à jouer
+     * @param music The sound to play
      */
     public static void playPriorityMusic(Music music) {
         AbyssMusicManager manager = getManager();
         if (manager != null && isInAbyssDimension()) {
-            manager.playPriorityMusic(music, false);
+            manager.playPriorityMusic(music, false, 0);
         }
     }
 
     /**
-     * Lance une musique prioritaire en boucle avec fade-in.
-     * Cette musique jouera indéfiniment jusqu'à ce qu'elle soit arrêtée manuellement.
+     * Plays a looping priority music with fade-in.
+     * This music will play indefinitely until stopped manually.
      *
-     * @param music La musique à jouer
+     * @param music The music to play
      */
-    public static void playPriorityMusicLooping(Music music) {
+    public static void playPriorityMusicLooping(Music music, int loopDuration) {
         AbyssMusicManager manager = getManager();
         if (manager != null && isInAbyssDimension()) {
-            manager.playPriorityMusic(music,true);
+            manager.playPriorityMusic(music,true, loopDuration);
         }
     }
 
     /**
-     * Arrête la musique prioritaire avec un fade-out.
-     * La musique d'ambiance reprendra automatiquement.
+     * Stops the priority music with a fade-out.
+     * Ambient music will resume automatically.
      */
     public static void stopPriorityMusic() {
         AbyssMusicManager manager = getManager();
@@ -73,7 +73,7 @@ public class AbyssMusicHelper {
     }
 
     /**
-     * Arrête immédiatement la musique prioritaire sans fade-out.
+     * Stops the priority music immediately without fade-out.
      */
     public static void stopPriorityMusicImmediate() {
         AbyssMusicManager manager = getManager();
@@ -83,12 +83,10 @@ public class AbyssMusicHelper {
     }
 
     /**
-     * Vérifie si une musique prioritaire est en cours de lecture.
+     * Checks if a priority music is currently playing.
      */
     public static boolean isPriorityMusicPlaying() {
         AbyssMusicManager manager = getManager();
         return manager != null && manager.isPriorityMusicPlaying();
     }
 }
-
-
