@@ -39,6 +39,7 @@ import wardentools.playerdata.serializables.CompletedTasks;
 import wardentools.playerdata.serializables.KnownWindWhispers;
 import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
+import wardentools.sounds.music.AbyssMusicHelper;
 import wardentools.weather.AbyssWeatherEventClient;
 
 @OnlyIn(Dist.CLIENT)
@@ -233,15 +234,12 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
 
     public  void themeIncarnationStart(ThemeIncarnationStart msg, final IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            Minecraft.getInstance().getMusicManager().stopPlaying();
-            Minecraft.getInstance().getMusicManager().startPlaying(ModMusics.INCARNATION_THEME);
+            AbyssMusicHelper.playPriorityMusicLooping(ModMusics.INCARNATION_THEME);//, 2505); // the music duration is 2520, -20 to avoid gap
         }, ctx);
     }
 
     public  void themeIncarnationStop(ThemeIncarnationStop msg, final IPayloadContext ctx) {
-        handleDataOnNetwork(() -> {
-            Minecraft.getInstance().getMusicManager().stopPlaying(ModMusics.INCARNATION_THEME);
-        }, ctx);
+        handleDataOnNetwork(AbyssMusicHelper::stopPriorityMusic, ctx);
     }
 
     public  void protectorHeartSynchronize(ProtectorHeartSynchronize msg, final IPayloadContext ctx) {

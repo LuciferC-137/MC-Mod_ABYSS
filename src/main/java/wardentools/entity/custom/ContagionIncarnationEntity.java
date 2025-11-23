@@ -96,7 +96,6 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     private BlockPos catalystPos = new BlockPos(0, 0, 0);
     private BlockPos lastSonicStrikePos = new BlockPos(0, 0, 0);
     private int deferredSonicStrikeTick = 0;
-    private int tickSinceLastMusicPlayed = 0;
 
 	public ContagionIncarnationEntity(EntityType<? extends Monster> entity, Level level) {
 		super(entity, level);
@@ -188,20 +187,12 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 			this.handleAnimationStates();
             this.handleSonicStrikeParticleEffect();
 		} else {
-            if (this.hasBeenSummonedByCatalyst()) this.clientMusicManager();
             this.handleSpawnLogic();
             this.updateSynchronizedTicks();
             this.randomSonicAttackTrigger();
         }
 		super.tick();
 	}
-
-    private void clientMusicManager() {
-        if (this.tickSinceLastMusicPlayed >= MUSIC_DURATION) {
-            this.tickSinceLastMusicPlayed = 0;
-            PacketDistributor.sendToPlayersTrackingEntity(this, new ThemeIncarnationStart());
-        } else this.tickSinceLastMusicPlayed++;
-    }
 
     private void handleSonicStrikeParticleEffect() {
         if (this.getSonicStrikeTick() == SONIC_STRIKE_DURATION - 1) {
