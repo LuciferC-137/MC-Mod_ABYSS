@@ -54,6 +54,11 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 	private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
 	@Nullable
 	private UUID persistentAngerTarget;
+    private static final float MAX_FLAP_ANGLE = 27f * ((float)Math.PI / 180F); // Rad
+    private boolean wingOnAscending = true;
+    private float wingAngle = 0f; // Rad
+    private float prevWingAngle = 0f;
+    private float clientPartialTick = 0f;
 
 	public TemperEntity(EntityType<? extends TamableAnimal> entity, Level level) {
 		super(entity, level);
@@ -93,6 +98,7 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 		}
 		if (level().isClientSide()) {
 			this.attackAnimationState.animateWhen(this.getAttackTick() > 0, this.tickCount);
+            this.flap(2.5F + (float)this.getDeltaMovement().lengthSqr() * 200F);
 		}
 		dispawnIfOwnerNotRadianceBringer();
 		super.tick();
@@ -194,6 +200,25 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 		this.invoker = player;
 		this.tame(player);
 	}
+
+    private void flap(float flapSpeed){
+        this.prevWingAngle = this.wingAngle;
+        float newAngle = this.wingAngle + (this.wingOnAscending ? flapSpeed : -flapSpeed) * ((float)Math.PI / 180F);
+        if (newAngle > MAX_FLAP_ANGLE){
+            this.wingOnAscending = false;
+        } else if (newAngle < -MAX_FLAP_ANGLE) {
+            this.wingOnAscending = true;
+        }
+        this.wingAngle = newAngle;
+    }
+
+    public float getWingAngle() {
+        return Mth.lerp(this.clientPartialTick, prevWingAngle, wingAngle);
+    }
+
+    public void setClientPartialTick(float pt) {
+        this.clientPartialTick = pt;
+    }
 
 	public Player getPlayerInvoker(){
 		return this.invoker;
