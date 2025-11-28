@@ -34,7 +34,7 @@ import wardentools.worldgen.tree.ModTrunkPlacerTypes;
 public class ModMain {
 	public static final String MOD_ID = "wardentools";
 	public static final String MODNAME = "ABYSS";
-    public static final String VERSION = "1.1.0";
+    public static final String VERSION = "1.1.2";
     private static final Logger LOGGER = LogUtils.getLogger();
 
 	public ModMain(IEventBus bus, ModContainer container) {

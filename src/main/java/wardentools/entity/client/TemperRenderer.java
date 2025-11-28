@@ -32,9 +32,10 @@ public class TemperRenderer extends MobRenderer<TemperEntity, Temper>{
 	}
 	
 	@Override
-	public void render(@NotNull TemperEntity pEntity, float pEntityYaw, float pPartialTicks,
+	public void render(@NotNull TemperEntity temper, float pEntityYaw, float pPartialTicks,
 					   @NotNull PoseStack pMatrixStack, @NotNull MultiBufferSource pBuffer, int pPackedLight) {
-		super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
+        temper.setClientPartialTick(pPartialTicks);
+		super.render(temper, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
 	}
 
 }

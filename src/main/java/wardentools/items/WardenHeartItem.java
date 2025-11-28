@@ -31,11 +31,10 @@ public class WardenHeartItem extends Item {
 		if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
 				if (isCorruptionVessel(player))  {
 					player.getCooldowns().addCooldown(this, 120);
-					long gameTime = serverLevel.getGameTime();
 					Vec3 startPosition = player.position().add(0.0D, 1.0F, 0.0D);
 					Vec3 direction = player.getLookAngle();
 					//Trigger laser
-					laserAttack.tick(serverLevel, player, gameTime, startPosition, direction, laserLength);
+					laserAttack.tick(serverLevel, player, startPosition, direction, laserLength);
 					//Send packet for sound and visuals
 					PacketDistributor.sendToPlayersTrackingChunk(
 							serverLevel,

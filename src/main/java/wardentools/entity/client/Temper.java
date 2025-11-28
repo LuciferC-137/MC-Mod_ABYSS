@@ -26,9 +26,10 @@ import wardentools.entity.custom.TemperEntity;
 public class Temper extends HierarchicalModel<TemperEntity> implements ArmedModel {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "temper"), "main");
-	private static final float MAX_FLAP_ANGLE = 27f * ((float)Math.PI / 180F); // Rad
-	private boolean wingOnAscending = true;
-	private float wingAngle = 0f; // Rad
+
+    private float wingAngle;
+    private float prevWingAngle;
+
 	private final ModelPart FULL;
 	private final ModelPart HEAD;
 	private final ModelPart BODY;
@@ -88,27 +89,15 @@ public class Temper extends HierarchicalModel<TemperEntity> implements ArmedMode
 	}
 
 	@Override
-	public void setupAnim(TemperEntity entity, float limbSwing,
+	public void setupAnim(TemperEntity temper, float limbSwing,
 						  float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		root().getAllParts().forEach(ModelPart::resetPose);
-		if (!entity.onGround()){
-			this.flap(2f);
-		}
-		animate(entity.attackAnimationState, TemperAnimation.attack, ageInTicks);
+		animate(temper.attackAnimationState, TemperAnimation.attack, ageInTicks);
+        float wingAngle = temper.getWingAngle();
+        this.WING_L.yRot = this.WING_L.yRot + wingAngle;
+        this.WING_R.yRot = this.WING_R.yRot - wingAngle;
 		HEAD.xRot = HEAD.xRot + headPitch * ((float)Math.PI / 180F);
 		HEAD.yRot = HEAD.yRot + netHeadYaw * ((float)Math.PI / 180F);
 
-	}
-
-	private void flap(float flapSpeed){
-		float newAngle = this.wingAngle + (this.wingOnAscending ? flapSpeed : -flapSpeed) * ((float)Math.PI / 180F);
-		if (newAngle > MAX_FLAP_ANGLE){
-			this.wingOnAscending = false;
-		} else if (newAngle < -MAX_FLAP_ANGLE) {
-			this.wingOnAscending = true;
-		}
-		this.wingAngle = newAngle;
-		this.WING_L.yRot = this.WING_L.yRot + this.wingAngle;
-		this.WING_R.yRot = this.WING_R.yRot - this.wingAngle;
 	}
 }

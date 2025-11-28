@@ -152,19 +152,18 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public void onNeighborChange(@NotNull BlockState state, @NotNull LevelReader level,
-                                 @NotNull BlockPos pos, @NotNull BlockPos neighbor) {
-        super.onNeighborChange(state, level, pos, neighbor);
-        if (!isValidNeighbor(level, neighbor)) {
-            if (level instanceof Level) {
-                ((Level) level).removeBlock(pos, true);
-            }
+    protected void neighborChanged(@NotNull BlockState myState, @NotNull Level level, @NotNull BlockPos pos,
+                                   @NotNull Block neighborBlock, @NotNull BlockPos neighborPos, boolean movedByPiston) {
+        super.neighborChanged(myState, level, pos, neighborBlock, neighborPos, movedByPiston);
+        BlockState newState = level.getBlockState(neighborPos);
+        if (!isValidState(newState) && isValidState(neighborBlock.defaultBlockState())) {
+            level.removeBlock(pos, false);
         }
     }
 
-    public boolean isValidNeighbor(LevelReader level, BlockPos pos){
-        return level.getBlockState(pos).is(Blocks.REINFORCED_DEEPSLATE)
-                || level.getBlockState(pos).is(BlockRegistry.ABYSS_PORTAL_BLOCK.get());
+    public boolean isValidState(BlockState state){
+        return state.is(Blocks.REINFORCED_DEEPSLATE)
+                || state.is(BlockRegistry.ABYSS_PORTAL_BLOCK.get());
     }
 
     private void showWinScreen(Player player, BlockPos pos) {

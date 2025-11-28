@@ -59,7 +59,7 @@ public class RadianceBringerEffect extends MobEffect {
                         player.getX() + 30, player.getY() + 30, player.getZ() + 30));
         int cnt = 0;
         for (TemperEntity temper : entities) {
-            if (temper.getPlayerInvoker() != null && temper.getPlayerInvoker().is(player)) {
+            if (temper.getOwner() != null && temper.getOwner().is(player)) {
                 cnt++;
             }
         }
