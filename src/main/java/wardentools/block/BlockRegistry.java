@@ -69,6 +69,7 @@ public class BlockRegistry {
 		    		.ofFullCopy(Blocks.OAK_LOG)
                     .mapColor(MapColor.COLOR_LIGHT_BLUE)
                     .strength(4F)
+                    .randomTicks()
 		    		.lightLevel((state) -> LIGHT_DARK_TREE))
 		    );
 

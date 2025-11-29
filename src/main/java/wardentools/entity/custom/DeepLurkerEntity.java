@@ -32,6 +32,8 @@ import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.utils.goal.AvoidWardenAndClimbTreeGoal;
 import wardentools.entity.utils.goal.ClimbGoal;
+import wardentools.entity.utils.goal.PickBerryGoal;
+import wardentools.entity.utils.goal.PickupBerryItemGoal;
 import wardentools.items.ItemRegistry;
 import wardentools.sounds.ModSounds;
 import wardentools.tags.ModTags;
@@ -40,6 +42,7 @@ public class DeepLurkerEntity extends Animal {
 	public final AnimationState calmAnimationState = new AnimationState();
 	public final AnimationState scaredAnimationState = new AnimationState();
     public final AnimationState climbAnimationState = new AnimationState();
+    public final AnimationState pickingAnimationState = new AnimationState();
 	private static final EntityDataAccessor<Boolean> CLIMBING =
             SynchedEntityData.defineId(DeepLurkerEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> SCARED =
@@ -48,6 +51,8 @@ public class DeepLurkerEntity extends Animal {
             SynchedEntityData.defineId(DeepLurkerEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> AVOID_WARDEN_STEP =
             SynchedEntityData.defineId(DeepLurkerEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> PICKING_BERRIES =
+            SynchedEntityData.defineId(DeepLurkerEntity.class, EntityDataSerializers.BOOLEAN);
 
 	public DeepLurkerEntity(EntityType<? extends Animal> entity, Level level) {
 		super(entity, level);
@@ -58,12 +63,14 @@ public class DeepLurkerEntity extends Animal {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new AvoidWardenAndClimbTreeGoal(this, 3.0D));
 		this.goalSelector.addGoal(2, new ClimbGoal(this));
-		this.goalSelector.addGoal(3, new PanicGoal(this, 3.0D));
-		this.goalSelector.addGoal(4, new BreedGoal(this, 10D));
-		this.goalSelector.addGoal(5, new TemptGoal(
-				this, 2.0D, Ingredient.of(ItemRegistry.DARKTREE_SAPLING.get()), false));
-		this.goalSelector.addGoal(6, new FollowParentGoal(this, 2D));
-		this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 2D) {
+        this.goalSelector.addGoal(3, new PickupBerryItemGoal(this, 2.2D));
+        this.goalSelector.addGoal(4, new PickBerryGoal(this, 2.1D));
+		this.goalSelector.addGoal(5, new PanicGoal(this, 3.0D));
+		this.goalSelector.addGoal(6, new BreedGoal(this, 3.0D));
+		this.goalSelector.addGoal(7, new TemptGoal(
+				this, 2.0D, Ingredient.of(ItemRegistry.DEEP_FRUIT.get()), false));
+		this.goalSelector.addGoal(8, new FollowParentGoal(this, 2D));
+		this.goalSelector.addGoal(9, new WaterAvoidingRandomStrollGoal(this, 2D) {
             @Override
             public boolean canUse() {
                 return super.canUse() && !DeepLurkerEntity.this.isScared();
@@ -87,8 +94,10 @@ public class DeepLurkerEntity extends Animal {
 			this.scaredAnimationState.animateWhen(this.isScared(), this.tickCount);
 			this.calmAnimationState.animateWhen(
 					!isInWaterOrBubble()
-                            && !this.walkAnimation.isMoving() && !this.isScared(), this.tickCount);
+                            && this.getDeltaMovement().horizontalDistanceSqr() < 0.001
+                            && !this.isScared(), this.tickCount);
             this.climbAnimationState.animateWhen(this.isClimbing(), this.tickCount);
+            this.pickingAnimationState.animateWhen(this.isPickingBerries(), this.tickCount);
 		} else {
             if (this.isAtTopOfTree()) {
                 // Reverse gravity
@@ -153,6 +162,7 @@ public class DeepLurkerEntity extends Animal {
         entityData.define(SCARED, false);
         entityData.define(IS_AT_TOP_OF_TREE, false);
         entityData.define(AVOID_WARDEN_STEP, 0);
+        entityData.define(PICKING_BERRIES, false);
     }
 
     public boolean isClimbing() {return this.entityData.get(CLIMBING);}
@@ -171,21 +181,22 @@ public class DeepLurkerEntity extends Animal {
 
     public void setAvoidWardenStep(int step) {this.entityData.set(AVOID_WARDEN_STEP, step);}
 
+    public boolean isPickingBerries() {return this.entityData.get(PICKING_BERRIES);}
+
+    public void setPickingBerries(boolean picking) {this.entityData.set(PICKING_BERRIES, picking);}
+
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putBoolean("climbing", this.isClimbing());
         compound.putBoolean("scared", this.isScared());
         compound.putBoolean("is_at_to_of_tree", this.isAtTopOfTree());
         compound.putInt("avoid_warden_step", this.getAvoidWardenStep());
+        compound.putBoolean("picking_berries", this.isPickingBerries());
     }
 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        if (compound.contains("climbing")) {
-            this.setClimbing(compound.getBoolean("climbing"));
-        }
         if (compound.contains("scared")) {
             this.setScared(compound.getBoolean("scared"));
         }
@@ -194,6 +205,9 @@ public class DeepLurkerEntity extends Animal {
         }
         if (compound.contains("avoid_warden_step")) {
             this.setAvoidWardenStep(compound.getInt("avoid_warden_step"));
+        }
+        if (compound.contains("picking_berries")) {
+            this.setPickingBerries(compound.getBoolean("picking_berries"));
         }
     }
 

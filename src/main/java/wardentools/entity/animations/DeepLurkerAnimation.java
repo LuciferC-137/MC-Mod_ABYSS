@@ -234,4 +234,31 @@ public class DeepLurkerAnimation {
                     new Keyframe(2.0F, KeyframeAnimations.degreeVec(-27.5F, 0.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
             ))
             .build();
+
+    public static final AnimationDefinition picking = AnimationDefinition.Builder.withLength(1.5F).looping()
+            .addAnimation("ARM_R", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                    new Keyframe(0.0F, KeyframeAnimations.degreeVec(-10.0F, 10.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(0.5F, KeyframeAnimations.degreeVec(-10.0F, 22.2993F, -2.3281F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.0F, KeyframeAnimations.degreeVec(-10.0F, 12.4402F, 0.5539F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.5F, KeyframeAnimations.degreeVec(-10.0F, 10.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+            ))
+            .addAnimation("foreArmR", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                    new Keyframe(0.0F, KeyframeAnimations.degreeVec(-12.5F, -27.5F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(0.5F, KeyframeAnimations.degreeVec(7.5F, -27.5F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.0F, KeyframeAnimations.degreeVec(0.0F, -20.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.5F, KeyframeAnimations.degreeVec(-12.5F, -27.5F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+            ))
+            .addAnimation("ARM_L", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                    new Keyframe(0.0F, KeyframeAnimations.degreeVec(-10.0F, -10.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(0.5F, KeyframeAnimations.degreeVec(-10.0F, -22.2993F, 2.3281F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.0F, KeyframeAnimations.degreeVec(-10.0F, -12.4402F, -0.5539F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.5F, KeyframeAnimations.degreeVec(-10.0F, -10.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+            ))
+            .addAnimation("foreArmL", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                    new Keyframe(0.0F, KeyframeAnimations.degreeVec(-12.5F, 27.5F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(0.5F, KeyframeAnimations.degreeVec(7.5F, 27.5F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.0F, KeyframeAnimations.degreeVec(0.0F, 20.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.5F, KeyframeAnimations.degreeVec(-12.5F, 27.5F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+            ))
+            .build();
 }

@@ -95,6 +95,7 @@ public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
 		animate(entity.scaredAnimationState, DeepLurkerAnimation.scared, ageInTicks);
 		animate(entity.calmAnimationState, DeepLurkerAnimation.calm1, ageInTicks);
         animate(entity.climbAnimationState, DeepLurkerAnimation.climbing, ageInTicks * 4F);
+        animate(entity.pickingAnimationState, DeepLurkerAnimation.picking, ageInTicks);
 
         if (!entity.isClimbing()) {
             animateWalk(DeepLurkerAnimation.walking,

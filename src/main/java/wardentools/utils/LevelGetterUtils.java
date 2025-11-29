@@ -25,6 +25,10 @@ public class LevelGetterUtils {
         return findClosest(origin, level, BLOCK_PREDICATE(block), searchRadius, 0);
     }
 
+    public static BlockPos findClosest(Vec3 origin, LevelReader level, Block block, int searchRadius, int heightRadius) {
+        return findClosest(origin, level, BLOCK_PREDICATE(block), searchRadius, heightRadius);
+    }
+
     public static BlockPos findClosest(Vec3 origin, LevelReader level, TagKey<Block> blockTagKey, int searchRadius, int heightRadius) {
         return findClosest(origin, level, TAG_PREDICATE(blockTagKey), searchRadius, heightRadius);
     }

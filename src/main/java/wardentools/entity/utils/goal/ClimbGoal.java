@@ -1,6 +1,9 @@
 package wardentools.entity.utils.goal;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import wardentools.entity.custom.DeepLurkerEntity;
 
 import java.util.EnumSet;
@@ -21,6 +24,9 @@ public class ClimbGoal extends Goal {
     @Override
     public void stop() {
         this.entity.setClimbing(false);
+        this.entity.getNavigation().stop();
+        Vec3 groundPos = Vec3.atCenterOf(getGroundUnderneath());
+        this.entity.getNavigation().moveTo(groundPos.x, groundPos.y, groundPos.z, 1.0D);
     }
 
     @Override
@@ -36,7 +42,22 @@ public class ClimbGoal extends Goal {
             if (this.entity.level().getBlockState(this.entity.blockPosition().above()).isAir()) {
                 this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, 0.1D, 0.0D));
             }
+        } else {
+            this.entity.setClimbing(false);
         }
+    }
+
+    public BlockPos getGroundUnderneath() {
+        BlockPos pos = this.entity.blockPosition();
+        Level level = this.entity.level();
+        while (pos.getY() > level.getMinBuildHeight()) {
+            BlockPos belowPos = pos.below();
+            if (level.getBlockState(belowPos).isSolidRender(level, belowPos)) {
+                return belowPos;
+            }
+            pos = belowPos;
+        }
+        return this.entity.blockPosition();
     }
 
 }

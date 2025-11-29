@@ -40,6 +40,19 @@ public class BlueBush extends TallGrassBlock implements BonemealableBlock {
     }
 
     @Override
+    protected void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos,
+                              @NotNull RandomSource random) {
+        if (random.nextInt(7) == 0) {
+            level.setBlock(pos, state.setValue(BERRY_STATE, BerryState.BLUE_BERRY), Block.UPDATE_ALL);
+        }
+    }
+
+    @Override
+    protected boolean isRandomlyTicking(BlockState state) {
+        return state.getValue(BERRY_STATE) == BerryState.NONE;
+    }
+
+    @Override
     public void performBonemeal(@NotNull ServerLevel level, @NotNull RandomSource randomSource,
                                 @NotNull BlockPos pos, @NotNull BlockState state) {
         if (state.getValue(BERRY_STATE) == BerryState.NONE) {
