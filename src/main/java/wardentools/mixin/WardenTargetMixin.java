@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.entity.interfaces.CorruptionMonster;
 
 @Mixin(Warden.class)
@@ -15,6 +16,8 @@ public abstract class WardenTargetMixin {
     private void preventTargetingContagionMonster(Entity target, CallbackInfoReturnable<Boolean> cir) {
         if (target instanceof CorruptionMonster) {
             cir.setReturnValue(false);
+        } else if (target instanceof DeepLurkerEntity deepLurker) {
+            cir.setReturnValue(!deepLurker.isCorrectlyHidden());
         }
     }
 }

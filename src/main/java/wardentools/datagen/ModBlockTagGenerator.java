@@ -190,5 +190,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.SCULK_TENDRIL_BLOCK.get())
                 .add(Blocks.SCULK_CATALYST);
 
+        this.tag(ModTags.Blocks.DARK_VEGETATION)
+                .add(BlockRegistry.DARKTREE_SAPLING.get())
+                .add(BlockRegistry.TALL_DARK_GRASS.get())
+                .add(BlockRegistry.DARK_GRASS.get())
+                .add(BlockRegistry.BLUE_BUSH.get());
+
     }
 }

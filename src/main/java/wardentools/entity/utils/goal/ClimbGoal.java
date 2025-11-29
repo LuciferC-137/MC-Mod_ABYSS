@@ -32,9 +32,9 @@ public class ClimbGoal extends Goal {
     @Override
     public void tick() {
         if (this.entity.horizontalCollision) {
-            this.entity.setDeltaMovement(this.entity.getDeltaMovement().multiply(1.0D, 0.2D, 1.0D));
+            this.entity.setDeltaMovement(this.entity.getDeltaMovement().multiply(1.0D, 0.1D, 1.0D));
             if (this.entity.level().getBlockState(this.entity.blockPosition().above()).isAir()) {
-                this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, 0.2D, 0.0D));
+                this.entity.setDeltaMovement(this.entity.getDeltaMovement().add(0.0D, 0.1D, 0.0D));
             }
         }
     }

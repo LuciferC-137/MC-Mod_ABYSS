@@ -18,7 +18,7 @@ public class DeepLurkerRenderer extends MobRenderer<DeepLurkerEntity, DeepLurker
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/deeplurker.png");
 
 	public DeepLurkerRenderer(EntityRendererProvider.Context context) {
-		super(context, new DeepLurker(context.bakeLayer(DeepLurker.LAYER_LOCATION)), 0.5f);
+		super(context, new DeepLurker(context.bakeLayer(DeepLurker.LAYER_LOCATION)), 0.2f);
 		this.addLayer(new DeepLurkerEyesLayer(this));
 	}
 
@@ -33,7 +33,7 @@ public class DeepLurkerRenderer extends MobRenderer<DeepLurkerEntity, DeepLurker
 					   @NotNull MultiBufferSource pBuffer, int pPackedLight) {
 		if (pEntity.isBaby()) {
 			pMatrixStack.scale(0.5f, 0.5f, 0.5f);
-		}	
+		}
 		super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
 	}
 
