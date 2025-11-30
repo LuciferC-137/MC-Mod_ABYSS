@@ -164,25 +164,10 @@ public class BlockRegistry {
 	
  
 	public static final DeferredBlock<Block> DARKTREE_LEAVES = BLOCKS.register("darktree_leaves",
-			() -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+			() -> new DarktreeLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(DARKTREE_FOLIAGE_COLOR)
-                    .lightLevel((state) -> LIGHT_DARK_TREE + 2)) {
-
-				@Override
-				public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-						return true;
-				}
-				@Override
-				public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-					return 60;
-				}
-				@Override
-				public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-					return 30;
-				}
-
-
-			});
+                    .lightLevel((state) -> LIGHT_DARK_TREE + 2)
+            ));
 
 	public static final DeferredBlock<Block> DARKTREE_SAPLING = BLOCKS.register("darktree_sapling",
 			()-> new SaplingBlock(new TreeGrower("darktree",
