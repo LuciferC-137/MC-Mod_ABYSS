@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-30T12:47:45.606495217	Tags for minecraft:block mod id wardentools
+// 1.21.1	2025-11-30T22:51:14.646014062	Tags for minecraft:block mod id wardentools
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/ancient_city_replaceable.json
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/block/animals_spawnable_on.json
 18262857d4a34e6ee53557a03eea4ca89a3572f3 data/minecraft/tags/block/climbable.json
@@ -11,6 +11,7 @@ aa1a853c7ebdc7617fc951ed87bde709518e78df data/minecraft/tags/block/fences.json
 e43039466b443e6e2090b89b06ff5884f78e3251 data/minecraft/tags/block/logs_that_burn.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/lush_ground_replaceable.json
 75152428425267c63abf296fdc8e3f8c8656a570 data/minecraft/tags/block/mineable/pickaxe.json
+fe0dfed652c709c1c46de9234483b847471a0111 data/minecraft/tags/block/mineable/shovel.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/moss_replaceable.json
 7fc8c03b6f02832173e4219f6d2c1848f440d65a data/minecraft/tags/block/needs_diamond_tool.json
 658e93d68f116661b37227e2bedda9ae0bd53009 data/minecraft/tags/block/needs_iron_tool.json

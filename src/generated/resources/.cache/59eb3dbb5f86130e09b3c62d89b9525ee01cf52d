@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-30T12:47:45.602376249	Loot Tables
+// 1.21.1	2025-11-30T22:51:14.643708228	Loot Tables
 ed2f8717d26fbcb60f0922c363ab315ba830ebe4 data/wardentools/loot_table/advancements/wind_journal.json
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_table/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_table/blocks/abyssalite_bricks.json
@@ -23,7 +23,7 @@ a0dfa254fe37c45cbc839db6194952a4ccfc2d9c data/wardentools/loot_table/blocks/crac
 12d43bc509ad1c375d4631a7398d3511c80eda94 data/wardentools/loot_table/blocks/cracked_abyssalite_bricks_wall.json
 a2dac6ebf393b77e642e640202c4bcf6cfbe04b4 data/wardentools/loot_table/blocks/dark_grass.json
 cd3afcd604acda173c23bfbfc1381b05dbe7bb16 data/wardentools/loot_table/blocks/darkdirt.json
-389f559700304e07f380d250e3ab3cfbf609406b data/wardentools/loot_table/blocks/darkgrass_block.json
+c4157f92b703436271f20a865344c6b611252e64 data/wardentools/loot_table/blocks/darkgrass_block.json
 05a6e49c435dc40acf7731ef3d51fa13f66df208 data/wardentools/loot_table/blocks/darktree_button.json
 392b5b44b484a1a86f6e469655e1a96aea7a70d5 data/wardentools/loot_table/blocks/darktree_door.json
 7a70c14c1f1a54d2f45596f912089261b48d690a data/wardentools/loot_table/blocks/darktree_fence.json
