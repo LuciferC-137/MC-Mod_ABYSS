@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-30T12:47:45.603584887	Recipes
+// 1.21.1	2025-11-30T21:09:46.958790652	Recipes
 fb72b19c5786e722e8393dd3121beb5e4a06818d data/minecraft/advancement/recipes/food/sugar.json
 0413a6dbf7f1225ebfff9a57b839065d5afd3456 data/minecraft/advancement/recipes/misc/amethyst_shard.json
 a25cf481b3b1ae9dbf9a560e44ca623f96d32ff9 data/minecraft/advancement/recipes/misc/echo_shard.json
@@ -93,6 +93,7 @@ a461d888dadf5b5e29a5bcaf161817785c732d6d data/wardentools/advancement/recipes/re
 2dfdd59e07ec23f64f6b7a92db268cb67142d3fd data/wardentools/advancement/recipes/redstone/darktree_door.json
 dc01c66d1e4b39c52ed5197b39f7b87f75165183 data/wardentools/advancement/recipes/redstone/darktree_fence_gate.json
 a4549767876235fff23717a640299b67f4b69b66 data/wardentools/advancement/recipes/redstone/darktree_trapdoor.json
+973312558e91dda3855268db7ae8cb418b49dac8 data/wardentools/advancement/recipes/redstone/sonic_blaster.json
 89c2d85cc2a6e325d45b7eb9337ddebb83d83ad2 data/wardentools/advancement/recipes/redstone/whitetree_button.json
 85b1ab850278cfa325bc112d68db2c14036dc2f0 data/wardentools/advancement/recipes/redstone/whitetree_door.json
 250c8da6601f56e91d95c21b13c0ec6f3c4e535a data/wardentools/advancement/recipes/redstone/whitetree_fence_gate.json
@@ -191,6 +192,7 @@ d804504f9ca328fbff4262e056386181576468c8 data/wardentools/recipe/radiant_staff_r
 fa2454ae486c329b1c5a5ee9bab5de69a0b5d898 data/wardentools/recipe/ruby.json
 83c5407ec067637c45141d25719560e2b5a10343 data/wardentools/recipe/ruby_block.json
 9341dc9948b888f05c7875082f7628ab65d75c83 data/wardentools/recipe/ruby_fragment.json
+2b3864c3933e04a5c1d66a744c7d312464905b5b data/wardentools/recipe/sonic_blaster.json
 68b8a92a6867b8b7ca9e655362947119c296c73a data/wardentools/recipe/stripped_darktree_wood.json
 3b38480f92691755bed8e07343564dbc41935dcb data/wardentools/recipe/stripped_whitetree_wood.json
 69a02f2221d5b6392ea51450957afdff90759642 data/wardentools/recipe/warden_heart.json

@@ -310,6 +310,16 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .unlockedBy("has_item", has(Items.AMETHYST_SHARD))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ItemRegistry.SONIC_BLASTER.get())
+                .define('R', Items.REDSTONE)
+                .define('P', ItemRegistry.PALE_SHARD.get())
+                .define('A', ItemRegistry.ABYSSALITE.get())
+                .pattern("AAA")
+                .pattern("PRP")
+                .pattern("AAA")
+                .unlockedBy("has_item", has(ItemRegistry.SONIC_BLASTER.get()))
+                .save(recipeOutput);
+
     }
 
     protected void allStoneVariants(@NotNull RecipeOutput recipeOutput, String name,
