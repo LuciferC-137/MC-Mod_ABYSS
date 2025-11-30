@@ -22,7 +22,7 @@ public class ShadowRenderer extends MobRenderer<ShadowEntity, Shadow>{
 			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/generic_shadow.png");
 
     public ShadowRenderer(EntityRendererProvider.Context context) {
-		super(context, new Shadow(context.bakeLayer(Shadow.LAYER_LOCATION)), 0.2f);
+		super(context, new Shadow(context.bakeLayer(Shadow.LAYER_LOCATION)), 0.6f);
 		this.addLayer(new ShadowEmissiveLayer(this));
 	}
 
