@@ -673,13 +673,13 @@ public class BlockRegistry {
 
     public static final DeferredBlock<Block> CRYSTAL_INFUSER
             = BLOCKS.register("crystal_infuser",
-            () -> new CrystalInfuserBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+            () -> new CrystalInfuserBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REINFORCED_DEEPSLATE)
                     .noOcclusion()
             ));
 
     public static final DeferredBlock<Block> GOLEM_STONE
             = BLOCKS.register("golem_stone",
-            () -> new GolemStoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+            () -> new GolemStoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REINFORCED_DEEPSLATE)
             ));
 
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
