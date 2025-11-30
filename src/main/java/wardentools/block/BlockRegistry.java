@@ -322,7 +322,7 @@ public class BlockRegistry {
             		.noOcclusion()));
 	
 	public static final DeferredBlock<Block> TALL_WHITE_GRASS = BLOCKS.register("tall_white_grass",
-			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
                     .mapColor(DyeColor.WHITE)
                     .noOcclusion()
 					.noCollission()
@@ -360,7 +360,7 @@ public class BlockRegistry {
 					.lightLevel((state) -> 10)));
 
 	public static final DeferredBlock<Block> DEEPFLOWER = BLOCKS.register("deepflower",
-			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
                     .mapColor(DARK_VEGETATION_COLOR)
                     .noOcclusion()
 					.noCollission()
@@ -374,7 +374,7 @@ public class BlockRegistry {
 					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
 
 	public static final DeferredBlock<Block> TALL_DARK_GRASS = BLOCKS.register("tall_dark_grass",
-			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
                     .mapColor(DARK_VEGETATION_COLOR)
                     .noOcclusion()
 					.noCollission()
