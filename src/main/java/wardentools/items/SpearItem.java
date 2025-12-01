@@ -1,7 +1,9 @@
 package wardentools.items;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -14,6 +16,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -60,15 +64,47 @@ public class SpearItem extends Item {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity user) {
-        stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
+        Holder<Enchantment> piercingHolder =
+                target.level().registryAccess()
+                        .lookupOrThrow(Registries.ENCHANTMENT)
+                        .getOrThrow(Enchantments.PIERCING);
+
+        int piercing = stack.getEnchantmentLevel(piercingHolder);
+
+        if (piercing > 0) {
+            float extraDamage = 1.5F * piercing;
+            target.hurt(user.damageSources().playerAttack((Player) user), extraDamage);
+        }
+
         if (user instanceof Player player) {
             if (!player.isCreative() && !player.isSpectator()) healUser(user, 0.25F);
-        } else healUser(user, 0.25F);
+        } else {
+            healUser(user, 0.25F);
+        }
+        stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
         return true;
     }
 
     private void healUser(@NotNull LivingEntity user, float heal) {
         user.heal(heal);
+    }
+
+    @Override
+    public int getEnchantmentValue(@NotNull ItemStack stack) {
+        return 15;
+    }
+
+    @Override
+    public boolean isEnchantable(@NotNull ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsEnchantment(@NotNull ItemStack stack, Holder<Enchantment> enchantment) {
+        return enchantment.is(Enchantments.PIERCING)
+                || enchantment.is(Enchantments.MENDING)
+                || enchantment.is(Enchantments.UNBREAKING)
+                || enchantment.is(Enchantments.LOOTING);
     }
 
     @Override
