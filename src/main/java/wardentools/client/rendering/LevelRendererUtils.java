@@ -44,15 +44,18 @@ public class LevelRendererUtils {
         PoseStack posestack = new PoseStack();
         posestack.mulPose(pose);
         Tesselator tesselator = Tesselator.getInstance();
-        VertexBuffer.unbind();
-        RenderSystem.enableBlend();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        renderSkyBackGround(posestack, tesselator, brightness);
+        RenderSystem.depthMask(false);
+        RenderSystem.disableDepthTest();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(
+                GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
+        );
 
-        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-                GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+        renderSkyBackGround(posestack, tesselator, brightness);
 
         float alpha = brightness / 255F;
 
