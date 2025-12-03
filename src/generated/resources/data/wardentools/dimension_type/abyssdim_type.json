@@ -2,7 +2,7 @@
   "ambient_light": 0.01,
   "bed_works": false,
   "coordinate_scale": 1.0,
-  "effects": "minecraft:the_nether",
+  "effects": "wardentools:renderer",
   "fixed_time": 1000,
   "has_ceiling": false,
   "has_raids": false,

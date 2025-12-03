@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
-import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
@@ -39,6 +38,9 @@ public class ModDimensions {
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim"));
     public static final ResourceKey<DimensionType> ABYSS_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim_type"));
+
+    public static final ResourceLocation DIMENSION_RENDERER = ResourceLocation
+            .fromNamespaceAndPath(ModMain.MOD_ID, "renderer");
     
     public static void bootstrapType(BootstrapContext<DimensionType> context) {
         context.register(ABYSS_DIM_TYPE, new DimensionType(
@@ -54,7 +56,7 @@ public class ModDimensions {
                 384, // height
                 384, // logicalHeight
                 BlockTags.INFINIBURN_OVERWORLD, // infiniburn
-                BuiltinDimensionTypes.NETHER_EFFECTS, // Base effectsLocation
+                DIMENSION_RENDERER, // Base effectsLocation
                 ABYSS_AMBIENT_LIGHT, // ambientLight
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
     }
