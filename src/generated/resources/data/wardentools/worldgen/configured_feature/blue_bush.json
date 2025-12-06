@@ -21,10 +21,7 @@
           "type": "minecraft:block_predicate_filter",
           "predicate": {
             "type": "minecraft:matching_blocks",
-            "blocks": [
-              "minecraft:air",
-              "minecraft:sculk_vein"
-            ]
+            "blocks": "minecraft:air"
           }
         }
       ]

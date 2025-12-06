@@ -95,14 +95,16 @@ public class ModConfiguredFeatures {
     	register(context, WHITE_TORCHFLOWER, Feature.RANDOM_PATCH,
     			grassPatch(BlockStateProvider.simple(BlockRegistry.WHITE_TORCHFLOWER.get()), 2));
     	
-    	register(context, DEEPFLOWER, Feature.RANDOM_PATCH,
-    			grassPatch(BlockStateProvider.simple(BlockRegistry.DEEPFLOWER.get()), 1));
+    	register(context, DEEPFLOWER, ModFeatures.DOUBLE_PLANT.get(),
+                new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.DEEPFLOWER.get()))
+        );
     	
     	register(context, BLUE_BUSH, Feature.RANDOM_PATCH,
     			grassPatch(BlockStateProvider.simple(BlockRegistry.BLUE_BUSH.get()), 10));
     	
-    	register(context, TALL_DARK_GRASS, Feature.RANDOM_PATCH,
-    			grassPatch(BlockStateProvider.simple(BlockRegistry.TALL_DARK_GRASS.get()), 5));
+    	register(context, TALL_DARK_GRASS, ModFeatures.DOUBLE_PLANT.get(),
+                new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.TALL_DARK_GRASS.get()))
+        );
     	
     	register(context, DARK_GRASS, Feature.RANDOM_PATCH,
     			grassPatch(BlockStateProvider.simple(BlockRegistry.DARK_GRASS.get()), 15));
@@ -217,7 +219,8 @@ public class ModConfiguredFeatures {
         return FeatureUtils.simpleRandomPatchConfiguration(tries,
 				PlacementUtils.filtered(Feature.SIMPLE_BLOCK,
 						new SimpleBlockConfiguration(stateProvider),
-						BlockPredicate.matchesBlocks(Blocks.AIR, Blocks.SCULK_VEIN)));
+						BlockPredicate.ONLY_IN_AIR_PREDICATE
+                ));
     }
 
 	public static OreConfiguration oreGeneration(int size, float discardChanceOnAirExposure,

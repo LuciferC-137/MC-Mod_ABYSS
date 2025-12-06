@@ -1,6 +1,8 @@
 package wardentools.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
@@ -23,5 +25,14 @@ public class AbyssDoublePlantBlock extends DoublePlantBlock {
     @Override
     protected boolean mayPlaceOn(@NotNull BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos) {
         return state.is(ModTags.Blocks.CAN_SUSTAIN_ABYSS_PLANTS) || super.mayPlaceOn(state, blockGetter, pos);
+    }
+
+    @Override
+    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level,
+                        @NotNull BlockPos pos, @NotNull RandomSource random) {
+        super.tick(state, level, pos, random);
+        if (!state.canSurvive(level, pos)) {
+            level.setBlock(pos, Blocks.AIR.defaultBlockState(), AbyssDoublePlantBlock.UPDATE_ALL);
+        }
     }
 }

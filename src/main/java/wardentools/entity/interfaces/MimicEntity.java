@@ -7,9 +7,10 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.utils.*;
+
+import java.util.Objects;
 
 public class MimicEntity extends CorruptionMonster {
     private LivingEntity mimicEntity = null;
@@ -32,26 +33,11 @@ public class MimicEntity extends CorruptionMonster {
                 }
             }
         }
-        this.updateBoundingBoxSize();
     }
 
-    private void updateBoundingBoxSize() {
-        if (this.mimicEntity != null) {
-            double width = this.mimicEntity.getBbWidth();
-            double height = this.mimicEntity.getBbHeight();
-            double depth = this.mimicEntity.getBbWidth();
-
-            double centerX = this.getX();
-            double centerY = this.getY();
-            double centerZ = this.getZ();
-
-            AABB newBox = new AABB(
-                    centerX - width / 2.0, centerY, centerZ - depth / 2.0,
-                    centerX + width / 2.0, centerY + height, centerZ + depth / 2.0
-            );
-
-            this.setBoundingBox(newBox);
-        }
+    @Override
+    public @NotNull EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
+        return Objects.requireNonNullElse(mimicEntity, this).getType().getDimensions();
     }
 
     @Override
@@ -100,6 +86,7 @@ public class MimicEntity extends CorruptionMonster {
     public void setMimicEntity(LivingEntity mimicEntity) {
         this.mimicEntity = mimicEntity;
         this.entityData.set(MIMIC_ENTITY_ID, mimicEntity.getId());
+        this.refreshDimensions();
     }
 
     @Override

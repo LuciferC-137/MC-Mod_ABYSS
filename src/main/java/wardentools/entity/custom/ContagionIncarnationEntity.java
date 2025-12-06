@@ -45,6 +45,7 @@ import wardentools.entity.utils.IncarnationBodyRotationControl;
 import wardentools.entity.utils.IncarnationMoveControl;
 import wardentools.entity.utils.goal.IncarnationAttackGoal;
 import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
+import wardentools.entity.utils.goal.TurnTowardsTargetGoal;
 import wardentools.network.payloads.special_effects.ThemeIncarnationStart;
 import wardentools.network.payloads.special_effects.ThemeIncarnationStop;
 import wardentools.sounds.ModSounds;
@@ -116,7 +117,8 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
 		this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new IncarnationSonicStrikeAttackGoal(this));
         this.goalSelector.addGoal(2, new IncarnationAttackGoal(this, 2.0D));
-		this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 2D){
+        this.goalSelector.addGoal(3, new TurnTowardsTargetGoal(this, 2.0F));
+		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 2D){
             @Override
             public boolean canUse() {
                 return ((ContagionIncarnationEntity)this.mob).getSonicStrikeTick() == 0 && super.canUse();
@@ -126,7 +128,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
                 return ((ContagionIncarnationEntity)this.mob).getSonicStrikeTick() == 0 && super.canContinueToUse();
             }
         });
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 10f));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 10f));
 
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -422,15 +424,15 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     }
 
 	@Override
-    protected SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
+    protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSourceIn) {
     	if (level().random.nextInt(CHANCE_OF_SCREAM_ON_HIT)==0) {
     		return ModSounds.CONTAGION_INCARNATION_SCREAM.get();
     	}
-    	return null;
+    	return null; // Probably a better way to do this
     }
 
     @Override
-    protected SoundEvent getDeathSound() {
+    protected @NotNull SoundEvent getDeathSound() {
     	 return ModSounds.CONTAGION_INCARNATION_DEATH.get();
     }
 
@@ -514,6 +516,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
             field.setAccessible(true);
             field.set(this, new IncarnationBodyRotationControl(this));
         } catch (NoSuchFieldException | IllegalAccessException e) {
+            System.out.println("Failed to set custom body rotation control for Contagion Incarnation.");
             e.printStackTrace();
         }
         try {
@@ -521,6 +524,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
             field.setAccessible(true);
             field.set(this, 4.5F);
         } catch (NoSuchFieldException | IllegalAccessException e) {
+            System.out.println("Failed to set custom eye height for Contagion Incarnation.");
             e.printStackTrace();
         }
     }

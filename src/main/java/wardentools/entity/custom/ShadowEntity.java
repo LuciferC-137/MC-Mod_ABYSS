@@ -25,7 +25,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.JumpControl;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -66,22 +68,33 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 		this.vibrationUser = new ShadowEntity.ShadowVibrationUser();
 		this.vibrationData = new VibrationSystem.Data();
 		this.dynamicGameEventListener = new DynamicGameEventListener<>(new VibrationSystem.Listener(this));
-
-	}
+        this.refreshDimensions();
+        this.jumpControl = new JumpControl(this);
+    }
 
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new MeleeAttackGoal(this, 3.0D, false){
 			@Override
 			public boolean canUse() {
-				return super.canUse() && !((ShadowEntity)this.mob).isStasis();
+				return super.canUse() && !isStasis();
 			}
 			@Override
 			public boolean canContinueToUse() {
-				return super.canContinueToUse() && !((ShadowEntity)this.mob).isStasis();
+				return super.canContinueToUse() && !isStasis();
 			}
 		});
-		this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
+        this.goalSelector.addGoal(1, new MoveTowardsTargetGoal(this, 3.0D, 32.0F){
+            @Override
+            public boolean canUse() {
+                return super.canUse() && !isStasis();
+            }
+            @Override
+            public boolean canContinueToUse() {
+                return super.canContinueToUse() && !isStasis();
+            }
+        });
+		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0D) {
 			@Override
 			public boolean canUse() {
 				return !isStasis() && super.canUse();
@@ -100,32 +113,68 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 				.add(Attributes.MAX_HEALTH, 20.0D)
 				.add(Attributes.MOVEMENT_SPEED, 0.1D)
 				.add(Attributes.ATTACK_DAMAGE, 4.0D)
-				.add(Attributes.FLYING_SPEED, 0.01D)
 				.add(Attributes.FOLLOW_RANGE, 20.0D);
 	}
 
-	@Override
-	public void tick() {
-		super.tick();
-		if (!this.level().isClientSide) {
-			VibrationSystem.Ticker.tick(this.level(), this.vibrationData, this.vibrationUser);
-		}
-		if (this.level().isClientSide) {
-			this.idleAnimation.animateWhen(!this.isStasis(), this.tickCount);
-			this.stasisAnimation.animateWhen(this.isStasis(), this.tickCount);
-			this.animateParticleTick();
-		}
-		if (this.isStasis()) this.doStasisTick(); else this.setNoGravity(false);
-		if (!this.isStasis() && this.getTarget() == null) {
-			outOfStasisTicks++;
-			if (outOfStasisTicks >= MAX_OUT_OF_STASIS_TICKS) {
-				this.setStasis(true);
-				outOfStasisTicks = 0;
-			}
-		} else {
-			outOfStasisTicks = 0;
-		}
-	}
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (!this.level().isClientSide) {
+            VibrationSystem.Ticker.tick(this.level(), this.vibrationData, this.vibrationUser);
+        }
+
+        if (this.level().isClientSide) {
+            this.idleAnimation.animateWhen(!this.isStasis(), this.tickCount);
+            this.stasisAnimation.animateWhen(this.isStasis(), this.tickCount);
+            this.animateParticleTick();
+        }
+
+        if (this.isStasis()) {
+            this.doStasisTick();
+        } else {
+            this.setNoGravity(false);
+        }
+
+        if (!this.isStasis() && this.getTarget() == null) {
+            outOfStasisTicks++;
+            if (outOfStasisTicks >= MAX_OUT_OF_STASIS_TICKS) {
+                this.setStasis(true);
+                outOfStasisTicks = 0;
+            }
+        } else {
+            outOfStasisTicks = 0;
+        }
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (this.jumping) {
+            this.jumpFromGround();
+        }
+    }
+
+    private void doStasisTick() {
+        this.setNoGravity(true);
+        if (this.getHeightAboveGround() < 3D) {
+            this.setDeltaMovement(0, 0.015, 0);
+        } else {
+            this.setDeltaMovement(0D,
+                    Math.cos((double)this.tickCount * 0.02D) * 0.02D,
+                    0D);
+        }
+        this.setDeltaMovement(this.getDeltaMovement().scale(0.9));
+
+        this.jumping = false;
+    }
+
+    @Override
+    public void jumpFromGround() {
+        if (!this.isStasis()) {
+            super.jumpFromGround();
+        }
+    }
 
 	public void animateParticleTick() {
 		float particleSpawnRadius = (float) this.getBoundingBox().getXsize() * 4f;
@@ -168,18 +217,6 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 		if (level instanceof ServerLevel serverlevel) {
 			consumer.accept(this.dynamicGameEventListener, serverlevel);
 		}
-	}
-
-	private void doStasisTick() {
-		this.setNoGravity(true);
-		if (this.getHeightAboveGround() < 3D) {
-			this.setDeltaMovement(0, 0.015, 0);
-		} else {
-			this.setDeltaMovement(0D,
-					Math.cos((double)this.tickCount * 0.02D) * 0.02D,
-					0D);
-		}
-		this.setDeltaMovement(this.getDeltaMovement().scale(0.9));
 	}
 
 	public double getHeightAboveGround() {
@@ -239,6 +276,7 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	public void readAdditionalSaveData(@NotNull CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		this.setStasis(tag.getBoolean("isStasis"));
+        this.setNoGravity(tag.getBoolean("isStasis"));
 		if (tag.contains("listener", 10)) {
 			VibrationSystem.Data.CODEC.parse(
 					new Dynamic<>(NbtOps.INSTANCE, tag.getCompound("listener")))
@@ -283,12 +321,12 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
     }
 
 	@Override
-	protected SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
+	protected @NotNull SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
 		return ModSounds.SHADOW_AMBIENT.get();
 	}
 
 	@Override
-	protected SoundEvent getDeathSound() {return ModSounds.SHADOW_DEATH.get();}
+	protected @NotNull SoundEvent getDeathSound() {return ModSounds.SHADOW_DEATH.get();}
 
 	@Override
 	protected float getSoundVolume() {

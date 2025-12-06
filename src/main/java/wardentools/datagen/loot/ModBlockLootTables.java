@@ -43,7 +43,6 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	//Drop self blocks
     	this.addDropSelf(BlockRegistry.DEEPBLOCK);
     	this.addDropSelf(BlockRegistry.DARKDIRT);
-    	this.addDropSelf(BlockRegistry.DARKGRASS_BLOCK);
     	this.addDropSelf(BlockRegistry.ABYSSALITE);
     	this.addDropSelf(BlockRegistry.CHISELED_ABYSSALITE);
     	this.addDropSelf(BlockRegistry.ABYSSALITE_BRICKS);
@@ -99,6 +98,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				createSilkTouchOnlyTable(BlockRegistry.LIVING_SPROUT.get()));
 		this.add(BlockRegistry.SCULK_TENDRIL_BLOCK.get(),
 				createSilkTouchOnlyTable(BlockRegistry.SCULK_TENDRIL_BLOCK.get()));
+        this.add(BlockRegistry.DARKGRASS_BLOCK.get(),
+                createSingleItemTableWithSilkTouch(BlockRegistry.DARKGRASS_BLOCK.get(),
+                        ItemRegistry.DARKDIRT.get()));
 
 		// Planks derivatives special drops
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 

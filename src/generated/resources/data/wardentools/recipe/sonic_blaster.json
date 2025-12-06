@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "wardentools:abyssalite"
+    },
+    "P": {
+      "item": "wardentools:pale_shard"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "PRP",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:sonic_blaster"
+  }
+}

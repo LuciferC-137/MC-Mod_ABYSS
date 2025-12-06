@@ -32,6 +32,7 @@ public class AbyssWeatherEventServer {
 	@SubscribeEvent
 	public static void onWeatherCommand(CommandEvent event) {
 		CommandContextBuilder<?> context = event.getParseResults().getContext();
+        if (context.getNodes().isEmpty()) return;
 		String command = context.getNodes().getFirst().getNode().getName();
         if (command.equals("weather")) {
             handleWeatherCommand(context, event.getParseResults().getContext().getSource().getLevel());

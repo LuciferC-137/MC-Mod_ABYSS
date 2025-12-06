@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:jigsaw",
+  "start_pool": "wardentools:abandoned_explorer_house/start_pool",
+
+  "size": 2,
+
+  "max_distance_from_center": 80,
+
+  "biomes": "#wardentools:has_structure/has_abandoned_explorer_house",
+
+  "step": "surface_structures",
+
+  "terrain_adaptation": "beard_thin",
+
+  "start_height": {
+    "absolute": 1
+  },
+  "project_start_to_heightmap": "WORLD_SURFACE_WG",
+
+  "use_expansion_hack": false,
+
+  "spawn_overrides": {
+    "creature": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:bat",
+          "weight": 1,
+          "minCount": 1,
+          "maxCount": 4
+        }
+      ]
+    }
+  }
+}

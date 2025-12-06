@@ -79,6 +79,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.SONIC_BLASTER.get())
                 .add(BlockRegistry.CORRUPTED_ABYSSALITE.get());
 
+        this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(BlockRegistry.DARKDIRT.get())
+                .add(BlockRegistry.DARKGRASS_BLOCK.get());
+
         this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
                 .add(BlockRegistry.ABYSSALITE.get());
 

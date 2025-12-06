@@ -6,7 +6,6 @@
     "WardenTargetMixin"
   ],
   "client": [
-    "LevelRendererMixin",
     "LocalPlayerMixin",
     "MusicManagerMixin",
     "BookAccessMixin",

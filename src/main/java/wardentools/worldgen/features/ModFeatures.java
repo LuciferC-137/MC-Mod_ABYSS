@@ -3,6 +3,7 @@ package wardentools.worldgen.features;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wardentools.ModMain;
 import wardentools.worldgen.features.custom.*;
@@ -51,4 +52,8 @@ public class ModFeatures {
     public static final Supplier<Feature<LivingSproutEmergenceConfiguration>> LIVING_SPROUT_EMERGENCE
             = FEATURES.register("living_sprout_emergence",
             () -> new LivingSproutEmergence(LivingSproutEmergenceConfiguration.CODEC));
+
+    public static final Supplier<Feature<SimpleBlockConfiguration>> DOUBLE_PLANT
+            = FEATURES.register("double_plant",
+            () -> new DoublePlantFeature(SimpleBlockConfiguration.CODEC));
 }

@@ -5,6 +5,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -16,6 +17,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -62,10 +65,22 @@ public class ScytheItem extends Item {
 
     @Override
     public boolean hurtEnemy(ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity user) {
-        stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
+        Holder<Enchantment> sweepingHolder =
+                target.level().registryAccess()
+                        .lookupOrThrow(Registries.ENCHANTMENT)
+                        .getOrThrow(Enchantments.SWEEPING_EDGE);
+
+        int sweeping = stack.getEnchantmentLevel(sweepingHolder);
+
+        if (sweeping > 0) {
+            float extraDamage = 1.5F * sweeping;
+            target.hurt(user.damageSources().playerAttack((Player) user), extraDamage);
+        }
         if (user instanceof Player player) {
             if (!player.isCreative() && !player.isSpectator()) hurtUser(user, 0.25F);
         } else hurtUser(user, 0.25F);
+
+        stack.hurtAndBreak(1, user, EquipmentSlot.MAINHAND);
         return true;
     }
 
@@ -77,7 +92,25 @@ public class ScytheItem extends Item {
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
+    public int getEnchantmentValue(@NotNull ItemStack stack) {
+        return 15;
+    }
+
+    @Override
+    public boolean isEnchantable(@NotNull ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsEnchantment(@NotNull ItemStack stack, Holder<Enchantment> enchantment) {
+        return enchantment.is(Enchantments.SWEEPING_EDGE)
+                || enchantment.is(Enchantments.MENDING)
+                || enchantment.is(Enchantments.UNBREAKING)
+                || enchantment.is(Enchantments.LOOTING);
+    }
+
+    @Override
+    public boolean canPerformAction(@NotNull ItemStack stack, @NotNull ItemAbility itemAbility) {
         return false;
     }
 }

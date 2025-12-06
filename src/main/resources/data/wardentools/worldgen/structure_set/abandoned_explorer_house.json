@@ -1,0 +1,16 @@
+{
+  "structures": [
+    {
+      "structure": "wardentools:abandoned_explorer_house",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1642136480,
+    "spacing": 40,
+
+    "separation": 20,
+
+    "type": "minecraft:random_spread"
+  }
+}

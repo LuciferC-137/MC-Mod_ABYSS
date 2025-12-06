@@ -1,68 +1,69 @@
 [
-    {
-        "section": "Minecraft: Dive Into the Abyss",
-        "disciplines": [
-            {
-                "discipline": "Main contributors",
-                "titles": [
-                    {
-                        "title": "Project Lead",
-                        "names": [
-                            "Maxime Bloch"
-                        ]
-                    },
-                    {                     
-                        "title": "Music Composer",
-                        "names": [
-                            "Antoine Bloch"
-                        ]
-                    },
-                    {                     
-                        "title": "Structure Build Team",
-                        "names": [
-                            "Maxime Bloch",
-                            "Arthur Bourmaud"
-                        ]
-                    }
-                ]
-            },
-            {
-                "discipline": "Special thanks",
-                "titles": [
-                    {
-                        "title": "Beta Testers",
-                        "names": [
-                            "Arthur Bourmaud"
-                        ]
-                    }
-                ]
-
-            },
-            {   "discipline": "Minecraft Modding acknowledgements",
-                "titles": [
-                    {
-                        "title": "Minecraft Environment",
-                        "names": [
-                            "Minecraft Forge",
-                            "Minecraft Coder Pack",
-                            "Minecraft Team: Mojang Studios"
-                        ]
-                    },
-                    {
-                        "title": "Other Mods inspiration",
-                        "names": [
-                            "Huge Structure Blocks"
-                        ]
-                    },
-                    {
-                        "title": "Minecraft Community thanks",
-                        "names": [
-                            "TurtyWurty",
-                            "Kaupenjoe"
-                        ]
-                    }
-                ]
-            }
+  {
+    "section": "Minecraft: Dive Into the Abyss",
+    "disciplines": [
+      {
+        "discipline": "Main contributors",
+        "titles": [
+          {
+            "title": "Project Lead",
+            "names": [
+              "Maxime Bloch"
+            ]
+          },
+          {
+            "title": "Music Composer",
+            "names": [
+              "Fenrir C-137"
+            ]
+          },
+          {
+            "title": "Structure Build Team",
+            "names": [
+              "Maxime Bloch"
+            ]
+          }
         ]
-    }
+      },
+      {
+        "discipline": "Special thanks",
+        "titles": [
+          {
+            "title": "Beta Testers",
+            "names": [
+              "Arthur Bourmaud"
+            ]
+          },
+          {
+            "title": "Translation & Proofreading",
+            "names": [
+              "koro0o1"
+            ]
+          }
+        ]
+
+      },
+      {
+        "discipline": "Minecraft Modding acknowledgements",
+        "titles": [
+          {
+            "title": "Minecraft Environment",
+            "names": [
+              "Minecraft Forge",
+              "Minecraft Neoforge",
+              "Minecraft Coder Pack",
+              "Minecraft Team: Mojang Studios"
+            ]
+          },
+          {
+            "title": "Minecraft Community thanks",
+            "names": [
+              "TurtyWurty",
+              "Kaupenjoe"
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]

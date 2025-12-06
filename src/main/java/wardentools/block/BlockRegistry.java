@@ -165,25 +165,10 @@ public class BlockRegistry {
 	
  
 	public static final DeferredBlock<Block> DARKTREE_LEAVES = BLOCKS.register("darktree_leaves",
-			() -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+			() -> new DarktreeLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(DARKTREE_FOLIAGE_COLOR)
-                    .lightLevel((state) -> LIGHT_DARK_TREE + 2)) {
-
-				@Override
-				public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-						return true;
-				}
-				@Override
-				public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-					return 60;
-				}
-				@Override
-				public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-					return 30;
-				}
-
-
-			});
+                    .lightLevel((state) -> LIGHT_DARK_TREE + 2)
+            ));
 
 	public static final DeferredBlock<Block> DARKTREE_SAPLING = BLOCKS.register("darktree_sapling",
 			()-> new SaplingBlock(new TreeGrower("darktree",
@@ -338,7 +323,7 @@ public class BlockRegistry {
             		.noOcclusion()));
 	
 	public static final DeferredBlock<Block> TALL_WHITE_GRASS = BLOCKS.register("tall_white_grass",
-			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
                     .mapColor(DyeColor.WHITE)
                     .noOcclusion()
 					.noCollission()
@@ -376,7 +361,7 @@ public class BlockRegistry {
 					.lightLevel((state) -> 10)));
 
 	public static final DeferredBlock<Block> DEEPFLOWER = BLOCKS.register("deepflower",
-			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
                     .mapColor(DARK_VEGETATION_COLOR)
                     .noOcclusion()
 					.noCollission()
@@ -390,7 +375,7 @@ public class BlockRegistry {
 					.lightLevel((state) -> LIGHT_DARK_VEGETATION)));
 
 	public static final DeferredBlock<Block> TALL_DARK_GRASS = BLOCKS.register("tall_dark_grass",
-			() -> new DoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
                     .mapColor(DARK_VEGETATION_COLOR)
                     .noOcclusion()
 					.noCollission()
@@ -689,13 +674,15 @@ public class BlockRegistry {
 
     public static final DeferredBlock<Block> CRYSTAL_INFUSER
             = BLOCKS.register("crystal_infuser",
-            () -> new CrystalInfuserBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+            () -> new CrystalInfuserBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REINFORCED_DEEPSLATE)
                     .noOcclusion()
+                    .noLootTable()
             ));
 
     public static final DeferredBlock<Block> GOLEM_STONE
             = BLOCKS.register("golem_stone",
-            () -> new GolemStoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+            () -> new GolemStoneBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REINFORCED_DEEPSLATE)
+                    .noLootTable()
             ));
 
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
