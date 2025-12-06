@@ -6,6 +6,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
+import wardentools.AbyssConfig;
 import wardentools.network.payloads.RequestStormStateFromServer;
 
 /**
@@ -31,7 +32,8 @@ public class AbyssFogClientHandler {
         }
         float targetFogDistance1;
         if (isStorming){
-            targetFogDistance1 = AbyssWeatherManager.MIN_FOG_DISTANCE;
+            targetFogDistance1 = Math.min((float)AbyssConfig.CLIENT.ABYSS_FOG_STORM_INTENSITY.get(),
+                    getMaxFogDistance());
         } else{
             targetFogDistance1 = getMaxFogDistance();
         }

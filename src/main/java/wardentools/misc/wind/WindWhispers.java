@@ -9,6 +9,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+import wardentools.AbyssConfig;
 import wardentools.ModMain;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
 import wardentools.playerdata.ModDataAttachments;
@@ -53,7 +54,9 @@ public class WindWhispers {
     }
 
     private static void sendMessage(Player player, String message) {
-        player.sendSystemMessage(Component.literal(message));
+        if (AbyssConfig.CLIENT.DISPLAY_WIND_MESSAGES.get()) {
+            player.sendSystemMessage(Component.literal(message));
+        }
     }
 
     public @Nullable Whisper getNewRandomContextualWhisper(WhisperTags.Tag tag) {

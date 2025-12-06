@@ -9,6 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.CommandEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import wardentools.AbyssConfig;
 import wardentools.ModMain;
 import wardentools.worldgen.dimension.ModDimensions;
 
@@ -25,6 +26,7 @@ public class AbyssWeatherEventServer {
 	@SubscribeEvent
 	public static void onServerTickEvent(ServerTickEvent.Pre event) {
 		ServerLevel abyssLevel = event.getServer().getLevel(ModDimensions.ABYSS_LEVEL_KEY);
+        if (!AbyssConfig.SERVER.DO_ABYSS_WEATHER.get()) return;
 		if (abyssLevel == null) return;
 		WEATHER_MANAGER.tick(abyssLevel);
 	}

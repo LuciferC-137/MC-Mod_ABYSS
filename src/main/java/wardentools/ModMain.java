@@ -6,7 +6,10 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
@@ -42,6 +45,11 @@ public class ModMain {
     private static final Logger LOGGER = LogUtils.getLogger();
 
 	public ModMain(IEventBus bus, ModContainer container) {
+
+        container.registerConfig(ModConfig.Type.CLIENT, AbyssConfig.CLIENT.SPEC);
+        container.registerConfig(ModConfig.Type.SERVER, AbyssConfig.SERVER.SPEC);
+        container.registerConfig(ModConfig.Type.COMMON, AbyssConfig.COMMON.SPEC);
+        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
 		ArmorRegistry.ARMORS.register(bus);
 		ItemRegistry.ITEMS.register(bus);

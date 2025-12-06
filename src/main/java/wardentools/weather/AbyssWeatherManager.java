@@ -30,7 +30,6 @@ public class AbyssWeatherManager {
     private static final int MAX_TICK_BETWEEN_EVENT = 48000; // two days
     private static final int MIN_TICK_BETWEEN_EVENT = 24000; // one day
     private static final int AVERAGE_TICK_BETWEEN_LIGHTNING_PER_CHUNK = 5000;
-    public static final float MIN_FOG_DISTANCE = 20f;
     private int weatherTimer = RandomSource.create().nextInt(MIN_TICK_BETWEEN_EVENT, MAX_TICK_BETWEEN_EVENT);
     private int timeSinceStormBegin = 0;
     private boolean isStorming = false;
