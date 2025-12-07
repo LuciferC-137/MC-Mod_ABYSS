@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import wardentools.AbyssConfig;
 
 import java.util.List;
 
@@ -42,7 +43,8 @@ public class WardenLaserAttack {
                         }
                     }
                     if (hit) {
-                        livingEntity.hurt(player.damageSources().sonicBoom(player), 20.0F);
+                        livingEntity.hurt(player.damageSources().sonicBoom(player),
+                                (float)AbyssConfig.SERVER.WARDEN_HEART_LASER.get());
                         double knockbackResistance = 1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
                         double knockbackHorizontal = 2.5D * knockbackResistance;
                         double knockbackVertical = 0.5D * knockbackResistance;

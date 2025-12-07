@@ -1,6 +1,5 @@
 package wardentools;
 
-import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 
@@ -37,6 +36,11 @@ public class AbyssConfig {
                 .translation("config.wardentools.title.do_abyss_weather")
                 .comment("Enable or disable weather changes in the Abyss dimension")
                 .define("doAbyssWeather", true);
+
+        public static final ModConfigSpec.ConfigValue<Integer> WARDEN_HEART_LASER = BUILDER
+                .translation("config.wardentools.title.warden_heart_laser")
+                .comment("Set damage dealt by the Warden Heart laser attack")
+                .defineInRange("wardenHeartLaser", 10, 1, 1000);
 
 
         static ModConfigSpec SPEC = BUILDER.build();

@@ -43,7 +43,7 @@ public class CrystalLaserEntity extends Entity {
     private static final EntityDataAccessor<Integer> ACTIVE_SEGMENT =
             SynchedEntityData.defineId(CrystalLaserEntity.class, EntityDataSerializers.INT);
 
-    private static final float DAMAGE = 15.0F;
+    private static final float DAMAGE = 9.0F;
     private static final float LASER_THICKNESS = 0.5F;
 
     private static final int TICK_BETWEEN_SEGMENT_CHANGE = 10;

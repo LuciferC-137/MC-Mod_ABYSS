@@ -176,7 +176,6 @@
 	"creativetab.egg": "Oeufs",
 	"creativetab.darktree": "Sombrabre",
 	"creativetab.whitetree": "Blancharbre",
-	"creativetab.abyss_tab": "Abyss",
 
 	"enchantment.wardentools.stealth": "Furtivité",
 
@@ -261,6 +260,7 @@
 	"config.wardentools.title.abyss_fog_intensity": "Brouillard lors des orages",
 	"config.wardentools.title.abyss_armor_protection": "Protection Armures",
 	"config.wardentools.title.do_abyss_weather": "Cycle météo",
+	"config.wardentools.title.warden_heart_laser": "Laser coeur du Warden",
 
 	"advancements.wardentools.abyss.title": "Venu de l'Abyss",
 	"advancements.wardentools.abyss.description": "Obtenez du sculk",
