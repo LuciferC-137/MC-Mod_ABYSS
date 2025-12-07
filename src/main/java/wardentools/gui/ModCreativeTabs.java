@@ -17,7 +17,7 @@ public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModMain.MOD_ID);
 
-    private static final Map<Tag, List<Supplier<Item>>> TAGGED_ITEMS = new HashMap<>();
+    private static final Map<Tag, List<Supplier<? extends Item>>> TAGGED_ITEMS = new HashMap<>();
     private static final List<Supplier<Item>> ALL_ITEMS = new ArrayList<>();
 
     static  {
@@ -289,7 +289,7 @@ public class ModCreativeTabs {
         CREATIVE_MODE_TABS.register(eventBus);
     }
 
-    public static void addItemToTag(Tag tag, Supplier<Item> item) {
+    public static void addItemToTag(Tag tag, Supplier<? extends Item> item) {
         TAGGED_ITEMS.computeIfAbsent(tag, k -> new ArrayList<>()).add(item);
     }
 
@@ -297,7 +297,7 @@ public class ModCreativeTabs {
         addItemToTag(tag, () -> item);
     }
 
-    public static List<Supplier<Item>> getItemsByTag(Tag tag) {
+    public static List<Supplier<? extends Item>> getItemsByTag(Tag tag) {
         return TAGGED_ITEMS.getOrDefault(tag, Collections.emptyList());
     }
 

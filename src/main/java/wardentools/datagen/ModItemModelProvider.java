@@ -229,7 +229,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     // Shoutout to El_Redstoniano for making this
-    private void trimmedArmorItem(DeferredItem<Item> itemRegistryObject) {
+    private void trimmedArmorItem(DeferredItem<? extends Item> itemRegistryObject) {
         final String MOD_ID = ModMain.MOD_ID; // Change this to your mod id
 
         if(itemRegistryObject.get() instanceof ArmorItem armorItem) {

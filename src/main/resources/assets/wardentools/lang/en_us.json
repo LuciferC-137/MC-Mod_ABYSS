@@ -260,6 +260,11 @@
 	"effect.wardentools.radiance_bringer": "Radiance Bringer",
 	"effect.wardentools.purified": "Purified",
 
+	"config.wardentools.title.display_wind_messages": "Display Wind Messages",
+	"config.wardentools.title.abyss_fog_intensity": "Storm Fog Distance",
+    "config.wardentools.title.abyss_armor_protection": "Abyss Armor Protection",
+	"config.wardentools.title.do_abyss_weather": "Do Abyss Weather cycle",
+
 	"advancements.wardentools.abyss.title": "From the abyss",
 	"advancements.wardentools.abyss.description": "Obtain some sculk.",
 	"advancements.wardentools.corruptedheart.title": "It looks sad... and so angry...",

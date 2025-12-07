@@ -558,7 +558,7 @@ public class ItemRegistry {
 					() -> new BlockItem(BlockRegistry.SOUL_SPAWNER.get(),
 							new Item.Properties().rarity(Rarity.EPIC).fireResistant()));
 
-	public static final DeferredItem<Item> ABYSSAL_SCYTHE =
+	public static final DeferredItem<ScytheItem> ABYSSAL_SCYTHE =
 			ITEMS.register("abyssal_scythe",
 					() -> new ScytheItem(new Item.Properties()
 							.stacksTo(1)
@@ -567,7 +567,7 @@ public class ItemRegistry {
 							.fireResistant()
 							.attributes(ScytheItem.createAttributes(12, -3F))));
 
-	public static final DeferredItem<Item> RADIANT_SPEAR =
+	public static final DeferredItem<SpearItem> RADIANT_SPEAR =
 			ITEMS.register("radiant_spear",
 					() -> new SpearItem(new Item.Properties()
 							.stacksTo(1)

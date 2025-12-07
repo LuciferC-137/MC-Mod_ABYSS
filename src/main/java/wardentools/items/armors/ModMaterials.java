@@ -59,6 +59,15 @@ public class ModMaterials {
 		return Registry.registerForHolder(BuiltInRegistries.ARMOR_MATERIAL, location,
 				new ArmorMaterial(typeProtection, enchantability, equipSound, ingredient, layers, toughness, knockbackResistance));
 	}
+
+    public static int getAbyssArmorProtection(ArmorItem.Type type) {
+        return switch (type) {
+            case HELMET, BOOTS -> (int) ((float) AbyssConfig.SERVER.ABYSS_ARMOR_PROTECTION.get() * 5F / 9F);
+            case LEGGINGS -> (int) ((float) AbyssConfig.SERVER.ABYSS_ARMOR_PROTECTION.get() * 7F / 9F);
+            case BODY -> (int) ((float) AbyssConfig.SERVER.ABYSS_ARMOR_PROTECTION.get() * 11F / 9F);
+            default -> AbyssConfig.SERVER.ABYSS_ARMOR_PROTECTION.get();
+        };
+    }
     
 	
 }

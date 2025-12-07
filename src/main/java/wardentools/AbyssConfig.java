@@ -1,5 +1,6 @@
 package wardentools;
 
+import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 
@@ -10,13 +11,13 @@ public class AbyssConfig {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
         public static final ModConfigSpec.ConfigValue<Integer> ABYSS_FOG_STORM_INTENSITY = BUILDER
-                .translation("config.wardentools.abyss_fog_intensity")
-                .comment("The distance in blocks of the fog during storms in the Abyss dimension (0-100)")
+                .translation("config.wardentools.title.abyss_fog_intensity")
+                .comment("Set the distance of the fog when a storm is active in the Abyss (in blocks)")
                 .defineInRange("abyssFogIntensity", 20, 10, 512);
 
         public static final ModConfigSpec.ConfigValue<Boolean> DISPLAY_WIND_MESSAGES = BUILDER
-                .translation("config.wardentools.display_wind_messages")
-                .comment("Enable or disable wind message display in the Abyss dimension")
+                .translation("config.wardentools.title.display_wind_messages")
+                .comment("Wind messages are still added to the journal")
                 .define("displayWindMessages", true);
 
         static ModConfigSpec SPEC = BUILDER.build();
@@ -27,23 +28,14 @@ public class AbyssConfig {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
         public static final ModConfigSpec.ConfigValue<Integer> ABYSS_ARMOR_PROTECTION = BUILDER
-                .translation("config.wardentools.abyss_armor_protection")
-                .comment("The base protection value for chestplate Abyss armor pieces (netherite is 8)")
+                .translation("config.wardentools.title.abyss_armor_protection")
+                .comment("Set the defense value for abyss chestplate. Other pieces will be scaled based on that value. (netherite is 8)")
+                .worldRestart()
                 .defineInRange("abyssArmorProtection", 9, 1, 20);
 
-        public static final ModConfigSpec.ConfigValue<Integer> SCYTHE_DAMAGE = BUILDER
-                .translation("config.wardentools.scythe_damage")
-                .comment("The base damage value for the Abyss Scythe weapon")
-                .defineInRange("scytheDamage", 12, 1, 30);
-
-        public static final ModConfigSpec.ConfigValue<Integer> SPEAR_DAMAGE = BUILDER
-                .translation("config.wardentools.spear_damage")
-                .comment("The base damage value for the Abyss Spear weapon")
-                .defineInRange("spearDamage", 10, 1, 30);
-
         public static final ModConfigSpec.ConfigValue<Boolean> DO_ABYSS_WEATHER = BUILDER
-                .translation("config.wardentools.do_abyss_weather")
-                .comment("Enable or disable weather in the Abyss dimension")
+                .translation("config.wardentools.title.do_abyss_weather")
+                .comment("Enable or disable weather changes in the Abyss dimension")
                 .define("doAbyssWeather", true);
 
 

@@ -20,6 +20,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.joml.Vector3f;
+import wardentools.AbyssConfig;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
@@ -41,6 +42,7 @@ import wardentools.sounds.ModMusics;
 import wardentools.sounds.ModSounds;
 import wardentools.sounds.music.AbyssMusicHelper;
 import wardentools.weather.AbyssWeatherEventClient;
+import wardentools.weather.AbyssWeatherManager;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientPayloadHandler implements IClientPayloadHandler {
@@ -282,6 +284,13 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
             if (ctx.player().level().isClientSide()) {
                 ctx.player().playSound(ModSounds.WIND_WHISPERS.get(), 5f,
                         ( ctx.player().getRandom().nextFloat() -  ctx.player().getRandom().nextFloat()) * 0.2F + 1.0F);
+                if (AbyssConfig.CLIENT.DISPLAY_WIND_MESSAGES.get()) {
+                    if (msg.stormStatus() == WindWhisperSound.StormStatus.START.getId()) {
+                        ctx.player().sendSystemMessage(AbyssWeatherManager.stormMessage);
+                    } else if (msg.stormStatus() == WindWhisperSound.StormStatus.END.getId()) {
+                        ctx.player().sendSystemMessage(AbyssWeatherManager.stormEndMessage);
+                    }
+                }
             }
         }, ctx);
     }

@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
@@ -20,7 +19,7 @@ import wardentools.effect.ModEffects;
 
 import java.util.Map;
 
-public class ModArmorItem extends ArmorItem {
+public class ArmorWithEffectItem extends ConfigurableDefenseItem {
     private static final ResourceLocation CORRUPTION_ADVANCEMENT
             = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel");
     private static final ResourceLocation RADIANCE_ADVANCEMENT
@@ -35,7 +34,7 @@ public class ModArmorItem extends ArmorItem {
                             EFFECT_TIME, 0,
                             false,false, true)).build();
 
-    public ModArmorItem(Holder<ArmorMaterial> pMaterial, Type pType, Properties pProperties) {
+    public ArmorWithEffectItem(Holder<ArmorMaterial> pMaterial, Type pType, Properties pProperties) {
         super(pMaterial, pType, pProperties);
     }
 

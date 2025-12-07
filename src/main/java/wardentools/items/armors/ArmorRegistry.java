@@ -7,58 +7,86 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wardentools.ModMain;
 
+import java.util.List;
+
 public class ArmorRegistry {
 	public static final DeferredRegister.Items ARMORS = DeferredRegister.createItems(ModMain.MOD_ID);
 	
-	public static final DeferredItem<Item> DEEPCRISTAL_HELMET =
+	public static final DeferredItem<ConfigurableDefenseItem> DEEPCRISTAL_HELMET =
 			ARMORS.register("deepcristal_helmet",
-			() -> new ArmorItem(ModMaterials.DEEPCRISTAL, ArmorItem.Type.HELMET, new Item.Properties()
+			() -> new ConfigurableDefenseItem(ModMaterials.DEEPCRISTAL, ArmorItem.Type.HELMET, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.stacksTo(1)
 					.fireResistant()));
-	public static final DeferredItem<Item> DEEPCRISTAL_CHESTPLATE =
+	public static final DeferredItem<ArmorWithEffectItem> DEEPCRISTAL_CHESTPLATE =
 			ARMORS.register("deepcristal_chestplate",
-			()->new ModArmorItem(ModMaterials.DEEPCRISTAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+			()->new ArmorWithEffectItem(ModMaterials.DEEPCRISTAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.stacksTo(1)
 					.fireResistant()));
-	public static final DeferredItem<Item> DEEPCRISTAL_LEGGINGS =
+	public static final DeferredItem<ConfigurableDefenseItem> DEEPCRISTAL_LEGGINGS =
 			ARMORS.register("deepcristal_leggings",
-			()->new ArmorItem(ModMaterials.DEEPCRISTAL, ArmorItem.Type.LEGGINGS, new Item.Properties()
+			()->new ConfigurableDefenseItem(ModMaterials.DEEPCRISTAL, ArmorItem.Type.LEGGINGS, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.stacksTo(1)
 					.fireResistant()));
-	public static final DeferredItem<Item> DEEPCRISTAL_BOOTS =
+	public static final DeferredItem<ConfigurableDefenseItem> DEEPCRISTAL_BOOTS =
 			ARMORS.register("deepcristal_boots",
-			()->new ArmorItem(ModMaterials.DEEPCRISTAL, ArmorItem.Type.BOOTS, new Item.Properties()
+			()->new ConfigurableDefenseItem(ModMaterials.DEEPCRISTAL, ArmorItem.Type.BOOTS, new Item.Properties()
 					.rarity(Rarity.UNCOMMON)
 					.stacksTo(1)
 					.fireResistant()));
 
 
-	public static final DeferredItem<Item> RADIANCE_CRISTAL_HELMET =
+	public static final DeferredItem<ConfigurableDefenseItem> RADIANCE_CRISTAL_HELMET =
 			ARMORS.register("radiance_cristal_helmet",
-					()->new ArmorItem(ModMaterials.RADIANCE_CRISTAL, ArmorItem.Type.HELMET, new Item.Properties()
+					()->new ConfigurableDefenseItem(ModMaterials.RADIANCE_CRISTAL, ArmorItem.Type.HELMET, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.stacksTo(1)
 							.fireResistant()));
-	public static final DeferredItem<Item> RADIANCE_CRISTAL_CHESTPLATE =
+	public static final DeferredItem<ArmorWithEffectItem> RADIANCE_CRISTAL_CHESTPLATE =
 			ARMORS.register("radiance_cristal_chestplate",
-					()->new ModArmorItem(ModMaterials.RADIANCE_CRISTAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
+					()->new ArmorWithEffectItem(ModMaterials.RADIANCE_CRISTAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.stacksTo(1)
 							.fireResistant()));
-	public static final DeferredItem<Item> RADIANCE_CRISTAL_LEGGINGS =
+	public static final DeferredItem<ConfigurableDefenseItem> RADIANCE_CRISTAL_LEGGINGS =
 			ARMORS.register("radiance_cristal_leggings",
-					()->new ArmorItem(ModMaterials.RADIANCE_CRISTAL, ArmorItem.Type.LEGGINGS, new Item.Properties()
+					()->new ConfigurableDefenseItem(ModMaterials.RADIANCE_CRISTAL, ArmorItem.Type.LEGGINGS, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.stacksTo(1)
 							.fireResistant()));
-	public static final DeferredItem<Item> RADIANCE_CRISTAL_BOOTS =
+	public static final DeferredItem<ConfigurableDefenseItem> RADIANCE_CRISTAL_BOOTS =
 			ARMORS.register("radiance_cristal_boots",
-					()->new ArmorItem(ModMaterials.RADIANCE_CRISTAL, ArmorItem.Type.BOOTS, new Item.Properties()
+					()->new ConfigurableDefenseItem(ModMaterials.RADIANCE_CRISTAL, ArmorItem.Type.BOOTS, new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.stacksTo(1)
 							.fireResistant()));
+
+    /**
+     * DO NOT CALL BEFORE REGISTRATION IS COMPLETE.
+     * @return List of ConfigurableDefenseItem representing the Deepcristal armor set.
+     */
+    public static List<ConfigurableDefenseItem> getDeepcristalArmorSet() {
+        return List.of(
+                DEEPCRISTAL_HELMET.get(),
+                DEEPCRISTAL_CHESTPLATE.get(),
+                DEEPCRISTAL_LEGGINGS.get(),
+                DEEPCRISTAL_BOOTS.get()
+        );
+    }
+
+    /**
+     * DO NOT CALL BEFORE REGISTRATION IS COMPLETE.
+     * @return List of ConfigurableDefenseItem representing the Radiance armor set.
+     */
+    public static List<ConfigurableDefenseItem> getRadianceCristalArmorSet() {
+        return List.of(
+                RADIANCE_CRISTAL_HELMET.get(),
+                RADIANCE_CRISTAL_CHESTPLATE.get(),
+                RADIANCE_CRISTAL_LEGGINGS.get(),
+                RADIANCE_CRISTAL_BOOTS.get()
+        );
+    }
 	
 }

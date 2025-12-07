@@ -257,6 +257,11 @@
 	"effect.wardentools.radiance_bringer": "Porteur de Radiance",
 	"effect.wardentools.purified": "Purifié",
 
+	"config.wardentools.title.display_wind_messages": "Messages du Vent",
+	"config.wardentools.title.abyss_fog_intensity": "Brouillard lors des orages",
+	"config.wardentools.title.abyss_armor_protection": "Protection Armures",
+	"config.wardentools.title.do_abyss_weather": "Cycle météo",
+
 	"advancements.wardentools.abyss.title": "Venu de l'Abyss",
 	"advancements.wardentools.abyss.description": "Obtenez du sculk",
 	"advancements.wardentools.corruptedheart.title": "Il a l'air triste... et tellement en colère...",

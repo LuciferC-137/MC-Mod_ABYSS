@@ -12,12 +12,16 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
+import wardentools.items.armors.ArmorRegistry;
+import wardentools.items.armors.ConfigurableDefenseItem;
+import wardentools.items.armors.ModMaterials;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.custom.*;
 
@@ -35,6 +39,16 @@ public class CommonModEvents {
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
 		});
+    }
+
+    @SubscribeEvent
+    public static void serverStart(ServerAboutToStartEvent event) {
+        for (ConfigurableDefenseItem armorItem : ArmorRegistry.getDeepcristalArmorSet()) {
+            armorItem.updateDefense(ModMaterials.getAbyssArmorProtection(armorItem.getType()));
+        }
+        for (ConfigurableDefenseItem armorItem : ArmorRegistry.getRadianceCristalArmorSet()) {
+            armorItem.updateDefense(ModMaterials.getAbyssArmorProtection(armorItem.getType()));
+        }
     }
     
     @SubscribeEvent

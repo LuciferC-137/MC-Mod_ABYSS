@@ -34,9 +34,9 @@ public class AbyssWeatherManager {
     private int timeSinceStormBegin = 0;
     private boolean isStorming = false;
     private Set<ChunkPos> loadedChunks = new HashSet<>();
-    private static final Component stormMessage
+    public static final Component stormMessage
             = Component.translatable("message." + ModMain.MOD_ID + ".wind.storm");
-    private static final Component stormEndMessage
+    public static final Component stormEndMessage
             = Component.translatable("message." + ModMain.MOD_ID + ".wind.storm_end");
 
     public void tick(@NotNull ServerLevel level) {
@@ -124,8 +124,8 @@ public class AbyssWeatherManager {
         this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
-                    player.sendSystemMessage(stormMessage);
-                    PacketDistributor.sendToPlayer(player, new WindWhisperSound());
+                    PacketDistributor.sendToPlayer(player,
+                            new WindWhisperSound(WindWhisperSound.StormStatus.START));
                 });
     }
 
@@ -134,8 +134,8 @@ public class AbyssWeatherManager {
         this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
-                    player.sendSystemMessage(stormEndMessage);
-                    PacketDistributor.sendToPlayer(player, new WindWhisperSound());
+                    PacketDistributor.sendToPlayer(player,
+                            new WindWhisperSound(WindWhisperSound.StormStatus.END));
                 });
         this.timeSinceStormBegin = 0;
     }
