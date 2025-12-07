@@ -34,6 +34,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerBlockWithItem(BlockRegistry.RUBY_BLOCK);
         registerBlockWithItem(BlockRegistry.MALACHITE_BLOCK);
         registerBlockWithItem(BlockRegistry.SOLID_CORRUPTION);
+        registerBlockWithItem(BlockRegistry.PURPLE_SOIL);
 
         // Registering blocks with top and bottom textures (no Orientation)
         registerTopBottomSideBlock(BlockRegistry.CHISELED_ABYSSALITE,

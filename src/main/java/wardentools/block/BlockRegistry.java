@@ -688,7 +688,7 @@ public class BlockRegistry {
 	public static final DeferredBlock<Block> LAVYN
 			= BLOCKS.register("lavyn",
 			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
-					.mapColor(MapColor.COLOR_PURPLE)
+					.mapColor(MapColor.TERRACOTTA_MAGENTA)
 					.noOcclusion()
 					.noCollission()
 					.noLootTable()
@@ -696,12 +696,26 @@ public class BlockRegistry {
 
 	public static final DeferredBlock<Block> SIRISCA
 			= BLOCKS.register("sirisca",
-			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
-			.mapColor(MapColor.COLOR_PURPLE)
+			() -> new SiriscaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.mapColor(MapColor.TERRACOTTA_MAGENTA)
 					.noOcclusion()
 					.noCollission()
 					.noLootTable()
 					.lightLevel((state) -> 7)
+			));
+
+	public static final DeferredBlock<Block> PURPLE_SOIL
+			= BLOCKS.register("purple_soil",
+			() ->  new PurpleSoilBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
+					.mapColor(MapColor.COLOR_PURPLE)
+					.strength(0.8F)
+			));
+
+	public static final DeferredBlock<Block> PURPLE_FARMLAND
+			= BLOCKS.register("purple_farmland",
+			() -> new PurpleFarmland(BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
+					.mapColor(MapColor.COLOR_PURPLE)
+					.strength(0.8F)
 			));
 
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {

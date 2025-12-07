@@ -711,4 +711,8 @@ public class ItemRegistry {
 			ITEMS.register("purple_seed",
 					() -> new ItemNameBlockItem(BlockRegistry.SIRISCA.get(), new Item.Properties()));
 
+	public static final DeferredItem<BlockItem> PURPLE_SOIL =
+			ITEMS.register("purple_soil",
+					() -> new BlockItem(BlockRegistry.PURPLE_SOIL.get(), new Item.Properties()));
+
 }

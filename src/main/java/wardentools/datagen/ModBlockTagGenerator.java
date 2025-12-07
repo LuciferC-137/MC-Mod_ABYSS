@@ -81,7 +81,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(BlockRegistry.DARKDIRT.get())
-                .add(BlockRegistry.DARKGRASS_BLOCK.get());
+                .add(BlockRegistry.DARKGRASS_BLOCK.get())
+                .add(BlockRegistry.PURPLE_SOIL.get())
+                .add(BlockRegistry.PURPLE_FARMLAND.get());
 
         this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
                 .add(BlockRegistry.ABYSSALITE.get());
@@ -91,7 +93,6 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.MOSS_REPLACEABLE)
                 .add(BlockRegistry.ABYSSALITE.get());
-
 
         this.tag(BlockTags.FEATURES_CANNOT_REPLACE)
                 .add(BlockRegistry.LIQUID_CORRUPTION_BLOCK.get());
@@ -137,7 +138,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.DIRT)
                 .add(BlockRegistry.DARKDIRT.get())
-                .add(BlockRegistry.DARKGRASS_BLOCK.get());
+                .add(BlockRegistry.DARKGRASS_BLOCK.get())
+                .add(BlockRegistry.PURPLE_SOIL.get());
 
         this.tag(BlockTags.FENCES)
                 .add(BlockRegistry.DARKTREE_FENCE.get())
@@ -182,7 +184,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.REINFORCED_GLASS.get());
 
 		this.tag(ModTags.Blocks.CAN_SUSTAIN_ABYSS_PLANTS)
-				.add(Blocks.SCULK);
+				.add(Blocks.SCULK)
+                .add(BlockRegistry.PURPLE_SOIL.get());
 
         this.tag(ModTags.Blocks.CONNECT_TO_TENDRILS_BLOCKS)
                 .add(Blocks.SCULK)

@@ -1,0 +1,30 @@
+package wardentools.block;
+
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+public class PurpleSoilBlock extends Block {
+
+    public PurpleSoilBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public @Nullable BlockState getToolModifiedState(@NotNull BlockState state,
+                                                     @NotNull UseOnContext context,
+                                                     @NotNull ItemAbility itemAbility,
+                                                     boolean simulate) {
+        if (ItemAbilities.HOE_TILL == itemAbility) {
+            Block block = state.getBlock();
+            if (block instanceof PurpleSoilBlock) {
+                return BlockRegistry.PURPLE_FARMLAND.get().defaultBlockState();
+            }
+        }
+        return super.getToolModifiedState(state, context, itemAbility, simulate);
+    }
+}

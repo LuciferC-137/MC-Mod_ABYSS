@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_farmland",
+  "textures": {
+    "dirt": "wardentools:block/purple_soil",
+    "top": "wardentools:block/purple_farmland"
+  }
+}

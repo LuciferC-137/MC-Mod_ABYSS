@@ -59,6 +59,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.addDropSelf(BlockRegistry.MALACHITE_BLOCK);
 		this.addDropSelf(BlockRegistry.SOLID_CORRUPTION);
 		this.addDropSelf(BlockRegistry.WIND_WHISPERER);
+		this.addDropSelf(BlockRegistry.PURPLE_SOIL);
     	
     	this.addDropSelf(BlockRegistry.DARKTREE_LOG);
     	this.addDropSelf(BlockRegistry.DARKTREE_PLANKS);
@@ -92,6 +93,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.addDropSelf(BlockRegistry.GRAMOPHONE);
 		this.addDropSelf(BlockRegistry.SONIC_BLASTER);
 		this.addDropSelf(BlockRegistry.CORRUPTED_ABYSSALITE);
+
+		// Drop something else
+		this.add(BlockRegistry.PURPLE_FARMLAND.get(),
+				createSingleItemTable(ItemRegistry.PURPLE_SOIL.get()));
 
 		// Blocks that drop only using silk touch
 		this.add(BlockRegistry.LIVING_SPROUT.get(),

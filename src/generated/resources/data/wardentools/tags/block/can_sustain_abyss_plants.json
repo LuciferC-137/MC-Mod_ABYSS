@@ -1,5 +1,6 @@
 {
   "values": [
-    "minecraft:sculk"
+    "minecraft:sculk",
+    "wardentools:purple_soil"
   ]
 }
