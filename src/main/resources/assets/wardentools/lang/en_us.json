@@ -63,6 +63,7 @@
 	"item.wardentools.crystal_resonator": "Crystal Resonator",
 	"item.wardentools.crystal_golem_spawn_egg": "Crystal Golem Spawn Egg",
 	"item.wardentools.ancient_citadel_map": "Ancient Citadel Map",
+	"item.wardentools.purple_seed": "Purple Seed",
 
 	"item.minecraft.potion.effect.purified_potion": "Purified Potion",
 	"item.minecraft.splash_potion.effect.purified_potion": "Splash Purified Potion",
@@ -152,6 +153,9 @@
 	"block.wardentools.white_grass": "White Grass",
 	"block.wardentools.tall_white_grass": "Tall White Grass",
 	"block.wardentools.white_torchflower": "White Torchflower",
+
+	"block.wardentools.lavyn": "Lavyn",
+	"block.wardentools.sirisca": "Sirisca",
 	
 	"block.wardentools.blue_bush": "Blue Bush",
 	"block.wardentools.tall_dark_grass": "Tall Dark Grass",

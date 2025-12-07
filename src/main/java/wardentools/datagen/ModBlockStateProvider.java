@@ -69,6 +69,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerCrossCutoutBlock(BlockRegistry.WHITE_GRASS);
         registerCrossCutoutBlock(BlockRegistry.WHITE_TORCHFLOWER);
         registerCrossCutoutBlock(BlockRegistry.DARK_GRASS);
+        registerCrossCutoutBlock(BlockRegistry.LAVYN);
         simpleBlockWithItem(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(), models()
         		.singleTexture("potted_white_torchflower",
                         ResourceLocation.withDefaultNamespace("flower_pot_cross"), "plant",

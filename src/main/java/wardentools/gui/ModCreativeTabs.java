@@ -128,6 +128,8 @@ public class ModCreativeTabs {
         addItemToTag(Tag.NATURE, ItemRegistry.WANDERER_PAW);
         addItemToTag(Tag.NATURE, ItemRegistry.NOCTILURE_TREAT);
         addItemToTag(Tag.NATURE, ItemRegistry.LURKER_EYE);
+        addItemToTag(Tag.NATURE, ItemRegistry.LAVYN);
+        addItemToTag(Tag.NATURE, ItemRegistry.PURPLE_SEED);
 
         addItemToTag(Tag.DIRT, ItemRegistry.DARKDIRT);
         addItemToTag(Tag.DIRT, ItemRegistry.DARKGRASS_BLOCK);

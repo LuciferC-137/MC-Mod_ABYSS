@@ -124,6 +124,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.PALE_CRISTAL);
         blockItemWithItemModel(BlockRegistry.CONTAGION_INCARNATION_SKULL);
         blockItemWithItemModel(BlockRegistry.GRAMOPHONE);
+        blockItemWithItemModel(BlockRegistry.LAVYN);
+        blockItemWithItemModel(ItemRegistry.PURPLE_SEED);
 
         //Items that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),
@@ -197,6 +199,12 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
  
     private ItemModelBuilder blockItemWithItemModel(DeferredBlock<Block> item) {
+        return withExistingParent(item.getId().getPath(),
+                ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "item/" + item.getId().getPath()));
+    }
+
+    private ItemModelBuilder blockItemWithItemModel(DeferredItem<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "item/" + item.getId().getPath()));

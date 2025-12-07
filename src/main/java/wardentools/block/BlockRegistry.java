@@ -685,6 +685,25 @@ public class BlockRegistry {
                     .noLootTable()
             ));
 
+	public static final DeferredBlock<Block> LAVYN
+			= BLOCKS.register("lavyn",
+			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.mapColor(MapColor.COLOR_PURPLE)
+					.noOcclusion()
+					.noCollission()
+					.noLootTable()
+					.lightLevel((state) -> 7)));
+
+	public static final DeferredBlock<Block> SIRISCA
+			= BLOCKS.register("sirisca",
+			() -> new AbyssDoublePlantBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			.mapColor(MapColor.COLOR_PURPLE)
+					.noOcclusion()
+					.noCollission()
+					.noLootTable()
+					.lightLevel((state) -> 7)
+			));
+
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
         return false;
     }

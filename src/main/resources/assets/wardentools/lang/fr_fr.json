@@ -63,6 +63,7 @@
 	"item.wardentools.crystal_resonator": "Résonateur de Cristal",
 	"item.wardentools.crystal_golem_spawn_egg": "Oeuf d'apparition de Golem-Cristal",
 	"item.wardentools.ancient_citadel_map": "Carte vers la Citadelle Ancienne",
+	"item.wardentools.purple_seed": "Graines Magenta",
 
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -153,6 +154,9 @@
 	"block.wardentools.living_sprout": "Bourgeon vivante",
 	"block.wardentools.crystal_infuser": "Infuseur de Cristal",
 	"block.wardentools.golem_stone": "Pierre de Golem",
+
+	"block.wardentools.lavyn": "Lavyn",
+	"block.wardentools.sirisca": "Sirisca",
 
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",
