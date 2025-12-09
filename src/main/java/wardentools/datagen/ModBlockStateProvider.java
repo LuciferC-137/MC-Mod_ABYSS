@@ -6,6 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -14,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.BlueBush;
+import wardentools.block.SiriscaBlock;
 
 public class ModBlockStateProvider extends BlockStateProvider {
 
@@ -89,6 +91,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks"),
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks"),
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/golem_stone_top"));
+
+        registerSiriscaBlock(BlockRegistry.SIRISCA);
 
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
@@ -318,6 +322,22 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 });
 
         itemModels().withExistingParent(name, modLoc("block/" + name));
+    }
+
+    private void registerSiriscaBlock(DeferredBlock<Block> blockRegistryObject) {
+
+        getVariantBuilder(blockRegistryObject.get())
+                .forAllStates(state -> {
+                    int age = state.getValue(SiriscaBlock.AGE);
+                    DoubleBlockHalf half = state.getValue(SiriscaBlock.HALF);
+                    String modelName = "sirisca/sirisca_" + age + "_" + (half == DoubleBlockHalf.LOWER ? "bottom" : "top");
+
+                    ModelFile modelFile = models().getExistingFile(modLoc("block/" + modelName));
+
+                    return ConfiguredModel.builder()
+                            .modelFile(modelFile)
+                            .build();
+                });
     }
     
     private void registerFromLocation(DeferredBlock<Block> blockRegistryObject, String location) {

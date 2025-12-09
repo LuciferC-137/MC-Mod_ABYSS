@@ -691,7 +691,6 @@ public class BlockRegistry {
 					.mapColor(MapColor.TERRACOTTA_MAGENTA)
 					.noOcclusion()
 					.noCollission()
-					.noLootTable()
 					.lightLevel((state) -> 7)));
 
 	public static final DeferredBlock<Block> SIRISCA
@@ -699,7 +698,7 @@ public class BlockRegistry {
 			() -> new SiriscaBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
 					.mapColor(MapColor.TERRACOTTA_MAGENTA)
 					.noOcclusion()
-					.noCollission()
+					.offsetType(BlockBehaviour.OffsetType.NONE)
 					.noLootTable()
 					.lightLevel((state) -> 7)
 			));

@@ -1,0 +1,46 @@
+{
+  "variants": {
+    "half=lower,sirisca_age=0": {
+      "model": "wardentools:block/sirisca/sirisca_0_bottom"
+    },
+    "half=lower,sirisca_age=1": {
+      "model": "wardentools:block/sirisca/sirisca_1_bottom"
+    },
+    "half=lower,sirisca_age=2": {
+      "model": "wardentools:block/sirisca/sirisca_2_bottom"
+    },
+    "half=lower,sirisca_age=3": {
+      "model": "wardentools:block/sirisca/sirisca_3_bottom"
+    },
+    "half=lower,sirisca_age=4": {
+      "model": "wardentools:block/sirisca/sirisca_4_bottom"
+    },
+    "half=lower,sirisca_age=5": {
+      "model": "wardentools:block/sirisca/sirisca_5_bottom"
+    },
+    "half=lower,sirisca_age=6": {
+      "model": "wardentools:block/sirisca/sirisca_6_bottom"
+    },
+    "half=upper,sirisca_age=0": {
+      "model": "wardentools:block/sirisca/sirisca_0_top"
+    },
+    "half=upper,sirisca_age=1": {
+      "model": "wardentools:block/sirisca/sirisca_1_top"
+    },
+    "half=upper,sirisca_age=2": {
+      "model": "wardentools:block/sirisca/sirisca_2_top"
+    },
+    "half=upper,sirisca_age=3": {
+      "model": "wardentools:block/sirisca/sirisca_3_top"
+    },
+    "half=upper,sirisca_age=4": {
+      "model": "wardentools:block/sirisca/sirisca_4_top"
+    },
+    "half=upper,sirisca_age=5": {
+      "model": "wardentools:block/sirisca/sirisca_5_top"
+    },
+    "half=upper,sirisca_age=6": {
+      "model": "wardentools:block/sirisca/sirisca_6_top"
+    }
+  }
+}

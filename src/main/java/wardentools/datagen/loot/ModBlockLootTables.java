@@ -12,6 +12,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -97,6 +99,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		// Drop something else
 		this.add(BlockRegistry.PURPLE_FARMLAND.get(),
 				createSingleItemTable(ItemRegistry.PURPLE_SOIL.get()));
+		this.add(BlockRegistry.LAVYN.get(),
+				createSingleDropWithChance(ItemRegistry.PURPLE_SEED.get(), 0.1F));
 
 		// Blocks that drop only using silk touch
 		this.add(BlockRegistry.LIVING_SPROUT.get(),
@@ -125,7 +129,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.add(BlockRegistry.WHITE_GRASS.get(),
     			block -> createShearsOnlyDrop(BlockRegistry.WHITE_GRASS.get()));
     	this.add(BlockRegistry.DEEPFLOWER.get(),
-                block -> createDoubleBlockSingleItemDrop(ItemRegistry.DEEPFLOWER));
+                block -> createDoubleBlockSingleItemDrop(BlockRegistry.DEEPFLOWER, ItemRegistry.DEEPFLOWER));
     	this.add(BlockRegistry.TALL_DARK_GRASS.get(),
     			block -> createDoublePlantShearsDrop(BlockRegistry.DARK_GRASS.get()));
     	this.add(BlockRegistry.DARK_GRASS.get(),
@@ -186,14 +190,30 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     private void addDropSelf(DeferredBlock<Block> block) {
 		this.dropSelf(block.get());
     }
-    
-    private LootTable.Builder createDoubleBlockSingleItemDrop(DeferredItem<Item> item) {
-        return LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(item.get())
-                                .when(LootItemRandomChanceCondition.randomChance(0.5f))));
-    }
+
+	private LootTable.Builder createSingleDropWithChance(ItemLike item, float chance) {
+		return LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(item)
+								.when(LootItemRandomChanceCondition.randomChance(chance))
+						)
+				);
+	}
+
+	private LootTable.Builder createDoubleBlockSingleItemDrop(DeferredBlock<Block> block, DeferredItem<Item> item) {
+		return LootTable.lootTable()
+				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(item.get())
+								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block.get())
+											.setProperties(StatePropertiesPredicate.Builder.properties()
+														.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF,
+																	DoubleBlockHalf.LOWER)
+											)
+								)
+						)
+				);
+	}
 
 	private LootTable.Builder createBlueBushLoot(DeferredBlock<Block> bushBlock, DeferredItem<Item> berryItem) {
 		return LootTable.lootTable()

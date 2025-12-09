@@ -8,8 +8,11 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "chance": 0.5,
-              "condition": "minecraft:random_chance"
+              "block": "wardentools:deepflower",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
             }
           ],
           "name": "wardentools:deepflower"
