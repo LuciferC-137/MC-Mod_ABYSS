@@ -4,6 +4,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 
+@SuppressWarnings("deprecation")
 public class ModFoods {
 	public static final FoodProperties DEEP_FRUIT_PROPERTIES =
 			new FoodProperties.Builder().nutrition(2).fast()
@@ -21,6 +22,14 @@ public class ModFoods {
 			new FoodProperties.Builder().nutrition(4).fast()
 			.saturationModifier(3f).effect(new MobEffectInstance(MobEffects.GLOWING,
 							200), 1f).build();
+
+	public static final FoodProperties SIRISCA_BLOSSOM_PROPERTIES =
+			new FoodProperties.Builder().nutrition(1).fast()
+					.saturationModifier(0.3f).build();
+
+	public static final FoodProperties PURPLE_CAKE_PROPERTIES =
+			new FoodProperties.Builder().nutrition(7)
+					.saturationModifier(8F).build();
 
 
 }

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "wardentools:sirisca_blossom"
+    },
+    {
+      "item": "wardentools:purple_seed"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "wardentools:purple_cake"
+  }
+}

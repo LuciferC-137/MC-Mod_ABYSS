@@ -130,6 +130,8 @@ public class ModCreativeTabs {
         addItemToTag(Tag.NATURE, ItemRegistry.LURKER_EYE);
         addItemToTag(Tag.NATURE, ItemRegistry.LAVYN);
         addItemToTag(Tag.NATURE, ItemRegistry.PURPLE_SEED);
+        addItemToTag(Tag.NATURE, ItemRegistry.SIRISCA_BLOSSOM);
+        addItemToTag(Tag.NATURE, ItemRegistry.PURPLE_CAKE);
 
         addItemToTag(Tag.DIRT, ItemRegistry.DARKDIRT);
         addItemToTag(Tag.DIRT, ItemRegistry.DARKGRASS_BLOCK);

@@ -1,4 +1,4 @@
-// 1.21.1	2025-12-07T14:01:36.645706046	Item Models: wardentools
+// 1.21.1	2025-12-10T19:37:14.370295031	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -107,6 +107,7 @@ df6103769189e8270bb718f6da221cb40c2044b7 assets/wardentools/models/item/protecto
 d7c873bfbe569cf399dd7bdb2cb77a55dab7829c assets/wardentools/models/item/protector_invoker.json
 a211e3021be071d858d1d178572b1cc4763e29b1 assets/wardentools/models/item/pure_essence.json
 41b094b08a051cb8b0541ab8a2d7edfdd2eb1178 assets/wardentools/models/item/pure_vessel.json
+4c21bd482526848ebebfda51cfc579b69420ba06 assets/wardentools/models/item/purple_cake.json
 c2391463a4da8278ea3682d356df66ec82574058 assets/wardentools/models/item/purple_seed.json
 aa0f198d94171a477a56c2fde4dcf0ae195b02f8 assets/wardentools/models/item/radiance_catalyst.json
 d42ec2d53dede80cbedfbceac25d58df1d306837 assets/wardentools/models/item/radiance_cristal.json
@@ -161,6 +162,7 @@ bbad7122669ed0a024e4bac611102f604156d428 assets/wardentools/models/item/ring_of_
 a0e2c082ba9528515dbd1ba4dc641974c0709613 assets/wardentools/models/item/ruby.json
 9fa6f6f8a8707a06140b5840c7b425f2c0fee059 assets/wardentools/models/item/ruby_fragment.json
 e0cc44edc967f7ca97ef213e9216a54d1a7a5f29 assets/wardentools/models/item/shadow_ornament.json
+3c3c106d632b9a68ca31d0e45ffdfc228b23b9cc assets/wardentools/models/item/sirisca_blossom.json
 b8df5fb1131e10a7db4c550a5b47f92b8c1058a5 assets/wardentools/models/item/strength_bracelet.json
 7a7d9fd169318dfa32e885c5db7cb5abbbccce3d assets/wardentools/models/item/stripped_darktree_log.json
 214aa1eb9265d9323f889c23f066019133437b78 assets/wardentools/models/item/stripped_darktree_wood.json

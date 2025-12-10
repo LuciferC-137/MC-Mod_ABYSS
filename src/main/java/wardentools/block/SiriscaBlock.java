@@ -83,10 +83,13 @@ public class SiriscaBlock extends Block implements BonemealableBlock {
                 half_space + width, height, half_space + width);
     }
 
-    protected @NotNull BlockState updateShape(BlockState state, Direction facing,
+    protected @NotNull BlockState updateShape(BlockState state, @NotNull Direction facing,
                                               @NotNull BlockState facingState,
                                               @NotNull LevelAccessor level,
                                               @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
+        if (state.getValue(AGE) < DOUBLE_BLOCK_AGE_START) {
+            return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+        }
         DoubleBlockHalf doubleblockhalf = state.getValue(HALF);
         if (facing.getAxis() != Direction.Axis.Y 
                 || doubleblockhalf == DoubleBlockHalf.LOWER != (facing == Direction.UP) 

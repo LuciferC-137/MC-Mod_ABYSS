@@ -320,6 +320,13 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .unlockedBy("has_item", has(ItemRegistry.SONIC_BLASTER.get()))
                 .save(recipeOutput);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemRegistry.PURPLE_CAKE.get())
+                .requires(Items.SUGAR)
+                .requires(ItemRegistry.SIRISCA_BLOSSOM.get())
+                .requires(ItemRegistry.PURPLE_SEED.get())
+                .unlockedBy("has_item", has(ItemRegistry.SIRISCA_BLOSSOM.get()))
+                .save(recipeOutput);
+
     }
 
     protected void allStoneVariants(@NotNull RecipeOutput recipeOutput, String name,

@@ -699,7 +699,6 @@ public class BlockRegistry {
 					.mapColor(MapColor.TERRACOTTA_MAGENTA)
 					.noOcclusion()
 					.offsetType(BlockBehaviour.OffsetType.NONE)
-					.noLootTable()
 					.lightLevel((state) -> 7)
 			));
 

@@ -1,4 +1,4 @@
-// 1.21.1	2025-11-30T21:09:46.958790652	Recipes
+// 1.21.1	2025-12-10T19:37:14.374695703	Recipes
 fb72b19c5786e722e8393dd3121beb5e4a06818d data/minecraft/advancement/recipes/food/sugar.json
 0413a6dbf7f1225ebfff9a57b839065d5afd3456 data/minecraft/advancement/recipes/misc/amethyst_shard.json
 a25cf481b3b1ae9dbf9a560e44ca623f96d32ff9 data/minecraft/advancement/recipes/misc/echo_shard.json
@@ -66,6 +66,7 @@ c8ae3f9ca5f58473dfe184d6b42d116f8fa8f018 data/wardentools/advancement/recipes/de
 6a6e9548147f9150ffca80b2b244318f6e7e0303 data/wardentools/advancement/recipes/decorations/ruby.json
 04517344f3efa6c05f39c62533b5e558cca3ec67 data/wardentools/advancement/recipes/decorations/whitetree_fence.json
 d15a3f65a2e86f4004a44d710bafcd498d9ebbb0 data/wardentools/advancement/recipes/food/noctilure_treat.json
+e2853c1ebc889b629bbc9f3e8e60f7b5b5b1029a data/wardentools/advancement/recipes/food/purple_cake.json
 7e135b7f3de94e97c0a709a7452f7eb9e4c0eaca data/wardentools/advancement/recipes/misc/citrine_fragment.json
 abb8b4f7778a3ceb319145c76934cd96244589df data/wardentools/advancement/recipes/misc/corrupted_essence.json
 be360d7678f9ee0b0ff6d6a1e15652872da9f4e1 data/wardentools/advancement/recipes/misc/corrupted_vessel.json
@@ -177,6 +178,7 @@ e780cc2b4067fc6747a4e1b52a3bb65d8752f32a data/wardentools/recipe/pale_cristal.js
 34fb5f0323e4f716ba15ee60ee8144ec3a13a3ef data/wardentools/recipe/protector_invoker.json
 f0f20f0f7c16ff52ca37951bff331935b4c8b1eb data/wardentools/recipe/pure_essence_catalyst.json
 aed95b81f09229f30e835f63eef2ab87ff5ddaa3 data/wardentools/recipe/pure_vessel_catalyst.json
+7d5abf3f6bcea69a2ec3cc4e26d0f6c334d418c3 data/wardentools/recipe/purple_cake.json
 ff739dcaa4089c5213a8be4faed01f141514e31f data/wardentools/recipe/radiance_catalyst.json
 3905a52ece82701944a163c029a6dc357577554c data/wardentools/recipe/radiance_cristal.json
 4e2e9ec70813373887c46fdeb1a1f39b9e425b3d data/wardentools/recipe/radiance_cristal_boots.json

@@ -715,4 +715,17 @@ public class ItemRegistry {
 			ITEMS.register("purple_soil",
 					() -> new BlockItem(BlockRegistry.PURPLE_SOIL.get(), new Item.Properties()));
 
+	public static final DeferredItem<Item> SIRISCA_BLOSSOM =
+			ITEMS.register("sirisca_blossom",
+					() -> new Item(new Item.Properties()
+							.food(ModFoods.SIRISCA_BLOSSOM_PROPERTIES)
+					));
+
+	public static final DeferredItem<Item> PURPLE_CAKE =
+			ITEMS.register("purple_cake",
+					() -> new Item(new Item.Properties()
+							.food(ModFoods.PURPLE_CAKE_PROPERTIES)
+							.stacksTo(16)
+					));
+
 }

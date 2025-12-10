@@ -31,6 +31,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.block.BlueBush;
+import wardentools.block.SiriscaBlock;
 import wardentools.items.ItemRegistry;
 
 import java.util.Set;
@@ -100,7 +101,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.add(BlockRegistry.PURPLE_FARMLAND.get(),
 				createSingleItemTable(ItemRegistry.PURPLE_SOIL.get()));
 		this.add(BlockRegistry.LAVYN.get(),
-				createSingleDropWithChance(ItemRegistry.PURPLE_SEED.get(), 0.1F));
+				createItemOrBlockWithShearsOrSilkTouch(BlockRegistry.LAVYN.get(),
+						ItemRegistry.PURPLE_SEED.get(), 0.2F));
+		this.add(BlockRegistry.SIRISCA.get(), createSiriscaDrop());
 
 		// Blocks that drop only using silk touch
 		this.add(BlockRegistry.LIVING_SPROUT.get(),
@@ -191,13 +194,22 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.dropSelf(block.get());
     }
 
-	private LootTable.Builder createSingleDropWithChance(ItemLike item, float chance) {
-		return LootTable.lootTable()
-				.withPool(LootPool.lootPool()
+	private LootPool.Builder createSingleDropWithChance(ItemLike item, float chance) {
+		return LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
 						.add(LootItem.lootTableItem(item)
 								.when(LootItemRandomChanceCondition.randomChance(chance))
-						)
+						);
+	}
+
+	private LootTable.Builder createItemOrBlockWithShearsOrSilkTouch(Block block, ItemLike item, float chance) {
+		return LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(block))
+						.when(this.hasShearsOrSilkTouch())
+				)
+				.withPool(createSingleDropWithChance(item, chance)
 				);
 	}
 
@@ -294,6 +306,37 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 										.apply(ApplyBonusCount.addUniformBonusCount(
 												registrylookup.getOrThrow(Enchantments.FORTUNE))))
 								.when(this.doesNotHaveSilkTouch())
+				);
+	}
+
+	private LootTable.Builder createSiriscaDrop() {
+		return LootTable.lootTable()
+				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ItemRegistry.PURPLE_SEED.get())
+								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(BlockRegistry.SIRISCA.get())
+										.setProperties(StatePropertiesPredicate.Builder.properties()
+												.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)
+										)
+								)
+						)
+						.add(LootItem.lootTableItem(ItemRegistry.PURPLE_SEED.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
+								.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(BlockRegistry.SIRISCA.get())
+										.setProperties(StatePropertiesPredicate.Builder.properties()
+												.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)
+												.hasProperty(SiriscaBlock.AGE, SiriscaBlock.MAX_AGE)
+										)
+								)
+						)
+						.add(LootItem.lootTableItem(ItemRegistry.SIRISCA_BLOSSOM.get())
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(BlockRegistry.SIRISCA.get())
+												.setProperties(StatePropertiesPredicate.Builder.properties()
+														.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)
+														.hasProperty(SiriscaBlock.AGE, SiriscaBlock.MAX_AGE)
+												)
+										)
+						)
 				);
 	}
 

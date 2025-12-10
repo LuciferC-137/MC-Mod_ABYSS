@@ -5,8 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.piston.MovingPistonBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -72,7 +70,9 @@ public class PurpleFarmland extends Block {
     public void fallOn(Level level, @NotNull BlockState state,
                        @NotNull BlockPos pos, @NotNull Entity entity, float fallDistance) {
         if (!level.isClientSide) {
-            turnToPurpleSoil(entity, state, level, pos);
+            if (entity instanceof LivingEntity) {
+                turnToPurpleSoil(entity, state, level, pos);
+            }
         }
         super.fallOn(level, state, pos, entity, fallDistance);
     }

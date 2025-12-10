@@ -1,0 +1,75 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "wardentools:sirisca",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
+          "name": "wardentools:purple_seed"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "wardentools:sirisca",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower",
+                "sirisca_age": "6"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "wardentools:purple_seed"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "wardentools:sirisca",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower",
+                "sirisca_age": "6"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "wardentools:sirisca_blossom"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "wardentools:blocks/sirisca"
+}

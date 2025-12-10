@@ -1,4 +1,4 @@
-// 1.21.1	2025-12-08T21:33:02.347133752	Loot Tables
+// 1.21.1	2025-12-10T19:01:05.904780046	Loot Tables
 ed2f8717d26fbcb60f0922c363ab315ba830ebe4 data/wardentools/loot_table/advancements/wind_journal.json
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_table/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_table/blocks/abyssalite_bricks.json
@@ -45,7 +45,7 @@ a914a7fbb431a333595b2c00bff53160587a3c13 data/wardentools/loot_table/blocks/deep
 9cb5e842af35b7c819b6f784f174b5fb3a070746 data/wardentools/loot_table/blocks/echo_block.json
 ecf4b0e88c94ab206f1b612761ed9a92ac39c15a data/wardentools/loot_table/blocks/echo_cristal.json
 cf2e222ad4ca03224fc6a6b9d9535ea038304e3e data/wardentools/loot_table/blocks/gramophone.json
-03f5a85231a3ef85453583e18bbdb191399965a6 data/wardentools/loot_table/blocks/lavyn.json
+3c47bf4d6a65609a4f34250a32b69469622d0143 data/wardentools/loot_table/blocks/lavyn.json
 08e67f0cf727dd6a3e93caec01a690bdd958c290 data/wardentools/loot_table/blocks/living_sprout.json
 0d2b2a31530daa03b8657f1d22a448f0db3d0451 data/wardentools/loot_table/blocks/malachite.json
 e000bbb8369c0744f517a29abc68ff12ae9d60f3 data/wardentools/loot_table/blocks/malachite_block.json
@@ -60,6 +60,7 @@ cf2300d2b3f6d9098daa6d7626544f2c7bccedc7 data/wardentools/loot_table/blocks/rein
 aabf4d47094e58c5af3afd0155df9061610a6090 data/wardentools/loot_table/blocks/ruby.json
 57a8144524b215b4ebbf694dbc5b0e3e7bb3d9c7 data/wardentools/loot_table/blocks/ruby_block.json
 91153dd82ccad86f820382e183cdeb7b291d7ad8 data/wardentools/loot_table/blocks/sculk_tendril_block.json
+16242214a1140e82cff574ff7d355a448d1ba3f9 data/wardentools/loot_table/blocks/sirisca.json
 fd2ac5aa4f74327ae0ad0118372ca4a824bafcba data/wardentools/loot_table/blocks/solid_corruption.json
 409d0398dfdfa9ca835d5dcfb7f154f51e8b4606 data/wardentools/loot_table/blocks/sonic_blaster.json
 22c5562d49c153eef742057e576bbd90d943acd0 data/wardentools/loot_table/blocks/stripped_darktree_log.json
