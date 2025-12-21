@@ -44,7 +44,7 @@ public class WardenLaserAttack {
                     }
                     if (hit) {
                         livingEntity.hurt(player.damageSources().sonicBoom(player),
-                                (float)AbyssConfig.SERVER.WARDEN_HEART_LASER.get());
+                                (float)AbyssConfig.COMMON.WARDEN_HEART_LASER.get());
                         double knockbackResistance = 1.0D - livingEntity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
                         double knockbackHorizontal = 2.5D * knockbackResistance;
                         double knockbackVertical = 0.5D * knockbackResistance;

@@ -261,6 +261,7 @@
 	"config.wardentools.title.abyss_armor_protection": "Protection Armures",
 	"config.wardentools.title.do_abyss_weather": "Cycle météo",
 	"config.wardentools.title.warden_heart_laser": "Laser coeur du Warden",
+	"config.wardentools.title.enable_void_fall_teleport": "Téléportation du Vide",
 
 	"advancements.wardentools.abyss.title": "Venu de l'Abyss",
 	"advancements.wardentools.abyss.description": "Obtenez du sculk",

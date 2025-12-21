@@ -9,6 +9,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import wardentools.AbyssConfig;
 import wardentools.ModMain;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
@@ -20,19 +21,21 @@ public class FallIntoVoidEvent {
 	public static void playerFallIntoVoid(LivingDamageEvent.Pre event) {
 		if ((event.getEntity() instanceof Player)) {
 			if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD)) {
-				if (event.getEntity().level() instanceof ServerLevel serverlevel) {
-	                MinecraftServer minecraftserver = serverlevel.getServer();
-	                ResourceKey<Level> resourcekey = ModDimensions.ABYSS_LEVEL_KEY;
-	                ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
-	                if (portalDimension != null && !event.getEntity().isPassenger()) {
-	                	event.getEntity().setPos(event.getEntity().blockPosition().getX(),
-	                			250, event.getEntity().blockPosition().getX());
-	                    event.getEntity().changeDimension(ModTeleporter
-								.diveTo(portalDimension,
-										event.getEntity().blockPosition().getCenter(), event.getEntity()));
-	               }
-	            }
-	        }
+				if (AbyssConfig.COMMON.ENABLE_VOID_FALL_TELEPORT.get()) {
+					if (event.getEntity().level() instanceof ServerLevel serverlevel) {
+						MinecraftServer minecraftserver = serverlevel.getServer();
+						ResourceKey<Level> resourcekey = ModDimensions.ABYSS_LEVEL_KEY;
+						ServerLevel portalDimension = minecraftserver.getLevel(resourcekey);
+						if (portalDimension != null && !event.getEntity().isPassenger()) {
+							event.getEntity().setPos(event.getEntity().blockPosition().getX(),
+									250, event.getEntity().blockPosition().getX());
+							event.getEntity().changeDimension(ModTeleporter
+									.diveTo(portalDimension,
+											event.getEntity().blockPosition().getCenter(), event.getEntity()));
+						}
+					}
+				}
+			}
 		}
 	}
 }
