@@ -273,6 +273,7 @@
     "config.wardentools.title.abyss_armor_protection": "Abyss Armor Protection",
 	"config.wardentools.title.do_abyss_weather": "Do Abyss Weather cycle",
 	"config.wardentools.title.warden_heart_laser": "Warden Heart Laser Damage",
+	"config.wardentools.title.enable_void_fall_teleport": "Void Teleportation",
 
 	"advancements.wardentools.abyss.title": "From the abyss",
 	"advancements.wardentools.abyss.description": "Obtain some sculk.",

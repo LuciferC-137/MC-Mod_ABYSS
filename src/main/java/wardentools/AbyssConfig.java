@@ -26,22 +26,10 @@ public class AbyssConfig {
     public static class SERVER {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-        public static final ModConfigSpec.ConfigValue<Integer> ABYSS_ARMOR_PROTECTION = BUILDER
-                .translation("config.wardentools.title.abyss_armor_protection")
-                .comment("Set the defense value for abyss chestplate. Other pieces will be scaled based on that value. (netherite is 8)")
-                .worldRestart()
-                .defineInRange("abyssArmorProtection", 9, 1, 20);
-
         public static final ModConfigSpec.ConfigValue<Boolean> DO_ABYSS_WEATHER = BUILDER
                 .translation("config.wardentools.title.do_abyss_weather")
                 .comment("Enable or disable weather changes in the Abyss dimension")
                 .define("doAbyssWeather", true);
-
-        public static final ModConfigSpec.ConfigValue<Integer> WARDEN_HEART_LASER = BUILDER
-                .translation("config.wardentools.title.warden_heart_laser")
-                .comment("Set damage dealt by the Warden Heart laser attack")
-                .defineInRange("wardenHeartLaser", 10, 1, 1000);
-
 
         static ModConfigSpec SPEC = BUILDER.build();
 
@@ -49,6 +37,22 @@ public class AbyssConfig {
 
     public static class COMMON {
         private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+
+        public static final ModConfigSpec.ConfigValue<Integer> ABYSS_ARMOR_PROTECTION = BUILDER
+                .translation("config.wardentools.title.abyss_armor_protection")
+                .comment("Set the defense value for abyss chestplate. Other pieces will be scaled based on that value. (netherite is 8)")
+                .worldRestart()
+                .defineInRange("abyssArmorProtection", 9, 1, 20);
+
+        public static final ModConfigSpec.ConfigValue<Integer> WARDEN_HEART_LASER = BUILDER
+                .translation("config.wardentools.title.warden_heart_laser")
+                .comment("Set damage dealt by the Warden Heart laser attack")
+                .defineInRange("wardenHeartLaser", 10, 1, 1000);
+
+        public static final ModConfigSpec.ConfigValue<Boolean> ENABLE_VOID_FALL_TELEPORT = BUILDER
+                .translation("config.wardentools.title.enable_void_fall_teleport")
+                .comment("Enable teleporting to the Abyss when falling into the void")
+                .define("enableVoidFallTeleport", true);
 
         static ModConfigSpec SPEC = BUILDER.build();
     }
