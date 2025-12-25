@@ -725,7 +725,12 @@ public class ItemRegistry {
 			ITEMS.register("purple_cake",
 					() -> new Item(new Item.Properties()
 							.food(ModFoods.PURPLE_CAKE_PROPERTIES)
-							.stacksTo(16)
+					));
+
+	public static final DeferredItem<Item> LUTH =
+			ITEMS.register("luth",
+					() -> new LuthItem(new Item.Properties()
+							.stacksTo(1)
 					));
 
 }
