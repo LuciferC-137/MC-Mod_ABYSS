@@ -17,6 +17,8 @@ import wardentools.block.CrystalInfuserBlock;
 import wardentools.block.DarkGrassBlock;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
+import wardentools.entity.client.thryssaryn.Thryssaryn;
+import wardentools.entity.client.thryssaryn.ThryssarynRenderer;
 import wardentools.items.CrystalResonatorItem;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;

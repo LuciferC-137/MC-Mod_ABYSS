@@ -1,4 +1,4 @@
-package wardentools.entity.client;
+package wardentools.entity.client.thryssaryn;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -26,11 +26,8 @@ public class ThryssarynLuthLayer extends RenderLayer<ThryssarynEntity, Thryssary
 
         poseStack.pushPose();
 
-        // Apply model hierarchy transforms to position at the end_fl bone
-        // This method also applies the final translation and orientation
         this.getParentModel().applyLuthPositionTransform(thryssaryn, poseStack);
 
-        // Render the luth item
         Minecraft.getInstance().getItemRenderer().renderStatic(
                 ThryssarynEntity.LUTH_ITEMSTACK,
                 ItemDisplayContext.FIXED,

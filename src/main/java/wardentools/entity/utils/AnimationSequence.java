@@ -18,13 +18,11 @@ public class AnimationSequence {
     private boolean isLooping = false;
 
     public AnimationSequence(int[] durations, AnimationState ... states) {
-        // Both non-null
         if (durations.length != states.length) {
             LOGGER.warn("AnimationSequence created with mismatched lengths");
             this.isValid = false;
         }
 
-        // matching lengths
         this.durations = durations.clone();
         this.states = states.clone();
         this.speedMultipliers = new float[states.length];

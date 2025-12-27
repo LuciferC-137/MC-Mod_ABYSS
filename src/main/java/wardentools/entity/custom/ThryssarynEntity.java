@@ -36,11 +36,23 @@ public class ThryssarynEntity extends Animal {
 
 	public static final EntityDataAccessor<Boolean> IS_PLAYING_LUTH =
 			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<Integer> EYES_COLOR =
+			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.INT);
 
-	private List<Runnable> scheduledTasks = new ArrayList<>();
-	private List<Integer> taskDelays = new ArrayList<>();
+	private final List<Runnable> scheduledTasks = new ArrayList<>();
+	private final List<Integer> taskDelays = new ArrayList<>();
 
 	public static final ItemStack LUTH_ITEMSTACK = new ItemStack(ItemRegistry.LUTH.get());
+	public static final int[] EYE_COLORS = new int[] {
+			0xFF0000, // Red
+			0x00FF00, // Green
+			0x0000FF, // Blue
+			0xFFFF00, // Yellow
+			0xFF00FF, // Magenta
+			0x00FFFF, // Cyan
+			0xFFFFFF, // White
+			0xFFA500  // Orange
+	};
 
 	public AnimationSequence thryssarynLuthSequence = new AnimationSequence(
 			new int[] {40, 1040, 40},
@@ -72,6 +84,9 @@ public class ThryssarynEntity extends Animal {
 			this.setPlayingLuth(false);
 		}
 		this.handleScheduledTasks();
+		if (!this.level().isClientSide && this.tickCount % 200 == 0) {
+			this.setEyesColor(EYE_COLORS[this.random.nextInt(EYE_COLORS.length)]);
+		}
 	}
 
 	public void handleScheduledTasks() {
@@ -118,6 +133,7 @@ public class ThryssarynEntity extends Animal {
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
         super.defineSynchedData(entityData);
 		entityData.define(IS_PLAYING_LUTH, false);
+		entityData.define(EYES_COLOR, EYE_COLORS[0]);
     }
 	
 	@Override
@@ -128,13 +144,17 @@ public class ThryssarynEntity extends Animal {
 	@Override
 	public void addAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
-		compound.putBoolean("IsPlayingLuth", this.isPlayingLuth());
+		compound.putBoolean("isPlayingLuth", this.isPlayingLuth());
+		compound.putInt("eyesColor", this.getEyesColor());
 	}
 
 	@Override
 	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		this.setPlayingLuth(compound.getBoolean("IsPlayingLuth"));
+		this.setPlayingLuth(compound.getBoolean("isPlayingLuth"));
+		if (compound.contains("eyesColor")) {
+			this.setEyesColor(compound.getInt("eyesColor"));
+		}
 	}
 
 	@Override
@@ -151,6 +171,10 @@ public class ThryssarynEntity extends Animal {
 	public boolean isPlayingLuth() {return this.entityData.get(IS_PLAYING_LUTH);}
 
 	public void setPlayingLuth(boolean isPlayingLuth) {this.entityData.set(IS_PLAYING_LUTH, isPlayingLuth);}
+
+	public int getEyesColor() {return this.entityData.get(EYES_COLOR);}
+
+	public void setEyesColor(int color) {this.entityData.set(EYES_COLOR, color);}
 
 	@Override
 	public boolean isFood(@NotNull ItemStack itemStack) {

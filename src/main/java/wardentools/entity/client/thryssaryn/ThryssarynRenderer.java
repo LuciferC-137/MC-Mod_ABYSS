@@ -1,4 +1,4 @@
-package wardentools.entity.client;
+package wardentools.entity.client.thryssaryn;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -19,6 +19,8 @@ public class ThryssarynRenderer extends MobRenderer<ThryssarynEntity, Thryssaryn
 
 	public ThryssarynRenderer(EntityRendererProvider.Context context) {
 		super(context, new Thryssaryn(context.bakeLayer(Thryssaryn.LAYER_LOCATION)), 0.7f);
+		this.addLayer(new ThryssarynShellLayer(this));
+		this.addLayer(new ThryssarynEyesLayer(this));
 		this.addLayer(new ThryssarynLuthLayer(this));
 	}
 
