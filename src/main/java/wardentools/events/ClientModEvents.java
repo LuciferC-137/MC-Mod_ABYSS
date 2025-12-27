@@ -50,6 +50,7 @@ public class ClientModEvents {
 		event.registerEntityRenderer(ModEntities.ABYSS_LIGHTNING.get(), AbyssLightningRenderer::new);
 		event.registerEntityRenderer(ModEntities.CRYSTAL_GOLEM.get(), CrystalGolemRenderer::new);
 		event.registerEntityRenderer(ModEntities.CRYSTAL_LASER.get(), CrystalLaserRenderer::new);
+		event.registerEntityRenderer(ModEntities.THRYSSARYN.get(), ThryssarynRenderer::new);
 	}
 
 	
@@ -70,6 +71,7 @@ public class ClientModEvents {
 		event.registerLayerDefinition(ContagionIncarnationCorpse.LAYER_LOCATION,
 				ContagionIncarnationCorpse::createBodyLayer);
 		event.registerLayerDefinition(CrystalGolem.LAYER_LOCATION, CrystalGolem::createBodyLayer);
+		event.registerLayerDefinition(Thryssaryn.LAYER_LOCATION, Thryssaryn::createBodyLayer);
 	}
 
 	@SubscribeEvent

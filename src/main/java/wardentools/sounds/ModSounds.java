@@ -91,6 +91,8 @@ public class ModSounds {
 			registerSoundEvents("laser_shoot");
 	public static final Supplier<SoundEvent> INFUSER_CHARGING =
 			registerSoundEvents("infuser_charging");
+	public static final Supplier<SoundEvent> LUTH_PLAYING_WARDEN =
+			registerSoundEvents("luth_playing_warden");
 
 	//Musics
 	public static final Supplier<SoundEvent> DEEP_FOREST =

@@ -94,6 +94,12 @@ public class ModEntities {
 					()->EntityType.Builder.of(CrystalLaserEntity::new, MobCategory.MISC)
 					.sized(0.5f, 0.5f)
 					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "crystal_laser").toString()));
+
+	public static final Supplier<EntityType<ThryssarynEntity>> THRYSSARYN =
+			ENTITY_TYPES.register("thryssaryn",
+					()->EntityType.Builder.of(ThryssarynEntity::new, MobCategory.CREATURE)
+					.sized(1.0f, 1.8f)
+					.build(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "thryssaryn").toString()));
 	
 	public static void register(IEventBus eventBus) {
 		ENTITY_TYPES.register(eventBus);

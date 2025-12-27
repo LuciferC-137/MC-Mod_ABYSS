@@ -179,6 +179,7 @@
 	"entity.wardentools.shadow": "Shadow",
 	"entity.wardentools.contagion_incarnation_corpse": "Contagion Incarnation Corpse",
 	"entity.wardentools.crystal_golem": "Crystal Golem",
+	"entity.wardentools.thryssaryn": "Thrysaryn",
 	
 	"creativetab.all": "Abyss",
 	"creativetab.blocks": "Blocks",
@@ -242,6 +243,7 @@
 	"sounds.wardentools.laser_charge": "Laser Charging",
 	"sounds.wardentools.laser_shoot": "Laser Shoot",
 	"sounds.wardentools.infuser_charging": "Crystal Infuser Charging",
+	"sounds.wardentools.luth_playing_warden": "Luth playing to calm Wardens",
 
 	"jukebox_song.wardentools.abyss_theme": "Fenrir C137 - Abyss Theme",
 	"jukebox_song.wardentools.incarnation_theme": "Fenrir C137 - Incarnation Theme",

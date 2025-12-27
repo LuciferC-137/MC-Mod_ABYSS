@@ -294,5 +294,11 @@
 		"sounds": [
 			"wardentools:infuser_charging"
 		]
+	},
+	"luth_playing_warden": {
+		"subtitles": "sounds.wardentools.luth_playing_warden",
+		"sounds": [
+			"wardentools:music/luth_playing_warden"
+		]
 	}
 }

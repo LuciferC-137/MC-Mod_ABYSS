@@ -64,6 +64,7 @@ public class CommonModEvents {
 		event.put(ModEntities.CONTAGION_INCARNATION_CORPSE.get(),
 				ContagionIncarnationCorpseEntity.createAttribute().build());
 		event.put(ModEntities.CRYSTAL_GOLEM.get(), CrystalGolemEntity.createAttribute().build());
+		event.put(ModEntities.THRYSSARYN.get(), ThryssarynEntity.createAttribute().build());
 	}
     
     @SubscribeEvent
