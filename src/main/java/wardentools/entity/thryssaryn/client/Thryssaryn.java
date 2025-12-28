@@ -1,4 +1,4 @@
-package wardentools.entity.client.thryssaryn;
+package wardentools.entity.thryssaryn.client;
 
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -18,8 +18,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.entity.animations.ThryssarynAnimation;
-import wardentools.entity.custom.ThryssarynEntity;
+import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class Thryssaryn extends HierarchicalModel<ThryssarynEntity> {

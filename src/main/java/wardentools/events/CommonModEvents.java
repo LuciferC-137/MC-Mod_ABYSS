@@ -19,6 +19,7 @@ import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
+import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.armors.ConfigurableDefenseItem;
 import wardentools.items.armors.ModMaterials;

@@ -8,6 +8,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import wardentools.ModMain;
 import wardentools.entity.custom.*;
+import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
 import wardentools.weather.lightning.AbyssLightningEntity;
 
 import java.util.function.Supplier;

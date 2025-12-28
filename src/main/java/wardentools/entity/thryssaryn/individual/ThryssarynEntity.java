@@ -1,4 +1,4 @@
-package wardentools.entity.custom;
+package wardentools.entity.thryssaryn.individual;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -22,12 +22,16 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import wardentools.entity.thryssaryn.community.Community;
+import wardentools.entity.thryssaryn.community.CommunityData;
 import wardentools.entity.utils.AnimationSequence;
 import wardentools.items.ItemRegistry;
 import wardentools.sounds.ModSounds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class ThryssarynEntity extends Animal {
 	public final AnimationState standing2playingLuth = new AnimationState();
@@ -38,6 +42,8 @@ public class ThryssarynEntity extends Animal {
 			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.BOOLEAN);
 	public static final EntityDataAccessor<Integer> EYES_COLOR =
 			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Optional<UUID>> COMMUNITY_ID =
+			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
 	private final List<Runnable> scheduledTasks = new ArrayList<>();
 	private final List<Integer> taskDelays = new ArrayList<>();
@@ -146,6 +152,9 @@ public class ThryssarynEntity extends Animal {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("isPlayingLuth", this.isPlayingLuth());
 		compound.putInt("eyesColor", this.getEyesColor());
+		if (this.getCommunityId().isPresent()) {
+			compound.putUUID("communityId", this.getCommunityId().get());
+		}
 	}
 
 	@Override
@@ -154,6 +163,36 @@ public class ThryssarynEntity extends Animal {
 		this.setPlayingLuth(compound.getBoolean("isPlayingLuth"));
 		if (compound.contains("eyesColor")) {
 			this.setEyesColor(compound.getInt("eyesColor"));
+		}
+		if (compound.contains("communityId")) {
+			this.setCommunityId(compound.getUUID("communityId"));
+		}
+	}
+
+	@Override
+	public void die(@NotNull DamageSource damageSource) {
+		super.die(damageSource);
+		Community community = this.getCommunity();
+		if (community != null) {
+			community.removeMember(this.getUUID());
+		}
+	}
+
+	@Override
+	public void onAddedToLevel() {
+		super.onAddedToLevel();
+		Community community = this.getCommunity();
+		if (community != null) {
+			community.registerLoadedMember(this.getUUID());
+		}
+	}
+
+	@Override
+	public void onRemovedFromLevel() {
+		super.onRemovedFromLevel();
+		Community community = this.getCommunity();
+		if (community != null) {
+			community.unregisterLoadedMember(this.getUUID());
 		}
 	}
 
@@ -175,6 +214,21 @@ public class ThryssarynEntity extends Animal {
 	public int getEyesColor() {return this.entityData.get(EYES_COLOR);}
 
 	public void setEyesColor(int color) {this.entityData.set(EYES_COLOR, color);}
+
+	public Optional<UUID> getCommunityId() {return this.entityData.get(COMMUNITY_ID);}
+
+	public void setCommunityId(@Nullable UUID communityId) {this.entityData.set(COMMUNITY_ID, Optional.ofNullable(communityId));}
+
+	public @Nullable Community getCommunity() {
+		if (this.level() instanceof ServerLevel serverLevel) {
+			CommunityData data = CommunityData.get(serverLevel);
+			UUID communityId = this.getCommunityId().orElse(null);
+			if (communityId != null) {
+				return data.getCommunity(communityId);
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public boolean isFood(@NotNull ItemStack itemStack) {

@@ -2,6 +2,11 @@ package wardentools.utils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+
+import java.util.Set;
+import java.util.UUID;
 
 public class SaveUtils {
 
@@ -20,4 +25,28 @@ public class SaveUtils {
         int z = tag.getInt(key + "_z");
         return new BlockPos(x, y, z);
     }
+
+    public static void putSetUUID(CompoundTag tag, String key, Set<UUID> set) {
+            ListTag list = new ListTag();
+            for (UUID uuid : set) {
+                CompoundTag elem = new CompoundTag();
+                elem.putUUID("u", uuid);
+                list.add(elem);
+            }
+            tag.put(key, list);
+        }
+
+    public static Set<UUID> readSetUUID(CompoundTag tag, String key) {
+        Set<UUID> result = new java.util.HashSet<>();
+        if (!tag.contains(key)) {
+            return result;
+        }
+        ListTag list = tag.getList(key, Tag.TAG_COMPOUND);
+        for (int i = 0; i < list.size(); i++) {
+            CompoundTag elem = list.getCompound(i);
+            result.add(elem.getUUID("u"));
+        }
+        return result;
+    }
+
 }

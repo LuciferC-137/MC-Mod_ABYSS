@@ -1,6 +1,7 @@
-package wardentools.entity.client.thryssaryn;
+package wardentools.entity.thryssaryn.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -11,14 +12,14 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.entity.custom.ThryssarynEntity;
+import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
 
 @OnlyIn(Dist.CLIENT)
-public class ThryssarynShellLayer extends RenderLayer<ThryssarynEntity, Thryssaryn> {
-    private static final RenderType SHELL = RenderType.entityTranslucent(ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/thryssaryn/thryssaryn_shell.png"));
+public class ThryssarynEyesLayer extends RenderLayer<ThryssarynEntity, Thryssaryn> {
+    private static final RenderType EYES = RenderType.entityTranslucent(ResourceLocation
+            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/thryssaryn/thryssaryn_eyes.png"));
 
-    public ThryssarynShellLayer(RenderLayerParent<ThryssarynEntity, Thryssaryn> renderer) {
+    public ThryssarynEyesLayer(RenderLayerParent<ThryssarynEntity, Thryssaryn> renderer) {
         super(renderer);
     }
 
@@ -27,8 +28,9 @@ public class ThryssarynShellLayer extends RenderLayer<ThryssarynEntity, Thryssar
                        @NotNull ThryssarynEntity thryssaryn, float limbSwing, float limbSwingAmount,
                        float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 
-        this.getParentModel().renderToBuffer(poseStack, buffer.getBuffer(SHELL), packedLight,
-                LivingEntityRenderer.getOverlayCoords(thryssaryn, 0.0F));
+        this.getParentModel().renderToBuffer(poseStack, buffer.getBuffer(EYES), LightTexture.FULL_BRIGHT,
+                LivingEntityRenderer.getOverlayCoords(thryssaryn, 0.0F),
+                0xFF000000 | thryssaryn.getEyesColor());
     }
 }
 

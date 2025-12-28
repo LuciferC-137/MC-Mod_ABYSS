@@ -1,4 +1,4 @@
-package wardentools.entity.animations;
+package wardentools.entity.thryssaryn.client;
 
 import net.minecraft.client.animation.AnimationChannel;
 import net.minecraft.client.animation.AnimationDefinition;
