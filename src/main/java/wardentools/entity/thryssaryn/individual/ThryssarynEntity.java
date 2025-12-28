@@ -28,10 +28,7 @@ import wardentools.entity.utils.AnimationSequence;
 import wardentools.items.ItemRegistry;
 import wardentools.sounds.ModSounds;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class ThryssarynEntity extends Animal {
 	public final AnimationState standing2playingLuth = new AnimationState();
@@ -67,6 +64,9 @@ public class ThryssarynEntity extends Animal {
 			playingLuth2standing
 	);
 
+	// SERVER VARIABLES
+	private boolean canCreateCommunity = true;
+
 	public ThryssarynEntity(EntityType<? extends Animal> entity, Level level) {
 		super(entity, level);
 	}
@@ -85,13 +85,18 @@ public class ThryssarynEntity extends Animal {
 	@Override
 	public void tick() {
 		super.tick();
+		if (!this.level().isClientSide) {
+			if (this.getEyesColor() == 0) {
+				this.setEyesColor(EYE_COLORS[this.random.nextInt(EYE_COLORS.length)]);
+			}
+		}
 		thryssarynLuthSequence.tick(this.tickCount);
 		if (!thryssarynLuthSequence.isRunning()) {
 			this.setPlayingLuth(false);
 		}
 		this.handleScheduledTasks();
-		if (!this.level().isClientSide && this.tickCount % 200 == 0) {
-			this.setEyesColor(EYE_COLORS[this.random.nextInt(EYE_COLORS.length)]);
+		if (!this.level().isClientSide && !this.hasCommunity() && tickCount % 200 == 0) {
+			this.joinOrCreateCommunity();
 		}
 	}
 
@@ -107,6 +112,26 @@ public class ThryssarynEntity extends Animal {
 				taskDelays.set(i, delay);
 			}
 		}
+	}
+
+	public void joinOrCreateCommunity() {
+		if (this.level().isClientSide) return;
+		if (this.getCommunityId().isPresent()) return;
+		CommunityData communities = CommunityData.get((ServerLevel) this.level());
+		Community closestCommunity = communities.getClosestCommunity(this.blockPosition());
+		if (closestCommunity != null && closestCommunity.distanceTo(this.blockPosition()) <= 100) {
+			this.addToCommunity(closestCommunity);
+		} else if (this.canCreateCommunity) {
+			Community community = communities.createCommunity(Set.of(this.getUUID()),
+					this.blockPosition(), 50);
+			this.addToCommunity(community);
+		}
+	}
+
+	public void addToCommunity(@NotNull Community community) {
+		if (this.level().isClientSide) return;
+		community.addMember(this.getUUID());
+		this.setCommunityId(community.uuid());
 	}
 
 	public void schedule(Runnable task, int delayTicks) {
@@ -139,7 +164,8 @@ public class ThryssarynEntity extends Animal {
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
         super.defineSynchedData(entityData);
 		entityData.define(IS_PLAYING_LUTH, false);
-		entityData.define(EYES_COLOR, EYE_COLORS[0]);
+		entityData.define(EYES_COLOR, 0);
+		entityData.define(COMMUNITY_ID, Optional.empty());
     }
 	
 	@Override
@@ -219,6 +245,8 @@ public class ThryssarynEntity extends Animal {
 
 	public void setCommunityId(@Nullable UUID communityId) {this.entityData.set(COMMUNITY_ID, Optional.ofNullable(communityId));}
 
+	public boolean hasCommunity() {return this.getCommunityId().isPresent();}
+
 	public @Nullable Community getCommunity() {
 		if (this.level() instanceof ServerLevel serverLevel) {
 			CommunityData data = CommunityData.get(serverLevel);
@@ -251,7 +279,7 @@ public class ThryssarynEntity extends Animal {
     }
 
 	protected float getSoundVolume() {
-		return 0.8F;
+		return 1.0F;
 	}
 
 }

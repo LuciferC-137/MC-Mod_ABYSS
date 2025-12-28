@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import wardentools.utils.SaveUtils;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class CommunityMemory {
      */
     private CommunityMemory(UUID communityId, Set<UUID> members, BlockPos center, int radius) {
         this.communityId = communityId;
-        this.members = members;
+        this.members = new HashSet<UUID>(members);
         this.center = center;
         this.radius = radius;
     }
@@ -54,6 +55,12 @@ public class CommunityMemory {
      */
     public void unregisterLoadedMember(UUID memberUUID) {
         loadedMembers.remove(memberUUID);
+    }
+
+    public void fuseMemory(CommunityMemory other, BlockPos newCenter, int newRadius) {
+        this.members.addAll(other.members);
+        this.center = newCenter;
+        this.radius = newRadius;
     }
 
     /**
@@ -80,8 +87,16 @@ public class CommunityMemory {
         return center;
     }
 
+    public void setCenter(BlockPos center) {
+        this.center = center;
+    }
+
     public int getRadius() {
         return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
     }
 
     public UUID getCommunityId() {
