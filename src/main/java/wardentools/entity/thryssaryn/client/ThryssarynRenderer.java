@@ -30,9 +30,11 @@ public class ThryssarynRenderer extends MobRenderer<ThryssarynEntity, Thryssaryn
 	}
 
 	@Override
-	public void render(@NotNull ThryssarynEntity entity, float entityYaw,
+	public void render(@NotNull ThryssarynEntity thryssaryn, float entityYaw,
                        float partialTicks, @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource buffer, int packedLight) {
-		super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+		float scale = thryssaryn.getSizeFactor();
+		poseStack.scale(scale, scale, scale);
+		super.render(thryssaryn, entityYaw, partialTicks, poseStack, buffer, packedLight);
 	}
 }

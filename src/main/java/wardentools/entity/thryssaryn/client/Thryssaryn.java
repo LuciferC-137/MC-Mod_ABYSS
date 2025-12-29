@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 import wardentools.ModMain;
 import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
 
@@ -240,6 +241,8 @@ public class Thryssaryn extends HierarchicalModel<ThryssarynEntity> {
 		animate(thryssaryn.playingLuthWarden, ThryssarynAnimation.playing_luth_warden, ageInTicks);
 		animate(thryssaryn.playingLuth2standing, ThryssarynAnimation.playing_luth_position,
 				ageInTicks, -1.0F);
+		float headScale = thryssaryn.getHeadSizeOffsetFactor();
+		this.head_main.offsetScale(new Vector3f(headScale, headScale, headScale));
 	}
 
 }

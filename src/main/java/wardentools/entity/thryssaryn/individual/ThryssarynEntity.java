@@ -9,7 +9,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -22,40 +21,22 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import wardentools.entity.thryssaryn.community.Community;
-import wardentools.entity.thryssaryn.community.CommunityData;
+import wardentools.client.color.ColorUtils;
+import wardentools.entity.ModEntities;
 import wardentools.entity.utils.AnimationSequence;
 import wardentools.items.ItemRegistry;
 import wardentools.sounds.ModSounds;
 
-import java.util.*;
 
-public class ThryssarynEntity extends Animal {
+public class ThryssarynEntity extends AbstractThryssaryn {
 	public final AnimationState standing2playingLuth = new AnimationState();
 	public final AnimationState playingLuth2standing = new AnimationState();
 	public final AnimationState playingLuthWarden = new AnimationState();
 
 	public static final EntityDataAccessor<Boolean> IS_PLAYING_LUTH =
 			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.BOOLEAN);
-	public static final EntityDataAccessor<Integer> EYES_COLOR =
-			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.INT);
-	public static final EntityDataAccessor<Optional<UUID>> COMMUNITY_ID =
-			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-
-	private final List<Runnable> scheduledTasks = new ArrayList<>();
-	private final List<Integer> taskDelays = new ArrayList<>();
 
 	public static final ItemStack LUTH_ITEMSTACK = new ItemStack(ItemRegistry.LUTH.get());
-	public static final int[] EYE_COLORS = new int[] {
-			0xFF0000, // Red
-			0x00FF00, // Green
-			0x0000FF, // Blue
-			0xFFFF00, // Yellow
-			0xFF00FF, // Magenta
-			0x00FFFF, // Cyan
-			0xFFFFFF, // White
-			0xFFA500  // Orange
-	};
 
 	public AnimationSequence thryssarynLuthSequence = new AnimationSequence(
 			new int[] {40, 1040, 40},
@@ -64,10 +45,7 @@ public class ThryssarynEntity extends Animal {
 			playingLuth2standing
 	);
 
-	// SERVER VARIABLES
-	private boolean canCreateCommunity = true;
-
-	public ThryssarynEntity(EntityType<? extends Animal> entity, Level level) {
+	public ThryssarynEntity(EntityType<? extends AbstractThryssaryn> entity, Level level) {
 		super(entity, level);
 	}
 	
@@ -87,56 +65,13 @@ public class ThryssarynEntity extends Animal {
 		super.tick();
 		if (!this.level().isClientSide) {
 			if (this.getEyesColor() == 0) {
-				this.setEyesColor(EYE_COLORS[this.random.nextInt(EYE_COLORS.length)]);
+				this.setEyesColor(BASE_EYE_COLORS[this.random.nextInt(BASE_EYE_COLORS.length)]);
 			}
 		}
 		thryssarynLuthSequence.tick(this.tickCount);
 		if (!thryssarynLuthSequence.isRunning()) {
 			this.setPlayingLuth(false);
 		}
-		this.handleScheduledTasks();
-		if (!this.level().isClientSide && !this.hasCommunity() && tickCount % 200 == 0) {
-			this.joinOrCreateCommunity();
-		}
-	}
-
-	public void handleScheduledTasks() {
-		for (int i = 0; i < taskDelays.size(); i++) {
-			int delay = taskDelays.get(i) - 1;
-			if (delay <= 0) {
-				scheduledTasks.get(i).run();
-				scheduledTasks.remove(i);
-				taskDelays.remove(i);
-				i--;
-			} else {
-				taskDelays.set(i, delay);
-			}
-		}
-	}
-
-	public void joinOrCreateCommunity() {
-		if (this.level().isClientSide) return;
-		if (this.getCommunityId().isPresent()) return;
-		CommunityData communities = CommunityData.get((ServerLevel) this.level());
-		Community closestCommunity = communities.getClosestCommunity(this.blockPosition());
-		if (closestCommunity != null && closestCommunity.distanceTo(this.blockPosition()) <= 100) {
-			this.addToCommunity(closestCommunity);
-		} else if (this.canCreateCommunity) {
-			Community community = communities.createCommunity(Set.of(this.getUUID()),
-					this.blockPosition(), 50);
-			this.addToCommunity(community);
-		}
-	}
-
-	public void addToCommunity(@NotNull Community community) {
-		if (this.level().isClientSide) return;
-		community.addMember(this.getUUID());
-		this.setCommunityId(community.uuid());
-	}
-
-	public void schedule(Runnable task, int delayTicks) {
-		scheduledTasks.add(task);
-		taskDelays.add(delayTicks);
 	}
 
 	public void startPlayingLuthToCalmWarden() {
@@ -154,18 +89,20 @@ public class ThryssarynEntity extends Animal {
 		this.setPlayingLuth(false);
 	}
 
-	@Override
-	public @Nullable AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel,
-                                                  @NotNull AgeableMob ageableMob) {
-		return null;
+	public @Nullable ThryssarynEntity getBreedOffspring(@NotNull ServerLevel serverLevel,
+                                                        @NotNull ThryssarynEntity otherParent) {
+		ThryssarynEntity child = ModEntities.THRYSSARYN.get().create(serverLevel);
+		if (child == null) return null;
+		child.setBaby(true);
+		child.setEyesColor(ColorUtils.lerpColor(this.getEyesColor(),
+				(otherParent).getEyesColor(), 0.5F));
+		return child;
 	}
 
 	@Override
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
         super.defineSynchedData(entityData);
 		entityData.define(IS_PLAYING_LUTH, false);
-		entityData.define(EYES_COLOR, 0);
-		entityData.define(COMMUNITY_ID, Optional.empty());
     }
 	
 	@Override
@@ -177,49 +114,12 @@ public class ThryssarynEntity extends Animal {
 	public void addAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putBoolean("isPlayingLuth", this.isPlayingLuth());
-		compound.putInt("eyesColor", this.getEyesColor());
-		if (this.getCommunityId().isPresent()) {
-			compound.putUUID("communityId", this.getCommunityId().get());
-		}
 	}
 
 	@Override
 	public void readAdditionalSaveData(@NotNull CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.setPlayingLuth(compound.getBoolean("isPlayingLuth"));
-		if (compound.contains("eyesColor")) {
-			this.setEyesColor(compound.getInt("eyesColor"));
-		}
-		if (compound.contains("communityId")) {
-			this.setCommunityId(compound.getUUID("communityId"));
-		}
-	}
-
-	@Override
-	public void die(@NotNull DamageSource damageSource) {
-		super.die(damageSource);
-		Community community = this.getCommunity();
-		if (community != null) {
-			community.removeMember(this.getUUID());
-		}
-	}
-
-	@Override
-	public void onAddedToLevel() {
-		super.onAddedToLevel();
-		Community community = this.getCommunity();
-		if (community != null) {
-			community.registerLoadedMember(this.getUUID());
-		}
-	}
-
-	@Override
-	public void onRemovedFromLevel() {
-		super.onRemovedFromLevel();
-		Community community = this.getCommunity();
-		if (community != null) {
-			community.unregisterLoadedMember(this.getUUID());
-		}
 	}
 
 	@Override
@@ -237,37 +137,7 @@ public class ThryssarynEntity extends Animal {
 
 	public void setPlayingLuth(boolean isPlayingLuth) {this.entityData.set(IS_PLAYING_LUTH, isPlayingLuth);}
 
-	public int getEyesColor() {return this.entityData.get(EYES_COLOR);}
 
-	public void setEyesColor(int color) {this.entityData.set(EYES_COLOR, color);}
-
-	public Optional<UUID> getCommunityId() {return this.entityData.get(COMMUNITY_ID);}
-
-	public void setCommunityId(@Nullable UUID communityId) {this.entityData.set(COMMUNITY_ID, Optional.ofNullable(communityId));}
-
-	public boolean hasCommunity() {return this.getCommunityId().isPresent();}
-
-	public @Nullable Community getCommunity() {
-		if (this.level() instanceof ServerLevel serverLevel) {
-			CommunityData data = CommunityData.get(serverLevel);
-			UUID communityId = this.getCommunityId().orElse(null);
-			if (communityId != null) {
-				return data.getCommunity(communityId);
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public boolean isFood(@NotNull ItemStack itemStack) {
-		return false;
-	}
-
-	@Override
-    public boolean causeFallDamage(float fallDistance, float damageMultiplier, @NotNull DamageSource source) {
-        return false;
-    }
-	
 	@Override
 	public boolean checkSpawnRules(@NotNull LevelAccessor level, @NotNull MobSpawnType spawnType) {
     	return true;
