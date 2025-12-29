@@ -251,6 +251,14 @@ public class ModCreativeTabs {
                         getItemsByTag(Tag.WHITETREE).forEach(item -> event.accept(item.get()));
                     }).build());
 
+    public static final Supplier<CreativeModeTab> DUSK_WILLOW
+            = CREATIVE_MODE_TABS.register("dusk_willow",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DUSK_WILLOW_LOG.get()))
+                    .title(Component.translatable("creativetab.dusk_willow"))
+                    .displayItems((pParameters, event) -> {
+                        getItemsByTag(Tag.DUSK_WILLOW).forEach(item -> event.accept(item.get()));
+                    }).build());
+
     public static final Supplier<CreativeModeTab> TOOLS
             = CREATIVE_MODE_TABS.register("tools",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get()))
@@ -345,7 +353,8 @@ public class ModCreativeTabs {
         BUILDING("building"),
         JEWELRY("jewelry"),
         MISC("misc"),
-        DISC("disc");
+        DISC("disc"),
+        DUSK_WILLOW("dusk_willow");
 
         private final String key;
 

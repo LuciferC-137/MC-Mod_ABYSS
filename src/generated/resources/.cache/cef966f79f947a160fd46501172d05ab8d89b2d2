@@ -1,4 +1,4 @@
-// 1.21.1	2025-12-07T15:53:10.143063171	Tags for minecraft:block mod id wardentools
+// 1.21.1	2025-12-29T23:30:04.470932649	Tags for minecraft:block mod id wardentools
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/ancient_city_replaceable.json
 22135263fc427aea3dd9f4ee24cd2081d9d398a2 data/minecraft/tags/block/animals_spawnable_on.json
 18262857d4a34e6ee53557a03eea4ca89a3572f3 data/minecraft/tags/block/climbable.json
@@ -8,7 +8,7 @@ f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/dripstone_rep
 dca5d6350fefc209ba1b33589cc253144488e56f data/minecraft/tags/block/features_cannot_replace.json
 fd8eb08f938bf92ef328db40c3c4d43af55e707d data/minecraft/tags/block/fence_gates.json
 aa1a853c7ebdc7617fc951ed87bde709518e78df data/minecraft/tags/block/fences.json
-e43039466b443e6e2090b89b06ff5884f78e3251 data/minecraft/tags/block/logs_that_burn.json
+eaa7e0c02d7fb6194d6d4fa120da0965e5887f29 data/minecraft/tags/block/logs_that_burn.json
 f0d886fe199841ade2fd465938c1b75dc0d1dbdf data/minecraft/tags/block/lush_ground_replaceable.json
 75152428425267c63abf296fdc8e3f8c8656a570 data/minecraft/tags/block/mineable/pickaxe.json
 6aa5f8207652dc3dbcd6dc60b8fc75871d7ecd56 data/minecraft/tags/block/mineable/shovel.json

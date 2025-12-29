@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-30T12:47:45.598436229	Tags for minecraft:item mod id wardentools
+// 1.21.1	2025-12-29T23:30:04.463919314	Tags for minecraft:item mod id wardentools
 29ed2dcbd1599255607a303305709089499f8809 data/minecraft/tags/item/chest_armor.json
 c493ae2247ad88f06fcc010f8816380c5e3e5a68 data/minecraft/tags/item/compasses.json
 2eb2235c54a005455813d83435e2f5d065ab95bd data/minecraft/tags/item/dampens_vibrations.json
@@ -10,6 +10,6 @@ cb821ff60c71241e4afb6116221c80b9ad03b9d1 data/minecraft/tags/item/enchantable/le
 c316642b6cd32a31697290e026677e1ad6a653fd data/minecraft/tags/item/foot_armor.json
 75362ec6a7adbb2701df2b3dd44e1a4b0201edb9 data/minecraft/tags/item/head_armor.json
 cb821ff60c71241e4afb6116221c80b9ad03b9d1 data/minecraft/tags/item/leg_armor.json
-b8d3fede55bff9a0af3aff1f4f5ac9f0ce926adf data/minecraft/tags/item/logs_that_burn.json
+f4314648fc34faf8a5b17e82e3bd1e0b2d9a89ba data/minecraft/tags/item/logs_that_burn.json
 31e2d784730c13e14e28ca0d2bb0202d9e774b0e data/minecraft/tags/item/planks.json
 cbfb44a33a8986ddca4fc00a8dd154b14a56911e data/minecraft/tags/item/trimmable_armor.json

@@ -130,7 +130,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.WHITETREE_LOG.get())
                 .add(BlockRegistry.WHITETREE_WOOD.get())
                 .add(BlockRegistry.STRIPPED_WHITETREE_LOG.get())
-                .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get());
+                .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get())
+                .add(BlockRegistry.DUSK_WILLOW_LOG.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(BlockRegistry.DARKTREE_PLANKS.get())

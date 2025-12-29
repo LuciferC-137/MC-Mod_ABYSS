@@ -91,6 +91,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITETREE_TRAPDOOR);
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
 
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_LOG);
+
     	this.addDropSelf(BlockRegistry.PROTECTOR_INVOKER);
 		this.addDropSelf(BlockRegistry.CONTAGION_INCARNATION_SKULL);
 		this.addDropSelf(BlockRegistry.GRAMOPHONE);

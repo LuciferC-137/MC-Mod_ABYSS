@@ -35,12 +35,14 @@ public class BlockRegistry {
 	private static final int LIGHT_WHITE_TREE = 10;
 	private static final int LIGHT_WHITE_VEGETATION = 8;
 	private static final int LIGHT_DARK_VEGETATION = 5;
+	private static final int DUSK_VEGETATION_LIGHT = 7;
 
     private static final MapColor DARKTREE_COLOR = MapColor.TERRACOTTA_BLUE;
     private static final MapColor DARKTREE_FOLIAGE_COLOR = MapColor.COLOR_CYAN;
     private static final MapColor DARK_VEGETATION_COLOR = MapColor.COLOR_CYAN;
     private static final MapColor WHITE_TREE_COLOR = MapColor.TERRACOTTA_CYAN;
     private static final MapColor DARKGRASS_COLOR = MapColor.TERRACOTTA_GREEN;
+	private static final MapColor DUSK_WILLOW = MapColor.TERRACOTTA_PURPLE;
 
 
     public static final DeferredBlock<Block> DEEPBLOCK = BLOCKS.register("deepblock",
@@ -715,6 +717,14 @@ public class BlockRegistry {
 					.mapColor(MapColor.COLOR_PURPLE)
 					.strength(0.8F)
 			));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_LOG = BLOCKS.register("dusk_willow_log",
+		    () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+		    		.ofFullCopy(Blocks.OAK_LOG)
+					.mapColor(DUSK_WILLOW)
+					.strength(4F)
+		    		.lightLevel((state) -> DUSK_VEGETATION_LIGHT))
+		    );
 
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
         return false;

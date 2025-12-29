@@ -105,6 +105,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_DARKTREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.WHITETREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_WHITETREE_LOG.get());
+        logBlock((RotatedPillarBlock) BlockRegistry.DUSK_WILLOW_LOG.get());
         
         // Registering block states for planks derivatives
         stairsBlock(((StairBlock)BlockRegistry.DARKTREE_STAIR.get()),

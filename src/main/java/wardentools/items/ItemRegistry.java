@@ -733,4 +733,9 @@ public class ItemRegistry {
 							.stacksTo(1)
 					));
 
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_LOG =
+			ITEMS.register("dusk_willow_log",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_LOG.get(), new Item.Properties()
+					));
+
 }
