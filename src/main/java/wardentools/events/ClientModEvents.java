@@ -66,6 +66,8 @@ public class ClientModEvents {
 		event.registerLayerDefinition(ModBoat.DARKTREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
 		event.registerLayerDefinition(ModBoat.WHITETREE_BOAT_LAYER, BoatModel::createBodyModel);
 		event.registerLayerDefinition(ModBoat.WHITETREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+		event.registerLayerDefinition(ModBoat.DUSK_WILLOW_BOAT_LAYER, BoatModel::createBodyModel);
+		event.registerLayerDefinition(ModBoat.DUSK_WILLOW_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
 		event.registerLayerDefinition(Temper.LAYER_LOCATION, Temper::createBodyLayer);
 		event.registerLayerDefinition(Parasyte.LAYER_LOCATION, Parasyte::createBodyLayer);
 		event.registerLayerDefinition(Noctilure.LAYER_LOCATION, Noctilure::createBodyLayer);

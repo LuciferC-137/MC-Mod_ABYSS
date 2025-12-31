@@ -40,6 +40,7 @@ public class ModBoatEntity extends Boat {
         return switch (getModVariant()) {
             case DARKTREE -> ItemRegistry.DARKTREE_BOAT.get();
             case WHITETREE -> ItemRegistry.WHITETREE_BOAT.get();
+            case DUSK_WILLOW -> ItemRegistry.DUSK_WILLOW_BOAT.get();
         };
     }
 
@@ -70,7 +71,8 @@ public class ModBoatEntity extends Boat {
     @SuppressWarnings("deprecation")
     public enum Type implements StringRepresentable {
         DARKTREE(BlockRegistry.DARKTREE_PLANKS.get(), "darktree"),
-        WHITETREE(BlockRegistry.WHITETREE_PLANKS.get(), "whitetree");
+        WHITETREE(BlockRegistry.WHITETREE_PLANKS.get(), "whitetree"),
+        DUSK_WILLOW(BlockRegistry.DUSK_WILLOW_PLANKS.get(), "dusk_willow");
 
         private final String name;
         private final Block planks;

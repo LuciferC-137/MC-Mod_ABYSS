@@ -28,6 +28,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // Registering blocks with item models
         registerBlockWithItem(BlockRegistry.DARKTREE_PLANKS);
         registerBlockWithItem(BlockRegistry.WHITETREE_PLANKS);
+        registerBlockWithItem(BlockRegistry.DUSK_WILLOW_PLANKS);
         registerBlockWithItem(BlockRegistry.DEEPBLOCK);
         registerBlockWithItem(BlockRegistry.DARKDIRT);
         registerBlockWithItem(BlockRegistry.PALE_CRISTAL_BLOCK);
@@ -99,6 +100,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerFromLocation(BlockRegistry.STRIPPED_DARKTREE_WOOD, "block/stripped_darktree_log");
         registerFromLocation(BlockRegistry.WHITETREE_WOOD, "block/whitetree_log");
         registerFromLocation(BlockRegistry.STRIPPED_WHITETREE_WOOD, "block/stripped_whitetree_log");
+        registerFromLocation(BlockRegistry.DUSK_WILLOW_WOOD, "block/dusk_willow_log");
+        registerFromLocation(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD, "block/stripped_dusk_willow_log");
 
         // Registering block states for logs
         logBlock((RotatedPillarBlock) BlockRegistry.DARKTREE_LOG.get());
@@ -106,6 +109,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         logBlock((RotatedPillarBlock) BlockRegistry.WHITETREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_WHITETREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.DUSK_WILLOW_LOG.get());
+        logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_DUSK_WILLOW_LOG.get());
         
         // Registering block states for planks derivatives
         stairsBlock(((StairBlock)BlockRegistry.DARKTREE_STAIR.get()),
@@ -143,6 +147,24 @@ public class ModBlockStateProvider extends BlockStateProvider {
         		modLoc("block/whitetree_door_bottom"), modLoc("block/whitetree_door_top"), "cutout");
         trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.WHITETREE_TRAPDOOR.get()),
         		modLoc("block/whitetree_trap_door"), true, "cutout");
+
+        stairsBlock(((StairBlock) BlockRegistry.DUSK_WILLOW_STAIR.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        slabBlock(((SlabBlock) BlockRegistry.DUSK_WILLOW_SLAB.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        buttonBlock(((ButtonBlock) BlockRegistry.DUSK_WILLOW_BUTTON.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        pressurePlateBlock(((PressurePlateBlock) BlockRegistry.DUSK_WILLOW_PRESSURE_PLATE.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        fenceBlock(((FenceBlock) BlockRegistry.DUSK_WILLOW_FENCE.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        fenceGateBlock(((FenceGateBlock) BlockRegistry.DUSK_WILLOW_FENCE_GATE.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        doorBlockWithRenderType(((DoorBlock) BlockRegistry.DUSK_WILLOW_DOOR.get()),
+        		modLoc("block/dusk_willow_door_bottom"), modLoc("block/dusk_willow_door_top"), "cutout");
+        trapdoorBlockWithRenderType(((TrapDoorBlock) BlockRegistry.DUSK_WILLOW_TRAPDOOR.get()),
+        		modLoc("block/dusk_willow_trap_door"), true, "cutout");
         
         stairsBlock(((StairBlock)BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get()),
         		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));

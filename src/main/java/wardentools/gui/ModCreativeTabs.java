@@ -124,6 +124,23 @@ public class ModCreativeTabs {
         addItemToTag(Tag.WHITE_VEGETAL, ItemRegistry.TALL_WHITE_GRASS);
         addItemToTag(Tag.WHITE_VEGETAL, ItemRegistry.WHITE_TORCHFLOWER);
 
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_LOG);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_WOOD);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.STRIPPED_DUSK_WILLOW_LOG);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.STRIPPED_DUSK_WILLOW_WOOD);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_LEAVES);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_PLANKS);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_STAIR);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_SLAB);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_FENCE);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_BUTTON);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_DOOR);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_TRAPDOOR);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_FENCE_GATE);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_PRESSURE_PLATE);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_BOAT);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_CHEST_BOAT);
+
         addItemToTag(Tag.NATURE, ItemRegistry.NOCTILURE_FEATHER);
         addItemToTag(Tag.NATURE, ItemRegistry.WANDERER_PAW);
         addItemToTag(Tag.NATURE, ItemRegistry.NOCTILURE_TREAT);

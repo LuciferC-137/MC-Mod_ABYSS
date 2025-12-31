@@ -74,6 +74,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.DARKTREE_CHEST_BOAT);
         simpleItem(ItemRegistry.WHITETREE_BOAT);
         simpleItem(ItemRegistry.WHITETREE_CHEST_BOAT);
+        simpleItem(ItemRegistry.DUSK_WILLOW_BOAT);
+        simpleItem(ItemRegistry.DUSK_WILLOW_CHEST_BOAT);
         simpleItem(ItemRegistry.DEEP_FRAGMENT);
         simpleItem(ItemRegistry.CITRINE_FRAGMENT);
         simpleItem(ItemRegistry.RUBY_FRAGMENT);
@@ -166,6 +168,20 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         withExistingParent(BlockRegistry.DUSK_WILLOW_LOG.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/dusk_willow_log"));
+        withExistingParent(BlockRegistry.DUSK_WILLOW_WOOD.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/dusk_willow_wood"));
+        withExistingParent(BlockRegistry.STRIPPED_DUSK_WILLOW_LOG.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/stripped_dusk_willow_log"));
+        withExistingParent(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/stripped_dusk_willow_wood"));
+        withExistingParent(BlockRegistry.DUSK_WILLOW_STAIR.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/dusk_willow_stair"));
+        withExistingParent(BlockRegistry.DUSK_WILLOW_SLAB.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/dusk_willow_slab"));
+        withExistingParent(BlockRegistry.DUSK_WILLOW_PRESSURE_PLATE.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/dusk_willow_pressure_plate"));
+        withExistingParent(BlockRegistry.DUSK_WILLOW_FENCE_GATE.getId().getPath(),
+        		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/dusk_willow_fence_gate"));
 
         withExistingParent(BlockRegistry.RADIANCE_CATALYST.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/radiance_catalyst"));
@@ -198,6 +214,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         fenceItem(BlockRegistry.WHITETREE_FENCE, BlockRegistry.WHITETREE_PLANKS);
         buttonItem(BlockRegistry.WHITETREE_BUTTON, BlockRegistry.WHITETREE_PLANKS);
         trapdoorItem(BlockRegistry.WHITETREE_TRAPDOOR);
+        fenceItem(BlockRegistry.DUSK_WILLOW_FENCE, BlockRegistry.DUSK_WILLOW_PLANKS);
+        buttonItem(BlockRegistry.DUSK_WILLOW_BUTTON, BlockRegistry.DUSK_WILLOW_PLANKS);
+        trapdoorItem(BlockRegistry.DUSK_WILLOW_TRAPDOOR);
         wallItem(BlockRegistry.ABYSSALITE_BRICKS_WALL, BlockRegistry.ABYSSALITE_BRICKS);
         wallItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL, BlockRegistry.CRACKED_ABYSSALITE_BRICKS);
         

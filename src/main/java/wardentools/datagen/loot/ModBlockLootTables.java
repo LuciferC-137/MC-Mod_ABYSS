@@ -92,6 +92,16 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
 
 		this.addDropSelf(BlockRegistry.DUSK_WILLOW_LOG);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_WOOD);
+		this.addDropSelf(BlockRegistry.STRIPPED_DUSK_WILLOW_LOG);
+		this.addDropSelf(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_PLANKS);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_STAIR);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_BUTTON);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_PRESSURE_PLATE);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_FENCE);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_FENCE_GATE);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_TRAPDOOR);
 
     	this.addDropSelf(BlockRegistry.PROTECTOR_INVOKER);
 		this.addDropSelf(BlockRegistry.CONTAGION_INCARNATION_SKULL);
@@ -125,6 +135,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     			block -> createSlabItemTable(BlockRegistry.WHITETREE_SLAB.get()));
     	this.add(BlockRegistry.WHITETREE_DOOR.get(), 
     			block -> createDoorTable(BlockRegistry.WHITETREE_DOOR.get()));
+		this.add(BlockRegistry.DUSK_WILLOW_SLAB.get(),
+				block -> createSlabItemTable(BlockRegistry.DUSK_WILLOW_SLAB.get()));
+		this.add(BlockRegistry.DUSK_WILLOW_DOOR.get(),
+				block -> createDoorTable(BlockRegistry.DUSK_WILLOW_DOOR.get()));
 		this.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get(),
 				block -> createSlabItemTable(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get()));
 

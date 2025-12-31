@@ -4,6 +4,7 @@ package wardentools.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -131,11 +132,15 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.WHITETREE_WOOD.get())
                 .add(BlockRegistry.STRIPPED_WHITETREE_LOG.get())
                 .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get())
-                .add(BlockRegistry.DUSK_WILLOW_LOG.get());
+                .add(BlockRegistry.DUSK_WILLOW_LOG.get())
+                .add(BlockRegistry.DUSK_WILLOW_WOOD.get())
+                .add(BlockRegistry.STRIPPED_DUSK_WILLOW_LOG.get())
+                .add(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(BlockRegistry.DARKTREE_PLANKS.get())
-                .add(BlockRegistry.WHITETREE_PLANKS.get());
+                .add(BlockRegistry.WHITETREE_PLANKS.get())
+                .add(BlockRegistry.DUSK_WILLOW_PLANKS.get());
 
         this.tag(BlockTags.DIRT)
                 .add(BlockRegistry.DARKDIRT.get())
@@ -144,11 +149,13 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.FENCES)
                 .add(BlockRegistry.DARKTREE_FENCE.get())
-                .add(BlockRegistry.WHITETREE_FENCE.get());
+                .add(BlockRegistry.WHITETREE_FENCE.get())
+                .add(BlockRegistry.DUSK_WILLOW_FENCE.get());
 
         this.tag(BlockTags.FENCE_GATES)
                 .add(BlockRegistry.DARKTREE_FENCE_GATE.get())
-                .add(BlockRegistry.WHITETREE_FENCE_GATE.get());
+                .add(BlockRegistry.WHITETREE_FENCE_GATE.get())
+                .add(BlockRegistry.DUSK_WILLOW_FENCE_GATE.get());
 
         this.tag(BlockTags.WALLS)
                 .add(BlockRegistry.ABYSSALITE_BRICKS_WALL.get())

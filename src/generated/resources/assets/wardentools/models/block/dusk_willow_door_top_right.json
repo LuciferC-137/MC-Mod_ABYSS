@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/door_top_right",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "wardentools:block/dusk_willow_door_bottom",
+    "top": "wardentools:block/dusk_willow_door_top"
+  }
+}

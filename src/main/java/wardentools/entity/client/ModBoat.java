@@ -13,11 +13,15 @@ public class ModBoat {
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "boat/darktree"), "main");
     public static final ModelLayerLocation WHITETREE_BOAT_LAYER = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "boat/whitetree"), "main");
+    public static final ModelLayerLocation DUSK_WILLOW_BOAT_LAYER = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "boat/dusk_willow"), "main");
 
 
     public static final ModelLayerLocation DARKTREE_CHEST_BOAT_LAYER = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chest_boat/darktree"), "main");
     public static final ModelLayerLocation WHITETREE_CHEST_BOAT_LAYER = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chest_boat/whitetree"), "main");
+    public static final ModelLayerLocation DUSK_WILLOW_CHEST_BOAT_LAYER = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chest_boat/dusk_willow"), "main");
 
 }
