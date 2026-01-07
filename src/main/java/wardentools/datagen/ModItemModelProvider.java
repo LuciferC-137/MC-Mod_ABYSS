@@ -114,6 +114,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.DARKTREE_DOOR);
         blockItemWithItemModel(BlockRegistry.WHITETREE_SAPLING);
         blockItemWithItemModel(BlockRegistry.WHITETREE_DOOR);
+        blockItemWithItemModel(BlockRegistry.DUSK_WILLOW_DOOR);
         blockItemWithItemModel(BlockRegistry.WHITE_GRASS);
         blockItemWithItemModel(BlockRegistry.TALL_WHITE_GRASS);
         blockItemWithItemModel(BlockRegistry.WHITE_TORCHFLOWER);
