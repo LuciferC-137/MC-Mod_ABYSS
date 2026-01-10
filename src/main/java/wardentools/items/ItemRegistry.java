@@ -812,4 +812,8 @@ public class ItemRegistry {
 			ITEMS.register("dusk_willow_chest_boat",
 					() -> new ModBoatItem(true, ModBoatEntity.Type.DUSK_WILLOW,
 							new Item.Properties().stacksTo(1)));
+
+	public static  final DeferredItem<Item> VALLEY_IVY =
+			ITEMS.register("valley_ivy",
+					() -> new BlockItem(BlockRegistry.VALLEY_IVY.get(), new Item.Properties()));
 }

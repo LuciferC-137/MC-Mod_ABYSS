@@ -837,6 +837,12 @@ public class BlockRegistry {
 
 			});
 
+	public static final DeferredBlock<Block> VALLEY_IVY = BLOCKS.register("valley_ivy",
+			() -> new ValleyIvyBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.VINE)
+					.mapColor(DUSK_WILLOW)
+					.lightLevel((state) -> LIGHT_DUSK_VEGETATION)
+			));
+
 	/*
 	public static final DeferredBlock<Block> DUSK_WILLOW_SAPLING = BLOCKS.register("dusk_willow_sapling",
 			()-> new SaplingBlock(new TreeGrower("dusk_willow",

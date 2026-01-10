@@ -1,4 +1,4 @@
-// 1.21.1	2025-12-31T13:07:19.183373308	Loot Tables
+// 1.21.1	2026-01-10T19:21:14.141019348	Loot Tables
 ed2f8717d26fbcb60f0922c363ab315ba830ebe4 data/wardentools/loot_table/advancements/wind_journal.json
 4b0869b43abcda388ec9ae0b9f6e36b87773f37b data/wardentools/loot_table/blocks/abyssalite.json
 1c9237e46a87002c5a54e96787ef08a82505d1ae data/wardentools/loot_table/blocks/abyssalite_bricks.json
@@ -82,6 +82,7 @@ d2ebb7754472b3337e9083f43187a35173fe6ff5 data/wardentools/loot_table/blocks/stri
 84bd6a30c1f27aedbf5bb4103c869a2a060007ff data/wardentools/loot_table/blocks/stripped_whitetree_wood.json
 b6feae8cb0330f896b241c022141da7974df601c data/wardentools/loot_table/blocks/tall_dark_grass.json
 22cc8ce0077fe6890ac2daa4b4faa72e438c75be data/wardentools/loot_table/blocks/tall_white_grass.json
+8731b6eccfeaee8d6c66559b2c9f3cbf2c2b70e4 data/wardentools/loot_table/blocks/valley_ivy.json
 7a619d981ea86a2209da2b62aa1eb05385925175 data/wardentools/loot_table/blocks/white_grass.json
 51f30eea15653359410c5be9ece438d299c74d15 data/wardentools/loot_table/blocks/white_torchflower.json
 f5d1324776086098c2b89d34dd34881696fe35ab data/wardentools/loot_table/blocks/whitetree_button.json

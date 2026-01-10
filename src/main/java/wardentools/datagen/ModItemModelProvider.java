@@ -131,6 +131,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         blockItemWithItemModel(BlockRegistry.GRAMOPHONE);
         blockItemWithItemModel(BlockRegistry.LAVYN);
         blockItemWithItemModel(ItemRegistry.PURPLE_SEED);
+        blockItemWithItemModel(ItemRegistry.VALLEY_IVY);
 
         //Items that did not create their own item model in the blockstate generator
         withExistingParent(BlockRegistry.DARKTREE_WOOD.getId().getPath(),

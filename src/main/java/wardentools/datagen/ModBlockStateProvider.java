@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import wardentools.ModMain;
@@ -95,6 +96,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/golem_stone_top"));
 
         registerSiriscaBlock(BlockRegistry.SIRISCA);
+
+        registerVineLikeBlock(BlockRegistry.VALLEY_IVY,"block/valley_ivy");
 
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
@@ -368,5 +371,72 @@ public class ModBlockStateProvider extends BlockStateProvider {
         	simpleBlockWithItem(blockRegistryObject.get(),
         	    models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
         	    		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, location)));
+    }
+
+    /**
+     * Registers a vine-like block state with multipart model.
+     * Produces the same JSON structure as vanilla vine.json.
+     * @param blockRegistryObject The vine-like block to register
+     * @param texture The texture path for the vine model (e.g., "block/my_vine")
+     */
+    private void registerVineLikeBlock(DeferredBlock<Block> blockRegistryObject, String texture) {
+        String name = BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath();
+
+        // Create the vine model (similar to minecraft:block/vine)
+        ModelFile vineModel = models().singleTexture(name,
+                ResourceLocation.withDefaultNamespace("block/vine"),
+                "vine", modLoc(texture)).renderType("cutout");
+
+        MultiPartBlockStateBuilder builder = getMultipartBuilder(blockRegistryObject.get());
+
+        // North face (y=0)
+        builder.part().modelFile(vineModel).addModel()
+                .condition(BlockStateProperties.NORTH, true);
+        builder.part().modelFile(vineModel).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
+
+        // East face (y=90)
+        builder.part().modelFile(vineModel).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.EAST, true);
+        builder.part().modelFile(vineModel).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
+
+        // South face (y=180)
+        builder.part().modelFile(vineModel).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.SOUTH, true);
+        builder.part().modelFile(vineModel).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
+
+        // West face (y=270)
+        builder.part().modelFile(vineModel).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.WEST, true);
+        builder.part().modelFile(vineModel).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
+
+        // Up face (x=270)
+        builder.part().modelFile(vineModel).rotationX(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.UP, true);
+        builder.part().modelFile(vineModel).rotationX(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
     }
 }

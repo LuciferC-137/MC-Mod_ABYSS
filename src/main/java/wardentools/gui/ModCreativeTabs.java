@@ -129,6 +129,7 @@ public class ModCreativeTabs {
         addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.STRIPPED_DUSK_WILLOW_LOG);
         addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.STRIPPED_DUSK_WILLOW_WOOD);
         addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_LEAVES);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.VALLEY_IVY);
         addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_PLANKS);
         addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_STAIR);
         addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_SLAB);
