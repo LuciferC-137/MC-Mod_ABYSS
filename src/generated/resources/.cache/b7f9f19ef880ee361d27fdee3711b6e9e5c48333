@@ -1,4 +1,4 @@
-// 1.21.1	2026-01-10T19:21:14.136772409	Item Models: wardentools
+// 1.21.1	2026-01-23T22:26:30.785072684	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -89,6 +89,7 @@ d94397f835d9315ed92ca4ce9fc7c48c81bc0443 assets/wardentools/models/item/dusk_wil
 6680925c2a12625cf4a47dfae33515c293491a62 assets/wardentools/models/item/dusk_willow_fence_gate.json
 498659462a2603f1ae0437d4a657994a30e8e9be assets/wardentools/models/item/dusk_willow_log.json
 8b3ca132799733b2ceb0a9a66df25574dadec7c0 assets/wardentools/models/item/dusk_willow_pressure_plate.json
+d9ddad3f2e00c25469b365aeda7ef8e7473dab40 assets/wardentools/models/item/dusk_willow_sapling.json
 ae09e5b6948789b0a70a6768577e081538204957 assets/wardentools/models/item/dusk_willow_slab.json
 2a6d9aafdae3fe8b4f7f9255e4e7d3b87bfb117e assets/wardentools/models/item/dusk_willow_stair.json
 047c2b6ab29c4b6bad23d3917b02f2fa0bae9d5f assets/wardentools/models/item/dusk_willow_trap_door.json

@@ -1,11 +1,10 @@
-package wardentools.worldgen.tree.custom;
+package wardentools.worldgen.features.tree.custom;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
 import com.google.common.base.Function;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -20,7 +19,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.F
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import org.jetbrains.annotations.NotNull;
-import wardentools.worldgen.tree.ModTrunkPlacerTypes;
+import wardentools.worldgen.features.tree.ModTrunkPlacerTypes;
 
 public class WhitetreeTrunkPlacer extends TrunkPlacer  {
 	public static final MapCodec<WhitetreeTrunkPlacer> CODEC = RecordCodecBuilder
@@ -41,7 +40,7 @@ public class WhitetreeTrunkPlacer extends TrunkPlacer  {
 	@Override
 	public @NotNull List<FoliageAttachment> placeTrunk(@NotNull LevelSimulatedReader pLevel,
 													   @NotNull BiConsumer<BlockPos, BlockState> pBlockSetter,
-													   @NotNull RandomSource pRandom, int pFreeTreeHeight,
+													   @NotNull RandomSource pRandom, int treeHeight,
 													   BlockPos pPos, @NotNull TreeConfiguration pConfig) {
 		setDirtAt(pLevel, pBlockSetter, pRandom, pPos.below(), pConfig);
 		
@@ -50,22 +49,17 @@ public class WhitetreeTrunkPlacer extends TrunkPlacer  {
 		List<BlockPos> listTrunkWE = new ArrayList<BlockPos>();
 		List<FoliageAttachment> foliagePositions = new ArrayList<>();
 
-		int treeHeight = pFreeTreeHeight;
+        boolean doubleTrunk = treeHeight > 9; //Deciding if the tree will have 2x2 tunk
 
-		boolean doubleTrunk = false; //Deciding if the tree will have 2x2 tunk
-		if (treeHeight > 9) {
-			doubleTrunk = true;
-		}
-		
-		for (int i=0; i<treeHeight; i++) {
+        for (int i=0; i<treeHeight; i++) {
 			listTrunk.add(pPos.above(i));
 			if (doubleTrunk) {
 				listTrunk.add(pPos.offset(1, i, 0));
 				listTrunk.add(pPos.offset(0, i, 1));
 				listTrunk.add(pPos.offset(1, i, 1));
 			}
-			if (i >= Math.round(treeHeight/3) && (i-Math.round(treeHeight/3))%3 == 0) {
-				int lengthBranches = (int)Math.round((treeHeight - i)/3) ;
+			if (i >= Math.round((float)treeHeight/3f) && (i-Math.round((float)treeHeight/3f))%3 == 0) {
+				int lengthBranches = (int)Math.round((float)(treeHeight - i)/3f) ;
 				List<List<BlockPos>> listBranches = this.branches(pPos.above(i), lengthBranches, doubleTrunk);
 				listTrunkNS.addAll(listBranches.get(0));
 				listTrunkWE.addAll(listBranches.get(1));
@@ -113,6 +107,7 @@ public class WhitetreeTrunkPlacer extends TrunkPlacer  {
 	protected boolean placeLog(LevelSimulatedReader pLevel, BiConsumer<BlockPos, BlockState> pBlockSetter,
 			RandomSource pRandom, BlockPos pos, TreeConfiguration pConfig, Direction direction) {
 	    Function<BlockState, BlockState> orientLog = (logState) -> {
+			if (logState == null) return null;
 	        if (direction == Direction.NORTH || direction == Direction.SOUTH) {
 	            return logState.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z);
 	        } else if (direction == Direction.EAST || direction == Direction.WEST) {

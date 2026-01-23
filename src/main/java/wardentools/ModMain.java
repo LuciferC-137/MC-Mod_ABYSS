@@ -33,8 +33,8 @@ import wardentools.sounds.ModSounds;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.features.ModFeatures;
 import wardentools.worldgen.structure.ModStructureTypes;
-import wardentools.worldgen.tree.ModFoliagePlacers;
-import wardentools.worldgen.tree.ModTrunkPlacerTypes;
+import wardentools.worldgen.features.tree.ModFoliagePlacers;
+import wardentools.worldgen.features.tree.ModTrunkPlacerTypes;
 
 
 @Mod(ModMain.MOD_ID)

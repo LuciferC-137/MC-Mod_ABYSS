@@ -72,6 +72,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerLeavesBlock(BlockRegistry.DUSK_WILLOW_LEAVES);
         registerCrossCutoutBlock(BlockRegistry.DARKTREE_SAPLING);
         registerCrossCutoutBlock(BlockRegistry.WHITETREE_SAPLING);
+        registerCrossCutoutBlock(BlockRegistry.DUSK_WILLOW_SAPLING);
         registerCrossCutoutBlock(BlockRegistry.WHITE_GRASS);
         registerCrossCutoutBlock(BlockRegistry.WHITE_TORCHFLOWER);
         registerCrossCutoutBlock(BlockRegistry.DARK_GRASS);

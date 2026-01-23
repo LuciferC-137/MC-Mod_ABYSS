@@ -93,6 +93,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
 		this.addDropSelf(BlockRegistry.DUSK_WILLOW_LOG);
 		this.addDropSelf(BlockRegistry.DUSK_WILLOW_WOOD);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_SAPLING);
 		this.addDropSelf(BlockRegistry.STRIPPED_DUSK_WILLOW_LOG);
 		this.addDropSelf(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD);
 		this.addDropSelf(BlockRegistry.DUSK_WILLOW_PLANKS);

@@ -1,4 +1,4 @@
-package wardentools.worldgen.tree.custom;
+package wardentools.worldgen.features.tree.custom;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer.F
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import org.jetbrains.annotations.NotNull;
-import wardentools.worldgen.tree.ModTrunkPlacerTypes;
+import wardentools.worldgen.features.tree.ModTrunkPlacerTypes;
 
 public class DarktreeTrunkPlacer extends TrunkPlacer {
 	 public static final MapCodec<DarktreeTrunkPlacer> CODEC = RecordCodecBuilder

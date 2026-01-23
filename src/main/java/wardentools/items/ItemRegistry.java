@@ -803,6 +803,11 @@ public class ItemRegistry {
 					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_LEAVES.get(), new Item.Properties()
 					));
 
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_SAPLING =
+			ITEMS.register("dusk_willow_sapling",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_SAPLING.get(), new Item.Properties()
+					));
+
 	public static final DeferredItem<Item> DUSK_WILLOW_BOAT =
 			ITEMS.register("dusk_willow_boat",
 					() -> new ModBoatItem(false, ModBoatEntity.Type.DUSK_WILLOW,

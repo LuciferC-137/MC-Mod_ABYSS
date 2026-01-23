@@ -1,4 +1,4 @@
-package wardentools.worldgen.tree.custom;
+package wardentools.worldgen.features.tree.custom;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
-import wardentools.worldgen.tree.ModFoliagePlacers;
+import wardentools.worldgen.features.tree.ModFoliagePlacers;
 
 public class DarktreeFoliagePlacer extends FoliagePlacer {
 	private static final int CHANCE_OF_DEPTH_VINES = 10;

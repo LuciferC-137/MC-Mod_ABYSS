@@ -1,4 +1,4 @@
-// 1.21.1	2025-12-03T22:42:51.218271773	Registries
+// 1.21.1	2026-01-23T23:30:14.321638144	Registries
 b6a46032459daee78c04dddea28f0c9fef53dbde data/wardentools/dimension/abyssdim.json
 120c8f2fee822bde96bdcb827ccb7a58c181a22a data/wardentools/dimension_type/abyssdim_type.json
 1c11a8f49d2df8e89a69dcab7725f1897a55fef4 data/wardentools/enchantment/stealth.json
@@ -31,6 +31,7 @@ fda8756dd75c165e919c7a3f0f25ed0821d565ea data/wardentools/worldgen/configured_fe
 62bfca54035c4af6365816402870d56b4ae0dec1 data/wardentools/worldgen/configured_feature/deep_ore.json
 665d32c461a0d16f39fb894c80b668912488e826 data/wardentools/worldgen/configured_feature/deepflower.json
 f1f453bd5516cb4bb00826cedb0d459331296a62 data/wardentools/worldgen/configured_feature/diamond_ore.json
+0af58bdc0a0ca86f97a7f17b29afff0a8e666cc7 data/wardentools/worldgen/configured_feature/dusk_willow.json
 0f60929a345eea6818f2dbc9379a8d0333cfe39e data/wardentools/worldgen/configured_feature/echo_cristal.json
 cc619b5ee1932c1ba7c924fcfc9f18163b54d48b data/wardentools/worldgen/configured_feature/echo_vein.json
 85c9d50755d50e452d8951a92b2a660b3307a230 data/wardentools/worldgen/configured_feature/lapis_ore.json

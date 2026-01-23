@@ -1,4 +1,4 @@
-package wardentools.worldgen.tree.custom;
+package wardentools.worldgen.features.tree.custom;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import org.jetbrains.annotations.NotNull;
-import wardentools.worldgen.tree.ModFoliagePlacers;
+import wardentools.worldgen.features.tree.ModFoliagePlacers;
 
 public class WhitetreeFoliagePlacer extends FoliagePlacer{
 	public static final MapCodec<WhitetreeFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(whitetreeFoliagePlacerInstance

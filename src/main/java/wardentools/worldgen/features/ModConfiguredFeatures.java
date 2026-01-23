@@ -26,10 +26,7 @@ import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
 import wardentools.worldgen.features.custom.sculk.AbyssSculkPatchConfiguration;
 import wardentools.worldgen.features.custom.sculk.LivingSproutEmergenceConfiguration;
 import wardentools.worldgen.features.custom.sculk.SculkTendrilsEmergenceConfiguration;
-import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
-import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
-import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;
-import wardentools.worldgen.tree.custom.WhitetreeTrunkPlacer;
+import wardentools.worldgen.features.tree.custom.*;
 
 import java.util.List;
 
@@ -38,6 +35,7 @@ public class ModConfiguredFeatures {
 	
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DARKTREE_KEY = registerKey("darktree");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITETREE_KEY = registerKey("whitetree");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DUSK_WILLOW_KEY = registerKey("dusk_willow");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_GRASS = registerKey("white_grass");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_WHITE_GRASS = registerKey("tall_white_grass");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_TORCHFLOWER = registerKey("white_torchflower");
@@ -85,6 +83,13 @@ public class ModConfiguredFeatures {
                 BlockStateProvider.simple(BlockRegistry.WHITETREE_LEAVES.get()),
                 new WhitetreeFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), 3),
                 new TwoLayersFeatureSize(1, 0, 2)).build());
+
+		register(context, DUSK_WILLOW_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+				BlockStateProvider.simple(BlockRegistry.DUSK_WILLOW_LOG.get()),
+				new DuskWillowTrunkPlacer(3, 2, 2),
+				BlockStateProvider.simple(BlockRegistry.DUSK_WILLOW_LEAVES.get()),
+				new DuskWillowFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), 3),
+				new TwoLayersFeatureSize(1, 0 ,2)).build());
     	
     	register(context, WHITE_GRASS, Feature.RANDOM_PATCH,
     			grassPatch(BlockStateProvider.simple(BlockRegistry.WHITE_GRASS.get()), 40));

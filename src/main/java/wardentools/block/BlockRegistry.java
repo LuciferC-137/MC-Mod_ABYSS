@@ -843,7 +843,7 @@ public class BlockRegistry {
 					.lightLevel((state) -> LIGHT_DUSK_VEGETATION)
 			));
 
-	/*
+
 	public static final DeferredBlock<Block> DUSK_WILLOW_SAPLING = BLOCKS.register("dusk_willow_sapling",
 			()-> new SaplingBlock(new TreeGrower("dusk_willow",
 					Optional.of(ModConfiguredFeatures.DUSK_WILLOW_KEY),
@@ -852,7 +852,7 @@ public class BlockRegistry {
 					BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
 							.mapColor(DUSK_WILLOW)
 							.lightLevel((state) -> LIGHT_DUSK_WILLOW)
-			));*/
+			));
 
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
         return false;
