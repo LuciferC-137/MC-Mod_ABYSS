@@ -121,7 +121,7 @@ public class DuskWillowTrunkPlacer extends TrunkPlacer {
             BlockPos midFoliagePos = this.placeMiddleBranch(levelSimulatedReader,
                     biConsumer, random, (int)(branchHeight * 0.8F),
                     startPos, direction, treeConfiguration);
-            int midFoliageRadius = Math.max(5, (int)(branchHeight * 0.6F));
+            int midFoliageRadius = getFoliageRadius(branchHeight, true);
             foliagePositions.add(new FoliageAttachment(midFoliagePos, midFoliageRadius, true));
         }
 
@@ -131,12 +131,18 @@ public class DuskWillowTrunkPlacer extends TrunkPlacer {
         BlockPos farFoliagePos = this.placeRegularBranch(levelSimulatedReader,
                 biConsumer, random, branchHeight, startPos, direction, treeConfiguration);
 
-        int foliageRadius = Math.max(2, (int)(branchHeight * 0.4F));
+        int foliageRadius = getFoliageRadius(branchHeight, false);
         foliagePositions.add(new FoliageAttachment(farFoliagePos, foliageRadius, false));
 
         return foliagePositions;
     }
 
+    private int getFoliageRadius(int branchHeight, boolean isMiddleBranch) {
+        int maxBranchHeight = maxBranchHeight() + (isMiddleBranch ? 3 : 0) + 2;
+        return Mth.lerpInt( (float)branchHeight / (float)maxBranchHeight,
+                DuskWillowFoliagePlacer.MIN_FOLIAGE_RADIUS,
+                DuskWillowFoliagePlacer.MAX_FOLIAGE_RADIUS);
+    }
 
     public BlockPos placeMiddleBranch(
             @NotNull LevelSimulatedReader levelSimulatedReader,

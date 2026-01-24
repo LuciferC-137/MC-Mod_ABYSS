@@ -35,7 +35,7 @@ import java.util.OptionalInt;
 /**
  * Copied from LeavesBlock with minor modifications to the decay distance.
  */
-public class DarktreeLeavesBlock extends Block implements SimpleWaterloggedBlock, IShearable {
+public class LongDecayDistanceLeavesBlock extends Block implements SimpleWaterloggedBlock, IShearable {
     public static final MapCodec<LeavesBlock> CODEC = simpleCodec(LeavesBlock::new);
     public static final int DECAY_DISTANCE = 9;
     public static final IntegerProperty DISTANCE;
@@ -47,7 +47,7 @@ public class DarktreeLeavesBlock extends Block implements SimpleWaterloggedBlock
         return CODEC;
     }
 
-    public DarktreeLeavesBlock(BlockBehaviour.Properties properties) {
+    public LongDecayDistanceLeavesBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState((BlockState)((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue(DISTANCE, DECAY_DISTANCE)).setValue(PERSISTENT, false)).setValue(WATERLOGGED, false));
     }

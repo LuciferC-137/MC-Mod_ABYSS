@@ -168,7 +168,7 @@ public class BlockRegistry {
 	
  
 	public static final DeferredBlock<Block> DARKTREE_LEAVES = BLOCKS.register("darktree_leaves",
-			() -> new DarktreeLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+			() -> new LongDecayDistanceLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(DARKTREE_FOLIAGE_COLOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE + 2)
             ));
@@ -817,25 +817,10 @@ public class BlockRegistry {
 					.noOcclusion()));
 
 	public static final DeferredBlock<Block> DUSK_WILLOW_LEAVES = BLOCKS.register("dusk_willow_leaves",
-			() -> new LeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+			() -> new LongDecayDistanceLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
 					.noLootTable() //TODO: add loottable
 					.mapColor(DUSK_WILLOW)
-					.lightLevel((state) -> LIGHT_DUSK_WILLOW + 2)) {
-
-				@Override
-				public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-					return true;
-				}
-				@Override
-				public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-					return 60;
-				}
-				@Override
-				public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
-					return 30;
-				}
-
-			});
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW + 2)));
 
 	public static final DeferredBlock<Block> VALLEY_IVY = BLOCKS.register("valley_ivy",
 			() -> new ValleyIvyBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.VINE)
