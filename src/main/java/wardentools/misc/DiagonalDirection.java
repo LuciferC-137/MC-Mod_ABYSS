@@ -1,5 +1,6 @@
 package wardentools.misc;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 
@@ -12,7 +13,7 @@ public enum DiagonalDirection {
     NORTHEAST(0, Direction.NORTH, Direction.EAST),
     SOUTHEAST(1, Direction.EAST, Direction.SOUTH),
     SOUTHWEST(2, Direction.SOUTH, Direction.WEST),
-    NORTHWEST(3, Direction.WEST, Direction.WEST);
+    NORTHWEST(3, Direction.WEST, Direction.NORTH);
 
     static final HashMap<Integer, DiagonalDirection> indexMap = new HashMap<>();
 
@@ -52,8 +53,16 @@ public enum DiagonalDirection {
         return this.dir1.getStepZ() + this.dir2.getStepZ();
     }
 
+    public BlockPos apply(BlockPos pos) {
+        return pos.offset(this.getStepX(), 0, this.getStepZ());
+    }
+
     public boolean has(Direction direction) {
         return this.dir1 == direction || this.dir2 == direction;
+    }
+
+    public DiagonalDirection opposite() {
+        return DiagonalDirection.byId((this.index + 2) % 4);
     }
 
     public static DiagonalDirection byId(int i) {
@@ -93,4 +102,9 @@ public enum DiagonalDirection {
         return Set.copyOf(Arrays.stream(DiagonalDirection.values()).toList());
     }
 
+    public static Set<DiagonalDirection> randomOppositeSet(RandomSource random) {
+        DiagonalDirection dir = DiagonalDirection.random(random);
+        DiagonalDirection oppositeDir = dir.opposite();
+        return Set.of(dir, oppositeDir);
+    }
 }

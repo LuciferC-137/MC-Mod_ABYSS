@@ -19,13 +19,13 @@ import wardentools.block.BlockRegistry;
 import wardentools.misc.DiagonalDirection;
 import wardentools.worldgen.features.tree.ModTrunkPlacerTypes;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 public class DuskWillowTrunkPlacer extends TrunkPlacer {
+    private static final float BRANCH_MIN_CURVATURE = 0.07f;
+    private static final float BRANCH_MAX_CURVATURE = 0.095f;
+    private static final int MIN_BRANCH_HEIGHT = 3;
 
     public static final MapCodec<DuskWillowTrunkPlacer> CODEC = RecordCodecBuilder
             .mapCodec(placerInstance ->
@@ -39,6 +39,14 @@ public class DuskWillowTrunkPlacer extends TrunkPlacer {
     @Override
     protected @NotNull TrunkPlacerType<?> type() {
         return ModTrunkPlacerTypes.DUSK_WILLOW_TRUNK_PLACER.get();
+    }
+
+    public int maxBaseTrunkSize() {
+        return this.baseHeight + this.heightRandA + this.heightRandB;
+    }
+
+    public int maxBranchHeight() {
+        return this.maxBaseTrunkSize() - 2;
     }
 
     @Override
@@ -58,71 +66,163 @@ public class DuskWillowTrunkPlacer extends TrunkPlacer {
         Set<DiagonalDirection> branchDirections = getBranches(random, mainTrunkHeight);
 
         // Branch Palcement
-        int branchStartY = mainTrunkHeight - 2 - random.nextInt(2); // starting height of branch
+        ArrayList<FoliageAttachment> foliagePositions = new ArrayList<>();
         for (DiagonalDirection dir : branchDirections) {
-            int branchHeight = (int)(mainTrunkHeight / 2) + random.nextInt(2); // branch height
-            BlockPos branchStart = blockPos.above(branchStartY);
-            this.placeBranch(levelSimulatedReader, biConsumer, random, branchHeight, branchStart, dir, treeConfiguration);
+            int branchHeight = Math.max(mainTrunkHeight
+                            - random.nextInt(2, 4) + random.nextInt(2), MIN_BRANCH_HEIGHT);
+            BlockPos branchStart = blockPos.above(mainTrunkHeight).below();
+            if (dir.has(Direction.SOUTH)) branchStart = branchStart.south();
+            if (dir.has(Direction.EAST)) branchStart = branchStart.east();
+            List<FoliageAttachment> foliagePos = this.placeBranch(levelSimulatedReader,
+                    biConsumer, random, branchHeight, mainTrunkHeight,
+                    branchStart, dir, treeConfiguration);
+            foliagePositions.addAll(foliagePos);
         }
 
         // Return foliage placement points
-        return branchDirections.stream()
-                .map(dir -> new FoliageAttachment(
-                        blockPos.above(branchStartY)
-                                .offset(dir.getStepX() * (3 + 1), 1, dir.getDir1().getStepZ() * (3 + 1)),
-                        0, false))
-                .toList();
+        return foliagePositions;
     }
 
     public void placeRoots(@NotNull LevelSimulatedReader levelSimulatedReader,
             @NotNull BiConsumer<BlockPos, BlockState> biConsumer, @NotNull RandomSource random,
             @NotNull BlockPos startPos, @NotNull TreeConfiguration treeConfiguration) {
-        HashSet<Direction> roots = new HashSet<>();
-        for (int i = 0; i < 4; i++) {
-            roots.add(Direction.Plane.HORIZONTAL.getRandomDirection(random));
-        }
-        for (Direction dir : roots) {
-            int length = 2 + random.nextInt(3);
-            for (int l = 0; l < length; l++) {
-                BlockPos rootPos = startPos.offset(dir.getStepX(), 0, dir.getStepZ());
-                if (dir == Direction.EAST) {
-                    rootPos.offset(dir.getStepX(), 0, dir.getStepZ());
+       for (Direction dir : Direction.Plane.HORIZONTAL) {
+            BlockPos rootPos = startPos.relative(dir);
+            if (dir == Direction.EAST || dir == Direction.SOUTH) {
+                rootPos = rootPos.relative(dir);
+            }
+            if (dir == Direction.NORTH || dir == Direction.EAST) {
+                if (random.nextBoolean()) {
+                    this.placeWood(levelSimulatedReader, biConsumer, rootPos);
                 }
-                if (dir == Direction.SOUTH) {
-                    rootPos.offset(dir.getStepX(), 0, dir.getStepZ());
+                rootPos = rootPos.relative(dir.getClockWise());
+            } else {
+                if (random.nextBoolean()) {
+                    this.placeWood(levelSimulatedReader, biConsumer, rootPos);
                 }
+                rootPos = rootPos.relative(dir.getCounterClockWise());
+            }
+            if (random.nextInt(3) == 0) {
                 this.placeWood(levelSimulatedReader, biConsumer, rootPos);
             }
         }
     }
 
-    public void placeBranch(
+    public List<FoliageAttachment> placeBranch(
+            @NotNull LevelSimulatedReader levelSimulatedReader,
+            @NotNull BiConsumer<BlockPos, BlockState> biConsumer,
+            @NotNull RandomSource random, int branchHeight, int mainTrunkHeight,
+            @NotNull BlockPos startPos, @NotNull DiagonalDirection direction,
+            @NotNull TreeConfiguration treeConfiguration) {
+        List<FoliageAttachment> foliagePositions = new ArrayList<>();
+
+        // If the tree is too big, it needs branches more centered above the trunk
+        if (mainTrunkHeight >= this.maxBaseTrunkSize() * 0.6F) {
+            BlockPos midFoliagePos = this.placeMiddleBranch(levelSimulatedReader,
+                    biConsumer, random, (int)(branchHeight * 0.8F),
+                    startPos, direction, treeConfiguration);
+            int midFoliageRadius = Math.max(5, (int)(branchHeight * 0.6F));
+            foliagePositions.add(new FoliageAttachment(midFoliagePos, midFoliageRadius, true));
+        }
+
+        // In any case, place the regular branches that go further out
+        startPos = direction.apply(startPos)
+                .below(random.nextInt(2, Math.max(3, mainTrunkHeight / 2 + 1)));
+        BlockPos farFoliagePos = this.placeRegularBranch(levelSimulatedReader,
+                biConsumer, random, branchHeight, startPos, direction, treeConfiguration);
+
+        int foliageRadius = Math.max(2, (int)(branchHeight * 0.4F));
+        foliagePositions.add(new FoliageAttachment(farFoliagePos, foliageRadius, false));
+
+        return foliagePositions;
+    }
+
+
+    public BlockPos placeMiddleBranch(
             @NotNull LevelSimulatedReader levelSimulatedReader,
             @NotNull BiConsumer<BlockPos, BlockState> biConsumer,
             @NotNull RandomSource random, int branchHeight,
             @NotNull BlockPos startPos, @NotNull DiagonalDirection direction,
             @NotNull TreeConfiguration treeConfiguration) {
         BlockPos lastPos = startPos;
-        lastPos = lastPos.offset(direction.getStepX(), -1, direction.getStepZ());
-        if (direction.has(Direction.SOUTH)) lastPos= lastPos.south();
-        if (direction.has(Direction.EAST)) lastPos= lastPos.east();
-        int heightOffset = 0;
 
+        lastPos = this.placeBlockArc(levelSimulatedReader, biConsumer, random,
+                this.branchCurvatureFactor(branchHeight) * 0.75F,
+                branchHeight + random.nextInt(1, 3),
+                lastPos, direction, treeConfiguration, 10);
+
+        return lastPos;
+    }
+
+    public BlockPos placeRegularBranch(
+            @NotNull LevelSimulatedReader levelSimulatedReader,
+            @NotNull BiConsumer<BlockPos, BlockState> biConsumer,
+            @NotNull RandomSource random, int branchHeight,
+            @NotNull BlockPos startPos, @NotNull DiagonalDirection direction,
+            @NotNull TreeConfiguration treeConfiguration) {
+        BlockPos lastPos = startPos;
+
+        // Placing branch curvature
+        float curvatureFactor = this.branchCurvatureFactor(branchHeight);
+        lastPos = this.placeBlockArc(levelSimulatedReader, biConsumer, random,
+                curvatureFactor, branchHeight, lastPos, direction,
+                treeConfiguration, 3);
+
+        // Placing short straight end
+        int straightLength = (int)((float)branchHeight / 2.5F);
+        for (int i = 0; i < straightLength; i++) {
+            lastPos = lastPos.relative(direction.getDir1());
+            placeWood(levelSimulatedReader, biConsumer, lastPos);
+            lastPos = lastPos.relative(direction.getDir2());
+            placeWood(levelSimulatedReader, biConsumer, lastPos);
+        }
+
+        // Final leaf attachment point
+        lastPos = lastPos.above();
+        placeLog(levelSimulatedReader, biConsumer, random, lastPos, treeConfiguration);
+
+        return lastPos;
+    }
+
+    public BlockPos placeBlockArc(
+            @NotNull LevelSimulatedReader levelSimulatedReader,
+            @NotNull BiConsumer<BlockPos, BlockState> biConsumer,
+            @NotNull RandomSource random, float curvatureFactor, int branchHeight,
+            @NotNull BlockPos startPos, @NotNull DiagonalDirection dir,
+            @NotNull TreeConfiguration treeConfiguration, int randomOffsetRarity) {
+        BlockPos lastPos = startPos;
+        int heightOffset = 0;
         while (heightOffset < branchHeight) {
             heightOffset++;
 
-            int targetHorizontalDistance = (int)Mth.sqrt(heightOffset);
-            int currentHorizontalDistance = (int)Mth.sqrt(heightOffset - 1);
+            int targetHorizontalDistance = (int)(Mth.square(heightOffset) * curvatureFactor);
+            int currentHorizontalDistance = (int)(Mth.square(heightOffset - 1) * curvatureFactor);
 
             int diagonalSteps = targetHorizontalDistance - currentHorizontalDistance;
 
             for (int i = 0; i < diagonalSteps; i++) {
-                lastPos = lastPos.offset(direction.getStepX(), 0, direction.getStepZ());
+                lastPos = dir.apply(lastPos);
                 placeWood(levelSimulatedReader, biConsumer, lastPos);
+                if (random.nextInt(randomOffsetRarity) == 0) {
+                    if (random.nextBoolean()) {
+                        lastPos = lastPos.relative(dir.getDir1());
+                    } else {
+                        lastPos = lastPos.relative(dir.getDir2());
+                    }
+                    placeWood(levelSimulatedReader, biConsumer, lastPos);
+                }
             }
+
             lastPos = lastPos.above();
             placeWood(levelSimulatedReader, biConsumer, lastPos);
         }
+        return lastPos;
+    }
+
+    private float branchCurvatureFactor(int branchHeight) {
+        return BRANCH_MIN_CURVATURE +
+                (BRANCH_MAX_CURVATURE - BRANCH_MIN_CURVATURE) *
+                        (1F - (float)branchHeight / (float)this.maxBranchHeight());
     }
 
     public void placeMainTrunk(
@@ -147,7 +247,7 @@ public class DuskWillowTrunkPlacer extends TrunkPlacer {
         if (mainTrunkHeight > this.baseHeight + this.heightRandA / 2) {
             return DiagonalDirection.randomSet(random, 3);
         }
-        return DiagonalDirection.randomSet(random, 2);
+        return DiagonalDirection.randomOppositeSet(random);
     }
 
     @Override
