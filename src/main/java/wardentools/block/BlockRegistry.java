@@ -818,7 +818,6 @@ public class BlockRegistry {
 
 	public static final DeferredBlock<Block> DUSK_WILLOW_LEAVES = BLOCKS.register("dusk_willow_leaves",
 			() -> new LongDecayDistanceLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
-					.noLootTable() //TODO: add loottable
 					.mapColor(DUSK_WILLOW)
 					.lightLevel((state) -> LIGHT_DUSK_WILLOW + 2)));
 

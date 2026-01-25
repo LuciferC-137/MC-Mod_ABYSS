@@ -197,6 +197,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.add(BlockRegistry.WHITETREE_LEAVES.get(),
 				block -> this.createCustomLeaveDrop(BlockRegistry.WHITETREE_LEAVES.get(),
 						BlockRegistry.WHITETREE_SAPLING.get(), ItemRegistry.WHITE_SEED.get(), 0.05F));
+		this.add(BlockRegistry.DUSK_WILLOW_LEAVES.get(),
+				block -> this.createCustomLeaveDrop(BlockRegistry.DUSK_WILLOW_LEAVES.get(),
+						BlockRegistry.DUSK_WILLOW_SAPLING.get(), ItemRegistry.PURPLE_SEED.get(), 0.05F));
 
 		// Special drop
 		this.add(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(),

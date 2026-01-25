@@ -67,6 +67,8 @@
 	"item.wardentools.sirisca_blossom": "Bourgeon de Sirisca",
 	"item.wardentools.purple_cake": "Gâteau Magenta",
 	"item.wardentools.luth": "Luth",
+	"item.wardentools.dusk_willow_boat": "Bâteau en saule du crépuscule",
+	"item.wardentools.dusk_willow_chest_boat": "Bâteau avec coffre en saule du crépuscule",
 
 	"block.wardentools.abyssalite": "Abyssalite",
 	"block.wardentools.chiseled_abyssalite": "Abyssalite sculptée",
@@ -162,6 +164,22 @@
 
 	"block.wardentools.lavyn": "Lavyn",
 	"block.wardentools.sirisca": "Sirisca",
+
+	"block.wardentools.dusk_willow_log": "Bûche de saule du crépuscule",
+	"block.wardentools.dusk_willow_wood": "Bois de saule du crépuscule",
+	"block.wardentools.stripped_dusk_willow_log": "Bûche de saule du crépuscule écorcée",
+	"block.wardentools.stripped_dusk_willow_wood": "Bois de saule du crépuscule écorcé",
+	"block.wardentools.dusk_willow_leaves": "Feuilles de saule du crépuscule",
+	"block.wardentools.dusk_willow_sapling": "Pousse de saule du crépuscule",
+	"block.wardentools.dusk_willow_planks": "Planches de saule du crépuscule",
+	"block.wardentools.dusk_willow_stair": "Escalier en saule du crépuscule",
+	"block.wardentools.dusk_willow_slab": "Dalle en saule du crépuscule",
+	"block.wardentools.dusk_willow_fence": "Barrière en saule du crépuscule",
+	"block.wardentools.dusk_willow_fence_gate": "Portillon en saule du crépuscule",
+	"block.wardentools.dusk_willow_button": "Bouton en saule du crépuscule",
+	"block.wardentools.dusk_willow_pressure_plate": "Plaque de pression en saule du crépuscule",
+	"block.wardentools.dusk_willow_door": "Porte en saule du crépuscule",
+	"block.wardentools.dusk_willow_trapdoor": "Trappe en saule du crépuscule",
 
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",

@@ -19,7 +19,7 @@
       "state": {
         "Name": "wardentools:dusk_willow_leaves",
         "Properties": {
-          "distance": "7",
+          "darktree_distance": "9",
           "persistent": "false",
           "waterlogged": "false"
         }
