@@ -710,6 +710,7 @@ public class BlockRegistry {
 			() ->  new PurpleSoilBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
 					.mapColor(MapColor.COLOR_PURPLE)
 					.strength(0.8F)
+					.randomTicks()
 			));
 
 	public static final DeferredBlock<Block> PURPLE_FARMLAND
@@ -717,6 +718,14 @@ public class BlockRegistry {
 			() -> new PurpleFarmland(BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
 					.mapColor(MapColor.COLOR_PURPLE)
 					.strength(0.8F)
+			));
+
+	public static final DeferredBlock<Block> GRASS_PURPLE_SOIL
+			= BLOCKS.register("grass_purple_soil",
+			() -> new GrassPurpleSoil(BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK)
+					.mapColor(MapColor.TERRACOTTA_GREEN)
+					.strength(0.9F)
+					.sound(SoundType.GRASS).randomTicks()
 			));
 
 	public static final DeferredBlock<Block> DUSK_WILLOW_LOG = BLOCKS.register("dusk_willow_log",

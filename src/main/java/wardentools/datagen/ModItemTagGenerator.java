@@ -56,7 +56,8 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 			.add(BlockRegistry.DUSK_WILLOW_PLANKS.get().asItem());
 		 
 		this.tag(ItemTags.DIRT)
-		 	 .add(BlockRegistry.DARKDIRT.get().asItem());
+		 	 .add(BlockRegistry.DARKDIRT.get().asItem())
+			.add(BlockRegistry.PURPLE_SOIL.get().asItem());
 
 		this.tag(ItemTags.DAMPENS_VIBRATIONS)
 				.add(ItemRegistry.REINFORCED_GLASS.get());

@@ -2,6 +2,7 @@
   "values": [
     "wardentools:darkdirt",
     "wardentools:darkgrass_block",
-    "wardentools:purple_soil"
+    "wardentools:purple_soil",
+    "wardentools:grass_purple_soil"
   ]
 }

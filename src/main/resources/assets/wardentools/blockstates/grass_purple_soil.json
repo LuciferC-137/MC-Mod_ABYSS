@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "wardentools:block/grass_purple_soil"
+      },
+      {
+        "model": "wardentools:block/grass_purple_soil",
+        "y": 90
+      },
+      {
+        "model": "wardentools:block/grass_purple_soil",
+        "y": 180
+      },
+      {
+        "model": "wardentools:block/grass_purple_soil",
+        "y": 270
+      }
+    ]
+  }
+}

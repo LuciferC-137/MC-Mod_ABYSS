@@ -15,6 +15,7 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.CrystalInfuserBlock;
 import wardentools.block.DarkGrassBlock;
+import wardentools.block.GrassPurpleSoil;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.entity.client.thryssaryn.Thryssaryn;
@@ -85,8 +86,12 @@ public class ClientModEvents {
 				BlockRegistry.CRYSTAL_INFUSER.get());
 		event.register(DarkGrassBlock::getColor,
 				BlockRegistry.DARKGRASS_BLOCK.get());
+		event.register(GrassPurpleSoil::getColor,
+				BlockRegistry.GRASS_PURPLE_SOIL.get());
 
 		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.DARKGRASS_BLOCK.get(),
+				RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GRASS_PURPLE_SOIL.get(),
 				RenderType.cutoutMipped());
 	}
 

@@ -715,6 +715,10 @@ public class ItemRegistry {
 			ITEMS.register("purple_soil",
 					() -> new BlockItem(BlockRegistry.PURPLE_SOIL.get(), new Item.Properties()));
 
+	public static final DeferredItem<BlockItem> GRASS_PURPLE_SOIL =
+			ITEMS.register("grass_purple_soil",
+					() -> new BlockItem(BlockRegistry.GRASS_PURPLE_SOIL.get(), new Item.Properties()));
+
 	public static final DeferredItem<Item> SIRISCA_BLOSSOM =
 			ITEMS.register("sirisca_blossom",
 					() -> new Item(new Item.Properties()

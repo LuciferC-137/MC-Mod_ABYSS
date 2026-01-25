@@ -154,6 +154,8 @@ public class ModCreativeTabs {
 
         addItemToTag(Tag.DIRT, ItemRegistry.DARKDIRT);
         addItemToTag(Tag.DIRT, ItemRegistry.DARKGRASS_BLOCK);
+        addItemToTag(Tag.DIRT, ItemRegistry.PURPLE_SOIL);
+        addItemToTag(Tag.DIRT, ItemRegistry.GRASS_PURPLE_SOIL);
 
         addItemToTag(Tag.EGG, ItemRegistry.DEEPLURKER_EGG);
         addItemToTag(Tag.EGG, ItemRegistry.PALEWANDERER_EGG);

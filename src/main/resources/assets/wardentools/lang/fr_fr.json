@@ -115,7 +115,8 @@
 	"block.wardentools.crystal_infuser": "Infuseur de Cristal",
 	"block.wardentools.golem_stone": "Pierre de Golem",
 	"block.wardentools.purple_soil": "Sol Magenta",
-	"block.wardentools.purple_farmland": "Purple Farmland",
+	"block.wardentools.purple_farmland": "Terre Agricole Magenta",
+	"block.wardentools.grass_purple_soil": "Sol Magenta herbeux",
 
 	"block.wardentools.darktree_log": "Bûche de sombrarbre",
 	"block.wardentools.darktree_leaves": "Feuilles de sombrarbre",
@@ -179,7 +180,8 @@
 	"block.wardentools.dusk_willow_button": "Bouton en saule du crépuscule",
 	"block.wardentools.dusk_willow_pressure_plate": "Plaque de pression en saule du crépuscule",
 	"block.wardentools.dusk_willow_door": "Porte en saule du crépuscule",
-	"block.wardentools.dusk_willow_trapdoor": "Trappe en saule du crépuscule",
+	"block.wardentools.dusk_willow_trap_door": "Trappe en saule du crépuscule",
+	"block.wardentools.valley_ivy": "Lierre des vallées",
 
 	"entity.wardentools.deeplurker": "Rôdeur des abîmes",
 	"entity.wardentools.pale_wanderer": "Vagabond pâle",

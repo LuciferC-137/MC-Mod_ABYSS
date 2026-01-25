@@ -25,6 +25,7 @@ DOWNLOAD
 --------
 
 Download on CurseForge: https://www.curseforge.com/minecraft/mc-mods/dive-into-the-abyss
+
 Download on Modrinth: https://modrinth.com/mod/dive-into-the-abyss
 
 ----------------------
@@ -53,4 +54,5 @@ NEOFORGE RESOURCES
 -------------------
 
 Community Documentation: https://docs.neoforged.net/
+
 NeoForged Discord: https://discord.neoforged.net/

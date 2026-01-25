@@ -67,6 +67,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_SCULK_PATCH = registerKey("abyss_sculk_patch");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DEPTH_VINE = registerKey("tall_depth_vine");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIVING_SPROUT_EMERGENCE = registerKey("living_sprout_emergence");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> LAVYN_PATCH = registerKey("lavyn_patch");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -217,6 +218,9 @@ public class ModConfiguredFeatures {
 
 		register(context, LIVING_SPROUT_EMERGENCE, ModFeatures.LIVING_SPROUT_EMERGENCE.get(),
 				new LivingSproutEmergenceConfiguration(1, 7, 0.2F, true));
+
+		register(context, LAVYN_PATCH, Feature.RANDOM_PATCH,
+				grassPatch(BlockStateProvider.simple(BlockRegistry.LAVYN.get()), 10));
 
     }
 	

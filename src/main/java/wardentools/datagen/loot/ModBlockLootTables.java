@@ -126,6 +126,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(BlockRegistry.DARKGRASS_BLOCK.get(),
                 createSingleItemTableWithSilkTouch(BlockRegistry.DARKGRASS_BLOCK.get(),
                         ItemRegistry.DARKDIRT.get()));
+		this.add(BlockRegistry.GRASS_PURPLE_SOIL.get(),
+				createSingleItemTableWithSilkTouch(BlockRegistry.GRASS_PURPLE_SOIL.get(),
+						ItemRegistry.PURPLE_SOIL.get()));
 
 		// Planks derivatives special drops
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 

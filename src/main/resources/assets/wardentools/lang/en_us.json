@@ -124,6 +124,7 @@
 	"block.wardentools.golem_stone": "Golem Stone",
 	"block.wardentools.purple_soil": "Purple Soil",
 	"block.wardentools.purple_farmland": "Purple Farmland",
+	"block.wardentools.grass_purple_soil": "Grass Purple Soil",
 	
 	"block.wardentools.darktree_log": "Darktree Log",
 	"block.wardentools.darktree_leaves": "Darktree Leaves",
@@ -183,7 +184,8 @@
 	"block.wardentools.dusk_willow_button": "Dusk Willow Button",
 	"block.wardentools.dusk_willow_pressure_plate": "Dusk Willow Pressure Plate",
 	"block.wardentools.dusk_willow_door": "Dusk Willow Door",
-	"block.wardentools.dusk_willow_trapdoor": "Dusk Willow Trap Door",
+	"block.wardentools.dusk_willow_trap_door": "Dusk Willow Trap Door",
+	"block.wardentools.valley_ivy": "Valley Ivy",
 	
 	"entity.wardentools.deeplurker": "Deep Lurker",
 	"entity.wardentools.pale_wanderer": "Pale Wanderer",

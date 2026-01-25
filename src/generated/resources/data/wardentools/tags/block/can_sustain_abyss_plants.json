@@ -1,6 +1,9 @@
 {
   "values": [
     "minecraft:sculk",
-    "wardentools:purple_soil"
+    "wardentools:purple_soil",
+    "wardentools:grass_purple_soil",
+    "wardentools:darkgrass_block",
+    "wardentools:darkdirt"
   ]
 }

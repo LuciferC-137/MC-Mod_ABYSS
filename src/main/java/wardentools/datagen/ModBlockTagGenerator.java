@@ -4,7 +4,6 @@ package wardentools.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -84,7 +83,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.DARKDIRT.get())
                 .add(BlockRegistry.DARKGRASS_BLOCK.get())
                 .add(BlockRegistry.PURPLE_SOIL.get())
-                .add(BlockRegistry.PURPLE_FARMLAND.get());
+                .add(BlockRegistry.PURPLE_FARMLAND.get())
+                .add(BlockRegistry.GRASS_PURPLE_SOIL.get());
 
         this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
                 .add(BlockRegistry.ABYSSALITE.get());
@@ -145,7 +145,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         this.tag(BlockTags.DIRT)
                 .add(BlockRegistry.DARKDIRT.get())
                 .add(BlockRegistry.DARKGRASS_BLOCK.get())
-                .add(BlockRegistry.PURPLE_SOIL.get());
+                .add(BlockRegistry.PURPLE_SOIL.get())
+                .add(BlockRegistry.GRASS_PURPLE_SOIL.get());
 
         this.tag(BlockTags.FENCES)
                 .add(BlockRegistry.DARKTREE_FENCE.get())
@@ -193,7 +194,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
 		this.tag(ModTags.Blocks.CAN_SUSTAIN_ABYSS_PLANTS)
 				.add(Blocks.SCULK)
-                .add(BlockRegistry.PURPLE_SOIL.get());
+                .add(BlockRegistry.PURPLE_SOIL.get())
+                .add(BlockRegistry.GRASS_PURPLE_SOIL.get())
+                .add(BlockRegistry.DARKGRASS_BLOCK.get())
+                .add(BlockRegistry.DARKDIRT.get());
 
         this.tag(ModTags.Blocks.CONNECT_TO_TENDRILS_BLOCKS)
                 .add(Blocks.SCULK)
