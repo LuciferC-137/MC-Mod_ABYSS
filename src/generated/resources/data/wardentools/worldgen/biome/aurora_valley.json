@@ -5,8 +5,8 @@
   "downfall": 0.8,
   "effects": {
     "fog_color": 2844,
-    "foliage_color": 4289374,
-    "grass_color": 5785945,
+    "foliage_color": 3363384,
+    "grass_color": 2244943,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2.0,
@@ -31,7 +31,8 @@
   },
   "features": [
     [
-      "wardentools:liquid_corruption_lake"
+      "wardentools:liquid_corruption_lake",
+      "wardentools:basalt_boulder"
     ],
     [],
     [],

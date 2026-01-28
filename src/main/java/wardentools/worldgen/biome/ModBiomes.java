@@ -24,8 +24,8 @@ public class ModBiomes {
     public static final int DEEP_FOREST_2 = 0x052a32;
     public static final int WHITE_FOREST_1 = 0x77b1ac;
     public static final int WHITE_FOREST_2 = 0x294d55;
-    public static final int AURORA_VALLEY_1 = 0x584959;
-    public static final int AURORA_VALLEY_2 = 0x41735e;
+    public static final int AURORA_VALLEY_1 = 0x22414f;
+    public static final int AURORA_VALLEY_2 = 0x335238;
 	private static final int FOG_COLOR = 0x000b1c;
 	private static final int WATER_COLOR = 0x0a4c5b;
     private static final GenerationStep.Decoration CRYSTAL_STEP = GenerationStep.Decoration.LOCAL_MODIFICATIONS;
@@ -196,6 +196,8 @@ public class ModBiomes {
         defaultAbyssOres(biomeBuilder);
         defaultAbyssCaves(biomeBuilder);
 
+        biomeBuilder.addFeature(GenerationStep.Decoration.RAW_GENERATION,
+                ModPlacedFeatures.BASALT_BOULDER_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
                 ModPlacedFeatures.DUSK_WILLOW_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,

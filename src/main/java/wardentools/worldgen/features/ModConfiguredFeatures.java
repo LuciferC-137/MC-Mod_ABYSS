@@ -68,6 +68,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DEPTH_VINE = registerKey("tall_depth_vine");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIVING_SPROUT_EMERGENCE = registerKey("living_sprout_emergence");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LAVYN_PATCH = registerKey("lavyn_patch");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> BASALT_BOULDER = registerKey("basalt_boulder");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -221,6 +222,8 @@ public class ModConfiguredFeatures {
 
 		register(context, LAVYN_PATCH, Feature.RANDOM_PATCH,
 				grassPatch(BlockStateProvider.simple(BlockRegistry.LAVYN.get()), 10));
+
+		register(context, BASALT_BOULDER, ModFeatures.BASALT_BOULDER.get(), new NoneFeatureConfiguration());
 
     }
 	

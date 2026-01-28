@@ -66,6 +66,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> CAVE_SCULK_TENDRILS_KEY = registerKey("sculk_tendrils");
 	public static final ResourceKey<PlacedFeature> LIVING_SPROUT_EMERGENCE_KEY = registerKey("living_sprout_emergence");
 	public static final ResourceKey<PlacedFeature> LAVYN_PATCH_KEY = registerKey("lavyn_patch");
+	public static final ResourceKey<PlacedFeature> BASALT_BOULDER_KEY = registerKey("basalt_boulder");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -80,7 +81,7 @@ public class ModPlacedFeatures {
                         BlockRegistry.WHITETREE_SAPLING.get()));
 
 		register(context, DUSK_WILLOW_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DUSK_WILLOW_KEY),
-				VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.01f, 1),
+				VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.2f, 1),
 						BlockRegistry.DUSK_WILLOW_SAPLING.get()));
         
 
@@ -283,6 +284,14 @@ public class ModPlacedFeatures {
 		register(context, LAVYN_PATCH_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.LAVYN_PATCH),
 				List.of(CountPlacement.of(UniformInt.of(4, 8)),
+						InSquarePlacement.spread(),
+						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+						BiomeFilter.biome())
+		);
+
+		register(context, BASALT_BOULDER_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.BASALT_BOULDER),
+				List.of(CountPlacement.of(UniformInt.of(0, 1)),
 						InSquarePlacement.spread(),
 						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
 						BiomeFilter.biome())
