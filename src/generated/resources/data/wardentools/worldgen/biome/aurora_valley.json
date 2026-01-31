@@ -34,7 +34,9 @@
       "wardentools:liquid_corruption_lake",
       "wardentools:basalt_boulder"
     ],
-    [],
+    [
+      "wardentools:abyss_lake"
+    ],
     [],
     [],
     [],

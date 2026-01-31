@@ -198,6 +198,8 @@ public class ModBiomes {
 
         biomeBuilder.addFeature(GenerationStep.Decoration.RAW_GENERATION,
                 ModPlacedFeatures.BASALT_BOULDER_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.LAKES,
+                ModPlacedFeatures.ABYSS_LAKE_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
                 ModPlacedFeatures.DUSK_WILLOW_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,

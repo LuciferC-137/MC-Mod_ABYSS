@@ -67,6 +67,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> LIVING_SPROUT_EMERGENCE_KEY = registerKey("living_sprout_emergence");
 	public static final ResourceKey<PlacedFeature> LAVYN_PATCH_KEY = registerKey("lavyn_patch");
 	public static final ResourceKey<PlacedFeature> BASALT_BOULDER_KEY = registerKey("basalt_boulder");
+	public static final ResourceKey<PlacedFeature> ABYSS_LAKE_KEY = registerKey("abyss_lake");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -297,6 +298,13 @@ public class ModPlacedFeatures {
 						BiomeFilter.biome())
 		);
 
+		register(context, ABYSS_LAKE_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.ABYSS_LAKE),
+                List.of(RarityFilter.onAverageOnceEvery(20),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+						BiomeFilter.biome())
+		);
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {

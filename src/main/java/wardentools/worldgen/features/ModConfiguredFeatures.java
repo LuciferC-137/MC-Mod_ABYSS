@@ -20,6 +20,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.worldgen.features.custom.AbyssLakeConfiguration;
 import wardentools.worldgen.features.custom.DepthVineConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
@@ -69,6 +70,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIVING_SPROUT_EMERGENCE = registerKey("living_sprout_emergence");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LAVYN_PATCH = registerKey("lavyn_patch");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> BASALT_BOULDER = registerKey("basalt_boulder");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_LAKE = registerKey("abyss_lake");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -224,6 +226,11 @@ public class ModConfiguredFeatures {
 				grassPatch(BlockStateProvider.simple(BlockRegistry.LAVYN.get()), 10));
 
 		register(context, BASALT_BOULDER, ModFeatures.BASALT_BOULDER.get(), new NoneFeatureConfiguration());
+
+		register(context, ABYSS_LAKE, ModFeatures.ABYSS_LAKE.get(), new AbyssLakeConfiguration(
+				BlockStateProvider.simple(Blocks.WATER),
+				BlockStateProvider.simple(Blocks.MUD),
+				true));
 
     }
 	
