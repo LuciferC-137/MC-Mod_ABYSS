@@ -209,6 +209,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/crystal_infuser"));
         withExistingParent(BlockRegistry.GOLEM_STONE.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/golem_stone"));
+        withExistingParent(BlockRegistry.AURORA_NENUPHAR.getId().getPath(),
+                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/aurora_nenuphar"));
 
         //Items that use custom methods
         fenceItem(BlockRegistry.DARKTREE_FENCE, BlockRegistry.DARKTREE_PLANKS);

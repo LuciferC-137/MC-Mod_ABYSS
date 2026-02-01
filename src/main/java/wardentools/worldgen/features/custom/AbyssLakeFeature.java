@@ -6,11 +6,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import wardentools.block.AuroraNenupharBlock;
 
 @SuppressWarnings("deprecation")
 public class AbyssLakeFeature extends Feature<AbyssLakeConfiguration> {
@@ -36,7 +37,9 @@ public class AbyssLakeFeature extends Feature<AbyssLakeConfiguration> {
         }
         carveLake(world, basePos, lakeShape, fluidState);
         placeBarrier(world, basePos, lakeShape, config, random);
-        freezeSurfaceIfNeeded(world, basePos, fluidState);
+        if (config.hasNenuphar()) {
+            placeNenuphar(world, basePos, lakeShape, config, random);
+        }
         return true;
     }
 
@@ -106,7 +109,7 @@ public class AbyssLakeFeature extends Feature<AbyssLakeConfiguration> {
                         BlockPos pos = basePos.offset(x, y, z);
                         if (canReplaceBlock(world.getBlockState(pos))) {
                             boolean isAir = y >= 4;
-                            world.setBlock(pos, isAir ? AIR : fluidState, 2);
+                            world.setBlock(pos, isAir ? AIR : fluidState, Block.UPDATE_CLIENTS);
                             if (isAir) {
                                 world.scheduleTick(pos, AIR.getBlock(), 0);
                                 markAboveForPostProcessing(world, pos);
@@ -136,7 +139,7 @@ public class AbyssLakeFeature extends Feature<AbyssLakeConfiguration> {
                         BlockState state = world.getBlockState(basePos.offset(x, y, z));
                         if (state.isSolid() && !state.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                             BlockPos pos = basePos.offset(x, y, z);
-                            world.setBlock(pos, barrierState, 2);
+                            world.setBlock(pos, barrierState, Block.UPDATE_CLIENTS);
                             markAboveForPostProcessing(world, pos);
                         }
                     }
@@ -145,18 +148,25 @@ public class AbyssLakeFeature extends Feature<AbyssLakeConfiguration> {
         }
     }
 
-    private void freezeSurfaceIfNeeded(WorldGenLevel world, BlockPos basePos, BlockState fluidState) {
-        if (!fluidState.getFluidState().is(FluidTags.WATER)) return;
+    private void placeNenuphar(WorldGenLevel world, BlockPos basePos, boolean[] shape, AbyssLakeConfiguration config, RandomSource random) {
         for (int x = 0; x < 16; ++x) {
             for (int z = 0; z < 16; ++z) {
-                int y = 4;
-                BlockPos pos = basePos.offset(x, y, z);
-                Biome biome = world.getBiome(pos).value();
-                if (biome.shouldFreeze(world, pos, false) && canReplaceBlock(world.getBlockState(pos))) {
-                    world.setBlock(pos, Blocks.ICE.defaultBlockState(), 2);
+                if (shape[(x * 16 + z) * 8 + 4]) {
+                    BlockPos pos = basePos.offset(x, 3, z);
+                    if (canReplaceBlock(world.getBlockState(pos.above()))) {
+                        if (random.nextInt(8) == 0 && world.getBlockState(pos.below())
+                                .getFluidState().is(FluidTags.WATER)) {
+                            BlockState nenupharState = auroraNenuphar(random);
+                            world.setBlock(pos.above(), nenupharState, Block.UPDATE_CLIENTS);
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private static BlockState auroraNenuphar(RandomSource random) {
+        return AuroraNenupharBlock.getRandomColoredState(random);
     }
 
     private boolean canReplaceBlock(BlockState state) {

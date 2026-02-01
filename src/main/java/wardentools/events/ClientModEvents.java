@@ -12,10 +12,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import wardentools.ModMain;
-import wardentools.block.BlockRegistry;
-import wardentools.block.CrystalInfuserBlock;
-import wardentools.block.DarkGrassBlock;
-import wardentools.block.GrassPurpleSoil;
+import wardentools.block.*;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.entity.client.thryssaryn.Thryssaryn;
@@ -88,10 +85,14 @@ public class ClientModEvents {
 				BlockRegistry.DARKGRASS_BLOCK.get());
 		event.register(GrassPurpleSoil::getColor,
 				BlockRegistry.GRASS_PURPLE_SOIL.get());
+		event.register(AuroraNenupharBlock::getColor,
+				BlockRegistry.AURORA_NENUPHAR.get());
 
 		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.DARKGRASS_BLOCK.get(),
 				RenderType.cutoutMipped());
 		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GRASS_PURPLE_SOIL.get(),
+				RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.AURORA_NENUPHAR.get(),
 				RenderType.cutoutMipped());
 	}
 

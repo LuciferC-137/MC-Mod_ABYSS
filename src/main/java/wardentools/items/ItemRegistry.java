@@ -822,7 +822,11 @@ public class ItemRegistry {
 					() -> new ModBoatItem(true, ModBoatEntity.Type.DUSK_WILLOW,
 							new Item.Properties().stacksTo(1)));
 
-	public static  final DeferredItem<Item> VALLEY_IVY =
+	public static final DeferredItem<Item> VALLEY_IVY =
 			ITEMS.register("valley_ivy",
 					() -> new BlockItem(BlockRegistry.VALLEY_IVY.get(), new Item.Properties()));
+
+	public static final DeferredItem<BlockItem> AURORA_NENUPHAR =
+			ITEMS.register("aurora_nenuphar",
+					() -> new PlaceOnWaterBlockItem(BlockRegistry.AURORA_NENUPHAR.get(), new Item.Properties()));
 }

@@ -847,6 +847,12 @@ public class BlockRegistry {
 							.lightLevel((state) -> LIGHT_DUSK_WILLOW)
 			));
 
+	public static final DeferredBlock<Block> AURORA_NENUPHAR = BLOCKS.register("aurora_nenuphar",
+			() -> new AuroraNenupharBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.LILY_PAD)
+					.mapColor(DyeColor.CYAN)
+					.lightLevel((state) -> 12)
+					.noOcclusion()));
+
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
         return false;
     }
