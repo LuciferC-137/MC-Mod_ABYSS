@@ -7,6 +7,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import wardentools.ModMain;
+import wardentools.client.rendering.AuroraShaderManager;
 
 /**
  * This class register all the weather ticks and is in charge of client sync.
@@ -21,5 +22,6 @@ public class AbyssWeatherEventClient {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (minecraft.level == null || minecraft.player == null) return;
 		CLIENT_WEATHER.updateFogDistanceOnTick(minecraft.level);
+		AuroraShaderManager.AURORA_MANAGER.tick();
 	}
 }

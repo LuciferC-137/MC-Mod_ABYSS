@@ -34,6 +34,7 @@ public class ModTags {
         public static final TagKey<Biome> MALACHITE_CAVES = register("malachite_caves");
         public static final TagKey<Biome> ECHO_CAVES = register("echo_caves");
         public static final TagKey<Biome> PALE_CAVES = register("pale_caves");
+        public static final TagKey<Biome> INTENSE_AURORAS = register("intense_auroras");
 
         private static TagKey<Biome> register(String name) {
             return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));

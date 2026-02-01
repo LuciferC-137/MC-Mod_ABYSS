@@ -49,5 +49,8 @@ public class ModBiomeTagGenerator extends TagsProvider<Biome> {
                 .add(biomeLookup.getOrThrow(ModBiomes.ECHO_CAVE).key());
         this.tag(ModTags.Biomes.PALE_CAVES)
                 .add(biomeLookup.getOrThrow(ModBiomes.PALE_CAVE).key());
+
+        this.tag(ModTags.Biomes.INTENSE_AURORAS)
+                .add(biomeLookup.getOrThrow(ModBiomes.AURORA_VALLEY).key());
     }
 }

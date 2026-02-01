@@ -11,10 +11,10 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import org.joml.Matrix4f;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import wardentools.AbyssConfig;
 import wardentools.ModMain;
+import wardentools.client.AbyssDimensionSpecialEffect;
+import wardentools.client.color.ColorUtils;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -24,12 +24,36 @@ import java.util.Objects;
  */
 @OnlyIn(Dist.CLIENT)
 public class AuroraShaderManager {
+    public static final AuroraShaderManager AURORA_MANAGER = new AuroraShaderManager();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuroraShaderManager.class);
     private static ShaderInstance auroraShader;
 
-    // Aurora parameters (configurable)
-    public static float[] auroraColor = {0.7F, 0.2F, 0.6F};
+    private float[] skyColor = new float[]{0, 0, 0};
+    private float[] targetSkyColor = new float[]{0, 0, 0};
+
+    private static final float LERP_SPEED = 0.01F;
+
+    private float auroraIntensity = 0F;
+    private float targetAuroraIntensity = 0F;
+
+    public AuroraShaderManager() {
+    }
+
+    public void tick() {
+        if (this.skyColor[0] == 0 && this.skyColor[1] == 0 && this.skyColor[2] == 0) {
+            // Initialize sky color to target on first tick
+            this.skyColor = this.targetSkyColor.clone();
+        } else if (Math.abs(this.skyColor[0] - this.targetSkyColor[0]) > 0.001F ||
+            Math.abs(this.skyColor[1] - this.targetSkyColor[1]) > 0.001F ||
+            Math.abs(this.skyColor[2] - this.targetSkyColor[2]) > 0.001F) {
+            this.skyColor = ColorUtils.lerpColor(skyColor, targetSkyColor, LERP_SPEED);
+        }
+        if (targetAuroraIntensity == 0F) {
+            this.auroraIntensity = targetAuroraIntensity;
+        } else if (Math.abs(this.auroraIntensity - this.targetAuroraIntensity) > 0.001F) {
+            this.auroraIntensity += (this.targetAuroraIntensity - this.auroraIntensity) * LERP_SPEED;
+        }
+    }
 
     public static void registerShader(RegisterShadersEvent event) throws IOException {
         event.registerShader(
@@ -46,7 +70,13 @@ public class AuroraShaderManager {
      * Applies the aurora shader on top of the existing sky rendering.
      * Called after the base sky rendering.
      */
-    public static void applyAuroraEffect(Matrix4f modelViewMatrix, Matrix4f projectionMatrix) {
+    public static void applyAuroraEffect(Matrix4f modelViewMatrix,
+                                         Matrix4f projectionMatrix,
+                                         float brightnessOverride,
+                                         int mainSkyColor, float intensityFactor) {
+        float brightnessFactor = brightnessOverride / AbyssDimensionSpecialEffect.BASE_BRIGHTNESS;
+        AURORA_MANAGER.targetSkyColor = ColorUtils.hexToNormalizedRGB(mainSkyColor);
+        AURORA_MANAGER.targetAuroraIntensity = AbyssConfig.CLIENT.AURORA_INTENSITY.get().floatValue() * intensityFactor;
 
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
@@ -78,11 +108,12 @@ public class AuroraShaderManager {
 
         if (auroraShader.getUniform("AuroraIntensity") != null) {
             Objects.requireNonNull(auroraShader.getUniform("AuroraIntensity"))
-                    .set(AbyssConfig.CLIENT.AURORA_INTENSITY.get().floatValue());
+                    .set(AURORA_MANAGER.auroraIntensity * brightnessFactor);
         }
 
         if (auroraShader.getUniform("AuroraColor") != null) {
-            Objects.requireNonNull(auroraShader.getUniform("AuroraColor")).set(auroraColor);
+            Objects.requireNonNull(auroraShader.getUniform("AuroraColor"))
+                    .set(AURORA_MANAGER.skyColor);
         }
         if (auroraShader.getUniform("AuroraSize") != null) {
             Objects.requireNonNull(auroraShader.getUniform("AuroraSize"))

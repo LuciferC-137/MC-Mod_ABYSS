@@ -5,16 +5,20 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import wardentools.AbyssConfig;
 import wardentools.client.rendering.AuroraShaderManager;
 import wardentools.client.rendering.LevelRendererUtils;
+import wardentools.tags.ModTags;
 import wardentools.weather.AbyssFogClientHandler;
 import wardentools.weather.AbyssWeatherEventClient;
 
 public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
+    public static final float BASE_BRIGHTNESS = 230F;
 
     public AbyssDimensionSpecialEffect(float cloudHeight, boolean hasGround, SkyType fogType,
                                        boolean forceBrightLightmap, boolean constantAmbientLight) {
@@ -41,13 +45,16 @@ public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
                              @NotNull Matrix4f modelViewMatrix, @NotNull Camera camera,
                              @NotNull Matrix4f projectionMatrix, boolean isFoggy, @NotNull Runnable setupFog) {
 
-        int brightness = (int)(230f * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
+        int brightness = (int)(BASE_BRIGHTNESS * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
                 / AbyssFogClientHandler.getMaxFogDistance());
 
         LevelRendererUtils.renderSky(level, modelViewMatrix, brightness);
 
         if (brightness > 50 && AbyssConfig.CLIENT.DISPLAY_AURORA.get()) {
-            AuroraShaderManager.applyAuroraEffect(modelViewMatrix, projectionMatrix);
+            Holder<Biome> biome = level.getBiome(camera.getBlockPosition());
+            AuroraShaderManager.applyAuroraEffect(modelViewMatrix, projectionMatrix, brightness,
+                    biome.value().getSkyColor(),
+                    biome.is(ModTags.Biomes.INTENSE_AURORAS) ? 1.4F : 0.3F);
         }
 
         return true;
