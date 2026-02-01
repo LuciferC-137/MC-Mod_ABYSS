@@ -299,6 +299,9 @@
 	"config.wardentools.title.do_abyss_weather": "Do Abyss Weather cycle",
 	"config.wardentools.title.warden_heart_laser": "Warden Heart Laser Damage",
 	"config.wardentools.title.enable_void_fall_teleport": "Void Teleportation",
+	"config.wardentools.title.display_aurora": "Display Aurora (recommended)",
+	"config.wardentools.title.aurora_intensity": "Aurora Intensity",
+	"config.wardentools.title.aurora_size": "Aurora Size",
 
 	"advancements.wardentools.abyss.title": "From the abyss",
 	"advancements.wardentools.abyss.description": "Obtain some sculk.",

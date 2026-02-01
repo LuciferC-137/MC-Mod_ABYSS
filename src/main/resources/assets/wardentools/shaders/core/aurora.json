@@ -11,6 +11,7 @@
     { "name": "ScreenSize", "type": "float", "count": 2, "values": [ 1920.0, 1080.0 ] },
     { "name": "Time", "type": "float", "count": 1, "values": [ 0.0 ] },
     { "name": "AuroraIntensity", "type": "float", "count": 1, "values": [ 1.8 ] },
-    { "name": "AuroraColor", "type": "float", "count": 3, "values": [ 0.7, 0.2, 0.6 ] }
+    { "name": "AuroraColor", "type": "float", "count": 3, "values": [ 0.7, 0.2, 0.6 ] },
+    { "name": "AuroraSize", "type": "int", "count": 1, "values": [ 50 ] }
   ]
 }

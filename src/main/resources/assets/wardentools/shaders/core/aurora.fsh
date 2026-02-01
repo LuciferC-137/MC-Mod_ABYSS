@@ -8,6 +8,7 @@ uniform mat4 ProjMat;
 uniform vec2 ScreenSize;
 uniform float Time;
 uniform float AuroraIntensity;
+uniform int AuroraSize;
 uniform vec3 AuroraColor;
 
 in vec2 texCoord;
@@ -41,10 +42,11 @@ float triNoise2d(vec2 p, float spd) {
     float rz = 0.0;
     p *= mm2(p.x * 0.06);
     vec2 bp = p;
+    mat2 timeRotation = mm2(Time * spd);
     
     for (float i = 0.0; i < 5.0; i++) {
         vec2 dg = tri2(bp * 1.85) * 0.75;
-        dg *= mm2(Time * spd);
+        dg *= timeRotation;
         p -= dg / z2;
 
         bp *= 1.3;
@@ -66,7 +68,7 @@ vec4 aurora(vec3 ro, vec3 rd, vec2 fragCoord) {
     vec4 col = vec4(0.0);
     vec4 avgCol = vec4(0.0);
 
-    for(float i = 0.0; i < 50.0; i++) {
+    for(float i = 0.0; i < AuroraSize; i++) {
         float of = 0.006 * hash21(fragCoord) * smoothstep(0.0, 15.0, i);
         float pt = ((0.8 + pow(i, 1.4) * 0.002) - ro.y) / (rd.y * 2.0 + 0.4);
         pt -= of;
@@ -103,6 +105,10 @@ void main() {
     float fade = smoothstep(0.0, 0.01, abs(rd.y)) * 0.1 + 0.9;
 
     vec2 fragCoord = texCoord * screenSize;
+
+    if (rd.y <= 0.0) {
+        discard; // Do not render below horizon
+    }
 
     if (rd.y > 0.0) {
         // Sky above horizon - display only aurora

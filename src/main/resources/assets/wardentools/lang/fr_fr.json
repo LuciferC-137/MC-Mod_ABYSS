@@ -295,6 +295,9 @@
 	"config.wardentools.title.do_abyss_weather": "Cycle météo",
 	"config.wardentools.title.warden_heart_laser": "Laser coeur du Warden",
 	"config.wardentools.title.enable_void_fall_teleport": "Téléportation du Vide",
+	"config.wardentools.title.display_aurora": "Aurores boréales (recommandées)",
+	"config.wardentools.title.aurora_intensity": "Intensité des Aurores boréales",
+	"config.wardentools.title.aurora_size": "Taille des Aurores boréales",
 
 	"advancements.wardentools.abyss.title": "Venu de l'Abyss",
 	"advancements.wardentools.abyss.description": "Obtenez du sculk",

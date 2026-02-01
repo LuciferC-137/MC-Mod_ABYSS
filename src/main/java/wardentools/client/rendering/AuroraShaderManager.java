@@ -13,9 +13,11 @@ import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import org.joml.Matrix4f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import wardentools.AbyssConfig;
 import wardentools.ModMain;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Manages post-process rendering of aurora borealis in the Abyss dimension.
@@ -25,10 +27,8 @@ public class AuroraShaderManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuroraShaderManager.class);
     private static ShaderInstance auroraShader;
-    private static boolean debugLogged = false;
 
     // Aurora parameters (configurable)
-    public static float auroraIntensity = 1.8F;
     public static float[] auroraColor = {0.7F, 0.2F, 0.6F};
 
     public static void registerShader(RegisterShadersEvent event) throws IOException {
@@ -47,23 +47,9 @@ public class AuroraShaderManager {
      * Called after the base sky rendering.
      */
     public static void applyAuroraEffect(Matrix4f modelViewMatrix, Matrix4f projectionMatrix) {
-        if (auroraShader == null) {
-            if (!debugLogged) {
-                LOGGER.warn("Aurora shader is null - shader not loaded!");
-                debugLogged = true;
-            }
-            return;
-        }
-
-        if (!debugLogged) {
-            LOGGER.info("Aurora shader loaded successfully: {}", auroraShader.getName());
-            LOGGER.info("ModelViewMat uniform: {}", auroraShader.getUniform("ModelViewMat"));
-            LOGGER.info("ProjMat uniform: {}", auroraShader.getUniform("ProjMat"));
-            LOGGER.info("ScreenSize uniform: {}", auroraShader.getUniform("ScreenSize"));
-            debugLogged = true;
-        }
 
         Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null) return;
 
         // Rendering configuration - additive mode to overlay aurora on sky
         RenderSystem.disableDepthTest();
@@ -78,24 +64,29 @@ public class AuroraShaderManager {
 
         // Send uniforms to shader BEFORE activating it
         if (auroraShader.getUniform("ScreenSize") != null) {
-            auroraShader.getUniform("ScreenSize").set(
+            Objects.requireNonNull(auroraShader.getUniform("ScreenSize")).set(
                     (float) mc.getMainRenderTarget().width,
                     (float) mc.getMainRenderTarget().height
             );
         }
 
         if (auroraShader.getUniform("Time") != null) {
-            auroraShader.getUniform("Time").set(
+            Objects.requireNonNull(auroraShader.getUniform("Time")).set(
                     (mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false)) / 20.0F
             );
         }
 
         if (auroraShader.getUniform("AuroraIntensity") != null) {
-            auroraShader.getUniform("AuroraIntensity").set(auroraIntensity);
+            Objects.requireNonNull(auroraShader.getUniform("AuroraIntensity"))
+                    .set(AbyssConfig.CLIENT.AURORA_INTENSITY.get().floatValue());
         }
 
         if (auroraShader.getUniform("AuroraColor") != null) {
-            auroraShader.getUniform("AuroraColor").set(auroraColor);
+            Objects.requireNonNull(auroraShader.getUniform("AuroraColor")).set(auroraColor);
+        }
+        if (auroraShader.getUniform("AuroraSize") != null) {
+            Objects.requireNonNull(auroraShader.getUniform("AuroraSize"))
+                    .set(AbyssConfig.CLIENT.AURORA_SIZE.get());
         }
 
         // Draw dome with shader
@@ -135,8 +126,8 @@ public class AuroraShaderManager {
         // Vertices are in WORLD SPACE (not transformed on Java side)
         // Shader will transform them with ModelViewMat * ProjMat
         float radius = 100.0F;
-        int segments = 32;
-        int rings = 16;
+        int segments = 16; //32;
+        int rings = 8; //16;
 
         for (int ring = 0; ring < rings; ring++) {
             float theta1 = (float) (ring * Math.PI / 2.0 / rings);
