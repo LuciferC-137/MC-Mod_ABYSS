@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
@@ -23,58 +22,69 @@ import java.util.Set;
 Class only effective on the Server-side. Manage the actual weather events in the abyss.
  This class sends packets to the clients to set the fog distances.
 */
-
 public class AbyssWeatherManager {
-    private static final int MAX_EVENT_DURATION = 6000; // 5 minutes
-    private static final int MIN_EVENT_DURATION = 3000; // 2.5 minutes
-    private static final int MAX_TICK_BETWEEN_EVENT = 48000; // two days
-    private static final int MIN_TICK_BETWEEN_EVENT = 24000; // one day
     private static final int AVERAGE_TICK_BETWEEN_LIGHTNING_PER_CHUNK = 5000;
-    private int weatherTimer = RandomSource.create().nextInt(MIN_TICK_BETWEEN_EVENT, MAX_TICK_BETWEEN_EVENT);
-    private int timeSinceStormBegin = 0;
-    private boolean isStorming = false;
-    private Set<ChunkPos> loadedChunks = new HashSet<>();
+
     public static final Component stormMessage
             = Component.translatable("message." + ModMain.MOD_ID + ".wind.storm");
     public static final Component stormEndMessage
             = Component.translatable("message." + ModMain.MOD_ID + ".wind.storm_end");
 
+    private int eventCountDown = RandomSource.create()
+            .nextInt(WeatherEvent.CLEAR.getMinDuration(), WeatherEvent.CLEAR.getMaxDuration());
+    private int tickSinceLastEvent = 0;
+
+    private Set<ChunkPos> loadedChunks = new HashSet<>();
+
+    private WeatherEvent activeEvent = WeatherEvent.CLEAR;
+
+    public AbyssWeatherManager() {
+        WeatherEvent.STORM.setOnStart(this::onStartStorm);
+        WeatherEvent.STORM.setOnEnd(this::stopStorm);
+        WeatherEvent.STORM.setOnTick(this::stormTick);
+    }
+
     public void tick(@NotNull ServerLevel level) {
-        if (!level.getGameRules().getBoolean(GameRules.RULE_WEATHER_CYCLE)) return;
-        this.weatherTimer--;
-        if (this.isStorming) stormTick(level);
-        if (this.weatherTimer <= 0 && this.anyWeatherEventActive()) {
-            this.weatherClear(level, level.random.nextInt(MIN_TICK_BETWEEN_EVENT, MAX_TICK_BETWEEN_EVENT));
-        } else if (this.weatherTimer <= 0) {
+        this.eventCountDown--;
+        this.activeEvent.tick(level);
+
+        if (!this.anyWeatherEventActive()) {
+            this.tickSinceLastEvent++;
+        }
+        if (this.eventCountDown <= 0 && this.anyWeatherEventActive()) {
+            this.weatherClear(level, this.activeEvent.randomTickToNextEvent(level.getRandom()));
+        } else if (this.eventCountDown <= 0) {
             this.startNewEvent(level);
         }
     }
 
     private boolean anyWeatherEventActive() {
-        return this.isStorming;
+        return this.activeEvent != WeatherEvent.CLEAR;
     }
 
     public void weatherClear(ServerLevel level) {
-        this.weatherClear(level, level.random.nextInt(MIN_TICK_BETWEEN_EVENT, MAX_TICK_BETWEEN_EVENT));
+        this.weatherClear(level, this.activeEvent.randomTickToNextEvent(level.getRandom()));
     }
 
     public void weatherClear(ServerLevel level, int duration) {
-        this.weatherTimer = duration;
-        this.stopStorm(level);
+        this.eventCountDown = duration;
+        this.activeEvent.onEnd(level);
+        this.activeEvent = WeatherEvent.CLEAR;
     }
 
     public void startNewEvent(ServerLevel level) {
-        this.startNewStorm(level);
+        this.eventCountDown = this.activeEvent.randomDuration(level.getRandom());
+        this.activeEvent = WeatherEvent.randomWeatherEvent(level.getRandom(),
+                this.activeEvent, (int)level.getGameTime());
+        if (this.activeEvent != WeatherEvent.CLEAR) {
+            this.tickSinceLastEvent = 0;
+        }
+        this.activeEvent.onStart(level);
     }
 
     public void startNewEvent(ServerLevel level, int duration){
-        this.weatherTimer = duration;
+        this.eventCountDown = duration;
         this.startNewEvent(level);
-    }
-
-    public void startNewStorm(ServerLevel level) {
-        this.weatherTimer = level.random.nextInt(MIN_EVENT_DURATION, MAX_EVENT_DURATION);
-        this.onStartStorm(level);
     }
 
     private void updateLoadedChunks(ServerLevel level) {
@@ -95,8 +105,7 @@ public class AbyssWeatherManager {
     private void stormTick(ServerLevel level) {
         // The way this method is done is to avoid to have more lightning when more players are in the same place.
         // This could be improved by directly having a list of the loaded chunk instead of calculating it.
-        this.timeSinceStormBegin++;
-        if (this.timeSinceStormBegin%20 == 0) this.updateLoadedChunks(level); //Optimize computation cost
+        if (this.eventCountDown % 20 == 0) this.updateLoadedChunks(level);
         for (ChunkPos chunkPos : this.loadedChunks) {
             if (level.random.nextInt(AVERAGE_TICK_BETWEEN_LIGHTNING_PER_CHUNK) == 0) {
                 addLightningInChunk(level, chunkPos);
@@ -104,7 +113,7 @@ public class AbyssWeatherManager {
         }
     }
 
-    private void addLightningInChunk(ServerLevel level, ChunkPos chunkPos) {
+    private static void addLightningInChunk(ServerLevel level, ChunkPos chunkPos) {
         AbyssLightningEntity lightning = ModEntities.ABYSS_LIGHTNING.get().create(level);
         if (lightning != null) {
             RandomSource random = level.random;
@@ -120,7 +129,6 @@ public class AbyssWeatherManager {
     }
 
     public void onStartStorm(ServerLevel level) {
-        this.isStorming = true;
         this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
@@ -130,22 +138,25 @@ public class AbyssWeatherManager {
     }
 
     private void stopStorm(ServerLevel level) {
-        this.isStorming = false;
         this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
                     PacketDistributor.sendToPlayer(player,
                             new WindWhisperSound(WindWhisperSound.StormStatus.END));
                 });
-        this.timeSinceStormBegin = 0;
+        this.loadedChunks.clear();
+    }
+
+    public boolean isStorming() {
+        return this.activeEvent == WeatherEvent.STORM;
     }
 
     public void sendServerFogDistanceToAllClients() {
-        PacketDistributor.sendToAllPlayers(new SendFogStateToClient(this.isStorming));
+        PacketDistributor.sendToAllPlayers(new SendFogStateToClient(this.isStorming()));
     }
 
     public void sendServerFogDistanceToClient(ServerPlayer player) {
-        PacketDistributor.sendToPlayer(player, new SendFogStateToClient(this.isStorming));
+        PacketDistributor.sendToPlayer(player, new SendFogStateToClient(this.isStorming()));
     }
 }
 
