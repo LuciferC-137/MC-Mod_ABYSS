@@ -5,33 +5,30 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.AbyssConfig;
-import wardentools.network.payloads.RequestStormStateFromServer;
 
 /**
 This class allows to interpolate visually the fog during storms.
 This avoids any strange behavior between inside and outside ambiances.
 */
-
 @OnlyIn(Dist.CLIENT)
-public class AbyssFogClientHandler {
+public class AbyssWeatherClientHandler {
     private static final float FOG_INTERPOLATION_SPEED = 0.05f; // per tick
     private float currentFogDistance = getMaxFogDistance();
-    private boolean isStorming = false;
     private int lastTime = 0;
     private int lastUpdate = 0;
     private static final int UPDATE_INTERVAL = 20; // ticks
 
+    private WeatherEvent activeEvent = WeatherEvent.CLEAR;
+
     public void updateFogDistanceOnTick(Level level) {
         if (this.lastUpdate == 0) {
-            PacketDistributor.sendToServer(new RequestStormStateFromServer());
             this.lastUpdate = UPDATE_INTERVAL;
         } else {
             this.lastUpdate--;
         }
         float targetFogDistance1;
-        if (isStorming){
+        if (this.activeEvent == WeatherEvent.STORM) {
             targetFogDistance1 = Math.min((float)AbyssConfig.CLIENT.ABYSS_FOG_STORM_INTENSITY.get(),
                     getMaxFogDistance());
         } else{
@@ -60,11 +57,17 @@ public class AbyssFogClientHandler {
         return Minecraft.getInstance().options.renderDistance().get().floatValue() * 16f;
     }
 
+    public WeatherEvent getActiveEvent() {
+        return this.activeEvent;
+    }
+
+    public void setActiveEvent(WeatherEvent activeEvent) {
+        System.out.println("Received active event on Client: " + activeEvent.getSerializedName());
+        this.activeEvent = activeEvent;
+    }
+
     public float currentFogDistance() {
         return this.currentFogDistance;
     }
 
-    public void setIsStorming(boolean isStorming) {
-        this.isStorming = isStorming;
-    }
 }

@@ -14,7 +14,7 @@ import wardentools.AbyssConfig;
 import wardentools.client.rendering.AuroraShaderManager;
 import wardentools.client.rendering.LevelRendererUtils;
 import wardentools.tags.ModTags;
-import wardentools.weather.AbyssFogClientHandler;
+import wardentools.weather.AbyssWeatherClientHandler;
 import wardentools.weather.AbyssWeatherEventClient;
 
 public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
@@ -46,7 +46,7 @@ public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
                              @NotNull Matrix4f projectionMatrix, boolean isFoggy, @NotNull Runnable setupFog) {
 
         int brightness = (int)(BASE_BRIGHTNESS * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
-                / AbyssFogClientHandler.getMaxFogDistance());
+                / AbyssWeatherClientHandler.getMaxFogDistance());
 
         LevelRendererUtils.renderSky(level, modelViewMatrix, brightness);
 

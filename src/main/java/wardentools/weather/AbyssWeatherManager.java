@@ -11,8 +11,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
+import wardentools.network.payloads.WeatherSyncToClient;
 import wardentools.network.payloads.special_effects.WindWhisperSound;
-import wardentools.network.payloads.SendFogStateToClient;
 import wardentools.weather.lightning.AbyssLightningEntity;
 
 import java.util.HashSet;
@@ -70,6 +70,7 @@ public class AbyssWeatherManager {
         this.eventCountDown = duration;
         this.activeEvent.onEnd(level);
         this.activeEvent = WeatherEvent.CLEAR;
+        this.onChangeEvent(level);
     }
 
     public void startNewEvent(ServerLevel level) {
@@ -78,8 +79,38 @@ public class AbyssWeatherManager {
                 this.activeEvent, (int)level.getGameTime());
         if (this.activeEvent != WeatherEvent.CLEAR) {
             this.tickSinceLastEvent = 0;
+            this.onChangeEvent(level);
         }
         this.activeEvent.onStart(level);
+    }
+
+    /**
+     * Force a storm to start immediately.
+     * @param level The server level where the storm should start.
+     * @param duration The duration of the storm in ticks. If duration is less than or equal to 0,
+     *                 a random duration will be chosen.
+     */
+    public void forceStorm(ServerLevel level, int duration) {
+        if (this.activeEvent != WeatherEvent.STORM) {
+            this.activeEvent.onEnd(level);
+            this.activeEvent = WeatherEvent.STORM;
+            this.tickSinceLastEvent = 0;
+            this.onChangeEvent(level);
+            this.activeEvent.onStart(level);
+        }
+        if (duration > 0) {
+            this.eventCountDown = duration;
+        } else {
+            this.eventCountDown = this.activeEvent.randomDuration(level.getRandom());
+        }
+    }
+
+    public void onChangeEvent(ServerLevel level) {
+        level.players().stream().filter(player -> player.level() == level)
+                .forEach((player) -> {
+                    PacketDistributor.sendToPlayer(player,
+                            new WeatherSyncToClient(this.activeEvent.getSerializedName()));
+                });
     }
 
     public void startNewEvent(ServerLevel level, int duration){
@@ -129,7 +160,6 @@ public class AbyssWeatherManager {
     }
 
     public void onStartStorm(ServerLevel level) {
-        this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
                     PacketDistributor.sendToPlayer(player,
@@ -138,7 +168,6 @@ public class AbyssWeatherManager {
     }
 
     private void stopStorm(ServerLevel level) {
-        this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
                     PacketDistributor.sendToPlayer(player,
@@ -149,14 +178,6 @@ public class AbyssWeatherManager {
 
     public boolean isStorming() {
         return this.activeEvent == WeatherEvent.STORM;
-    }
-
-    public void sendServerFogDistanceToAllClients() {
-        PacketDistributor.sendToAllPlayers(new SendFogStateToClient(this.isStorming()));
-    }
-
-    public void sendServerFogDistanceToClient(ServerPlayer player) {
-        PacketDistributor.sendToPlayer(player, new SendFogStateToClient(this.isStorming()));
     }
 }
 

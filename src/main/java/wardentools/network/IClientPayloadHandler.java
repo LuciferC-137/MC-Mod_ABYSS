@@ -2,10 +2,10 @@ package wardentools.network;
 
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import wardentools.network.payloads.WeatherSyncToClient;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
 import wardentools.network.payloads.special_effects.*;
-import wardentools.network.payloads.SendFogStateToClient;
 import wardentools.network.payloads.ShowWinScreen;
 import wardentools.network.payloads.SwitchCamera;
 
@@ -20,8 +20,6 @@ public interface IClientPayloadHandler {
     }
 
     void showWinScreen(ShowWinScreen msg, final IPayloadContext ctx);
-
-    void updateFogDistance(SendFogStateToClient msg, final IPayloadContext ctx);
 
     void switchCamera(SwitchCamera msg, final IPayloadContext ctx) ;
 
@@ -66,4 +64,6 @@ public interface IClientPayloadHandler {
     void syncKnownWhisper(SyncKnownWhisperToClient msg, final IPayloadContext ctx);
 
     void sendWhisperToClient(WindWhisperSendToClient msg, final IPayloadContext ctx);
+
+    void weatherSyncToClient(WeatherSyncToClient msg, final IPayloadContext ctx);
 }

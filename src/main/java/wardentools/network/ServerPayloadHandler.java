@@ -13,7 +13,6 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
-import wardentools.network.payloads.RequestStormStateFromServer;
 import wardentools.network.payloads.SwitchAchievement;
 import wardentools.network.payloads.TeleportPlayerTo;
 import wardentools.network.payloads.datasync.SyncDataTaskToServer;
@@ -21,7 +20,6 @@ import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
 import wardentools.playerdata.ModDataAttachments;
 import wardentools.playerdata.serializables.CompletedTasks;
 import wardentools.playerdata.serializables.KnownWindWhispers;
-import wardentools.weather.AbyssWeatherEventServer;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
@@ -67,14 +65,6 @@ public class ServerPayloadHandler {
                     }
                     ModCriteriaTriggers.CORRUPTION_VESSEL.trigger(serverPlayer);
                 }
-            }
-        }, ctx);
-    }
-
-    public static void sendServerFogDistanceToPlayer(RequestStormStateFromServer msg, final IPayloadContext ctx) {
-        handleDataOnNetwork(() -> {
-            if (ctx.player() instanceof ServerPlayer serverPlayer) {
-                AbyssWeatherEventServer.WEATHER_MANAGER.sendServerFogDistanceToClient(serverPlayer);
             }
         }, ctx);
     }

@@ -12,10 +12,9 @@ import wardentools.client.rendering.AuroraShaderManager;
 /**
  * This class register all the weather ticks and is in charge of client sync.
  */
-
 @EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
 public class AbyssWeatherEventClient {
-	public static final AbyssFogClientHandler CLIENT_WEATHER = new AbyssFogClientHandler();
+	public static final AbyssWeatherClientHandler CLIENT_WEATHER = new AbyssWeatherClientHandler();
 
 	@SubscribeEvent
 	public static void onClientLevelTickEvent(ClientTickEvent.Pre event) {

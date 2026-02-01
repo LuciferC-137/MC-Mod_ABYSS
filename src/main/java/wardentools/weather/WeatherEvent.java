@@ -2,10 +2,12 @@ package wardentools.weather;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
-public enum WeatherEvent {
+public enum WeatherEvent implements StringRepresentable {
     CLEAR("clear", 24000, 3000, 0, 10),
     STORM("storm", 6000, 3000, 24000, 1),
     CELESTIAL_REFRACTION("celestial_refraction", 6000,
@@ -58,7 +60,6 @@ public enum WeatherEvent {
             }
         }
         selectedEvent.timeOfLast = gameTime;
-        System.out.println("Selected Weather Event: " + selectedEvent.getName());
         return selectedEvent;
     }
 
@@ -88,10 +89,6 @@ public enum WeatherEvent {
 
     public int getWeight() {
         return weight;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setOnEnd(Consumer<ServerLevel> onEnd) {
@@ -131,5 +128,19 @@ public enum WeatherEvent {
 
     public void defaultOnTick() {
         // Default no-op
+    }
+
+    @Override
+    public @NotNull String getSerializedName() {
+        return this.name;
+    }
+
+    public static WeatherEvent fromString(String name) {
+        for (WeatherEvent event : WeatherEvent.values()) {
+            if (event.getSerializedName().equals(name)) {
+                return event;
+            }
+        }
+        return CLEAR;
     }
 }

@@ -26,13 +26,10 @@ import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 import wardentools.gui.winscreen.CustomWinScreen;
 import wardentools.misc.wind.WindWhispers;
+import wardentools.network.payloads.*;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
 import wardentools.network.payloads.special_effects.*;
-import wardentools.network.payloads.SendFogStateToClient;
-import wardentools.network.payloads.ShowWinScreen;
-import wardentools.network.payloads.SwitchCamera;
-import wardentools.network.payloads.TeleportPlayerTo;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.options.ShineParticleOptions;
 import wardentools.playerdata.ModDataAttachments;
@@ -43,6 +40,7 @@ import wardentools.sounds.ModSounds;
 import wardentools.sounds.music.AbyssMusicHelper;
 import wardentools.weather.AbyssWeatherEventClient;
 import wardentools.weather.AbyssWeatherManager;
+import wardentools.weather.WeatherEvent;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientPayloadHandler implements IClientPayloadHandler {
@@ -60,12 +58,6 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
             winScreen.init(minecraft, minecraft.getWindow().getGuiScaledWidth(),
                     minecraft.getWindow().getGuiScaledHeight());
             minecraft.setScreen(winScreen);
-        }, ctx);
-    }
-
-    public  void updateFogDistance(SendFogStateToClient msg, final IPayloadContext ctx) {
-        handleDataOnNetwork(() -> {
-            AbyssWeatherEventClient.CLIENT_WEATHER.setIsStorming(msg.isStorming());
         }, ctx);
     }
 
@@ -326,6 +318,13 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
                     0.3F, 0.1F, 40,
                     ParticleRegistry.CORRUPTION.get(), false);
         }, ctx);
+    }
+
+
+    public void weatherSyncToClient(WeatherSyncToClient msg, IPayloadContext ctx) {
+        AbyssWeatherEventClient.CLIENT_WEATHER.setActiveEvent(
+                WeatherEvent.fromString(msg.activeEvent())
+        );
     }
 
     private  void particleExplosion(Level level, Vector3f pos, float radius,

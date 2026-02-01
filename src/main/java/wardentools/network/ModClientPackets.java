@@ -169,13 +169,6 @@ public class ModClientPackets {
 				)
 		);
 		registrar.playToClient(
-				SendFogStateToClient.TYPE,
-				SendFogStateToClient.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::updateFogDistance
-				)
-		);
-		registrar.playToClient(
 				SwitchCamera.TYPE,
 				SwitchCamera.STREAM_CODEC,
 				new MainThreadPayloadHandler<>(
@@ -189,5 +182,12 @@ public class ModClientPackets {
                         handler::sendWhisperToClient
                 )
         );
+		registrar.playToClient(
+				WeatherSyncToClient.TYPE,
+				WeatherSyncToClient.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						handler::weatherSyncToClient
+				)
+		);
 	}
 }
