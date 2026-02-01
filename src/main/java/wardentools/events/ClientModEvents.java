@@ -11,8 +11,10 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import wardentools.ModMain;
 import wardentools.block.*;
+import wardentools.client.rendering.AuroraShaderManager;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.entity.client.thryssaryn.Thryssaryn;
@@ -21,6 +23,8 @@ import wardentools.items.CrystalResonatorItem;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;
 import wardentools.weather.lightning.AbyssLightningRenderer;
+
+import java.io.IOException;
 
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
@@ -100,4 +104,10 @@ public class ClientModEvents {
 	public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
 		event.register(CrystalResonatorItem::getColor, ItemRegistry.CRYSTAL_RESONATOR.get());
 	}
+
+	@SubscribeEvent
+	public static void registerShader(RegisterShadersEvent event) throws IOException {
+		AuroraShaderManager.registerShader(event);
+	}
+
 }

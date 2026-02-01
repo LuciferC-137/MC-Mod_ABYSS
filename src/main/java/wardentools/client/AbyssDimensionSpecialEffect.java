@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
+import wardentools.client.rendering.AuroraShaderManager;
 import wardentools.client.rendering.LevelRendererUtils;
 import wardentools.weather.AbyssFogClientHandler;
 import wardentools.weather.AbyssWeatherEventClient;
@@ -15,7 +16,7 @@ import wardentools.weather.AbyssWeatherEventClient;
 public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
 
     public AbyssDimensionSpecialEffect(float cloudHeight, boolean hasGround, SkyType fogType,
-                                    boolean forceBrightLightmap, boolean constantAmbientLight) {
+                                       boolean forceBrightLightmap, boolean constantAmbientLight) {
         super(cloudHeight, hasGround, fogType, forceBrightLightmap, constantAmbientLight);
     }
 
@@ -38,9 +39,19 @@ public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
     public boolean renderSky(@NotNull ClientLevel level, int ticks, float partialTick,
                              @NotNull Matrix4f modelViewMatrix, @NotNull Camera camera,
                              @NotNull Matrix4f projectionMatrix, boolean isFoggy, @NotNull Runnable setupFog) {
+
+        // Calculer la luminosité
         int brightness = (int)(230f * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
                 / AbyssFogClientHandler.getMaxFogDistance());
+
+        // 1. Rendu du ciel de base (dégradé + étoiles)
         LevelRendererUtils.renderSky(level, modelViewMatrix, brightness);
+
+        // 2. Appliquer l'effet d'aurore par-dessus
+        if (brightness > 50) { // Ne montrer l'aurore que si assez lumineux
+            AuroraShaderManager.applyAuroraEffect(modelViewMatrix, projectionMatrix);
+        }
+
         return true;
     }
 
