@@ -8,15 +8,17 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import wardentools.AbyssConfig;
 import wardentools.client.rendering.AuroraShaderManager;
 import wardentools.client.rendering.LevelRendererUtils;
-import wardentools.tags.ModTags;
 import wardentools.weather.AbyssWeatherClientHandler;
 import wardentools.weather.AbyssWeatherEventClient;
 
+@OnlyIn(Dist.CLIENT)
 public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
     public static final float BASE_BRIGHTNESS = 230F;
 

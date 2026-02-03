@@ -21,6 +21,8 @@ public class AbyssWeatherClientHandler {
     private static final int UPDATE_INTERVAL = 20; // ticks
 
     private WeatherEvent activeEvent = WeatherEvent.CLEAR;
+    private boolean isPlayerOutside = true;
+    private static final int OUTSIDE_CHECK_INTERVAL = 20;
 
     public void updateFogDistanceOnTick(Level level) {
         if (this.lastUpdate == 0) {
@@ -48,6 +50,11 @@ public class AbyssWeatherClientHandler {
                     + this.currentFogDistance * (1 - FOG_INTERPOLATION_SPEED);
             this.lastTime = (int) level.getGameTime();
         }
+
+        if ((int) level.getGameTime() % OUTSIDE_CHECK_INTERVAL == 0 && player != null) {
+            this.isPlayerOutside = AbyssFogEvent.isPlayerOutside(player);
+            this.lastUpdate = OUTSIDE_CHECK_INTERVAL;
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -70,4 +77,7 @@ public class AbyssWeatherClientHandler {
         return this.currentFogDistance;
     }
 
+    public boolean isPlayerOutside() {
+        return isPlayerOutside;
+    }
 }

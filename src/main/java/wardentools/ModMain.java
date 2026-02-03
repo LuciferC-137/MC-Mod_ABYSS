@@ -1,19 +1,16 @@
 package wardentools;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
-import wardentools.client.AbyssDimensionSpecialEffect;
 import wardentools.datagen.loot.ModLootModifiers;
 import wardentools.gui.MenuRegistry;
 import wardentools.gui.ModCreativeTabs;
@@ -30,7 +27,6 @@ import wardentools.items.recipe.ModRecipes;
 import wardentools.particle.ParticleRegistry;
 import wardentools.playerdata.ModDataAttachments;
 import wardentools.sounds.ModSounds;
-import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.features.ModFeatures;
 import wardentools.worldgen.structure.ModStructureTypes;
 import wardentools.worldgen.features.tree.ModFoliagePlacers;
@@ -49,7 +45,6 @@ public class ModMain {
         container.registerConfig(ModConfig.Type.CLIENT, AbyssConfig.CLIENT.SPEC);
         container.registerConfig(ModConfig.Type.SERVER, AbyssConfig.SERVER.SPEC);
         container.registerConfig(ModConfig.Type.COMMON, AbyssConfig.COMMON.SPEC);
-        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
 		ArmorRegistry.ARMORS.register(bus);
 		ItemRegistry.ITEMS.register(bus);
@@ -73,8 +68,6 @@ public class ModMain {
 		ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
         ModDataAttachments.ATTACHMENTS.register(bus);
 
-        bus.addListener(ModMain::registerDimEffects);
-
         NeoForge.EVENT_BUS.register(this);
     }
 
@@ -84,12 +77,6 @@ public class ModMain {
         LOGGER.info("HELLO from server starting");
     }
 
-    private static void registerDimEffects(RegisterDimensionSpecialEffectsEvent event) {
-        event.register(ModDimensions.DIMENSION_RENDERER,
-                new AbyssDimensionSpecialEffect(128.0F, false,
-                        DimensionSpecialEffects.SkyType.NORMAL, false,
-                        false));
-    }
 }
 
 
