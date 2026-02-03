@@ -6,7 +6,11 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.event.RegisterShadersEvent;
@@ -15,6 +19,10 @@ import wardentools.AbyssConfig;
 import wardentools.ModMain;
 import wardentools.client.AbyssDimensionSpecialEffect;
 import wardentools.client.color.ColorUtils;
+import wardentools.misc.Crystal;
+import wardentools.tags.ModTags;
+import wardentools.weather.AbyssWeatherEventClient;
+import wardentools.weather.WeatherEvent;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -27,11 +35,14 @@ public class AuroraShaderManager {
     public static final AuroraShaderManager AURORA_MANAGER = new AuroraShaderManager();
 
     private static ShaderInstance auroraShader;
+    private static Crystal lastCrystal = Crystal.getDefault();
+    private static final int COLOR_TICK_INTERVAL = 140;
+    // Ticks between target color changes during celestial refraction event
 
     private float[] skyColor = new float[]{0, 0, 0};
     private float[] targetSkyColor = new float[]{0, 0, 0};
 
-    private static final float LERP_SPEED = 0.01F;
+    private static final float LERP_SPEED = 0.015F;
 
     private float auroraIntensity = 0F;
     private float targetAuroraIntensity = 0F;
@@ -39,7 +50,13 @@ public class AuroraShaderManager {
     public AuroraShaderManager() {
     }
 
+    public static boolean colorOverride(Holder<Biome> biome) {
+        return AbyssWeatherEventClient.CLIENT_WEATHER.getActiveEvent()
+                == WeatherEvent.CELESTIAL_REFRACTION && biome.is(ModTags.Biomes.INTENSE_AURORAS);
+    }
+
     public void tick() {
+        updateTargetValues();
         if (this.skyColor[0] == 0 && this.skyColor[1] == 0 && this.skyColor[2] == 0) {
             // Initialize sky color to target on first tick
             this.skyColor = this.targetSkyColor.clone();
@@ -53,6 +70,26 @@ public class AuroraShaderManager {
         } else if (Math.abs(this.auroraIntensity - this.targetAuroraIntensity) > 0.001F) {
             this.auroraIntensity += (this.targetAuroraIntensity - this.auroraIntensity) * LERP_SPEED;
         }
+    }
+
+    public static void updateTargetValues() {
+        Level level = Minecraft.getInstance().level;
+        if (level == null) return;
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+        Holder<Biome> biome = level.getBiome(player.blockPosition());
+        AURORA_MANAGER.targetAuroraIntensity = AbyssConfig.CLIENT.AURORA_INTENSITY.get().floatValue() *
+                (biome.is(ModTags.Biomes.INTENSE_AURORAS) ? 1.4F : 0.3F);
+        if (colorOverride(biome) && (int) level.getGameTime() % COLOR_TICK_INTERVAL == 0) {
+            lastCrystal = lastCrystal.getNext();
+            AURORA_MANAGER.targetSkyColor = ColorUtils.hexToNormalizedRGB(lastCrystal.getColor());
+        } else if (!colorOverride(biome)) {
+            AURORA_MANAGER.targetSkyColor = ColorUtils.hexToNormalizedRGB(biome.value().getSkyColor());
+        }
+    }
+
+    public static float[] getAuroraColor() {
+        return AURORA_MANAGER.skyColor;
     }
 
     public static void registerShader(RegisterShadersEvent event) throws IOException {
@@ -72,11 +109,8 @@ public class AuroraShaderManager {
      */
     public static void applyAuroraEffect(Matrix4f modelViewMatrix,
                                          Matrix4f projectionMatrix,
-                                         float brightnessOverride,
-                                         int mainSkyColor, float intensityFactor) {
+                                         float brightnessOverride) {
         float brightnessFactor = brightnessOverride / AbyssDimensionSpecialEffect.BASE_BRIGHTNESS;
-        AURORA_MANAGER.targetSkyColor = ColorUtils.hexToNormalizedRGB(mainSkyColor);
-        AURORA_MANAGER.targetAuroraIntensity = AbyssConfig.CLIENT.AURORA_INTENSITY.get().floatValue() * intensityFactor;
 
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null) return;
@@ -113,7 +147,7 @@ public class AuroraShaderManager {
 
         if (auroraShader.getUniform("AuroraColor") != null) {
             Objects.requireNonNull(auroraShader.getUniform("AuroraColor"))
-                    .set(AURORA_MANAGER.skyColor);
+                    .set(getAuroraColor());
         }
         if (auroraShader.getUniform("AuroraSize") != null) {
             Objects.requireNonNull(auroraShader.getUniform("AuroraSize"))

@@ -105,6 +105,21 @@ public class AbyssWeatherManager {
         }
     }
 
+    public void forceCelestialRefraction(ServerLevel level, int duration) {
+        if (this.activeEvent != WeatherEvent.CELESTIAL_REFRACTION) {
+            this.activeEvent.onEnd(level);
+            this.activeEvent = WeatherEvent.CELESTIAL_REFRACTION;
+            this.tickSinceLastEvent = 0;
+            this.onChangeEvent(level);
+            this.activeEvent.onStart(level);
+        }
+        if (duration > 0) {
+            this.eventCountDown = duration;
+        } else {
+            this.eventCountDown = this.activeEvent.randomDuration(level.getRandom());
+        }
+    }
+
     public void onChangeEvent(ServerLevel level) {
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {

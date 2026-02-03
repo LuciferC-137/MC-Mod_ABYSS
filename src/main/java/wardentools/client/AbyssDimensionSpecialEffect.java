@@ -52,9 +52,7 @@ public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
 
         if (brightness > 50 && AbyssConfig.CLIENT.DISPLAY_AURORA.get()) {
             Holder<Biome> biome = level.getBiome(camera.getBlockPosition());
-            AuroraShaderManager.applyAuroraEffect(modelViewMatrix, projectionMatrix, brightness,
-                    biome.value().getSkyColor(),
-                    biome.is(ModTags.Biomes.INTENSE_AURORAS) ? 1.4F : 0.3F);
+            AuroraShaderManager.applyAuroraEffect(modelViewMatrix, projectionMatrix, brightness);
         }
 
         return true;

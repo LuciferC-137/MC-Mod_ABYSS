@@ -10,6 +10,7 @@ import wardentools.AbyssConfig;
 /**
 This class allows to interpolate visually the fog during storms.
 This avoids any strange behavior between inside and outside ambiances.
+ It also handles the active weather event on the client side.
 */
 @OnlyIn(Dist.CLIENT)
 public class AbyssWeatherClientHandler {
@@ -62,7 +63,6 @@ public class AbyssWeatherClientHandler {
     }
 
     public void setActiveEvent(WeatherEvent activeEvent) {
-        System.out.println("Received active event on Client: " + activeEvent.getSerializedName());
         this.activeEvent = activeEvent;
     }
 
