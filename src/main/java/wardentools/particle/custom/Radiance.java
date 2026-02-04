@@ -7,6 +7,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
+@OnlyIn(Dist.CLIENT)
 public class Radiance extends SimpleAnimatedParticle {
     Radiance(ClientLevel level, double x, double y, double z, double xd, double yd, double zd, SpriteSet sprites) {
         super(level, x, y, z, sprites, 0.0125F);

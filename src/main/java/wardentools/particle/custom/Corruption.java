@@ -7,6 +7,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
+@OnlyIn(Dist.CLIENT)
 public class Corruption extends TextureSheetParticle {
     protected Corruption(ClientLevel level, double x, double y, double z,
                          SpriteSet spriteSet, double xd, double yd, double zd) {

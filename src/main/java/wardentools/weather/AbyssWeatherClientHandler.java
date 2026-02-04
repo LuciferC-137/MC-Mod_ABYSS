@@ -8,8 +8,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 import wardentools.AbyssConfig;
 
 /**
-This class allows to interpolate visually the fog during storms.
-This avoids any strange behavior between inside and outside ambiances.
+ This class allows to interpolate visually the fog during storms.
+ This avoids any strange behavior between inside and outside ambiances.
  It also handles the active weather event on the client side.
 */
 @OnlyIn(Dist.CLIENT)
@@ -40,7 +40,7 @@ public class AbyssWeatherClientHandler {
         LocalPlayer player = Minecraft.getInstance().player;
         float targetFogDistance;
         if (player != null) {
-            targetFogDistance = AbyssFogEvent.isPlayerOutside(player) ?
+            targetFogDistance = this.isPlayerOutside ?
                     targetFogDistance1 : getMaxFogDistance();
         } else {
             targetFogDistance = targetFogDistance1;

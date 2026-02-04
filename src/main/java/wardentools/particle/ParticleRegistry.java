@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.particle.options.GlyphParticleOptions;
 import wardentools.particle.options.GlyphParticleRotatingOptions;
+import wardentools.particle.options.PrismaticFireflyOptions;
 import wardentools.particle.options.ShineParticleOptions;
 
 import java.util.function.Supplier;
@@ -37,6 +38,8 @@ public class ParticleRegistry {
             registerCustom("glyph", GlyphParticleOptions.CODEC, GlyphParticleOptions.STREAM_CODEC);
     public static final Supplier<ParticleType<GlyphParticleRotatingOptions>> GLYPH_PARTICLE_ROTATING =
             registerCustom("glyph_rotating", GlyphParticleRotatingOptions.CODEC, GlyphParticleRotatingOptions.STREAM_CODEC);
+    public static final Supplier<ParticleType<PrismaticFireflyOptions>> PRISMATIC_FIREFLY_PARTICLE =
+            registerCustom("prismatic_firefly", PrismaticFireflyOptions.CODEC, PrismaticFireflyOptions.STREAM_CODEC);
 
 
     private static <T extends ParticleOptions> Supplier<ParticleType<T>>

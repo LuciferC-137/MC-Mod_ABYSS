@@ -7,7 +7,9 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.weather.AbyssWeatherEventClient;
+import wardentools.weather.WeatherEvent;
 
+@OnlyIn(Dist.CLIENT)
 public class AbyssAmbient extends TextureSheetParticle {
 
     protected AbyssAmbient(ClientLevel level, double x, double y, double z,
@@ -29,7 +31,8 @@ public class AbyssAmbient extends TextureSheetParticle {
     public void tick() {
         super.tick();
         this.fadeOut();
-        if (AbyssWeatherEventClient.CLIENT_WEATHER.isPlayerOutside()) {
+        if (AbyssWeatherEventClient.CLIENT_WEATHER.isPlayerOutside()
+                && AbyssWeatherEventClient.CLIENT_WEATHER.getActiveEvent() == WeatherEvent.STORM) {
             this.xd = 0.5F;
             this.zd = 0.5F;
         }

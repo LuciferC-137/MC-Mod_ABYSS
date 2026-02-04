@@ -22,12 +22,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.misc.Crystal;
+import wardentools.particle.options.PrismaticFireflyOptions;
 
 public class AuroraNenupharBlock extends BushBlock {
     public static final MapCodec<AuroraNenupharBlock> CODEC = simpleCodec(AuroraNenupharBlock::new);
     protected static final VoxelShape AABB = Block.box(1.0F, 0.0F, 1.0F, 15.0F, 1.5F, 15.0F);
 
     private static final int SPECIAL_COLOR_RARITY = 6;
+    private static final int PARTICLE_RADIUS = 3;
 
     public @NotNull MapCodec<AuroraNenupharBlock> codec() {
         return CODEC;
@@ -92,5 +94,17 @@ public class AuroraNenupharBlock extends BushBlock {
         if (index != 1) return -1;
         if (!state.hasProperty(Crystal.VARIANT)) return -1;
         return Crystal.fromBlockProperty(state).getColor();
+    }
+
+    @Override
+    public void animateTick(@NotNull BlockState state, @NotNull Level level,
+                            @NotNull BlockPos pos, @NotNull RandomSource random) {
+        super.animateTick(state, level, pos, random);
+        level.addParticle(new PrismaticFireflyOptions(false,
+                        Crystal.fromBlockProperty(state).getColor()),
+                pos.getX() + 0.5F + (random.nextDouble() - 0.5F) * (float)PARTICLE_RADIUS * 2F,
+                pos.getY() + 0.5F + random.nextDouble() * (float)PARTICLE_RADIUS / 2F,
+                pos.getZ() + 0.5F + (random.nextDouble() - 0.5F) * (float)PARTICLE_RADIUS * 2F,
+                0, 0, 0);
     }
 }

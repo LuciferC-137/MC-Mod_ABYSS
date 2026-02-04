@@ -137,6 +137,8 @@ public class CommonModEvents {
 				GlyphParticle.Provider::new);
 		Minecraft.getInstance().particleEngine.register(ParticleRegistry.GLYPH_PARTICLE_ROTATING.get(),
 				GlyphParticleRotating.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.PRISMATIC_FIREFLY_PARTICLE.get(),
+				PrismaticFirefly.Provider::new);
 	}
 
 	@SubscribeEvent
