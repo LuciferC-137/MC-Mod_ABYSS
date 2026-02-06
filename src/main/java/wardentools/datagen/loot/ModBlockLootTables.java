@@ -164,6 +164,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 block -> createShearsOnlyDrop(BlockRegistry.DEPTH_VINES_PLANT.get()));
 		this.add(BlockRegistry.VALLEY_IVY.get(),
 				block -> createShearsOnlyDrop(BlockRegistry.VALLEY_IVY.get()));
+		this.add(BlockRegistry.VERDANT_GRASS.get(),
+				block -> createShearsOnlyDrop(BlockRegistry.VERDANT_GRASS.get()));
 
 		// Ore drop
 		this.add(BlockRegistry.ABYSSALITE_COAL_ORE.get(),

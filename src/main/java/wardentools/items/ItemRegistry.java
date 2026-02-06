@@ -829,4 +829,8 @@ public class ItemRegistry {
 	public static final DeferredItem<BlockItem> AURORA_NENUPHAR =
 			ITEMS.register("aurora_nenuphar",
 					() -> new PlaceOnWaterBlockItem(BlockRegistry.AURORA_NENUPHAR.get(), new Item.Properties()));
+
+	public static final DeferredItem<BlockItem> VERDANT_GRASS =
+			ITEMS.register("verdant_grass",
+					() -> new BlockItem(BlockRegistry.VERDANT_GRASS.get(), new Item.Properties()));
 }

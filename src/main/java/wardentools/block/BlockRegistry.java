@@ -853,6 +853,13 @@ public class BlockRegistry {
 					.lightLevel((state) -> 12)
 					.noOcclusion()));
 
+	public static final DeferredBlock<Block> VERDANT_GRASS = BLOCKS.register("verdant_grass",
+			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> 6)
+			));
+
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {
         return false;
     }

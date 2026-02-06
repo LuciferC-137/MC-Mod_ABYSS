@@ -1,4 +1,4 @@
-// 1.21.1	2026-01-31T22:47:50.488320756	Item Models: wardentools
+// 1.21.1	2026-02-06T19:01:32.881489628	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -187,6 +187,7 @@ f23faea458c5d462deeaf38c9d144c38b5c47993 assets/wardentools/models/item/stripped
 0a97dffdd3ad150e8f5754c8e5a285b8d9424e24 assets/wardentools/models/item/tall_dark_grass.json
 6c32364d24d94cdf7cf4110c71b0502f0f641a6e assets/wardentools/models/item/tall_white_grass.json
 f17f5981b504e7ae90179b384c2e878594766d2a assets/wardentools/models/item/valley_ivy.json
+a133ea6c578964865646feaa09c5228b3b3e4e63 assets/wardentools/models/item/verdant_grass.json
 ba0ff94d006b7fd3340bdf4c6f6f5d5f84f58f29 assets/wardentools/models/item/wanderer_paw.json
 63885717308c5161ab6541a89ea1c36416dd89f5 assets/wardentools/models/item/warden_heart.json
 47cce41962cb1181704ad2e7a743d26caa74e098 assets/wardentools/models/item/white_grass.json

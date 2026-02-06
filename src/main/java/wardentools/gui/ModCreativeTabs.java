@@ -152,6 +152,7 @@ public class ModCreativeTabs {
         addItemToTag(Tag.NATURE, ItemRegistry.PURPLE_SEED);
         addItemToTag(Tag.NATURE, ItemRegistry.SIRISCA_BLOSSOM);
         addItemToTag(Tag.NATURE, ItemRegistry.PURPLE_CAKE);
+        addItemToTag(Tag.NATURE, ItemRegistry.VERDANT_GRASS);
 
         addItemToTag(Tag.DIRT, ItemRegistry.DARKDIRT);
         addItemToTag(Tag.DIRT, ItemRegistry.DARKGRASS_BLOCK);
