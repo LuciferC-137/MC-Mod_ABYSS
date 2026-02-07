@@ -71,6 +71,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LAVYN_PATCH = registerKey("lavyn_patch");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> BASALT_BOULDER = registerKey("basalt_boulder");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_LAKE = registerKey("abyss_lake");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> VERDANT_GRASS_PATCH = registerKey("verdant_grass_patch");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -223,7 +224,7 @@ public class ModConfiguredFeatures {
 				new LivingSproutEmergenceConfiguration(1, 7, 0.2F, true));
 
 		register(context, LAVYN_PATCH, Feature.RANDOM_PATCH,
-				grassPatch(BlockStateProvider.simple(BlockRegistry.LAVYN.get()), 10));
+				customRandomPatch(BlockStateProvider.simple(BlockRegistry.LAVYN.get()), 96, 7, 3));
 
 		register(context, BASALT_BOULDER, ModFeatures.BASALT_BOULDER.get(), new NoneFeatureConfiguration());
 
@@ -231,6 +232,9 @@ public class ModConfiguredFeatures {
 				BlockStateProvider.simple(Blocks.WATER),
 				BlockStateProvider.simple(Blocks.MUD),
 				true));
+
+		register(context, VERDANT_GRASS_PATCH, Feature.RANDOM_PATCH,
+				grassPatch(BlockStateProvider.simple(BlockRegistry.VERDANT_GRASS.get()), 15));
 
     }
 	
@@ -241,6 +245,19 @@ public class ModConfiguredFeatures {
 						BlockPredicate.ONLY_IN_AIR_PREDICATE
                 ));
     }
+
+	private static RandomPatchConfiguration customRandomPatch(BlockStateProvider stateProvider, int tries, int xzSpread, int ySpread) {
+		return new RandomPatchConfiguration(
+			tries,
+			xzSpread,
+			ySpread,
+			PlacementUtils.filtered(
+				Feature.SIMPLE_BLOCK,
+				new SimpleBlockConfiguration(stateProvider),
+				BlockPredicate.ONLY_IN_AIR_PREDICATE
+			)
+		);
+	}
 
 	public static OreConfiguration oreGeneration(int size, float discardChanceOnAirExposure,
 									  Block abyssaliteReplaceable, Block deepslateReplaceable){

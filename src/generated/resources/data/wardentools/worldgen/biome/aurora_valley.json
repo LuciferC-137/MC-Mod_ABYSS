@@ -54,7 +54,8 @@
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
       "wardentools:dusk_willow_placed",
-      "wardentools:lavyn_patch"
+      "wardentools:lavyn_patch",
+      "wardentools:verdant_grass_patch"
     ]
   ],
   "has_precipitation": false,

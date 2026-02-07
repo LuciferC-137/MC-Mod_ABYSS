@@ -68,6 +68,7 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> LAVYN_PATCH_KEY = registerKey("lavyn_patch");
 	public static final ResourceKey<PlacedFeature> BASALT_BOULDER_KEY = registerKey("basalt_boulder");
 	public static final ResourceKey<PlacedFeature> ABYSS_LAKE_KEY = registerKey("abyss_lake");
+	public static final ResourceKey<PlacedFeature> VERDANT_GRASS_PATCH_KEY = registerKey("verdant_grass_patch");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -284,10 +285,11 @@ public class ModPlacedFeatures {
 
 		register(context, LAVYN_PATCH_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.LAVYN_PATCH),
-				List.of(CountPlacement.of(UniformInt.of(4, 8)),
-						InSquarePlacement.spread(),
-						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
-						BiomeFilter.biome())
+				List.of(RarityFilter.onAverageOnceEvery(5),
+					InSquarePlacement.spread(),
+					PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+					BiomeFilter.biome()
+					)
 		);
 
 		register(context, BASALT_BOULDER_KEY,
@@ -303,6 +305,14 @@ public class ModPlacedFeatures {
                 List.of(RarityFilter.onAverageOnceEvery(20),
                         InSquarePlacement.spread(),
                         PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+						BiomeFilter.biome())
+		);
+
+		register(context, VERDANT_GRASS_PATCH_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.VERDANT_GRASS_PATCH),
+				List.of(CountPlacement.of(UniformInt.of(4, 8)),
+						InSquarePlacement.spread(),
+						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
 						BiomeFilter.biome())
 		);
     }

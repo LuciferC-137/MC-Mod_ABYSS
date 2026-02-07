@@ -8,7 +8,7 @@
           "to_place": {
             "type": "minecraft:simple_state_provider",
             "state": {
-              "Name": "wardentools:lavyn"
+              "Name": "wardentools:verdant_grass"
             }
           }
         }
@@ -23,7 +23,7 @@
         }
       ]
     },
-    "tries": 96,
+    "tries": 15,
     "xz_spread": 7,
     "y_spread": 3
   }

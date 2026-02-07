@@ -208,6 +208,8 @@ public class ModBiomes {
                 ModPlacedFeatures.DUSK_WILLOW_PLACED_KEY);
         biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
                 ModPlacedFeatures.LAVYN_PATCH_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
+                ModPlacedFeatures.VERDANT_GRASS_PATCH_KEY);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)

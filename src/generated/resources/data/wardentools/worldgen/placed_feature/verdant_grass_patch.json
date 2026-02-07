@@ -1,9 +1,13 @@
 {
-  "feature": "wardentools:lavyn_patch",
+  "feature": "wardentools:verdant_grass_patch",
   "placement": [
     {
-      "type": "minecraft:rarity_filter",
-      "chance": 5
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:uniform",
+        "max_inclusive": 8,
+        "min_inclusive": 4
+      }
     },
     {
       "type": "minecraft:in_square"
