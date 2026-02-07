@@ -854,7 +854,7 @@ public class BlockRegistry {
 					.noOcclusion()));
 
 	public static final DeferredBlock<Block> VERDANT_GRASS = BLOCKS.register("verdant_grass",
-			() -> new TallGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+			() -> new VerdantGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
 					.noOcclusion()
 					.noCollission()
 					.lightLevel((state) -> 6)

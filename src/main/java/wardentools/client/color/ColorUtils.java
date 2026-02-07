@@ -34,13 +34,13 @@ public class ColorUtils {
         return new float[]{r, g, b};
     }
 
-    public static int lerpColor(int colorA, int colorB, float t) {
-        int rA = getRed(colorA);
-        int gA = getGreen(colorA);
-        int bA = getBlue(colorA);
-        int rB = getRed(colorB);
-        int gB = getGreen(colorB);
-        int bB = getBlue(colorB);
+    public static int lerpColor(int color0, int color1, float t) {
+        int rA = getRed(color0);
+        int gA = getGreen(color0);
+        int bA = getBlue(color0);
+        int rB = getRed(color1);
+        int gB = getGreen(color1);
+        int bB = getBlue(color1);
 
         int r = (int) (rA + (rB - rA) * t);
         int g = (int) (gA + (gB - gA) * t);

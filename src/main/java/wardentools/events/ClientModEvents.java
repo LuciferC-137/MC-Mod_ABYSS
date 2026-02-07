@@ -17,6 +17,7 @@ import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import wardentools.ModMain;
 import wardentools.block.*;
 import wardentools.client.AbyssDimensionSpecialEffect;
+import wardentools.client.color.ContextColorMethods;
 import wardentools.client.rendering.AuroraShaderManager;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
@@ -95,6 +96,8 @@ public class ClientModEvents {
 				BlockRegistry.GRASS_PURPLE_SOIL.get());
 		event.register(AuroraNenupharBlock::getColor,
 				BlockRegistry.AURORA_NENUPHAR.get());
+		event.register(ContextColorMethods::getVerdantGrassColor,
+				BlockRegistry.VERDANT_GRASS.get());
 
 		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.DARKGRASS_BLOCK.get(),
 				RenderType.cutoutMipped());
@@ -102,11 +105,17 @@ public class ClientModEvents {
 				RenderType.cutoutMipped());
 		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.AURORA_NENUPHAR.get(),
 				RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.VERDANT_GRASS.get(),
+				RenderType.cutoutMipped());
 	}
 
 	@SubscribeEvent
 	public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
 		event.register(CrystalResonatorItem::getColor, ItemRegistry.CRYSTAL_RESONATOR.get());
+		event.register(VerdantGrassBlock::getColor, ItemRegistry.VERDANT_GRASS.get());
+		event.register(DarkGrassBlock::getColor, ItemRegistry.DARKGRASS_BLOCK.get());
+		event.register(GrassPurpleSoil::getColor, ItemRegistry.GRASS_PURPLE_SOIL.get());
+		event.register(AuroraNenupharBlock::getColor, ItemRegistry.AURORA_NENUPHAR.get());
 	}
 
 	@SubscribeEvent

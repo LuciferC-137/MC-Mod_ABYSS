@@ -30,7 +30,8 @@ public class ModBiomeTagGenerator extends TagsProvider<Biome> {
                 .add(biomeLookup.getOrThrow(ModBiomes.CITRINE_CAVE).key())
                 .add(biomeLookup.getOrThrow(ModBiomes.MALACHITE_CAVE).key())
                 .add(biomeLookup.getOrThrow(ModBiomes.ECHO_CAVE).key())
-                .add(biomeLookup.getOrThrow(ModBiomes.PALE_CAVE).key());
+                .add(biomeLookup.getOrThrow(ModBiomes.PALE_CAVE).key())
+                .add(biomeLookup.getOrThrow(ModBiomes.AURORA_VALLEY).key());
         this.tag(ModTags.Biomes.DEEPFOREST)
                 .add(biomeLookup.getOrThrow(ModBiomes.DEEP_FOREST).key());
         this.tag(ModTags.Biomes.WHITE_FOREST)
@@ -49,6 +50,8 @@ public class ModBiomeTagGenerator extends TagsProvider<Biome> {
                 .add(biomeLookup.getOrThrow(ModBiomes.ECHO_CAVE).key());
         this.tag(ModTags.Biomes.PALE_CAVES)
                 .add(biomeLookup.getOrThrow(ModBiomes.PALE_CAVE).key());
+        this.tag(ModTags.Biomes.AURORA_VALLEY)
+                .add(biomeLookup.getOrThrow(ModBiomes.AURORA_VALLEY).key());
 
         this.tag(ModTags.Biomes.INTENSE_AURORAS)
                 .add(biomeLookup.getOrThrow(ModBiomes.AURORA_VALLEY).key());

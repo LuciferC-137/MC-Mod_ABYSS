@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-06T19:01:32.881489628	Item Models: wardentools
+// 1.21.1	2026-02-07T13:00:48.56295305	Item Models: wardentools
 6a9db753a124b22ae6f31a1af1eeace9fbfc4dcc assets/wardentools/models/item/abyssalite_bricks_slab.json
 dcc7c39981fad44e192e33c1a7a593472d27c0df assets/wardentools/models/item/abyssalite_bricks_stair.json
 cf86330192e686513926d5c33ec5361bb2b9bd19 assets/wardentools/models/item/abyssalite_bricks_wall.json
@@ -19,6 +19,7 @@ a65c533509296757326d41312eab3c4a6e224090 assets/wardentools/models/item/cracked_
 41d48175390c037a364df0058818befb91b4d81b assets/wardentools/models/item/crystal_infuser.json
 ea2874feb6278a75ad639c9f21d5011efba83d5b assets/wardentools/models/item/dark_grass.json
 675611e0a9b1c15082c459e76ad074045ff25e58 assets/wardentools/models/item/dark_stick.json
+4905e1a853513744f3d7dfe232fa48dd703f7db5 assets/wardentools/models/item/darkgrass_block.json
 2db4f823d6a343d8a598793326fe6a661a1dae18 assets/wardentools/models/item/darktree_boat.json
 870cf025c0990ff6c3b5250e2f5251aaea139616 assets/wardentools/models/item/darktree_button.json
 56691d71f6e26ed48bcd0dc29d2ef80ac9fffc15 assets/wardentools/models/item/darktree_chest_boat.json
@@ -100,6 +101,7 @@ ae09e5b6948789b0a70a6768577e081538204957 assets/wardentools/models/item/dusk_wil
 e132a841ade458e1fba92f9890b565e60eb931b1 assets/wardentools/models/item/echo_cristal.json
 e581645fdb16072672721f30a8410190d506bd20 assets/wardentools/models/item/golem_stone.json
 4e89426c6145ff7a533571546c1cb79bec6866c9 assets/wardentools/models/item/gramophone.json
+a4bb62360a91d985e4cc67caf43ff4f771f402f0 assets/wardentools/models/item/grass_purple_soil.json
 41d2ba8da20c6a1e7fbc8e080977604f4c34312a assets/wardentools/models/item/lavyn.json
 d2bba8fae90a771af2785d42d9fe71828f22e5b1 assets/wardentools/models/item/light_ornament.json
 4eed343ad56cdb6b1dd37d013734dd2a60f9a5a8 assets/wardentools/models/item/living_sprout.json

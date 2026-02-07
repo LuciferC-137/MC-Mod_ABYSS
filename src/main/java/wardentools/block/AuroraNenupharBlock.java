@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
@@ -23,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.misc.Crystal;
 import wardentools.particle.options.PrismaticFireflyOptions;
+import wardentools.worldgen.biome.ModBiomes;
 
 public class AuroraNenupharBlock extends BushBlock {
     public static final MapCodec<AuroraNenupharBlock> CODEC = simpleCodec(AuroraNenupharBlock::new);
@@ -106,5 +108,9 @@ public class AuroraNenupharBlock extends BushBlock {
                 pos.getY() + 0.5F + random.nextDouble() * (float)PARTICLE_RADIUS / 2F,
                 pos.getZ() + 0.5F + (random.nextDouble() - 0.5F) * (float)PARTICLE_RADIUS * 2F,
                 0, 0, 0);
+    }
+
+    public static int getColor(ItemStack stack, int index) {
+        return Crystal.getDefault().getColor();
     }
 }

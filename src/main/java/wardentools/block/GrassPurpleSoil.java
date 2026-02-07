@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,7 +41,9 @@ public class GrassPurpleSoil extends Block {
             else if (index == 1) return ModBiomes.DEEP_FOREST_2;
             else return -1;
         }
-
     }
 
+    public static int getColor(ItemStack stack, int index) {
+        return index == 0 ? ModBiomes.AURORA_VALLEY_1 : ModBiomes.AURORA_VALLEY_2;
+    }
 }
