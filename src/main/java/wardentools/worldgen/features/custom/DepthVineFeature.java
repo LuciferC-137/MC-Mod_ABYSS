@@ -24,37 +24,23 @@ public class DepthVineFeature extends Feature<DepthVineConfiguration> {
         WorldGenLevel level = context.level();
         DepthVineConfiguration config = context.config();
 
-        int k = 0;
-        while (!level.getBlockState(origin).isAir() && k < MAX_REACH) {
-            origin = origin.above();
-            k++;
-        }
 
-        BlockPos pos = origin.above();
-
-        int i = 0;
-        while (level.getBlockState(pos).isAir() && i < MAX_REACH) {
-            pos = pos.above();
-            i++;
-        }
-
-        if (DepthVines.canHangBelow(level.getBlockState(pos), level, pos)) {
+        if (DepthVines.canHangBelow(level.getBlockState(origin), level, origin)) {
 
             int length;
             if (config.adaptative()) {
-                int totalSpace = pos.getY() - origin.getY()
-                        + availableSpaceBelow(level, origin, MAX_REACH);
+                int space = availableSpaceBelow(level, origin.below(), MAX_REACH);
                 length = nextTriangular(context.random(),
-                        (int)((float)totalSpace * 0.2F),
-                        (int)((float)totalSpace * 0.85F),
-                        (int)((float)totalSpace * 0.55F)
+                        (int)((float)space * 0.2F),
+                        (int)((float)space * 0.85F),
+                        (int)((float)space * 0.55F)
                         );
             } else {
                 length = nextTriangular(context.random(), config.min(), config.max(),
                         config.averageLength());
             }
 
-            BlockPos placePos = pos.below();
+            BlockPos placePos = origin.below();
             for (int j = 0; j < length; j++) {
                 if (level.getBlockState(placePos).isAir()) {
                     boolean hasBerries = context.random().nextFloat() < CHANCE_BERRY_ON_PLACEMENT;

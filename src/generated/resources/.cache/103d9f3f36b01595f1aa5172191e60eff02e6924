@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-07T14:28:07.369714504	Registries
+// 1.21.1	2026-02-22T19:15:33.27915177	Registries
 24a10955ed0689c65165599f5d8ca448c02a9769 data/wardentools/dimension/abyssdim.json
 120c8f2fee822bde96bdcb827ccb7a58c181a22a data/wardentools/dimension_type/abyssdim_type.json
 1c11a8f49d2df8e89a69dcab7725f1897a55fef4 data/wardentools/enchantment/stealth.json
@@ -98,7 +98,7 @@ a346c7a4e91c13434aea1c1842b0482df3899982 data/wardentools/worldgen/placed_featur
 0f9983dc7beb9ee91e9f0dffdacc0c45ac453e5e data/wardentools/worldgen/placed_feature/sculk_tendrils.json
 01287169b3a43617d33a0801741229ec66c397b2 data/wardentools/worldgen/placed_feature/sharp_rock.json
 10252d25fb3078f380edeadd11c8a2c398e1d110 data/wardentools/worldgen/placed_feature/tall_dark_grass.json
-edecf55486ccf0fd07b10152a02cd69cf8e6e231 data/wardentools/worldgen/placed_feature/tall_depth_vines.json
+873ade0a2f1a2578b808238be650f4b98be22c30 data/wardentools/worldgen/placed_feature/tall_depth_vines.json
 8c9b0f8c9569eae0bc38ab5ce9efbd240c10e736 data/wardentools/worldgen/placed_feature/tall_white_grass.json
 2e70b2f4854558bcc352fbb9c5d1a674d0896f83 data/wardentools/worldgen/placed_feature/verdant_grass_patch.json
 7b3cb404d939b0e7f2f2bec8a2de16784d3d84b2 data/wardentools/worldgen/placed_feature/white_grass.json

@@ -268,9 +268,7 @@ public class ModPlacedFeatures {
 
 		register(context, TALL_DEPTH_VINES_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.TALL_DEPTH_VINE),
-				List.of(CountPlacement.of(UniformInt.of(6, 12)),
-						InSquarePlacement.spread(),
-						BiomeFilter.biome())
+				onCaveWallUp(8, 16)
 		);
 
 		register(context, CAVE_SCULK_TENDRILS_KEY,
