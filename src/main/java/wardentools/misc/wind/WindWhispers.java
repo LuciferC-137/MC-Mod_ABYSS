@@ -21,17 +21,16 @@ import java.util.*;
 
 @OnlyIn(Dist.CLIENT)
 public class WindWhispers {
-	private final Map<Integer, Whisper> whispers = new HashMap<>();
+	private final Map<String, Whisper> whispers = new HashMap<>();
     public final WhisperTags whisperTags = new WhisperTags();
     public static final WindWhispers INSTANCE = new WindWhispers();
 
 
 	public WindWhispers() {
-        int globalId = 0;
         for (WhisperTags.Tag tag : WhisperTags.Tag.values()) {
             for (int i = 1; i <= tag.getNumberOfWhispers(); i++) {
+                String globalId = WhisperTags.getGlobalId(tag, i);
                 Whisper whisper = new Whisper(tag, i, globalId);
-                globalId++;
                 whispers.put(globalId, whisper);
                 whisperTags.addTag(tag, whisper);
             }

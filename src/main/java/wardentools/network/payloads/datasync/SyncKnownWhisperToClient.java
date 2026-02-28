@@ -9,18 +9,19 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
 import java.nio.IntBuffer;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-public record SyncKnownWhisperToClient(int[] whisperIds) implements CustomPacketPayload {
+public record SyncKnownWhisperToClient(Set<String> whisperIds) implements CustomPacketPayload {
     public static final Type<SyncKnownWhisperToClient> TYPE
             = new Type<>(ResourceLocation
             .fromNamespaceAndPath(ModMain.MOD_ID, "sync_known_whisper_to_client"));
 
     public static final StreamCodec<ByteBuf, SyncKnownWhisperToClient> STREAM_CODEC =
             StreamCodec.composite(
-                    ByteBufCodecs.INT
-                            .apply(ByteBufCodecs.list())
-                            .map(list -> list.stream().mapToInt(Integer::intValue).toArray(),
-                                    arr -> java.util.Arrays.stream(arr).boxed().toList()),
+                    ByteBufCodecs.STRING_UTF8
+                            .apply(ByteBufCodecs.collection(HashSet::new)),
                     SyncKnownWhisperToClient::whisperIds,
                     SyncKnownWhisperToClient::new
             );

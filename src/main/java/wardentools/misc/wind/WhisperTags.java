@@ -26,6 +26,10 @@ public class WhisperTags {
         }
     }
 
+    public static String getGlobalId(Tag tag, int index) {
+        return tag.getKey() + "." + index;
+    }
+
     public void addTag(Tag tag, Whisper whisper) {
         tagMap.get(tag).add(whisper);
     }
@@ -48,6 +52,7 @@ public class WhisperTags {
         ANCIENT_CITADEL("ancient_citadel", 8, true),
         DEEPFOREST("deepforest", 10, true),
         WHITE_FOREST("white_forest", 4, true),
+        AURORA_VALLEY("aurora_valley", 17, true),
         CRYSTAL_CAVE("crystal_cave", 13, true),
         OVERWORLD("overworld", 19, true),
         AMETHYST_CAVE("amethyst_cave", 18, true),
@@ -68,10 +73,10 @@ public class WhisperTags {
         }
 
         public String getName() {
-            return Component.translatable("message.wardentools.whisper." + this.getTranslatableTag()).getString();
+            return Component.translatable("message.wardentools.whisper." + this.getKey()).getString();
         }
 
-        public String getTranslatableTag() {
+        public String getKey() {
             return this.key;
         }
 
