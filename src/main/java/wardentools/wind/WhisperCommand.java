@@ -43,7 +43,7 @@ public class WhisperCommand {
                 .executes(context -> grantAll(context.getSource())));
         revoke = revoke.then(Commands.literal("all")
                 .executes(context -> revokeAll(context.getSource())));
-        dispatcher.register(Commands.literal("whisper")
+        dispatcher.register(Commands.literal("windjournal")
                 .then(grant)
                 .then(revoke));
     }

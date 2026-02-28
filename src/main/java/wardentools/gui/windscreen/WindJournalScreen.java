@@ -201,6 +201,8 @@ public class WindJournalScreen extends Screen {
                 this.removeAllButtons(this.cachedRightTaskButtons);
             } else {
                 // Task section
+                this.removeAllButtons(this.cachedLeftTaskButtons);
+                this.removeAllButtons(this.cachedRightTaskButtons);
                 int trunkIndex = this.currentLeftPageIndex - this.getJournalPageCount();
                 this.cachedLeftTaskPage = this.taskNoteAccess.getTaskPage(trunkIndex - 1);
                 this.cachedRightTaskPage = this.taskNoteAccess.getTaskPage(trunkIndex);

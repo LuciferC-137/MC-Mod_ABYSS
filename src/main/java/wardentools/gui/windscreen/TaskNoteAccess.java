@@ -35,19 +35,23 @@ public class TaskNoteAccess {
                 "textures/gui/wind_journal/deepforest.png")));
         tasks.put(1, new Task(1, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/whiteforest.png")));
-        tasks.put(2, new Task(2, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(2, new Task(9, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/aurora_valley.png")));
+        tasks.put(3, new Task(2, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/crystal_cave.png")));
-        tasks.put(3, new Task(3, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(4, new Task(3, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/waste_land.png")));
-        tasks.put(4, new Task(4, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
-                "textures/gui/wind_journal/ancient_citadel.png")));
         tasks.put(5, new Task(5, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/noctilure.png")));
         tasks.put(6, new Task(6, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/protector.png")));
-        tasks.put(7, new Task(7, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(7, new Task(10, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/crystal_temple.png")));
+        tasks.put(8, new Task(4, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+                "textures/gui/wind_journal/ancient_citadel.png")));
+        tasks.put(9, new Task(7, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/portal.png")));
-        tasks.put(8, new Task(8, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(10, new Task(8, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
                 "textures/gui/wind_journal/incarnation.png")));
     }
 
