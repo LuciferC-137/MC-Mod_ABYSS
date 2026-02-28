@@ -88,8 +88,14 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
     public void syncKnownWhisper(SyncKnownWhisperToClient msg, IPayloadContext ctx) {
         handleDataOnNetwork(() -> {
             KnownWindWhispers data = ctx.player().getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
-            for (String id : msg.whisperIds()) {
-                data.addKnownWhisper(id);
+            if (msg.revoke()) {
+                for (String id : msg.whisperIds()) {
+                    data.removeKnownWhisper(id);
+                }
+            } else {
+                for (String id : msg.whisperIds()) {
+                    data.addKnownWhisper(id);
+                }
             }
             ctx.player().setData(ModDataAttachments.KNOWN_WIND_WHISPERS, data);
         }, ctx);

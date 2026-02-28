@@ -26,6 +26,7 @@ import wardentools.items.armors.ModMaterials;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.custom.*;
 import wardentools.weather.CommandAbyssWeather;
+import wardentools.wind.WhisperCommand;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
 public class CommonModEvents {
@@ -144,5 +145,6 @@ public class CommonModEvents {
 	@SubscribeEvent
 	public static void registerCommands(RegisterCommandsEvent event) {
 		new CommandAbyssWeather(event.getDispatcher());
+		new WhisperCommand(event.getDispatcher());
 	}
 }

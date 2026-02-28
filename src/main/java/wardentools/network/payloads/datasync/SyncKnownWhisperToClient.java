@@ -13,16 +13,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public record SyncKnownWhisperToClient(Set<String> whisperIds) implements CustomPacketPayload {
+public record SyncKnownWhisperToClient(Set<String> whisperIds, boolean revoke) implements CustomPacketPayload {
     public static final Type<SyncKnownWhisperToClient> TYPE
             = new Type<>(ResourceLocation
             .fromNamespaceAndPath(ModMain.MOD_ID, "sync_known_whisper_to_client"));
+
+    public SyncKnownWhisperToClient(Set<String> whisperIds) {
+        this(whisperIds, false);
+    }
 
     public static final StreamCodec<ByteBuf, SyncKnownWhisperToClient> STREAM_CODEC =
             StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8
                             .apply(ByteBufCodecs.collection(HashSet::new)),
                     SyncKnownWhisperToClient::whisperIds,
+                    ByteBufCodecs.BOOL,
+                    SyncKnownWhisperToClient::revoke,
                     SyncKnownWhisperToClient::new
             );
 
