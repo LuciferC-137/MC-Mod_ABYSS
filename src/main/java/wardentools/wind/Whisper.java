@@ -1,4 +1,4 @@
-package wardentools.misc.wind;
+package wardentools.wind;
 
 import net.minecraft.network.chat.Component;
 import wardentools.ModMain;

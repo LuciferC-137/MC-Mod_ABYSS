@@ -1,4 +1,4 @@
-package wardentools.misc.wind;
+package wardentools.wind;
 
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;

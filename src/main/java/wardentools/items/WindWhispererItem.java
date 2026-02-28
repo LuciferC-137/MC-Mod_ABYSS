@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
-import wardentools.misc.wind.WhisperManager;
+import wardentools.wind.WhisperManager;
 import wardentools.worldgen.dimension.ModDimensions;
 
 public class WindWhispererItem extends BlockItem {

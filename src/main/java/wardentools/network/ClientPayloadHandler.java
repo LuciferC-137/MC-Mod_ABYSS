@@ -25,7 +25,7 @@ import wardentools.block.BlockRegistry;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 import wardentools.gui.winscreen.CustomWinScreen;
-import wardentools.misc.wind.WindWhispers;
+import wardentools.wind.WindWhispers;
 import wardentools.network.payloads.*;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
