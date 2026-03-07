@@ -106,7 +106,7 @@ public class Thryssaryn<T extends Entity> extends EntityModel<T> {
 
 		PartDefinition cube_r11 = neck_base.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(80, 90).addBox(-2.0F, -6.0F, 0.0F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
 
-		PartDefinition body = FULL.addOrReplaceChild("body", CubeListBuilder.create().texOffs(36, 97).addBox(-1.0F, 8.0F, 9.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -26.0F, -3.0F));
+		PartDefinition body = FULL.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, -26.0F, -3.0F));
 
 		PartDefinition thorax = body.addOrReplaceChild("thorax", CubeListBuilder.create(), PartPose.offset(0.2F, 16.2742F, 9.175F));
 

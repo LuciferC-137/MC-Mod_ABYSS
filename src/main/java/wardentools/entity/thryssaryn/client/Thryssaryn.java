@@ -103,7 +103,7 @@ public class Thryssaryn extends HierarchicalModel<ThryssarynEntity> {
 		PartDefinition cube_r10 = mandible_tip_l.addOrReplaceChild("cube_r10", CubeListBuilder.create().texOffs(32, 60).addBox(-0.5F, -0.5F, -1.9F, 1.0F, 1.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.3F, 0.0F, -0.6F, 0.2949F, 0.5792F, 0.2561F));
 		PartDefinition neck_base = neck.addOrReplaceChild("neck_base", CubeListBuilder.create(), PartPose.offset(0.0F, 1.25F, -1.0F));
 		PartDefinition cube_r11 = neck_base.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(80, 90).addBox(-2.0F, -6.0F, 0.0F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.3927F, 0.0F, 0.0F));
-		PartDefinition body = FULL.addOrReplaceChild("body", CubeListBuilder.create().texOffs(36, 97).addBox(-1.0F, 8.0F, 9.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -26.0F, -3.0F));
+		PartDefinition body = FULL.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, -26.0F, -3.0F));
 		PartDefinition thorax = body.addOrReplaceChild("thorax", CubeListBuilder.create(), PartPose.offset(0.2F, 16.2742F, 9.175F));
 		PartDefinition cube_r12 = thorax.addOrReplaceChild("cube_r12", CubeListBuilder.create().texOffs(40, 52).addBox(-4.0F, -3.3905F, -3.5604F, 7.0F, 5.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.0F, -12.8F, -8.2F, -1.0675F, 0.1509F, -0.2666F));
 		PartDefinition cube_r13 = thorax.addOrReplaceChild("cube_r13", CubeListBuilder.create().texOffs(0, 56).addBox(-3.0F, -1.0F, -5.1507F, 6.0F, 2.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.2F, -2.082F, -4.2371F, -0.9861F, 0.0F, 0.0F));

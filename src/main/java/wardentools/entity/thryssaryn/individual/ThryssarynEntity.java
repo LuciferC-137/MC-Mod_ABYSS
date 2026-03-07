@@ -125,10 +125,11 @@ public class ThryssarynEntity extends AbstractThryssaryn {
 	@Override
 	public @NotNull InteractionResult interactAt(@NotNull Player player, @NotNull Vec3 vec,
 												 @NotNull InteractionHand hand) {
-		if (thryssarynLuthSequence.isRunning()) {
-			this.stopPlayingLuth();
-		} else {
-			this.startPlayingLuthToCalmWarden();
+		if (player.isShiftKeyDown() && this.level().isClientSide) {
+			net.minecraft.client.Minecraft.getInstance().setScreen(
+					new wardentools.entity.thryssaryn.client.debug.ThryssarynDebugScreen(this.getId())
+			);
+			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.SUCCESS;
 	}

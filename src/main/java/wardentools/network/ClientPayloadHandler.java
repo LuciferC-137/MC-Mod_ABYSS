@@ -29,6 +29,7 @@ import wardentools.wind.WindWhispers;
 import wardentools.network.payloads.*;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
+import wardentools.network.payloads.debug.SyncCommunityDataToClient;
 import wardentools.network.payloads.special_effects.*;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.options.ShineParticleOptions;
@@ -331,6 +332,17 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
         AbyssWeatherEventClient.CLIENT_WEATHER.setActiveEvent(
                 WeatherEvent.fromString(msg.activeEvent())
         );
+    }
+
+    public void syncCommunityData(SyncCommunityDataToClient msg, IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            Minecraft minecraft = Minecraft.getInstance();
+            minecraft.setScreen(new wardentools.entity.thryssaryn.client.debug.CommunityDebugScreen(
+                    msg.communityUuid(),
+                    msg.centerX(), msg.centerY(), msg.centerZ(),
+                    msg.radius(), msg.memberUuids()
+            ));
+        }, ctx);
     }
 
     private  void particleExplosion(Level level, Vector3f pos, float radius,

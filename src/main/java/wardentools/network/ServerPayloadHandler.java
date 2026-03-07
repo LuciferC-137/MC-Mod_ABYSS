@@ -10,20 +10,31 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
+import wardentools.entity.thryssaryn.community.Community;
+import wardentools.entity.thryssaryn.community.CommunityData;
+import wardentools.entity.thryssaryn.debug.ThryssarynField;
+import wardentools.entity.thryssaryn.individual.AbstractThryssaryn;
 import wardentools.network.payloads.SwitchAchievement;
 import wardentools.network.payloads.TeleportPlayerTo;
 import wardentools.network.payloads.datasync.SyncDataTaskToServer;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
+import wardentools.network.payloads.debug.DebugEditThryssarynToServer;
+import wardentools.network.payloads.debug.RequestCommunityDataToServer;
+import wardentools.network.payloads.debug.SyncCommunityDataToClient;
 import wardentools.playerdata.ModDataAttachments;
 import wardentools.playerdata.serializables.CompletedTasks;
 import wardentools.playerdata.serializables.KnownWindWhispers;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ServerPayloadHandler {
     private static final ResourceLocation CORRUPTION_ADVANCEMENT
@@ -91,6 +102,41 @@ public class ServerPayloadHandler {
             }
             ctx.player().setData(ModDataAttachments.KNOWN_WIND_WHISPERS, data);
 
+        }, ctx);
+    }
+
+    public static void debugEditThryssaryn(DebugEditThryssarynToServer msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            if (!(ctx.player() instanceof ServerPlayer serverPlayer)) return;
+            if (!serverPlayer.hasPermissions(2)) return; // OP only
+            ServerLevel level = serverPlayer.serverLevel();
+            Entity entity = level.getEntity(msg.entityId());
+            if (entity instanceof AbstractThryssaryn thryssaryn) {
+                ThryssarynField field = ThryssarynField.fromId(msg.fieldId());
+                if (field != null) {
+                    field.setValue(thryssaryn, msg.newValue());
+                }
+            }
+        }, ctx);
+    }
+
+    public static void requestCommunityData(RequestCommunityDataToServer msg, final IPayloadContext ctx) {
+        handleDataOnNetwork(() -> {
+            if (!(ctx.player() instanceof ServerPlayer serverPlayer)) return;
+            if (!serverPlayer.hasPermissions(2)) return; // OP only
+            ServerLevel level = serverPlayer.serverLevel();
+            CommunityData data = CommunityData.get(level);
+            UUID communityId = msg.getCommunityUuid();
+            Community community = data.getCommunity(communityId);
+            if (community != null) {
+                List<UUID> members = new ArrayList<>(community.members());
+                SyncCommunityDataToClient response = new SyncCommunityDataToClient(
+                        communityId,
+                        community.center().getX(), community.center().getY(), community.center().getZ(),
+                        community.radius(), members
+                );
+                PacketDistributor.sendToPlayer(serverPlayer, response);
+            }
         }, ctx);
     }
 

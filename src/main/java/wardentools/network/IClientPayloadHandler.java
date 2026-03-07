@@ -5,6 +5,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 import wardentools.network.payloads.WeatherSyncToClient;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
+import wardentools.network.payloads.debug.SyncCommunityDataToClient;
 import wardentools.network.payloads.special_effects.*;
 import wardentools.network.payloads.ShowWinScreen;
 import wardentools.network.payloads.SwitchCamera;
@@ -66,4 +67,6 @@ public interface IClientPayloadHandler {
     void sendWhisperToClient(WindWhisperSendToClient msg, final IPayloadContext ctx);
 
     void weatherSyncToClient(WeatherSyncToClient msg, final IPayloadContext ctx);
+
+    void syncCommunityData(SyncCommunityDataToClient msg, final IPayloadContext ctx);
 }

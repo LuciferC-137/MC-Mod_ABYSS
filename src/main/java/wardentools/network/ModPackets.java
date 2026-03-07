@@ -9,6 +9,8 @@ import wardentools.ModMain;
 import wardentools.network.payloads.*;
 import wardentools.network.payloads.datasync.SyncDataTaskToServer;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
+import wardentools.network.payloads.debug.DebugEditThryssarynToServer;
+import wardentools.network.payloads.debug.RequestCommunityDataToServer;
 
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
@@ -45,6 +47,20 @@ public class ModPackets {
                 SyncKnownWhisperToServer.STREAM_CODEC,
                 new MainThreadPayloadHandler<>(
                         ServerPayloadHandler::syncWindWhisperData
+                )
+        );
+        registrar.playToServer(
+                DebugEditThryssarynToServer.TYPE,
+                DebugEditThryssarynToServer.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        ServerPayloadHandler::debugEditThryssaryn
+                )
+        );
+        registrar.playToServer(
+                RequestCommunityDataToServer.TYPE,
+                RequestCommunityDataToServer.STREAM_CODEC,
+                new MainThreadPayloadHandler<>(
+                        ServerPayloadHandler::requestCommunityData
                 )
         );
 	}

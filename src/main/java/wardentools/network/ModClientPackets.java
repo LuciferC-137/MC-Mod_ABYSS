@@ -9,6 +9,7 @@ import wardentools.ModMain;
 import wardentools.network.payloads.*;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
+import wardentools.network.payloads.debug.SyncCommunityDataToClient;
 import wardentools.network.payloads.special_effects.*;
 
 
@@ -187,6 +188,13 @@ public class ModClientPackets {
 				WeatherSyncToClient.STREAM_CODEC,
 				new MainThreadPayloadHandler<>(
 						handler::weatherSyncToClient
+				)
+		);
+		registrar.playToClient(
+				SyncCommunityDataToClient.TYPE,
+				SyncCommunityDataToClient.STREAM_CODEC,
+				new MainThreadPayloadHandler<>(
+						handler::syncCommunityData
 				)
 		);
 	}

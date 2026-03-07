@@ -25,6 +25,7 @@ public class AbstractThryssaryn extends PathfinderMob {
             SynchedEntityData.defineId(AbstractThryssaryn.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Optional<UUID>> COMMUNITY_ID =
             SynchedEntityData.defineId(AbstractThryssaryn.class, EntityDataSerializers.OPTIONAL_UUID);
+    private boolean isPaused;
 
     // SERVER VARIABLES
     private boolean canCreateCommunity = true;
@@ -60,6 +61,7 @@ public class AbstractThryssaryn extends PathfinderMob {
 
     @Override
     public void tick() {
+        if (this.isPaused) return;
         super.tick();
         this.handleScheduledTasks();
         if (!this.level().isClientSide) {
@@ -74,6 +76,20 @@ public class AbstractThryssaryn extends PathfinderMob {
                 this.joinOrCreateCommunity();
             }
         }
+    }
+
+    @Override
+    public void aiStep() {
+        if  (this.isPaused) return;
+        super.aiStep();
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
     }
 
     public float getSizeFactor() {

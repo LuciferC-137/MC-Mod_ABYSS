@@ -22,6 +22,7 @@ public class ThryssarynRenderer extends MobRenderer<ThryssarynEntity, Thryssaryn
 		this.addLayer(new ThryssarynShellLayer(this));
 		this.addLayer(new ThryssarynEyesLayer(this));
 		this.addLayer(new ThryssarynLuthLayer(this));
+		this.addLayer(new ThryssarynClotheLayer(this));
 	}
 
 	@Override
