@@ -5,12 +5,46 @@
       "type": "minecraft:count",
       "count": {
         "type": "minecraft:uniform",
-        "max_inclusive": 12,
-        "min_inclusive": 6
+        "max_inclusive": 16,
+        "min_inclusive": 8
       }
     },
     {
       "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 64
+        },
+        "min_inclusive": {
+          "above_bottom": 0
+        }
+      }
+    },
+    {
+      "type": "minecraft:environment_scan",
+      "allowed_search_condition": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "minecraft:air"
+      },
+      "direction_of_search": "up",
+      "max_steps": 20,
+      "target_condition": {
+        "type": "minecraft:solid"
+      }
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:not",
+        "predicate": {
+          "type": "minecraft:matching_block_tag",
+          "tag": "wardentools:cristal_block"
+        }
+      }
     },
     {
       "type": "minecraft:biome"

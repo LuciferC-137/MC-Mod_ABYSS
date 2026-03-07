@@ -34,7 +34,7 @@ public class AttachCapabilities {
                 PacketDistributor.sendToPlayer(player, new SyncDataTaskToClient(taskId, false));
             }
             KnownWindWhispers whisperData = player.getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
-            PacketDistributor.sendToPlayer(player, new SyncKnownWhisperToClient(whisperData.getAllAsArray()));
+            PacketDistributor.sendToPlayer(player, new SyncKnownWhisperToClient(whisperData.getAll()));
         }
     }
 

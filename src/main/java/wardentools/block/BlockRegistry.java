@@ -35,12 +35,15 @@ public class BlockRegistry {
 	private static final int LIGHT_WHITE_TREE = 10;
 	private static final int LIGHT_WHITE_VEGETATION = 8;
 	private static final int LIGHT_DARK_VEGETATION = 5;
+	private static final int LIGHT_DUSK_WILLOW = 7;
+	private static final int LIGHT_DUSK_VEGETATION = 6;
 
     private static final MapColor DARKTREE_COLOR = MapColor.TERRACOTTA_BLUE;
     private static final MapColor DARKTREE_FOLIAGE_COLOR = MapColor.COLOR_CYAN;
     private static final MapColor DARK_VEGETATION_COLOR = MapColor.COLOR_CYAN;
     private static final MapColor WHITE_TREE_COLOR = MapColor.TERRACOTTA_CYAN;
     private static final MapColor DARKGRASS_COLOR = MapColor.TERRACOTTA_GREEN;
+	private static final MapColor DUSK_WILLOW = MapColor.TERRACOTTA_PURPLE;
 
 
     public static final DeferredBlock<Block> DEEPBLOCK = BLOCKS.register("deepblock",
@@ -165,7 +168,7 @@ public class BlockRegistry {
 	
  
 	public static final DeferredBlock<Block> DARKTREE_LEAVES = BLOCKS.register("darktree_leaves",
-			() -> new DarktreeLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+			() -> new LongDecayDistanceLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
                     .mapColor(DARKTREE_FOLIAGE_COLOR)
                     .lightLevel((state) -> LIGHT_DARK_TREE + 2)
             ));
@@ -707,6 +710,7 @@ public class BlockRegistry {
 			() ->  new PurpleSoilBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)
 					.mapColor(MapColor.COLOR_PURPLE)
 					.strength(0.8F)
+					.randomTicks()
 			));
 
 	public static final DeferredBlock<Block> PURPLE_FARMLAND
@@ -714,6 +718,146 @@ public class BlockRegistry {
 			() -> new PurpleFarmland(BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
 					.mapColor(MapColor.COLOR_PURPLE)
 					.strength(0.8F)
+			));
+
+	public static final DeferredBlock<Block> GRASS_PURPLE_SOIL
+			= BLOCKS.register("grass_purple_soil",
+			() -> new GrassPurpleSoil(BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK)
+					.mapColor(MapColor.TERRACOTTA_GREEN)
+					.strength(0.9F)
+					.sound(SoundType.GRASS).randomTicks()
+			));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_LOG = BLOCKS.register("dusk_willow_log",
+		    () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+		    		.ofFullCopy(Blocks.OAK_LOG)
+					.mapColor(DUSK_WILLOW)
+					.strength(4F)
+		    		.lightLevel((state) -> LIGHT_DUSK_WILLOW))
+		    );
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_WOOD = BLOCKS.register("dusk_willow_wood",
+			() -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+					.ofFullCopy(Blocks.OAK_LOG)
+					.mapColor(DUSK_WILLOW)
+					.strength(4F)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)
+			));
+
+	public static final DeferredBlock<Block> STRIPPED_DUSK_WILLOW_LOG = BLOCKS.register("stripped_dusk_willow_log",
+			() -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+					.ofFullCopy(Blocks.STRIPPED_OAK_LOG)
+					.mapColor(DUSK_WILLOW)
+					.strength(4F)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)));
+
+	public static final DeferredBlock<Block> STRIPPED_DUSK_WILLOW_WOOD = BLOCKS.register("stripped_dusk_willow_wood",
+			() -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties
+					.ofFullCopy(Blocks.STRIPPED_OAK_WOOD)
+					.mapColor(DUSK_WILLOW)
+					.strength(4F)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_PLANKS = BLOCKS.register("dusk_willow_planks",
+			() -> new Block(BlockBehaviour.Properties
+					.ofFullCopy(Blocks.OAK_PLANKS)
+					.mapColor(DUSK_WILLOW)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)) {
+
+				@Override
+				public boolean isFlammable(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+					return true;
+				}
+				@Override
+				public int getFlammability(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+					return 20;
+				}
+				@Override
+				public int getFireSpreadSpeed(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+					return 5;
+				}
+
+			});
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_STAIR = BLOCKS.register("dusk_willow_stair",
+			() -> new StairBlock(Blocks.OAK_STAIRS.defaultBlockState(),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)
+							.mapColor(DUSK_WILLOW)
+							.lightLevel((state) -> LIGHT_DUSK_WILLOW)));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_SLAB = BLOCKS.register("dusk_willow_slab",
+			() -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)
+					.mapColor(DUSK_WILLOW)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_BUTTON = BLOCKS.register("dusk_willow_button",
+			() -> new ButtonBlock(BlockSetType.OAK, 10,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+							.mapColor(DUSK_WILLOW)
+							.lightLevel((state) -> LIGHT_DUSK_WILLOW)
+			));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_PRESSURE_PLATE = BLOCKS.register("dusk_willow_pressure_plate",
+			() -> new PressurePlateBlock(BlockSetType.OAK,
+					BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)
+							.mapColor(DUSK_WILLOW)
+							.lightLevel((state) -> LIGHT_DUSK_WILLOW)));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_FENCE = BLOCKS.register("dusk_willow_fence",
+			() -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)
+					.mapColor(DUSK_WILLOW)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_FENCE_GATE = BLOCKS.register("dusk_willow_fence_gate",
+			() -> new FenceGateBlock(WoodType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)
+					.mapColor(DUSK_WILLOW)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_DOOR = BLOCKS.register("dusk_willow_door",
+			() -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)
+					.mapColor(DUSK_WILLOW)
+					.noOcclusion()));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_TRAPDOOR = BLOCKS.register("dusk_willow_trap_door",
+			() -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)
+					.mapColor(DUSK_WILLOW)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW)
+					.noOcclusion()));
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_LEAVES = BLOCKS.register("dusk_willow_leaves",
+			() -> new LongDecayDistanceLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
+					.mapColor(DUSK_WILLOW)
+					.lightLevel((state) -> LIGHT_DUSK_WILLOW + 2)));
+
+	public static final DeferredBlock<Block> VALLEY_IVY = BLOCKS.register("valley_ivy",
+			() -> new ValleyIvyBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.VINE)
+					.mapColor(DUSK_WILLOW)
+					.lightLevel((state) -> LIGHT_DUSK_VEGETATION)
+			));
+
+
+	public static final DeferredBlock<Block> DUSK_WILLOW_SAPLING = BLOCKS.register("dusk_willow_sapling",
+			()-> new SaplingBlock(new TreeGrower("dusk_willow",
+					Optional.of(ModConfiguredFeatures.DUSK_WILLOW_KEY),
+					Optional.of(ModConfiguredFeatures.DUSK_WILLOW_KEY),
+					Optional.of(ModConfiguredFeatures.DUSK_WILLOW_KEY)),
+					BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
+							.mapColor(DUSK_WILLOW)
+							.lightLevel((state) -> LIGHT_DUSK_WILLOW)
+			));
+
+	public static final DeferredBlock<Block> AURORA_NENUPHAR = BLOCKS.register("aurora_nenuphar",
+			() -> new AuroraNenupharBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.LILY_PAD)
+					.mapColor(DyeColor.CYAN)
+					.lightLevel((state) -> 12)
+					.noOcclusion()));
+
+	public static final DeferredBlock<Block> VERDANT_GRASS = BLOCKS.register("verdant_grass",
+			() -> new VerdantGrassBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.TALL_GRASS)
+					.noOcclusion()
+					.noCollission()
+					.lightLevel((state) -> 6)
 			));
 
     private static boolean never(BlockState state, BlockGetter level, BlockPos pos) {

@@ -10,6 +10,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
@@ -25,6 +26,8 @@ import wardentools.items.armors.ConfigurableDefenseItem;
 import wardentools.items.armors.ModMaterials;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.custom.*;
+import wardentools.weather.CommandAbyssWeather;
+import wardentools.wind.WhisperCommand;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
 public class CommonModEvents {
@@ -136,5 +139,13 @@ public class CommonModEvents {
 				GlyphParticle.Provider::new);
 		Minecraft.getInstance().particleEngine.register(ParticleRegistry.GLYPH_PARTICLE_ROTATING.get(),
 				GlyphParticleRotating.Provider::new);
+		Minecraft.getInstance().particleEngine.register(ParticleRegistry.PRISMATIC_FIREFLY_PARTICLE.get(),
+				PrismaticFirefly.Provider::new);
+	}
+
+	@SubscribeEvent
+	public static void registerCommands(RegisterCommandsEvent event) {
+		new CommandAbyssWeather(event.getDispatcher());
+		new WhisperCommand(event.getDispatcher());
 	}
 }

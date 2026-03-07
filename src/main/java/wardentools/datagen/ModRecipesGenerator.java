@@ -156,6 +156,15 @@ public class ModRecipesGenerator extends RecipeProvider {
                 ItemRegistry.WHITETREE_WOOD.get(), ItemRegistry.STRIPPED_WHITETREE_WOOD.get(),
                 ItemRegistry.WHITETREE_BOAT.get(), ItemRegistry.WHITETREE_CHEST_BOAT.get());
 
+        this.allWoodCrafts(recipeOutput, "dusk_willow",
+                ItemRegistry.DUSK_WILLOW_LOG.get(), ItemRegistry.DUSK_WILLOW_PLANKS.get(), ItemRegistry.STRIPPED_DUSK_WILLOW_LOG.get(),
+                ItemRegistry.DUSK_WILLOW_SLAB.get(), ItemRegistry.DUSK_WILLOW_STAIR.get(),
+                ItemRegistry.DUSK_WILLOW_FENCE.get(), ItemRegistry.DUSK_WILLOW_FENCE_GATE.get(),
+                ItemRegistry.DUSK_WILLOW_DOOR.get(), ItemRegistry.DUSK_WILLOW_TRAPDOOR.get(),
+                ItemRegistry.DUSK_WILLOW_BUTTON.get(),
+                ItemRegistry.DUSK_WILLOW_WOOD.get(), ItemRegistry.STRIPPED_DUSK_WILLOW_WOOD.get(),
+                ItemRegistry.DUSK_WILLOW_BOAT.get(), ItemRegistry.DUSK_WILLOW_CHEST_BOAT.get());
+
         this.craftsForCrystal(recipeOutput, ItemRegistry.CITRINE.get(),
                 ItemRegistry.CITRINE_BLOCK.get(), ItemRegistry.CITRINE_FRAGMENT.get());
         this.craftsForCrystal(recipeOutput, ItemRegistry.MALACHITE.get(),

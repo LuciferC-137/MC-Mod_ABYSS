@@ -19,6 +19,21 @@ public class AbyssConfig {
                 .comment("Wind messages are still added to the journal")
                 .define("displayWindMessages", true);
 
+        public static final ModConfigSpec.ConfigValue<Boolean> DISPLAY_AURORA = BUILDER
+                .translation("config.wardentools.title.display_aurora")
+                .comment("Display the aurora effect in the Abyss")
+                .define("displayAurora", true);
+
+        public static final ModConfigSpec.ConfigValue<Double> AURORA_INTENSITY = BUILDER
+                .translation("config.wardentools.title.aurora_intensity")
+                .comment("Set the intensity of the aurora effect in the Abyss.")
+                .defineInRange("auroraIntensity", 3.0, 0.1, 10.0);
+
+        public static final ModConfigSpec.ConfigValue<Integer> AURORA_SIZE = BUILDER
+                .translation("config.wardentools.title.aurora_size")
+                .comment("Set the size of the aurora effect. Reduce for better performance. (Increase intensity to keep beautiful visuals at lower cost).")
+                .defineInRange("auroraSize", 40, 1, 50);
+
         static ModConfigSpec SPEC = BUILDER.build();
 
     }

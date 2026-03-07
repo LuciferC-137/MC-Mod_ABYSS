@@ -91,6 +91,20 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     	this.addDropSelf(BlockRegistry.WHITETREE_TRAPDOOR);
     	this.addDropSelf(BlockRegistry.WHITE_TORCHFLOWER);
 
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_LOG);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_WOOD);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_SAPLING);
+		this.addDropSelf(BlockRegistry.STRIPPED_DUSK_WILLOW_LOG);
+		this.addDropSelf(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_PLANKS);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_STAIR);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_BUTTON);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_PRESSURE_PLATE);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_FENCE);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_FENCE_GATE);
+		this.addDropSelf(BlockRegistry.DUSK_WILLOW_TRAPDOOR);
+		this.addDropSelf(BlockRegistry.AURORA_NENUPHAR);
+
     	this.addDropSelf(BlockRegistry.PROTECTOR_INVOKER);
 		this.addDropSelf(BlockRegistry.CONTAGION_INCARNATION_SKULL);
 		this.addDropSelf(BlockRegistry.GRAMOPHONE);
@@ -113,6 +127,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.add(BlockRegistry.DARKGRASS_BLOCK.get(),
                 createSingleItemTableWithSilkTouch(BlockRegistry.DARKGRASS_BLOCK.get(),
                         ItemRegistry.DARKDIRT.get()));
+		this.add(BlockRegistry.GRASS_PURPLE_SOIL.get(),
+				createSingleItemTableWithSilkTouch(BlockRegistry.GRASS_PURPLE_SOIL.get(),
+						ItemRegistry.PURPLE_SOIL.get()));
 
 		// Planks derivatives special drops
     	this.add(BlockRegistry.DARKTREE_SLAB.get(), 
@@ -123,6 +140,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     			block -> createSlabItemTable(BlockRegistry.WHITETREE_SLAB.get()));
     	this.add(BlockRegistry.WHITETREE_DOOR.get(), 
     			block -> createDoorTable(BlockRegistry.WHITETREE_DOOR.get()));
+		this.add(BlockRegistry.DUSK_WILLOW_SLAB.get(),
+				block -> createSlabItemTable(BlockRegistry.DUSK_WILLOW_SLAB.get()));
+		this.add(BlockRegistry.DUSK_WILLOW_DOOR.get(),
+				block -> createDoorTable(BlockRegistry.DUSK_WILLOW_DOOR.get()));
 		this.add(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get(),
 				block -> createSlabItemTable(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get()));
 
@@ -141,6 +162,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                 block -> createShearsOnlyDrop(BlockRegistry.DEPTH_VINES.get()));
         this.add(BlockRegistry.DEPTH_VINES_PLANT.get(),
                 block -> createShearsOnlyDrop(BlockRegistry.DEPTH_VINES_PLANT.get()));
+		this.add(BlockRegistry.VALLEY_IVY.get(),
+				block -> createShearsOnlyDrop(BlockRegistry.VALLEY_IVY.get()));
+		this.add(BlockRegistry.VERDANT_GRASS.get(),
+				block -> createShearsOnlyDrop(BlockRegistry.VERDANT_GRASS.get()));
 
 		// Ore drop
 		this.add(BlockRegistry.ABYSSALITE_COAL_ORE.get(),
@@ -178,6 +203,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 		this.add(BlockRegistry.WHITETREE_LEAVES.get(),
 				block -> this.createCustomLeaveDrop(BlockRegistry.WHITETREE_LEAVES.get(),
 						BlockRegistry.WHITETREE_SAPLING.get(), ItemRegistry.WHITE_SEED.get(), 0.05F));
+		this.add(BlockRegistry.DUSK_WILLOW_LEAVES.get(),
+				block -> this.createCustomLeaveDrop(BlockRegistry.DUSK_WILLOW_LEAVES.get(),
+						BlockRegistry.DUSK_WILLOW_SAPLING.get(), ItemRegistry.PURPLE_SEED.get(), 0.05F));
 
 		// Special drop
 		this.add(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(),

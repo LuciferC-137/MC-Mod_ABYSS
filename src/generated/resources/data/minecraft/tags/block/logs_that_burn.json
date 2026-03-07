@@ -7,6 +7,10 @@
     "wardentools:whitetree_log",
     "wardentools:whitetree_wood",
     "wardentools:stripped_whitetree_log",
-    "wardentools:stripped_whitetree_wood"
+    "wardentools:stripped_whitetree_wood",
+    "wardentools:dusk_willow_log",
+    "wardentools:dusk_willow_wood",
+    "wardentools:stripped_dusk_willow_log",
+    "wardentools:stripped_dusk_willow_wood"
   ]
 }

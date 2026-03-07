@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "wardentools:dusk_willow_log"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "wardentools:dusk_willow_planks"
+  }
+}

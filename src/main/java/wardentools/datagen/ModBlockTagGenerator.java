@@ -83,7 +83,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.DARKDIRT.get())
                 .add(BlockRegistry.DARKGRASS_BLOCK.get())
                 .add(BlockRegistry.PURPLE_SOIL.get())
-                .add(BlockRegistry.PURPLE_FARMLAND.get());
+                .add(BlockRegistry.PURPLE_FARMLAND.get())
+                .add(BlockRegistry.GRASS_PURPLE_SOIL.get());
 
         this.tag(BlockTags.DRIPSTONE_REPLACEABLE)
                 .add(BlockRegistry.ABYSSALITE.get());
@@ -130,24 +131,32 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(BlockRegistry.WHITETREE_LOG.get())
                 .add(BlockRegistry.WHITETREE_WOOD.get())
                 .add(BlockRegistry.STRIPPED_WHITETREE_LOG.get())
-                .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get());
+                .add(BlockRegistry.STRIPPED_WHITETREE_WOOD.get())
+                .add(BlockRegistry.DUSK_WILLOW_LOG.get())
+                .add(BlockRegistry.DUSK_WILLOW_WOOD.get())
+                .add(BlockRegistry.STRIPPED_DUSK_WILLOW_LOG.get())
+                .add(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD.get());
 
         this.tag(BlockTags.PLANKS)
                 .add(BlockRegistry.DARKTREE_PLANKS.get())
-                .add(BlockRegistry.WHITETREE_PLANKS.get());
+                .add(BlockRegistry.WHITETREE_PLANKS.get())
+                .add(BlockRegistry.DUSK_WILLOW_PLANKS.get());
 
         this.tag(BlockTags.DIRT)
                 .add(BlockRegistry.DARKDIRT.get())
                 .add(BlockRegistry.DARKGRASS_BLOCK.get())
-                .add(BlockRegistry.PURPLE_SOIL.get());
+                .add(BlockRegistry.PURPLE_SOIL.get())
+                .add(BlockRegistry.GRASS_PURPLE_SOIL.get());
 
         this.tag(BlockTags.FENCES)
                 .add(BlockRegistry.DARKTREE_FENCE.get())
-                .add(BlockRegistry.WHITETREE_FENCE.get());
+                .add(BlockRegistry.WHITETREE_FENCE.get())
+                .add(BlockRegistry.DUSK_WILLOW_FENCE.get());
 
         this.tag(BlockTags.FENCE_GATES)
                 .add(BlockRegistry.DARKTREE_FENCE_GATE.get())
-                .add(BlockRegistry.WHITETREE_FENCE_GATE.get());
+                .add(BlockRegistry.WHITETREE_FENCE_GATE.get())
+                .add(BlockRegistry.DUSK_WILLOW_FENCE_GATE.get());
 
         this.tag(BlockTags.WALLS)
                 .add(BlockRegistry.ABYSSALITE_BRICKS_WALL.get())
@@ -185,7 +194,10 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
 		this.tag(ModTags.Blocks.CAN_SUSTAIN_ABYSS_PLANTS)
 				.add(Blocks.SCULK)
-                .add(BlockRegistry.PURPLE_SOIL.get());
+                .add(BlockRegistry.PURPLE_SOIL.get())
+                .add(BlockRegistry.GRASS_PURPLE_SOIL.get())
+                .add(BlockRegistry.DARKGRASS_BLOCK.get())
+                .add(BlockRegistry.DARKDIRT.get());
 
         this.tag(ModTags.Blocks.CONNECT_TO_TENDRILS_BLOCKS)
                 .add(Blocks.SCULK)

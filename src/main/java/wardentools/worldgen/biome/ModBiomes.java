@@ -24,8 +24,13 @@ public class ModBiomes {
     public static final int DEEP_FOREST_2 = 0x052a32;
     public static final int WHITE_FOREST_1 = 0x77b1ac;
     public static final int WHITE_FOREST_2 = 0x294d55;
+    public static final int AURORA_VALLEY_1 = 0x22414f;
+    public static final int AURORA_VALLEY_2 = 0x335238;
 	private static final int FOG_COLOR = 0x000b1c;
 	private static final int WATER_COLOR = 0x0a4c5b;
+    private static final int BASE_SKY_COLOR = 0x3d8f83;
+    private static final int WHITE_FOREST_SKY_COLOR = 0x97f7f5;
+    private static final int AURORA_VALLEY_SKY_COLOR = 0xcc2179;
     private static final GenerationStep.Decoration CRYSTAL_STEP = GenerationStep.Decoration.LOCAL_MODIFICATIONS;
     private static final GenerationStep.Decoration SCULK_STEP = GenerationStep.Decoration.UNDERGROUND_DECORATION;
 	
@@ -35,6 +40,8 @@ public class ModBiomes {
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "waste_land"));
 	public static final ResourceKey<Biome> WHITE_FOREST = ResourceKey.create(Registries.BIOME,
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "white_forest"));
+    public static final ResourceKey<Biome> AURORA_VALLEY = ResourceKey.create(Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "aurora_valley"));
     public static final ResourceKey<Biome> CRYSTAL_CAVE = ResourceKey.create(Registries.BIOME,
             ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristal_cave"));
     public static final ResourceKey<Biome> BLINDING_DEPTH = ResourceKey.create(Registries.BIOME,
@@ -57,6 +64,7 @@ public class ModBiomes {
         context.register(DEEP_FOREST, deepForest(context));
         context.register(WASTE_LAND, wasteLand(context));
         context.register(WHITE_FOREST, whiteForest(context));
+        context.register(AURORA_VALLEY, auroraValley(context));
         context.register(CRYSTAL_CAVE, cristalCave(context));
         context.register(BLINDING_DEPTH, blindingDepth(context));
         context.register(AMETHYST_CAVE, amethystCave(context));
@@ -177,7 +185,45 @@ public class ModBiomes {
                         .grassColorOverride(WHITE_FOREST_1)
                         .foliageColorOverride(WHITE_FOREST_2)
                         .backgroundMusic(ModMusics.WHITE_FOREST)
+                        .skyColor(WHITE_FOREST_SKY_COLOR)
                         .build()).build();
+    }
+
+    public static Biome auroraValley(BootstrapContext<Biome> context) {
+        MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
+
+        BiomeGenerationSettings.Builder biomeBuilder =
+                new BiomeGenerationSettings.Builder(
+                        context.lookup(Registries.PLACED_FEATURE), context.lookup(Registries.CONFIGURED_CARVER)
+                );
+        globalAbyssGeneration(biomeBuilder);
+        defaultAbyssOres(biomeBuilder);
+        defaultAbyssCaves(biomeBuilder);
+
+        biomeBuilder.addFeature(GenerationStep.Decoration.RAW_GENERATION,
+                ModPlacedFeatures.BASALT_BOULDER_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.LAKES,
+                ModPlacedFeatures.ABYSS_LAKE_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
+                ModPlacedFeatures.DUSK_WILLOW_PLACED_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
+                ModPlacedFeatures.LAVYN_PATCH_KEY);
+        biomeBuilder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
+                ModPlacedFeatures.VERDANT_GRASS_PATCH_KEY);
+
+        return new Biome.BiomeBuilder()
+                .hasPrecipitation(false)
+                .downfall(0.8f)
+                .temperature(0.2f)
+                .generationSettings(biomeBuilder.build())
+                .mobSpawnSettings(spawnBuilder.build())
+                .specialEffects(commonBiomeSpecialEffects()
+                        .backgroundMusic(ModMusics.ABYSS_THEME) // TODO: Change music
+                        .grassColorOverride(AURORA_VALLEY_1)
+                        .foliageColorOverride(AURORA_VALLEY_2)
+                        .skyColor(AURORA_VALLEY_SKY_COLOR)
+                        .build()).build();
+
     }
 
     public static Biome cristalCave(BootstrapContext<Biome> context) {
@@ -427,7 +473,7 @@ public class ModBiomes {
         return new BiomeSpecialEffects.Builder()
                 .waterColor(WATER_COLOR)
                 .waterFogColor(FOG_COLOR)
-                .skyColor(FOG_COLOR)
+                .skyColor(BASE_SKY_COLOR)
                 .grassColorOverride(DEEP_FOREST_1)
                 .foliageColorOverride(DEEP_FOREST_2)
                 .fogColor(FOG_COLOR)

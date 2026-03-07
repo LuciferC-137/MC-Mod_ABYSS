@@ -5,17 +5,25 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
+import wardentools.AbyssConfig;
+import wardentools.client.rendering.AuroraShaderManager;
 import wardentools.client.rendering.LevelRendererUtils;
-import wardentools.weather.AbyssFogClientHandler;
+import wardentools.weather.AbyssWeatherClientHandler;
 import wardentools.weather.AbyssWeatherEventClient;
 
+@OnlyIn(Dist.CLIENT)
 public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
+    public static final float BASE_BRIGHTNESS = 230F;
 
     public AbyssDimensionSpecialEffect(float cloudHeight, boolean hasGround, SkyType fogType,
-                                    boolean forceBrightLightmap, boolean constantAmbientLight) {
+                                       boolean forceBrightLightmap, boolean constantAmbientLight) {
         super(cloudHeight, hasGround, fogType, forceBrightLightmap, constantAmbientLight);
     }
 
@@ -38,9 +46,17 @@ public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
     public boolean renderSky(@NotNull ClientLevel level, int ticks, float partialTick,
                              @NotNull Matrix4f modelViewMatrix, @NotNull Camera camera,
                              @NotNull Matrix4f projectionMatrix, boolean isFoggy, @NotNull Runnable setupFog) {
-        int brightness = (int)(230f * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
-                / AbyssFogClientHandler.getMaxFogDistance());
+
+        int brightness = (int)(BASE_BRIGHTNESS * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
+                / AbyssWeatherClientHandler.getMaxFogDistance());
+
         LevelRendererUtils.renderSky(level, modelViewMatrix, brightness);
+
+        if (brightness > 50 && AbyssConfig.CLIENT.DISPLAY_AURORA.get()) {
+            Holder<Biome> biome = level.getBiome(camera.getBlockPosition());
+            AuroraShaderManager.applyAuroraEffect(modelViewMatrix, projectionMatrix, brightness);
+        }
+
         return true;
     }
 

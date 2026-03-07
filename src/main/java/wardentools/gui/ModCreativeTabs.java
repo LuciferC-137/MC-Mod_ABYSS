@@ -124,17 +124,40 @@ public class ModCreativeTabs {
         addItemToTag(Tag.WHITE_VEGETAL, ItemRegistry.TALL_WHITE_GRASS);
         addItemToTag(Tag.WHITE_VEGETAL, ItemRegistry.WHITE_TORCHFLOWER);
 
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_LOG);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_WOOD);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.STRIPPED_DUSK_WILLOW_LOG);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.STRIPPED_DUSK_WILLOW_WOOD);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_LEAVES);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.VALLEY_IVY);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_SAPLING);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_PLANKS);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_STAIR);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_SLAB);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_FENCE);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_BUTTON);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_DOOR);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_TRAPDOOR);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_FENCE_GATE);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_PRESSURE_PLATE);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_BOAT);
+        addItemToTag(Tag.DUSK_WILLOW, ItemRegistry.DUSK_WILLOW_CHEST_BOAT);
+
         addItemToTag(Tag.NATURE, ItemRegistry.NOCTILURE_FEATHER);
         addItemToTag(Tag.NATURE, ItemRegistry.WANDERER_PAW);
         addItemToTag(Tag.NATURE, ItemRegistry.NOCTILURE_TREAT);
         addItemToTag(Tag.NATURE, ItemRegistry.LURKER_EYE);
         addItemToTag(Tag.NATURE, ItemRegistry.LAVYN);
+        addItemToTag(Tag.NATURE, ItemRegistry.AURORA_NENUPHAR);
         addItemToTag(Tag.NATURE, ItemRegistry.PURPLE_SEED);
         addItemToTag(Tag.NATURE, ItemRegistry.SIRISCA_BLOSSOM);
         addItemToTag(Tag.NATURE, ItemRegistry.PURPLE_CAKE);
+        addItemToTag(Tag.NATURE, ItemRegistry.VERDANT_GRASS);
 
         addItemToTag(Tag.DIRT, ItemRegistry.DARKDIRT);
         addItemToTag(Tag.DIRT, ItemRegistry.DARKGRASS_BLOCK);
+        addItemToTag(Tag.DIRT, ItemRegistry.PURPLE_SOIL);
+        addItemToTag(Tag.DIRT, ItemRegistry.GRASS_PURPLE_SOIL);
 
         addItemToTag(Tag.EGG, ItemRegistry.DEEPLURKER_EGG);
         addItemToTag(Tag.EGG, ItemRegistry.PALEWANDERER_EGG);
@@ -251,6 +274,14 @@ public class ModCreativeTabs {
                         getItemsByTag(Tag.WHITETREE).forEach(item -> event.accept(item.get()));
                     }).build());
 
+    public static final Supplier<CreativeModeTab> DUSK_WILLOW
+            = CREATIVE_MODE_TABS.register("dusk_willow",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.DUSK_WILLOW_LOG.get()))
+                    .title(Component.translatable("creativetab.dusk_willow"))
+                    .displayItems((pParameters, event) -> {
+                        getItemsByTag(Tag.DUSK_WILLOW).forEach(item -> event.accept(item.get()));
+                    }).build());
+
     public static final Supplier<CreativeModeTab> TOOLS
             = CREATIVE_MODE_TABS.register("tools",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get()))
@@ -345,7 +376,8 @@ public class ModCreativeTabs {
         BUILDING("building"),
         JEWELRY("jewelry"),
         MISC("misc"),
-        DISC("disc");
+        DISC("disc"),
+        DUSK_WILLOW("dusk_willow");
 
         private final String key;
 

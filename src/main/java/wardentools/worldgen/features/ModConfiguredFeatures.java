@@ -20,16 +20,14 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.worldgen.features.custom.AbyssLakeConfiguration;
 import wardentools.worldgen.features.custom.DepthVineConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalFormationConfiguration;
 import wardentools.worldgen.features.custom.cristals.CristalVeinConfiguration;
 import wardentools.worldgen.features.custom.sculk.AbyssSculkPatchConfiguration;
 import wardentools.worldgen.features.custom.sculk.LivingSproutEmergenceConfiguration;
 import wardentools.worldgen.features.custom.sculk.SculkTendrilsEmergenceConfiguration;
-import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
-import wardentools.worldgen.tree.custom.DarktreeTrunkPlacer;
-import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;
-import wardentools.worldgen.tree.custom.WhitetreeTrunkPlacer;
+import wardentools.worldgen.features.tree.custom.*;
 
 import java.util.List;
 
@@ -38,6 +36,7 @@ public class ModConfiguredFeatures {
 	
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DARKTREE_KEY = registerKey("darktree");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITETREE_KEY = registerKey("whitetree");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> DUSK_WILLOW_KEY = registerKey("dusk_willow");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_GRASS = registerKey("white_grass");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_WHITE_GRASS = registerKey("tall_white_grass");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_TORCHFLOWER = registerKey("white_torchflower");
@@ -69,6 +68,10 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_SCULK_PATCH = registerKey("abyss_sculk_patch");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DEPTH_VINE = registerKey("tall_depth_vine");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIVING_SPROUT_EMERGENCE = registerKey("living_sprout_emergence");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> LAVYN_PATCH = registerKey("lavyn_patch");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> BASALT_BOULDER = registerKey("basalt_boulder");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> ABYSS_LAKE = registerKey("abyss_lake");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> VERDANT_GRASS_PATCH = registerKey("verdant_grass_patch");
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		
@@ -85,6 +88,13 @@ public class ModConfiguredFeatures {
                 BlockStateProvider.simple(BlockRegistry.WHITETREE_LEAVES.get()),
                 new WhitetreeFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), 3),
                 new TwoLayersFeatureSize(1, 0, 2)).build());
+
+		register(context, DUSK_WILLOW_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+				BlockStateProvider.simple(BlockRegistry.DUSK_WILLOW_LOG.get()),
+				new DuskWillowTrunkPlacer(3, 2, 2),
+				BlockStateProvider.simple(BlockRegistry.DUSK_WILLOW_LEAVES.get()),
+				new DuskWillowFoliagePlacer(ConstantInt.of(5), ConstantInt.of(0), 3),
+				new TwoLayersFeatureSize(1, 0 ,2)).build());
     	
     	register(context, WHITE_GRASS, Feature.RANDOM_PATCH,
     			grassPatch(BlockStateProvider.simple(BlockRegistry.WHITE_GRASS.get()), 40));
@@ -213,6 +223,19 @@ public class ModConfiguredFeatures {
 		register(context, LIVING_SPROUT_EMERGENCE, ModFeatures.LIVING_SPROUT_EMERGENCE.get(),
 				new LivingSproutEmergenceConfiguration(1, 7, 0.2F, true));
 
+		register(context, LAVYN_PATCH, Feature.RANDOM_PATCH,
+				customRandomPatch(BlockStateProvider.simple(BlockRegistry.LAVYN.get()), 96, 7, 3));
+
+		register(context, BASALT_BOULDER, ModFeatures.BASALT_BOULDER.get(), new NoneFeatureConfiguration());
+
+		register(context, ABYSS_LAKE, ModFeatures.ABYSS_LAKE.get(), new AbyssLakeConfiguration(
+				BlockStateProvider.simple(Blocks.WATER),
+				BlockStateProvider.simple(Blocks.MUD),
+				true));
+
+		register(context, VERDANT_GRASS_PATCH, Feature.RANDOM_PATCH,
+				grassPatch(BlockStateProvider.simple(BlockRegistry.VERDANT_GRASS.get()), 15));
+
     }
 	
 	private static RandomPatchConfiguration grassPatch(BlockStateProvider stateProvider, int tries) {
@@ -222,6 +245,19 @@ public class ModConfiguredFeatures {
 						BlockPredicate.ONLY_IN_AIR_PREDICATE
                 ));
     }
+
+	private static RandomPatchConfiguration customRandomPatch(BlockStateProvider stateProvider, int tries, int xzSpread, int ySpread) {
+		return new RandomPatchConfiguration(
+			tries,
+			xzSpread,
+			ySpread,
+			PlacementUtils.filtered(
+				Feature.SIMPLE_BLOCK,
+				new SimpleBlockConfiguration(stateProvider),
+				BlockPredicate.ONLY_IN_AIR_PREDICATE
+			)
+		);
+	}
 
 	public static OreConfiguration oreGeneration(int size, float discardChanceOnAirExposure,
 									  Block abyssaliteReplaceable, Block deepslateReplaceable){

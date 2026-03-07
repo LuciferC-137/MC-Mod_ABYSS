@@ -33,13 +33,6 @@ public class ModPackets {
 						ServerPayloadHandler::switchAchievement
 				)
 		);
-		registrar.playToServer(
-				RequestStormStateFromServer.TYPE,
-				RequestStormStateFromServer.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						ServerPayloadHandler::sendServerFogDistanceToPlayer
-				)
-		);
         registrar.playToServer(
                 SyncDataTaskToServer.TYPE,
                 SyncDataTaskToServer.STREAM_CODEC,

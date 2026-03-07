@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "wardentools:block/aurora_nenuphar"
+      },
+      {
+        "model": "wardentools:block/aurora_nenuphar",
+        "y": 90
+      },
+      {
+        "model": "wardentools:block/aurora_nenuphar",
+        "y": 180
+      },
+      {
+        "model": "wardentools:block/aurora_nenuphar",
+        "y": 270
+      }
+    ]
+  }
+}

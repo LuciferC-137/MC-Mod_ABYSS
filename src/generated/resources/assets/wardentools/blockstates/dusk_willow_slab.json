@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "wardentools:block/dusk_willow_slab"
+    },
+    "type=double": {
+      "model": "wardentools:block/dusk_willow_planks"
+    },
+    "type=top": {
+      "model": "wardentools:block/dusk_willow_slab_top"
+    }
+  }
+}

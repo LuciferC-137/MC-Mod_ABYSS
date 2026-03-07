@@ -2,14 +2,14 @@ package wardentools.particle.custom;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.LevelRenderer;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import wardentools.weather.AbyssWeatherEventClient;
+import wardentools.weather.WeatherEvent;
 
+@OnlyIn(Dist.CLIENT)
 public class AbyssAmbient extends TextureSheetParticle {
 
     protected AbyssAmbient(ClientLevel level, double x, double y, double z,
@@ -31,24 +31,15 @@ public class AbyssAmbient extends TextureSheetParticle {
     public void tick() {
         super.tick();
         this.fadeOut();
+        if (AbyssWeatherEventClient.CLIENT_WEATHER.isPlayerOutside()
+                && AbyssWeatherEventClient.CLIENT_WEATHER.getActiveEvent() == WeatherEvent.STORM) {
+            this.xd = 0.5F;
+            this.zd = 0.5F;
+        }
     }
 
     private void fadeOut() {
         this.alpha = (-(1/(float)lifetime) * age + 1);
-    }
-
-    @Override
-    protected int getLightColor(float f) {
-        BlockPos blockpos = BlockPos.containing(this.x, this.y, this.z);
-        if (!this.level.hasChunkAt(blockpos)) {
-            return 0;
-        }
-        int lightColor = LevelRenderer.getLightColor(this.level, blockpos);
-        int blockLight = (lightColor >> 4) & 0xF;
-        int skyLight = (lightColor >> 20) & 0xF;
-        blockLight = Math.min(blockLight * 2, 15);
-        skyLight = Math.min(skyLight * 2, 15);
-        return LightTexture.pack(skyLight, blockLight);
     }
 
     @Override

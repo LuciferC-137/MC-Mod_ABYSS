@@ -8,13 +8,13 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
-public record SyncKnownWhisperToServer(int whisperId, boolean remove) implements CustomPacketPayload {
+public record SyncKnownWhisperToServer(String whisperId, boolean remove) implements CustomPacketPayload {
     public static final Type<SyncKnownWhisperToServer> TYPE
             = new Type<>(ResourceLocation
             .fromNamespaceAndPath(ModMain.MOD_ID, "sync_known_whisper_to_server"));
 
     public static final StreamCodec<ByteBuf, SyncKnownWhisperToServer> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.INT,
+            ByteBufCodecs.STRING_UTF8,
             SyncKnownWhisperToServer::whisperId,
             ByteBufCodecs.BOOL,
             SyncKnownWhisperToServer::remove,

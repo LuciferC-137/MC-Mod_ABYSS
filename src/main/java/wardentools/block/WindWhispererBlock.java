@@ -11,7 +11,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
-import wardentools.misc.wind.WhisperManager;
+import wardentools.wind.WhisperManager;
 import wardentools.network.payloads.special_effects.ContagionParticleExplosion;
 
 public class WindWhispererBlock extends Block {

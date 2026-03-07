@@ -81,11 +81,14 @@ public class ModDimensions {
                 climate(0F, 0F, 0F, 0F, 0F, 0F,
                         ModBiomes.DEEP_FOREST, biomeRegistry),
 
-                climate(0.6F, -0.4F, 0F, 0.5F, 0.0F, 0F,
+                climate(0.7F, -0.7F, 0F, -0.5F, 0.0F, 0F,
                         ModBiomes.WASTE_LAND, biomeRegistry),
 
-                climate(-0.6F, 0.4F, -0.5F, -0.5F, 0.0F, 0F,
+                climate(-0.4F, -0.1F, -0.5F, -0.5F, 0.0F, 0F,
                         ModBiomes.WHITE_FOREST, biomeRegistry),
+
+                climate(0F, 0.3F, 0F, 0.5F, 0F, 0F,
+                        ModBiomes.AURORA_VALLEY, biomeRegistry),
 
                 climate(0F, 0.5F, 0.6F, 0.1F, 0.8F, 0.3F,
                         ModBiomes.CRYSTAL_CAVE, biomeRegistry),

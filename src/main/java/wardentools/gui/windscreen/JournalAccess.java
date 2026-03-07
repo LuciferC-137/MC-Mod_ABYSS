@@ -12,9 +12,9 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.misc.wind.Whisper;
-import wardentools.misc.wind.WhisperTags;
-import wardentools.misc.wind.WindWhispers;
+import wardentools.wind.Whisper;
+import wardentools.wind.WhisperTags;
+import wardentools.wind.WindWhispers;
 import wardentools.playerdata.ModDataAttachments;
 import wardentools.playerdata.serializables.KnownWindWhispers;
 
@@ -29,7 +29,6 @@ public class JournalAccess {
     private final List<List<Component>> tableOfContentComponents = new ArrayList<>();
     public int tableOfContentComponentYOffset = 0;
     private int lengthOfTableOfContent = 0;
-    private int actualPageCount = 0;
 
     public JournalAccess() {
         this.sections = new ArrayList<>();
@@ -38,7 +37,6 @@ public class JournalAccess {
 
     public void initPages(@NotNull Font font) {
         this.pages = this.buildPagesList(font);
-        this.actualPageCount = this.pages.size();
     }
 
     private List<List<FormattedCharSequence>> buildPagesList(Font font) {
@@ -165,10 +163,10 @@ public class JournalAccess {
         List<Whisper> whispersList = WindWhispers.INSTANCE.whisperTags.getWhispersWithTag(tag);
         for (Whisper whisper : whispersList) {
             if (data.whisperKnown(whisper.globalId())) {
-                whispers.add(baseText((whisper.globalId() + 1 ) + " - "
+                whispers.add(baseText(("" + whisper.id()) + " - "
                         + whisper.whisper().getString() + "\n"));
             } else {
-                whispers.add(baseText((whisper.globalId() + 1)+  " - " +
+                whispers.add(baseText(("" + whisper.id())+  " - " +
                         WindWhispers.getLockedString() + "\n", false, true));
             }
         }

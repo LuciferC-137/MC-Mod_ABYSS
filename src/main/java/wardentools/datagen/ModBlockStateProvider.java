@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import wardentools.ModMain;
@@ -28,6 +29,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // Registering blocks with item models
         registerBlockWithItem(BlockRegistry.DARKTREE_PLANKS);
         registerBlockWithItem(BlockRegistry.WHITETREE_PLANKS);
+        registerBlockWithItem(BlockRegistry.DUSK_WILLOW_PLANKS);
         registerBlockWithItem(BlockRegistry.DEEPBLOCK);
         registerBlockWithItem(BlockRegistry.DARKDIRT);
         registerBlockWithItem(BlockRegistry.PALE_CRISTAL_BLOCK);
@@ -67,8 +69,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // Registering specific block models
         registerLeavesBlock(BlockRegistry.DARKTREE_LEAVES);
         registerLeavesBlock(BlockRegistry.WHITETREE_LEAVES);
+        registerLeavesBlock(BlockRegistry.DUSK_WILLOW_LEAVES);
         registerCrossCutoutBlock(BlockRegistry.DARKTREE_SAPLING);
         registerCrossCutoutBlock(BlockRegistry.WHITETREE_SAPLING);
+        registerCrossCutoutBlock(BlockRegistry.DUSK_WILLOW_SAPLING);
         registerCrossCutoutBlock(BlockRegistry.WHITE_GRASS);
         registerCrossCutoutBlock(BlockRegistry.WHITE_TORCHFLOWER);
         registerCrossCutoutBlock(BlockRegistry.DARK_GRASS);
@@ -94,17 +98,23 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         registerSiriscaBlock(BlockRegistry.SIRISCA);
 
+        registerVineLikeBlock(BlockRegistry.VALLEY_IVY,"block/valley_ivy");
+
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
         registerFromLocation(BlockRegistry.STRIPPED_DARKTREE_WOOD, "block/stripped_darktree_log");
         registerFromLocation(BlockRegistry.WHITETREE_WOOD, "block/whitetree_log");
         registerFromLocation(BlockRegistry.STRIPPED_WHITETREE_WOOD, "block/stripped_whitetree_log");
+        registerFromLocation(BlockRegistry.DUSK_WILLOW_WOOD, "block/dusk_willow_log");
+        registerFromLocation(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD, "block/stripped_dusk_willow_log");
 
         // Registering block states for logs
         logBlock((RotatedPillarBlock) BlockRegistry.DARKTREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_DARKTREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.WHITETREE_LOG.get());
         logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_WHITETREE_LOG.get());
+        logBlock((RotatedPillarBlock) BlockRegistry.DUSK_WILLOW_LOG.get());
+        logBlock((RotatedPillarBlock) BlockRegistry.STRIPPED_DUSK_WILLOW_LOG.get());
         
         // Registering block states for planks derivatives
         stairsBlock(((StairBlock)BlockRegistry.DARKTREE_STAIR.get()),
@@ -142,6 +152,24 @@ public class ModBlockStateProvider extends BlockStateProvider {
         		modLoc("block/whitetree_door_bottom"), modLoc("block/whitetree_door_top"), "cutout");
         trapdoorBlockWithRenderType(((TrapDoorBlock)BlockRegistry.WHITETREE_TRAPDOOR.get()),
         		modLoc("block/whitetree_trap_door"), true, "cutout");
+
+        stairsBlock(((StairBlock) BlockRegistry.DUSK_WILLOW_STAIR.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        slabBlock(((SlabBlock) BlockRegistry.DUSK_WILLOW_SLAB.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        buttonBlock(((ButtonBlock) BlockRegistry.DUSK_WILLOW_BUTTON.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        pressurePlateBlock(((PressurePlateBlock) BlockRegistry.DUSK_WILLOW_PRESSURE_PLATE.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        fenceBlock(((FenceBlock) BlockRegistry.DUSK_WILLOW_FENCE.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        fenceGateBlock(((FenceGateBlock) BlockRegistry.DUSK_WILLOW_FENCE_GATE.get()),
+        		blockTexture(BlockRegistry.DUSK_WILLOW_PLANKS.get()));
+        doorBlockWithRenderType(((DoorBlock) BlockRegistry.DUSK_WILLOW_DOOR.get()),
+        		modLoc("block/dusk_willow_door_bottom"), modLoc("block/dusk_willow_door_top"), "cutout");
+        trapdoorBlockWithRenderType(((TrapDoorBlock) BlockRegistry.DUSK_WILLOW_TRAPDOOR.get()),
+        		modLoc("block/dusk_willow_trap_door"), true, "cutout");
         
         stairsBlock(((StairBlock)BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get()),
         		blockTexture(BlockRegistry.ABYSSALITE_BRICKS.get()));
@@ -344,5 +372,72 @@ public class ModBlockStateProvider extends BlockStateProvider {
         	simpleBlockWithItem(blockRegistryObject.get(),
         	    models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
         	    		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, location)));
+    }
+
+    /**
+     * Registers a vine-like block state with multipart model.
+     * Produces the same JSON structure as vanilla vine.json.
+     * @param blockRegistryObject The vine-like block to register
+     * @param texture The texture path for the vine model (e.g., "block/my_vine")
+     */
+    private void registerVineLikeBlock(DeferredBlock<Block> blockRegistryObject, String texture) {
+        String name = BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath();
+
+        // Create the vine model (similar to minecraft:block/vine)
+        ModelFile vineModel = models().singleTexture(name,
+                ResourceLocation.withDefaultNamespace("block/vine"),
+                "vine", modLoc(texture)).renderType("cutout");
+
+        MultiPartBlockStateBuilder builder = getMultipartBuilder(blockRegistryObject.get());
+
+        // North face (y=0)
+        builder.part().modelFile(vineModel).addModel()
+                .condition(BlockStateProperties.NORTH, true);
+        builder.part().modelFile(vineModel).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
+
+        // East face (y=90)
+        builder.part().modelFile(vineModel).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.EAST, true);
+        builder.part().modelFile(vineModel).rotationY(90).uvLock(true).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
+
+        // South face (y=180)
+        builder.part().modelFile(vineModel).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.SOUTH, true);
+        builder.part().modelFile(vineModel).rotationY(180).uvLock(true).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
+
+        // West face (y=270)
+        builder.part().modelFile(vineModel).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.WEST, true);
+        builder.part().modelFile(vineModel).rotationY(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
+
+        // Up face (x=270)
+        builder.part().modelFile(vineModel).rotationX(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.UP, true);
+        builder.part().modelFile(vineModel).rotationX(270).uvLock(true).addModel()
+                .condition(BlockStateProperties.NORTH, false)
+                .condition(BlockStateProperties.EAST, false)
+                .condition(BlockStateProperties.SOUTH, false)
+                .condition(BlockStateProperties.WEST, false)
+                .condition(BlockStateProperties.UP, false);
     }
 }

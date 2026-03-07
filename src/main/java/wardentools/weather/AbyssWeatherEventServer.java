@@ -53,7 +53,7 @@ public class AbyssWeatherEventServer {
 					WEATHER_MANAGER.weatherClear(level);
 					break;
 				case "rain", "thunder":
-					WEATHER_MANAGER.startNewEvent(level);
+					WEATHER_MANAGER.forceStorm(level, duration);
 					break;
 				default:
 					break;
@@ -64,7 +64,7 @@ public class AbyssWeatherEventServer {
 					WEATHER_MANAGER.weatherClear(level, duration);
 					break;
 				case "rain", "thunder":
-					WEATHER_MANAGER.startNewEvent(level, duration);
+					WEATHER_MANAGER.forceStorm(level, duration);
 					break;
 				default:
 					break;

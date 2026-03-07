@@ -56,4 +56,12 @@ public class ModFeatures {
     public static final Supplier<Feature<SimpleBlockConfiguration>> DOUBLE_PLANT
             = FEATURES.register("double_plant",
             () -> new DoublePlantFeature(SimpleBlockConfiguration.CODEC));
+
+    public static final Supplier<Feature<NoneFeatureConfiguration>> BASALT_BOULDER
+            = FEATURES.register("basalt_boulder",
+            () -> new BasaltBoulderFeature(NoneFeatureConfiguration.CODEC));
+
+    public static final Supplier<Feature<AbyssLakeConfiguration>> ABYSS_LAKE
+            = FEATURES.register("abyss_lake",
+            () -> new AbyssLakeFeature(AbyssLakeConfiguration.CODEC));
 }

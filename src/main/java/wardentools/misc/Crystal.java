@@ -6,6 +6,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
@@ -165,6 +167,17 @@ public enum Crystal implements StringRepresentable {
     @Override
     public @NotNull String getSerializedName() {
         return this.name().toLowerCase();
+    }
+
+    public static final IntegerProperty VARIANT = IntegerProperty.create("crystal_variant",
+            0, values().length - 1);
+
+    public static Crystal fromBlockProperty(BlockState state) {
+        if (state.hasProperty(VARIANT)) {
+            int index = state.getValue(VARIANT);
+            return fromIndex(index);
+        }
+        return getDefault();
     }
 }
 

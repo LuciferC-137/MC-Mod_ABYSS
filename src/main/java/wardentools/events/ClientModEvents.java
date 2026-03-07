@@ -2,6 +2,7 @@ package wardentools.events;
 
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
@@ -11,10 +12,13 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
+import net.neoforged.neoforge.client.event.RegisterShadersEvent;
 import wardentools.ModMain;
-import wardentools.block.BlockRegistry;
-import wardentools.block.CrystalInfuserBlock;
-import wardentools.block.DarkGrassBlock;
+import wardentools.block.*;
+import wardentools.client.AbyssDimensionSpecialEffect;
+import wardentools.client.color.ContextColorMethods;
+import wardentools.client.rendering.AuroraShaderManager;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.entity.thryssaryn.client.Thryssaryn;
@@ -23,6 +27,9 @@ import wardentools.items.CrystalResonatorItem;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;
 import wardentools.weather.lightning.AbyssLightningRenderer;
+import wardentools.worldgen.dimension.ModDimensions;
+
+import java.io.IOException;
 
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
@@ -66,6 +73,8 @@ public class ClientModEvents {
 		event.registerLayerDefinition(ModBoat.DARKTREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
 		event.registerLayerDefinition(ModBoat.WHITETREE_BOAT_LAYER, BoatModel::createBodyModel);
 		event.registerLayerDefinition(ModBoat.WHITETREE_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
+		event.registerLayerDefinition(ModBoat.DUSK_WILLOW_BOAT_LAYER, BoatModel::createBodyModel);
+		event.registerLayerDefinition(ModBoat.DUSK_WILLOW_CHEST_BOAT_LAYER, ChestBoatModel::createBodyModel);
 		event.registerLayerDefinition(Temper.LAYER_LOCATION, Temper::createBodyLayer);
 		event.registerLayerDefinition(Parasyte.LAYER_LOCATION, Parasyte::createBodyLayer);
 		event.registerLayerDefinition(Noctilure.LAYER_LOCATION, Noctilure::createBodyLayer);
@@ -83,13 +92,44 @@ public class ClientModEvents {
 				BlockRegistry.CRYSTAL_INFUSER.get());
 		event.register(DarkGrassBlock::getColor,
 				BlockRegistry.DARKGRASS_BLOCK.get());
+		event.register(GrassPurpleSoil::getColor,
+				BlockRegistry.GRASS_PURPLE_SOIL.get());
+		event.register(AuroraNenupharBlock::getColor,
+				BlockRegistry.AURORA_NENUPHAR.get());
+		event.register(ContextColorMethods::getVerdantGrassColor,
+				BlockRegistry.VERDANT_GRASS.get());
 
 		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.DARKGRASS_BLOCK.get(),
+				RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GRASS_PURPLE_SOIL.get(),
+				RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.AURORA_NENUPHAR.get(),
+				RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(BlockRegistry.VERDANT_GRASS.get(),
 				RenderType.cutoutMipped());
 	}
 
 	@SubscribeEvent
 	public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
 		event.register(CrystalResonatorItem::getColor, ItemRegistry.CRYSTAL_RESONATOR.get());
+		event.register(VerdantGrassBlock::getColor, ItemRegistry.VERDANT_GRASS.get());
+		event.register(DarkGrassBlock::getColor, ItemRegistry.DARKGRASS_BLOCK.get());
+		event.register(GrassPurpleSoil::getColor, ItemRegistry.GRASS_PURPLE_SOIL.get());
+		event.register(AuroraNenupharBlock::getColor, ItemRegistry.AURORA_NENUPHAR.get());
 	}
+
+	@SubscribeEvent
+	public static void registerShader(RegisterShadersEvent event) throws IOException {
+		AuroraShaderManager.registerShader(event);
+	}
+
+	@SubscribeEvent
+	public static void registerDimensionSpecialEffect(RegisterDimensionSpecialEffectsEvent event) {
+		event.register(ModDimensions.DIMENSION_RENDERER,
+				new AbyssDimensionSpecialEffect(128.0F, false,
+						DimensionSpecialEffects.SkyType.NORMAL, false,
+						false));
+
+	}
+
 }

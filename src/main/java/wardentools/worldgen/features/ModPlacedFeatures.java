@@ -26,6 +26,7 @@ import java.util.List;
 public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> DARKTREE_PLACED_KEY = registerKey("darktree_placed");
 	public static final ResourceKey<PlacedFeature> WHITETREE_PLACED_KEY = registerKey("whitetree_placed");
+	public static final ResourceKey<PlacedFeature> DUSK_WILLOW_PLACED_KEY = registerKey("dusk_willow_placed");
 	public static final ResourceKey<PlacedFeature> WHITE_GRASS_KEY = registerKey("white_grass");
 	public static final ResourceKey<PlacedFeature> TALL_WHITE_GRASS_KEY = registerKey("tall_white_grass");
 	public static final ResourceKey<PlacedFeature> WHITE_TORCHFLOWER_KEY = registerKey("white_torchflower");
@@ -64,12 +65,15 @@ public class ModPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> TALL_DEPTH_VINES_KEY = registerKey("tall_depth_vines");
 	public static final ResourceKey<PlacedFeature> CAVE_SCULK_TENDRILS_KEY = registerKey("sculk_tendrils");
 	public static final ResourceKey<PlacedFeature> LIVING_SPROUT_EMERGENCE_KEY = registerKey("living_sprout_emergence");
+	public static final ResourceKey<PlacedFeature> LAVYN_PATCH_KEY = registerKey("lavyn_patch");
+	public static final ResourceKey<PlacedFeature> BASALT_BOULDER_KEY = registerKey("basalt_boulder");
+	public static final ResourceKey<PlacedFeature> ABYSS_LAKE_KEY = registerKey("abyss_lake");
+	public static final ResourceKey<PlacedFeature> VERDANT_GRASS_PATCH_KEY = registerKey("verdant_grass_patch");
 
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        
         register(context, DARKTREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DARKTREE_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1f, 2),
                         BlockRegistry.DARKTREE_SAPLING.get()));
@@ -77,6 +81,10 @@ public class ModPlacedFeatures {
         register(context, WHITETREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WHITETREE_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(14, 0.1f, 2),
                         BlockRegistry.WHITETREE_SAPLING.get()));
+
+		register(context, DUSK_WILLOW_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.DUSK_WILLOW_KEY),
+				VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.2f, 1),
+						BlockRegistry.DUSK_WILLOW_SAPLING.get()));
         
 
         register(context, WHITE_GRASS_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.WHITE_GRASS),
@@ -260,9 +268,7 @@ public class ModPlacedFeatures {
 
 		register(context, TALL_DEPTH_VINES_KEY,
 				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.TALL_DEPTH_VINE),
-				List.of(CountPlacement.of(UniformInt.of(6, 12)),
-						InSquarePlacement.spread(),
-						BiomeFilter.biome())
+				onCaveWallUp(8, 16)
 		);
 
 		register(context, CAVE_SCULK_TENDRILS_KEY,
@@ -275,6 +281,38 @@ public class ModPlacedFeatures {
 				onCaveWallDown(6, 10)
 		);
 
+		register(context, LAVYN_PATCH_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.LAVYN_PATCH),
+				List.of(RarityFilter.onAverageOnceEvery(5),
+					InSquarePlacement.spread(),
+					PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+					BiomeFilter.biome()
+					)
+		);
+
+		register(context, BASALT_BOULDER_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.BASALT_BOULDER),
+				List.of(CountPlacement.of(UniformInt.of(0, 1)),
+						InSquarePlacement.spread(),
+						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+						BiomeFilter.biome())
+		);
+
+		register(context, ABYSS_LAKE_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.ABYSS_LAKE),
+                List.of(RarityFilter.onAverageOnceEvery(20),
+                        InSquarePlacement.spread(),
+                        PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+						BiomeFilter.biome())
+		);
+
+		register(context, VERDANT_GRASS_PATCH_KEY,
+				context.lookup((Registries.CONFIGURED_FEATURE)).getOrThrow(ModConfiguredFeatures.VERDANT_GRASS_PATCH),
+				List.of(CountPlacement.of(UniformInt.of(4, 8)),
+						InSquarePlacement.spread(),
+						PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
+						BiomeFilter.biome())
+		);
     }
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {

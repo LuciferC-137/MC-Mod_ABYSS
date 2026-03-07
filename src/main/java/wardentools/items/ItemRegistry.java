@@ -715,6 +715,10 @@ public class ItemRegistry {
 			ITEMS.register("purple_soil",
 					() -> new BlockItem(BlockRegistry.PURPLE_SOIL.get(), new Item.Properties()));
 
+	public static final DeferredItem<BlockItem> GRASS_PURPLE_SOIL =
+			ITEMS.register("grass_purple_soil",
+					() -> new BlockItem(BlockRegistry.GRASS_PURPLE_SOIL.get(), new Item.Properties()));
+
 	public static final DeferredItem<Item> SIRISCA_BLOSSOM =
 			ITEMS.register("sirisca_blossom",
 					() -> new Item(new Item.Properties()
@@ -733,4 +737,100 @@ public class ItemRegistry {
 							.stacksTo(1)
 					));
 
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_LOG =
+			ITEMS.register("dusk_willow_log",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_LOG.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_WOOD =
+			ITEMS.register("dusk_willow_wood",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_WOOD.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> STRIPPED_DUSK_WILLOW_LOG =
+			ITEMS.register("stripped_dusk_willow_log",
+					() -> new BlockItem(BlockRegistry.STRIPPED_DUSK_WILLOW_LOG.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> STRIPPED_DUSK_WILLOW_WOOD =
+			ITEMS.register("stripped_dusk_willow_wood",
+					() -> new BlockItem(BlockRegistry.STRIPPED_DUSK_WILLOW_WOOD.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_PLANKS =
+			ITEMS.register("dusk_willow_planks",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_PLANKS.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_STAIR =
+			ITEMS.register("dusk_willow_stair",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_STAIR.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_SLAB =
+			ITEMS.register("dusk_willow_slab",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_SLAB.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_FENCE =
+			ITEMS.register("dusk_willow_fence",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_FENCE.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_FENCE_GATE =
+			ITEMS.register("dusk_willow_fence_gate",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_FENCE_GATE.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_BUTTON =
+			ITEMS.register("dusk_willow_button",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_BUTTON.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_PRESSURE_PLATE =
+			ITEMS.register("dusk_willow_pressure_plate",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_PRESSURE_PLATE.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_DOOR =
+			ITEMS.register("dusk_willow_door",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_DOOR.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_TRAPDOOR =
+			ITEMS.register("dusk_willow_trap_door",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_TRAPDOOR.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_LEAVES =
+			ITEMS.register("dusk_willow_leaves",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_LEAVES.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<BlockItem> DUSK_WILLOW_SAPLING =
+			ITEMS.register("dusk_willow_sapling",
+					() -> new BlockItem(BlockRegistry.DUSK_WILLOW_SAPLING.get(), new Item.Properties()
+					));
+
+	public static final DeferredItem<Item> DUSK_WILLOW_BOAT =
+			ITEMS.register("dusk_willow_boat",
+					() -> new ModBoatItem(false, ModBoatEntity.Type.DUSK_WILLOW,
+							new Item.Properties().stacksTo(1)));
+
+	public static final DeferredItem<Item> DUSK_WILLOW_CHEST_BOAT =
+			ITEMS.register("dusk_willow_chest_boat",
+					() -> new ModBoatItem(true, ModBoatEntity.Type.DUSK_WILLOW,
+							new Item.Properties().stacksTo(1)));
+
+	public static final DeferredItem<Item> VALLEY_IVY =
+			ITEMS.register("valley_ivy",
+					() -> new BlockItem(BlockRegistry.VALLEY_IVY.get(), new Item.Properties()));
+
+	public static final DeferredItem<BlockItem> AURORA_NENUPHAR =
+			ITEMS.register("aurora_nenuphar",
+					() -> new PlaceOnWaterBlockItem(BlockRegistry.AURORA_NENUPHAR.get(), new Item.Properties()));
+
+	public static final DeferredItem<BlockItem> VERDANT_GRASS =
+			ITEMS.register("verdant_grass",
+					() -> new BlockItem(BlockRegistry.VERDANT_GRASS.get(), new Item.Properties()));
 }
