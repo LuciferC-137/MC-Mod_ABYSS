@@ -2,6 +2,7 @@ package wardentools.events;
 
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
@@ -11,16 +12,19 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.CrystalInfuserBlock;
 import wardentools.block.DarkGrassBlock;
+import wardentools.client.AbyssDimensionSpecialEffect;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.items.CrystalResonatorItem;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;
 import wardentools.weather.lightning.AbyssLightningRenderer;
+import wardentools.worldgen.dimension.ModDimensions;
 
 @OnlyIn(Dist.CLIENT)
 @EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
@@ -87,5 +91,14 @@ public class ClientModEvents {
 	@SubscribeEvent
 	public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
 		event.register(CrystalResonatorItem::getColor, ItemRegistry.CRYSTAL_RESONATOR.get());
+	}
+
+	@SubscribeEvent
+	public static void registerDimensionSpecialEffect(RegisterDimensionSpecialEffectsEvent event) {
+		event.register(ModDimensions.DIMENSION_RENDERER,
+				new AbyssDimensionSpecialEffect(128.0F, false,
+						DimensionSpecialEffects.SkyType.NORMAL, false,
+						false));
+
 	}
 }
