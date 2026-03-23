@@ -7,8 +7,14 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+**Bug description**
 A clear and concise description of what the bug is.
+
+**Configuration**
+Minecraft version: 1.21.1
+Mod Version: 1.1.4
+Mod loader version: neoforge 21.3.94
+Other mods involved:
 
 **To Reproduce**
 Steps to reproduce the behavior:
@@ -20,7 +26,8 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+**Attached file**
+Add the game logs if a crash happened.
 If applicable, add screenshots to help explain your problem.
 
 **Additional context**
