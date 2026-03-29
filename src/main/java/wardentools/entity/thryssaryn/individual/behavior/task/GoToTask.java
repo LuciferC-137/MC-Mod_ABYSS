@@ -1,8 +1,10 @@
 package wardentools.entity.thryssaryn.individual.behavior.task;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.pathfinder.Path;
+import org.jetbrains.annotations.NotNull;
 import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
 
 import javax.annotation.Nullable;
@@ -18,12 +20,12 @@ public class GoToTask extends Task {
     BlockPos target;
 
     public GoToTask(ThryssarynEntity entity, BlockPos target) {
-        super(entity, Set.of(), Task.DEFAULT_MAX_TIME);
+        super(entity, Set.of(), Task.DEFAULT_MAX_TIME, 1);
         this.target = target;
     }
 
     public GoToTask(ThryssarynEntity entity, Entity targetEntity) {
-        super(entity, Set.of(), Task.DEFAULT_MAX_TIME);
+        super(entity, Set.of(), Task.DEFAULT_MAX_TIME, 1);
         this.target = targetEntity.blockPosition();
     }
 
@@ -36,7 +38,7 @@ public class GoToTask extends Task {
     @Override
     public void tick() {
         super.tick();
-        if (this.timeAlive % INTERVAL_BETWEEN_PATHFINDING == 0 || lastEvaluation == -1) {
+        if (this.tickCount % INTERVAL_BETWEEN_PATHFINDING == 0 || lastEvaluation == -1) {
             this.entity.moveTo(target.getCenter());
             this.path = this.entity.getNavigation().getPath();
         }
@@ -63,5 +65,10 @@ public class GoToTask extends Task {
         if (this.path == null && shouldRecompute()) evaluatePath();
         if (this.path == null) return Requirement.MAX_DIFFICULTY;
         return Requirement.clampDifficulty(this.path.getDistToTarget() / MAX_DISTANCE_TO_BE_FEASIBLE);
+    }
+
+    @Override
+    public @NotNull CompoundTag toCompoundTag() {
+        return super.toCompoundTag();
     }
 }

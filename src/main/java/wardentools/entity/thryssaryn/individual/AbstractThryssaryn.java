@@ -41,29 +41,14 @@ public class AbstractThryssaryn extends PathfinderMob {
     };
     public static final int ADULT_AGE = 36000; // 30 minutes in ticks
 
-    private final List<Runnable> scheduledTasks = new ArrayList<>();
-    private final List<Integer> taskDelays = new ArrayList<>();
-
     protected AbstractThryssaryn(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
-    }
-
-    /**
-     * Schedules a task to be executed after a delay in ticks.
-     * Can work on both client and server side, each one calculating its own delay.
-     * @param task The task to execute
-     * @param delayTicks Delay in ticks before execution
-     */
-    public void schedule(Runnable task, int delayTicks) {
-        scheduledTasks.add(task);
-        taskDelays.add(delayTicks);
     }
 
     @Override
     public void tick() {
         if (this.isPaused) return;
         super.tick();
-        this.handleScheduledTasks();
         if (!this.level().isClientSide) {
             if (this.getAge() == -1) {
                 this.setAge(ADULT_AGE); // Allow spawning as adult by default
@@ -114,20 +99,6 @@ public class AbstractThryssaryn extends PathfinderMob {
     @Override
     public boolean isBaby() {
         return this.getAge() < ADULT_AGE;
-    }
-
-    public void handleScheduledTasks() {
-        for (int i = 0; i < taskDelays.size(); i++) {
-            int delay = taskDelays.get(i) - 1;
-            if (delay <= 0) {
-                scheduledTasks.get(i).run();
-                scheduledTasks.remove(i);
-                taskDelays.remove(i);
-                i--;
-            } else {
-                taskDelays.set(i, delay);
-            }
-        }
     }
 
     @Override

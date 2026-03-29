@@ -18,20 +18,25 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.gameevent.DynamicGameEventListener;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.client.color.ColorUtils;
 import wardentools.entity.ModEntities;
+import wardentools.entity.thryssaryn.individual.behavior.Brain;
 import wardentools.entity.utils.AnimationSequence;
 import wardentools.items.ItemRegistry;
-import wardentools.sounds.ModSounds;
+
+import java.util.function.BiConsumer;
 
 
 public class ThryssarynEntity extends AbstractThryssaryn {
 	public final AnimationState standing2playingLuth = new AnimationState();
 	public final AnimationState playingLuth2standing = new AnimationState();
 	public final AnimationState playingLuthWarden = new AnimationState();
+
+	private final Brain brain;
 
 	public static final EntityDataAccessor<Boolean> IS_PLAYING_LUTH =
 			SynchedEntityData.defineId(ThryssarynEntity.class, EntityDataSerializers.BOOLEAN);
@@ -47,6 +52,7 @@ public class ThryssarynEntity extends AbstractThryssaryn {
 
 	public ThryssarynEntity(EntityType<? extends AbstractThryssaryn> entity, Level level) {
 		super(entity, level);
+		this.brain = new Brain(this);
 	}
 	
 	protected void registerGoals() {
@@ -72,21 +78,16 @@ public class ThryssarynEntity extends AbstractThryssaryn {
 		if (!thryssarynLuthSequence.isRunning()) {
 			this.setPlayingLuth(false);
 		}
+		this.brain.tick();
 	}
 
-	public void startPlayingLuthToCalmWarden() {
-		if (!thryssarynLuthSequence.isRunning()) {
-			thryssarynLuthSequence.start();
-			this.schedule(() -> this.playSound(ModSounds.LUTH_PLAYING_WARDEN.get()), 38);
+	@Override
+	public void updateDynamicGameEventListener(
+			@NotNull BiConsumer<DynamicGameEventListener<?>, ServerLevel> consumer) {
+		Level level = this.level();
+		if (level instanceof ServerLevel serverlevel) {
+			consumer.accept(this.brain.getHearing().dynamicGameEventListener, serverlevel);
 		}
-		this.setPlayingLuth(true);
-	}
-
-	public void stopPlayingLuth() {
-		if (thryssarynLuthSequence.isRunning()) {
-			thryssarynLuthSequence.stop();
-		}
-		this.setPlayingLuth(false);
 	}
 
 	public @Nullable ThryssarynEntity getBreedOffspring(@NotNull ServerLevel serverLevel,

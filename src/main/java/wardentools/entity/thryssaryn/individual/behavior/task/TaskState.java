@@ -2,7 +2,8 @@ package wardentools.entity.thryssaryn.individual.behavior.task;
 
 public enum TaskState {
     FAILED,
-    ALIVE,
+    RUNNING,
     DONE,
-    WAITING
+    WAITING,
+    THEORETICAL
 }
