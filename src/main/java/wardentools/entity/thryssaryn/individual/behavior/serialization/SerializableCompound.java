@@ -1,4 +1,4 @@
-package wardentools.entity.thryssaryn.individual.behavior;
+package wardentools.entity.thryssaryn.individual.behavior.serialization;
 
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;

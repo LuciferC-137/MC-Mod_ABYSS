@@ -25,6 +25,8 @@ public class AbstractThryssaryn extends PathfinderMob {
             SynchedEntityData.defineId(AbstractThryssaryn.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Optional<UUID>> COMMUNITY_ID =
             SynchedEntityData.defineId(AbstractThryssaryn.class, EntityDataSerializers.OPTIONAL_UUID);
+    public static final EntityDataAccessor<Integer> HUNGER =
+            SynchedEntityData.defineId(AbstractThryssaryn.class, EntityDataSerializers.INT);
     private boolean isPaused;
 
     // SERVER VARIABLES
@@ -40,6 +42,7 @@ public class AbstractThryssaryn extends PathfinderMob {
             0xFFA500  // Orange
     };
     public static final int ADULT_AGE = 36000; // 30 minutes in ticks
+    public static final int MAX_HUNGER = 144000; // 2h
 
     protected AbstractThryssaryn(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
@@ -56,9 +59,11 @@ public class AbstractThryssaryn extends PathfinderMob {
             if (this.getAge() < ADULT_AGE) {
                 this.ageUp(1);
             }
-
             if (!this.hasCommunity() && tickCount % 200 == 0) {
                 this.joinOrCreateCommunity();
+            }
+            if (this.getHunger() > 0) {
+                this.setHunger(this.getHunger() - 1);
             }
         }
     }
@@ -107,6 +112,7 @@ public class AbstractThryssaryn extends PathfinderMob {
         entityData.define(EYES_COLOR, 0);
         entityData.define(COMMUNITY_ID, Optional.empty());
         entityData.define(AGE, -1);
+        entityData.define(HUNGER, MAX_HUNGER);
     }
 
     @Override
@@ -117,6 +123,7 @@ public class AbstractThryssaryn extends PathfinderMob {
             compound.putUUID("communityId", this.getCommunityId().get());
         }
         compound.putInt("age", this.getAge());
+        compound.putFloat("hunger", this.getHunger());
     }
 
     @Override
@@ -173,6 +180,10 @@ public class AbstractThryssaryn extends PathfinderMob {
     public int getAge() {return this.entityData.get(AGE);}
 
     public void setAge(int age) {this.entityData.set(AGE, age);}
+
+    public int getHunger() {return this.entityData.get(HUNGER);}
+
+    public void setHunger(int hunger) {this.entityData.set(HUNGER, hunger);}
 
     public @Nullable Community getCommunity() {
         if (this.level() instanceof ServerLevel serverLevel) {
