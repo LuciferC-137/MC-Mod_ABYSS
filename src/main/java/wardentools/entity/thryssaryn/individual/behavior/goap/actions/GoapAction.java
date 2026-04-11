@@ -1,17 +1,31 @@
 package wardentools.entity.thryssaryn.individual.behavior.goap.actions;
 
+import net.minecraft.world.entity.PathfinderMob;
+import org.jetbrains.annotations.NotNull;
 import wardentools.entity.thryssaryn.individual.behavior.goap.WorldState;
 
 public class GoapAction {
+    PathfinderMob mob;
 
-    public void CheckPreconditions(WorldState ws) {
-
+    public GoapAction(PathfinderMob mob) {
+        this.mob = mob;
     }
 
-    public WorldState applyEffects(WorldState ws) {
+    public boolean checkPreconditions(WorldState ws) {
+        return true;
+    }
+
+    public @NotNull WorldState applyEffects(WorldState ws) {
         return ws;
     }
 
-    public void execute(WorldState ws) {
+    public @NotNull Status execute(WorldState ws) {
+        return Status.FAILURE;
+    }
+
+    public enum Status {
+        RUNNING,
+        SUCCESS,
+        FAILURE
     }
 }
