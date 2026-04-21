@@ -9,10 +9,12 @@ public class Brain {
     private final Hearing hearing;
     private final Sight sight;
     private ThryssarynEntity entity;
+    private ThryssarynMemory memory;
 
     public Brain(ThryssarynEntity entity) {
         this.hearing = new Hearing(entity);
         this.sight = new Sight(entity);
+        this.memory = new ThryssarynMemory(entity); // TODO make this persistent
     }
 
     public Hearing getHearing() {
@@ -21,6 +23,10 @@ public class Brain {
 
     public Sight getSight() {
         return sight;
+    }
+
+    public ThryssarynMemory getMemory() {
+        return memory;
     }
 
     public void tick() {

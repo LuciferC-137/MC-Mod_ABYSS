@@ -90,6 +90,10 @@ public class ThryssarynEntity extends AbstractThryssaryn {
 		}
 	}
 
+	public Brain getThrBrain() {
+		return this.brain;
+	}
+
 	public @Nullable ThryssarynEntity getBreedOffspring(@NotNull ServerLevel serverLevel,
                                                         @NotNull ThryssarynEntity otherParent) {
 		ThryssarynEntity child = ModEntities.THRYSSARYN.get().create(serverLevel);
