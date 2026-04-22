@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The Action Factory is the builder that collects and instantiate all possible actions
+ * The Action Factory is the builder that collects and instantiates all possible actions
  * for the scheduler to chose from.
  * Complex actions have their own factory extending this base class.
 */

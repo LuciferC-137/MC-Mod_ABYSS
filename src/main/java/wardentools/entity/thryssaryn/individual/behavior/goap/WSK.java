@@ -7,6 +7,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import wardentools.entity.thryssaryn.individual.behavior.goap.poi.POIInstance;
+import wardentools.entity.thryssaryn.individual.behavior.goap.poi.POIType;
+
+import java.util.Set;
 
 /**
  * World State Keys
@@ -31,6 +34,7 @@ public final class WSK<T> {
     public static final WSK<Float> DISTANCE_TO_TARGET = new WSK<>("DISTANCE_TO_TARGET", Float.class);
 
     public static final WSK<POIInstance> POI_AT = new WSK<>("POI_AT", POIInstance.class);
+    public static final WSK<Set<POIType>> KNOWN_POI_TYPES = new WSK<>("KNOWN_POI_TYPES", erased(Set.class));
 
     private final String name;
     private final Class<T> type;

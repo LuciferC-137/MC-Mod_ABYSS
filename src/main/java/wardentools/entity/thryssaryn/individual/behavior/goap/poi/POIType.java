@@ -3,12 +3,13 @@ package wardentools.entity.thryssaryn.individual.behavior.goap.poi;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import wardentools.utils.TaggableEnum;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public enum POIType {
-    FARM(Set.of(Items.WHEAT, Items.CARROT, Items.POTATO)),
+public enum POIType implements TaggableEnum {
+    FARM(Set.of(Items.WHEAT, Items.CARROT, Items.POTATO)), //TODO placeholder
     ;
 
     private final Set<Item> associatedItems;
@@ -42,5 +43,9 @@ public enum POIType {
         return Arrays.stream(values())
                 .filter(t -> t.canContain(block))
                 .collect(Collectors.toSet());
+    }
+
+    public static POIType fromTag(String tag) {
+        return TaggableEnum.fromTag(POIType.class, tag);
     }
 }

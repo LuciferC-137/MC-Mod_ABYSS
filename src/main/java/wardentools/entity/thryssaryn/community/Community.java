@@ -3,9 +3,11 @@ package wardentools.entity.thryssaryn.community;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
@@ -16,9 +18,17 @@ import java.util.UUID;
 /**
  * Thryssaryn community, with members and shared data.
  */
-public class Community {
-    private CommunityBrain brain;
+public class Community implements INBTSerializable<CompoundTag> {
+    private static final String BRAIN_TAG = "brain";
+    private final CommunityBrain brain;
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    /**
+     * Constructor only for deserialization: data must be manually updated
+    */
+    public Community() {
+        this.brain = new CommunityBrain();
+    }
 
     public Community(CommunityMemory memory) {
         this.brain = new CommunityBrain(memory);
@@ -128,22 +138,16 @@ public class Community {
         return brain.memory.hasLoadedMembers();
     }
 
-    /**
-     * Serializes this community to NBT for saving.
-     * @param tag The tag to write to
-     * @return The tag with community data
-     */
-    public CompoundTag toNbt(CompoundTag tag) {
-        return brain.memory.toNbt(tag);
+    @Override
+    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
+        return this.brain.memory.serializeNBT(provider);
     }
 
-    /**
-     * Deserializes a community from NBT.
-     * @param tag The tag containing community data
-     * @return The restored community
-     */
-    public static Community fromNbt(CompoundTag tag) {
-        CommunityMemory memory = CommunityMemory.fromNbt(tag);
-        return new Community(memory);
+    @Override
+    public void deserializeNBT(HolderLookup.@NotNull Provider provider,
+                               @NotNull CompoundTag compoundTag) {
+        if (compoundTag.contains(BRAIN_TAG)) {
+            this.brain.deserializeNBT(provider, compoundTag.getCompound(BRAIN_TAG));
+        }
     }
 }

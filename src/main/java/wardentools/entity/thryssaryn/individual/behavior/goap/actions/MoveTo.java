@@ -4,12 +4,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
 import wardentools.entity.thryssaryn.individual.behavior.goap.WSK;
 import wardentools.entity.thryssaryn.individual.behavior.goap.WorldState;
 
@@ -41,7 +41,7 @@ public class MoveTo extends GoapAction {
     private LivingEntity resolvedEntity = null;
     private BlockPos resolvedPos = null;
 
-    public MoveTo(PathfinderMob mob, MoveTarget target,
+    public MoveTo(ThryssarynEntity mob, MoveTarget target,
                   double speedModifier, float arrivalThreshold) {
         super(mob);
         this.target = target;

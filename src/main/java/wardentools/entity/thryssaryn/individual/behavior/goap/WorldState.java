@@ -3,10 +3,12 @@ package wardentools.entity.thryssaryn.individual.behavior.goap;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import wardentools.entity.thryssaryn.individual.behavior.goap.poi.POIInstance;
+import wardentools.entity.thryssaryn.individual.behavior.goap.poi.POIType;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class WorldState {
     private final Map<WSK<?>, Object> facts;
@@ -47,6 +49,12 @@ public class WorldState {
         }
         newFacts.put(wsk, value);
         return new WorldState(newFacts);
+    }
+
+    public boolean knowsPOI(POIType type) {
+        Set<POIType> poiTypes = this.get(WSK.KNOWN_POI_TYPES);
+        if (poiTypes == null) return false;
+        return poiTypes.contains(type);
     }
 
     public boolean hasAccessTo(Item item) {

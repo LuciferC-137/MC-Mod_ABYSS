@@ -150,10 +150,11 @@ public class CommunityData extends SavedData {
     }
 
     @Override
-    public @NotNull CompoundTag save(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
+    public @NotNull CompoundTag save(@NotNull CompoundTag tag,
+                                     HolderLookup.@NotNull Provider registries) {
         ListTag communitiesList = new ListTag();
         for (Community community : communities.values()) {
-            CompoundTag communityTag = community.toNbt(new CompoundTag());
+            CompoundTag communityTag = community.serializeNBT(registries);
             communitiesList.add(communityTag);
         }
         tag.put(COMMUNITIES_KEY, communitiesList);
@@ -167,7 +168,8 @@ public class CommunityData extends SavedData {
             ListTag communitiesList = tag.getList(COMMUNITIES_KEY, Tag.TAG_COMPOUND);
             for (int i = 0; i < communitiesList.size(); i++) {
                 CompoundTag communityTag = communitiesList.getCompound(i);
-                Community community = Community.fromNbt(communityTag);
+                Community community = new Community();
+                community.deserializeNBT(registries, communityTag);
                 data.communities.put(community.uuid(), community);
             }
         }

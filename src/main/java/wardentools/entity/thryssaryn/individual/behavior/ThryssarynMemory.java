@@ -1,60 +1,44 @@
 package wardentools.entity.thryssaryn.individual.behavior;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.phys.Vec3;
-import wardentools.entity.thryssaryn.individual.AbstractThryssaryn;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.neoforged.neoforge.common.util.INBTSerializable;
+import org.jetbrains.annotations.NotNull;
+import wardentools.entity.thryssaryn.individual.ThryssarynEntity;
 import wardentools.entity.thryssaryn.individual.behavior.goap.poi.POIInstance;
-import wardentools.entity.thryssaryn.individual.behavior.goap.poi.POIType;
+import wardentools.entity.thryssaryn.individual.behavior.goap.poi.POIMemory;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Set;
 
-public class ThryssarynMemory {
-    private final AbstractThryssaryn entity;
+public class ThryssarynMemory implements INBTSerializable<CompoundTag> {
+    private static final String KNOWN_POI_TAG = "KNOWN_POIS";
+    private final ThryssarynEntity entity;
+    private final POIMemory poiMemory;
 
-    // Map of all POI known to the mob.
-    private final Map<POIType, Set<POIInstance>> knownPOIs = new EnumMap<>(POIType.class);
 
-    public ThryssarynMemory(AbstractThryssaryn entity) {
+    public ThryssarynMemory(ThryssarynEntity entity) {
         this.entity = entity;
-    }
-
-    public Set<POIType> getKnownPOITypes() {
-        return this.knownPOIs.keySet();
-    }
-
-    public Set<POIInstance> getPOIs(POIType type) {
-        return this.knownPOIs.get(type);
+        this.poiMemory = new POIMemory(entity);
     }
 
     public Set<POIInstance> getAllPOIs() {
-        return this.knownPOIs.values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toSet());
+        return this.poiMemory.getAllPOIs();
     }
 
-    /** Return closest POI for a given type */
-    public Optional<POIInstance> nearest(POIType type) {
-        return knownPOIs.getOrDefault(type, Set.of()).stream()
-                .min(Comparator.comparingDouble(p ->
-                        this.entity.position().distanceToSqr(Vec3.atCenterOf(p.pos()))));
+
+    @Override
+    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
+        CompoundTag tag = new CompoundTag();
+        CompoundTag poiTag = this.poiMemory.serializeNBT(provider);
+        tag.put(KNOWN_POI_TAG, poiTag);
+        return tag;
     }
 
-    /** Return nearest POI that can contain the given Item. */
-    public List<POIInstance> nearestPOIsFor(Item item) {
-        return POIType.typesFor(item).stream()
-                .flatMap(t -> nearest(t).stream())
-                .sorted(Comparator.comparingDouble(p ->
-                        entity.position().distanceToSqr(Vec3.atCenterOf(p.pos()))))
-                .toList();
-    }
-
-    /** Return nearest POI that can contain the given Block */
-    public List<POIInstance> nearestPOIsFor(net.minecraft.world.level.block.Block block) {
-        return POIType.typesFor(block).stream()
-                .flatMap(t -> nearest(t).stream())
-                .sorted(Comparator.comparingDouble(p ->
-                        entity.position().distanceToSqr(Vec3.atCenterOf(p.pos()))))
-                .toList();
+    @Override
+    public void deserializeNBT(HolderLookup.@NotNull Provider provider,
+                               @NotNull CompoundTag compoundTag) {
+        if (compoundTag.contains(KNOWN_POI_TAG)) {
+            this.poiMemory.deserializeNBT(provider, compoundTag.getCompound(KNOWN_POI_TAG));
+        }
     }
 }

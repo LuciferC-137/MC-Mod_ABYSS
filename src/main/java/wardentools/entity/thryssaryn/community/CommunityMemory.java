@@ -1,18 +1,28 @@
 package wardentools.entity.thryssaryn.community;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.neoforged.neoforge.common.util.INBTSerializable;
+import org.jetbrains.annotations.NotNull;
+import wardentools.entity.thryssaryn.individual.behavior.goap.poi.POIMemory;
 import wardentools.utils.SaveUtils;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class CommunityMemory {
-    private final UUID communityId;
+public class CommunityMemory implements INBTSerializable<CompoundTag> {
+    private static final String COMMUNITY_ID_TAG = "communityId";
+    private static final String MEMBERS_TAG = "members";
+    private static final String CENTER_TAG = "center";
+    private static final String RADIUS_TAG = "radius";
+    private static final String POI_MEMORY_TAG = "poiMemory";
+    private UUID communityId;
     private Set<UUID> members;
     private BlockPos center;
     private int radius;
+    public POIMemory poiMemory;
 
     /**
      * Transient set of currently loaded members (not saved to NBT).
@@ -25,6 +35,7 @@ public class CommunityMemory {
      */
     public CommunityMemory(Set<UUID> members, BlockPos center, int radius) {
         this(UUID.randomUUID(), members, center, radius);
+        this.poiMemory = new POIMemory(this);
     }
 
     /**
@@ -35,6 +46,7 @@ public class CommunityMemory {
         this.members = new HashSet<UUID>(members);
         this.center = center;
         this.radius = radius;
+        this.poiMemory = new POIMemory(this);
     }
 
     /**
@@ -103,21 +115,35 @@ public class CommunityMemory {
         return communityId;
     }
 
-    public CompoundTag toNbt(CompoundTag tag) {
-        tag.putUUID("communityId", communityId);
-        SaveUtils.putBlockPos(tag, "center", center);
-        SaveUtils.putSetUUID(tag, "members", members);
-        tag.putInt("radius", radius);
 
+    @Override
+    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
+        CompoundTag tag = new CompoundTag();
+        tag.putUUID(COMMUNITY_ID_TAG, communityId);
+        SaveUtils.putBlockPos(tag, CENTER_TAG, center);
+        SaveUtils.putSetUUID(tag, MEMBERS_TAG, members);
+        tag.putInt(RADIUS_TAG, radius);
+        tag.put(POI_MEMORY_TAG, this.poiMemory.serializeNBT(provider));
         return tag;
     }
 
-    public static CommunityMemory fromNbt(CompoundTag tag) {
-        UUID communityId = tag.getUUID("communityId");
-        Set<UUID> members = SaveUtils.readSetUUID(tag, "members");
-        BlockPos center = SaveUtils.readBlockPos(tag, "center");
-        int radius = tag.getInt("radius");
-
-        return new CommunityMemory(communityId, members, center, radius);
+    @Override
+    public void deserializeNBT(HolderLookup.@NotNull Provider provider,
+                               @NotNull CompoundTag compoundTag) {
+        if (compoundTag.contains(POI_MEMORY_TAG)) {
+            this.poiMemory.deserializeNBT(provider, compoundTag.getCompound(POI_MEMORY_TAG));
+        }
+        if (compoundTag.contains(MEMBERS_TAG)) {
+            this.members = SaveUtils.readSetUUID(compoundTag, MEMBERS_TAG);
+        }
+        if (compoundTag.contains(CENTER_TAG)) {
+            this.center = SaveUtils.readBlockPos(compoundTag, CENTER_TAG);
+        }
+        if (compoundTag.contains(RADIUS_TAG)) {
+            this.radius = compoundTag.getInt(RADIUS_TAG);
+        }
+        if (compoundTag.contains(COMMUNITY_ID_TAG)) {
+            this.communityId = compoundTag.getUUID(COMMUNITY_ID_TAG);
+        }
     }
 }
