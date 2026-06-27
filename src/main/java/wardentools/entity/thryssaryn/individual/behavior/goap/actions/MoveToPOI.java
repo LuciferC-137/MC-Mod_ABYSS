@@ -11,7 +11,7 @@ public class MoveToPOI extends MoveTo {
 
     public MoveToPOI(ThryssarynEntity entity, POIInstance target,
                      double speedModifier, float arrivalThreshold) {
-        super(entity, new MoveTarget.ToBlock(target.pos()), speedModifier, arrivalThreshold);
+        super(entity, new MoveTarget.ToBlock(target.getPos()), speedModifier, arrivalThreshold);
         this.poi = target;
     }
 

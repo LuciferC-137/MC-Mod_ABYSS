@@ -54,6 +54,8 @@ public class POIInstance implements INBTSerializable<CompoundTag> {
         return pos;
     }
 
+    public POIType getPOItype() {return this.type;}
+
     public long getLastSeenTick() {
         return lastSeenTick;
     }

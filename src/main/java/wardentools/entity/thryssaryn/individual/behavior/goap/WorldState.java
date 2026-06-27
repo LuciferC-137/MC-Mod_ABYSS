@@ -59,12 +59,12 @@ public class WorldState {
 
     public boolean hasAccessTo(Item item) {
         POIInstance poi = this.get(WSK.POI_AT);
-        return poi != null && poi.type().canContain(item);
+        return poi != null && poi.getPOItype().canContain(item);
     }
 
     public boolean hasAccessTo(Block block) {
         POIInstance poi = this.get(WSK.POI_AT);
-        return poi != null && poi.type().canContain(block);
+        return poi != null && poi.getPOItype().canContain(block);
     }
 
     public WorldState copy() {
