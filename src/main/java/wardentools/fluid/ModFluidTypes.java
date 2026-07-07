@@ -2,11 +2,11 @@ package wardentools.fluid;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.pathfinder.PathType;
-import net.neoforged.neoforge.common.SoundAction;
-import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraftforge.common.SoundAction;
+import net.minecraftforge.fluids.FluidType;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Vector3f;
 import wardentools.ModMain;
 
@@ -14,20 +14,20 @@ import java.util.function.Supplier;
 
 public class ModFluidTypes {
     public static final ResourceLocation LIQUID_CORRUPTION_STILL_RL
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/liquid_corruption_still");
+            = new ResourceLocation(ModMain.MOD_ID, "block/liquid_corruption_still");
     public static final ResourceLocation LIQUID_CORRUPTION_FLOWING_RL
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/liquid_corruption_flow");
+            = new ResourceLocation(ModMain.MOD_ID, "block/liquid_corruption_flow");
     public static final ResourceLocation LIQUID_CORRUPTION_OVERLAY_RL
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "misc/in_liquid_corruption_overlay");
+            = new ResourceLocation(ModMain.MOD_ID, "misc/in_liquid_corruption_overlay");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
-            DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, ModMain.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.FLUID_TYPES.get(), ModMain.MOD_ID);
 
     public static final Supplier<FluidType> LIQUID_CORRUPTION = register("liquid_corruption",
             FluidType.Properties.create()
                     .canSwim(false)
-                    .pathType(PathType.DAMAGE_FIRE)
-                    .adjacentPathType(PathType.DANGER_FIRE)
+                    .pathType(BlockPathTypes.DAMAGE_FIRE)
+                    .adjacentPathType(BlockPathTypes.DANGER_FIRE)
                     .lightLevel(5)
                     .density(3000)
                     .viscosity(10)

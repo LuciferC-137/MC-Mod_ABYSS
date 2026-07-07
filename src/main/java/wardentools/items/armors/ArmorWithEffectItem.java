@@ -27,10 +27,10 @@ public class ArmorWithEffectItem extends ConfigurableDefenseItem {
     private static final int EFFECT_TIME = 242;
     private static final Map<Holder<ArmorMaterial>, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
             (new ImmutableMap.Builder<Holder<ArmorMaterial>, MobEffectInstance>())
-                    .put(ModMaterials.DEEPCRISTAL, new MobEffectInstance(ModEffects.CORRUPTION_VESSEL,
+                    .put(ModMaterials.DEEPCRISTAL, new MobEffectInstance(ModEffects.CORRUPTION_VESSEL.get(),
                             EFFECT_TIME, 0,
                             false,false, true))
-                    .put(ModMaterials.RADIANCE_CRISTAL, new MobEffectInstance(ModEffects.RADIANCE_BRINGER,
+                    .put(ModMaterials.RADIANCE_CRISTAL, new MobEffectInstance(ModEffects.RADIANCE_BRINGER.get(),
                             EFFECT_TIME, 0,
                             false,false, true)).build();
 

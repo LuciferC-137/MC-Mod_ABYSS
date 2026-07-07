@@ -5,12 +5,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import org.jetbrains.annotations.NotNull;
 
-public class LiquidCorruptionFluid extends BaseFlowingFluid {
+public class LiquidCorruptionFluid extends ForgeFlowingFluid {
 
-    public LiquidCorruptionFluid(Properties prop){
+    public LiquidCorruptionFluid(ForgeFlowingFluid.Properties prop){
         super(prop);
     }
 

@@ -12,7 +12,7 @@ public class WardenHeartFoilManager {
     public static boolean isFoil() {
         Player player = Minecraft.getInstance().player;
         if (player == null) return false;
-        return player.getEffect(ModEffects.CORRUPTION_VESSEL) != null;
+        return player.getEffect(ModEffects.CORRUPTION_VESSEL.get()) != null;
     }
 
 }

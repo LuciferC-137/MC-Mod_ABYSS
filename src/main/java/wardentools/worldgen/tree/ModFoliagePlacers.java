@@ -4,7 +4,7 @@ package wardentools.worldgen.tree;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
 import wardentools.ModMain;
 import wardentools.worldgen.tree.custom.DarktreeFoliagePlacer;
 import wardentools.worldgen.tree.custom.WhitetreeFoliagePlacer;

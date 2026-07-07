@@ -1,8 +1,8 @@
 package wardentools.blockentity;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 
@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public class BlockEntityRegistry {
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-			DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, ModMain.MOD_ID);
+			DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ModMain.MOD_ID);
 
 	public static final Supplier<BlockEntityType<RadianceCatalystBlockEntity>> RADIANCE_CATALYST_BLOCK_ENTITY =
 			BLOCK_ENTITIES.register("radiance_catalyst_block_entity",
