@@ -10,7 +10,7 @@ base {
 }
 java {
     withSourcesJar()
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 minecraft {
     mappings channel: 'official', version: minecraft_version
@@ -124,7 +124,7 @@ publishing {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.compilerArgs.add('--enable-preview')
-    options.release = 21
+    options.release = 17
 }
 
 // Ensure tests (if any) are run with preview features enabled
