@@ -24,8 +24,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredItem;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.block.BlueBush;
@@ -178,11 +178,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				block -> createBlueBushLoot(BlockRegistry.BLUE_BUSH, ItemRegistry.BLUE_GLOW_BERRIES));
     }
 
-    private void addDropSelf(DeferredBlock<Block> block) {
+    private void addDropSelf(RegistryObject<Block> block) {
 		this.dropSelf(block.get());
     }
     
-    private LootTable.Builder createDoubleBlockSingleItemDrop(DeferredItem<Item> item) {
+    private LootTable.Builder createDoubleBlockSingleItemDrop(RegistryObject<Item> item) {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
@@ -190,7 +190,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
                                 .when(LootItemRandomChanceCondition.randomChance(0.5f))));
     }
 
-	private LootTable.Builder createBlueBushLoot(DeferredBlock<Block> bushBlock, DeferredItem<Item> berryItem) {
+	private LootTable.Builder createBlueBushLoot(RegistryObject<Block> bushBlock, RegistryObject<Item> berryItem) {
 		return LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.setRolls(ConstantValue.exactly(1))
@@ -206,7 +206,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 	}
 
 
-	private LootTable.Builder createBlackLanternItemDrop(DeferredBlock<Block> block) {
+	private LootTable.Builder createBlackLanternItemDrop(RegistryObject<Block> block) {
 		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return LootTable.lootTable()
 				.withPool(
@@ -236,7 +236,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 				);
 	}
 
-	private LootTable.Builder createReinforcedGlassItemDrop(DeferredBlock<Block> block) {
+	private LootTable.Builder createReinforcedGlassItemDrop(RegistryObject<Block> block) {
 		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return LootTable.lootTable()
 				.withPool(

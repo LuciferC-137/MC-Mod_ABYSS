@@ -1,13 +1,14 @@
 package wardentools;
 
 import com.mojang.logging.LogUtils;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
 import wardentools.datagen.loot.ModLootModifiers;
 import wardentools.gui.MenuRegistry;
@@ -38,11 +39,12 @@ public class ModMain {
     public static final String VERSION = "1.1.4";
     private static final Logger LOGGER = LogUtils.getLogger();
 
-	public ModMain(IEventBus bus, ModContainer container) {
+	public ModMain() {
+		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        container.registerConfig(ModConfig.Type.CLIENT, AbyssConfig.CLIENT.SPEC);
-        container.registerConfig(ModConfig.Type.SERVER, AbyssConfig.SERVER.SPEC);
-        container.registerConfig(ModConfig.Type.COMMON, AbyssConfig.COMMON.SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AbyssConfig.CLIENT.SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AbyssConfig.SERVER.SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AbyssConfig.COMMON.SPEC);
 
 		ArmorRegistry.ARMORS.register(bus);
 		ItemRegistry.ITEMS.register(bus);
@@ -66,7 +68,7 @@ public class ModMain {
 		ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
         ModDataAttachments.ATTACHMENTS.register(bus);
 
-        NeoForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent

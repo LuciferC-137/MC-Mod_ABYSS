@@ -18,7 +18,7 @@ public class CorruptedEffect extends MobEffect {
 
     @Override
     public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
-        if (entity.hasEffect(ModEffects.PURIFIED)) {
+        if (entity.hasEffect(ModEffects.PURIFIED.get())) {
             return super.applyEffectTick(entity, amplifier);
         }
         Holder<DamageType> corruptedDamageHolder

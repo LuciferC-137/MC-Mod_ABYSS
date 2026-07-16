@@ -180,7 +180,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 )
                 .addCriterion("radiant_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER)))
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.get())))
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_armor"), existingFileHelper);
 
         AdvancementHolder protectorInvoker = Advancement.Builder.advancement()
@@ -245,7 +245,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 )
                 .addCriterion("deep_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL)))
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.get())))
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_armor"), existingFileHelper);
 
         AdvancementHolder incarnation = Advancement.Builder.advancement()
@@ -311,7 +311,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 )
                 .addCriterion("corrupted",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED)))
+                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.get())))
                 .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted"), existingFileHelper);
 
         AdvancementHolder escape = Advancement.Builder.advancement()

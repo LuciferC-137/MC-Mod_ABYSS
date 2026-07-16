@@ -2,19 +2,21 @@ package wardentools.items;
 
 
 import net.minecraft.world.item.*;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.common.ForgeSpawnEggItem;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ModBoatEntity;
+import wardentools.sounds.ModSounds;
 
 public class ItemRegistry {
-	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ModMain.MOD_ID);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ModMain.MOD_ID);
 	
 	
-	public static final DeferredItem<Item> DEEPINGOTS =
+	public static final RegistryObject<Item> DEEPINGOTS =
 			ITEMS.register("deepingots",
 			() -> new Item(new Item.Properties()
 					.stacksTo(64)
@@ -22,14 +24,14 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> DEEPBLOCK =
+	public static final RegistryObject<Item> DEEPBLOCK =
 			ITEMS.register("deepblock",
 			() -> new BlockItem(BlockRegistry.DEEPBLOCK.get(), new Item.Properties()
 					.rarity(Rarity.RARE)
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> DEEPCRISTAL =
+	public static final RegistryObject<Item> DEEPCRISTAL =
 			ITEMS.register("deepcristal",
 			() -> new BlockItem(BlockRegistry.DEEP_CRISTAL.get(), new Item.Properties()
 					.stacksTo(64)
@@ -37,7 +39,7 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> RADIANCE_FRAGMENT =
+	public static final RegistryObject<Item> RADIANCE_FRAGMENT =
 			ITEMS.register("radiance_fragment",
 			() -> new Item(new Item.Properties()
 					.stacksTo(64)
@@ -45,7 +47,7 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> RADIANCE_CRISTAL =
+	public static final RegistryObject<Item> RADIANCE_CRISTAL =
 			ITEMS.register("radiance_cristal",
 			() -> new BlockItem(BlockRegistry.RADIANCE_CRISTAL.get(), new Item.Properties()
 					.stacksTo(64)
@@ -53,7 +55,7 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> WARDEN_HEART =
+	public static final RegistryObject<Item> WARDEN_HEART =
 			ITEMS.register("warden_heart",
 			() -> new WardenHeartItem(new Item.Properties()
 					.stacksTo(1)
@@ -61,87 +63,87 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> DARKTREE_LOG =
+	public static final RegistryObject<Item> DARKTREE_LOG =
 			ITEMS.register("darktree_log",
 		    () -> new BlockItem(BlockRegistry.DARKTREE_LOG.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_LEAVES =
+	public static final RegistryObject<Item> DARKTREE_LEAVES =
 			ITEMS.register("darktree_leaves",
 			() -> new BlockItem(BlockRegistry.DARKTREE_LEAVES.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> STRIPPED_DARKTREE_LOG =
+	public static final RegistryObject<Item> STRIPPED_DARKTREE_LOG =
 			ITEMS.register("stripped_darktree_log",
 			() -> new BlockItem(BlockRegistry.STRIPPED_DARKTREE_LOG.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_WOOD =
+	public static final RegistryObject<Item> DARKTREE_WOOD =
 			ITEMS.register("darktree_wood",
 			() -> new BlockItem(BlockRegistry.DARKTREE_WOOD.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> STRIPPED_DARKTREE_WOOD =
+	public static final RegistryObject<Item> STRIPPED_DARKTREE_WOOD =
 			ITEMS.register("stripped_darktree_wood",
 			() -> new BlockItem(BlockRegistry.STRIPPED_DARKTREE_WOOD.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_PLANKS =
+	public static final RegistryObject<Item> DARKTREE_PLANKS =
 			ITEMS.register("darktree_planks",
 			() -> new BlockItem(BlockRegistry.DARKTREE_PLANKS.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_STAIRS =
+	public static final RegistryObject<Item> DARKTREE_STAIRS =
 			ITEMS.register("darktree_stair",
 			() -> new BlockItem(BlockRegistry.DARKTREE_STAIR.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_SLAB =
+	public static final RegistryObject<Item> DARKTREE_SLAB =
 			ITEMS.register("darktree_slab",
 			() -> new BlockItem(BlockRegistry.DARKTREE_SLAB.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_BUTTON =
+	public static final RegistryObject<Item> DARKTREE_BUTTON =
 			ITEMS.register("darktree_button",
 			() -> new BlockItem(BlockRegistry.DARKTREE_BUTTON.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_PRESSURE_PLATE =
+	public static final RegistryObject<Item> DARKTREE_PRESSURE_PLATE =
 			ITEMS.register("darktree_pressure_plate",
 			() -> new BlockItem(BlockRegistry.DARKTREE_PRESSURE_PLATE.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_DOOR =
+	public static final RegistryObject<Item> DARKTREE_DOOR =
 			ITEMS.register("darktree_door",
 			() -> new BlockItem(BlockRegistry.DARKTREE_DOOR.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_TRAPDOOR =
+	public static final RegistryObject<Item> DARKTREE_TRAPDOOR =
 			ITEMS.register("darktree_trapdoor",
 			() -> new BlockItem(BlockRegistry.DARKTREE_TRAPDOOR.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_FENCE =
+	public static final RegistryObject<Item> DARKTREE_FENCE =
 			ITEMS.register("darktree_fence",
 			() -> new BlockItem(BlockRegistry.DARKTREE_FENCE.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_FENCE_GATE =
+	public static final RegistryObject<Item> DARKTREE_FENCE_GATE =
 			ITEMS.register("darktree_fence_gate",
 			() -> new BlockItem(BlockRegistry.DARKTREE_FENCE_GATE.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKTREE_SAPLING =
+	public static final RegistryObject<Item> DARKTREE_SAPLING =
 			ITEMS.register("darktree_sapling",
 			() -> new BlockItem(BlockRegistry.DARKTREE_SAPLING.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKGRASS_BLOCK =
+	public static final RegistryObject<Item> DARKGRASS_BLOCK =
 			ITEMS.register("darkgrass_block",
 			() -> new BlockItem(BlockRegistry.DARKGRASS_BLOCK.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARKDIRT =
+	public static final RegistryObject<Item> DARKDIRT =
 			ITEMS.register("darkdirt",
 			() -> new BlockItem(BlockRegistry.DARKDIRT.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DEEPLURKER_EGG =
+	public static final RegistryObject<Item> DEEPLURKER_EGG =
 			ITEMS.register("deeplurker_spawn_egg",
-			() -> new DeferredSpawnEggItem(ModEntities.DEEPLURKER, 0x005693,
+			() -> new ForgeSpawnEggItem(ModEntities.DEEPLURKER, 0x005693,
 					0x00ebff, new Item.Properties()));
 	
-	public static final DeferredItem<Item> DEEP_FRUIT =
+	public static final RegistryObject<Item> DEEP_FRUIT =
 			ITEMS.register("deep_fruit",
 			() -> new Item(new Item.Properties()
 					.food(ModFoods.DEEP_FRUIT_PROPERTIES)
 					.stacksTo(64)
 					));
 	
-	public static final DeferredItem<Item> ABYSS_DIVER =
+	public static final RegistryObject<Item> ABYSS_DIVER =
 			ITEMS.register("abyss_diver",
 			() -> new AbyssDiverItem(new Item.Properties()
 					.stacksTo(1)
@@ -150,7 +152,7 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> WIND_WHISPERER =
+	public static final RegistryObject<Item> WIND_WHISPERER =
 			ITEMS.register("wind_whisperer",
 			() -> new WindWhispererItem(BlockRegistry.WIND_WHISPERER.get(), new Item.Properties()
 					.stacksTo(1)
@@ -158,7 +160,7 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> CORRUPTED_ESSENCE =
+	public static final RegistryObject<Item> CORRUPTED_ESSENCE =
 			ITEMS.register("corrupted_essence",
 			() -> new Item(new Item.Properties()
 					.stacksTo(64)
@@ -166,7 +168,7 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> CORRUPTED_VESSEL =
+	public static final RegistryObject<Item> CORRUPTED_VESSEL =
 			ITEMS.register("corrupted_vessel",
 			() -> new Item(new Item.Properties()
 					.stacksTo(64)
@@ -174,303 +176,303 @@ public class ItemRegistry {
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> DARK_STICK =
+	public static final RegistryObject<Item> DARK_STICK =
 			ITEMS.register("dark_stick",
 			() -> new Item(new Item.Properties()
 					.stacksTo(64)
 					.fireResistant()
 					));
 	
-	public static final DeferredItem<Item> WHITETREE_LOG =
+	public static final RegistryObject<Item> WHITETREE_LOG =
 			ITEMS.register("whitetree_log",
 		    () -> new BlockItem(BlockRegistry.WHITETREE_LOG.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_LEAVES =
+	public static final RegistryObject<Item> WHITETREE_LEAVES =
 			ITEMS.register("whitetree_leaves",
 			() -> new BlockItem(BlockRegistry.WHITETREE_LEAVES.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> STRIPPED_WHITETREE_LOG =
+	public static final RegistryObject<Item> STRIPPED_WHITETREE_LOG =
 			ITEMS.register("stripped_whitetree_log",
 			() -> new BlockItem(BlockRegistry.STRIPPED_WHITETREE_LOG.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_WOOD =
+	public static final RegistryObject<Item> WHITETREE_WOOD =
 			ITEMS.register("whitetree_wood",
 			() -> new BlockItem(BlockRegistry.WHITETREE_WOOD.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> STRIPPED_WHITETREE_WOOD =
+	public static final RegistryObject<Item> STRIPPED_WHITETREE_WOOD =
 			ITEMS.register("stripped_whitetree_wood",
 			() -> new BlockItem(BlockRegistry.STRIPPED_WHITETREE_WOOD.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_SAPLING =
+	public static final RegistryObject<Item> WHITETREE_SAPLING =
 			ITEMS.register("whitetree_sapling",
 			() -> new BlockItem(BlockRegistry.WHITETREE_SAPLING.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_PLANKS =
+	public static final RegistryObject<Item> WHITETREE_PLANKS =
 			ITEMS.register("whitetree_planks",
 			() -> new BlockItem(BlockRegistry.WHITETREE_PLANKS.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_STAIRS =
+	public static final RegistryObject<Item> WHITETREE_STAIRS =
 			ITEMS.register("whitetree_stair",
 			() -> new BlockItem(BlockRegistry.WHITETREE_STAIR.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_SLAB =
+	public static final RegistryObject<Item> WHITETREE_SLAB =
 			ITEMS.register("whitetree_slab",
 			() -> new BlockItem(BlockRegistry.WHITETREE_SLAB.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_BUTTON =
+	public static final RegistryObject<Item> WHITETREE_BUTTON =
 			ITEMS.register("whitetree_button",
 			() -> new BlockItem(BlockRegistry.WHITETREE_BUTTON.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_PRESSURE_PLATE =
+	public static final RegistryObject<Item> WHITETREE_PRESSURE_PLATE =
 			ITEMS.register("whitetree_pressure_plate",
 			() -> new BlockItem(BlockRegistry.WHITETREE_PRESSURE_PLATE.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_DOOR =
+	public static final RegistryObject<Item> WHITETREE_DOOR =
 			ITEMS.register("whitetree_door",
 			() -> new BlockItem(BlockRegistry.WHITETREE_DOOR.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_TRAPDOOR =
+	public static final RegistryObject<Item> WHITETREE_TRAPDOOR =
 			ITEMS.register("whitetree_trapdoor",
 			() -> new BlockItem(BlockRegistry.WHITETREE_TRAPDOOR.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_FENCE =
+	public static final RegistryObject<Item> WHITETREE_FENCE =
 			ITEMS.register("whitetree_fence",
 			() -> new BlockItem(BlockRegistry.WHITETREE_FENCE.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITETREE_FENCE_GATE =
+	public static final RegistryObject<Item> WHITETREE_FENCE_GATE =
 			ITEMS.register("whitetree_fence_gate",
 			() -> new BlockItem(BlockRegistry.WHITETREE_FENCE_GATE.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITE_SEED =
+	public static final RegistryObject<Item> WHITE_SEED =
 			ITEMS.register("white_seed",
 			() -> new Item(new Item.Properties()
 					.food(ModFoods.WHITE_SEED_PROPPERTIES)
 					.stacksTo(64)
 					));
 	
-	public static final DeferredItem<Item> PALEWANDERER_EGG =
+	public static final RegistryObject<Item> PALEWANDERER_EGG =
 			ITEMS.register("pale_wanderer_spawn_egg",
-			() -> new DeferredSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
+			() -> new ForgeSpawnEggItem(ModEntities.PALE_WANDERER, 0xbcebec,
 					0x00ebff, new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITE_GRASS =
+	public static final RegistryObject<Item> WHITE_GRASS =
 			ITEMS.register("white_grass",
 			() -> new BlockItem(BlockRegistry.WHITE_GRASS.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> TALL_WHITE_GRASS =
+	public static final RegistryObject<Item> TALL_WHITE_GRASS =
 			ITEMS.register("tall_white_grass",
 			() -> new BlockItem(BlockRegistry.TALL_WHITE_GRASS.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> WHITE_TORCHFLOWER =
+	public static final RegistryObject<Item> WHITE_TORCHFLOWER =
 			ITEMS.register("white_torchflower",
 			() -> new BlockItem(BlockRegistry.WHITE_TORCHFLOWER.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> RADIANCE_CATALYST =
+	public static final RegistryObject<Item> RADIANCE_CATALYST =
 			ITEMS.register("radiance_catalyst",
 			() -> new RadianceCatalystItem(BlockRegistry.RADIANCE_CATALYST.get(),
 					new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 	
-	public static final DeferredItem<Item> PURE_ESSENCE =
+	public static final RegistryObject<Item> PURE_ESSENCE =
 			ITEMS.register("pure_essence",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
-	public static final DeferredItem<Item> RADIANT_CORE =
+	public static final RegistryObject<Item> RADIANT_CORE =
 			ITEMS.register("radiant_core",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
-	public static final DeferredItem<Item> PURE_VESSEL =
+	public static final RegistryObject<Item> PURE_VESSEL =
 			ITEMS.register("pure_vessel",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
-	public static final DeferredItem<Item> PROTECTOR_HEART =
+	public static final RegistryObject<Item> PROTECTOR_HEART =
 			ITEMS.register("protector_heart",
 			() -> new ProtectorHeartItem(new Item.Properties().rarity(Rarity.RARE).stacksTo(1)));
 	
-	public static final DeferredItem<Item> DEEPFLOWER =
+	public static final RegistryObject<Item> DEEPFLOWER =
 			ITEMS.register("deepflower",
 			() -> new BlockItem(BlockRegistry.DEEPFLOWER.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> BLUE_BUSH =
+	public static final RegistryObject<Item> BLUE_BUSH =
 			ITEMS.register("blue_bush",
 			() -> new BlockItem(BlockRegistry.BLUE_BUSH.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> TALL_DARK_GRASS =
+	public static final RegistryObject<Item> TALL_DARK_GRASS =
 			ITEMS.register("tall_dark_grass",
 			() -> new BlockItem(BlockRegistry.TALL_DARK_GRASS.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> DARK_GRASS =
+	public static final RegistryObject<Item> DARK_GRASS =
 			ITEMS.register("dark_grass",
 			() -> new BlockItem(BlockRegistry.DARK_GRASS.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> PROTECTOR_INVOKER =
+	public static final RegistryObject<Item> PROTECTOR_INVOKER =
 			ITEMS.register("protector_invoker",
 			() -> new BlockItem(BlockRegistry.PROTECTOR_INVOKER.get(),
 					new Item.Properties().rarity(Rarity.EPIC)));
 	
-	public static final DeferredItem<Item> DYING_PROTECTOR_HEART =
+	public static final RegistryObject<Item> DYING_PROTECTOR_HEART =
 			ITEMS.register("dying_protector_heart",
 			() -> new Item(new Item.Properties().rarity(Rarity.RARE)));
 	
-	public static final DeferredItem<Item> ABYSSALITE =
+	public static final RegistryObject<Item> ABYSSALITE =
 			ITEMS.register("abyssalite",
 			() -> new BlockItem(BlockRegistry.ABYSSALITE.get(),
 					new Item.Properties()));
 	
-	public static final DeferredItem<Item> CHISELED_ABYSSALITE =
+	public static final RegistryObject<Item> CHISELED_ABYSSALITE =
 			ITEMS.register("chiseled_abyssalite",
 			() -> new BlockItem(BlockRegistry.CHISELED_ABYSSALITE.get(),
 					new Item.Properties()));
 	
-	public static final DeferredItem<Item> ABYSSALITE_BRICKS =
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS =
 			ITEMS.register("abyssalite_bricks",
 			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS.get(),
 					new Item.Properties()));
 	
-	public static final DeferredItem<Item> CRACKED_ABYSSALITE_BRICKS =
+	public static final RegistryObject<Item> CRACKED_ABYSSALITE_BRICKS =
 			ITEMS.register("cracked_abyssalite_bricks",
 			() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS.get(),
 					new Item.Properties()));
 
-	public static final DeferredItem<Item> DARKTREE_BOAT =
+	public static final RegistryObject<Item> DARKTREE_BOAT =
 			ITEMS.register("darktree_boat",
 			() -> new ModBoatItem(false, ModBoatEntity.Type.DARKTREE,
 					new Item.Properties().stacksTo(1)));
 
-	public static final DeferredItem<Item> DARKTREE_CHEST_BOAT =
+	public static final RegistryObject<Item> DARKTREE_CHEST_BOAT =
 			ITEMS.register("darktree_chest_boat",
 			() -> new ModBoatItem(true, ModBoatEntity.Type.DARKTREE,
 					new Item.Properties().stacksTo(1)));
 
-	public static final DeferredItem<Item> WHITETREE_BOAT =
+	public static final RegistryObject<Item> WHITETREE_BOAT =
 			ITEMS.register("whitetree_boat",
 					() -> new ModBoatItem(false, ModBoatEntity.Type.WHITETREE,
 							new Item.Properties().stacksTo(1)));
 
-	public static final DeferredItem<Item> WHITETREE_CHEST_BOAT =
+	public static final RegistryObject<Item> WHITETREE_CHEST_BOAT =
 			ITEMS.register("whitetree_chest_boat",
 					() -> new ModBoatItem(true, ModBoatEntity.Type.WHITETREE,
 							new Item.Properties().stacksTo(1)));
 	
-	public static final DeferredItem<Item> ABYSSALITE_BRICKS_STAIRS =
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_STAIRS =
 			ITEMS.register("abyssalite_bricks_stair",
 			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_STAIRS.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> ABYSSALITE_BRICKS_SLAB =
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_SLAB =
 			ITEMS.register("abyssalite_bricks_slab",
 			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_SLAB.get(), new Item.Properties()));
 	
-	public static final DeferredItem<Item> ABYSSALITE_BRICKS_WALL =
+	public static final RegistryObject<Item> ABYSSALITE_BRICKS_WALL =
 			ITEMS.register("abyssalite_bricks_wall",
 			() -> new BlockItem(BlockRegistry.ABYSSALITE_BRICKS_WALL.get(), new Item.Properties()));
 
-	public static final DeferredItem<Item> DEEP_FRAGMENT =
+	public static final RegistryObject<Item> DEEP_FRAGMENT =
 			ITEMS.register("deep_fragment",
 					() -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).fireResistant()));
 
-	public static final DeferredItem<Item> ABYSSALITE_COAL_ORE =
+	public static final RegistryObject<Item> ABYSSALITE_COAL_ORE =
 			ITEMS.register("abyssalite_coal_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_COAL_ORE.get(),
 							new Item.Properties()));
 
-	public static final DeferredItem<Item> ABYSSALITE_LAPIS_ORE =
+	public static final RegistryObject<Item> ABYSSALITE_LAPIS_ORE =
 			ITEMS.register("abyssalite_lapis_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_LAPIS_ORE.get(),
 							new Item.Properties()));
 
-	public static final DeferredItem<Item> ABYSSALITE_DIAMOND_ORE =
+	public static final RegistryObject<Item> ABYSSALITE_DIAMOND_ORE =
 			ITEMS.register("abyssalite_diamond_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_DIAMOND_ORE.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> ABYSSALITE_DEEP_ORE =
+	public static final RegistryObject<Item> ABYSSALITE_DEEP_ORE =
 			ITEMS.register("abyssalite_deep_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_DEEP_ORE.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> ABYSSALITE_REDSTONE_ORE =
+	public static final RegistryObject<Item> ABYSSALITE_REDSTONE_ORE =
 			ITEMS.register("abyssalite_redstone_ore",
 					() -> new BlockItem(BlockRegistry.ABYSSALITE_REDSTONE_ORE.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> PALE_SHARD =
+	public static final RegistryObject<Item> PALE_SHARD =
 			ITEMS.register("pale_shard",
 					() -> new Item(new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> PALE_CRISTAL =
+	public static final RegistryObject<Item> PALE_CRISTAL =
 			ITEMS.register("pale_cristal",
 					() -> new BlockItem(BlockRegistry.PALE_CRISTAL.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> PALE_CRISTAL_BLOCK =
+	public static final RegistryObject<Item> PALE_CRISTAL_BLOCK =
 			ITEMS.register("pale_cristal_block",
 					() -> new BlockItem(BlockRegistry.PALE_CRISTAL_BLOCK.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> CITRINE_FRAGMENT =
+	public static final RegistryObject<Item> CITRINE_FRAGMENT =
 			ITEMS.register("citrine_fragment",
 					() -> new Item(new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> CITRINE =
+	public static final RegistryObject<Item> CITRINE =
 			ITEMS.register("citrine",
 					() -> new BlockItem(BlockRegistry.CITRINE.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> CITRINE_BLOCK =
+	public static final RegistryObject<Item> CITRINE_BLOCK =
 			ITEMS.register("citrine_block",
 					() -> new BlockItem(BlockRegistry.CITRINE_BLOCK.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> ECHO_CRISTAL =
+	public static final RegistryObject<Item> ECHO_CRISTAL =
 			ITEMS.register("echo_cristal",
 					() -> new BlockItem(BlockRegistry.ECHO_CRISTAL.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> ECHO_BLOCK =
+	public static final RegistryObject<Item> ECHO_BLOCK =
 			ITEMS.register("echo_block",
 					() -> new BlockItem(BlockRegistry.ECHO_BLOCK.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> RUBY_FRAGMENT =
+	public static final RegistryObject<Item> RUBY_FRAGMENT =
 			ITEMS.register("ruby_fragment",
 					() -> new Item(new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> RUBY =
+	public static final RegistryObject<Item> RUBY =
 			ITEMS.register("ruby",
 					() -> new BlockItem(BlockRegistry.RUBY.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> RUBY_BLOCK =
+	public static final RegistryObject<Item> RUBY_BLOCK =
 			ITEMS.register("ruby_block",
 					() -> new BlockItem(BlockRegistry.RUBY_BLOCK.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> MALACHITE_FRAGMENT =
+	public static final RegistryObject<Item> MALACHITE_FRAGMENT =
 			ITEMS.register("malachite_fragment",
 					() -> new Item(new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> MALACHITE =
+	public static final RegistryObject<Item> MALACHITE =
 			ITEMS.register("malachite",
 				() -> new BlockItem(BlockRegistry.MALACHITE.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> MALACHITE_BLOCK =
+	public static final RegistryObject<Item> MALACHITE_BLOCK =
 			ITEMS.register("malachite_block",
 					() -> new BlockItem(BlockRegistry.MALACHITE_BLOCK.get(),
 							new Item.Properties().fireResistant()));
 
-	public static final DeferredItem<Item> RADIANCE_INGOTS =
+	public static final RegistryObject<Item> RADIANCE_INGOTS =
 			ITEMS.register("radiance_ingots",
 					() -> new Item(new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()
 					));
 
-	public static final DeferredItem<Item> TEMPER_EGG =
+	public static final RegistryObject<Item> TEMPER_EGG =
 			ITEMS.register("temper_spawn_egg",
-					() -> new DeferredSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
+					() -> new ForgeSpawnEggItem(ModEntities.TEMPER, 0xb3fcff,
 							0x72c8cc, new Item.Properties()));
 
-	public static final DeferredItem<Item> RADIANT_STAFF =
+	public static final RegistryObject<Item> RADIANT_STAFF =
 			ITEMS.register("radiant_staff",
 					() -> new RadiantStaffItem(new Item.Properties()
 							.stacksTo(1)
@@ -478,226 +480,224 @@ public class ItemRegistry {
 							.durability(20)
 							.fireResistant()));
 
-	public static final DeferredItem<Item> SOLID_CORRUPTION =
+	public static final RegistryObject<Item> SOLID_CORRUPTION =
 			ITEMS.register("solid_corruption",
 					() -> new BlockItem(BlockRegistry.SOLID_CORRUPTION.get(), new Item.Properties()
 							.rarity(Rarity.UNCOMMON)
 							.fireResistant()));
 
-	public static final DeferredItem<Item> PARASYTE_EGG =
+	public static final RegistryObject<Item> PARASYTE_EGG =
 			ITEMS.register("parasyte_spawn_egg",
-					() -> new DeferredSpawnEggItem(ModEntities.PARASYTE, 0x319473,
+					() -> new ForgeSpawnEggItem(ModEntities.PARASYTE, 0x319473,
 							0x30ab9c, new Item.Properties()));
 
-	public static final DeferredItem<Item> PROTECTOR_EGG =
+	public static final RegistryObject<Item> PROTECTOR_EGG =
 			ITEMS.register("protector_spawn_egg",
-					() -> new DeferredSpawnEggItem(ModEntities.PROTECTOR, 0xbad3d4,
+					() -> new ForgeSpawnEggItem(ModEntities.PROTECTOR, 0xbad3d4,
 							0x3bedf5, new Item.Properties()));
 
-	public static final DeferredItem<Item> CONTAGION_INCARNATION_EGG =
+	public static final RegistryObject<Item> CONTAGION_INCARNATION_EGG =
 			ITEMS.register("contagion_incarnation_spawn_egg",
-					() -> new DeferredSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
+					() -> new ForgeSpawnEggItem(ModEntities.CONTAGION_INCARNATION, 0x046366,
 							0xbdbd8a, new Item.Properties()));
 
-	public static final DeferredItem<Item> NOCTILURE_EGG =
+	public static final RegistryObject<Item> NOCTILURE_EGG =
 			ITEMS.register("noctilure_spawn_egg",
-					() -> new DeferredSpawnEggItem(ModEntities.NOCTILURE, 0x08155c, 0xcad4fc,
+					() -> new ForgeSpawnEggItem(ModEntities.NOCTILURE, 0x08155c, 0xcad4fc,
 							new Item.Properties()));
 
-	public static final DeferredItem<Item> DYSFUNCTIONNING_CATALYST =
+	public static final RegistryObject<Item> DYSFUNCTIONNING_CATALYST =
 			ITEMS.register("dysfunctionning_catalyst",
 					() -> new BlockItem(BlockRegistry.DYSFUNCTIONNING_CATALYST.get(),
 							new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
 
-	public static final DeferredItem<Item> BLACK_LANTERN =
+	public static final RegistryObject<Item> BLACK_LANTERN =
 			ITEMS.register("black_lantern",
 					() -> new BlockItem(BlockRegistry.BLACK_LANTERN.get(),
 							new Item.Properties()));
 
-	public static final DeferredItem<Item> BLUE_GLOW_BERRIES =
+	public static final RegistryObject<Item> BLUE_GLOW_BERRIES =
 			ITEMS.register("blue_glow_berries",
 					() -> new Item(new Item.Properties()
 							.food(ModFoods.GLOW_BERRY_PROPERTIES)));
 
-	public static final DeferredItem<Item> NOCTILURE_TREAT =
+	public static final RegistryObject<Item> NOCTILURE_TREAT =
 			ITEMS.register("noctilure_treat",
 					() -> new Item(new Item.Properties()));
 
-	public static final DeferredItem<Item> CRACKED_ABYSSALITE_BRICKS_SLAB =
+	public static final RegistryObject<Item> CRACKED_ABYSSALITE_BRICKS_SLAB =
 			ITEMS.register("cracked_abyssalite_bricks_slab",
 					() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.get(),
 							new Item.Properties()));
 
-	public static final DeferredItem<Item> CRACKED_ABYSSALITE_BRICKS_STAIR =
+	public static final RegistryObject<Item> CRACKED_ABYSSALITE_BRICKS_STAIR =
 			ITEMS.register("cracked_abyssalite_bricks_stair",
 					() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.get(),
 							new Item.Properties()));
 
-	public static final DeferredItem<Item> CRACKED_ABYSSALITE_BRICKS_WALL =
+	public static final RegistryObject<Item> CRACKED_ABYSSALITE_BRICKS_WALL =
 			ITEMS.register("cracked_abyssalite_bricks_wall",
 					() -> new BlockItem(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_WALL.get(),
 							new Item.Properties()));
 
-	public static final DeferredItem<Item> SHADOW_EGG =
+	public static final RegistryObject<Item> SHADOW_EGG =
 			ITEMS.register("shadow_spawn_egg",
-					() -> new DeferredSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
+					() -> new ForgeSpawnEggItem(ModEntities.SHADOW, 0x2d4854, 0x2d544a,
 							new Item.Properties()));
 	
-	public static final DeferredItem<Item> CONTAGION_INCARNATION_SKULL =
+	public static final RegistryObject<Item> CONTAGION_INCARNATION_SKULL =
 			ITEMS.register("contagion_incarnation_skull",
 					() -> new BlockItem(BlockRegistry.CONTAGION_INCARNATION_SKULL.get(),
 							new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
 
-	public static final DeferredItem<Item> REINFORCED_GLASS =
+	public static final RegistryObject<Item> REINFORCED_GLASS =
 			ITEMS.register("reinforced_glass",
 					() -> new BlockItem(BlockRegistry.REINFORCED_GLASS.get(),
 							new Item.Properties().fireResistant()));
 	
-	public static final DeferredItem<Item> SOUL_SPAWNER =
+	public static final RegistryObject<Item> SOUL_SPAWNER =
 			ITEMS.register("soul_spawner",
 					() -> new BlockItem(BlockRegistry.SOUL_SPAWNER.get(),
 							new Item.Properties().rarity(Rarity.EPIC).fireResistant()));
 
-	public static final DeferredItem<ScytheItem> ABYSSAL_SCYTHE =
+	public static final RegistryObject<Item> ABYSSAL_SCYTHE =
 			ITEMS.register("abyssal_scythe",
-					() -> new ScytheItem(new Item.Properties()
+					() -> new ScytheItem(12, -3F, new Item.Properties()
 							.stacksTo(1)
 							.rarity(Rarity.RARE)
-							.durability(2031)
-							.fireResistant()
-							.attributes(ScytheItem.createAttributes(12, -3F))));
+							.defaultDurability(2031)
+							.fireResistant()));
 
-	public static final DeferredItem<SpearItem> RADIANT_SPEAR =
+	public static final RegistryObject<Item> RADIANT_SPEAR =
 			ITEMS.register("radiant_spear",
-					() -> new SpearItem(new Item.Properties()
+					() -> new SpearItem(10, -3F, new Item.Properties()
 							.stacksTo(1)
 							.rarity(Rarity.RARE)
-							.durability(2031)
-							.fireResistant()
-							.attributes(SpearItem.createAttributes(10, -3F))));
+							.defaultDurability(2031)
+							.fireResistant()));
 
-	public static final DeferredItem<Item> ABYSS_MUSIC_DISC =
+	public static final RegistryObject<Item> ABYSS_MUSIC_DISC =
 			ITEMS.register("music_disc_abyss",
-					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
-							.jukeboxPlayable(ModJukeBoxSongsGenerator.ABYSS)));
+					() -> new RecordItem(1, ModSounds.ABYSS_THEME_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 3420));
 
-	public static final DeferredItem<Item> INCARNATION_MUSIC_DISC =
+	public static final RegistryObject<Item> INCARNATION_MUSIC_DISC =
 			ITEMS.register("music_disc_incarnation",
-					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
-							.jukeboxPlayable(ModJukeBoxSongsGenerator.INCARNATION)));
+					() -> new RecordItem(1, ModSounds.INCARNATION_THEME_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2520));
 
-	public static final DeferredItem<Item> DEEP_FOREST_MUSIC_DISC =
+	public static final RegistryObject<Item> DEEP_FOREST_MUSIC_DISC =
 			ITEMS.register("music_disc_deepforest",
-					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
-							.jukeboxPlayable(ModJukeBoxSongsGenerator.DEEPFOREST)));
+					() -> new RecordItem(1, ModSounds.DEEP_FOREST_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2420));
 
-	public static final DeferredItem<Item> WHITE_FOREST_MUSIC_DISC =
+	public static final RegistryObject<Item> WHITE_FOREST_MUSIC_DISC =
 			ITEMS.register("music_disc_whiteforest",
-					() -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.RARE)
-							.jukeboxPlayable(ModJukeBoxSongsGenerator.WHITEFOREST)));
+					() -> new RecordItem(1, ModSounds.WHITE_FOREST_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2060));
 
-    public static final DeferredItem<Item> REFLECTION_MUSIC_DISC =
+    public static final RegistryObject<Item> REFLECTION_MUSIC_DISC =
             ITEMS.register("music_disc_reflection",
-                    () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)
-                            .jukeboxPlayable(ModJukeBoxSongsGenerator.REFLECTION)));
+                    () -> new RecordItem(1, ModSounds.REFLECTION_MUSIC_DISC.get(),
+							new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 2060));
 
 
-    public static final DeferredItem<Item> WHISTLE =
+    public static final RegistryObject<Item> WHISTLE =
 			ITEMS.register("whistle",
 					() -> new WhistleItem(new Item.Properties().stacksTo(1)));
 
-	public static final DeferredItem<Item> WIND_JOURNAL =
+	public static final RegistryObject<Item> WIND_JOURNAL =
             ITEMS.register("wind_journal",
 					() -> new WindJournal(new Item.Properties().stacksTo(1)));
 
-	public static final DeferredItem<Item> NOCTILURE_FEATHER =
+	public static final RegistryObject<Item> NOCTILURE_FEATHER =
             ITEMS.register("noctilure_feather",
 					() -> new Item(new Item.Properties()));
 
-	public static final DeferredItem<Item> GRAMOPHONE =
+	public static final RegistryObject<Item> GRAMOPHONE =
             ITEMS.register("gramophone",
 					() -> new BlockItem(BlockRegistry.GRAMOPHONE.get(), new Item.Properties()));
 
-	public static final DeferredItem<Item> SONIC_BLASTER =
+	public static final RegistryObject<Item> SONIC_BLASTER =
             ITEMS.register("sonic_blaster",
 					() -> new BlockItem(BlockRegistry.SONIC_BLASTER.get(), new Item.Properties()));
 
-	public static final DeferredItem<Item> DEPTH_BERRIES =
+	public static final RegistryObject<Item> DEPTH_BERRIES =
             ITEMS.register("depth_berries",
 					() -> new BlockItem(BlockRegistry.DEPTH_VINES.get(), new Item.Properties()
 							.food(ModFoods.GLOW_BERRY_PROPERTIES))); // TODO: make proper food effect
 
-	public static final DeferredItem<Item> SCULK_TENDRIL_BLOCK =
+	public static final RegistryObject<Item> SCULK_TENDRIL_BLOCK =
             ITEMS.register("sculk_tendril_block",
 			() -> new BlockItem(BlockRegistry.SCULK_TENDRIL_BLOCK.get(), new Item.Properties()));
 
-	public static final DeferredItem<Item> WANDERER_PAW =
+	public static final RegistryObject<Item> WANDERER_PAW =
             ITEMS.register("wanderer_paw",
 			() -> new Item(new Item.Properties()));
 
-	public static final DeferredItem<Item> LURKER_EYE =
+	public static final RegistryObject<Item> LURKER_EYE =
             ITEMS.register("lurker_eye",
 			() -> new Item(new Item.Properties()));
 
-	public static final DeferredItem<Item> CORRUPTED_ABYSSALITE =
+	public static final RegistryObject<Item> CORRUPTED_ABYSSALITE =
             ITEMS.register("corrupted_abyssalite",
 			() -> new BlockItem(BlockRegistry.CORRUPTED_ABYSSALITE.get(), new Item.Properties()));
 
-	public static final DeferredItem<Item> LIVING_SPROUT =
+	public static final RegistryObject<Item> LIVING_SPROUT =
             ITEMS.register("living_sprout",
 			() -> new BlockItem(BlockRegistry.LIVING_SPROUT.get(), new Item.Properties()));
 
-	public static final DeferredItem<Item> MIND_TIARA =
+	public static final RegistryObject<Item> MIND_TIARA =
             ITEMS.register("mind_tiara",
 			() -> new Item(new Item.Properties()
 					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
-	public static final DeferredItem<Item> RING_OF_WILL =
+	public static final RegistryObject<Item> RING_OF_WILL =
             ITEMS.register("ring_of_will",
 			() -> new Item(new Item.Properties()
 					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
-	public static final DeferredItem<Item> STRENGTH_BRACELET =
+	public static final RegistryObject<Item> STRENGTH_BRACELET =
             ITEMS.register("strength_bracelet",
 			() -> new Item(new Item.Properties()
 					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
-	public static final DeferredItem<Item> PENDANT_OF_BALANCE =
+	public static final RegistryObject<Item> PENDANT_OF_BALANCE =
             ITEMS.register("pendant_of_balance",
 			() -> new Item(new Item.Properties()
 					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
-	public static final DeferredItem<Item> SHADOW_ORNAMENT =
+	public static final RegistryObject<Item> SHADOW_ORNAMENT =
             ITEMS.register("shadow_ornament",
 			() -> new Item(new Item.Properties()
 					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
-	public static final DeferredItem<Item> LIGHT_ORNAMENT =
+	public static final RegistryObject<Item> LIGHT_ORNAMENT =
             ITEMS.register("light_ornament",
 			() -> new Item(new Item.Properties()
 					.stacksTo(1).rarity(Rarity.RARE).fireResistant()));
 
-	public static final DeferredItem<Item> CRYSTAL_RESONATOR =
+	public static final RegistryObject<Item> CRYSTAL_RESONATOR =
             ITEMS.register("crystal_resonator",
 			() -> new CrystalResonatorItem(new Item.Properties()
 					.stacksTo(1)
 					.rarity(Rarity.RARE).fireResistant()));
 
-	public static final DeferredItem<Item> CRYSTAL_INFUSER =
+	public static final RegistryObject<Item> CRYSTAL_INFUSER =
             ITEMS.register("crystal_infuser",
 			() -> new BlockItem(BlockRegistry.CRYSTAL_INFUSER.get(),
 					new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
 
-	public static final DeferredItem<Item> CRYSTAL_GOLEM_SPAWN_EGG =
+	public static final RegistryObject<Item> CRYSTAL_GOLEM_SPAWN_EGG =
             ITEMS.register("crystal_golem_spawn_egg",
-					() -> new DeferredSpawnEggItem(ModEntities.CRYSTAL_GOLEM, 0x6e7474, 0x74673b,
+					() -> new ForgeSpawnEggItem(ModEntities.CRYSTAL_GOLEM, 0x6e7474, 0x74673b,
 							new Item.Properties()));
 
-	public static final DeferredItem<Item> GOLEM_STONE =
+	public static final RegistryObject<Item> GOLEM_STONE =
             ITEMS.register("golem_stone",
 			() -> new BlockItem(BlockRegistry.GOLEM_STONE.get(), new Item.Properties()));
 
-	public static final DeferredItem<Item> ANCIENT_CITADEL_MAP =
+	public static final RegistryObject<Item> ANCIENT_CITADEL_MAP =
             ITEMS.register("ancient_citadel_map",
 			() -> new AncientCitadelMap(new Item.Properties()
 					.stacksTo(1)

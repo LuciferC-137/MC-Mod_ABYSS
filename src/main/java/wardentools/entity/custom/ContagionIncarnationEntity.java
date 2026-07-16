@@ -308,7 +308,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
                 if (this.random.nextInt(CHANCE_TO_CORRUPT_ON_HIT) == 0) {
                     this.getTarget().addEffect(
                             new MobEffectInstance(
-                                    ModEffects.CORRUPTED, 100, 0));
+                                    ModEffects.CORRUPTED.get(), 100, 0));
                 }
             }
         }

@@ -48,7 +48,7 @@ public class WardenHeartItem extends Item {
 
 	private static boolean isCorruptionVessel(Player player) {
 		if (player==null) return false;
-		return player.getEffect(ModEffects.CORRUPTION_VESSEL) != null;
+		return player.getEffect(ModEffects.CORRUPTION_VESSEL.get()) != null;
 	}
 	
 	@Override

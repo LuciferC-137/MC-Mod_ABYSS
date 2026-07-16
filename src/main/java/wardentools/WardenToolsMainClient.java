@@ -1,18 +1,18 @@
 package wardentools;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.fml.ModLoadingContext;
+import wardentools.client.gui.AbyssConfigScreen;
 
-@Mod(value = ModMain.MOD_ID, dist = Dist.CLIENT)
-public class WardenToolsMainClient {
+public final class WardenToolsMainClient {
 
-    public WardenToolsMainClient(IEventBus modBus, ModContainer container) {
+    private WardenToolsMainClient() {
+    }
 
-        container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-
+    public static void registerConfigScreen() {
+        ModLoadingContext.get().registerExtensionPoint(
+                ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> new AbyssConfigScreen(parent)));
     }
 }
+

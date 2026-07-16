@@ -10,7 +10,7 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
+import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.BlueBush;
@@ -154,20 +154,20 @@ public class ModBlockStateProvider extends BlockStateProvider {
         
     }
 
-    private void registerCrossCutoutBlock(DeferredBlock<Block> blockRegistryObject) {
+    private void registerCrossCutoutBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
                 models().cross(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
 
-    private void registerCutoutBlock(DeferredBlock<Block> blockRegistryObject) {
+    private void registerCutoutBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
                 models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         blockTexture(blockRegistryObject.get())).renderType("cutout"));
         simpleBlockItem(blockRegistryObject.get(), models().getExistingFile(blockTexture(blockRegistryObject.get())));
     }
 
-    public void registerBlueBushBlock(DeferredBlock<Block> blockRegistryObject) {
+    public void registerBlueBushBlock(RegistryObject<Block> blockRegistryObject) {
         getVariantBuilder(blockRegistryObject.get())
                 .partialState().with(BlueBush.BERRY_STATE, BlueBush.BerryState.NONE)
                 .modelForState().modelFile(models().cross(
@@ -179,14 +179,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         modLoc("block/blue_bush_berry")).renderType("cutout")).addModel();
     }
 
-    private void registerTranslucentBlock(DeferredBlock<Block> blockRegistryObject) {
+    private void registerTranslucentBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlock(blockRegistryObject.get(),
                 models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         blockTexture(blockRegistryObject.get())).renderType("translucent"));
         simpleBlockItem(blockRegistryObject.get(), models().getExistingFile(blockTexture(blockRegistryObject.get())));
     }
 
-    private void registerLeavesBlock(DeferredBlock<Block> blockRegistryObject) {
+    private void registerLeavesBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(),
                 models().singleTexture(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
                         ResourceLocation.withDefaultNamespace("block/leaves"),
@@ -194,11 +194,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
     
 
-    private void registerBlockWithItem(DeferredBlock<Block> blockRegistryObject) {
+    private void registerBlockWithItem(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
     }
 
-    private void registerTopBottomSideBlock(DeferredBlock<? extends Block> blockRegistryObject,
+    private void registerTopBottomSideBlock(RegistryObject<? extends Block> blockRegistryObject,
                                             String side, String top, String bottom) {
         ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + side);
         ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top);
@@ -209,7 +209,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(blockRegistryObject.get(), modelFile);
     }
 
-    private void registerCustomSidesDirectionalBlock(DeferredBlock<? extends Block> block,
+    private void registerCustomSidesDirectionalBlock(RegistryObject<? extends Block> block,
                                                      String left, String right, String top,
                                                      String bottom, String back, String front) {
         String name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
@@ -249,7 +249,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         itemModels().withExistingParent(name, modLoc("block/" + name));
     }
 
-    private void registerCrossCutoutBlockWithBerries(DeferredBlock<Block> blockRegistryObject,
+    private void registerCrossCutoutBlockWithBerries(RegistryObject<Block> blockRegistryObject,
                                                      String noBerriesTexture,
                                                      String berriesTexture) {
         getVariantBuilder(blockRegistryObject.get())
@@ -263,7 +263,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         modLoc("block/" + berriesTexture)).renderType("cutout")).addModel();
     }
 
-    private void registerCustomSidesDirectionalPoweredBlock(DeferredBlock<? extends Block> block,
+    private void registerCustomSidesDirectionalPoweredBlock(RegistryObject<? extends Block> block,
                                                             String left, String right, String top,
                                                             String bottom, String back, String front,
                                                             String left_off, String right_off,
@@ -318,7 +318,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         itemModels().withExistingParent(name, modLoc("block/" + name));
     }
     
-    private void registerFromLocation(DeferredBlock<Block> blockRegistryObject, String location) {
+    private void registerFromLocation(RegistryObject<Block> blockRegistryObject, String location) {
         	simpleBlockWithItem(blockRegistryObject.get(),
         	    models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
         	    		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, location)));

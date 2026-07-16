@@ -2,7 +2,7 @@ package wardentools.worldgen.structure;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
 import wardentools.ModMain;
 
 import java.util.function.Supplier;

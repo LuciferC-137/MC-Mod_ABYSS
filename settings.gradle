@@ -1,8 +1,10 @@
+// Update plugin repositories to include Forge Maven root and Maven Central
 pluginManagement {
     repositories {
         mavenLocal()
         gradlePluginPortal()
-        maven { url = 'https://maven.neoforged.net/releases' }
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
     }
 }
 
