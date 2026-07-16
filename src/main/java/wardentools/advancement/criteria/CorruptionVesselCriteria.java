@@ -1,45 +1,40 @@
 package wardentools.advancement.criteria;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import com.google.gson.JsonObject;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
-import wardentools.advancement.ModCriteriaTriggers;
-
-import java.util.Optional;
+import wardentools.ModMain;
 
 public class CorruptionVesselCriteria extends SimpleCriterionTrigger<CorruptionVesselCriteria.TriggerInstance> {
+
+    static final ResourceLocation ID = new ResourceLocation(ModMain.MOD_ID, "corruption_vessel_criteria");
+
+    @Override
+    public @NotNull ResourceLocation getId() {
+        return ID;
+    }
+
+    @Override
+    public @NotNull TriggerInstance createInstance(@NotNull JsonObject json,
+                                                   @NotNull ContextAwarePredicate player,
+                                                   @NotNull DeserializationContext context) {
+        return new TriggerInstance(player);
+    }
 
     public void trigger(ServerPlayer player) {
         this.trigger(player, instance -> true);
     }
 
-    @Override
-    public @NotNull Codec<CorruptionVesselCriteria.TriggerInstance> codec() {
-        return CorruptionVesselCriteria.TriggerInstance.CODEC;
-    }
+    public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 
-    public static record TriggerInstance(Optional<ContextAwarePredicate> player)
-            implements SimpleInstance {
-        public static final Codec<CorruptionVesselCriteria.TriggerInstance> CODEC
-                = RecordCodecBuilder.create(instance -> {
-            return instance.group(EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player")
-                            .forGetter(CorruptionVesselCriteria.TriggerInstance::player))
-                    .apply(instance, CorruptionVesselCriteria.TriggerInstance::new);
-        });
-
-        public static Criterion<CorruptionVesselCriteria.TriggerInstance> choseCorruption() {
-            return ModCriteriaTriggers.CORRUPTION_VESSEL.createCriterion(
-                    new CorruptionVesselCriteria.TriggerInstance(Optional.empty()));
+        public TriggerInstance(ContextAwarePredicate player) {
+            super(ID, player);
         }
 
-        @Override
-        public @NotNull Optional<ContextAwarePredicate> player() {
-            return this.player;
+        public static TriggerInstance choseCorruption() {
+            return new TriggerInstance(ContextAwarePredicate.ANY);
         }
     }
 }

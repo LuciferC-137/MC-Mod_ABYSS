@@ -2,18 +2,18 @@ package wardentools.events;
 
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
-import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
-import net.neoforged.neoforge.registries.RegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.RegisterEvent;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.block.BlockRegistry;
@@ -25,7 +25,7 @@ import wardentools.items.armors.ModMaterials;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.custom.*;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID)
+@Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
 public class CommonModEvents {
 
 	@SubscribeEvent
@@ -38,6 +38,7 @@ public class CommonModEvents {
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
+			ModCriteriaTriggers.register();
 		});
     }
 
@@ -67,52 +68,52 @@ public class CommonModEvents {
 	}
     
     @SubscribeEvent
-    public static void registerSpawnPlacement(RegisterSpawnPlacementsEvent event) {
+    public static void registerSpawnPlacement(SpawnPlacementRegisterEvent event) {
     	event.register(ModEntities.DEEPLURKER.get(),
-				SpawnPlacementTypes.ON_GROUND,
+				SpawnPlacements.Type.ON_GROUND,
     			Heightmap.Types.MOTION_BLOCKING,
     			DeepLurkerEntity::canSpawn,
-				RegisterSpawnPlacementsEvent.Operation.OR);
+				SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.PALE_WANDERER.get(),
-    			SpawnPlacementTypes.ON_GROUND,
+    			SpawnPlacements.Type.ON_GROUND,
     			Heightmap.Types.WORLD_SURFACE,
     			PaleWandererEntity::canSpawn,
-				RegisterSpawnPlacementsEvent.Operation.OR);
+				SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.PROTECTOR.get(),
-    			SpawnPlacementTypes.ON_GROUND,
+    			SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
     			ProtectorEntity::canSpawn,
-				RegisterSpawnPlacementsEvent.Operation.OR);
+				SpawnPlacementRegisterEvent.Operation.OR);
     	event.register(ModEntities.CONTAGION_INCARNATION.get(),
-				SpawnPlacementTypes.ON_GROUND,
+				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
     			ContagionIncarnationEntity::canSpawn,
-				RegisterSpawnPlacementsEvent.Operation.OR);
+				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.TEMPER.get(),
-				SpawnPlacementTypes.NO_RESTRICTIONS,
+				SpawnPlacements.Type.NO_RESTRICTIONS,
 				Heightmap.Types.MOTION_BLOCKING,
 				TemperEntity::canSpawn,
-				RegisterSpawnPlacementsEvent.Operation.OR);
+				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.PARASYTE.get(),
-				SpawnPlacementTypes.ON_GROUND,
+				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
 				ParasyteEntity::canSpawn,
-				RegisterSpawnPlacementsEvent.Operation.OR);
+				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.NOCTILURE.get(),
-				SpawnPlacementTypes.ON_GROUND,
+				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.WORLD_SURFACE,
 				NoctilureEntity::canSpawn,
-				RegisterSpawnPlacementsEvent.Operation.OR);
+				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.SHADOW.get(),
-				SpawnPlacementTypes.ON_GROUND,
+				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
 				ShadowEntity::canSpawn,
-				RegisterSpawnPlacementsEvent.Operation.OR);
+				SpawnPlacementRegisterEvent.Operation.OR);
 		event.register(ModEntities.CRYSTAL_GOLEM.get(),
-				SpawnPlacementTypes.ON_GROUND,
+				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING,
 				CrystalGolemEntity::canSpawn,
-                RegisterSpawnPlacementsEvent.Operation.OR);
+                SpawnPlacementRegisterEvent.Operation.OR);
     }
 
 	@SubscribeEvent

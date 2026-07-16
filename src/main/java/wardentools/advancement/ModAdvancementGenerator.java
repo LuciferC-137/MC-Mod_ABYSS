@@ -1,16 +1,15 @@
 package wardentools.advancement;
 
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRewards;
-import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.data.AdvancementProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.advancement.criteria.AbyssPortalCriteria;
@@ -26,100 +25,101 @@ import wardentools.worldgen.dimension.ModDimensions;
 
 import java.util.function.Consumer;
 
-public class ModAdvancementGenerator implements AdvancementProvider.AdvancementGenerator {
+public class ModAdvancementGenerator implements ForgeAdvancementProvider.AdvancementGenerator {
+
     @Override
     public void generate(HolderLookup.@NotNull Provider registries,
-                         @NotNull Consumer<AdvancementHolder> saver,
+                         @NotNull Consumer<Advancement> saver,
                          @NotNull ExistingFileHelper existingFileHelper) {
-        AdvancementHolder abyss = Advancement.Builder.advancement()
+        Advancement abyss = Advancement.Builder.advancement()
                 .display(
                         Items.SCULK, // Picture displayed
                         Component.translatable("advancements.wardentools.abyss.title"), // Title
                         Component.translatable("advancements.wardentools.abyss.description"), // Description
-                        ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/advancements/backgrounds/sculk.png"), // Background
-                        AdvancementType.TASK, //  (TASK, GOAL, or CHALLENGE)
+                        new ResourceLocation(ModMain.MOD_ID, "textures/gui/advancements/backgrounds/sculk.png"), // Background
+                        FrameType.TASK, //  (TASK, GOAL, or CHALLENGE)
                         true, // Show to everyone when completed
                         true, // Show in toast
                         false // Announce in chat
                 )
                 // Advancement criterion
                 .addCriterion("has_sculk", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SCULK))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyss"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "abyss"), existingFileHelper);
 
         // Second advancement triggering after abyss
-        AdvancementHolder corruptedHeart = Advancement.Builder.advancement()
+        Advancement corruptedHeart = Advancement.Builder.advancement()
                 .parent(abyss) // This is child of abyss
                 .display(
                         ItemRegistry.WARDEN_HEART.get(),
                         Component.translatable("advancements.wardentools.corruptedheart.title"),
                         Component.translatable("advancements.wardentools.corruptedheart.description"),
                         null, // no background
-                        AdvancementType.GOAL,
+                        FrameType.GOAL,
                         true,
                         true,
                         false
                 )
                 .addCriterion("has_warden_heart",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_HEART.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted_heart"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "corrupted_heart"), existingFileHelper);
 
-        AdvancementHolder abyssdiver = Advancement.Builder.advancement()
+        Advancement abyssdiver = Advancement.Builder.advancement()
                 .parent(corruptedHeart)
                 .display(
                         ItemRegistry.ABYSS_DIVER.get(),
                         Component.translatable("advancements.wardentools.abyssdiver.title"),
                         Component.translatable("advancements.wardentools.abyssdiver.description"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("has_abyssdiver",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ABYSS_DIVER.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdiver"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "abyssdiver"), existingFileHelper);
 
-        AdvancementHolder windwhisperer = Advancement.Builder.advancement()
+        Advancement windwhisperer = Advancement.Builder.advancement()
                 .parent(corruptedHeart)
                 .display(
                         ItemRegistry.WIND_WHISPERER.get(),
                         Component.translatable("advancements.wardentools.windwhisperer.title"),
                         Component.translatable("advancements.wardentools.windwhisperer.description"),
                         null,
-                        AdvancementType.CHALLENGE,
+                        FrameType.CHALLENGE,
                         true,
                         true,
                         false
                 )
                 .addCriterion("windwhisperer",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WIND_WHISPERER.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "windwhisperer"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "windwhisperer"), existingFileHelper);
 
-        AdvancementHolder theAbyss = Advancement.Builder.advancement()
+        Advancement theAbyss = Advancement.Builder.advancement()
                 .parent(abyss)
                 .display(
                         ItemRegistry.DARKGRASS_BLOCK.get(),
                         Component.translatable("advancements.wardentools.theabyss.title"),
                         Component.translatable("advancements.wardentools.theabyss.description"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("to_the_abyss",
                         ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.ABYSS_LEVEL_KEY))
-                .rewards(AdvancementRewards.Builder.loot(ModAdvancementLootTables.WIND_JOURNAL_LT))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "the_abyss"), existingFileHelper);
+                .rewards(AdvancementRewards.Builder.loot(ModAdvancementLootTables.WIND_JOURNAL_LT.location()))
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "the_abyss"), existingFileHelper);
 
-        AdvancementHolder cristals = Advancement.Builder.advancement()
+        Advancement cristals = Advancement.Builder.advancement()
                 .parent(theAbyss)
                 .display(
                         ItemRegistry.CITRINE_FRAGMENT.get(),
                         Component.translatable("advancements.wardentools.cristals.title"),
                         Component.translatable("advancements.wardentools.cristals.description"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
@@ -132,130 +132,130 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                                 ItemRegistry.CITRINE_BLOCK.get(),
                                 ItemRegistry.MALACHITE_BLOCK.get(),
                                 Items.AMETHYST_BLOCK))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristals"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "cristals"), existingFileHelper);
 
-        AdvancementHolder radiance = Advancement.Builder.advancement()
+        Advancement radiance = Advancement.Builder.advancement()
                 .parent(theAbyss)
                 .display(
                         ItemRegistry.RADIANCE_FRAGMENT.get(),
                         Component.translatable("advancements.wardentools.radiance.title"),
                         Component.translatable("advancements.wardentools.radiance.description"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("radiance",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RADIANCE_FRAGMENT.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiance"), existingFileHelper);
 
-        AdvancementHolder radianceCatalyst = Advancement.Builder.advancement()
+        Advancement radianceCatalyst = Advancement.Builder.advancement()
                 .parent(radiance)
                 .display(
                         ItemRegistry.RADIANCE_CATALYST.get(),
                         Component.translatable("advancements.wardentools.radiance_catalyst.title"),
                         Component.translatable("advancements.wardentools.radiance_catalyst.description"),
                         null,
-                        AdvancementType.GOAL,
+                        FrameType.GOAL,
                         true,
                         true,
                         false
                 )
                 .addCriterion("radiance_catalyst",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RADIANCE_CATALYST.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_catalyst"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiance_catalyst"), existingFileHelper);
 
-        AdvancementHolder radiantArmor = Advancement.Builder.advancement()
+        Advancement radiantArmor = Advancement.Builder.advancement()
                 .parent(radianceCatalyst)
                 .display(
                         ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get(),
                         Component.translatable("advancements.wardentools.radiant_armor.title"),
                         Component.translatable("advancements.wardentools.radiant_armor.description"),
                         null,
-                        AdvancementType.GOAL,
+                        FrameType.GOAL,
                         true,
                         true,
                         false
                 )
                 .addCriterion("radiant_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.RADIANCE_BRINGER.get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiant_armor"), existingFileHelper);
+                                MobEffectsPredicate.effects().and(ModEffects.RADIANCE_BRINGER.get())))
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiant_armor"), existingFileHelper);
 
-        AdvancementHolder protectorInvoker = Advancement.Builder.advancement()
+        Advancement protectorInvoker = Advancement.Builder.advancement()
                 .parent(radiance)
                 .display(
                         ItemRegistry.PROTECTOR_INVOKER.get(),
                         Component.translatable("advancements.wardentools.protector_invoker.title"),
                         Component.translatable("advancements.wardentools.protector_invoker.description"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("protector_invoker",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.PROTECTOR_INVOKER.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector_invoker"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "protector_invoker"), existingFileHelper);
 
-        AdvancementHolder protector = Advancement.Builder.advancement()
+        Advancement protector = Advancement.Builder.advancement()
                 .parent(protectorInvoker)
                 .display(
                         ItemRegistry.PROTECTOR_HEART.get(),
                         Component.translatable("advancements.wardentools.protector.title"),
                         Component.translatable("advancements.wardentools.protector.description"),
                         null,
-                        AdvancementType.CHALLENGE,
+                        FrameType.CHALLENGE,
                         true,
                         true,
                         false
                 )
                 .addCriterion("protector",
                         SummonProtectorCriteria.TriggerInstance.summonProtector())
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "protector"), existingFileHelper);
 
-        AdvancementHolder deepCristal = Advancement.Builder.advancement()
+        Advancement deepCristal = Advancement.Builder.advancement()
                 .parent(theAbyss)
                 .display(
                         ItemRegistry.DEEPCRISTAL.get(),
                         Component.translatable("advancements.wardentools.deepcristal.title"),
                         Component.translatable("advancements.wardentools.deepcristal.description"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("deepcristal",
                         InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DEEPCRISTAL.get()))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deepcristal"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "deepcristal"), existingFileHelper);
 
-        AdvancementHolder deepArmor = Advancement.Builder.advancement()
+        Advancement deepArmor = Advancement.Builder.advancement()
                 .parent(deepCristal)
                 .display(
                         ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get(),
                         Component.translatable("advancements.wardentools.deep_armor.title"),
                         Component.translatable("advancements.wardentools.deep_armor.description"),
                         null,
-                        AdvancementType.GOAL,
+                        FrameType.GOAL,
                         true,
                         true,
                         false
                 )
                 .addCriterion("deep_armor",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTION_VESSEL.get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_armor"), existingFileHelper);
+                                MobEffectsPredicate.effects().and(ModEffects.CORRUPTION_VESSEL.get())))
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "deep_armor"), existingFileHelper);
 
-        AdvancementHolder incarnation = Advancement.Builder.advancement()
+        Advancement incarnation = Advancement.Builder.advancement()
                 .parent(deepCristal)
                 .display(
                         ItemRegistry.CHISELED_ABYSSALITE.get(),
                         Component.translatable("advancements.wardentools.incarnation.title"),
                         Component.translatable("advancements.wardentools.incarnation.description"),
                         null,
-                        AdvancementType.GOAL,
+                        FrameType.GOAL,
                         true,
                         true,
                         false
@@ -263,70 +263,70 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .addCriterion("kill_contagion_incarnation",
                         KilledTrigger.TriggerInstance.playerKilledEntity(
                                 EntityPredicate.Builder.entity().of(ModEntities.CONTAGION_INCARNATION.get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "incarnation"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "incarnation"), existingFileHelper);
 
-        AdvancementHolder corruption_vessel = Advancement.Builder.advancement()
+        Advancement corruption_vessel = Advancement.Builder.advancement()
                 .parent(incarnation)
                 .display(
                         ItemRegistry.CORRUPTED_VESSEL.get(),
                         Component.translatable("advancements.wardentools.corruption_vessel.title"),
                         Component.translatable("advancements.wardentools.corruption_vessel.description"),
                         null,
-                        AdvancementType.CHALLENGE,
+                        FrameType.CHALLENGE,
                         true,
                         true,
                         false
                 )
                 .addCriterion("corruption_vessel",
                         CorruptionVesselCriteria.TriggerInstance.choseCorruption())
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "corruption_vessel"), existingFileHelper);
 
-        AdvancementHolder radiance_bringer = Advancement.Builder.advancement()
+        Advancement radiance_bringer = Advancement.Builder.advancement()
                 .parent(incarnation)
                 .display(
                         ItemRegistry.PURE_VESSEL.get(),
                         Component.translatable("advancements.wardentools.radiance_bringer.title"),
                         Component.translatable("advancements.wardentools.radiance_bringer.description"),
                         null,
-                        AdvancementType.CHALLENGE,
+                        FrameType.CHALLENGE,
                         true,
                         true,
                         false
                 )
                 .addCriterion("radiance_bringer",
                         RadianceBringerCriteria.TriggerInstance.choseRadiance())
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "radiance_bringer"), existingFileHelper);
 
-        AdvancementHolder corrupted = Advancement.Builder.advancement()
+        Advancement corrupted = Advancement.Builder.advancement()
                 .parent(deepCristal)
                 .display(
                         ItemRegistry.CORRUPTED_ESSENCE.get(),
                         Component.translatable("advancements.wardentools.corrupted.title"),
                         Component.translatable("advancements.wardentools.corrupted.description"),
                         null,
-                        AdvancementType.TASK,
+                        FrameType.TASK,
                         true,
                         true,
                         false
                 )
                 .addCriterion("corrupted",
                         EffectsChangedTrigger.TriggerInstance.hasEffects(
-                                MobEffectsPredicate.Builder.effects().and(ModEffects.CORRUPTED.get())))
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted"), existingFileHelper);
+                                MobEffectsPredicate.effects().and(ModEffects.CORRUPTED.get())))
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "corrupted"), existingFileHelper);
 
-        AdvancementHolder escape = Advancement.Builder.advancement()
+        Advancement escape = Advancement.Builder.advancement()
                 .parent(abyssdiver)
                 .display(
                         ItemRegistry.RADIANT_STAFF.get(),
                         Component.translatable("advancements.wardentools.escape.title"),
                         Component.translatable("advancements.wardentools.escape.description"),
                         null,
-                        AdvancementType.CHALLENGE,
+                        FrameType.CHALLENGE,
                         true,
                         true,
                         false
                 )
                 .addCriterion("escape", AbyssPortalCriteria.TriggerInstance.openPortal())
-                .save(saver, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "escape"), existingFileHelper);
+                .save(saver, new ResourceLocation(ModMain.MOD_ID, "escape"), existingFileHelper);
     }
 }
