@@ -22,3 +22,10 @@ NEOFORGE RESOURCES
 
 Community Documentation: https://docs.neoforged.net/
 NeoForged Discord: https://discord.neoforged.net/
+
+-------
+LICENSE
+-------
+
+This project code base is under the GPL-3.0 license.
+The assets of this mod *are not covered by the GPL-3.0* license and are considered *all-rights reserved*. See the dedicated wiki page at https://github.com/LuciferC-137/MC-Mod_ABYSS/wiki/License .
