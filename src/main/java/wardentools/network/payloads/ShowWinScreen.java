@@ -1,28 +1,20 @@
 package wardentools.network.payloads;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import wardentools.ModMain;
 
-public record ShowWinScreen(Vector3f respawnPos) implements CustomPacketPayload {
+public record ShowWinScreen(Vector3f respawnPos) {
 
-    public static final CustomPacketPayload.Type<ShowWinScreen> TYPE
-            = new CustomPacketPayload.Type<>(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "show_win_screen"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "show_win_screen");
 
-    public static final StreamCodec<ByteBuf, ShowWinScreen> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VECTOR3F,
-            ShowWinScreen::respawnPos,
-            ShowWinScreen::new
-    );
+    public static void encode(ShowWinScreen msg, FriendlyByteBuf buf) {
+        buf.writeVector3f(msg.respawnPos());
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static ShowWinScreen decode(FriendlyByteBuf buf) {
+        return new ShowWinScreen(buf.readVector3f());
     }
 }

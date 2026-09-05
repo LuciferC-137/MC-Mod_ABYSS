@@ -1,7 +1,7 @@
 package wardentools.network;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.network.payloads.RequestStormStateFromServer;
@@ -25,43 +24,44 @@ import wardentools.weather.AbyssWeatherEventServer;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
+import java.lang.reflect.Method;
 import java.util.Objects;
 
 public class ServerPayloadHandler {
     private static final ResourceLocation CORRUPTION_ADVANCEMENT
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel");
+            = new ResourceLocation(ModMain.MOD_ID, "corruption_vessel");
     private static final ResourceLocation RADIANCE_ADVANCEMENT
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer");
+            = new ResourceLocation(ModMain.MOD_ID, "radiance_bringer");
 
-    public static void teleportPlayerTo(TeleportPlayerTo msg, final IPayloadContext ctx) {
+    public static void teleportPlayerTo(TeleportPlayerTo msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
             if (ctx.player() instanceof ServerPlayer serverPlayer) {
                 Level level = serverPlayer.level();
                 if (!(level instanceof ServerLevel serverLevel)) return;
                 teleport(serverLevel, serverPlayer,
-                        (int)msg.respawnPos().x, (int)msg.respawnPos().y, (int)msg.respawnPos().z);
+                        (int) msg.respawnPos().x, (int) msg.respawnPos().y, (int) msg.respawnPos().z);
             }
         }, ctx);
     }
 
-    public static void switchAchievement(SwitchAchievement msg, final IPayloadContext ctx) {
+    public static void switchAchievement(SwitchAchievement msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
             if (ctx.player() instanceof ServerPlayer serverPlayer) {
                 if (msg.index() == 0) {
-                    AdvancementHolder corruptionAdvancement = serverPlayer.server.getAdvancements()
-                            .get(CORRUPTION_ADVANCEMENT);
+                    Advancement corruptionAdvancement = serverPlayer.server.getAdvancements()
+                            .getAdvancement(CORRUPTION_ADVANCEMENT);
                     if (corruptionAdvancement != null) {
-                        for (String criterion : corruptionAdvancement.value().criteria().keySet()) {
+                        for (String criterion : corruptionAdvancement.getCriteria().keySet()) {
                             serverPlayer.getAdvancements().revoke(corruptionAdvancement, criterion);
                         }
                     }
                     ModCriteriaTriggers.RADIANCE_BRINGER.trigger(serverPlayer);
                 }
                 if (msg.index() == 1) {
-                    AdvancementHolder radianceAdvancement = serverPlayer.server.getAdvancements()
-                            .get(RADIANCE_ADVANCEMENT);
+                    Advancement radianceAdvancement = serverPlayer.server.getAdvancements()
+                            .getAdvancement(RADIANCE_ADVANCEMENT);
                     if (radianceAdvancement != null) {
-                        for (String criterion : radianceAdvancement.value().criteria().keySet()) {
+                        for (String criterion : radianceAdvancement.getCriteria().keySet()) {
                             serverPlayer.getAdvancements().revoke(radianceAdvancement, criterion);
                         }
                     }
@@ -71,7 +71,7 @@ public class ServerPayloadHandler {
         }, ctx);
     }
 
-    public static void sendServerFogDistanceToPlayer(RequestStormStateFromServer msg, final IPayloadContext ctx) {
+    public static void sendServerFogDistanceToPlayer(RequestStormStateFromServer msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
             if (ctx.player() instanceof ServerPlayer serverPlayer) {
                 AbyssWeatherEventServer.WEATHER_MANAGER.sendServerFogDistanceToClient(serverPlayer);
@@ -79,29 +79,52 @@ public class ServerPayloadHandler {
         }, ctx);
     }
 
-    public static void syncTaskData(SyncDataTaskToServer msg, final IPayloadContext ctx) {
+    public static void syncTaskData(SyncDataTaskToServer msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            CompletedTasks data = ctx.player().getData(ModDataAttachments.COMPLETED_TASKS);
+            CompletedTasks data = getEntityData(ctx.player(), ModDataAttachments.COMPLETED_TASKS);
             if (msg.remove()) {
                 data.removeCompletedTask(msg.taskId());
             } else {
                 data.addCompletedTask(msg.taskId());
             }
-            ctx.player().setData(ModDataAttachments.COMPLETED_TASKS, data);
+            setEntityData(ctx.player(), ModDataAttachments.COMPLETED_TASKS, data);
         }, ctx);
     }
 
-    public static void syncWindWhisperData(SyncKnownWhisperToServer msg, final IPayloadContext ctx) {
+    public static void syncWindWhisperData(SyncKnownWhisperToServer msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            KnownWindWhispers data = ctx.player().getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
+            KnownWindWhispers data = getEntityData(ctx.player(), ModDataAttachments.KNOWN_WIND_WHISPERS);
             if (msg.remove()) {
                 data.removeKnownWhisper(msg.whisperId());
             } else {
                 data.addKnownWhisper(msg.whisperId());
             }
-            ctx.player().setData(ModDataAttachments.KNOWN_WIND_WHISPERS, data);
-
+            setEntityData(ctx.player(), ModDataAttachments.KNOWN_WIND_WHISPERS, data);
         }, ctx);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> T getEntityData(Entity entity, Object attachmentKey) {
+        try {
+            Method method = entity.getClass().getMethod("getData", attachmentKey.getClass());
+            return (T) method.invoke(entity, attachmentKey);
+        } catch (ReflectiveOperationException e) {
+            throw new IllegalStateException("Entity data API not available during network sync", e);
+        }
+    }
+
+    private static void setEntityData(Entity entity, Object attachmentKey, Object data) {
+        for (Method method : entity.getClass().getMethods()) {
+            if (method.getName().equals("setData") && method.getParameterCount() == 2) {
+                try {
+                    method.invoke(entity, attachmentKey, data);
+                    return;
+                } catch (ReflectiveOperationException e) {
+                    throw new IllegalStateException("Failed to set entity data during network sync", e);
+                }
+            }
+        }
+        throw new IllegalStateException("Entity data API not available during network sync");
     }
 
     private static void teleport(ServerLevel level, Entity entity, int x, int y, int z) {
@@ -126,18 +149,21 @@ public class ServerPayloadHandler {
         if (targetLevel == null) return;
         if (entity instanceof ServerPlayer serverPlayer) {
             serverPlayer.revive();
-            serverPlayer.changeDimension(ModTeleporter.diveToAncientCity(targetLevel, targetPos, serverPlayer));
+            serverPlayer.changeDimension(targetLevel,
+                    ModTeleporter.diveToAncientCity(targetLevel, targetPos, serverPlayer));
         } else if (!entity.level().isClientSide) {
-            entity.changeDimension(ModTeleporter.diveToAncientCity(targetLevel, targetPos, entity));
+            entity.changeDimension(targetLevel,
+                    ModTeleporter.diveToAncientCity(targetLevel, targetPos, entity));
         }
     }
 
-    private static void handleDataOnNetwork(Runnable run, final IPayloadContext ctx) {
+    private static void handleDataOnNetwork(Runnable run, final ForgePayloadContext ctx) {
         ctx.enqueueWork(run)
                 .exceptionally(e -> {
                     LogUtils.getLogger().error("Dive Into the Abyss networking failed{}", e.getMessage());
                     ctx.disconnect(Component.literal("Dive Into the Abyss networking failed"));
                     return null;
                 });
+        ctx.setPacketHandled();
     }
 }

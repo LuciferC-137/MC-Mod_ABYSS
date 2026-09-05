@@ -5,14 +5,14 @@ import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.CrystalInfuserBlock;
@@ -27,7 +27,7 @@ import wardentools.weather.lightning.AbyssLightningRenderer;
 import wardentools.worldgen.dimension.ModDimensions;
 
 @OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
 public class ClientModEvents {
 
 	@SubscribeEvent

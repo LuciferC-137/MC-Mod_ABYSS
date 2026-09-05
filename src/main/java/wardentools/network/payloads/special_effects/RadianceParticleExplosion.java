@@ -1,38 +1,27 @@
 package wardentools.network.payloads.special_effects;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import wardentools.ModMain;
 
 public record RadianceParticleExplosion(Vector3f pos, float radius,
                                         float speed, int particleNumber,
-                                        boolean implosion) implements CustomPacketPayload {
+                                        boolean implosion) {
 
-    public static final Type<RadianceParticleExplosion> TYPE
-            = new Type<>(
-                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_particle_explosion"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "radiance_particle_explosion");
 
-    public static final StreamCodec<ByteBuf, RadianceParticleExplosion> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VECTOR3F,
-            RadianceParticleExplosion::pos,
-            ByteBufCodecs.FLOAT,
-            RadianceParticleExplosion::radius,
-            ByteBufCodecs.FLOAT,
-            RadianceParticleExplosion::speed,
-            ByteBufCodecs.INT,
-            RadianceParticleExplosion::particleNumber,
-            ByteBufCodecs.BOOL,
-            RadianceParticleExplosion::implosion,
-            RadianceParticleExplosion::new
-    );
+    public static void encode(RadianceParticleExplosion msg, FriendlyByteBuf buf) {
+        buf.writeVector3f(msg.pos());
+        buf.writeFloat(msg.radius());
+        buf.writeFloat(msg.speed());
+        buf.writeInt(msg.particleNumber());
+        buf.writeBoolean(msg.implosion());
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static RadianceParticleExplosion decode(FriendlyByteBuf buf) {
+        return new RadianceParticleExplosion(buf.readVector3f(), buf.readFloat(), buf.readFloat(),
+                buf.readInt(), buf.readBoolean());
     }
 }

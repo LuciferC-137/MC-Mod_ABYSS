@@ -84,12 +84,12 @@ public class DepthVinesBlock extends GrowingPlantHeadBlock implements Bonemealab
 
     @Override
     public boolean isValidBonemealTarget(@NotNull LevelReader levelReader, @NotNull BlockPos pos,
-                                         BlockState state) {
+                                         BlockState state, boolean b) {
         return !(Boolean)state.getValue(BERRIES);
     }
 
     @Override
-    protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
         return DepthVines.canHangBelow(level.getBlockState(pos.above()), level, pos.above())
                 || super.canSurvive(state, level, pos);
     }

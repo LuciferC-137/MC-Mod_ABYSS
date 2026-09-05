@@ -1,28 +1,20 @@
 package wardentools.network.payloads;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import wardentools.ModMain;
 
-public record TeleportPlayerTo(Vector3f respawnPos) implements CustomPacketPayload {
+public record TeleportPlayerTo(Vector3f respawnPos) {
 
-    public static final Type<TeleportPlayerTo> TYPE
-            = new Type<>(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "teleport_player_to"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "teleport_player_to");
 
-    public static final StreamCodec<ByteBuf, TeleportPlayerTo> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VECTOR3F,
-            TeleportPlayerTo::respawnPos,
-            TeleportPlayerTo::new
-    );
+    public static void encode(TeleportPlayerTo msg, FriendlyByteBuf buf) {
+        buf.writeVector3f(msg.respawnPos());
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static TeleportPlayerTo decode(FriendlyByteBuf buf) {
+        return new TeleportPlayerTo(buf.readVector3f());
     }
 }

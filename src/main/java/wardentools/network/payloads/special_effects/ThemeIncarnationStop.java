@@ -1,23 +1,20 @@
 package wardentools.network.payloads.special_effects;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.network.CodecBuilders;
 
-public record ThemeIncarnationStop() implements CustomPacketPayload {
+public record ThemeIncarnationStop() {
 
-    public static final Type<ThemeIncarnationStop> TYPE
-            = new Type<>(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "theme_incarnation_stop"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "theme_incarnation_stop");
 
-    public static final StreamCodec<ByteBuf, ThemeIncarnationStop> STREAM_CODEC
-            = CodecBuilders.emptyCodec(ThemeIncarnationStop::new);
+    public static void encode(ThemeIncarnationStop msg, FriendlyByteBuf buf) {
+        CodecBuilders.encodeEmpty(msg, buf);
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static ThemeIncarnationStop decode(FriendlyByteBuf buf) {
+        return CodecBuilders.decodeEmpty(buf, ThemeIncarnationStop::new);
     }
 }

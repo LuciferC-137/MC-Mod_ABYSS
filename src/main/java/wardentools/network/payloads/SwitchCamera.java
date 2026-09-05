@@ -1,25 +1,20 @@
 package wardentools.network.payloads;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.network.CodecBuilders;
 
-public record SwitchCamera() implements CustomPacketPayload {
+public record SwitchCamera() {
 
-    public static final Type<SwitchCamera> TYPE
-            = new Type<>(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "switch_camera"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "switch_camera");
 
+    public static void encode(SwitchCamera msg, FriendlyByteBuf buf) {
+        CodecBuilders.encodeEmpty(msg, buf);
+    }
 
-    public static final StreamCodec<ByteBuf, SwitchCamera> STREAM_CODEC
-            = CodecBuilders.emptyCodec(SwitchCamera::new);
-
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static SwitchCamera decode(FriendlyByteBuf buf) {
+        return CodecBuilders.decodeEmpty(buf, SwitchCamera::new);
     }
 }

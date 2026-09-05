@@ -1,193 +1,113 @@
 package wardentools.network;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.handling.MainThreadPayloadHandler;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import wardentools.ModMain;
-import wardentools.network.payloads.*;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkEvent;
+import wardentools.network.payloads.SendFogStateToClient;
+import wardentools.network.payloads.ShowWinScreen;
+import wardentools.network.payloads.SwitchCamera;
 import wardentools.network.payloads.datasync.SyncDataTaskToClient;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
 import wardentools.network.payloads.special_effects.*;
 
+import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID)
 public class ModClientPackets {
 
-	@SubscribeEvent
-	public static void register(final RegisterPayloadHandlersEvent event) {
-		IClientPayloadHandler handler = IClientPayloadHandler.create();
-		final PayloadRegistrar registrar = event.registrar("1");
-		// ------------------ CLIENT SPECIAL EFFECTS PACKETS --------------------------
-		registrar.playToClient(
-				AncientLaboratoryGateSound.TYPE,
-				AncientLaboratoryGateSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::ancientLaboratoryGateSound
-				)
-		);
-		registrar.playToClient(
-				IncarnationEmergeSound.TYPE,
-				IncarnationEmergeSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::incarnationEmergeSound
-				)
-		);
-		registrar.playToClient(
-				IncarnationScreamSound.TYPE,
-				IncarnationScreamSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::incarnationScreamSound
-				)
-		);
-		registrar.playToClient(
-				IncarnationSonicStrikeSound.TYPE,
-				IncarnationSonicStrikeSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::incarnationSonicStrikeSound
-				)
-		);
-		registrar.playToClient(
-				ContagionParticleExplosion.TYPE,
-				ContagionParticleExplosion.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::contagionParticleExplosion
-				)
-		);
-		registrar.playToClient(
-				ParticleDarktreeFenceDestroy.TYPE,
-				ParticleDarktreeFenceDestroy.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::particleDarktreeFenceDestroy
-				)
-		);
-		registrar.playToClient(
-				RadianceCatalystChargedParticleSound.TYPE,
-				RadianceCatalystChargedParticleSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::radianceCatalystChargedParticleSound
-				)
-		);
-		registrar.playToClient(
-				RadianceCatalystChargingParticleSound.TYPE,
-				RadianceCatalystChargingParticleSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::radianceCatalystChargingParticleSound
-				)
-		);
-		registrar.playToClient(
-				RadianceCatalystPurifyingParticleSound.TYPE,
-				RadianceCatalystPurifyingParticleSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::radianceCatalystPurifyingParticleSound
-				)
-		);
-		registrar.playToClient(
-				RadianceParticleExplosion.TYPE,
-				RadianceParticleExplosion.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::radianceParticleExplosion
-				)
-		);
-		registrar.playToClient(
-				WardenDeathParticle.TYPE,
-				WardenDeathParticle.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::wardenDeathParticle
-				)
-		);
-		registrar.playToClient(
-				ThemeIncarnationStart.TYPE,
-				ThemeIncarnationStart.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::themeIncarnationStart
-				)
-		);
-		registrar.playToClient(
-				ThemeIncarnationStop.TYPE,
-				ThemeIncarnationStop.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::themeIncarnationStop
-				)
-		);
-		registrar.playToClient(
-				ProtectorHeartSynchronize.TYPE,
-				ProtectorHeartSynchronize.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::protectorHeartSynchronize
-				)
-		);
-		registrar.playToClient(
-				WardenLaserParticleSound.TYPE,
-				WardenLaserParticleSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::wardenLaserParticleSound
-				)
-		);
-		registrar.playToClient(
-				WindWhisperSound.TYPE,
-				WindWhisperSound.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::windWhisperSound
-				)
-		);
-        registrar.playToClient(
-                ParticleShineExplosion.TYPE,
-                ParticleShineExplosion.STREAM_CODEC,
-                new MainThreadPayloadHandler<>(
-                        handler::particleShineExplosion
-                )
-        );
-        registrar.playToClient(
-                LivingSproutBurst.TYPE,
-                LivingSproutBurst.STREAM_CODEC,
-                new MainThreadPayloadHandler<>(
-                        handler::livingSproutBurst
-                )
-        );
-        registrar.playToClient(
-                SyncDataTaskToClient.TYPE,
-                SyncDataTaskToClient.STREAM_CODEC,
-                new MainThreadPayloadHandler<>(
-                        handler::syncDataTask
-                )
-        );
-        registrar.playToClient(
-                SyncKnownWhisperToClient.TYPE,
-                SyncKnownWhisperToClient.STREAM_CODEC,
-                new MainThreadPayloadHandler<>(
-                        handler::syncKnownWhisper
-                )
-        );
-		// ----------------------- CLIENT GAME PACKETS -----------------------------
-		registrar.playToClient(
-				ShowWinScreen.TYPE,
-				ShowWinScreen.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::showWinScreen
-				)
-		);
-		registrar.playToClient(
-				SendFogStateToClient.TYPE,
-				SendFogStateToClient.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::updateFogDistance
-				)
-		);
-		registrar.playToClient(
-				SwitchCamera.TYPE,
-				SwitchCamera.STREAM_CODEC,
-				new MainThreadPayloadHandler<>(
-						handler::switchCamera
-				)
-		);
-        registrar.playToClient(
-                WindWhisperSendToClient.TYPE,
-                WindWhisperSendToClient.STREAM_CODEC,
-                new MainThreadPayloadHandler<>(
-                        handler::sendWhisperToClient
-                )
-        );
-	}
+    public static int registerClientbound(int packetId) {
+        IClientPayloadHandler handler = IClientPayloadHandler.create();
+
+        packetId = registerClientbound(packetId, AncientLaboratoryGateSound.class,
+                AncientLaboratoryGateSound::encode, AncientLaboratoryGateSound::decode,
+                client(handler::ancientLaboratoryGateSound));
+        packetId = registerClientbound(packetId, IncarnationEmergeSound.class,
+                IncarnationEmergeSound::encode, IncarnationEmergeSound::decode,
+                client(handler::incarnationEmergeSound));
+        packetId = registerClientbound(packetId, IncarnationScreamSound.class,
+                IncarnationScreamSound::encode, IncarnationScreamSound::decode,
+                client(handler::incarnationScreamSound));
+        packetId = registerClientbound(packetId, IncarnationSonicStrikeSound.class,
+                IncarnationSonicStrikeSound::encode, IncarnationSonicStrikeSound::decode,
+                client(handler::incarnationSonicStrikeSound));
+        packetId = registerClientbound(packetId, ContagionParticleExplosion.class,
+                ContagionParticleExplosion::encode, ContagionParticleExplosion::decode,
+                client(handler::contagionParticleExplosion));
+        packetId = registerClientbound(packetId, ParticleDarktreeFenceDestroy.class,
+                ParticleDarktreeFenceDestroy::encode, ParticleDarktreeFenceDestroy::decode,
+                client(handler::particleDarktreeFenceDestroy));
+        packetId = registerClientbound(packetId, RadianceCatalystChargedParticleSound.class,
+                RadianceCatalystChargedParticleSound::encode, RadianceCatalystChargedParticleSound::decode,
+                client(handler::radianceCatalystChargedParticleSound));
+        packetId = registerClientbound(packetId, RadianceCatalystChargingParticleSound.class,
+                RadianceCatalystChargingParticleSound::encode, RadianceCatalystChargingParticleSound::decode,
+                client(handler::radianceCatalystChargingParticleSound));
+        packetId = registerClientbound(packetId, RadianceCatalystPurifyingParticleSound.class,
+                RadianceCatalystPurifyingParticleSound::encode, RadianceCatalystPurifyingParticleSound::decode,
+                client(handler::radianceCatalystPurifyingParticleSound));
+        packetId = registerClientbound(packetId, RadianceParticleExplosion.class,
+                RadianceParticleExplosion::encode, RadianceParticleExplosion::decode,
+                client(handler::radianceParticleExplosion));
+        packetId = registerClientbound(packetId, WardenDeathParticle.class,
+                WardenDeathParticle::encode, WardenDeathParticle::decode,
+                client(handler::wardenDeathParticle));
+        packetId = registerClientbound(packetId, ThemeIncarnationStart.class,
+                ThemeIncarnationStart::encode, ThemeIncarnationStart::decode,
+                client(handler::themeIncarnationStart));
+        packetId = registerClientbound(packetId, ThemeIncarnationStop.class,
+                ThemeIncarnationStop::encode, ThemeIncarnationStop::decode,
+                client(handler::themeIncarnationStop));
+        packetId = registerClientbound(packetId, ProtectorHeartSynchronize.class,
+                ProtectorHeartSynchronize::encode, ProtectorHeartSynchronize::decode,
+                client(handler::protectorHeartSynchronize));
+        packetId = registerClientbound(packetId, WardenLaserParticleSound.class,
+                WardenLaserParticleSound::encode, WardenLaserParticleSound::decode,
+                client(handler::wardenLaserParticleSound));
+        packetId = registerClientbound(packetId, WindWhisperSound.class,
+                WindWhisperSound::encode, WindWhisperSound::decode,
+                client(handler::windWhisperSound));
+        packetId = registerClientbound(packetId, ParticleShineExplosion.class,
+                ParticleShineExplosion::encode, ParticleShineExplosion::decode,
+                client(handler::particleShineExplosion));
+        packetId = registerClientbound(packetId, LivingSproutBurst.class,
+                LivingSproutBurst::encode, LivingSproutBurst::decode,
+                client(handler::livingSproutBurst));
+        packetId = registerClientbound(packetId, SyncDataTaskToClient.class,
+                SyncDataTaskToClient::encode, SyncDataTaskToClient::decode,
+                client(handler::syncDataTask));
+        packetId = registerClientbound(packetId, SyncKnownWhisperToClient.class,
+                SyncKnownWhisperToClient::encode, SyncKnownWhisperToClient::decode,
+                client(handler::syncKnownWhisper));
+        packetId = registerClientbound(packetId, ShowWinScreen.class,
+                ShowWinScreen::encode, ShowWinScreen::decode,
+                client(handler::showWinScreen));
+        packetId = registerClientbound(packetId, SendFogStateToClient.class,
+                SendFogStateToClient::encode, SendFogStateToClient::decode,
+                client(handler::updateFogDistance));
+        packetId = registerClientbound(packetId, SwitchCamera.class,
+                SwitchCamera::encode, SwitchCamera::decode,
+                client(handler::switchCamera));
+        packetId = registerClientbound(packetId, WindWhisperSendToClient.class,
+                WindWhisperSendToClient::encode, WindWhisperSendToClient::decode,
+                client(handler::sendWhisperToClient));
+
+        return packetId;
+    }
+
+    private static <MSG> int registerClientbound(int packetId,
+                                                  Class<MSG> messageClass,
+                                                  BiConsumer<MSG, FriendlyByteBuf> encoder,
+                                                  Function<FriendlyByteBuf, MSG> decoder,
+                                                  BiConsumer<MSG, Supplier<NetworkEvent.Context>> consumer) {
+        ModPackets.CHANNEL.registerMessage(packetId, messageClass, encoder, decoder, consumer,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        return packetId + 1;
+    }
+
+    private static <MSG> BiConsumer<MSG, Supplier<NetworkEvent.Context>> client(
+            BiConsumer<MSG, ForgePayloadContext> handler) {
+        return (msg, ctx) -> handler.accept(msg, ForgePayloadContext.client(ctx));
+    }
 }

@@ -26,7 +26,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
     private TendrilTree cachedTendrilTree = null;
 
     public SculkTendrilBlock(IntProvider intProvider, Properties properties) {
-        super(intProvider, properties);
+        super(properties, intProvider);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
     }
 
     @Override
-    protected boolean useShapeForLightOcclusion(@NotNull BlockState state) {
+    public boolean useShapeForLightOcclusion(@NotNull BlockState state) {
         return true;
     }
 
@@ -169,7 +169,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
     }
 
     @Override
-    protected void neighborChanged(@NotNull BlockState state, @NotNull Level level,
+    public void neighborChanged(@NotNull BlockState state, @NotNull Level level,
                                    @NotNull BlockPos pos, @NotNull Block block,
                                    @NotNull BlockPos neighbor, boolean b) {
         super.neighborChanged(state, level, pos, block, neighbor, b);
@@ -188,7 +188,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
     }
 
     @Override
-    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level,
+    public void tick(@NotNull BlockState state, @NotNull ServerLevel level,
                         @NotNull BlockPos pos, @NotNull RandomSource random) {
         super.tick(state, level, pos, random);
         if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
@@ -197,7 +197,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
     }
 
     @Override
-    protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader levelReader,
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader levelReader,
                                  @NotNull BlockPos pos) {
         for (Direction direction : Direction.values()) {
             BlockPos supportPosition = pos.relative(direction);
@@ -229,7 +229,7 @@ public class SculkTendrilBlock extends DropExperienceBlock implements EntityBloc
     }
 
     @Override
-    protected void onRemove(@NotNull BlockState state, @NotNull Level level,
+    public void onRemove(@NotNull BlockState state, @NotNull Level level,
                             @NotNull BlockPos pos, @NotNull BlockState state1, boolean b) {
         if (level.getBlockEntity(pos) instanceof SculkTendrilBlockEntity tendrilBlockEntity) {
             TendrilTree tendrilTree = tendrilBlockEntity.getRelativeTendrilTreeGraph();

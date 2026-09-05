@@ -18,7 +18,7 @@ public class AbyssDoublePlantBlock extends DoublePlantBlock {
     }
 
     @Override
-    protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader reader, @NotNull BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader reader, @NotNull BlockPos pos) {
         return state.is(ModTags.Blocks.CAN_SUSTAIN_ABYSS_PLANTS) || super.canSurvive(state, reader, pos);
     }
 
@@ -28,7 +28,7 @@ public class AbyssDoublePlantBlock extends DoublePlantBlock {
     }
 
     @Override
-    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level,
+    public void tick(@NotNull BlockState state, @NotNull ServerLevel level,
                         @NotNull BlockPos pos, @NotNull RandomSource random) {
         super.tick(state, level, pos, random);
         if (!state.canSurvive(level, pos)) {

@@ -1,28 +1,20 @@
 package wardentools.network.payloads.special_effects;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import wardentools.ModMain;
 
-public record WardenDeathParticle(Vector3f pos) implements CustomPacketPayload {
+public record WardenDeathParticle(Vector3f pos) {
 
-    public static final Type<WardenDeathParticle> TYPE
-            = new Type<>(
-                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "warden_death_particle"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "warden_death_particle");
 
-    public static final StreamCodec<ByteBuf, WardenDeathParticle> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VECTOR3F,
-            WardenDeathParticle::pos,
-            WardenDeathParticle::new
-    );
+    public static void encode(WardenDeathParticle msg, FriendlyByteBuf buf) {
+        buf.writeVector3f(msg.pos());
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static WardenDeathParticle decode(FriendlyByteBuf buf) {
+        return new WardenDeathParticle(buf.readVector3f());
     }
 }

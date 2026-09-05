@@ -1,6 +1,5 @@
 package wardentools.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -11,8 +10,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
@@ -21,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.AbyssPortalBlockEntity;
 import wardentools.network.payloads.ShowWinScreen;
@@ -34,7 +32,6 @@ import wardentools.worldgen.structure.StructureUtils;
 import java.util.Objects;
 
 public class AbyssPortalBlock extends Block implements EntityBlock {
-    public static final MapCodec<AbyssPortalBlock> CODEC = simpleCodec(AbyssPortalBlock::new);
 
     public AbyssPortalBlock(Properties prop) {
         super(prop);
@@ -45,8 +42,7 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader level,
+    public @NotNull ItemStack getCloneItemStack(@NotNull BlockGetter level,
                                                 @NotNull BlockPos pos, @NotNull BlockState state) {
         return ItemStack.EMPTY;
     }
@@ -141,18 +137,21 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
     private void teleportToAncientCity(Entity entity, ResourceKey<Level> targetDimension, BlockPos targetPos) {
         if (entity instanceof ServerPlayer serverPlayer) {
             ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
-            serverPlayer.changeDimension(
-                    ModTeleporter.diveToAncientCity(targetLevel, targetPos, serverPlayer));
+            if (targetLevel != null) {
+                serverPlayer.changeDimension(targetLevel,
+                        ModTeleporter.diveToAncientCity(targetLevel, targetPos, serverPlayer));
+            }
         } else if (!entity.level().isClientSide) {
             ServerLevel targetLevel = Objects.requireNonNull(entity.getServer()).getLevel(targetDimension);
             if (targetLevel != null) {
-                entity.changeDimension(ModTeleporter.diveToAncientCity(targetLevel, targetPos, entity));
+                entity.changeDimension(targetLevel,
+                        ModTeleporter.diveToAncientCity(targetLevel, targetPos, entity));
             }
         }
     }
 
     @Override
-    protected void neighborChanged(@NotNull BlockState myState, @NotNull Level level, @NotNull BlockPos pos,
+    public void neighborChanged(@NotNull BlockState myState, @NotNull Level level, @NotNull BlockPos pos,
                                    @NotNull Block neighborBlock, @NotNull BlockPos neighborPos, boolean movedByPiston) {
         super.neighborChanged(myState, level, pos, neighborBlock, neighborPos, movedByPiston);
         BlockState newState = level.getBlockState(neighborPos);

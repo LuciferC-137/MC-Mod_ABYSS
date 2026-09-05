@@ -1,28 +1,20 @@
 package wardentools.network.payloads.special_effects;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import wardentools.ModMain;
 
-public record IncarnationSonicStrikeSound(Vector3f pos) implements CustomPacketPayload {
+public record IncarnationSonicStrikeSound(Vector3f pos) {
 
-    public static final Type<IncarnationSonicStrikeSound> TYPE
-            = new Type<>(
-                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "incarnation_sonic_strike_sound"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "incarnation_sonic_strike_sound");
 
-    public static final StreamCodec<ByteBuf, IncarnationSonicStrikeSound> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VECTOR3F,
-            IncarnationSonicStrikeSound::pos,
-            IncarnationSonicStrikeSound::new
-    );
+    public static void encode(IncarnationSonicStrikeSound msg, FriendlyByteBuf buf) {
+        buf.writeVector3f(msg.pos());
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static IncarnationSonicStrikeSound decode(FriendlyByteBuf buf) {
+        return new IncarnationSonicStrikeSound(buf.readVector3f());
     }
 }

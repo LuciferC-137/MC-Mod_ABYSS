@@ -1,28 +1,18 @@
 package wardentools.network.payloads.datasync;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
-public record SyncDataTaskToServer(int taskId, boolean remove) implements CustomPacketPayload {
-    public static final Type<SyncDataTaskToServer> TYPE
-            = new Type<>(ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "sync_data_task_to_server"));
+public record SyncDataTaskToServer(int taskId, boolean remove) {
+    public static final ResourceLocation ID = new ResourceLocation(ModMain.MOD_ID, "sync_data_task_to_server");
 
-    public static final StreamCodec<ByteBuf, SyncDataTaskToServer> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.INT,
-            SyncDataTaskToServer::taskId,
-            ByteBufCodecs.BOOL,
-            SyncDataTaskToServer::remove,
-            SyncDataTaskToServer::new
-    );
+    public static void encode(SyncDataTaskToServer msg, FriendlyByteBuf buf) {
+        buf.writeInt(msg.taskId());
+        buf.writeBoolean(msg.remove());
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static SyncDataTaskToServer decode(FriendlyByteBuf buf) {
+        return new SyncDataTaskToServer(buf.readInt(), buf.readBoolean());
     }
 }

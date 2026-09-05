@@ -1,28 +1,20 @@
 package wardentools.network.payloads.special_effects;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import wardentools.ModMain;
 
-public record IncarnationEmergeSound(Vector3f pos) implements CustomPacketPayload {
+public record IncarnationEmergeSound(Vector3f pos) {
 
-    public static final CustomPacketPayload.Type<IncarnationEmergeSound> TYPE
-            = new CustomPacketPayload.Type<>(
-                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "incarnation_emerge_sound"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "incarnation_emerge_sound");
 
-    public static final StreamCodec<ByteBuf, IncarnationEmergeSound> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VECTOR3F,
-            IncarnationEmergeSound::pos,
-            IncarnationEmergeSound::new
-    );
+    public static void encode(IncarnationEmergeSound msg, FriendlyByteBuf buf) {
+        buf.writeVector3f(msg.pos());
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static IncarnationEmergeSound decode(FriendlyByteBuf buf) {
+        return new IncarnationEmergeSound(buf.readVector3f());
     }
 }

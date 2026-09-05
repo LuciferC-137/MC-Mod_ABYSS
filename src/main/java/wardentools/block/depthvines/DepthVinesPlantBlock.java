@@ -1,19 +1,17 @@
 package wardentools.block.depthvines;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GrowingPlantBodyBlock;
-import net.minecraft.world.level.block.GrowingPlantHeadBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -22,12 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 
-public class DepthVinesPlantBlock extends GrowingPlantBodyBlock implements BonemealableBlock, DepthVines {
-    public static final MapCodec<net.minecraft.world.level.block.CaveVinesPlantBlock> CODEC = simpleCodec(net.minecraft.world.level.block.CaveVinesPlantBlock::new);
 
-    public @NotNull MapCodec<net.minecraft.world.level.block.CaveVinesPlantBlock> codec() {
-        return CODEC;
-    }
+public class DepthVinesPlantBlock extends GrowingPlantBodyBlock implements BonemealableBlock, DepthVines {
 
     public DepthVinesPlantBlock(BlockBehaviour.Properties properties) {
         super(properties, Direction.DOWN, SHAPE, false);
@@ -45,15 +39,17 @@ public class DepthVinesPlantBlock extends GrowingPlantBodyBlock implements Bonem
     }
 
     @Override
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader levelReader,
+    public @NotNull ItemStack getCloneItemStack(@NotNull BlockGetter levelReader,
                                                 @NotNull BlockPos pos, @NotNull BlockState state) {
         return new ItemStack(ItemRegistry.DEPTH_BERRIES.get());
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
-                                                        @NotNull BlockPos pos, @NotNull Player player,
-                                                        @NotNull BlockHitResult hitResult) {
+    @SuppressWarnings("deprecation")
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level,
+                                          @NotNull BlockPos pos, @NotNull Player player,
+                                          @NotNull InteractionHand hand,
+                                          @NotNull BlockHitResult hitResult) {
         return DepthVines.use(player, state, level, pos);
     }
 
@@ -63,14 +59,14 @@ public class DepthVinesPlantBlock extends GrowingPlantBodyBlock implements Bonem
     }
 
     @Override
-    protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
         return level.getBlockState(pos.above()).is(BlockRegistry.DARKTREE_LEAVES.get())
                 || super.canSurvive(state, level, pos);
     }
 
     @Override
     public boolean isValidBonemealTarget(@NotNull LevelReader levelReader, @NotNull BlockPos pos,
-                                         BlockState state) {
+                                         BlockState state, boolean b) {
         return !(Boolean)state.getValue(BERRIES);
     }
 

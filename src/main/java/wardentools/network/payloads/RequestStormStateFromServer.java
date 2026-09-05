@@ -1,24 +1,20 @@
 package wardentools.network.payloads;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.network.CodecBuilders;
 
-public record RequestStormStateFromServer() implements CustomPacketPayload {
+public record RequestStormStateFromServer() {
 
-    public static final Type<RequestStormStateFromServer> TYPE
-            = new Type<>(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "request_storm_state_from_server"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "request_storm_state_from_server");
 
-    public static final StreamCodec<ByteBuf, RequestStormStateFromServer> STREAM_CODEC =
-            CodecBuilders.emptyCodec(RequestStormStateFromServer::new);
+    public static void encode(RequestStormStateFromServer msg, FriendlyByteBuf buf) {
+        CodecBuilders.encodeEmpty(msg, buf);
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static RequestStormStateFromServer decode(FriendlyByteBuf buf) {
+        return CodecBuilders.decodeEmpty(buf, RequestStormStateFromServer::new);
     }
 }

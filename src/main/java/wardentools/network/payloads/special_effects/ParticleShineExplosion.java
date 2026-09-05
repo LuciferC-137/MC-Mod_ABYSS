@@ -1,38 +1,27 @@
 package wardentools.network.payloads.special_effects;
 
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import wardentools.ModMain;
 
 public record ParticleShineExplosion(Vector3f pos, float radius,
                                      float speed, int particleNumber,
-                                     int color) implements CustomPacketPayload {
+                                     int color) {
 
-    public static final Type<ParticleShineExplosion> TYPE
-            = new Type<>(
-                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "particle_shine_explosion"));
+    public static final ResourceLocation ID =
+            new ResourceLocation(ModMain.MOD_ID, "particle_shine_explosion");
 
-    public static final StreamCodec<ByteBuf, ParticleShineExplosion> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.VECTOR3F,
-            ParticleShineExplosion::pos,
-            ByteBufCodecs.FLOAT,
-            ParticleShineExplosion::radius,
-            ByteBufCodecs.FLOAT,
-            ParticleShineExplosion::speed,
-            ByteBufCodecs.INT,
-            ParticleShineExplosion::particleNumber,
-            ByteBufCodecs.INT,
-            ParticleShineExplosion::color,
-            ParticleShineExplosion::new
-    );
+    public static void encode(ParticleShineExplosion msg, FriendlyByteBuf buf) {
+        buf.writeVector3f(msg.pos());
+        buf.writeFloat(msg.radius());
+        buf.writeFloat(msg.speed());
+        buf.writeInt(msg.particleNumber());
+        buf.writeInt(msg.color());
+    }
 
-    @Override
-    public @NotNull Type<? extends CustomPacketPayload> type() {
-        return TYPE;
+    public static ParticleShineExplosion decode(FriendlyByteBuf buf) {
+        return new ParticleShineExplosion(buf.readVector3f(), buf.readFloat(), buf.readFloat(),
+                buf.readInt(), buf.readInt());
     }
 }
