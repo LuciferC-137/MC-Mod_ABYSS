@@ -1,7 +1,6 @@
 package wardentools.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -21,8 +20,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
@@ -32,11 +30,12 @@ import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.gui.menu.DysfunctionningCatalystMenu;
+import wardentools.misc.Crystal;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.AncientLaboratoryGateSound;
 import wardentools.network.payloads.special_effects.ContagionParticleExplosion;
 import wardentools.network.payloads.special_effects.IncarnationEmergeSound;
 import wardentools.network.payloads.special_effects.ParticleDarktreeFenceDestroy;
-import wardentools.misc.Crystal;
 import wardentools.particle.ParticleRegistry;
 
 import java.util.List;
@@ -120,12 +119,12 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     @Override
-    protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-        super.loadAdditional(tag, provider);
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
         var wardentoolsData = tag.getCompound(ModMain.MOD_ID);
         if (wardentoolsData.isEmpty()) return;
         if (wardentoolsData.contains("Inventory", Tag.TAG_COMPOUND)) {
-            this.inventory.deserializeNBT(provider, wardentoolsData.getCompound("Inventory"));
+            this.inventory.deserializeNBT(wardentoolsData.getCompound("Inventory"));
         }
         this.citrine = wardentoolsData.getInt("Citrine");
         this.amethyst = wardentoolsData.getInt("Amethyst");
@@ -138,10 +137,10 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-        super.saveAdditional(tag, provider);
+    public void saveAdditional(@NotNull CompoundTag tag) {
+        super.saveAdditional(tag);
         var wardentoolsData = new CompoundTag();
-        wardentoolsData.put("Inventory", this.inventory.serializeNBT(provider));
+        wardentoolsData.put("Inventory", this.inventory.serializeNBT());
         wardentoolsData.putInt("Citrine", this.citrine);
         wardentoolsData.putInt("Amethyst", this.amethyst);
         wardentoolsData.putInt("PaleShard", this.pale);
@@ -262,9 +261,8 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
         contagionIncarnation.initiateSpawnAnimation();
         contagionIncarnation.setCatalystPos(this.worldPosition);
         this.level.addFreshEntity(contagionIncarnation);
-        PacketDistributor.sendToPlayersTrackingChunk(
-                (ServerLevel)this.level,
-                this.level.getChunkAt(this.worldPosition).getPos(),
+        ModPackets.sendToAllTrackingChunk(
+                (ServerLevel)this.level, this.worldPosition,
                 new IncarnationEmergeSound(this.worldPosition.below(12).getCenter().toVector3f()));
     }
 
@@ -294,9 +292,8 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
                     for (BlockPos pos : fencePos) {
                         if (this.level.getBlockState(pos).getBlock() == BlockRegistry.DARKTREE_FENCE.get()) {
                             this.level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-                            PacketDistributor.sendToPlayersTrackingChunk(
-                                    (ServerLevel)this.level,
-                                    this.level.getChunkAt(pos).getPos(),
+                            ModPackets.sendToAllTrackingChunk(
+                                    (ServerLevel)this.level, this.worldPosition,
                                     new ParticleDarktreeFenceDestroy(pos.getCenter().toVector3f())
                             );
                         }
@@ -318,9 +315,9 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
 
     private void sendGateClosingSoundEffectToClient(Vector3f source) {
         if (this.level != null && this.level.isClientSide) return;
-        PacketDistributor.sendToPlayersTrackingChunk(
+        ModPackets.sendToAllTrackingChunk(
                 (ServerLevel)this.level,
-                this.level.getChunkAt(this.worldPosition).getPos(),
+                this.worldPosition,
                 new AncientLaboratoryGateSound(source));
     }
 
@@ -391,9 +388,9 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
-        CompoundTag nbt = super.getUpdateTag(provider);
-        saveAdditional(nbt, provider);
+    public @NotNull CompoundTag getUpdateTag() {
+        CompoundTag nbt = super.getUpdateTag();
+        saveAdditional(nbt);
         return nbt;
     }
 
@@ -495,9 +492,8 @@ public class DysfunctionningCatalystBlockEntity extends BlockEntity implements T
     }
 
     public void hugeParticleExplosion() {
-        PacketDistributor.sendToPlayersTrackingChunk(
-                (ServerLevel)this.level,
-                this.level.getChunkAt(this.worldPosition).getPos(),
+        ModPackets.sendToAllTrackingChunk(
+                (ServerLevel)this.level, this.worldPosition,
                 new ContagionParticleExplosion(this.worldPosition.getCenter().toVector3f(),
                         1f, 2f, 800, false)
         );

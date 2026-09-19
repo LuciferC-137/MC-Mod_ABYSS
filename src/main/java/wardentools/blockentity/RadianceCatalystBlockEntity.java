@@ -1,38 +1,35 @@
 package wardentools.blockentity;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.server.level.ServerLevel;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import wardentools.ModMain;
-import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.util.CustomEnergyStorage;
 import wardentools.blockentity.util.TickableBlockEntity;
+import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.items.ItemRegistry;
 import wardentools.items.recipe.ModRecipes;
 import wardentools.items.recipe.RadianceCatalystRecipe;
 import wardentools.items.recipe.RadianceCatalystRecipeInput;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.RadianceCatalystChargedParticleSound;
 import wardentools.network.payloads.special_effects.RadianceCatalystChargingParticleSound;
 import wardentools.network.payloads.special_effects.RadianceCatalystPurifyingParticleSound;
@@ -93,11 +90,11 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 
 	@Override
-	protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-		super.loadAdditional(tag, provider);
+	public void load(@NotNull CompoundTag tag) {
+		super.load(tag);
 		if (tag.isEmpty()) return;
 		if (tag.contains("Inventory", Tag.TAG_COMPOUND)) {
-			this.inventory.deserializeNBT(provider, tag.getCompound("Inventory"));
+			this.inventory.deserializeNBT(tag.getCompound("Inventory"));
 		}
 		if (tag.contains("Energy", Tag.TAG_INT)) {
 			this.energy.setEnergy(tag.getInt("Energy"));
@@ -114,9 +111,9 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-		super.saveAdditional(tag, provider);
-		tag.put("Inventory", this.inventory.serializeNBT(provider));
+	public void saveAdditional(@NotNull CompoundTag tag) {
+		super.saveAdditional(tag);
+		tag.put("Inventory", this.inventory.serializeNBT());
 		tag.putInt("Energy", this.energy.getEnergyStored());
 		tag.putInt("BurnTime", this.burnTime);
 		tag.putInt("MaxBurnTime", this.maxBurnTime);
@@ -135,9 +132,8 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 					}
 				} else {
 					// is burning
-					PacketDistributor.sendToPlayersTrackingChunk(
-							(ServerLevel) this.level,
-							this.level.getChunkAt(this.getBlockPos()).getPos(),
+					ModPackets.sendToAllTrackingChunk(
+							(ServerLevel) this.level, this.getBlockPos(),
 							new RadianceCatalystChargingParticleSound(this.getBlockPos().getCenter().toVector3f())
 					);
 					this.burnTime--;
@@ -152,9 +148,8 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 						this.purifyingTime = 0;
 						sendUpdate();
 					} else {
-						PacketDistributor.sendToPlayersTrackingChunk(
-								(ServerLevel) this.level,
-								this.level.getChunkAt(this.getBlockPos()).getPos(),
+						ModPackets.sendToAllTrackingChunk(
+								(ServerLevel) this.level, this.getBlockPos(),
 								new RadianceCatalystPurifyingParticleSound(this.getBlockPos().getCenter().toVector3f())
 						);
 						this.purifyingTime++;
@@ -185,9 +180,8 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 					this.purifyingTime++;
 					sendUpdate();
 				} else if (this.tickFractionner%5==1){
-					PacketDistributor.sendToPlayersTrackingChunk(
-							(ServerLevel) this.level,
-							this.level.getChunkAt(this.getBlockPos()).getPos(),
+					ModPackets.sendToAllTrackingChunk(
+							(ServerLevel) this.level, this.getBlockPos(),
 							new RadianceCatalystChargedParticleSound(this.getBlockPos().getCenter().toVector3f())
 					);
 				}
@@ -196,9 +190,9 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	}
 
 	@Override
-	public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
-		CompoundTag nbt = super.getUpdateTag(provider);
-		saveAdditional(nbt, provider);
+	public @NotNull CompoundTag getUpdateTag() {
+		CompoundTag nbt = super.getUpdateTag();
+		saveAdditional(nbt);
 		return nbt;
 	}
 	
@@ -238,13 +232,10 @@ public class RadianceCatalystBlockEntity extends BlockEntity implements Tickable
 	@Nullable
 	private RadianceCatalystRecipe getRecipeFor(ItemStack input) {
 		if (this.level == null) return null;
-		RecipeHolder<RadianceCatalystRecipe> recipe = this.level.getRecipeManager()
-				.getRecipeFor(ModRecipes.RADIANCE_RECIPE_TYPE.get(),
-						new RadianceCatalystRecipeInput(input), this.level)
-				.orElse(null);
-		return recipe != null ? recipe.value() : null;
+        return this.level.getRecipeManager()
+                .getRecipeFor(ModRecipes.RADIANCE_RECIPE_TYPE.get(),
+                        new RadianceCatalystRecipeInput(input), this.level).orElse(null);
 	}
-
 
 	public ItemStack getPurifiedVersion(ItemStack stack) {
 		RadianceCatalystRecipe recipe = getRecipeFor(stack);

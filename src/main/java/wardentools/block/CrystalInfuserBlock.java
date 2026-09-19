@@ -1,13 +1,12 @@
 package wardentools.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,21 +27,20 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.CrystalInfuserBlockEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.misc.Crystal;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.ParticleShineExplosion;
 import wardentools.particle.ModParticleUtils;
 import wardentools.particle.options.GlyphParticleRotatingOptions;
 import wardentools.particle.options.ShineParticleOptions;
 
 public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    private static final MapCodec<CrystalInfuserBlock> CODEC
-            = simpleCodec(CrystalInfuserBlock::new);
+
     public static final EnumProperty<Crystal> CRYSTAL;
     private static final Vec3[] positions = new Vec3[] {
             new Vec3(10.5F, 10F + 0.35F, 10.5F),
@@ -63,8 +61,6 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
                 .setValue(FACING, Direction.NORTH));
     }
 
-    @Override
-    protected @NotNull MapCodec<CrystalInfuserBlock> codec() {return CODEC;}
 
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter,
                                         @NotNull BlockPos pos, @NotNull CollisionContext ctx) {
@@ -73,13 +69,9 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack,
-                                                       @NotNull BlockState state,
-                                                       @NotNull Level level,
-                                                       @NotNull BlockPos pos,
-                                                       @NotNull Player player,
-                                                       @NotNull InteractionHand hand,
-                                                       @NotNull BlockHitResult hitResult) {
+    public InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                                 @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
+        ItemStack stack = player.getItemInHand(hand);
         if (level.getBlockEntity(pos) instanceof CrystalInfuserBlockEntity infuser) {
             if (stack.isEmpty()) {
                 ItemStack removedItem = infuser.removeItemInOrder();
@@ -88,18 +80,18 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
                         if (!removedItem.is(ItemRegistry.CRYSTAL_RESONATOR.get())) {
                             if (player.getInventory().items.get(i).is(removedItem.getItem())) {
                                 player.getInventory().items.get(i).grow(1);
-                                return ItemInteractionResult.SUCCESS;
+                                return InteractionResult.SUCCESS;
                             }
                         }
                     }
                     player.setItemInHand(hand, removedItem);
-                    return ItemInteractionResult.SUCCESS;
+                    return InteractionResult.SUCCESS;
                 }
             } else if (infuser.setItemInAvailableSlot(stack)) {
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Nullable
@@ -153,7 +145,7 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
     }
 
     @Override
-    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level,
+    public void tick(@NotNull BlockState state, @NotNull ServerLevel level,
                         @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (level.getBlockEntity(pos) instanceof CrystalInfuserBlockEntity infuser) {
             if (infuser.isInfusing()) {
@@ -281,7 +273,7 @@ public class CrystalInfuserBlock extends HorizontalDirectionalBlock implements E
             double baseY = pos.getY();
             double baseZ = pos.getZ();
             Vec3 center = positions[4].scale(1.0F / 16.0F).add(baseX, baseY, baseZ);
-            PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level, level.getChunkAt(pos).getPos(),
+            ModPackets.sendToAllTrackingChunk((ServerLevel) level, pos,
                     new ParticleShineExplosion(center.toVector3f(), 0.1F, explosionSpeed,
                             100, getCrystalColor(state)));
         }

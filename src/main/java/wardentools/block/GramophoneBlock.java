@@ -1,23 +1,23 @@
 package wardentools.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.JukeboxPlayable;
+import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -38,11 +38,7 @@ import wardentools.blockentity.GramophoneBlockEntity;
 import javax.annotation.Nullable;
 
 public class GramophoneBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    public static final MapCodec<GramophoneBlock> CODEC = simpleCodec(GramophoneBlock::new);
     public static final EnumProperty<DoubleBlockHalf> HALF;
-
-    @Override
-    protected @NotNull MapCodec<GramophoneBlock> codec() {return CODEC;}
 
     public GramophoneBlock(Properties properties) {
         super(properties);
@@ -52,7 +48,7 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
     }
 
     @Override
-    protected @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter,
+    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter blockGetter,
                                            @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return state.getValue(HALF) == DoubleBlockHalf.LOWER ?
                 Block.box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0):
@@ -60,7 +56,7 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
     }
 
     @Override
-    protected @NotNull BlockState updateShape(BlockState state, Direction direction,
+    public @NotNull BlockState updateShape(BlockState state, Direction direction,
                                               @NotNull BlockState state1,
                                               @NotNull LevelAccessor accessor,
                                               @NotNull BlockPos pos, @NotNull BlockPos pos1) {
@@ -73,40 +69,50 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
-                                                       @NotNull Level level, @NotNull BlockPos pos,
-                                                       @NotNull Player player, @NotNull InteractionHand hand,
-                                                       @NotNull BlockHitResult hitResult) {
+    public InteractionResult use(@NotNull BlockState state, @NotNull Level level,
+                                 @NotNull BlockPos pos, @NotNull Player player,
+                                 @NotNull InteractionHand hand,
+                                 @NotNull BlockHitResult hitResult) {
+        if (!player.getItemInHand(hand).isEmpty()) {
+            return this.useItemOn(player.getItemInHand(hand), state, level, pos, player, hand, hitResult);
+        } else {
+            return this.useWithoutItem(state, level, pos, player, hitResult);
+        }
+    }
+
+    protected @NotNull InteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+                                                   @NotNull Level level, @NotNull BlockPos pos,
+                                                   @NotNull Player player, @NotNull InteractionHand hand,
+                                                   @NotNull BlockHitResult hitResult) {
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
             BlockState stateBelow = level.getBlockState(pos.below());
             if (stateBelow.is(BlockRegistry.GRAMOPHONE.get())) {
                 return ((GramophoneBlock)stateBelow.getBlock())
                         .publicUseItemOn(stack, stateBelow, level, pos.below(), player, hand, hitResult);
             }
-            return ItemInteractionResult.FAIL;
+            return InteractionResult.FAIL;
         }
         return this.publicUseItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
-    public @NotNull ItemInteractionResult publicUseItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
+    public @NotNull InteractionResult publicUseItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
                                                           @NotNull Level level, @NotNull BlockPos pos,
                                                           @NotNull Player player, @NotNull InteractionHand hand,
                                                           @NotNull BlockHitResult hitResult) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof GramophoneBlockEntity gramophone) {
             if (!gramophone.isEmpty()) {
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                return InteractionResult.PASS;
             } else {
                 ItemStack itemInHand = player.getItemInHand(hand);
-                ItemInteractionResult action = tryInsertIntoJukebox(level, pos, itemInHand, player);
+                InteractionResult action = tryInsertIntoJukebox(level, pos, itemInHand, player);
                 return !action.consumesAction()
-                        ? ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION : action;
+                        ? InteractionResult.PASS : action;
             }
         }
-        return ItemInteractionResult.FAIL;
+        return InteractionResult.FAIL;
     }
 
-    @Override
     protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
                                                         @NotNull BlockPos pos, @NotNull Player player,
                                                         @NotNull BlockHitResult hitResult) {
@@ -132,25 +138,25 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
         return InteractionResult.PASS;
     }
 
-    public static ItemInteractionResult tryInsertIntoJukebox(Level level, BlockPos pos, ItemStack stack, Player player) {
-        JukeboxPlayable jukeboxPlayable = stack.get(DataComponents.JUKEBOX_PLAYABLE);
-        if (jukeboxPlayable == null) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    public static InteractionResult tryInsertIntoJukebox(Level level, BlockPos pos, ItemStack stack, Player player) {
+        if (!(stack.getItem() instanceof RecordItem)) {
+            return InteractionResult.PASS;
         } else {
             BlockState blockState = level.getBlockState(pos);
             if (blockState.is(BlockRegistry.GRAMOPHONE.get())) {
                 if (!level.isClientSide) {
-                    ItemStack consumeAndReturn = stack.consumeAndReturn(1, player);
+                    ItemStack disc = stack.copy();
+                    stack.shrink(1);
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof GramophoneBlockEntity gramophone) {
-                        gramophone.setTheItem(consumeAndReturn);
+                        gramophone.setTheItem(disc);
                         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, blockState));
                     }
                     player.awardStat(Stats.PLAY_RECORD);
                 }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             } else {
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                return InteractionResult.PASS;
             }
         }
     }
@@ -181,7 +187,7 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
     }
 
     @Override
-    protected boolean canSurvive(BlockState state, @NotNull LevelReader levelReader, @NotNull BlockPos pos) {
+    public boolean canSurvive(BlockState state, @NotNull LevelReader levelReader, @NotNull BlockPos pos) {
         if (state.getValue(HALF) != DoubleBlockHalf.UPPER) {
             return super.canSurvive(state, levelReader, pos);
         } else {
@@ -201,12 +207,12 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
     }
 
     @Override
-    public @NotNull BlockState playerWillDestroy(Level level, @NotNull BlockPos pos,
-                                                 @NotNull BlockState state, @NotNull Player player) {
+    public void playerWillDestroy(Level level, @NotNull BlockPos pos,
+                                  @NotNull BlockState state, @NotNull Player player) {
         if (!level.isClientSide) {
             preventDropFromBottomPart(level, pos, state, player);
         }
-        return super.playerWillDestroy(level, pos, state, player);
+        super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
@@ -230,7 +236,7 @@ public class GramophoneBlock extends HorizontalDirectionalBlock implements Entit
         }
     }
 
-    protected void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+    public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos,
                             BlockState state1, boolean b) {
         if (!state.is(state1.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(pos);

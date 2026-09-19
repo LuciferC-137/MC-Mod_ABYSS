@@ -1,6 +1,5 @@
 package wardentools.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -22,8 +21,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.WardenLaserParticleSound;
 import wardentools.tags.ModTags;
 
@@ -31,16 +30,12 @@ import javax.annotation.Nullable;
 
 
 public class SonicBlaster extends DirectionalBlock {
-    public static final MapCodec<SonicBlaster> CODEC = simpleCodec(SonicBlaster::new);
     public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     private static final int TRIGGER_DELAY = 4;
     private static final float LASER_LENGTH = 6f;
     private static final float LASER_RADIUS = 1.5f;
     private static final float PUSH_STRENGTH = 2.8f;
-
-    @Override
-    protected @NotNull MapCodec<SonicBlaster> codec() {return CODEC;}
 
     public SonicBlaster(Properties properties) {
         super(properties);
@@ -58,7 +53,7 @@ public class SonicBlaster extends DirectionalBlock {
     }
 
     @Override
-    protected void onPlace(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+    public void onPlace(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
                            @NotNull BlockState state1, boolean b) {
         super.onPlace(state, level, pos, state1, b);
         for (Direction direction : Direction.values()) {
@@ -76,12 +71,12 @@ public class SonicBlaster extends DirectionalBlock {
     }
 
     @Override
-    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level,
+    public void tick(@NotNull BlockState state, @NotNull ServerLevel level,
                         @NotNull BlockPos pos, @NotNull RandomSource random) {
         sonicBoom(level, pos, state.getValue(FACING));
     }
 
-    protected void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
+    public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
                                    @NotNull Block block, @NotNull BlockPos posNeighbor, boolean b) {
         if (level.getBlockState(posNeighbor).is(ModTags.Blocks.CRISTAL_BLOCK)) {
             level.setBlock(pos, state.setValue(POWERED, true), Block.UPDATE_ALL);
@@ -118,8 +113,7 @@ public class SonicBlaster extends DirectionalBlock {
 
         AABB aabb = sonicHitBox(facing, origin, target);
 
-        PacketDistributor.sendToPlayersTrackingChunk(level,
-                level.getChunkAt(pos).getPos(),
+        ModPackets.sendToAllTrackingChunk(level, pos,
                 new WardenLaserParticleSound(origin.toVector3f(), direction.toVector3f(), (int) LASER_LENGTH));
 
         for (Entity entity : level.getEntities(null, aabb)) {

@@ -1,13 +1,18 @@
 package wardentools.network;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import wardentools.ModMain;
 import wardentools.network.payloads.RequestStormStateFromServer;
@@ -56,6 +61,22 @@ public class ModPackets {
 
     public static <MSG> void sendToServer(MSG msg) {
         CHANNEL.sendToServer(msg);
+    }
+
+    public static <MSG> void sendToPlayer(ServerPlayer player, MSG msg) {
+        CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), msg);
+    }
+
+    public static <MSG> void sendToAll(MSG msg) {
+        CHANNEL.send(PacketDistributor.ALL.noArg(), msg);
+    }
+
+    public static <MSG> void sendToAllInDimension(ResourceKey<Level> dimension, MSG msg) {
+        CHANNEL.send(PacketDistributor.DIMENSION.with(() -> dimension), msg);
+    }
+
+    public static <MDG> void sendToAllTrackingChunk(Level level, BlockPos pos, MDG msg) {
+        CHANNEL.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(pos)), msg);
     }
 
     private static <MSG> int registerServerbound(int packetId,

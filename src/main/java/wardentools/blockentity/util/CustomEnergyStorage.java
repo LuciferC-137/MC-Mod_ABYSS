@@ -1,7 +1,7 @@
 package wardentools.blockentity.util;
 
 
-import net.neoforged.neoforge.energy.EnergyStorage;
+import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage {
     public CustomEnergyStorage(int capacity) {

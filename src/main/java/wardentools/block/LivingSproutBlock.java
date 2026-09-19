@@ -18,16 +18,19 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.SculkSensorPhase;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.LivingSproutBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ParasyteEntity;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.LivingSproutBurst;
 import wardentools.tags.ModTags;
 
@@ -50,20 +53,20 @@ public class LivingSproutBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
+    public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level,
                                            @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return Block.box(3, 4, 3, 13, 14, 13);
     }
 
     @Override
-    protected boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader levelReader,
+    public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader levelReader,
                                  @NotNull BlockPos pos) {
         return levelReader.getBlockState(pos.below()).is(ModTags.Blocks.SUSTAIN_LIVING_SPROUT)
                 && super.canSurvive(state, levelReader, pos);
     }
 
     @Override
-    protected void neighborChanged(@NotNull BlockState state, @NotNull Level level,
+    public void neighborChanged(@NotNull BlockState state, @NotNull Level level,
                                    @NotNull BlockPos pos, @NotNull Block block,
                                    @NotNull BlockPos neighbor, boolean b) {
         super.neighborChanged(state, level, pos, block, neighbor, b);
@@ -114,7 +117,7 @@ public class LivingSproutBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected void tick(@NotNull BlockState state, @NotNull ServerLevel level,
+    public void tick(@NotNull BlockState state, @NotNull ServerLevel level,
                         @NotNull BlockPos pos, @NotNull RandomSource random) {
         super.tick(state, level, pos, random);
         if (getPhase(state) == SculkSensorPhase.INACTIVE) return;
@@ -144,7 +147,7 @@ public class LivingSproutBlock extends Block implements EntityBlock {
 
     public static void burst(Level level, BlockPos pos) {
         if (!level.isClientSide) {
-            PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level, level.getChunkAt(pos).getPos(),
+            ModPackets.sendToAllTrackingChunk((ServerLevel) level, pos,
                     new LivingSproutBurst(pos.getCenter().toVector3f()));
             int parasyteNumber = level.random.nextInt(2, 4);
             for (int i = 0; i < parasyteNumber; i++) {
@@ -159,14 +162,15 @@ public class LivingSproutBlock extends Block implements EntityBlock {
     }
 
     @Override
-    protected void spawnAfterBreak(@NotNull BlockState state, @NotNull ServerLevel level,
+    public void spawnAfterBreak(@NotNull BlockState state, @NotNull ServerLevel level,
                                    @NotNull BlockPos pos, @NotNull ItemStack stack, boolean silkTouch) {
         super.spawnAfterBreak(state, level, pos, stack, silkTouch);
         burst(level, pos);
     }
 
-
-    protected boolean isPathfindable(@NotNull BlockState state, @NotNull PathComputationType pathComputationType) {
+    @Override
+    public boolean isPathfindable(@NotNull BlockState state, @NotNull BlockGetter level,
+                                  @NotNull BlockPos pos, @NotNull PathComputationType type) {
         return false;
     }
 

@@ -1,7 +1,6 @@
 package wardentools.block;
 
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -19,18 +18,11 @@ import javax.annotation.Nullable;
 
 
 public class ContagionIncarnationSkullBlock extends HorizontalDirectionalBlock implements EntityBlock {
-	private static final MapCodec<ContagionIncarnationSkullBlock> CODEC
-			= simpleCodec(ContagionIncarnationSkullBlock::new);
 
 	public ContagionIncarnationSkullBlock(Properties properties) {
 	      super(properties);
 	      this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
     }
-
-	@Override
-	protected @NotNull MapCodec<? extends HorizontalDirectionalBlock> codec() {
-		return CODEC;
-	}
 
 	public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter getter,
 										@NotNull BlockPos pos, @NotNull CollisionContext ctx) {

@@ -1,9 +1,6 @@
 package wardentools.block;
 
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.item.component.CustomData;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,35 +43,15 @@ public class RadianceCatalystBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
-														@NotNull BlockPos pos, @NotNull Player player,
-														@NotNull BlockHitResult hitResult) {
-		return this.use(level, pos, player);
-	}
-
-	@Override
-	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
-													   @NotNull Level level, @NotNull BlockPos pos,
-													   @NotNull Player player, @NotNull InteractionHand hand,
-													   @NotNull BlockHitResult hitResult) {
-		switch (this.use(level, pos, player)) {
-			case InteractionResult.SUCCESS:
-				return ItemInteractionResult.SUCCESS;
-			case InteractionResult.FAIL:
-				return ItemInteractionResult.FAIL;
-			case InteractionResult.PASS:
-				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-	}
-
-	public @NotNull InteractionResult use(Level level, BlockPos pos,
-										  Player player) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level,
+								 @NotNull BlockPos pos, @NotNull Player player,
+								 @NotNull InteractionHand hand,
+								 @NotNull BlockHitResult hitResult) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (!(blockEntity instanceof RadianceCatalystBlockEntity)) return InteractionResult.PASS;
 		if (level.isClientSide()) return InteractionResult.SUCCESS;
 		if (player instanceof ServerPlayer sPlayer) {
-			sPlayer.openMenu((MenuProvider)blockEntity, pos);
+			sPlayer.openMenu((MenuProvider)blockEntity);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;
@@ -98,7 +75,7 @@ public class RadianceCatalystBlock extends Block implements EntityBlock {
 	            int energy = blockEntity.getEnergy().getEnergyStored();
 	            CompoundTag tag = new CompoundTag();
 	            tag.putInt("Energy", energy);
-				stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+				stack.setTag(tag);
 	            ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5D,
 	            		pos.getY() + 0.5D, pos.getZ() + 0.5D, stack);
 	            level.addFreshEntity(itemEntity);

@@ -1,18 +1,5 @@
 package wardentools.blockentity;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.neoforged.neoforge.network.PacketDistributor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,16 +7,28 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.blockentity.util.TickableBlockEntity;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ProtectorEntity;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ProtectorHeartItem;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.RadianceParticleExplosion;
 
 import java.util.Objects;
@@ -96,9 +95,8 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 				}
 				protec.makeSpawnAnimation();
 				Vec3 particleSource = spawnPos.above().getCenter();
-				PacketDistributor.sendToPlayersTrackingChunk(
-						(ServerLevel) level,
-						level.getChunkAt(spawnPos).getPos(),
+				ModPackets.sendToAllTrackingChunk(
+						(ServerLevel) level, spawnPos,
 						new RadianceParticleExplosion(particleSource.toVector3f(),
 								1F, 0.2F, 100, false)
 				);
@@ -192,9 +190,9 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	}
 
 	@Override
-	public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
-		CompoundTag nbt = super.getUpdateTag(provider);
-		this.saveAdditional(nbt, provider);
+	public @NotNull CompoundTag getUpdateTag() {
+		CompoundTag nbt = super.getUpdateTag();
+		this.saveAdditional(nbt);
 		return nbt;
 	}
 
@@ -205,11 +203,11 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 
 
 	@Override
-	protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-		super.loadAdditional(tag, provider);
+	public void load(@NotNull CompoundTag tag) {
+		super.load(tag);
 		if (tag.isEmpty()) return;
 		if (tag.contains("Inventory", Tag.TAG_COMPOUND)) {
-			this.inventory.deserializeNBT(provider, tag.getCompound("Inventory"));
+			this.inventory.deserializeNBT(tag.getCompound("Inventory"));
 		}
 		if (tag.contains("ProtectorSuccessfullyInvoked", Tag.TAG_BYTE)) {
 			this.protectorSuccessfullyInvoked = tag.getBoolean("ProtectorSuccessfullyInvoked");
@@ -217,9 +215,9 @@ public class ProtectorInvokerBlockEntity extends BlockEntity implements Tickable
 	}
 
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-		super.saveAdditional(tag, provider);
-		tag.put("Inventory", this.inventory.serializeNBT(provider));
+	protected void saveAdditional(@NotNull CompoundTag tag) {
+		super.saveAdditional(tag);
+		tag.put("Inventory", this.inventory.serializeNBT());
 		tag.putBoolean("ProtectorSuccessfullyInvoked", protectorSuccessfullyInvoked);
 	}
 	

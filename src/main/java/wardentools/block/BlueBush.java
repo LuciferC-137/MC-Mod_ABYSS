@@ -6,7 +6,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,15 +39,15 @@ public class BlueBush extends TallGrassBlock implements BonemealableBlock {
     }
 
     @Override
-    protected void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos,
-                              @NotNull RandomSource random) {
+    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos,
+                           @NotNull RandomSource random) {
         if (random.nextInt(7) == 0) {
             level.setBlock(pos, state.setValue(BERRY_STATE, BerryState.BLUE_BERRY), Block.UPDATE_ALL);
         }
     }
 
     @Override
-    protected boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return state.getValue(BERRY_STATE) == BerryState.NONE;
     }
 
@@ -63,9 +62,11 @@ public class BlueBush extends TallGrassBlock implements BonemealableBlock {
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
-                                                        @NotNull BlockPos pos, @NotNull Player player,
-                                                        @NotNull BlockHitResult hitResult) {
+    public InteractionResult use(@NotNull BlockState state, @NotNull Level level,
+                                 @NotNull BlockPos pos, @NotNull Player player,
+                                 @NotNull InteractionHand hand,
+                                 @NotNull BlockHitResult hitResult) {
+
         if (state.getValue(BERRY_STATE) == BerryState.BLUE_BERRY) {
             if (!level.isClientSide) {
                 level.setBlock(pos, state.setValue(BERRY_STATE, BerryState.NONE), Block.UPDATE_ALL);
@@ -73,22 +74,7 @@ public class BlueBush extends TallGrassBlock implements BonemealableBlock {
             }
             return InteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
-    }
-
-    @Override
-    protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
-                                                       @NotNull Level level, @NotNull BlockPos pos,
-                                                       @NotNull Player player, @NotNull InteractionHand hand,
-                                                       @NotNull BlockHitResult hitResult) {
-        if (state.getValue(BERRY_STATE) == BerryState.BLUE_BERRY) {
-            if (!level.isClientSide) {
-                level.setBlock(pos, state.setValue(BERRY_STATE, BerryState.NONE), Block.UPDATE_ALL);
-                throwBlueGlowBerry((ServerLevel) level, pos);
-            }
-            return ItemInteractionResult.SUCCESS;
-        }
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        return super.use(state, level, pos, player, hand, hitResult);
     }
 
     private void throwBlueGlowBerry(ServerLevel level, BlockPos pos) {

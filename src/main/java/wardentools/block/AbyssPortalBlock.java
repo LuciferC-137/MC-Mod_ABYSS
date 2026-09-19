@@ -22,6 +22,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.AbyssPortalBlockEntity;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.ShowWinScreen;
 import wardentools.particle.ParticleRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
@@ -187,7 +188,7 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
 
     private void sendScreenPacket(Player player, BlockPos pos){
         ((ServerLevel)player.level()).removePlayerImmediately((ServerPlayer)player, Entity.RemovalReason.CHANGED_DIMENSION);
-        PacketDistributor.sendToPlayer((ServerPlayer) player, new ShowWinScreen(pos.getCenter().toVector3f()));
+        ModPackets.sendToPlayer((ServerPlayer) player, new ShowWinScreen(pos.getCenter().toVector3f()));
     }
 
     @Override

@@ -1,12 +1,13 @@
 package wardentools.block;
 
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -24,8 +25,6 @@ import javax.annotation.Nullable;
 
 
 public class GolemStoneBlock extends HorizontalDirectionalBlock implements EntityBlock {
-	private static final MapCodec<GolemStoneBlock> CODEC
-			= simpleCodec(GolemStoneBlock::new);
 
 	public static final EnumProperty<Crystal> CRYSTAL;
 	public static final BooleanProperty HAS_SCULK = BooleanProperty.create("has_sculk");
@@ -42,11 +41,6 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock implements Entit
 				  .setValue(HAS_SCULK, false)
                   .setValue(HAS_SPAWNED_GOLEM, false));
     }
-
-	@Override
-	protected @NotNull MapCodec<? extends HorizontalDirectionalBlock> codec() {
-		return CODEC;
-	}
 
 	@Nullable
 	public BlockState getStateForPlacement(BlockPlaceContext ctx) {

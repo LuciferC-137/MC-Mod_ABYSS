@@ -38,15 +38,7 @@ import wardentools.particle.options.ShineParticleOptions;
 
 
 public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
-	public static final MapCodec<CrystalBlock> CODEC = RecordCodecBuilder
-			.mapCodec((blockInstance) -> blockInstance.group(
-					Codec.FLOAT.fieldOf("height").forGetter((block) -> block.height),
-					Codec.FLOAT.fieldOf("aabb_offset").forGetter((block) -> block.aabbOffset),
-					Codec.INT.fieldOf("base_light_level").forGetter((block) -> block.baseLightLevel),
-					Codec.STRING.fieldOf("crystal_type").forGetter((block) -> block.crystalType.getSerializedName()),
-					propertiesCodec())
-				.apply(blockInstance, CrystalBlock::new));
-	
+
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
 	public static final BooleanProperty OVERCHARGED;
@@ -56,8 +48,6 @@ public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
 	protected final VoxelShape westAabb;
 	protected final VoxelShape upAabb;
 	protected final VoxelShape downAabb;
-	private final float height;
-	private final float aabbOffset;
 
 	private final int baseLightLevel;
 	public final Crystal crystalType;
@@ -88,8 +78,6 @@ public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
 				  height, (16.0F - length), (16.0F - length));
 	      this.westAabb = Block.box((16.0F - height), length,
 				  length, 16.0D, (16.0F - length), (16.0F - length));
-	      this.height = height;
-	      this.aabbOffset = length;
 		  this.baseLightLevel = baseLightLevel;
 		  this.crystalType = crystal;
 	   }
@@ -178,11 +166,5 @@ public class CrystalBlock extends Block implements SimpleWaterloggedBlock {
 		}
 		super.animateTick(state, level, pos, random);
 	}
-
-	@Override
-	protected @NotNull MapCodec<CrystalBlock> codec() {
-	      return CODEC;
-	}
-	
 
 }

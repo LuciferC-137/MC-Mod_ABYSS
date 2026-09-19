@@ -1,6 +1,5 @@
 package wardentools.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,7 +12,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,7 +24,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.IShearable;
+import net.minecraftforge.common.IForgeShearable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.OptionalInt;
@@ -35,33 +33,28 @@ import java.util.OptionalInt;
 /**
  * Copied from LeavesBlock with minor modifications to the decay distance.
  */
-public class DarktreeLeavesBlock extends Block implements SimpleWaterloggedBlock, IShearable {
-    public static final MapCodec<LeavesBlock> CODEC = simpleCodec(LeavesBlock::new);
+public class DarktreeLeavesBlock extends Block implements SimpleWaterloggedBlock, IForgeShearable {
     public static final int DECAY_DISTANCE = 9;
     public static final IntegerProperty DISTANCE;
     public static final BooleanProperty PERSISTENT;
     public static final BooleanProperty WATERLOGGED;
     private static final int TICK_DELAY = 1;
 
-    public @NotNull MapCodec<? extends LeavesBlock> codec() {
-        return CODEC;
-    }
-
     public DarktreeLeavesBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState((BlockState)((BlockState)((BlockState)((BlockState)this.stateDefinition.any()).setValue(DISTANCE, DECAY_DISTANCE)).setValue(PERSISTENT, false)).setValue(WATERLOGGED, false));
     }
 
-    protected @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState state,
+    public @NotNull VoxelShape getBlockSupportShape(@NotNull BlockState state,
                                                        @NotNull BlockGetter reader, @NotNull BlockPos pos) {
         return Shapes.empty();
     }
 
-    protected boolean isRandomlyTicking(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return (Integer)state.getValue(DISTANCE) == DECAY_DISTANCE && !(Boolean)state.getValue(PERSISTENT);
     }
 
-    protected void randomTick(@NotNull BlockState state, @NotNull ServerLevel level,
+    public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level,
                               @NotNull BlockPos pos, @NotNull RandomSource random) {
         if (this.decaying(state)) {
             dropResources(state, level, pos);
@@ -74,17 +67,17 @@ public class DarktreeLeavesBlock extends Block implements SimpleWaterloggedBlock
         return !(Boolean)state.getValue(PERSISTENT) && (Integer)state.getValue(DISTANCE) == DECAY_DISTANCE;
     }
 
-    protected void tick(@NotNull BlockState state, ServerLevel level,
+    public void tick(@NotNull BlockState state, ServerLevel level,
                         @NotNull BlockPos pos, @NotNull RandomSource random) {
         level.setBlock(pos, updateDistance(state, level, pos), 3);
     }
 
-    protected int getLightBlock(@NotNull BlockState state, @NotNull BlockGetter level,
+    public int getLightBlock(@NotNull BlockState state, @NotNull BlockGetter level,
                                 @NotNull BlockPos pos) {
         return 1;
     }
 
-    protected @NotNull BlockState updateShape(BlockState state, @NotNull Direction facing,
+    public @NotNull BlockState updateShape(BlockState state, @NotNull Direction facing,
                                               @NotNull BlockState facingState,
                                               @NotNull LevelAccessor level, @NotNull BlockPos currentPos,
                                               @NotNull BlockPos facingPos) {
@@ -127,7 +120,7 @@ public class DarktreeLeavesBlock extends Block implements SimpleWaterloggedBlock
         }
     }
 
-    protected @NotNull FluidState getFluidState(BlockState state) {
+    public @NotNull FluidState getFluidState(BlockState state) {
         return (Boolean)state.getValue(WATERLOGGED) ?
                 Fluids.WATER.getSource(false) : super.getFluidState(state);
     }

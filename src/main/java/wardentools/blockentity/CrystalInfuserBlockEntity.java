@@ -1,7 +1,6 @@
 package wardentools.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
@@ -17,7 +16,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.block.BlockRegistry;
@@ -59,22 +58,22 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-        super.saveAdditional(tag, provider);
-        tag.put("inventory", this.inventory.serializeNBT(provider));
+    protected void saveAdditional(@NotNull CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("inventory", this.inventory.serializeNBT());
         tag.putBoolean("is_infusing", this.isInfusing);
         tag.putFloat("next_temple_orientation", this.nextTempleOrientation);
         tag.putInt("compass_effect_tick", this.compassEffectTick);
     }
 
     @Override
-    protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-        super.loadAdditional(tag, provider);
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
         if (tag.contains("inventory", Tag.TAG_COMPOUND)) {
             for (int i = 0; i < this.inventory.getSlots(); i++) {
                 this.inventory.setStackInSlot(i, ItemStack.EMPTY);
             }
-            this.inventory.deserializeNBT(provider, tag.getCompound("inventory"));
+            this.inventory.deserializeNBT(tag.getCompound("inventory"));
             }
         if (tag.contains("is_infusing", Tag.TAG_BYTE)) {
             this.isInfusing = tag.getBoolean("is_infusing");
@@ -247,9 +246,9 @@ public class CrystalInfuserBlockEntity extends BlockEntity {
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
+    public @NotNull CompoundTag getUpdateTag() {
         CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, provider);
+        saveAdditional(tag);
         return tag;
     }
 

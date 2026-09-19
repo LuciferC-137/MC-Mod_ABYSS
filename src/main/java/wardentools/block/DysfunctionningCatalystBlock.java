@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +18,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.BlockEntityRegistry;
@@ -42,31 +41,13 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
-														@NotNull BlockPos pos, @NotNull Player player,
-														@NotNull BlockHitResult hitResult) {
-		return this.use(level, pos, player);
-	}
-
-	@Override
-	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
-													   @NotNull Level level, @NotNull BlockPos pos,
-													   @NotNull Player player, @NotNull InteractionHand hand,
-													   @NotNull BlockHitResult hitResult) {
-        return switch (this.use(level, pos, player)) {
-            case InteractionResult.SUCCESS -> ItemInteractionResult.SUCCESS;
-            case InteractionResult.FAIL -> ItemInteractionResult.FAIL;
-            default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        };
-    }
-
-	public @NotNull InteractionResult use(Level level, @NotNull BlockPos pos,
-										  @NotNull Player player) {
+	public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+                                          @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (!(blockEntity instanceof DysfunctionningCatalystBlockEntity)) return InteractionResult.PASS;
 		if (level.isClientSide()) return InteractionResult.SUCCESS;
 		if (player instanceof ServerPlayer sPlayer) {
-			sPlayer.openMenu((MenuProvider)blockEntity, pos);
+			sPlayer.openMenu((MenuProvider)blockEntity);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;

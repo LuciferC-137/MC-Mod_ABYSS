@@ -9,7 +9,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.ItemAbility;
+import net.minecraftforge.common.ToolAction;
 import org.jetbrains.annotations.NotNull;
 
 public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
@@ -35,12 +35,9 @@ public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
 		return 5;
 	}
 
-
-
 	@Override
-	public @Nullable BlockState getToolModifiedState(@NotNull BlockState state,
-													 UseOnContext context, @NotNull ItemAbility ability,
-													 boolean simulate) {
+	public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context,
+													 ToolAction toolAction, boolean simulate) {
 		
 		if (context.getItemInHand().getItem() instanceof AxeItem) {
 			if (state.is(BlockRegistry.DARKTREE_LOG.get())) {
@@ -63,6 +60,6 @@ public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
 						.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
 			}
 		}
-		return super.getToolModifiedState(state, context, ability, simulate);
+		return super.getToolModifiedState(state, context, toolAction, simulate);
 	}
 }

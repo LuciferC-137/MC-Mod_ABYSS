@@ -1,12 +1,11 @@
 package wardentools.block;
 
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,7 +58,7 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	protected boolean useShapeForLightOcclusion(@NotNull BlockState state) {
+	public boolean useShapeForLightOcclusion(@NotNull BlockState state) {
 		return true;
 	}
 
@@ -70,27 +69,18 @@ public class ProtectorInvokerBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	protected @NotNull ItemInteractionResult useItemOn(@NotNull ItemStack stack, @NotNull BlockState state,
-													   @NotNull Level level, @NotNull BlockPos pos,
-													   @NotNull Player player, @NotNull InteractionHand hand,
-													   @NotNull BlockHitResult hitResult) {
-		return switch (this.use(level, pos, player, hand)) {
-			case InteractionResult.SUCCESS -> ItemInteractionResult.SUCCESS;
-			case InteractionResult.FAIL -> ItemInteractionResult.FAIL;
-			default -> ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-		};
-	}
-
-	public @NotNull InteractionResult use( Level level, @NotNull BlockPos pos,
-											  @NotNull Player player, @NotNull InteractionHand interactionHand) {
+	public InteractionResult use(@NotNull BlockState state, @NotNull Level level,
+								 @NotNull BlockPos pos, @NotNull Player player,
+								 @NotNull InteractionHand hand,
+								 @NotNull BlockHitResult hitResult) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (!(blockEntity instanceof ProtectorInvokerBlockEntity invoker)) {
 			return InteractionResult.PASS;
 		}
-        if (InteractionHand.MAIN_HAND != interactionHand) {
+        if (InteractionHand.MAIN_HAND != hand) {
 			return InteractionResult.FAIL;
 		}
-		return invoker.playerInteract(player, pos, interactionHand);
+		return invoker.playerInteract(player, pos, hand);
 	}
 
 	@Override
