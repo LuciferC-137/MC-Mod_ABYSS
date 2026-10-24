@@ -1,16 +1,26 @@
 package wardentools.items.enchantment;
 
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 
 public class EnchantmentRegistry {
-    public static final ResourceKey<Enchantment> STEALTH = register("stealth");
-    
-    public static ResourceKey<Enchantment> register(String name) {
-        return ResourceKey.create(Registries.ENCHANTMENT,
-               new ResourceLocation(ModMain.MOD_ID, name));
+    public static final DeferredRegister<Enchantment> ENCHANTMENTS =
+            DeferredRegister.create(
+                    ForgeRegistries.ENCHANTMENTS,
+                    ModMain.MOD_ID
+            );
+
+    public static final RegistryObject<Enchantment> STEALTH =
+            ENCHANTMENTS.register(
+                    "stealth",
+                    StealthEnchantment::new
+            );
+
+    public static void register(IEventBus modEventBus) {
+        ENCHANTMENTS.register(modEventBus);
     }
 }

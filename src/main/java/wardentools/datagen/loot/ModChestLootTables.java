@@ -312,7 +312,7 @@ public class ModChestLootTables implements LootTableSubProvider {
     public LootPoolSingletonContainer.Builder<?> stealthBook() {
         Holder<Enchantment> stealth = this.registries
                 .lookupOrThrow(Registries.ENCHANTMENT)
-                .getOrThrow(EnchantmentRegistry.STEALTH);
+                .getOrThrow(EnchantmentRegistry.STEALTH.getKey());
 
         return LootItem.lootTableItem(Items.BOOK)
                 .apply(EnchantRandomlyFunction.randomEnchantment()

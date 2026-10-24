@@ -2,26 +2,27 @@ package wardentools;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import org.slf4j.Logger;
-import wardentools.datagen.loot.ModLootModifiers;
-import wardentools.gui.MenuRegistry;
-import wardentools.gui.ModCreativeTabs;
-import wardentools.items.PotionRegistry;
-import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.BlockEntityRegistry;
+import wardentools.datagen.loot.ModLootModifiers;
 import wardentools.effect.ModEffects;
 import wardentools.entity.ModEntities;
 import wardentools.fluid.FluidRegistry;
 import wardentools.fluid.ModFluidTypes;
+import wardentools.gui.MenuRegistry;
+import wardentools.gui.ModCreativeTabs;
 import wardentools.items.ItemRegistry;
+import wardentools.items.PotionRegistry;
+import wardentools.items.armors.ArmorRegistry;
+import wardentools.items.enchantment.EnchantmentRegistry;
 import wardentools.items.recipe.ModRecipes;
 import wardentools.particle.ParticleRegistry;
 import wardentools.playerdata.ModDataAttachments;
@@ -67,6 +68,7 @@ public class ModMain {
 		ModStructureTypes.STRUCTURE_TYPES.register(bus);
 		ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
         ModDataAttachments.ATTACHMENTS.register(bus);
+		EnchantmentRegistry.ENCHANTMENTS.register(bus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

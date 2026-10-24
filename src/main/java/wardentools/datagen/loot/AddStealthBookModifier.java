@@ -34,7 +34,7 @@ public class AddStealthBookModifier extends LootModifier implements IGlobalLootM
             Holder.Reference<Enchantment> stealthEnchantment = context.getLevel()
                     .registryAccess()
                     .registryOrThrow(Registries.ENCHANTMENT)
-                    .getHolderOrThrow(EnchantmentRegistry.STEALTH);
+                    .getHolderOrThrow(EnchantmentRegistry.STEALTH.getKey());
 
             enchantedBook.enchant(stealthEnchantment.value(), 1);
 

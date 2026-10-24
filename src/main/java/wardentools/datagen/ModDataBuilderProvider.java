@@ -9,7 +9,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import wardentools.ModMain;
 import wardentools.items.ModJukeBoxSongsGenerator;
-import wardentools.items.enchantment.EnchantmentGenerator;
 import wardentools.worldgen.CustomNoiseSettings;
 import wardentools.worldgen.biome.ModBiomes;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
@@ -31,7 +30,6 @@ public class ModDataBuilderProvider extends DatapackBuiltinEntriesProvider {
     		.add(Registries.CONFIGURED_CARVER, ModConfiguredCarver::bootstrap)
             .add(Registries.NOISE_SETTINGS, CustomNoiseSettings::bootstrap)
             // Other Providers
-            .add(Registries.ENCHANTMENT, EnchantmentGenerator::bootstrap)
             .add(Registries.JUKEBOX_SONG, ModJukeBoxSongsGenerator::bootstrap);
 
     public ModDataBuilderProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
