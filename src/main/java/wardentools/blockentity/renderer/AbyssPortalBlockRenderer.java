@@ -1,22 +1,17 @@
 package wardentools.blockentity.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
@@ -89,7 +84,7 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
         for (float[] c : corners) {
             float x = c[0], y = c[1], z = c[2];
             float[] uv = projectToUv(model, view, projection, x, y, z); // UVs from P * V * M
-            bb.addVertex(model, x, y, z).setUv(uv[0], uv[1]).setColor(255, 255, 255, 255);
+            bb.vertex(model, x, y, z).setUv(uv[0], uv[1]).color(255, 255, 255, 255);
         }
     }
 

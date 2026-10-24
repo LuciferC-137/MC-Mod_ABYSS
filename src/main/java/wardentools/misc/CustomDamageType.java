@@ -11,5 +11,5 @@ public class CustomDamageType {
 
     public static ResourceKey<DamageType> CORRUPTED_KEY
         = ResourceKey.create(Registries.DAMAGE_TYPE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corrupted"));
+           new ResourceLocation(ModMain.MOD_ID, "corrupted"));
 }

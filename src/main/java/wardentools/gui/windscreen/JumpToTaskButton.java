@@ -7,17 +7,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
 @OnlyIn(Dist.CLIENT)
 public class JumpToTaskButton extends Button {
     public static final ResourceLocation JUMP_TO_TASK_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/jump_to_task_button.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/gui/wind_journal/jump_to_task_button.png");
     public static final ResourceLocation JUMP_TO_TASK_TEXTURE_HOVER
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/jump_to_task_button_hover.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/gui/wind_journal/jump_to_task_button_hover.png");
     private static final int LENGTH = 51;
     private static final int HEIGHT = 47;
     private static final Component jump_message = Component.empty()

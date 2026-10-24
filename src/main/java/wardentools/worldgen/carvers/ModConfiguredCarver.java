@@ -22,7 +22,7 @@ public class ModConfiguredCarver {
 	
 	private static ResourceKey<ConfiguredWorldCarver<?>> createKey(String name) {
 	      return ResourceKey.create(Registries.CONFIGURED_CARVER,
-				  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+				 new ResourceLocation(ModMain.MOD_ID, name));
 	}
 	
 	public static void bootstrap(BootstrapContext<ConfiguredWorldCarver<?>> ctx) {

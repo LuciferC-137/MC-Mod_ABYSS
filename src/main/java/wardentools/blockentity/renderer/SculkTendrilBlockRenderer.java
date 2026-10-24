@@ -19,10 +19,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
 import wardentools.ModMain;
@@ -33,7 +32,7 @@ import java.util.Map;
 @OnlyIn(Dist.CLIENT)
 public class SculkTendrilBlockRenderer implements BlockEntityRenderer<SculkTendrilBlockEntity> {
     private static final ResourceLocation SCULK
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+            =new ResourceLocation(ModMain.MOD_ID,
             "textures/item/sculk_tendril_block.png");
     private static final Map<Direction, Quaternionf> DIRECTION_ROTATIONS = Map.of(
             Direction.NORTH, new Quaternionf(),
@@ -51,18 +50,6 @@ public class SculkTendrilBlockRenderer implements BlockEntityRenderer<SculkTendr
 
 
     public SculkTendrilBlockRenderer(BlockEntityRendererProvider.Context ctx) {
-    }
-
-    @Override
-    public @NotNull AABB getRenderBoundingBox(SculkTendrilBlockEntity entity) {
-        return new AABB(
-                entity.getBlockPos().getX() - 1.0,
-                entity.getBlockPos().getY() - 1.0,
-                entity.getBlockPos().getZ() - 1.0,
-                entity.getBlockPos().getX() + 1.0,
-                entity.getBlockPos().getY() + 1.0,
-                entity.getBlockPos().getZ() + 1.0
-        );
     }
 
 
@@ -158,8 +145,8 @@ public class SculkTendrilBlockRenderer implements BlockEntityRenderer<SculkTendr
 
         @Override
         public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-                                   int packedLight, int packedOverlay, int i) {
-            root.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+                                   int packedLight, int packedOverlay, float f, float f2, float f3, float f4) {
+            root.render(poseStack, vertexConsumer, packedLight, packedOverlay);
         }
 
         public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {

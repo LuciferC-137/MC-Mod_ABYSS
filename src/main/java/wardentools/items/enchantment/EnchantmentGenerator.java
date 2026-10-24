@@ -32,7 +32,7 @@ public class EnchantmentGenerator {
 
     private static ResourceKey<Enchantment> key(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT,
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+               new ResourceLocation(ModMain.MOD_ID, name));
     }
 
     private static void register(BootstrapContext<Enchantment> registry,

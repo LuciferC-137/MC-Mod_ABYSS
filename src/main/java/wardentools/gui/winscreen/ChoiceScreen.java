@@ -10,8 +10,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
@@ -25,13 +25,13 @@ public class ChoiceScreen extends Screen {
    private static final ResourceLocation VIGNETTE_LOCATION
            = ResourceLocation.withDefaultNamespace("textures/misc/vignette.png");
    private static final ResourceLocation CORRUPTION_LOCATION
-              = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/choice_screen/corruption.png");
+              =new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/corruption.png");
    private static final ResourceLocation RADIANCE_LOCATION
-              = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/choice_screen/radiance.png");
+              =new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/radiance.png");
    private static final ResourceLocation CORRUPTION_BUTTON_OVERLAY
-              = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/choice_screen/corruption_button_overlay.png");
+              =new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/corruption_button_overlay.png");
    private static final ResourceLocation RADIANCE_BUTTON_OVERLAY
-              = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/choice_screen/radiance_button_overlay.png");
+              =new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/radiance_button_overlay.png");
    private static final int BUTTON_WIDTH = 100;
    private static final int BUTTON_HEIGHT = 20;
    private static final int OVERLAY_MARGIN = 40;

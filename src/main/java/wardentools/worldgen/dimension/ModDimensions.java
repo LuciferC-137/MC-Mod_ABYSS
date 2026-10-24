@@ -33,11 +33,11 @@ public class ModDimensions {
 
 
 	public static final ResourceKey<LevelStem> ABYSS_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim"));
+           new ResourceLocation(ModMain.MOD_ID, "abyssdim"));
     public static final ResourceKey<Level> ABYSS_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim"));
+           new ResourceLocation(ModMain.MOD_ID, "abyssdim"));
     public static final ResourceKey<DimensionType> ABYSS_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "abyssdim_type"));
+           new ResourceLocation(ModMain.MOD_ID, "abyssdim_type"));
 
     public static final ResourceLocation DIMENSION_RENDERER = ResourceLocation
             .fromNamespaceAndPath(ModMain.MOD_ID, "renderer");

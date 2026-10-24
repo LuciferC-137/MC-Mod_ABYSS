@@ -8,8 +8,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import wardentools.client.rendering.RenderingUtils;
@@ -81,19 +81,19 @@ public class CrystalLaserRenderer extends EntityRenderer<CrystalLaserEntity> {
         Vec3 v2 = start.subtract(side);
         Vec3 v3 = end.subtract(side);
         Vec3 v4 = end.add(side);
-        consumer.addVertex(matrix, (float) v1.x, (float) v1.y, (float) v1.z)
+        consumer.vertex(matrix, (float) v1.x, (float) v1.y, (float) v1.z)
                 .setColor(r, g, b, a)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix, (float) v2.x, (float) v2.y, (float) v2.z)
+        consumer.vertex(matrix, (float) v2.x, (float) v2.y, (float) v2.z)
                 .setColor(r, g, b, a)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix, (float) v3.x, (float) v3.y, (float) v3.z)
+        consumer.vertex(matrix, (float) v3.x, (float) v3.y, (float) v3.z)
                 .setColor(r, g, b, a)
                 .setNormal(0, 1, 0);
 
-        consumer.addVertex(matrix, (float) v4.x, (float) v4.y, (float) v4.z)
+        consumer.vertex(matrix, (float) v4.x, (float) v4.y, (float) v4.z)
                 .setColor(r, g, b, a)
                 .setNormal(0, 1, 0);
     }

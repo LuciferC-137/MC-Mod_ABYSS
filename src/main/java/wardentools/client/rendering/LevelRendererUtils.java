@@ -11,8 +11,8 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -81,7 +81,7 @@ public class LevelRendererUtils {
         Matrix4f matrix4f = posestack.last().pose();
         posestack.mulPose(Axis.XP.rotationDegrees(-90.0F));
         BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-        bufferbuilder.addVertex(matrix4f, 0.0F, 90.0F, 0.0F)
+        bufferbuilder.vertex(matrix4f, 0.0F, 90.0F, 0.0F)
                 .setColor(0F, 0.1F, 0.1F, alpha);
 
         // Draw circle from zenith to horizon
@@ -91,7 +91,7 @@ public class LevelRendererUtils {
             float x = 90.0F * Mth.cos(azimuth);
             float y = -10.0F; // A bit lower than the Horizon
             float z = 90.0F * Mth.sin(azimuth);
-            bufferbuilder.addVertex(matrix4f, x, y, z)
+            bufferbuilder.vertex(matrix4f, x, y, z)
                     .setColor(red, green, blue, 0.0F);
         }
 
@@ -204,10 +204,10 @@ public class LevelRendererUtils {
                 Vector3f c2 = new Vector3f(-star.size(),  star.size(), 0.0F).rotate(q).add(star.pos()); // (0,1)
                 Vector3f c3 = new Vector3f(-star.size(), -star.size(), 0.0F).rotate(q).add(star.pos()); // (0,0)
 
-                starBuf.addVertex(mat, c0.x(), c0.y(), c0.z()).setUv(1.0F, 0.0F);
-                starBuf.addVertex(mat, c1.x(), c1.y(), c1.z()).setUv(1.0F, 1.0F);
-                starBuf.addVertex(mat, c2.x(), c2.y(), c2.z()).setUv(0.0F, 1.0F);
-                starBuf.addVertex(mat, c3.x(), c3.y(), c3.z()).setUv(0.0F, 0.0F);
+                starBuf.vertex(mat, c0.x(), c0.y(), c0.z()).setUv(1.0F, 0.0F);
+                starBuf.vertex(mat, c1.x(), c1.y(), c1.z()).setUv(1.0F, 1.0F);
+                starBuf.vertex(mat, c2.x(), c2.y(), c2.z()).setUv(0.0F, 1.0F);
+                starBuf.vertex(mat, c3.x(), c3.y(), c3.z()).setUv(0.0F, 0.0F);
             }
 
             BufferUploader.drawWithShader(starBuf.buildOrThrow());

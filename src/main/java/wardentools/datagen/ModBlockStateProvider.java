@@ -84,9 +84,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 "depth_vines_plant", "depth_vines_plant_lit");
 
         horizontalBlock(BlockRegistry.GOLEM_STONE.get(),
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks"),
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks"),
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/golem_stone_top"));
+               new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks"),
+               new ResourceLocation(ModMain.MOD_ID, "block/abyssalite_bricks"),
+               new ResourceLocation(ModMain.MOD_ID, "block/golem_stone_top"));
 
         // Registering block model for block using another model name
         registerFromLocation(BlockRegistry.DARKTREE_WOOD, "block/darktree_log");
@@ -200,9 +200,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void registerTopBottomSideBlock(RegistryObject<? extends Block> blockRegistryObject,
                                             String side, String top, String bottom) {
-        ResourceLocation sideTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + side);
-        ResourceLocation topTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top);
-        ResourceLocation bottomTexture = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + bottom);
+        ResourceLocation sideTexture =new ResourceLocation(ModMain.MOD_ID, "block/" + side);
+        ResourceLocation topTexture =new ResourceLocation(ModMain.MOD_ID,"block/" + top);
+        ResourceLocation bottomTexture =new ResourceLocation(ModMain.MOD_ID, "block/" + bottom);
         ModelFile modelFile = models().cubeBottomTop(
                 BuiltInRegistries.BLOCK.getKey(
                         blockRegistryObject.get()).getPath(), sideTexture, bottomTexture, topTexture);
@@ -214,12 +214,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
                                                      String bottom, String back, String front) {
         String name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
 
-        ResourceLocation leftTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + left);
-        ResourceLocation rightTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + right);
-        ResourceLocation topTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top);
-        ResourceLocation bottomTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + bottom);
-        ResourceLocation backTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + back);
-        ResourceLocation frontTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + front);
+        ResourceLocation leftTex =new ResourceLocation(ModMain.MOD_ID, "block/" + left);
+        ResourceLocation rightTex =new ResourceLocation(ModMain.MOD_ID,"block/" + right);
+        ResourceLocation topTex =new ResourceLocation(ModMain.MOD_ID,"block/" + top);
+        ResourceLocation bottomTex =new ResourceLocation(ModMain.MOD_ID,"block/" + bottom);
+        ResourceLocation backTex =new ResourceLocation(ModMain.MOD_ID,"block/" + back);
+        ResourceLocation frontTex =new ResourceLocation(ModMain.MOD_ID,"block/" + front);
 
         ModelFile model = models().cube(name, bottomTex, topTex, frontTex, backTex, leftTex, rightTex)
                 .texture("particle", frontTex);
@@ -271,19 +271,19 @@ public class ModBlockStateProvider extends BlockStateProvider {
                                                             String back_off, String front_off) {
         String name = BuiltInRegistries.BLOCK.getKey(block.get()).getPath();
 
-        ResourceLocation leftTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + left);
-        ResourceLocation rightTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + right);
-        ResourceLocation topTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top);
-        ResourceLocation bottomTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + bottom);
-        ResourceLocation backTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + back);
-        ResourceLocation frontTex = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + front);
+        ResourceLocation leftTex =new ResourceLocation(ModMain.MOD_ID, "block/" + left);
+        ResourceLocation rightTex =new ResourceLocation(ModMain.MOD_ID,"block/" + right);
+        ResourceLocation topTex =new ResourceLocation(ModMain.MOD_ID,"block/" + top);
+        ResourceLocation bottomTex =new ResourceLocation(ModMain.MOD_ID,"block/" + bottom);
+        ResourceLocation backTex =new ResourceLocation(ModMain.MOD_ID,"block/" + back);
+        ResourceLocation frontTex =new ResourceLocation(ModMain.MOD_ID,"block/" + front);
 
-        ResourceLocation leftTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + left_off);
-        ResourceLocation rightTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + right_off);
-        ResourceLocation topTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + top_off);
-        ResourceLocation bottomTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + bottom_off);
-        ResourceLocation backTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + back_off);
-        ResourceLocation frontTex_off = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,"block/" + front_off);
+        ResourceLocation leftTex_off =new ResourceLocation(ModMain.MOD_ID, "block/" + left_off);
+        ResourceLocation rightTex_off =new ResourceLocation(ModMain.MOD_ID,"block/" + right_off);
+        ResourceLocation topTex_off =new ResourceLocation(ModMain.MOD_ID,"block/" + top_off);
+        ResourceLocation bottomTex_off =new ResourceLocation(ModMain.MOD_ID,"block/" + bottom_off);
+        ResourceLocation backTex_off =new ResourceLocation(ModMain.MOD_ID,"block/" + back_off);
+        ResourceLocation frontTex_off =new ResourceLocation(ModMain.MOD_ID,"block/" + front_off);
 
         ModelFile model = models().cube(name, bottomTex, topTex, frontTex, backTex, leftTex, rightTex)
                 .texture("particle", frontTex);

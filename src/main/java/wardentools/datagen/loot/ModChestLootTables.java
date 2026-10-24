@@ -31,21 +31,21 @@ import java.util.function.BiConsumer;
 
 public class ModChestLootTables implements LootTableSubProvider {
     public static final ResourceKey<LootTable> ANCIENT_CITADEL = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/ancient_citadel"));
+           new ResourceLocation(ModMain.MOD_ID, "chests/ancient_citadel"));
     public static final ResourceKey<LootTable> ABANDONED_EXPLORER_HOUSE = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/abandoned_explorer_house"));
+           new ResourceLocation(ModMain.MOD_ID, "chests/abandoned_explorer_house"));
     public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_AMETHYST = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_amethyst"));
+           new ResourceLocation(ModMain.MOD_ID, "chests/crystal_temple_amethyst"));
     public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_RUBY = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_ruby"));
+           new ResourceLocation(ModMain.MOD_ID, "chests/crystal_temple_ruby"));
     public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_CITRINE = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_citrine"));
+           new ResourceLocation(ModMain.MOD_ID, "chests/crystal_temple_citrine"));
     public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_MALACHITE = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_malachite"));
+           new ResourceLocation(ModMain.MOD_ID, "chests/crystal_temple_malachite"));
     public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_ECHO = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_echo"));
+           new ResourceLocation(ModMain.MOD_ID, "chests/crystal_temple_echo"));
     public static final ResourceKey<LootTable> CRYSTAL_TEMPLE_PALE = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "chests/crystal_temple_pale"));
+           new ResourceLocation(ModMain.MOD_ID, "chests/crystal_temple_pale"));
 
     private final Map<ResourceKey<LootTable>, LootTable.Builder> lootTables = new HashMap<>();
     protected final HolderLookup.Provider registries;

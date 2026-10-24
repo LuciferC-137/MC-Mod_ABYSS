@@ -14,8 +14,8 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import wardentools.ModMain;
@@ -26,7 +26,7 @@ import wardentools.entity.custom.DeepLurkerEntity;
 public class DeepLurker extends HierarchicalModel<DeepLurkerEntity> {
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deeplurker"), "main");
+           new ResourceLocation(ModMain.MOD_ID, "deeplurker"), "main");
 
     private final ModelPart FULL;
     private final ModelPart LOW_BODY;

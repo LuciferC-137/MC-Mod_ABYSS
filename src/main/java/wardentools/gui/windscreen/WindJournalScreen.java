@@ -17,8 +17,8 @@ import net.minecraft.network.chat.ClickEvent.Action;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
@@ -27,9 +27,9 @@ public class WindJournalScreen extends Screen {
     public static final int PAGE_TEXT_X_OFFSET = 18;
     public static final int PAGE_TEXT_Y_OFFSET = 30;
     public static final ResourceLocation JOURNAL_FIRST_PAGE_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/wind_journal_first.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/gui/wind_journal/wind_journal_first.png");
     public static final ResourceLocation JOURNAL_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/wind_journal.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/gui/wind_journal/wind_journal.png");
     public static final ChatFormatting TEXT_COLOR = ChatFormatting.DARK_RED;
     protected static final int TOP_MARGIN = 10;
     protected static final int TEXTURE_WIDTH = 292;

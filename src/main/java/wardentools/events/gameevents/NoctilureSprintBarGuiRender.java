@@ -13,10 +13,10 @@ import wardentools.entity.custom.NoctilureEntity;
 @EventBusSubscriber(modid = ModMain.MOD_ID)
 public class NoctilureSprintBarGuiRender {
     private static final ResourceLocation SPRINT_BAR_BACKGROUND
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+            =new ResourceLocation(ModMain.MOD_ID,
             "textures/gui/sprint_bar/noctilure_background.png");
     private static final ResourceLocation SPRINT_BAR_PROGRESS
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+            =new ResourceLocation(ModMain.MOD_ID,
             "textures/gui/sprint_bar/noctilure_progress.png");
 
     @SubscribeEvent

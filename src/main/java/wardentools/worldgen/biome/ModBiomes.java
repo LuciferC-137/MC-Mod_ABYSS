@@ -30,28 +30,28 @@ public class ModBiomes {
     private static final GenerationStep.Decoration SCULK_STEP = GenerationStep.Decoration.UNDERGROUND_DECORATION;
 	
 	public static final ResourceKey<Biome> DEEP_FOREST = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "deep_forest"));
+           new ResourceLocation(ModMain.MOD_ID, "deep_forest"));
 	public static final ResourceKey<Biome> WASTE_LAND = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "waste_land"));
+           new ResourceLocation(ModMain.MOD_ID, "waste_land"));
 	public static final ResourceKey<Biome> WHITE_FOREST = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "white_forest"));
+           new ResourceLocation(ModMain.MOD_ID, "white_forest"));
     public static final ResourceKey<Biome> CRYSTAL_CAVE = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "cristal_cave"));
+           new ResourceLocation(ModMain.MOD_ID, "cristal_cave"));
     public static final ResourceKey<Biome> BLINDING_DEPTH = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "blinding_depth"));
+           new ResourceLocation(ModMain.MOD_ID, "blinding_depth"));
 
     public static final ResourceKey<Biome> AMETHYST_CAVE = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "amethyst_cave"));
+           new ResourceLocation(ModMain.MOD_ID, "amethyst_cave"));
     public static final ResourceKey<Biome> CITRINE_CAVE = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "citrine_cave"));
+           new ResourceLocation(ModMain.MOD_ID, "citrine_cave"));
     public static final ResourceKey<Biome> MALACHITE_CAVE = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "malachite_cave"));
+           new ResourceLocation(ModMain.MOD_ID, "malachite_cave"));
     public static final ResourceKey<Biome> RUBY_CAVE = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "ruby_cave"));
+           new ResourceLocation(ModMain.MOD_ID, "ruby_cave"));
     public static final ResourceKey<Biome> ECHO_CAVE = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "echo_cave"));
+           new ResourceLocation(ModMain.MOD_ID, "echo_cave"));
     public static final ResourceKey<Biome> PALE_CAVE = ResourceKey.create(Registries.BIOME,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "pale_cave"));
+           new ResourceLocation(ModMain.MOD_ID, "pale_cave"));
 
     public static void bootstrap(BootstrapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));

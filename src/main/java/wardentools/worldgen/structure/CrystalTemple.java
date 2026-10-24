@@ -44,7 +44,7 @@ public class CrystalTemple extends Structure {
 
     private static final TagKey<Biome> DEFAULT_CAVE_BIOME =
             TagKey.create(Registries.BIOME,
-                    ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "amethyst_cave")
+                   new ResourceLocation(ModMain.MOD_ID, "amethyst_cave")
             );
 
     private final ResourceKey<StructureTemplatePool> startPool;

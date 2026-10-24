@@ -20,8 +20,8 @@ import net.minecraft.sounds.Music;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -39,13 +39,13 @@ public class CustomWinScreen extends Screen {
    private static final ResourceLocation VIGNETTE_LOCATION
            = ResourceLocation.withDefaultNamespace("textures/misc/vignette.png");
    private static final ResourceLocation WIN_TXT
-           = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "texts/win.txt");
+           =new ResourceLocation(ModMain.MOD_ID, "texts/win.txt");
    private static final ResourceLocation MOD_CREDITS
-           = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "texts/mod_credits.json");
+           =new ResourceLocation(ModMain.MOD_ID, "texts/mod_credits.json");
    private static final ResourceLocation POSTCREDITS_LOCATION
            = ResourceLocation.withDefaultNamespace("texts/postcredits.txt");
    private static final ResourceLocation MOD_BACKGROUND_LOCATION
-           = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/background.png");
+           =new ResourceLocation(ModMain.MOD_ID, "textures/gui/background.png");
    private static final Component SECTION_HEADING
            = Component.literal("========================").withStyle(ChatFormatting.WHITE);
    private static final String OBFUSCATE_TOKEN

@@ -5,17 +5,17 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
 @OnlyIn(Dist.CLIENT)
 public class CheckButton extends Button {
     public static final ResourceLocation CHECKED_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/checkbox_ok.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/gui/wind_journal/checkbox_ok.png");
     public static final ResourceLocation UNCHECKED_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/checkbox_empty.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/gui/wind_journal/checkbox_empty.png");
     private final TaskNoteAccess.Task task;
 
     public CheckButton(int x, int y, TaskNoteAccess.Task task, OnPress onPress) {

@@ -11,6 +11,6 @@ public class EnchantmentRegistry {
     
     public static ResourceKey<Enchantment> register(String name) {
         return ResourceKey.create(Registries.ENCHANTMENT,
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+               new ResourceLocation(ModMain.MOD_ID, name));
     }
 }

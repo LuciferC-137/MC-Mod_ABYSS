@@ -13,8 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
@@ -26,7 +26,7 @@ public class ContagionIncarnationSkullRenderer implements BlockEntityRenderer<Co
     private static final ContagionIncarnationSkull model =
 			new ContagionIncarnationSkull(ContagionIncarnationSkull.createBodyLayer().bakeRoot());
     private static final ResourceLocation INTERIOR_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/contagion_incarnation_corpse_skull.png");
+            = new ResourceLocation(ModMain.MOD_ID, "textures/models/contagion_incarnation_corpse_skull.png");
 
 	public ContagionIncarnationSkullRenderer(BlockEntityRendererProvider.Context ctx) {
 	}

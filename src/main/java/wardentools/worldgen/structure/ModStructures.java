@@ -26,7 +26,7 @@ public class ModStructures {
 
     private static ResourceKey<Structure> createKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE,
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+               new ResourceLocation(ModMain.MOD_ID, name));
     }
 
 

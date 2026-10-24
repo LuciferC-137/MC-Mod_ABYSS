@@ -12,8 +12,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.blockentity.LivingSproutBlockEntity;
@@ -24,7 +24,7 @@ public class LivingSproutRenderer implements BlockEntityRenderer<LivingSproutBlo
     private static final LivingSproutCoreModel model =
 			new LivingSproutCoreModel(LivingSproutCoreModel.createBodyLayer().bakeRoot());
     private static final ResourceLocation CORE_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/living_sprout_core.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/models/living_sprout_core.png");
 
     public static final float sizeAtBeat = 0.5F;
     public static final float sizeBetweenBeats = 0.375F;

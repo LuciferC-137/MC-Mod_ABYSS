@@ -1,14 +1,8 @@
 package wardentools.blockentity.renderer;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.LightTexture;
@@ -26,6 +20,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
 import wardentools.items.ItemRegistry;
 
@@ -184,19 +182,19 @@ public class ProtectorInvokerRenderer implements BlockEntityRenderer<ProtectorIn
 	}
 	
 	private static void vertex01(VertexConsumer vertexConsumer, Matrix4f mat, int alpha) {
-		vertexConsumer.addVertex(mat, 0.0F, 0.0F, 0.0F).setColor(183, 208, 226, alpha);
+		vertexConsumer.vertex(mat, 0.0F, 0.0F, 0.0F).color(183, 208, 226, alpha);
 	   }
 
 	private static void vertex2(VertexConsumer vertexConsumer, Matrix4f mat, float f1, float f2) {
-		vertexConsumer.addVertex(mat, -HALF_SQRT_3 * f2, f1, -0.5F * f2).setColor(0, 255, 255, 0);
+		vertexConsumer.vertex(mat, -HALF_SQRT_3 * f2, f1, -0.5F * f2).color(0, 255, 255, 0);
 	   }
 
 	private static void vertex3(VertexConsumer vertexConsumer, Matrix4f mat, float f1, float f2) {
-		vertexConsumer.addVertex(mat, HALF_SQRT_3 * f2, f1, -0.5F * f2).setColor(15, 195, 183, 0);
+		vertexConsumer.vertex(mat, HALF_SQRT_3 * f2, f1, -0.5F * f2).color(15, 195, 183, 0);
 	   }
 
 	private static void vertex4(VertexConsumer vertexConsumer, Matrix4f mat, float f1, float f2) {
-		vertexConsumer.addVertex(mat, 0.0F, f1, f2).setColor(117, 176, 216, 0);
+		vertexConsumer.vertex(mat, 0.0F, f1, f2).color(117, 176, 216, 0);
 	   }
 
 }

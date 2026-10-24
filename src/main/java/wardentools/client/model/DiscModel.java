@@ -12,8 +12,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
@@ -58,7 +58,7 @@ public class DiscModel extends Model {
 		String name = stack.getItem().getDescriptionId()
 				.substring(stack.getItem().getDescriptionId().lastIndexOf('.') + 1);
 
-		ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+		ResourceLocation location =new ResourceLocation(ModMain.MOD_ID,
 				"textures/models/disc_model/" + name + ".png");
 
 		ResourceManager manager = Minecraft.getInstance().getResourceManager();

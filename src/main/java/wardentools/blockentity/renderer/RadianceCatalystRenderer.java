@@ -13,8 +13,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
@@ -24,7 +24,7 @@ import wardentools.client.model.RadianceCatalystInterior;
 public class RadianceCatalystRenderer implements BlockEntityRenderer<RadianceCatalystBlockEntity> {
 	private static final float rotationSpeed = 1.5f;
     private static final ResourceLocation INTERIOR_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/radiance_catalyst_interior.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/models/radiance_catalyst_interior.png");
     private static final RadianceCatalystInterior model =
 			new RadianceCatalystInterior(RadianceCatalystInterior.createBodyLayer().bakeRoot());
 	

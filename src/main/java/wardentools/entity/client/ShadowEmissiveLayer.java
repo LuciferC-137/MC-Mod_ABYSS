@@ -8,8 +8,8 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.ShadowEntity;
@@ -17,7 +17,7 @@ import wardentools.entity.custom.ShadowEntity;
 @OnlyIn(Dist.CLIENT)
 public class ShadowEmissiveLayer extends RenderLayer<ShadowEntity, Shadow> {
     private static final RenderType EMISSIVE = RenderType.eyes(
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+           new ResourceLocation(ModMain.MOD_ID,
     		"textures/entity/shadow_emissive.png"));
 
     public ShadowEmissiveLayer(RenderLayerParent<ShadowEntity, Shadow> renderLayerParent) {

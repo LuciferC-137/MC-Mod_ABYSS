@@ -9,8 +9,8 @@ import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.ModMain;
 import wardentools.network.payloads.datasync.SyncDataTaskToServer;
@@ -31,23 +31,23 @@ public class TaskNoteAccess {
     public List<List<Task>> sections = new ArrayList<>();
     private static final Map<Integer, Task> tasks = new HashMap<>();
     static {
-        tasks.put(0, new Task(0, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(0, new Task(0,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/deepforest.png")));
-        tasks.put(1, new Task(1, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(1, new Task(1,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/whiteforest.png")));
-        tasks.put(2, new Task(2, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(2, new Task(2,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/crystal_cave.png")));
-        tasks.put(3, new Task(3, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(3, new Task(3,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/waste_land.png")));
-        tasks.put(4, new Task(4, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(4, new Task(4,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/ancient_citadel.png")));
-        tasks.put(5, new Task(5, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(5, new Task(5,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/noctilure.png")));
-        tasks.put(6, new Task(6, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(6, new Task(6,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/protector.png")));
-        tasks.put(7, new Task(7, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(7, new Task(7,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/portal.png")));
-        tasks.put(8, new Task(8, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+        tasks.put(8, new Task(8,new ResourceLocation(ModMain.MOD_ID,
                 "textures/gui/wind_journal/incarnation.png")));
     }
 
@@ -116,7 +116,7 @@ public class TaskNoteAccess {
     public static class Task {
         int id;
         private ResourceLocation icon
-                = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/wind_journal/default_task.png");
+                =new ResourceLocation(ModMain.MOD_ID, "textures/gui/wind_journal/default_task.png");
         boolean isOk = false;
 
         public Task(int id) {

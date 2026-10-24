@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.client.rendering.RenderingUtils;
@@ -98,40 +98,40 @@ public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, Crysta
 		float s = 0.3F; // Cube Half Size
 
 		// Down Face
-		consumer.addVertex(entry.pose(), -s, -s, -s).setColor(ri, gi, bi, ai).setNormal(0f, -1f, 0f);
-		consumer.addVertex(entry.pose(),  s, -s, -s).setColor(ri, gi, bi, ai).setNormal(0f, -1f, 0f);
-		consumer.addVertex(entry.pose(),  s, -s,  s).setColor(ri, gi, bi, ai).setNormal(0f, -1f, 0f);
-		consumer.addVertex(entry.pose(), -s, -s,  s).setColor(ri, gi, bi, ai).setNormal(0f, -1f, 0f);
+		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).setNormal(0f, -1f, 0f);
+		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).setNormal(0f, -1f, 0f);
+		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).setNormal(0f, -1f, 0f);
+		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).setNormal(0f, -1f, 0f);
 
 		// Up Face
-		consumer.addVertex(entry.pose(), -s,  s, -s).setColor(ri, gi, bi, ai).setNormal(0f, 1f, 0f);
-		consumer.addVertex(entry.pose(), -s,  s,  s).setColor(ri, gi, bi, ai).setNormal(0f, 1f, 0f);
-		consumer.addVertex(entry.pose(),  s,  s,  s).setColor(ri, gi, bi, ai).setNormal(0f, 1f, 0f);
-		consumer.addVertex(entry.pose(),  s,  s, -s).setColor(ri, gi, bi, ai).setNormal(0f, 1f, 0f);
+		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).setNormal(0f, 1f, 0f);
+		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).setNormal(0f, 1f, 0f);
+		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).setNormal(0f, 1f, 0f);
+		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).setNormal(0f, 1f, 0f);
 
 		// North Face
-		consumer.addVertex(entry.pose(), -s, -s, -s).setColor(ri, gi, bi, ai).setNormal(0f, 0f, -1f);
-		consumer.addVertex(entry.pose(), -s,  s, -s).setColor(ri, gi, bi, ai).setNormal(0f, 0f, -1f);
-		consumer.addVertex(entry.pose(),  s,  s, -s).setColor(ri, gi, bi, ai).setNormal(0f, 0f, -1f);
-		consumer.addVertex(entry.pose(),  s, -s, -s).setColor(ri, gi, bi, ai).setNormal(0f, 0f, -1f);
+		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).setNormal(0f, 0f, -1f);
+		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).setNormal(0f, 0f, -1f);
+		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).setNormal(0f, 0f, -1f);
+		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).setNormal(0f, 0f, -1f);
 
 		// South Face
-		consumer.addVertex(entry.pose(), -s, -s,  s).setColor(ri, gi, bi, ai).setNormal(0f, 0f, 1f);
-		consumer.addVertex(entry.pose(),  s, -s,  s).setColor(ri, gi, bi, ai).setNormal(0f, 0f, 1f);
-		consumer.addVertex(entry.pose(),  s,  s,  s).setColor(ri, gi, bi, ai).setNormal(0f, 0f, 1f);
-		consumer.addVertex(entry.pose(), -s,  s,  s).setColor(ri, gi, bi, ai).setNormal(0f, 0f, 1f);
+		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).setNormal(0f, 0f, 1f);
+		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).setNormal(0f, 0f, 1f);
+		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).setNormal(0f, 0f, 1f);
+		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).setNormal(0f, 0f, 1f);
 
 		// Left Face
-		consumer.addVertex(entry.pose(), -s, -s, -s).setColor(ri, gi, bi, ai).setNormal(-1f, 0f, 0f);
-		consumer.addVertex(entry.pose(), -s, -s,  s).setColor(ri, gi, bi, ai).setNormal(-1f, 0f, 0f);
-		consumer.addVertex(entry.pose(), -s,  s,  s).setColor(ri, gi, bi, ai).setNormal(-1f, 0f, 0f);
-		consumer.addVertex(entry.pose(), -s,  s, -s).setColor(ri, gi, bi, ai).setNormal(-1f, 0f, 0f);
+		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).setNormal(-1f, 0f, 0f);
+		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).setNormal(-1f, 0f, 0f);
+		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).setNormal(-1f, 0f, 0f);
+		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).setNormal(-1f, 0f, 0f);
 
 		// East Face
-		consumer.addVertex(entry.pose(),  s, -s, -s).setColor(ri, gi, bi, ai).setNormal(1f, 0f, 0f);
-		consumer.addVertex(entry.pose(),  s,  s, -s).setColor(ri, gi, bi, ai).setNormal(1f, 0f, 0f);
-		consumer.addVertex(entry.pose(),  s,  s,  s).setColor(ri, gi, bi, ai).setNormal(1f, 0f, 0f);
-		consumer.addVertex(entry.pose(),  s, -s,  s).setColor(ri, gi, bi, ai).setNormal(1f, 0f, 0f);
+		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).setNormal(1f, 0f, 0f);
+		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).setNormal(1f, 0f, 0f);
+		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).setNormal(1f, 0f, 0f);
+		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).setNormal(1f, 0f, 0f);
 	}
 
 }

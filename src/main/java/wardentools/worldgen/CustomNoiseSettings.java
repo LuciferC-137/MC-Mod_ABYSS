@@ -77,12 +77,12 @@ public class CustomNoiseSettings {
 
     private static ResourceKey<NoiseGeneratorSettings> createNoiseKey(String name) {
         return ResourceKey.create(Registries.NOISE_SETTINGS,
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+               new ResourceLocation(ModMain.MOD_ID, name));
     }
 
     private static ResourceKey<DensityFunction> createKey(String name) {
         return ResourceKey.create(Registries.DENSITY_FUNCTION,
-                ResourceLocation.fromNamespaceAndPath("minecraft", name));
+               new ResourceLocation("minecraft", name));
     }
 
     public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> ctx) {

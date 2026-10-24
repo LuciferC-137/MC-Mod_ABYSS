@@ -21,9 +21,9 @@ import java.util.Map;
 
 public class ArmorWithEffectItem extends ConfigurableDefenseItem {
     private static final ResourceLocation CORRUPTION_ADVANCEMENT
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "corruption_vessel");
+            =new ResourceLocation(ModMain.MOD_ID, "corruption_vessel");
     private static final ResourceLocation RADIANCE_ADVANCEMENT
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "radiance_bringer");
+            =new ResourceLocation(ModMain.MOD_ID, "radiance_bringer");
     private static final int EFFECT_TIME = 242;
     private static final Map<Holder<ArmorMaterial>, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
             (new ImmutableMap.Builder<Holder<ArmorMaterial>, MobEffectInstance>())

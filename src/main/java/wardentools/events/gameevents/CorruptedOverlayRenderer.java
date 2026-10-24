@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class CorruptedOverlayRenderer {
     private static final Map<UUID, Integer> effectTotalDurations = new HashMap<>();
     private static final ResourceLocation CORRUPTED_OVERLAY
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/misc/corruption_outline_screen.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/misc/corruption_outline_screen.png");
     private static final float blurDurationTick = 200.0f; // Approximate
     private static final float glitterPulsation = 0.04f;
     private static final float transparentMax = 0.9f;

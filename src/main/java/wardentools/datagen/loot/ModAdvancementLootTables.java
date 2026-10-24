@@ -19,7 +19,7 @@ import java.util.function.BiConsumer;
 
 public class ModAdvancementLootTables implements LootTableSubProvider {
     public static final ResourceKey<LootTable> WIND_JOURNAL_LT = ResourceKey.create(Registries.LOOT_TABLE,
-            ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "advancements/wind_journal"));
+           new ResourceLocation(ModMain.MOD_ID, "advancements/wind_journal"));
 
     private final Map<ResourceKey<LootTable>, LootTable.Builder> lootTables = new HashMap<>();
     protected final HolderLookup.Provider registries;

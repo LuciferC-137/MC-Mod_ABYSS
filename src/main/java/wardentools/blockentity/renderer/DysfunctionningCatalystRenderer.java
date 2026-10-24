@@ -13,8 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
@@ -28,7 +28,7 @@ public class DysfunctionningCatalystRenderer implements BlockEntityRenderer<Dysf
     private static final DysfunctionningCatalystInterior model =
 			new DysfunctionningCatalystInterior(DysfunctionningCatalystInterior.createBodyLayer().bakeRoot());
     private static final ResourceLocation INTERIOR_TEXTURE
-            = ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/models/dysfunctionning_catalyst_interior.png");
+            =new ResourceLocation(ModMain.MOD_ID, "textures/models/dysfunctionning_catalyst_interior.png");
 
 	public DysfunctionningCatalystRenderer(BlockEntityRendererProvider.Context ctx) {
 	}

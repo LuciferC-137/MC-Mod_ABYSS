@@ -169,13 +169,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent(BlockRegistry.ABYSSALITE_BRICKS_SLAB.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/abyssalite_bricks_slab"));
         withExistingParent(BlockRegistry.DYSFUNCTIONNING_CATALYST.getId().getPath(),
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/dysfunctionning_catalyst"));
+               new ResourceLocation(ModMain.MOD_ID, "block/dysfunctionning_catalyst"));
         withExistingParent(BlockRegistry.BLACK_LANTERN.getId().getPath(),
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/black_lantern"));
+               new ResourceLocation(ModMain.MOD_ID, "block/black_lantern"));
         withExistingParent(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_STAIR.getId().getPath(),
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_stair"));
+               new ResourceLocation(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_stair"));
         withExistingParent(BlockRegistry.CRACKED_ABYSSALITE_BRICKS_SLAB.getId().getPath(),
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_slab"));
+               new ResourceLocation(ModMain.MOD_ID, "block/cracked_abyssalite_bricks_slab"));
 
         withExistingParent(BlockRegistry.LIVING_SPROUT.getId().getPath(),
         		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/living_sprout"));
@@ -199,13 +199,13 @@ public class ModItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder blockItemWithItemModel(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "item/" + item.getId().getPath()));
+               new ResourceLocation(ModMain.MOD_ID, "item/" + item.getId().getPath()));
     }
     
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "item/" + item.getId().getPath()));
+               new ResourceLocation(ModMain.MOD_ID, "item/" + item.getId().getPath()));
     }
     
     public void trapdoorItem(RegistryObject<Block> block) {
@@ -215,17 +215,17 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     public void fenceItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(BuiltInRegistries.BLOCK.getKey(block.get()).getPath(), mcLoc("block/fence_inventory"))
-                .texture("texture",  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + BuiltInRegistries.BLOCK.getKey(baseBlock.get()).getPath()));
+                .texture("texture", new ResourceLocation(ModMain.MOD_ID, "block/" + BuiltInRegistries.BLOCK.getKey(baseBlock.get()).getPath()));
     }
 
     public void buttonItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(BuiltInRegistries.BLOCK.getKey(block.get()).getPath(), mcLoc("block/button_inventory"))
-                .texture("texture",  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + BuiltInRegistries.BLOCK.getKey(baseBlock.get()).getPath()));
+                .texture("texture", new ResourceLocation(ModMain.MOD_ID, "block/" + BuiltInRegistries.BLOCK.getKey(baseBlock.get()).getPath()));
     }
     
     public void wallItem(RegistryObject<Block> block, RegistryObject<Block> baseBlock) {
         this.withExistingParent(BuiltInRegistries.BLOCK.getKey(block.get()).getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall",  ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "block/" + BuiltInRegistries.BLOCK.getKey(baseBlock.get()).getPath()));
+                .texture("wall", new ResourceLocation(ModMain.MOD_ID, "block/" + BuiltInRegistries.BLOCK.getKey(baseBlock.get()).getPath()));
     }
 
     // Shoutout to El_Redstoniano for making this
@@ -268,7 +268,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                         .model(new ModelFile.UncheckedModelFile(trimNameResLoc.getNamespace()  + ":item/" + trimNameResLoc.getPath()))
                         .predicate(mcLoc("trim_type"), trimValue).end()
                         .texture("layer0",
-                                ResourceLocation.fromNamespaceAndPath(MOD_ID,
+                               new ResourceLocation(MOD_ID,
                                         "item/" + itemRegistryObject.getId().getPath()));
             });
         }

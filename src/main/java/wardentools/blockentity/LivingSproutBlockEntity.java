@@ -2,15 +2,10 @@ package wardentools.blockentity;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.RegistryOps;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +26,7 @@ import wardentools.sounds.ModSounds;
 
 import javax.annotation.Nullable;
 
-public class LivingSproutBlockEntity extends BlockEntity implements GameEventListener.Provider<VibrationSystem.Listener>, VibrationSystem {
+public class LivingSproutBlockEntity extends BlockEntity implements GameEventListener.Holder<VibrationSystem.Listener>, VibrationSystem {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final int COOLDOWN = 216;
@@ -67,16 +62,8 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
     @Override
     public @NotNull User getVibrationUser() {return this.vibrationUser;}
 
-    protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-        super.loadAdditional(tag, provider);
-        RegistryOps<Tag> context = provider.createSerializationContext(NbtOps.INSTANCE);
-        if (tag.contains("listener", CompoundTag.TAG_COMPOUND)) {
-            Data.CODEC.parse(context, tag.getCompound("listener")).resultOrPartial((error) -> {
-                LOGGER.error("Failed to parse vibration listener for Living Sprout: '{}'", error);
-            }).ifPresent((data) -> {
-                this.vibrationData = data;
-            });
-        }
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
         if (tag.contains("lastTimeHeard", CompoundTag.TAG_INT)) {
             this.lastTimeHeard = tag.getInt("lastTimeHeard");
         }
@@ -85,14 +72,8 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
         }
     }
 
-    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider provider) {
-        super.saveAdditional(tag, provider);
-        RegistryOps<Tag> context = provider.createSerializationContext(NbtOps.INSTANCE);
-        Data.CODEC.encodeStart(context, this.vibrationData).resultOrPartial((error) -> {
-            LOGGER.error("Failed to encode vibration listener for Living Sprout: '{}'", error);
-        }).ifPresent((tag1) -> {
-            tag.put("listener", tag1);
-        });
+    protected void saveAdditional(@NotNull CompoundTag tag) {
+       super.saveAdditional(tag);
         tag.putInt("lastTimeHeard", this.lastTimeHeard);
         tag.putBoolean("isPulsing", this.isPulsing);
     }
@@ -139,9 +120,9 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
     }
 
     @Override
-    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider provider) {
-        CompoundTag nbt = super.getUpdateTag(provider);
-        saveAdditional(nbt, provider);
+    public @NotNull CompoundTag getUpdateTag() {
+        CompoundTag nbt = super.getUpdateTag();
+        saveAdditional(nbt);
         return nbt;
     }
 
@@ -166,20 +147,22 @@ public class LivingSproutBlockEntity extends BlockEntity implements GameEventLis
 
         public boolean canTriggerAvoidVibration() {return true;}
 
-        @SuppressWarnings("deprecation")
+
+        @Override
         public boolean canReceiveVibration(@NotNull ServerLevel level, BlockPos pos,
-                                           @NotNull Holder<GameEvent> gameEventHolder,
+                                           @NotNull GameEvent event,
                                            @Nullable GameEvent.Context context) {
             return (!pos.equals(this.blockPos)
-                    || !gameEventHolder.is(GameEvent.BLOCK_DESTROY)
-                    && !gameEventHolder.is(GameEvent.BLOCK_PLACE))
+                    || !event.equals(GameEvent.BLOCK_DESTROY)
+                    && !event.equals(GameEvent.BLOCK_PLACE))
                     && LivingSproutBlock.canActivate(LivingSproutBlockEntity.this.getBlockState())
                     && context != null
                     && (context.sourceEntity() instanceof Player player && !player.isCreative());
         }
 
+        @Override
         public void onReceiveVibration(@NotNull ServerLevel level, @NotNull BlockPos pos,
-                                       @NotNull Holder<GameEvent> gameEventHolder,
+                                       @NotNull GameEvent event,
                                        @Nullable Entity entity, @Nullable Entity entity1, float v) {
             BlockState state = LivingSproutBlockEntity.this.getBlockState();
             if (LivingSproutBlock.canActivate(state)) {

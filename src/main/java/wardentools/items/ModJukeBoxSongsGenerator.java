@@ -38,6 +38,6 @@ public class ModJukeBoxSongsGenerator {
     }
 
     private static ResourceKey<JukeboxSong> create(String name) {
-        return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+        return ResourceKey.create(Registries.JUKEBOX_SONG,new ResourceLocation(ModMain.MOD_ID, name));
     }
 }
