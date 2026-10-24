@@ -26,7 +26,7 @@ public class DataGenerators {
 
         ModBlockTagGenerator blockTagGenerator = generator.addProvider(event.includeServer(), new ModBlockTagGenerator(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModItemTagGenerator(packOutput, lookupProvider, blockTagGenerator.contentsGetter(), existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModRecipesGenerator(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModRecipesGenerator(packOutput));
 
         ModDataBuilderProvider dataBuilder = new ModDataBuilderProvider(packOutput, lookupProvider);
         generator.addProvider(event.includeServer(), dataBuilder);
@@ -39,6 +39,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ModBiomeTagGenerator(packOutput, dataBuilder.getRegistryProvider()));
 
         generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput, combinedLookup));
-        generator.addProvider(event.includeServer(), new ModGlobalLootModifiersProvider(packOutput, combinedLookup));
+        generator.addProvider(event.includeServer(), new ModGlobalLootModifiersProvider(packOutput));
     }
 }
