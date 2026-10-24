@@ -1,6 +1,6 @@
 package wardentools.datagen.loot;
 
-import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
@@ -10,15 +10,16 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import net.neoforged.neoforge.common.loot.LootModifier;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 import wardentools.items.enchantment.EnchantmentRegistry;
 
 public class AddStealthBookModifier extends LootModifier implements IGlobalLootModifier {
-    public static final MapCodec<AddStealthBookModifier> CODEC = RecordCodecBuilder.mapCodec(inst ->
-            codecStart(inst).apply(inst, AddStealthBookModifier::new)
-    );
+    public static final Codec<AddStealthBookModifier> CODEC =
+            RecordCodecBuilder.create(inst ->
+                    codecStart(inst).apply(inst, AddStealthBookModifier::new)
+            );
 
     public AddStealthBookModifier(LootItemCondition[] conditionsIn) {
         super(conditionsIn);
@@ -35,7 +36,7 @@ public class AddStealthBookModifier extends LootModifier implements IGlobalLootM
                     .registryOrThrow(Registries.ENCHANTMENT)
                     .getHolderOrThrow(EnchantmentRegistry.STEALTH);
 
-            enchantedBook.enchant(stealthEnchantment, 1);
+            enchantedBook.enchant(stealthEnchantment.value(), 1);
 
             generatedLoot.add(enchantedBook);
         }
@@ -44,7 +45,7 @@ public class AddStealthBookModifier extends LootModifier implements IGlobalLootM
     }
 
     @Override
-    public @NotNull MapCodec<? extends IGlobalLootModifier> codec() {
+    public @NotNull Codec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

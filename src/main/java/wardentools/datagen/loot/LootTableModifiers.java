@@ -3,20 +3,20 @@ package wardentools.datagen.loot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.event.LootTableLoadEvent;
 import wardentools.ModMain;
 import wardentools.items.ItemRegistry;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
 public class LootTableModifiers {
-    private static final ResourceLocation wardenLootTable = new ResourceLocation.withDefaultNamespace("entities/warden");
+    private static final ResourceLocation wardenLootTable = new ResourceLocation("entities/warden");
 
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {

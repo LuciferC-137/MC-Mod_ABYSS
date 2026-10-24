@@ -23,7 +23,7 @@ import java.util.Random;
 @OnlyIn(Dist.CLIENT)
 public class ChoiceScreen extends Screen {
    private static final ResourceLocation VIGNETTE_LOCATION
-           = new ResourceLocation.withDefaultNamespace("textures/misc/vignette.png");
+           = new ResourceLocation("textures/misc/vignette.png");
    private static final ResourceLocation CORRUPTION_LOCATION
               =new ResourceLocation(ModMain.MOD_ID, "textures/gui/choice_screen/corruption.png");
    private static final ResourceLocation RADIANCE_LOCATION

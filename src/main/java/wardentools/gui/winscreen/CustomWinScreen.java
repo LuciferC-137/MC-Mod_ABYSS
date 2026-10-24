@@ -37,13 +37,13 @@ import java.util.List;
 public class CustomWinScreen extends Screen {
    private static final Logger LOGGER = LogUtils.getLogger();
    private static final ResourceLocation VIGNETTE_LOCATION
-           = new ResourceLocation.withDefaultNamespace("textures/misc/vignette.png");
+           = new ResourceLocation("textures/misc/vignette.png");
    private static final ResourceLocation WIN_TXT
            =new ResourceLocation(ModMain.MOD_ID, "texts/win.txt");
    private static final ResourceLocation MOD_CREDITS
            =new ResourceLocation(ModMain.MOD_ID, "texts/mod_credits.json");
    private static final ResourceLocation POSTCREDITS_LOCATION
-           = new ResourceLocation.withDefaultNamespace("texts/postcredits.txt");
+           = new ResourceLocation("texts/postcredits.txt");
    private static final ResourceLocation MOD_BACKGROUND_LOCATION
            =new ResourceLocation(ModMain.MOD_ID, "textures/gui/background.png");
    private static final Component SECTION_HEADING

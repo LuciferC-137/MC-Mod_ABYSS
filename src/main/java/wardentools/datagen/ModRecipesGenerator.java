@@ -1,7 +1,6 @@
 package wardentools.datagen;
 
-import net.minecraft.advancements.Criterion;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -17,15 +16,15 @@ import wardentools.datagen.utils.RadianceCatalystRecipeBuilder;
 import wardentools.items.ItemRegistry;
 import wardentools.items.armors.ArmorRegistry;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class ModRecipesGenerator extends RecipeProvider {
-    public ModRecipesGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
-        super(packOutput, completableFuture);
+    public ModRecipesGenerator(PackOutput packOutput) {
+        super(packOutput);
     }
 
     @Override
-    protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> recipeOutput) {
 
         buildRadianceCatalystRecipes(recipeOutput);
 
@@ -322,7 +321,7 @@ public class ModRecipesGenerator extends RecipeProvider {
 
     }
 
-    protected void allStoneVariants(@NotNull RecipeOutput recipeOutput, String name,
+    protected void allStoneVariants(@NotNull Consumer<FinishedRecipe> recipeOutput, String name,
                                     @NotNull Item block, @NotNull Item brick, @NotNull Item slab,
                                     @Nullable Item stairs, @Nullable Item wall,
                                     @Nullable Item chiseled){
@@ -400,7 +399,7 @@ public class ModRecipesGenerator extends RecipeProvider {
         }
     }
 
-    protected void allWoodCrafts(@NotNull RecipeOutput recipeOutput, String name,
+    protected void allWoodCrafts(@NotNull Consumer<FinishedRecipe> recipeOutput, String name,
                                  @NotNull Item log, @NotNull Item plank, @NotNull Item stripedLog,
                                  @Nullable Item slab, @Nullable Item stairs, @Nullable Item fence,
                                  @Nullable Item fenceGate, @Nullable Item door, @Nullable Item trapdoor,
@@ -505,7 +504,7 @@ public class ModRecipesGenerator extends RecipeProvider {
         }
     }
 
-    protected void craftsForCrystal(@NotNull RecipeOutput recipeOutput,
+    protected void craftsForCrystal(@NotNull Consumer<FinishedRecipe> recipeOutput,
                                     @NotNull Item crystal, @NotNull Item block, @NotNull Item shard) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, block, 1)
                 .define('S', shard)
@@ -533,7 +532,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .save(recipeOutput);
     }
 
-    protected void crackedStoneCrafts(@NotNull RecipeOutput recipeOutput, String name,
+    protected void crackedStoneCrafts(@NotNull Consumer<FinishedRecipe> recipeOutput, String name,
                                       @NotNull Item block, @NotNull Item cracked,
                                       @Nullable Item crackedSlab, @Nullable Item crackedStair,
                                       @Nullable Item crackedWall) {
@@ -579,7 +578,7 @@ public class ModRecipesGenerator extends RecipeProvider {
         }
     }
 
-    protected void smeltAndBlast(@NotNull RecipeOutput recipeOutput, @NotNull Item input,
+    protected void smeltAndBlast(@NotNull Consumer<FinishedRecipe> recipeOutput, @NotNull Item input,
                                  @NotNull Item output, String name, float exp, int time) {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(input),
                         RecipeCategory.MISC, output, exp, time)
@@ -591,7 +590,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .save(recipeOutput,new ResourceLocation(ModMain.MOD_ID, name + "_blasting"));
     }
 
-    protected void fullArmorCraft(@NotNull RecipeOutput recipeOutput, @NotNull Item material,
+    protected void fullArmorCraft(@NotNull Consumer<FinishedRecipe> recipeOutput, @NotNull Item material,
                                   @NotNull Item helmet, @NotNull Item chestplate,
                                   @NotNull Item leggings, @NotNull Item boots) {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, helmet, 1)
@@ -622,7 +621,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .save(recipeOutput);
     }
 
-    private void buildRadianceCatalystRecipes(RecipeOutput recipeOutput) {
+    private void buildRadianceCatalystRecipes(Consumer<FinishedRecipe> recipeOutput) {
         RadianceCatalystRecipeBuilder.catalyst(
                 Ingredient.of(ItemRegistry.CORRUPTED_VESSEL.get()),
                 new ItemStack(ItemRegistry.PURE_VESSEL.get()),
@@ -652,7 +651,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 "protector_heart_from_dying_catalyst"));
     }
 
-    public static Criterion<?> hasItem(ItemLike item) {
+    public static InventoryChangeTrigger.TriggerInstance hasItem(ItemLike item) {
         return has(item);
     }
 }

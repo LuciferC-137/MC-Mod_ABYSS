@@ -16,7 +16,7 @@ public class ModItemProperties {
                         && ((WhistleItem)stack.getItem()).isUsing() ? 1.0F : 0.0F);
 
         ItemProperties.register(ItemRegistry.CRYSTAL_RESONATOR.get(),
-                ResourceLocation.withDefaultNamespace("angle"),
+                ResourceLocation("angle"),
                 new CrystalResonatorPropertyFunction(
                         (level, stack, entity) -> CrystalResonatorItem.getTargetPosition(level, stack)
                 )

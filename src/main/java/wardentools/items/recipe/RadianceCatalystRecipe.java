@@ -1,35 +1,33 @@
 package wardentools.items.recipe;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
+import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import wardentools.ModMain;
+
+import javax.annotation.Nullable;
+
 
 public record RadianceCatalystRecipe(Ingredient inputItem, ItemStack output, int energyCost)
         implements Recipe<RadianceCatalystRecipeInput> {
 
+    private static final ResourceLocation ID = new ResourceLocation(ModMain.MOD_ID, "radiance_catalyst");
+
     @Override
     public boolean matches(@NotNull RadianceCatalystRecipeInput input, Level level) {
-        if(level.isClientSide()) {
-            return false;
-        }
-        return inputItem.test(input.getItem(0));
+        return !level.isClientSide()
+                && inputItem.test(input.getItem(0));
     }
 
     @Override
-    public @NotNull ItemStack assemble(@NotNull RadianceCatalystRecipeInput input,
-                                       HolderLookup.@NotNull Provider registries) {
+    public @NotNull ItemStack assemble(@NotNull RadianceCatalystRecipeInput input, @NotNull RegistryAccess registries) {
         return output.copy();
     }
 
@@ -39,15 +37,20 @@ public record RadianceCatalystRecipe(Ingredient inputItem, ItemStack output, int
     }
 
     @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
+    public @NotNull ItemStack getResultItem(@NotNull RegistryAccess registries) {
         return output;
     }
 
     @Override
     public @NotNull NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.create();
-        list.add(inputItem);
-        return list;
+        NonNullList<Ingredient> ingredients = NonNullList.create();
+        ingredients.add(inputItem);
+        return ingredients;
+    }
+
+    @Override
+    public @NotNull ResourceLocation getId() {
+        return ID;
     }
 
     @Override
@@ -60,34 +63,34 @@ public record RadianceCatalystRecipe(Ingredient inputItem, ItemStack output, int
         return ModRecipes.RADIANCE_RECIPE_TYPE.get();
     }
 
-    public static class Serializer implements RecipeSerializer<RadianceCatalystRecipe> {
-        public static final MapCodec<RadianceCatalystRecipe> CODEC
-                = RecordCodecBuilder.mapCodec(inst -> inst.group(
-                Ingredient.CODEC_NONEMPTY.fieldOf("ingredient")
-                        .forGetter(RadianceCatalystRecipe::inputItem),
-                ItemStack.CODEC.fieldOf("result")
-                        .forGetter(RadianceCatalystRecipe::output),
-                Codec.INT.fieldOf("energy_cost")
-                        .forGetter(RadianceCatalystRecipe::energyCost)
-        ).apply(inst, RadianceCatalystRecipe::new));
-
-        public static final StreamCodec<RegistryFriendlyByteBuf, RadianceCatalystRecipe> STREAM_CODEC =
-                StreamCodec.composite(
-                        Ingredient.CONTENTS_STREAM_CODEC, RadianceCatalystRecipe::inputItem,
-                        ItemStack.STREAM_CODEC, RadianceCatalystRecipe::output,
-                        ByteBufCodecs.VAR_INT, RadianceCatalystRecipe::energyCost,
-                        RadianceCatalystRecipe::new);
+    public static class Serializer
+            implements RecipeSerializer<RadianceCatalystRecipe> {
 
         @Override
-        public @NotNull MapCodec<RadianceCatalystRecipe> codec() {
-            return CODEC;
+        public @NotNull RadianceCatalystRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
+
+            int energyCost = GsonHelper.getAsInt(json, "energy_cost");
+
+            return new RadianceCatalystRecipe(ingredient, output, energyCost);
         }
 
         @Override
-        public @NotNull StreamCodec<RegistryFriendlyByteBuf, RadianceCatalystRecipe> streamCodec() {
-            return STREAM_CODEC;
+        public @Nullable RadianceCatalystRecipe fromNetwork(@NotNull ResourceLocation recipeId, @NotNull FriendlyByteBuf buffer) {
+            Ingredient ingredient = Ingredient.fromNetwork(buffer);
+            ItemStack output = buffer.readItem();
+            int energyCost = buffer.readVarInt();
+
+            return new RadianceCatalystRecipe(ingredient, output, energyCost);
+        }
+
+        @Override
+        public void toNetwork(@NotNull FriendlyByteBuf buffer, RadianceCatalystRecipe recipe) {
+            recipe.inputItem.toNetwork(buffer);
+            buffer.writeItem(recipe.output);
+            buffer.writeVarInt(recipe.energyCost);
         }
     }
-
-
 }
+

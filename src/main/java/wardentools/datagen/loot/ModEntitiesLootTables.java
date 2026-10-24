@@ -1,6 +1,5 @@
 package wardentools.datagen.loot;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlagSet;
@@ -20,12 +19,12 @@ import java.util.stream.Stream;
 
 public class ModEntitiesLootTables extends EntityLootSubProvider {
 
-    public ModEntitiesLootTables(HolderLookup.Provider provider) {
-        this(FeatureFlags.REGISTRY.allFlags(), provider);
+    public ModEntitiesLootTables() {
+        this(FeatureFlags.REGISTRY.allFlags());
     }
 
-    protected ModEntitiesLootTables(FeatureFlagSet flagSet, HolderLookup.Provider provider) {
-        super(flagSet, provider);
+    protected ModEntitiesLootTables(FeatureFlagSet flagSet) {
+        super(flagSet);
     }
 
     @Override

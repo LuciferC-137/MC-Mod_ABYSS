@@ -1,21 +1,20 @@
 package wardentools.datagen;
 
-import java.util.concurrent.CompletableFuture;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
 import wardentools.items.armors.ArmorRegistry;
-import wardentools.block.BlockRegistry;
+
+import javax.annotation.Nullable;
+import java.util.concurrent.CompletableFuture;
 
 public class ModItemTagGenerator extends ItemTagsProvider {
 
@@ -55,31 +54,6 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
 		this.tag(ItemTags.DAMPENS_VIBRATIONS)
 				.add(ItemRegistry.REINFORCED_GLASS.get());
-
-		this.tag(ItemTags.FOOT_ARMOR)
-				.add(ArmorRegistry.DEEPCRISTAL_BOOTS.get())
-				.add(ArmorRegistry.RADIANCE_CRISTAL_BOOTS.get());
-		this.tag(ItemTags.FOOT_ARMOR_ENCHANTABLE)
-				.add(ArmorRegistry.DEEPCRISTAL_BOOTS.get())
-				.add(ArmorRegistry.RADIANCE_CRISTAL_BOOTS.get());
-		this.tag(ItemTags.HEAD_ARMOR)
-				.add(ArmorRegistry.DEEPCRISTAL_HELMET.get())
-				.add(ArmorRegistry.RADIANCE_CRISTAL_HELMET.get());
-		this.tag(ItemTags.HEAD_ARMOR_ENCHANTABLE)
-				.add(ArmorRegistry.DEEPCRISTAL_HELMET.get())
-				.add(ArmorRegistry.RADIANCE_CRISTAL_HELMET.get());
-		this.tag(ItemTags.CHEST_ARMOR)
-				.add(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get())
-				.add(ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get());
-		this.tag(ItemTags.CHEST_ARMOR_ENCHANTABLE)
-				.add(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get())
-				.add(ArmorRegistry.RADIANCE_CRISTAL_CHESTPLATE.get());
-		this.tag(ItemTags.LEG_ARMOR)
-				.add(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get())
-				.add(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS.get());
-		this.tag(ItemTags.LEG_ARMOR_ENCHANTABLE)
-				.add(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get())
-				.add(ArmorRegistry.RADIANCE_CRISTAL_LEGGINGS.get());
 
 		this.tag(ItemTags.COMPASSES)
 			.add(ItemRegistry.CRYSTAL_RESONATOR.get());

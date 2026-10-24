@@ -1,9 +1,6 @@
 package wardentools.datagen.loot;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -18,34 +15,35 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 public class ModAdvancementLootTables implements LootTableSubProvider {
-    public static final ResourceKey<LootTable> WIND_JOURNAL_LT = ResourceKey.create(Registries.LOOT_TABLE,
-           new ResourceLocation(ModMain.MOD_ID, "advancements/wind_journal"));
 
-    private final Map<ResourceKey<LootTable>, LootTable.Builder> lootTables = new HashMap<>();
-    protected final HolderLookup.Provider registries;
+    public static final ResourceLocation WIND_JOURNAL_LT =
+            new ResourceLocation(ModMain.MOD_ID, "advancements/wind_journal");
 
-    public ModAdvancementLootTables(HolderLookup.Provider provider) {
-        this.registries = provider;
-    }
+    private final Map<ResourceLocation, LootTable.Builder> lootTables =
+            new HashMap<>();
 
     private void generate() {
         this.addSimpleLootTable(
                 LootPool.lootPool()
                         .setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(ItemRegistry.WIND_JOURNAL.get())),
-                WIND_JOURNAL_LT);
+                        .add(LootItem.lootTableItem(
+                                ItemRegistry.WIND_JOURNAL.get()
+                        )),
+                WIND_JOURNAL_LT
+        );
     }
 
-    private void addSimpleLootTable(LootPool.Builder lootTable, ResourceKey<LootTable> key) {
-        this.lootTables.put(key, LootTable.lootTable().withPool(lootTable));
+    private void addSimpleLootTable(LootPool.Builder lootPool, ResourceLocation key) {
+        this.lootTables.put(key, LootTable.lootTable().withPool(lootPool));
     }
 
     @Override
-    public void generate(@NotNull BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
+    public void generate(@NotNull BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
         this.generate();
-        for (Map.Entry<ResourceKey<LootTable>, LootTable.Builder> entry : lootTables.entrySet()) {
-            biConsumer.accept(entry.getKey(), entry.getValue());
+        for (Map.Entry<ResourceLocation, LootTable.Builder> entry : this.lootTables.entrySet()) {
+            consumer.accept(entry.getKey(), entry.getValue());
         }
     }
 }
+
 

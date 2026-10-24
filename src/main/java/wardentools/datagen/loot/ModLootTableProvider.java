@@ -15,8 +15,8 @@ public class ModLootTableProvider {
         return new LootTableProvider(output, Set.of(), List.of(
                 new LootTableProvider.SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK),
                 new LootTableProvider.SubProviderEntry(ModAdvancementLootTables::new, LootContextParamSets.ADVANCEMENT_REWARD),
-                new LootTableProvider.SubProviderEntry(ModChestLootTables::new, LootContextParamSets.CHEST),
+                new LootTableProvider.SubProviderEntry(() -> new ModChestLootTables(lookupProvider.join()), LootContextParamSets.CHEST),
                 new LootTableProvider.SubProviderEntry(ModEntitiesLootTables::new, LootContextParamSets.ENTITY)
-        ), lookupProvider);
+        ));
     }
 }

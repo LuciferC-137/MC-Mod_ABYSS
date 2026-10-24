@@ -10,19 +10,18 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
-import wardentools.items.armors.ArmorRegistry;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
+import wardentools.items.armors.ArmorRegistry;
 
 import java.util.LinkedHashMap;
 
+@SuppressWarnings({"DataFlowIssue", "deprecation"})
 public class ModItemModelProvider extends ItemModelProvider {
     private static final LinkedHashMap<ResourceKey<TrimMaterial>, Float> trimMaterials
             = new LinkedHashMap<>();
@@ -196,16 +195,16 @@ public class ModItemModelProvider extends ItemModelProvider {
         
     }
  
-    private ItemModelBuilder blockItemWithItemModel(RegistryObject<Block> item) {
-        return withExistingParent(item.getId().getPath(),
-                ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
-               new ResourceLocation(ModMain.MOD_ID, "item/" + item.getId().getPath()));
+    private void blockItemWithItemModel(RegistryObject<Block> item) {
+        withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(ModMain.MOD_ID, "item/" + item.getId().getPath()));
     }
     
-    private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
-        return withExistingParent(item.getId().getPath(),
-                ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
-               new ResourceLocation(ModMain.MOD_ID, "item/" + item.getId().getPath()));
+    private void simpleItem(RegistryObject<Item> item) {
+        withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(ModMain.MOD_ID, "item/" + item.getId().getPath()));
     }
     
     public void trapdoorItem(RegistryObject<Block> block) {
@@ -230,7 +229,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     // Shoutout to El_Redstoniano for making this
     private void trimmedArmorItem(RegistryObject<? extends Item> itemRegistryObject) {
-        final String MOD_ID = ModMain.MOD_ID; // Change this to your mod id
+        final String MOD_ID = ModMain.MOD_ID;
 
         if(itemRegistryObject.get() instanceof ArmorItem armorItem) {
             trimMaterials.forEach((trimMaterial, value) -> {
@@ -247,9 +246,9 @@ public class ModItemModelProvider extends ItemModelProvider {
                 String armorItemPath = armorItem.toString();
                 String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
                 String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-                ResourceLocation armorItemResLoc = new ResourceLocation.parse(armorItemPath);
-                ResourceLocation trimResLoc = new ResourceLocation.parse(trimPath); // minecraft namespace
-                ResourceLocation trimNameResLoc = new ResourceLocation.parse(currentTrimName);
+                ResourceLocation armorItemResLoc = ResourceLocation.tryParse(armorItemPath);
+                ResourceLocation trimResLoc = ResourceLocation.tryParse(trimPath); // minecraft namespace
+                ResourceLocation trimNameResLoc = ResourceLocation.tryParse(currentTrimName);
 
                 // This is used for making the ExistingFileHelper acknowledge that this texture exist, so this will
                 // avoid an IllegalArgumentException

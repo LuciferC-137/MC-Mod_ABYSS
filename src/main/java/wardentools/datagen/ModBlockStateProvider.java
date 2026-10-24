@@ -1,20 +1,21 @@
 package wardentools.datagen;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.BlueBush;
 
+@SuppressWarnings("deprecation")
 public class ModBlockStateProvider extends BlockStateProvider {
 
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -71,7 +72,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerCrossCutoutBlock(BlockRegistry.DARK_GRASS);
         simpleBlockWithItem(BlockRegistry.POTTED_WHITE_TORCHFLOWER.get(), models()
         		.singleTexture("potted_white_torchflower",
-                        ResourceLocation.withDefaultNamespace("flower_pot_cross"), "plant",
+                        new ResourceLocation("flower_pot_cross"), "plant",
                 blockTexture(BlockRegistry.WHITE_TORCHFLOWER.get())).renderType("cutout"));
         registerBlueBushBlock(BlockRegistry.BLUE_BUSH);
         registerCustomSidesDirectionalPoweredBlock(BlockRegistry.SONIC_BLASTER,
@@ -189,7 +190,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private void registerLeavesBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(),
                 models().singleTexture(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
-                        ResourceLocation.withDefaultNamespace("block/leaves"),
+                        new ResourceLocation("block/leaves"),
                         "all", blockTexture(blockRegistryObject.get())).renderType("cutout"));
     }
     

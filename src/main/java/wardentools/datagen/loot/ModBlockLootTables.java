@@ -1,14 +1,10 @@
 package wardentools.datagen.loot;
 
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.core.Holder;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -18,13 +14,9 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
@@ -34,8 +26,9 @@ import wardentools.items.ItemRegistry;
 import java.util.Set;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
-	protected ModBlockLootTables(HolderLookup.Provider registries) {
-		super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
+
+	protected ModBlockLootTables() {
+		super(Set.of(), FeatureFlags.REGISTRY.allFlags());
 	}
 
     @Override
@@ -207,12 +200,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
 
 	private LootTable.Builder createBlackLanternItemDrop(RegistryObject<Block> block) {
-		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return LootTable.lootTable()
 				.withPool(
 						LootPool.lootPool()
 								.setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(block.get()).when(this.hasSilkTouch()))
+								.add(LootItem.lootTableItem(block.get()).when(HAS_SILK_TOUCH))
 				)
 				.withPool(
 						LootPool.lootPool()
@@ -220,9 +212,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.add(LootItem.lootTableItem(ItemRegistry.PALE_SHARD.get())
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(1, 3)))
-										.apply(ApplyBonusCount.addUniformBonusCount(
-												registrylookup.getOrThrow(Enchantments.FORTUNE)))
-										.when(this.doesNotHaveSilkTouch())
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.when(HAS_NO_SILK_TOUCH)
 								))
 				.withPool(
 						LootPool.lootPool()
@@ -230,19 +221,17 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.add(LootItem.lootTableItem(Items.ECHO_SHARD)
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(1, 3)))
-										.apply(ApplyBonusCount.addUniformBonusCount(
-												registrylookup.getOrThrow(Enchantments.FORTUNE))))
-								.when(this.doesNotHaveSilkTouch())
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
+								.when(HAS_NO_SILK_TOUCH)
 				);
 	}
 
 	private LootTable.Builder createReinforcedGlassItemDrop(RegistryObject<Block> block) {
-		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return LootTable.lootTable()
 				.withPool(
 						LootPool.lootPool()
 								.setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(block.get()).when(this.hasSilkTouch()))
+								.add(LootItem.lootTableItem(block.get()).when(HAS_SILK_TOUCH))
 				)
 				.withPool(
 						LootPool.lootPool()
@@ -250,15 +239,13 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.add(LootItem.lootTableItem(ItemRegistry.PALE_SHARD.get())
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(0, 2)))
-										.apply(ApplyBonusCount.addUniformBonusCount(
-												registrylookup.getOrThrow(Enchantments.FORTUNE)))
-										.when(this.doesNotHaveSilkTouch()))
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.when(HAS_NO_SILK_TOUCH))
 								.add(LootItem.lootTableItem(Items.ECHO_SHARD)
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(0, 2)))
-										.apply(ApplyBonusCount.addUniformBonusCount(
-												registrylookup.getOrThrow(Enchantments.FORTUNE)))
-										.when(this.doesNotHaveSilkTouch())
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))
+										.when(HAS_NO_SILK_TOUCH)
 								))
 				.withPool(
 						LootPool.lootPool()
@@ -266,48 +253,42 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 								.add(LootItem.lootTableItem(Items.IRON_NUGGET)
 										.apply(SetItemCountFunction.setCount(
 												UniformGenerator.between(0, 3)))
-										.apply(ApplyBonusCount.addUniformBonusCount(
-												registrylookup.getOrThrow(Enchantments.FORTUNE))))
-								.when(this.doesNotHaveSilkTouch())
+										.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE)))
+								.when(HAS_NO_SILK_TOUCH)
 				);
 	}
 
 	protected LootTable.Builder createNumberBasedOreDrop(Block block, ItemLike drop , float min, float max) {
-		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return createSilkTouchDispatchTable(block,
 				this.applyExplosionDecay(block,
 						LootItem.lootTableItem(drop)
 						.apply(SetItemCountFunction
 						.setCount(UniformGenerator.between(min, max)))
-						.apply(ApplyBonusCount.addOreBonusCount(
-								registrylookup.getOrThrow(Enchantments.FORTUNE)))));
+						.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
 	}
 
 	private LootTable.Builder cristalLoot(Block block, ItemLike cristal) {
-		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return createSilkTouchDispatchTable(block,
 				this.applyExplosionDecay(block,
 						LootItem.lootTableItem(cristal)
 						.apply(SetItemCountFunction
 						.setCount(UniformGenerator.between(1, 2)))
-						.apply(ApplyBonusCount.addUniformBonusCount(
-								registrylookup.getOrThrow(Enchantments.FORTUNE)))));
+						.apply(ApplyBonusCount.addUniformBonusCount(Enchantments.BLOCK_FORTUNE))));
 	}
 
 	protected LootTable.Builder createCustomLeaveDrop(Block leave, Block sapling, ItemLike fruit, float... f) {
-		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
 		return this.createLeavesDrops(leave, sapling, f)
 				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
 						.when(this.doesNotHaveShearsOrSilkTouch())
 						.add(((LootPoolSingletonContainer.Builder<?>)
 								this.applyExplosionCondition(leave, LootItem.lootTableItem(fruit)))
 								.when(BonusLevelTableCondition
-										.bonusLevelFlatChance(registrylookup.getOrThrow(Enchantments.FORTUNE),
-												new float[]{0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F}))));
+										.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE,
+                                                0.005F, 0.0055555557F, 0.00625F, 0.008333334F, 0.025F))));
 	}
 
 	private LootItemCondition.Builder hasShearsOrSilkTouch() {
-		return HAS_SHEARS.or(this.hasSilkTouch());
+		return HAS_SHEARS.or(HAS_SILK_TOUCH);
 	}
 
 	private LootItemCondition.Builder doesNotHaveShearsOrSilkTouch() {
@@ -316,6 +297,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
 	@Override
 	protected @NotNull Iterable<Block> getKnownBlocks() {
-		return BlockRegistry.BLOCKS.getEntries().stream().map(Holder::value)::iterator;
+		return BlockRegistry.BLOCKS.getEntries()
+				.stream()
+				.flatMap(RegistryObject::stream)
+				::iterator;
 	}
 }
