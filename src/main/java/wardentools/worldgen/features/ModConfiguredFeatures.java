@@ -1,7 +1,7 @@
 package wardentools.worldgen.features;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -10,6 +10,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSi
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
-import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.worldgen.features.custom.DepthVineConfiguration;
@@ -70,7 +70,7 @@ public class ModConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_DEPTH_VINE = registerKey("tall_depth_vine");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> LIVING_SPROUT_EMERGENCE = registerKey("living_sprout_emergence");
 
-	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 		
     	register(context, DARKTREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(BlockRegistry.DARKTREE_LOG.get()),
@@ -254,7 +254,7 @@ public class ModConfiguredFeatures {
     }
 
     private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(
-			BootstrapContext<ConfiguredFeature<?, ?>> context,
+			BootstapContext<ConfiguredFeature<?, ?>> context,
         ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
         	context.register(key, new ConfiguredFeature<>(feature, configuration));
 	}

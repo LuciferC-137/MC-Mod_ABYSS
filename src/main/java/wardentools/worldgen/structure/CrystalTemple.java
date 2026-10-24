@@ -16,11 +16,8 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
-import net.minecraft.world.level.levelgen.structure.pools.DimensionPadding;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
-import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 
@@ -94,19 +91,10 @@ public class CrystalTemple extends Structure {
         Optional<Holder.Reference<StructureTemplatePool>> poolHolder =
                 poolRegistry.getHolder(this.startPool);
 
-        return poolHolder.flatMap(structureTemplatePoolReference -> JigsawPlacement.addPieces(
-                context,
-                structureTemplatePoolReference,
-                this.startJigsawName,
-                this.maxDepth,
-                pos,
-                false,
-                Optional.empty(),
-                this.maxDistanceFromCenter,
-                PoolAliasLookup.EMPTY,
-                new DimensionPadding(1),
-                LiquidSettings.APPLY_WATERLOGGING
-        ));
+        return poolHolder.flatMap(pool ->
+                JigsawPlacement.addPieces(context, pool, this.startJigsawName, this.maxDepth, pos,
+                        false, Optional.empty(), this.maxDistanceFromCenter)
+        );
 
     }
 

@@ -12,7 +12,7 @@ public class ModStructureTypes {
             DeferredRegister.create(Registries.STRUCTURE_TYPE, ModMain.MOD_ID);
 
     public static final Supplier<StructureType<CrystalTemple>> CRYSTAL_TEMPLE =
-            STRUCTURE_TYPES.register("crystal_temple", () -> () -> CrystalTemple.MAP_CODEC);
+            STRUCTURE_TYPES.register("crystal_temple", () -> CrystalTemple.MAP_CODEC::codec);
 
 }
 

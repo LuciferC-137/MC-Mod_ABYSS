@@ -16,7 +16,7 @@ import wardentools.block.sculktendril.TendrilTree;
 import java.util.ArrayList;
 import java.util.List;
 
-import static wardentools.worldgen.features.custom.sculk.TendrilTreeUtils.*;
+import static wardentools.worldgen.features.custom.sculk.TendrilTreeUtils.getRandomHorizontalDirectionExcept;
 
 public class LivingSproutEmergence extends Feature<LivingSproutEmergenceConfiguration> {
 
@@ -41,10 +41,10 @@ public class LivingSproutEmergence extends Feature<LivingSproutEmergenceConfigur
 
         for (int i=0; i<length; i++){
             directions.add(config.upward() ? Direction.UP : Direction.DOWN);
-            tip = tip.relative(directions.getLast());
+            tip = tip.relative(directions.get(directions.size()-1));
             if (random.nextFloat() < config.shiftProb()) {
-                directions.add(getRandomHorizontalDirectionExcept(directions.getLast()));
-                tip = tip.relative(directions.getLast());
+                directions.add(getRandomHorizontalDirectionExcept(directions.get(directions.size()-1)));
+                tip = tip.relative(directions.get(directions.size()-1));
             }
         }
 

@@ -1,13 +1,7 @@
 package wardentools.worldgen.tree.custom;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.BiConsumer;
-
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelSimulatedReader;
@@ -18,6 +12,11 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import org.jetbrains.annotations.NotNull;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.BiConsumer;
 
 public class DarktreeTrunkPlacer extends TrunkPlacer {
 	 public static final MapCodec<DarktreeTrunkPlacer> CODEC = RecordCodecBuilder
@@ -72,13 +71,13 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		actualBranchStart.add(branchPosVariation);
 		for (int x = 0; x <= branchLength + branchLengthVariation; x++) {
             int y = (int) Math.round(branchCurvature * x * x) + branchPosVariation;
-            if (y-listTrunk.getLast().getY()+startPoint.getY()>1) {
+            if (y-listTrunk.get(listTrunk.size()-1).getY()+startPoint.getY()>1) {
             	listTrunk.add(startPoint.offset(-x, y-1, 0));
             }
             listTrunk.add(startPoint.offset(-x, y, 0));
     	}
-		listTrunk.add(listTrunk.getLast().offset(0, 1, 0));
-		foliagePositions.add(new FoliageAttachment(listTrunk.getLast(), -2, false));
+		listTrunk.add(listTrunk.get(listTrunk.size()-1).offset(0, 1, 0));
+		foliagePositions.add(new FoliageAttachment(listTrunk.get(listTrunk.size()-1), -2, false));
 		
 		branchCurvature = branchCurvatureMean*random.nextDouble()*2;
 		branchLengthVariation = random.nextInt(-3,3);
@@ -86,13 +85,13 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		actualBranchStart.add(branchPosVariation);
 		for (int z = 0; z <= branchLength + branchLengthVariation; z++) {
             int y = (int) Math.round(branchCurvature * z * z) + branchPosVariation;
-            if (y-listTrunk.getLast().getY()+startPoint.getY()>1) {
+            if (y-listTrunk.get(listTrunk.size()-1).getY()+startPoint.getY()>1) {
             	listTrunk.add(startPoint.offset(0, y-1, z));
             }
             listTrunk.add(startPoint.offset(0, y, z));
 		}
-		listTrunk.add(listTrunk.getLast().offset(0, 1, 0));
-		foliagePositions.add(new FoliageAttachment(listTrunk.getLast(), -2, false));
+		listTrunk.add(listTrunk.get(listTrunk.size()-1).offset(0, 1, 0));
+		foliagePositions.add(new FoliageAttachment(listTrunk.get(listTrunk.size()-1), -2, false));
 		
 		branchCurvature = branchCurvatureMean*random.nextDouble()*2;
 		branchLengthVariation = random.nextInt(-3,3);
@@ -100,13 +99,13 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		actualBranchStart.add(branchPosVariation);
 		for (int x = 0; x <= branchLength + branchLengthVariation; x++) {
             int y = (int) Math.round(branchCurvature * x * x) + branchPosVariation;
-            if (y-listTrunk.getLast().getY()+startPoint.getY()>1) {
+            if (y-listTrunk.get(listTrunk.size()-1).getY()+startPoint.getY()>1) {
             	listTrunk.add(startPoint.offset(x, y-1, 0));
             }
             listTrunk.add(startPoint.offset(x, y, 0));
         }
-		listTrunk.add(listTrunk.getLast().offset(0, 1, 0));
-		foliagePositions.add(new FoliageAttachment(listTrunk.getLast(), -2, false));
+		listTrunk.add(listTrunk.get(listTrunk.size()-1).offset(0, 1, 0));
+		foliagePositions.add(new FoliageAttachment(listTrunk.get(listTrunk.size()-1), -2, false));
 		
 		branchCurvature = branchCurvatureMean*random.nextDouble()*2;
 		branchLengthVariation = random.nextInt(-3,3);
@@ -114,13 +113,13 @@ public class DarktreeTrunkPlacer extends TrunkPlacer {
 		actualBranchStart.add(branchPosVariation);
 		for (int z = 0; z <= branchLength+ branchLengthVariation; z++) {
             int y = (int) Math.round(branchCurvature * z * z) + branchPosVariation;
-            if (y-listTrunk.getLast().getY()+startPoint.getY()>1) {
+            if (y-listTrunk.get(listTrunk.size()-1).getY()+startPoint.getY()>1) {
             	listTrunk.add(startPoint.offset(0, y-1, -z));
             }
             listTrunk.add(startPoint.offset(0, y, -z));
 		}
-		listTrunk.add(listTrunk.getLast().offset(0, 1, 0));
-		foliagePositions.add(new FoliageAttachment(listTrunk.getLast(), -2, false));
+		listTrunk.add(listTrunk.get(listTrunk.size()-1).offset(0, 1, 0));
+		foliagePositions.add(new FoliageAttachment(listTrunk.get(listTrunk.size()-1), -2, false));
 
 		//Complete the trunk
 		for (int i=heightFirstBranch-4; i<heightFirstBranch + Collections.max(actualBranchStart);i++) {

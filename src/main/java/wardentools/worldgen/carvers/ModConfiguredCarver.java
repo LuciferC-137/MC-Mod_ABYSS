@@ -2,7 +2,7 @@ package wardentools.worldgen.carvers;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -25,12 +25,12 @@ public class ModConfiguredCarver {
 				 new ResourceLocation(ModMain.MOD_ID, name));
 	}
 	
-	public static void bootstrap(BootstrapContext<ConfiguredWorldCarver<?>> ctx) {
+	public static void bootstrap(BootstapContext<ConfiguredWorldCarver<?>> ctx) {
 		ctx.register(ABYSS_CAVE, WorldCarver.CAVE.configured(getCaveCarver(ctx)));
  
 	}
 
-	public static CaveCarverConfiguration getCaveCarver(BootstrapContext<ConfiguredWorldCarver<?>> ctx) {
+	public static CaveCarverConfiguration getCaveCarver(BootstapContext<ConfiguredWorldCarver<?>> ctx) {
     	HolderGetter<Block> holdergetter = ctx.lookup(Registries.BLOCK);
     	return new CaveCarverConfiguration(
     			0.2F, //cave probability

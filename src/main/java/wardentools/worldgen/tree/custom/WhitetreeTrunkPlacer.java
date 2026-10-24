@@ -1,14 +1,8 @@
 package wardentools.worldgen.tree.custom;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiConsumer;
-
 import com.google.common.base.Function;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -21,6 +15,10 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import org.jetbrains.annotations.NotNull;
 import wardentools.worldgen.tree.ModTrunkPlacerTypes;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiConsumer;
 
 public class WhitetreeTrunkPlacer extends TrunkPlacer  {
 	public static final MapCodec<WhitetreeTrunkPlacer> CODEC = RecordCodecBuilder

@@ -1,14 +1,10 @@
 package wardentools.worldgen.dimension;
 
-import java.util.List;
-import java.util.OptionalLong;
-
 import com.mojang.datafixers.util.Pair;
-
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -24,6 +20,9 @@ import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import wardentools.ModMain;
 import wardentools.worldgen.CustomNoiseSettings;
 import wardentools.worldgen.biome.ModBiomes;
+
+import java.util.List;
+import java.util.OptionalLong;
 
 
 public class ModDimensions {
@@ -42,7 +41,7 @@ public class ModDimensions {
     public static final ResourceLocation DIMENSION_RENDERER = new ResourceLocation
             (ModMain.MOD_ID, "renderer");
     
-    public static void bootstrapType(BootstrapContext<DimensionType> context) {
+    public static void bootstrapType(BootstapContext<DimensionType> context) {
         context.register(ABYSS_DIM_TYPE, new DimensionType(
                 OptionalLong.of(18000), // fixedTime
                 false, // hasSkylight
@@ -61,7 +60,7 @@ public class ModDimensions {
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
     }
 
-    public static void bootstrapStem(BootstrapContext<LevelStem> context) {
+    public static void bootstrapStem(BootstapContext<LevelStem> context) {
         HolderGetter<Biome> biomeRegistry = context.lookup(Registries.BIOME);
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);

@@ -2,7 +2,7 @@ package wardentools.worldgen.biome;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -14,8 +14,8 @@ import wardentools.ModMain;
 import wardentools.entity.ModEntities;
 import wardentools.particle.ParticleRegistry;
 import wardentools.sounds.ModMusics;
-import wardentools.worldgen.features.ModPlacedFeatures;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
+import wardentools.worldgen.features.ModPlacedFeatures;
 
 public class ModBiomes {
     // COLOR 1 is encoded as the grass color
@@ -53,7 +53,7 @@ public class ModBiomes {
     public static final ResourceKey<Biome> PALE_CAVE = ResourceKey.create(Registries.BIOME,
            new ResourceLocation(ModMain.MOD_ID, "pale_cave"));
 
-    public static void bootstrap(BootstrapContext<Biome> context) {
+    public static void bootstrap(BootstapContext<Biome> context) {
         context.register(DEEP_FOREST, deepForest(context));
         context.register(WASTE_LAND, wasteLand(context));
         context.register(WHITE_FOREST, whiteForest(context));
@@ -67,7 +67,7 @@ public class ModBiomes {
         context.register(PALE_CAVE, paleCave(context));
     }
 
-    public static Biome deepForest(BootstrapContext<Biome> context) {
+    public static Biome deepForest(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
@@ -106,7 +106,7 @@ public class ModBiomes {
                         .build()).build();
     }
     
-    public static Biome wasteLand(BootstrapContext<Biome> context) {
+    public static Biome wasteLand(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         spawnBuilder.addSpawn(MobCategory.CREATURE,
@@ -139,7 +139,7 @@ public class ModBiomes {
                 .specialEffects(commonBiomeSpecialEffects().build()).build();
     }
     
-    public static Biome whiteForest(BootstrapContext<Biome> context) {
+    public static Biome whiteForest(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
         
         // (EntityType, weight of entity compare to other spawns, min entity spawn in one try, max)
@@ -180,7 +180,7 @@ public class ModBiomes {
                         .build()).build();
     }
 
-    public static Biome cristalCave(BootstrapContext<Biome> context) {
+    public static Biome cristalCave(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         spawnBuilder.addSpawn(MobCategory.CREATURE,
@@ -213,7 +213,7 @@ public class ModBiomes {
                         .grassColorOverride(0x57ab6a).build()).build();
     }
 
-    public static Biome blindingDepth(BootstrapContext<Biome> context) {
+    public static Biome blindingDepth(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
@@ -245,7 +245,7 @@ public class ModBiomes {
 
     }
 
-    public static Biome amethystCave(BootstrapContext<Biome> context) {
+    public static Biome amethystCave(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
@@ -270,7 +270,7 @@ public class ModBiomes {
 
     }
 
-    public static Biome citrineCave(BootstrapContext<Biome> context) {
+    public static Biome citrineCave(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
@@ -295,7 +295,7 @@ public class ModBiomes {
 
     }
 
-    public static Biome malachiteCave(BootstrapContext<Biome> context) {
+    public static Biome malachiteCave(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
@@ -320,7 +320,7 @@ public class ModBiomes {
 
     }
 
-    public static Biome rubyCave(BootstrapContext<Biome> context) {
+    public static Biome rubyCave(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
@@ -345,7 +345,7 @@ public class ModBiomes {
 
     }
 
-    public static Biome echoCave(BootstrapContext<Biome> context) {
+    public static Biome echoCave(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
@@ -376,7 +376,7 @@ public class ModBiomes {
 
     }
 
-    public static Biome paleCave(BootstrapContext<Biome> context) {
+    public static Biome paleCave(BootstapContext<Biome> context) {
         MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder();
 
         BiomeGenerationSettings.Builder biomeBuilder =
