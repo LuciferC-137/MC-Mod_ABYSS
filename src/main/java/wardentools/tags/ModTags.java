@@ -18,7 +18,7 @@ public class ModTags {
         public static final TagKey<Block> DARK_VEGETATION = register("dark_vegetation");
 
         private static TagKey<Block> register(String name) {
-            return BlockTags.create(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+            return BlockTags.create(new ResourceLocation(ModMain.MOD_ID, name));
         }
 
     }

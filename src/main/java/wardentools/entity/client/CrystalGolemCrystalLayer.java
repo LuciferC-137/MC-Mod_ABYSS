@@ -18,7 +18,7 @@ import wardentools.entity.custom.CrystalGolemEntity;
 @OnlyIn(Dist.CLIENT)
 public class CrystalGolemCrystalLayer extends RenderLayer<CrystalGolemEntity, CrystalGolem> {
     private static final RenderType GLOW = RenderType.entityTranslucent(ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem_glow_overlay.png"));
+            (ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem_glow_overlay.png"));
 
     public CrystalGolemCrystalLayer(RenderLayerParent<CrystalGolemEntity, CrystalGolem> renderLayerParent) {
         super(renderLayerParent);

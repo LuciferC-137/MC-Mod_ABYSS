@@ -16,7 +16,7 @@ import wardentools.entity.custom.ParasyteEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class ParasyteEmissiveLayer extends RenderLayer<ParasyteEntity, Parasyte> {
-    private static final RenderType EMISSIVE = RenderType.eyes(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+    private static final RenderType EMISSIVE = RenderType.eyes(new ResourceLocation(ModMain.MOD_ID,
     		"textures/entity/parasyte_emissive.png"));
 
     public ParasyteEmissiveLayer(RenderLayerParent<ParasyteEntity, Parasyte> renderLayerParent) {

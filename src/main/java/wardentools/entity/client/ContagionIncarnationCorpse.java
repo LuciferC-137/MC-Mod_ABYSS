@@ -19,7 +19,7 @@ import wardentools.entity.custom.ContagionIncarnationCorpseEntity;
 public class ContagionIncarnationCorpse extends HierarchicalModel<ContagionIncarnationCorpseEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
 			= new ModelLayerLocation(
-					ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "contagion_incarnation_corpse"), "main");
+					new ResourceLocation(ModMain.MOD_ID, "contagion_incarnation_corpse"), "main");
 	private final ModelPart FULL;
 	private final ModelPart TAIL;
 	private final ModelPart SECTION_6;

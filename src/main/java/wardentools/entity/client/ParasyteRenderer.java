@@ -16,7 +16,7 @@ import wardentools.particle.ParticleRegistry;
 @OnlyIn(Dist.CLIENT)
 public class ParasyteRenderer extends MobRenderer<ParasyteEntity, Parasyte>{
 	private static final ResourceLocation PARASYTE_TEXTURE =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/parasyte.png");
+			new ResourceLocation(ModMain.MOD_ID, "textures/entity/parasyte.png");
 
 	public ParasyteRenderer(EntityRendererProvider.Context context) {
 		super(context, new Parasyte(context.bakeLayer(Parasyte.LAYER_LOCATION)), 0.2f);

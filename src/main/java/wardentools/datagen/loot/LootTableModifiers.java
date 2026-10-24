@@ -8,15 +8,15 @@ import net.minecraft.world.level.storage.loot.entries.EmptyLootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
 import wardentools.ModMain;
 import wardentools.items.ItemRegistry;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
 public class LootTableModifiers {
-    private static final ResourceLocation wardenLootTable = ResourceLocation.withDefaultNamespace("entities/warden");
+    private static final ResourceLocation wardenLootTable = new ResourceLocation.withDefaultNamespace("entities/warden");
 
     @SubscribeEvent
     public static void onLootTableLoad(LootTableLoadEvent event) {

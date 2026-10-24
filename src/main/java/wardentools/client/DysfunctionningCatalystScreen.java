@@ -18,10 +18,10 @@ import java.util.Random;
 @OnlyIn(Dist.CLIENT)
 public class DysfunctionningCatalystScreen extends AbstractContainerScreen<DysfunctionningCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+			new ResourceLocation(ModMain.MOD_ID,
 					"textures/gui/dysfunctionning_catalyst_menu.png");
 	private static final ResourceLocation TEXTURE_EYES =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+			new ResourceLocation(ModMain.MOD_ID,
 					"textures/gui/dysfunctionning_catalyst_menu_eye_overlay.png");
 	private static final int BAR_LENGTH = 28;
 	private static final int BG_COLOR = 0xff8B8B8B;
@@ -42,7 +42,7 @@ public class DysfunctionningCatalystScreen extends AbstractContainerScreen<Dysfu
 
 	@Override
 	protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-		renderTransparentBackground(guiGraphics);
+		renderBackground(guiGraphics);
 		guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0,
 				this.imageWidth, this.imageHeight);
 

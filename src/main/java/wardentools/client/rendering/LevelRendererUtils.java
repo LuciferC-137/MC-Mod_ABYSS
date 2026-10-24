@@ -26,23 +26,22 @@ import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class LevelRendererUtils {
-    public static final ResourceLocation STAR_0 = ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/environment/star_0.png");
-    public static final ResourceLocation STAR_1 = ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/environment/star_1.png");
-    public static final ResourceLocation STAR_2 = ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/environment/star_2.png");
-    public static final ResourceLocation STAR_3 = ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/environment/star_3.png");
-    public static final ResourceLocation STAR_4 = ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/environment/star_4.png");
+    public static final ResourceLocation STAR_0 = new ResourceLocation
+            (ModMain.MOD_ID, "textures/environment/star_0.png");
+    public static final ResourceLocation STAR_1 = new ResourceLocation
+            (ModMain.MOD_ID, "textures/environment/star_1.png");
+    public static final ResourceLocation STAR_2 = new ResourceLocation
+            (ModMain.MOD_ID, "textures/environment/star_2.png");
+    public static final ResourceLocation STAR_3 = new ResourceLocation
+            (ModMain.MOD_ID, "textures/environment/star_3.png");
+    public static final ResourceLocation STAR_4 = new ResourceLocation
+            (ModMain.MOD_ID, "textures/environment/star_4.png");
     public static final List<ResourceLocation> STAR_TEXTURES
             = List.of(STAR_0, STAR_1, STAR_2, STAR_3, STAR_4);
     public static final Vec3i SKYCOLOR = new Vec3i(0, 75, 85);
 
-    public static void renderSky(ClientLevel level, Matrix4f pose, int brightness) {
+    public static void renderSky(ClientLevel level, int brightness) {
         PoseStack posestack = new PoseStack();
-        posestack.mulPose(pose);
         Tesselator tesselator = Tesselator.getInstance();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

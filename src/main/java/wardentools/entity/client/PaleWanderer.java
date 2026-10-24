@@ -24,7 +24,7 @@ import wardentools.entity.custom.PaleWandererEntity;
 public class PaleWanderer extends HierarchicalModel<PaleWandererEntity> {
 
 	public static final ModelLayerLocation LAYER_LOCATION =
-			new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "pale_wanderer"), "main");
+			new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "pale_wanderer"), "main");
 
 	private final ModelParts parts;
 

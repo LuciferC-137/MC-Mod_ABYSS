@@ -15,7 +15,7 @@ import wardentools.entity.custom.DeepLurkerEntity;
 @OnlyIn(Dist.CLIENT)
 public class DeepLurkerRenderer extends MobRenderer<DeepLurkerEntity, DeepLurker>{
 	private static final ResourceLocation DEEPLURKER_TEXTURE = 
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/deeplurker.png");
+			new ResourceLocation(ModMain.MOD_ID, "textures/entity/deeplurker.png");
 
 	public DeepLurkerRenderer(EntityRendererProvider.Context context) {
 		super(context, new DeepLurker(context.bakeLayer(DeepLurker.LAYER_LOCATION)), 0.2f);

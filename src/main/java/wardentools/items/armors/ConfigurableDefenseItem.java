@@ -39,7 +39,7 @@ public class ConfigurableDefenseItem extends ArmorItem {
             EquipmentSlotGroup equipmentslotgroup
                     = EquipmentSlotGroup.bySlot(type.getSlot());
             ResourceLocation resourcelocation
-                    = ResourceLocation.withDefaultNamespace("armor." + type.getName());
+                    = new ResourceLocation.withDefaultNamespace("armor." + type.getName());
             itemattributemodifiers$builder.add(Attributes.ARMOR,
                     new AttributeModifier(resourcelocation, defense,
                             AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup);

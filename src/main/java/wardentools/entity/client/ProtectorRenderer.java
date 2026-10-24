@@ -15,7 +15,7 @@ import wardentools.entity.custom.ProtectorEntity;
 @OnlyIn(Dist.CLIENT)
 public class ProtectorRenderer extends MobRenderer<ProtectorEntity, Protector>{
 	private static final ResourceLocation PROTECTOR_TEXTURE = 
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/protector.png");
+			new ResourceLocation(ModMain.MOD_ID, "textures/entity/protector.png");
 
 	public ProtectorRenderer(EntityRendererProvider.Context context) {
 		super(context, new Protector(context.bakeLayer(Protector.LAYER_LOCATION)), 0.5f);

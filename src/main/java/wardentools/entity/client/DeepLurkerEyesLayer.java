@@ -17,7 +17,7 @@ import wardentools.entity.custom.DeepLurkerEntity;
 @OnlyIn(Dist.CLIENT)
 public class DeepLurkerEyesLayer extends RenderLayer<DeepLurkerEntity, DeepLurker> {
     private static final RenderType EYES = RenderType.eyes(ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID,
+            (ModMain.MOD_ID,
     		"textures/entity/deeplurker_eyes.png"));
 
     public DeepLurkerEyesLayer(RenderLayerParent<DeepLurkerEntity, DeepLurker> renderLayerParent) {

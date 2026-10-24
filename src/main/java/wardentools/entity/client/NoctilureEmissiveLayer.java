@@ -17,7 +17,7 @@ import wardentools.entity.custom.NoctilureEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class NoctilureEmissiveLayer extends RenderLayer<NoctilureEntity, Noctilure> {
-    private static final RenderType EMISSIVE = RenderType.entityTranslucent(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+    private static final RenderType EMISSIVE = RenderType.entityTranslucent(new ResourceLocation(ModMain.MOD_ID,
     		"textures/entity/noctilure_emissive.png"));
 
     public NoctilureEmissiveLayer(RenderLayerParent<NoctilureEntity, Noctilure> renderLayerParent) {

@@ -20,7 +20,7 @@ import wardentools.entity.utils.RenderToBufferFunction;
 @OnlyIn(Dist.CLIENT)
 public class Shadow extends HierarchicalModel<ShadowEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
-			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "shadow"), "main");
+			= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "shadow"), "main");
 	private RenderToBufferFunction renderToBufferFunction;
 	private final ModelPart FULL;
 	private final ModelPart HEAD;

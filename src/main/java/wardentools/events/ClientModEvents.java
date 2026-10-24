@@ -1,5 +1,6 @@
 package wardentools.events;
 
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -17,9 +18,14 @@ import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
 import wardentools.block.CrystalInfuserBlock;
 import wardentools.block.DarkGrassBlock;
+import wardentools.blockentity.BlockEntityRegistry;
+import wardentools.blockentity.renderer.*;
 import wardentools.client.AbyssDimensionSpecialEffect;
+import wardentools.client.DysfunctionningCatalystScreen;
+import wardentools.client.RadianceCatalystScreen;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
+import wardentools.gui.MenuRegistry;
 import wardentools.items.CrystalResonatorItem;
 import wardentools.items.ItemRegistry;
 import wardentools.items.ModItemProperties;
@@ -33,6 +39,18 @@ public class ClientModEvents {
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
 		event.enqueueWork(ModItemProperties::addCustomProperties);
+
+		event.enqueueWork(() -> {
+			MenuScreens.register(
+					MenuRegistry.RADIANCE_CATALYST_MENU.get(),
+					RadianceCatalystScreen::new
+			);
+
+			MenuScreens.register(
+					MenuRegistry.DYSFUNCTIONNING_CATALYST_MENU.get(),
+					DysfunctionningCatalystScreen::new
+			);
+		});
 	}
 
 	@SubscribeEvent
@@ -100,5 +118,29 @@ public class ClientModEvents {
 						DimensionSpecialEffects.SkyType.NORMAL, false,
 						false));
 
+	}
+
+	@SubscribeEvent
+	public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerBlockEntityRenderer(BlockEntityRegistry.RADIANCE_CATALYST_BLOCK_ENTITY.get(),
+				RadianceCatalystRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.PROTECTOR_INVOKER_BLOCK_ENTITY.get(),
+				ProtectorInvokerRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.ABYSS_PORTAL_BLOCK_ENTITY.get(),
+				AbyssPortalBlockRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.DYSFUNCTIONNING_CATALYST_BLOCK_ENTITY.get(),
+				DysfunctionningCatalystRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.CONTAGION_INCARNATION_SKULL_BLOCK_ENTITY.get(),
+				ContagionIncarnationSkullRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.SOUL_SPAWNER_BLOCK_ENTITY.get(),
+				SoulSpawnerRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.GRAMOPHONE_BLOCK_ENTITY.get(),
+				GramophoneRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.SCULK_TENDRIL_BLOCK_ENTITY.get(),
+				SculkTendrilBlockRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.LIVING_SPROUT_BLOCK_ENTITY.get(),
+				LivingSproutRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.CRYSTAL_INFUSER_BLOCK_ENTITY.get(),
+				CrystalInfuserRenderer::new);
 	}
 }

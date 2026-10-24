@@ -321,6 +321,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private void registerFromLocation(RegistryObject<Block> blockRegistryObject, String location) {
         	simpleBlockWithItem(blockRegistryObject.get(),
         	    models().cubeAll(BuiltInRegistries.BLOCK.getKey(blockRegistryObject.get()).getPath(),
-        	    		ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, location)));
+        	    		new ResourceLocation(ModMain.MOD_ID, location)));
     }
 }

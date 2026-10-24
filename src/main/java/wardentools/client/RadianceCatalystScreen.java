@@ -1,22 +1,21 @@
 package wardentools.client;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.gui.menu.RadianceCatalystMenu;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
+import wardentools.gui.menu.RadianceCatalystMenu;
 
 @OnlyIn(Dist.CLIENT)
 public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCatalystMenu> {
 	private static final ResourceLocation TEXTURE =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/gui/radiance_catalyst_menu.png");
+			new ResourceLocation(ModMain.MOD_ID, "textures/gui/radiance_catalyst_menu.png");
 	private static final Component CORRUPTED =
 			Component.translatable("gui." + ModMain.MOD_ID + ".radiance_catalyst_screen.hover.corrupted");
 	private static final Component PURE =
@@ -30,7 +29,7 @@ public class RadianceCatalystScreen extends AbstractContainerScreen<RadianceCata
 
 	@Override
 	protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-		renderTransparentBackground(guiGraphics);
+		renderBackground(guiGraphics);
 		guiGraphics.blit(TEXTURE, this.leftPos,this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 			
 		// Render Energy bar

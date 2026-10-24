@@ -16,7 +16,7 @@ import wardentools.particle.ParticleRegistry;
 public class ContagionIncarnationCorpseRenderer
 		extends LivingEntityRenderer<ContagionIncarnationCorpseEntity, ContagionIncarnationCorpse> {
 	private static final ResourceLocation CONTAGION_INCARNATION_TEXTURE =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/contagion_incarnation_corpse.png");
+			new ResourceLocation(ModMain.MOD_ID, "textures/entity/contagion_incarnation_corpse.png");
 	private static final int PARTICLE_EFFECT_DURATION = 200;
 
 	public ContagionIncarnationCorpseRenderer(EntityRendererProvider.Context context) {

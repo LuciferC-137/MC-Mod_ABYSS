@@ -8,8 +8,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
 import org.lwjgl.opengl.GL11;
 
 @OnlyIn(Dist.CLIENT)
@@ -43,19 +41,13 @@ public class AbyssPortalBuilder {
         RenderSystem.clearColor(0f, 0f, 0f, 1f);
         RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
 
-        LevelRendererUtils.renderSky(level, view(camera), 255);
+        LevelRendererUtils.renderSky(level, 255);
 
         mc.getMainRenderTarget().bindWrite(true);
     }
 
     public int getSkyTextureId() {
         return skyTarget != null ? skyTarget.getColorTextureId() : 0;
-    }
-
-    public static Matrix4f view(Camera camera) {
-        Quaternionf q = camera.rotation().conjugate(new Quaternionf());
-        return new Matrix4f()
-                .rotate(q);
     }
 
 }

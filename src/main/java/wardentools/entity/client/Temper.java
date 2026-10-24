@@ -25,7 +25,7 @@ import wardentools.entity.custom.TemperEntity;
 @OnlyIn(Dist.CLIENT)
 public class Temper extends HierarchicalModel<TemperEntity> implements ArmedModel {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "temper"), "main");
+			new ResourceLocation(ModMain.MOD_ID, "temper"), "main");
 
     private float wingAngle;
     private float prevWingAngle;

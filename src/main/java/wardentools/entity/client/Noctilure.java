@@ -19,7 +19,7 @@ import wardentools.entity.custom.NoctilureEntity;
 @OnlyIn(Dist.CLIENT)
 public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
-			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "noctilure"), "main");
+			= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "noctilure"), "main");
     private static final int WING_ANGLE_MAX_COUNT_ON_FALL = 50;
     private int wingAngleCount = 0;
     private final ModelPart ROOT;

@@ -23,7 +23,7 @@ import wardentools.entity.custom.ProtectorEntity;
 @OnlyIn(Dist.CLIENT)
 public class Protector extends HierarchicalModel<ProtectorEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION =
-			new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "protector"), "main");
+			new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "protector"), "main");
 	private final ModelParts parts;
 
 	public Protector(ModelPart root) {

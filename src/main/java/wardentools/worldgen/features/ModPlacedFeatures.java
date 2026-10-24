@@ -279,7 +279,7 @@ public class ModPlacedFeatures {
 	
 	private static ResourceKey<PlacedFeature> registerKey(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE,
-				ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, name));
+				new ResourceLocation(ModMain.MOD_ID, name));
     }
 
     private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration,

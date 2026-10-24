@@ -20,7 +20,7 @@ import wardentools.ModMain;
 @OnlyIn(Dist.CLIENT)
 public class DiscModel extends Model {
 	private static final ResourceLocation DEFAULT_TEXTURE =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID,
+			new ResourceLocation(ModMain.MOD_ID,
 					"textures/models/disc_model/music_disc_default.png");
 	private final ModelPart root;
 
@@ -46,8 +46,8 @@ public class DiscModel extends Model {
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay, int i) {
-		root.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+							   int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay) {

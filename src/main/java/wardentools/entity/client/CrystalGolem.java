@@ -25,7 +25,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 public class CrystalGolem extends HierarchicalModel<CrystalGolemEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
 			= new ModelLayerLocation(ResourceLocation
-			.fromNamespaceAndPath(ModMain.MOD_ID, "crystal_golem"), "main");
+			(ModMain.MOD_ID, "crystal_golem"), "main");
 	private final ModelPart FULL;
 	private final ModelPart leg_r;
 	private final ModelPart leg_l;

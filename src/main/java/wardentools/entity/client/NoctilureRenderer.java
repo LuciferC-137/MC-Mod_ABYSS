@@ -14,7 +14,7 @@ import wardentools.entity.custom.NoctilureEntity;
 @OnlyIn(Dist.CLIENT)
 public class NoctilureRenderer extends MobRenderer<NoctilureEntity, Noctilure>{
 	private static final ResourceLocation NOCTILURE_TEXTURE =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/noctilure.png");
+			new ResourceLocation(ModMain.MOD_ID, "textures/entity/noctilure.png");
 
 	public NoctilureRenderer(EntityRendererProvider.Context context) {
 		super(context, new Noctilure(context.bakeLayer(Noctilure.LAYER_LOCATION)), 1f);

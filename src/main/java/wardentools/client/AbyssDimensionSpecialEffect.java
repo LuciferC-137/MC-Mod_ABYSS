@@ -36,11 +36,11 @@ public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
 
     @Override
     public boolean renderSky(@NotNull ClientLevel level, int ticks, float partialTick,
-                             @NotNull Matrix4f modelViewMatrix, @NotNull Camera camera,
+                             @NotNull PoseStack poseStack, @NotNull Camera camera,
                              @NotNull Matrix4f projectionMatrix, boolean isFoggy, @NotNull Runnable setupFog) {
         int brightness = (int)(230f * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
                 / AbyssFogClientHandler.getMaxFogDistance());
-        LevelRendererUtils.renderSky(level, modelViewMatrix, brightness);
+        LevelRendererUtils.renderSky(level, brightness);
         return true;
     }
 
@@ -53,7 +53,7 @@ public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
     public boolean renderClouds(@NotNull ClientLevel level, int ticks, float partialTick,
                                 @NotNull PoseStack poseStack,
                                 double camX, double camY, double camZ,
-                                @NotNull Matrix4f modelViewMatrix, @NotNull Matrix4f projectionMatrix) {
+                                @NotNull Matrix4f projectionMatrix) {
         return true;
     }
 

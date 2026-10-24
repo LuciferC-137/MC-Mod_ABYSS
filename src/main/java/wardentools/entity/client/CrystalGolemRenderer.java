@@ -17,7 +17,7 @@ import wardentools.entity.custom.CrystalGolemEntity;
 @OnlyIn(Dist.CLIENT)
 public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, CrystalGolem>{
 	private static final ResourceLocation CRYSTAL_GOLEM_TEXTURE =
-			ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem.png");
+			new ResourceLocation(ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem.png");
 
 	private static final float MIN_CUBE_SIZE = 0.2F;
 	private static final float MAX_CUBE_SIZE = 0.5F;

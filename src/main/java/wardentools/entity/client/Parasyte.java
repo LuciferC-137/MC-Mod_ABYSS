@@ -19,7 +19,7 @@ import wardentools.entity.custom.ParasyteEntity;
 @OnlyIn(Dist.CLIENT)
 public class Parasyte extends HierarchicalModel<ParasyteEntity> {
 	public static final ModelLayerLocation LAYER_LOCATION
-			= new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ModMain.MOD_ID, "parasyte"), "main");
+			= new ModelLayerLocation(new ResourceLocation(ModMain.MOD_ID, "parasyte"), "main");
 	private final Parasyte.ModelParts parts;
 
 	public Parasyte(ModelPart root) {

@@ -17,7 +17,7 @@ import wardentools.entity.custom.CrystalGolemEntity;
 @OnlyIn(Dist.CLIENT)
 public class CrystalGolemRustLayer extends RenderLayer<CrystalGolemEntity, CrystalGolem> {
     private static final RenderType RUST = RenderType.entityTranslucent(ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem_rust_overlay.png"));
+            (ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem_rust_overlay.png"));
 
     public CrystalGolemRustLayer(RenderLayerParent<CrystalGolemEntity, CrystalGolem> renderLayerParent) {
         super(renderLayerParent);

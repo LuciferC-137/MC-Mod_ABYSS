@@ -39,8 +39,8 @@ public class ModDimensions {
     public static final ResourceKey<DimensionType> ABYSS_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
            new ResourceLocation(ModMain.MOD_ID, "abyssdim_type"));
 
-    public static final ResourceLocation DIMENSION_RENDERER = ResourceLocation
-            .fromNamespaceAndPath(ModMain.MOD_ID, "renderer");
+    public static final ResourceLocation DIMENSION_RENDERER = new ResourceLocation
+            (ModMain.MOD_ID, "renderer");
     
     public static void bootstrapType(BootstrapContext<DimensionType> context) {
         context.register(ABYSS_DIM_TYPE, new DimensionType(
