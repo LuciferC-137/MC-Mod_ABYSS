@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.advancement.ModCriteriaTriggers;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.RadianceParticleExplosion;
 import wardentools.worldgen.features.custom.PlaceAbyssPortal;
 
@@ -44,14 +44,14 @@ public class RadiantStaffItem extends Item {
                 if (portal.place(serverLevel, serverLevel.getChunkSource().getGenerator(),
                         serverLevel.random, abovePos)){
                     ModCriteriaTriggers.ABYSS_PORTAL_OPEN.trigger((ServerPlayer)player);
-                    PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunkAt(abovePos).getPos(),
+                    ModPackets.sendToAllTrackingChunk(serverLevel, abovePos,
                             new RadianceParticleExplosion(abovePos.getCenter().toVector3f(),
                                     1.5f, 0.1f, 100, false));
-                    PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunkAt(abovePos).getPos(),
+                    ModPackets.sendToAllTrackingChunk(serverLevel, abovePos,
                             new RadianceParticleExplosion(abovePos.getCenter().toVector3f(),
                                     2.5f, 0.15f, 100, false));
-                    context.getItemInHand()
-                            .hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+                    context.getItemInHand().hurtAndBreak(1, player,
+                            entity -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
                     return InteractionResult.SUCCESS;
                 }
             }

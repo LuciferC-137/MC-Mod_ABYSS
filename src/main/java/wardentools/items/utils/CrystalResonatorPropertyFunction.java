@@ -58,19 +58,20 @@ public class CrystalResonatorPropertyFunction implements ClampedItemPropertyFunc
         double angleFromEntityToPos = this.getAngleFromEntityToPos(entity, pos);
         double visualRotationY = this.getWrappedVisualRotationY(entity);
         double finalRotation;
+
         if (entity instanceof Player player) {
-            if (player.isLocalPlayer() && player.level().tickRateManager().runsNormally()) {
+            if (player.isLocalPlayer()) {
                 if (this.wobble.shouldUpdate(partialTick)) {
                     this.wobble.update(partialTick, 0.5 - (visualRotationY - 0.25));
                 }
-
                 finalRotation = angleFromEntityToPos + this.wobble.rotation;
-                return Mth.positiveModulo((float)finalRotation, 1.0F);
+                return Mth.positiveModulo((float) finalRotation, 1.0F);
             }
         }
 
         finalRotation = 0.5 - (visualRotationY - 0.25 - angleFromEntityToPos);
-        return Mth.positiveModulo((float)finalRotation, 1.0F);
+
+        return Mth.positiveModulo((float) finalRotation, 1.0F);
     }
 
     @Nullable

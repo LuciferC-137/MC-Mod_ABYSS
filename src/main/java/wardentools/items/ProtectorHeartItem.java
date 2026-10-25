@@ -1,20 +1,17 @@
 package wardentools.items;
 
-import java.util.List;
-import java.util.UUID;
-
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.custom.ProtectorEntity;
-import wardentools.items.utils.ItemUtils;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.UUID;
 
 public class ProtectorHeartItem extends Item {
 
@@ -23,10 +20,9 @@ public class ProtectorHeartItem extends Item {
 	}
 	
 	public void setProtector(ItemStack stack, ProtectorEntity protector) {
-        CompoundTag tag = ItemUtils.customTag(stack);
+        CompoundTag tag = stack.getOrCreateTag();
         tag.putUUID("ProtectorUUID", protector.getUUID());
 		tag.putInt("ProtectorID", protector.getId());
-		stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
     }
 
 	public void saveHealth(ItemStack stack, ProtectorEntity protector){
@@ -34,13 +30,13 @@ public class ProtectorHeartItem extends Item {
 	}
 
 	public void saveHealth(ItemStack stack, float health) {
-		CompoundTag tag = ItemUtils.customTag(stack);
+		CompoundTag tag = stack.getOrCreateTag();
 		tag.putFloat("ProtectorHealth", health);
-		stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
 	}
 	
 	public float readHealth(ItemStack stack) {
-		CompoundTag tag = ItemUtils.customTag(stack);
+		CompoundTag tag = stack.getTag();
+		if (tag == null) return 0.0f;
         if (tag.contains("ProtectorHealth")) {
             return tag.getFloat("ProtectorHealth");
         }
@@ -48,12 +44,14 @@ public class ProtectorHeartItem extends Item {
     }
 	
 	public @Nullable UUID getProtectorUUID(ItemStack stack) {
-		CompoundTag tag = ItemUtils.customTag(stack);
+		CompoundTag tag = stack.getTag();
+		if (tag == null) return null;
         return tag.contains("ProtectorUUID") ? tag.getUUID("ProtectorUUID") : null;
     }
 
 	public int getProtectorID(ItemStack stack){
-		CompoundTag tag = ItemUtils.customTag(stack);
+		CompoundTag tag = stack.getTag();
+		if (tag == null) return -1;
 		return tag.contains("ProtectorID") ? tag.getInt("ProtectorID") : 0;
 	}
 	
@@ -61,10 +59,11 @@ public class ProtectorHeartItem extends Item {
 		return(int)this.readHealth(stack) + "/" + (int)ProtectorEntity.MAX_HEALTH;
 	}
 
+
 	@Override
-	public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext ctx,
+	public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level,
 								@NotNull List<Component> components, @NotNull TooltipFlag flag) {
-		super.appendHoverText(stack, ctx, components, flag);
+		super.appendHoverText(stack, level, components, flag);
 		components.add(Component.literal(this.getTextHealth(stack)));
 	}
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
+import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.jetbrains.annotations.NotNull;
 import wardentools.worldgen.structure.ModStructures;
@@ -40,7 +40,7 @@ public class AncientCitadelMap extends Item {
                         (byte) 2, true, true);
                 MapItem.renderBiomePreviewMap(serverLevel, mapStack);
                 MapItemSavedData.addTargetDecoration(mapStack, structurePos,
-                        "+", MapDecorationTypes.RED_X);
+                        "+", MapDecoration.Type.RED_X);
 
                 player.setItemInHand(hand, mapStack);
 

@@ -1,12 +1,11 @@
 package wardentools.items;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -27,11 +26,11 @@ public class RadianceCatalystItem extends BlockItem {
             ItemStack stack = context.getItemInHand();
             BlockItem.updateCustomBlockEntityTag(level, context.getPlayer(), pos, stack);
             RadianceCatalystBlockEntity blockEntity = (RadianceCatalystBlockEntity) level.getBlockEntity(pos);
-            CustomData data = stack.get(DataComponents.CUSTOM_DATA);
+            CompoundTag tag = stack.getTag();
             if (blockEntity == null) return result;
-            if (data == null) {blockEntity.setEnergy(0); return result;}
-            if (data.contains("Energy")) {
-            	blockEntity.setEnergy(data.copyTag().getInt("Energy"));
+            if (tag == null) {blockEntity.setEnergy(0); return result;}
+            if (tag.contains("Energy")) {
+            	blockEntity.setEnergy(tag.getInt("Energy"));
             } else {
             	blockEntity.setEnergy(0);
             }

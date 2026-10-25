@@ -36,7 +36,7 @@ public class WhistleItem extends Item {
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
+    public int getUseDuration(@NotNull ItemStack stack) {
         return USE_DURATION;
     }
 

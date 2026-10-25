@@ -1,9 +1,8 @@
 package wardentools.items.armors;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,8 +24,8 @@ public class ArmorWithEffectItem extends ConfigurableDefenseItem {
     private static final ResourceLocation RADIANCE_ADVANCEMENT
             =new ResourceLocation(ModMain.MOD_ID, "radiance_bringer");
     private static final int EFFECT_TIME = 242;
-    private static final Map<Holder<ArmorMaterial>, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
-            (new ImmutableMap.Builder<Holder<ArmorMaterial>, MobEffectInstance>())
+    private static final Map<ArmorMaterial, MobEffectInstance> MATERIAL_TO_EFFECT_MAP =
+            (new ImmutableMap.Builder<ArmorMaterial, MobEffectInstance>())
                     .put(ModMaterials.DEEPCRISTAL, new MobEffectInstance(ModEffects.CORRUPTION_VESSEL.get(),
                             EFFECT_TIME, 0,
                             false,false, true))
@@ -34,8 +33,8 @@ public class ArmorWithEffectItem extends ConfigurableDefenseItem {
                             EFFECT_TIME, 0,
                             false,false, true)).build();
 
-    public ArmorWithEffectItem(Holder<ArmorMaterial> pMaterial, Type pType, Properties pProperties) {
-        super(pMaterial, pType, pProperties);
+    public ArmorWithEffectItem(ArmorMaterial material, Type type, Properties properties) {
+        super(material, type, properties);
     }
 
     @Override
@@ -53,8 +52,8 @@ public class ArmorWithEffectItem extends ConfigurableDefenseItem {
     }
 
     private void evaluateArmorEffects(Player player) {
-        for (Map.Entry<Holder<ArmorMaterial>, MobEffectInstance> entry : MATERIAL_TO_EFFECT_MAP.entrySet()) {
-            Holder<ArmorMaterial> mapArmorMaterial = entry.getKey();
+        for (Map.Entry<ArmorMaterial, MobEffectInstance> entry : MATERIAL_TO_EFFECT_MAP.entrySet()) {
+            ArmorMaterial mapArmorMaterial = entry.getKey();
             MobEffectInstance mapStatusEffect = entry.getValue();
 
             if(hasCorrectArmorOn(mapArmorMaterial, player)) {
@@ -63,7 +62,7 @@ public class ArmorWithEffectItem extends ConfigurableDefenseItem {
         }
     }
 
-    private void addStatusEffectForMaterial(Player player, Holder<ArmorMaterial> mapArmorMaterial,
+    private void addStatusEffectForMaterial(Player player, ArmorMaterial mapArmorMaterial,
                                             MobEffectInstance mapStatusEffect) {
         if(hasCorrectArmorOn(mapArmorMaterial, player)) {
             player.addEffect(new MobEffectInstance(mapStatusEffect));
@@ -80,7 +79,7 @@ public class ArmorWithEffectItem extends ConfigurableDefenseItem {
                 && !leggings.isEmpty() && !boots.isEmpty();
     }
 
-    private boolean hasCorrectArmorOn(Holder<ArmorMaterial> material, Player player) {
+    private boolean hasCorrectArmorOn(ArmorMaterial material, Player player) {
         for (ItemStack armorStack : player.getInventory().armor) {
             if(!(armorStack.getItem() instanceof ArmorItem)) {
                 return false;
@@ -97,14 +96,14 @@ public class ArmorWithEffectItem extends ConfigurableDefenseItem {
         return allSameMaterial && playerHasAdvancement(breastplate.getMaterial(), player);
     }
 
-    private boolean playerHasAdvancement(Holder<ArmorMaterial> material, Player player) {
+    private boolean playerHasAdvancement(ArmorMaterial material, Player player) {
         if (!player.level().isClientSide) {
             ServerPlayer serverPlayer = (ServerPlayer) player;
-            AdvancementHolder advancementHolder = null;
+            Advancement advancementHolder = null;
             if (material == ModMaterials.DEEPCRISTAL) {
-                advancementHolder = serverPlayer.server.getAdvancements().get(CORRUPTION_ADVANCEMENT);
+                advancementHolder = serverPlayer.server.getAdvancements().getAdvancement(CORRUPTION_ADVANCEMENT);
             } else if (material == ModMaterials.RADIANCE_CRISTAL) {
-                advancementHolder = serverPlayer.server.getAdvancements().get(RADIANCE_ADVANCEMENT);
+                advancementHolder = serverPlayer.server.getAdvancements().getAdvancement(RADIANCE_ADVANCEMENT);
             }
             if (advancementHolder != null) {
                 AdvancementProgress progress = serverPlayer.getAdvancements()

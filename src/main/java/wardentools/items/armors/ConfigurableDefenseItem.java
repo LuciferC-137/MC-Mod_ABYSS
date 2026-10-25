@@ -1,56 +1,76 @@
 package wardentools.items.armors;
 
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
-import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlotGroup;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
+
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 public class ConfigurableDefenseItem extends ArmorItem {
 
-    private Supplier<ItemAttributeModifiers> dynamicModifiers;
+    private int defense;
 
-    public ConfigurableDefenseItem(Holder<ArmorMaterial> pMaterial, Type pType, Properties pProperties) {
-        super(pMaterial, pType, pProperties);
-        this.updateDefense((material.value()).getDefense(type));
+    private Multimap<Attribute, AttributeModifier> dynamicModifiers;
+
+    private final UUID modifierId;
+
+    public ConfigurableDefenseItem(ArmorMaterial material, Type type, Item.Properties properties) {
+        super(material, type, properties);
+
+        this.modifierId = UUID.nameUUIDFromBytes(("wardentools:armor." + type.getName())
+                .getBytes(StandardCharsets.UTF_8));
+
+        this.updateDefense(ModMaterials.getAbyssArmorProtection(type));
     }
 
     @Override
-    public @NotNull ItemAttributeModifiers getDefaultAttributeModifiers() {
-        return this.dynamicModifiers.get();
+    public @NotNull Multimap<Attribute, AttributeModifier>
+    getDefaultAttributeModifiers(EquipmentSlot slot) {
+        if (slot == this.type.getSlot()) {
+            return this.dynamicModifiers;
+        }
+
+        return super.getDefaultAttributeModifiers(slot);
     }
 
     @Override
     public int getDefense() {
-        return ModMaterials.getAbyssArmorProtection(this.type);
+        return this.defense;
     }
 
     public void updateDefense(int defense) {
-        this.dynamicModifiers = Suppliers.memoize(() -> {
-            float toughness = (material.value()).toughness();
-            ItemAttributeModifiers.Builder itemattributemodifiers$builder
-                    = ItemAttributeModifiers.builder();
-            EquipmentSlotGroup equipmentslotgroup
-                    = EquipmentSlotGroup.bySlot(type.getSlot());
-            ResourceLocation resourcelocation
-                    = new ResourceLocation("armor." + type.getName());
-            itemattributemodifiers$builder.add(Attributes.ARMOR,
-                    new AttributeModifier(resourcelocation, defense,
-                            AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup);
-            itemattributemodifiers$builder.add(Attributes.ARMOR_TOUGHNESS,
-                    new AttributeModifier(resourcelocation, toughness,
-                            AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup);
-            float f1 = (material.value()).knockbackResistance();
-            if (f1 > 0.0F) {
-                itemattributemodifiers$builder.add(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(resourcelocation, f1, AttributeModifier.Operation.ADD_VALUE), equipmentslotgroup);
-            }
-            return itemattributemodifiers$builder.build();
-        });
+        this.defense = defense;
+
+        ImmutableMultimap.Builder<Attribute, AttributeModifier> builder =
+                ImmutableMultimap.builder();
+
+        builder.put(Attributes.ARMOR,
+                new AttributeModifier(this.modifierId, "Armor modifier",
+                        defense, AttributeModifier.Operation.ADDITION));
+
+        builder.put(Attributes.ARMOR_TOUGHNESS,
+                new AttributeModifier(this.modifierId, "Armor toughness",
+                        this.material.getToughness(), AttributeModifier.Operation.ADDITION)
+        );
+
+        float knockbackResistance = this.material.getKnockbackResistance();
+
+        if (knockbackResistance > 0.0F) {
+            builder.put(Attributes.KNOCKBACK_RESISTANCE,
+                    new AttributeModifier(this.modifierId, "Armor knockback resistance",
+                            knockbackResistance, AttributeModifier.Operation.ADDITION)
+            );
+        }
+
+        this.dynamicModifiers = builder.build();
     }
 }
+

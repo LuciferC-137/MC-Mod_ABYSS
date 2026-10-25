@@ -8,11 +8,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.effect.ModEffects;
 import wardentools.items.clientutils.WardenHeartFoilManager;
 import wardentools.misc.WardenLaserAttack;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.WardenLaserParticleSound;
 
 public class WardenHeartItem extends Item {
@@ -36,9 +36,8 @@ public class WardenHeartItem extends Item {
 					//Trigger laser
 					laserAttack.tick(serverLevel, player, startPosition, direction, laserLength);
 					//Send packet for sound and visuals
-					PacketDistributor.sendToPlayersTrackingChunk(
-							serverLevel,
-							serverLevel.getChunkAt(player.getOnPos()).getPos(),
+					ModPackets.sendToAllTrackingChunk(
+							serverLevel, player.getOnPos(),
 							new WardenLaserParticleSound(startPosition.toVector3f(), direction.toVector3f(), laserLength));
 					return InteractionResultHolder.success(player.getItemInHand(interactionHand));
 			    }
