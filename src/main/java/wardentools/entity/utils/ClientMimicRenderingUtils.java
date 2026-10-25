@@ -1,6 +1,7 @@
 package wardentools.entity.utils;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -9,18 +10,20 @@ import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.slf4j.Logger;
 
 import java.lang.reflect.Method;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientMimicRenderingUtils {
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     public static RenderToBufferFunction getRenderToBufferFunction(LivingEntity mimic) {
         EntityRenderer<? super LivingEntity> renderer =
                 Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(mimic);
         if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-            return (poseStack, vertexConsumer, i, j) ->
-                    livingRenderer.getModel().renderToBuffer(poseStack, vertexConsumer, i, j);
+            return (poseStack, vertexConsumer, i, j, r, g, b, a) ->
+                    livingRenderer.getModel().renderToBuffer(poseStack, vertexConsumer, i, j, r, g, b, a);
         }
         return null;
     }
@@ -48,12 +51,12 @@ public class ClientMimicRenderingUtils {
                     try {
                         return (float) getBobMethod.invoke(livingRenderer, entity, partialTicks);
                     } catch (Exception e) {
-                        System.out.println("Error invoking getBob method");
+                        LOGGER.error("DITA Mimic Entity Error: could not invoke getBob method", e);
                         return 0.0f;
                     }
                 };
             } catch (NoSuchMethodException e) {
-                System.out.println("Error invoking getBob method: NoSuchMethodException");
+                LOGGER.error("DITA Mimic Entity Error: could not find getBob method", e);
             }
         }
         return null;
@@ -71,11 +74,11 @@ public class ClientMimicRenderingUtils {
                     try {
                         scaleMethod.invoke(livingRenderer, entity, poseStack, v);
                     } catch (Exception e) {
-                        System.out.println("Error invoking scale method");
+                        LOGGER.error("DITA Mimic Entity Error: could not invoke scaleMethod", e);
                     }
                 };
             } catch (NoSuchMethodException e) {
-                System.out.println("Error invoking scale method: NoSuchMethodException");
+                LOGGER.error("DITA Mimic Entity Error: could not find scale method", e);
             }
         }
         return null;

@@ -8,8 +8,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.NodeEvaluator;
-import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 
@@ -122,12 +122,12 @@ public class IncarnationMoveControl extends MoveControl {
     }
 
     private boolean isWalkable(float dx, float dy) {
-        PathNavigation navigation = this.mob.getNavigation();
-        NodeEvaluator nodeEvaluator = navigation.getNodeEvaluator();
-        return nodeEvaluator.getPathType(this.mob, BlockPos
-                .containing(this.mob.getX() + (double) dx,
-                        (double) this.mob.getBlockY(), this.mob.getZ() + (double) dy))
-                == PathType.WALKABLE;
+        PathNavigation pathnavigation = this.mob.getNavigation();
+        NodeEvaluator nodeevaluator = pathnavigation.getNodeEvaluator();
+        return nodeevaluator.getBlockPathType(this.mob.level(),
+                Mth.floor(this.mob.getX() + (double) dx),
+                this.mob.getBlockY(), Mth.floor(this.mob.getZ()
+                        + (double) dy)) == BlockPathTypes.WALKABLE;
     }
 
     protected float rotlerp(float currentYaw, float targetYaw, float maxTurn) {

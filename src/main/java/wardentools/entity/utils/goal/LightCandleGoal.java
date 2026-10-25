@@ -15,7 +15,6 @@ public class LightCandleGoal extends Goal {
     private static final int LIGHT_PHASE_DURATION = 40;
     private static final int TIME_TO_LIGHT = 30;
     private static final double SPEED = 1D;
-    private static final int POS_ACCURACY = 0;
     private int lightTick = 0;
 
     private static final int TIMEOUT = 2000;
@@ -39,7 +38,7 @@ public class LightCandleGoal extends Goal {
         this.changePhaseTo(Phase.TRAVEL);
         BlockPos targetPos = golem.peekUnlitCandle();
         Vec3 target = targetPos.getCenter();
-        if (!golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED)) {
+        if (!golem.getNavigation().moveTo(target.x, target.y, target.z, SPEED)) {
             golem.pollUnlitCandle();
             this.stop();
         }
@@ -86,7 +85,7 @@ public class LightCandleGoal extends Goal {
                         if (golem.getUnlitCandles().isEmpty()) {
                             this.changePhaseTo(Phase.COMEBACK);
                             Vec3 target = this.golem.getGolemStonePos().getCenter();
-                            golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
+                            golem.getNavigation().moveTo(target.x, target.y, target.z, SPEED);
                         }
                     }
                 } else {
@@ -106,7 +105,7 @@ public class LightCandleGoal extends Goal {
                     this.changePhaseTo(Phase.TRAVEL);
                     BlockPos next = golem.peekUnlitCandle();
                     Vec3 target = next.getCenter();
-                    golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
+                    golem.getNavigation().moveTo(target.x, target.y, target.z, SPEED);
                 } else {
                     this.goBack();
                 }
@@ -129,7 +128,7 @@ public class LightCandleGoal extends Goal {
     public void goBack() {
         this.changePhaseTo(Phase.COMEBACK);
         Vec3 target = this.golem.getGolemStonePos().getCenter();
-        golem.getNavigation().moveTo(target.x, target.y, target.z, POS_ACCURACY, SPEED);
+        golem.getNavigation().moveTo(target.x, target.y, target.z, SPEED);
     }
 
     public boolean surroundingGolemHasSameTarget() {

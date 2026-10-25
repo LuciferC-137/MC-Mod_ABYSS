@@ -9,10 +9,10 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.ContagionIncarnationEntity;
 import wardentools.entity.custom.ParasyteEntity;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.IncarnationEmergeSound;
 import wardentools.network.payloads.special_effects.IncarnationSonicStrikeSound;
 
@@ -59,16 +59,16 @@ public class IncarnationSonicStrikeAttackGoal extends Goal {
         if (this.incarnation.level() instanceof ServerLevel serverLevel) {
             if (this.incarnation.getSonicStrikeTick()
                     == ContagionIncarnationEntity.SONIC_STRIKE_DURATION - SCREAM_SOUND_DELAY) {
-                PacketDistributor.sendToPlayersTrackingChunk(
+                ModPackets.sendToAllTrackingChunk(
                         serverLevel,
-                        serverLevel.getChunkAt(this.incarnation.blockPosition()).getPos(),
+                        this.incarnation.blockPosition(),
                         new IncarnationEmergeSound(this.incarnation.position().toVector3f()));
             }
             if (this.incarnation.getSonicStrikeTick()
                     == ContagionIncarnationEntity.SONIC_STRIKE_EFFECT_TICK + SONIC_SOUND_ADVANCE_TICK) {
-                PacketDistributor.sendToPlayersTrackingChunk(
+                ModPackets.sendToAllTrackingChunk(
                         serverLevel,
-                        serverLevel.getChunkAt(this.incarnation.blockPosition()).getPos(),
+                        this.incarnation.blockPosition(),
                         new IncarnationSonicStrikeSound(this.incarnation.position().toVector3f()));
             }
             if (this.incarnation.getSonicStrikeTick() == ContagionIncarnationEntity.SONIC_STRIKE_EFFECT_TICK) {

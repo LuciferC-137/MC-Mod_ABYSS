@@ -1,12 +1,9 @@
 package wardentools.entity.utils.goal;
 
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import wardentools.entity.custom.NoctilureEntity;
 
-import java.util.Objects;
 
 public class JoinOwnerGoal extends Goal {
     private int tickCount = 0;

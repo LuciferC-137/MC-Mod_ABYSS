@@ -37,7 +37,7 @@ public class AvoidWardenAndClimbTreeGoal extends Goal {
                 entity.getBoundingBox().inflate(scaredRadius));
 
         if (!wardens.isEmpty()) {
-            this.closestWarden = wardens.getFirst();
+            this.closestWarden = wardens.get(0);
             return true;
         }
         return false;

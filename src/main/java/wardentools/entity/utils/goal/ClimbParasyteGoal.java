@@ -1,7 +1,6 @@
 package wardentools.entity.utils.goal;
 
 import net.minecraft.world.entity.ai.goal.Goal;
-import wardentools.entity.custom.DeepLurkerEntity;
 import wardentools.entity.custom.ParasyteEntity;
 
 import java.util.EnumSet;
