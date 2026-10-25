@@ -4,12 +4,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.WindWhisperSendToClient;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
@@ -20,7 +20,7 @@ public class WhisperManager {
     private int timeSinceLastWhisper = 0;
 
     @SubscribeEvent
-    public static void onServerTick(ServerTickEvent.Pre event) {
+    public static void onServerTick(TickEvent.ServerTickEvent event) {
         INSTANCE.tick();
     }
 
@@ -32,8 +32,7 @@ public class WhisperManager {
         if (this.timeSinceLastWhisper > nextMinTime) {
             this.timeSinceLastWhisper = 0;
             this.nextMinTime = MIN_TIME_BETWEEN_WHISPERS + level.random.nextInt(MIN_TIME_BETWEEN_WHISPERS);
-            PacketDistributor.sendToPlayersTrackingChunk(level, level.getChunkAt(pos).getPos(),
-                    new WindWhisperSendToClient());
+            ModPackets.sendToAllTrackingChunk(level, pos, new WindWhisperSendToClient());
             return true;
         }
         return false;
@@ -43,6 +42,6 @@ public class WhisperManager {
         if (!(player instanceof ServerPlayer serverPlayer)) {
             return;
         }
-        PacketDistributor.sendToPlayer(serverPlayer, new WindWhisperSendToClient());
+        ModPackets.sendToPlayer(serverPlayer, new WindWhisperSendToClient());
     }
 }

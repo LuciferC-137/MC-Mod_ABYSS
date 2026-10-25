@@ -32,12 +32,10 @@ public abstract class MusicManagerMixin implements AbyssMusicManagerAccessor {
 
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void onTick(CallbackInfo ci) {
-        // Vérifier si le joueur est dans la dimension Abyss
         boolean isInAbyss = this.minecraft.player != null
                 && this.minecraft.player.level().dimension() == ModDimensions.ABYSS_LEVEL_KEY;
 
         if (isInAbyss) {
-            // Utiliser le gestionnaire personnalisé pour l'Abyss
             this.abyssMusic$customManager.tick();
             ci.cancel();
             return;
