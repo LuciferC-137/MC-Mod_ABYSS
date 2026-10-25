@@ -8,7 +8,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import wardentools.ModMain;
-import wardentools.items.ModJukeBoxSongsGenerator;
 import wardentools.worldgen.CustomNoiseSettings;
 import wardentools.worldgen.biome.ModBiomes;
 import wardentools.worldgen.carvers.ModConfiguredCarver;
@@ -28,9 +27,7 @@ public class ModDataBuilderProvider extends DatapackBuiltinEntriesProvider {
     		.add(Registries.LEVEL_STEM, ModDimensions::bootstrapStem)
     		.add(Registries.BIOME, ModBiomes::bootstrap)
     		.add(Registries.CONFIGURED_CARVER, ModConfiguredCarver::bootstrap)
-            .add(Registries.NOISE_SETTINGS, CustomNoiseSettings::bootstrap)
-            // Other Providers
-            .add(Registries.JUKEBOX_SONG, ModJukeBoxSongsGenerator::bootstrap);
+            .add(Registries.NOISE_SETTINGS, CustomNoiseSettings::bootstrap);
 
     public ModDataBuilderProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, ImmutableSet.of(ModMain.MOD_ID, "minecraft"));

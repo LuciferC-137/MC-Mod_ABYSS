@@ -21,19 +21,19 @@ public class RadianceBringerEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(LivingEntity entity, int amplifier) {
-        if (!(entity.tickCount%(200 / (amplifier + 1))==0)) return true;
-        if (!(entity instanceof Player)) return true;
-        if (countMyTemper(entity.level(), (Player)entity) >= MAX_NUMBER_OF_TEMPER) return true;
+    public void applyEffectTick(LivingEntity entity, int amplifier) {
+        if (!(entity.tickCount%(200 / (amplifier + 1))==0)) return;
+        if (!(entity instanceof Player)) return;
+        if (countMyTemper(entity.level(), (Player)entity) >= MAX_NUMBER_OF_TEMPER) return;
         TemperEntity temper = ModEntities.TEMPER.get().create(entity.level());
-        if (temper==null) return true;
+        if (temper==null) return;
         BlockPos spawnPos = findSpawnPosition(entity.level(), entity.getOnPos());
-        if (spawnPos == null) return true;
+        if (spawnPos == null) return;
         temper.moveTo(spawnPos.getX() + 0.5f, spawnPos.getY() + 0.5f,
                 spawnPos.getZ() + 0.5f);
         temper.setPlayerInvoker((Player)entity);
         entity.level().addFreshEntity(temper);
-        return super.applyEffectTick(entity, amplifier);
+        super.applyEffectTick(entity, amplifier);
     }
 
     private BlockPos findSpawnPosition(Level level, BlockPos origin) {
@@ -64,10 +64,5 @@ public class RadianceBringerEffect extends MobEffect {
             }
         }
         return cnt;
-    }
-
-    @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-        return true;
     }
 }

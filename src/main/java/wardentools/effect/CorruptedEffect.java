@@ -17,9 +17,10 @@ public class CorruptedEffect extends MobEffect {
     }
 
     @Override
-    public boolean applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
-        if (entity.hasEffect(ModEffects.PURIFIED.get())) {
-            return super.applyEffectTick(entity, amplifier);
+    public void applyEffectTick(@NotNull LivingEntity entity, int amplifier) {
+        if (entity.hasEffect(ModEffects.PURIFIED.get()) || entity.tickCount % 20 != 0) {
+            super.applyEffectTick(entity, amplifier);
+            return;
         }
         Holder<DamageType> corruptedDamageHolder
                 = entity.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
@@ -27,11 +28,6 @@ public class CorruptedEffect extends MobEffect {
 
         entity.hurt(new DamageSource(corruptedDamageHolder, null, entity, null),
                 1 + amplifier );
-        return super.applyEffectTick(entity, amplifier);
-    }
-
-    @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-        return duration%20==0;
+        super.applyEffectTick(entity, amplifier);
     }
 }
