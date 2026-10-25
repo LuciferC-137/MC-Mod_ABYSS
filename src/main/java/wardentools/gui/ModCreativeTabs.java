@@ -2,12 +2,15 @@ package wardentools.gui;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.*;
-import net.neoforged.bus.api.IEventBus;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import wardentools.ModMain;
-import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.ItemRegistry;
+import wardentools.items.armors.ArmorRegistry;
 
 import java.lang.reflect.Field;
 import java.util.*;

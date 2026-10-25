@@ -1,41 +1,92 @@
 package wardentools.playerdata;
 
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraftforge.fml.common.Mod;
+import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
-import wardentools.network.payloads.datasync.SyncDataTaskToClient;
-import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
 import wardentools.playerdata.serializables.CompletedTasks;
 import wardentools.playerdata.serializables.KnownWindWhispers;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID)
+import javax.annotation.Nullable;
+
+@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AttachCapabilities {
 
-    @SubscribeEvent
-    public static void onPlayerClone(PlayerEvent.Clone event) {
-        if (event.isWasDeath() && event.getOriginal().hasData(ModDataAttachments.COMPLETED_TASKS)) {
-            event.getEntity().getData(ModDataAttachments.COMPLETED_TASKS)
-                    .copy(event.getOriginal().getData(ModDataAttachments.COMPLETED_TASKS));
-        }
-        if (event.isWasDeath() && event.getOriginal().hasData(ModDataAttachments.KNOWN_WIND_WHISPERS)) {
-            event.getEntity().getData(ModDataAttachments.KNOWN_WIND_WHISPERS)
-                    .copy(event.getOriginal().getData(ModDataAttachments.KNOWN_WIND_WHISPERS));
-        }
-    }
+    private static final ResourceLocation COMPLETED_TASKS_ID =
+            new ResourceLocation(ModMain.MOD_ID, "task_list");
+
+    private static final ResourceLocation KNOWN_WIND_WHISPERS_ID =
+            new ResourceLocation(ModMain.MOD_ID, "known_wind_whispers");
 
     @SubscribeEvent
-    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
-            CompletedTasks taskData = player.getData(ModDataAttachments.COMPLETED_TASKS);
-            for (int taskId : taskData.getAll()) {
-                PacketDistributor.sendToPlayer(player, new SyncDataTaskToClient(taskId, false));
-            }
-            KnownWindWhispers whisperData = player.getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
-            PacketDistributor.sendToPlayer(player, new SyncKnownWhisperToClient(whisperData.getAllAsArray()));
+    public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
+        if (!(event.getObject() instanceof Player)) {
+            return;
         }
-    }
 
+        CompletedTasks tasks = new CompletedTasks();
+        LazyOptional<CompletedTasks> tasksOptional = LazyOptional.of(() -> tasks);
+
+        event.addCapability(COMPLETED_TASKS_ID,
+                new ICapabilitySerializable<CompoundTag>() {
+
+                    @Override
+                    public <T> @NotNull LazyOptional<T> getCapability(
+                            @NotNull Capability<T> capability,
+                            @Nullable Direction side) {
+                        return capability == ModCapabilities.COMPLETED_TASKS
+                                ? tasksOptional.cast() : LazyOptional.empty();
+                    }
+
+                    @Override
+                    public CompoundTag serializeNBT() {
+                        return tasks.serializeNBT();
+                    }
+
+                    @Override
+                    public void deserializeNBT(CompoundTag tag) {
+                        tasks.deserializeNBT(tag);
+                    }
+                });
+
+        event.addListener(tasksOptional::invalidate);
+
+        KnownWindWhispers whispers = new KnownWindWhispers();
+        LazyOptional<KnownWindWhispers> whispersOptional =
+                LazyOptional.of(() -> whispers);
+
+        event.addCapability(KNOWN_WIND_WHISPERS_ID,
+                new ICapabilitySerializable<CompoundTag>() {
+
+                    @Override
+                    public <T> @NotNull LazyOptional<T> getCapability(
+                            @NotNull Capability<T> capability,
+                            @Nullable Direction side) {
+                        return capability == ModCapabilities.KNOWN_WIND_WHISPERS
+                                ? whispersOptional.cast()
+                                : LazyOptional.empty();
+                    }
+
+                    @Override
+                    public CompoundTag serializeNBT() {
+                        return whispers.serializeNBT();
+                    }
+
+                    @Override
+                    public void deserializeNBT(CompoundTag tag) {
+                        whispers.deserializeNBT(tag);
+                    }
+                });
+
+        event.addListener(whispersOptional::invalidate);
+    }
 }

@@ -1,7 +1,5 @@
 package wardentools.fluid;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fluids.ForgeFlowingFluid;

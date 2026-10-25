@@ -33,7 +33,7 @@ import wardentools.network.payloads.datasync.SyncKnownWhisperToClient;
 import wardentools.network.payloads.special_effects.*;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.options.ShineParticleOptions;
-import wardentools.playerdata.ModDataAttachments;
+import wardentools.playerdata.ModCapabilities;
 import wardentools.playerdata.serializables.CompletedTasks;
 import wardentools.playerdata.serializables.KnownWindWhispers;
 import wardentools.sounds.ModMusics;
@@ -81,23 +81,23 @@ public class ClientPayloadHandler implements IClientPayloadHandler {
 
     public void syncDataTask(SyncDataTaskToClient msg, ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            CompletedTasks data = getEntityData(ctx.player(), ModDataAttachments.COMPLETED_TASKS);
+            CompletedTasks data = getEntityData(ctx.player(), ModCapabilities.COMPLETED_TASKS);
             if (msg.remove()) {
                 data.removeCompletedTask(msg.taskId());
             } else {
                 data.addCompletedTask(msg.taskId());
             }
-            setEntityData(ctx.player(), ModDataAttachments.COMPLETED_TASKS, data);
+            setEntityData(ctx.player(), ModCapabilities.COMPLETED_TASKS, data);
         }, ctx);
     }
 
     public void syncKnownWhisper(SyncKnownWhisperToClient msg, ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            KnownWindWhispers data = getEntityData(ctx.player(), ModDataAttachments.KNOWN_WIND_WHISPERS);
+            KnownWindWhispers data = getEntityData(ctx.player(), ModCapabilities.KNOWN_WIND_WHISPERS);
             for (int i : msg.whisperIds()) {
                 data.addKnownWhisper(i);
             }
-            setEntityData(ctx.player(), ModDataAttachments.KNOWN_WIND_WHISPERS, data);
+            setEntityData(ctx.player(), ModCapabilities.KNOWN_WIND_WHISPERS, data);
         }, ctx);
     }
 

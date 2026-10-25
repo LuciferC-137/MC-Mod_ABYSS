@@ -25,7 +25,6 @@ import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.enchantment.EnchantmentRegistry;
 import wardentools.items.recipe.ModRecipes;
 import wardentools.particle.ParticleRegistry;
-import wardentools.playerdata.ModDataAttachments;
 import wardentools.sounds.ModSounds;
 import wardentools.worldgen.features.ModFeatures;
 import wardentools.worldgen.structure.ModStructureTypes;
@@ -67,7 +66,6 @@ public class ModMain {
 		ModRecipes.TYPES.register(bus);
 		ModStructureTypes.STRUCTURE_TYPES.register(bus);
 		ModLootModifiers.LOOT_MODIFIER_SERIALIZERS.register(bus);
-        ModDataAttachments.ATTACHMENTS.register(bus);
 		EnchantmentRegistry.ENCHANTMENTS.register(bus);
 
         MinecraftForge.EVENT_BUS.register(this);

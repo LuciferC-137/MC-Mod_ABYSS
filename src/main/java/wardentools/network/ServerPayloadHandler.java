@@ -17,7 +17,7 @@ import wardentools.network.payloads.SwitchAchievement;
 import wardentools.network.payloads.TeleportPlayerTo;
 import wardentools.network.payloads.datasync.SyncDataTaskToServer;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
-import wardentools.playerdata.ModDataAttachments;
+import wardentools.playerdata.ModCapabilities;
 import wardentools.playerdata.serializables.CompletedTasks;
 import wardentools.playerdata.serializables.KnownWindWhispers;
 import wardentools.weather.AbyssWeatherEventServer;
@@ -81,25 +81,25 @@ public class ServerPayloadHandler {
 
     public static void syncTaskData(SyncDataTaskToServer msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            CompletedTasks data = getEntityData(ctx.player(), ModDataAttachments.COMPLETED_TASKS);
+            CompletedTasks data = getEntityData(ctx.player(), ModCapabilities.COMPLETED_TASKS);
             if (msg.remove()) {
                 data.removeCompletedTask(msg.taskId());
             } else {
                 data.addCompletedTask(msg.taskId());
             }
-            setEntityData(ctx.player(), ModDataAttachments.COMPLETED_TASKS, data);
+            setEntityData(ctx.player(), ModCapabilities.COMPLETED_TASKS, data);
         }, ctx);
     }
 
     public static void syncWindWhisperData(SyncKnownWhisperToServer msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            KnownWindWhispers data = getEntityData(ctx.player(), ModDataAttachments.KNOWN_WIND_WHISPERS);
+            KnownWindWhispers data = getEntityData(ctx.player(), ModCapabilities.KNOWN_WIND_WHISPERS);
             if (msg.remove()) {
                 data.removeKnownWhisper(msg.whisperId());
             } else {
                 data.addKnownWhisper(msg.whisperId());
             }
-            setEntityData(ctx.player(), ModDataAttachments.KNOWN_WIND_WHISPERS, data);
+            setEntityData(ctx.player(), ModCapabilities.KNOWN_WIND_WHISPERS, data);
         }, ctx);
     }
 

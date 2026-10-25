@@ -12,9 +12,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.SwitchAchievement;
 import wardentools.sounds.ModMusics;
 
@@ -92,12 +92,12 @@ public class ChoiceScreen extends Screen {
    private void respawn() {this.onFinished.run();}
 
    private void onRadianceClicked() {
-      PacketDistributor.sendToServer(new SwitchAchievement(0));
+      ModPackets.sendToServer(new SwitchAchievement(0));
       this.respawn();
    }
 
    private void onContagionClicked() {
-      PacketDistributor.sendToServer(new SwitchAchievement(1));
+      ModPackets.sendToServer(new SwitchAchievement(1));
       this.respawn();
    }
 

@@ -1,10 +1,5 @@
 package wardentools.gui.windscreen;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import javax.annotation.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.Font;
@@ -12,8 +7,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.ClickEvent.Action;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -21,6 +19,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 @OnlyIn(Dist.CLIENT)
 public class WindJournalScreen extends Screen {
@@ -308,8 +311,8 @@ public class WindJournalScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderTransparentBackground(graphics);
+    public void renderBackground(@NotNull GuiGraphics graphics) {
+        super.renderBackground(graphics);
         if (this.cachedLeftPageIndex == 0) {
             graphics.blit(JOURNAL_FIRST_PAGE_TEXTURE, leftMargin(), TOP_MARGIN,
                     0, 0, TEXTURE_WIDTH,

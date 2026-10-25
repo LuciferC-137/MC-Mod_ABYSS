@@ -1,10 +1,8 @@
 package wardentools.playerdata.serializables;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -43,7 +41,7 @@ public class CompletedTasks implements INBTSerializable<CompoundTag> {
     }
 
     @Override
-    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
+    public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         int[] arr = tasks.stream().mapToInt(Integer::intValue).toArray();
         tag.putIntArray(taskDataId, arr);
@@ -51,7 +49,7 @@ public class CompletedTasks implements INBTSerializable<CompoundTag> {
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull CompoundTag tag) {
+    public void deserializeNBT(@NotNull CompoundTag tag) {
         int[] arr = tag.getIntArray(taskDataId);
         this.tasks.clear();
         for (int i : arr) this.tasks.add(i);

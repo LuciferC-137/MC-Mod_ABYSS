@@ -1,8 +1,7 @@
 package wardentools.playerdata.serializables;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -46,7 +45,7 @@ public class KnownWindWhispers implements INBTSerializable<CompoundTag> {
     }
 
     @Override
-    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
+    public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         int[] arr = whispers.stream().mapToInt(Integer::intValue).toArray();
         tag.putIntArray(taskDataId, arr);
@@ -54,7 +53,7 @@ public class KnownWindWhispers implements INBTSerializable<CompoundTag> {
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull CompoundTag tag) {
+    public void deserializeNBT(@NotNull CompoundTag tag) {
         int[] arr = tag.getIntArray(taskDataId);
         this.whispers.clear();
         for (int i : arr) this.whispers.add(i);

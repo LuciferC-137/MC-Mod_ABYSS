@@ -11,11 +11,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.ModMain;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.datasync.SyncDataTaskToServer;
-import wardentools.playerdata.ModDataAttachments;
-import wardentools.playerdata.serializables.CompletedTasks;
+import wardentools.playerdata.ModCapabilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,11 +77,12 @@ public class TaskNoteAccess {
     private void buildHasCompletedTask() {
         LocalPlayer player = Minecraft.getInstance().player;
         if (player == null) return;
-        CompletedTasks data = player.getData(ModDataAttachments.COMPLETED_TASKS);
-        for (int i : data.getAll()) {
-            Task task = tasks.get(i);
-            if (task != null) {task.setOk(true);}
-        }
+        player.getCapability(ModCapabilities.COMPLETED_TASKS).ifPresent(data -> {
+            for (int i : data.getAll()) {
+                Task task = tasks.get(i);
+                if (task != null) {task.setOk(true);}
+            }
+        });
     }
 
     public List<Task> getTaskPage(int index) {
@@ -146,15 +146,15 @@ public class TaskNoteAccess {
             this.switchState();
             Player player = Minecraft.getInstance().player;
             if (player == null) return;
-            CompletedTasks data = player.getData(ModDataAttachments.COMPLETED_TASKS);
-            boolean remove = data.taskCompleted(this.id);
-            if (!remove) {
-                data.addCompletedTask(this.id);
-            } else {
-                data.removeCompletedTask(this.id);
-            }
-            player.setData(ModDataAttachments.COMPLETED_TASKS, data);
-            PacketDistributor.sendToServer(new SyncDataTaskToServer(this.id, remove));
+            player.getCapability(ModCapabilities.COMPLETED_TASKS).ifPresent(data -> {
+                boolean remove = data.taskCompleted(this.id);
+                if (!remove) {
+                    data.addCompletedTask(this.id);
+                } else {
+                    data.removeCompletedTask(this.id);
+                }
+                ModPackets.sendToServer(new SyncDataTaskToServer(this.id, remove));
+            });
         }
 
         public static Component hoveredTranslatableText(String text) {

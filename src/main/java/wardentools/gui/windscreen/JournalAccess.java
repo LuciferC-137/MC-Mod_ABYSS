@@ -15,8 +15,7 @@ import wardentools.ModMain;
 import wardentools.misc.wind.Whisper;
 import wardentools.misc.wind.WhisperTags;
 import wardentools.misc.wind.WindWhispers;
-import wardentools.playerdata.ModDataAttachments;
-import wardentools.playerdata.serializables.KnownWindWhispers;
+import wardentools.playerdata.ModCapabilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -78,7 +77,7 @@ public class JournalAccess {
         // Replace XX with page proper page index and adds links to it.
         int indexParsing = 0;
         this.tableOfContentComponents.clear();
-        this.lengthOfTableOfContent = sectionPageIndex.getFirst() - 1;
+        this.lengthOfTableOfContent = sectionPageIndex.get(0) - 1;
         for (int p = 0; p < this.lengthOfTableOfContent; p++) {
             List<FormattedCharSequence> tocPage = pages.get(p);
             for (int k = 0; k < tocPage.size(); k++) {
@@ -94,7 +93,7 @@ public class JournalAccess {
                     }
                     this.tableOfContentComponents.get(p).add(clickableComponent);
                     FormattedCharSequence clickableLine = font.split(clickableComponent,
-                            WindJournalScreen.TEXT_WIDTH + 10).getFirst();
+                            WindJournalScreen.TEXT_WIDTH + 10).get(0);
                     tocPage.set(k, clickableLine);
                     indexParsing++;
                 }
@@ -161,17 +160,18 @@ public class JournalAccess {
     private List<Component> getWhispersTextByTag(Minecraft minecraft, WhisperTags.Tag tag){
         if (minecraft == null || minecraft.player == null) return List.of();
         List<Component> whispers = new ArrayList<>();
-        KnownWindWhispers data = minecraft.player.getData(ModDataAttachments.KNOWN_WIND_WHISPERS);
-        List<Whisper> whispersList = WindWhispers.INSTANCE.whisperTags.getWhispersWithTag(tag);
-        for (Whisper whisper : whispersList) {
-            if (data.whisperKnown(whisper.globalId())) {
-                whispers.add(baseText((whisper.globalId() + 1 ) + " - "
-                        + whisper.whisper().getString() + "\n"));
-            } else {
-                whispers.add(baseText((whisper.globalId() + 1)+  " - " +
-                        WindWhispers.getLockedString() + "\n", false, true));
+        minecraft.player.getCapability(ModCapabilities.KNOWN_WIND_WHISPERS).ifPresent(data -> {
+            List<Whisper> whispersList = WindWhispers.INSTANCE.whisperTags.getWhispersWithTag(tag);
+            for (Whisper whisper : whispersList) {
+                if (data.whisperKnown(whisper.globalId())) {
+                    whispers.add(baseText((whisper.globalId() + 1 ) + " - "
+                            + whisper.whisper().getString() + "\n"));
+                } else {
+                    whispers.add(baseText((whisper.globalId() + 1)+  " - " +
+                            WindWhispers.getLockedString() + "\n", false, true));
+                }
             }
-        }
+        });
         return whispers;
     }
 
