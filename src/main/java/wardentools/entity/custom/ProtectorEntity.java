@@ -9,30 +9,22 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AnimationState;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.blockentity.ProtectorInvokerBlockEntity;
-import net.minecraft.world.entity.animal.AbstractGolem;
 import wardentools.entity.utils.goal.ChooseMonsterTargetGoal;
 import wardentools.entity.utils.goal.ReturnToInvokerGoal;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.ProtectorHeartSynchronize;
 import wardentools.network.payloads.special_effects.RadianceParticleExplosion;
 import wardentools.sounds.ModSounds;
@@ -178,8 +170,7 @@ public class ProtectorEntity extends AbstractGolem {
 
 	private void deathParticleEffect() {
 		if (this.level() instanceof ServerLevel level) {
-			PacketDistributor.sendToPlayersTrackingChunk(level,
-					level.getChunkAt(this.blockPosition()).getPos(),
+			ModPackets.sendToAllTrackingChunk(level, this.blockPosition(),
 					new RadianceParticleExplosion(this.getPosition(1f).add(0, 1, 0).toVector3f(),
 							3.0F, 0.2F, 100, true)
 					);
@@ -217,7 +208,7 @@ public class ProtectorEntity extends AbstractGolem {
 			if (level instanceof ServerLevel serverlevel) {
 				if (entity == null || entity.killedEntity(serverlevel, this)) {
 					this.gameEvent(GameEvent.ENTITY_DIE);
-					this.dropAllDeathLoot(serverlevel, source);
+					this.dropAllDeathLoot(source);
 					this.createWitherRose(livingentity);
 				}
 				this.level().broadcastEntityEvent(this, (byte)3);
@@ -227,12 +218,12 @@ public class ProtectorEntity extends AbstractGolem {
 	}
 
 	@Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-        super.defineSynchedData(entityData);
-        entityData.define(attackAnimationTick, 0);
-		entityData.define(dispawnTick, 0);
-		entityData.define(spawnTick, 0);
-		entityData.define(earTick, 0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(attackAnimationTick, 0);
+		this.entityData.define(dispawnTick, 0);
+		this.entityData.define(spawnTick, 0);
+		this.entityData.define(earTick, 0);
     }
 	
 	@Override
@@ -267,7 +258,8 @@ public class ProtectorEntity extends AbstractGolem {
 	@Override
 	public boolean hurt(@NotNull DamageSource source, float amount) {
 		if (this.invokerPos != null){
-			PacketDistributor.sendToAllPlayers(
+			ModPackets.sendToAllTrackingChunk(
+					this.level(), this.blockPosition(),
 					new ProtectorHeartSynchronize(this.invokerPos.getCenter().toVector3f(), this.getHealth()));
 			if (this.level().getBlockEntity(this.invokerPos) instanceof ProtectorInvokerBlockEntity invoker) {
 				invoker.saveHealth(this);

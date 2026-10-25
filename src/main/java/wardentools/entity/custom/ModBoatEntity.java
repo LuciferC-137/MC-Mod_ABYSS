@@ -52,8 +52,8 @@ public class ModBoatEntity extends Boat {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-        super.defineSynchedData(entityData);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
         entityData.define(DATA_ID_TYPE, Type.DARKTREE.ordinal());
     }
 

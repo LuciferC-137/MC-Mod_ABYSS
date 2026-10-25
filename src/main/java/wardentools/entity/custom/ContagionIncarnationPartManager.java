@@ -5,13 +5,13 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.entity.PartEntity;
+import net.minecraftforge.entity.PartEntity;
 import org.jetbrains.annotations.NotNull;
 import wardentools.entity.interfaces.CorruptionMonster;
 
@@ -232,8 +232,8 @@ public class ContagionIncarnationPartManager extends CorruptionMonster implement
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-        super.defineSynchedData(entityData);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
         entityData.define(section_6_rotX, 0f);
         entityData.define(section_6_rotY, 0f);
         entityData.define(section_7_rotX, 0f);

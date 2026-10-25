@@ -35,7 +35,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.entity.ModEntities;
@@ -47,6 +46,7 @@ import wardentools.entity.utils.goal.LandGoal;
 import wardentools.entity.utils.goal.RandomFlyGoal;
 import wardentools.entity.utils.goal.TakeOffGoal;
 import wardentools.items.ItemRegistry;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.SwitchCamera;
 import wardentools.sounds.ModSounds;
 
@@ -297,7 +297,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 			} else if (this.isTamed() && player.getUUID().equals(this.getOwnerUUID())){
 				if (!this.level().isClientSide){
 					player.startRiding(this);
-					PacketDistributor.sendToPlayer((ServerPlayer) player, new SwitchCamera());
+					ModPackets.sendToPlayer((ServerPlayer) player, new SwitchCamera());
 				}
 				return InteractionResult.SUCCESS;
 			}
@@ -414,8 +414,8 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-		super.defineSynchedData(entityData);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 		entityData.define(DATA_REMAINING_ANGER_TIME, 0);
 		entityData.define(TARGETED_HEIGHT_ON_TAKE_OFF, 0);
 		entityData.define(IS_FLYING, false);
@@ -566,9 +566,20 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	@Override
 	protected void positionRider(@NotNull Entity rider, Entity.@NotNull MoveFunction moveFunction) {
 		super.positionRider(rider, moveFunction);
-		if (rider instanceof LivingEntity) {
-			((LivingEntity)rider).yBodyRot = this.yBodyRot;
+		if (!this.hasPassenger(rider)) {
+			return;
 		}
+
+		float rot = this.yBodyRot * ((float) Math.PI / 180F)
+				+ (float) Math.PI / 2F;
+
+		double offset = 0.3F;
+
+		double x = -offset * Mth.cos(rot);
+		double z = -offset * Mth.sin(rot);
+		double y = this.getPassengersRidingOffset();
+
+		moveFunction.accept(rider, this.getX() + x, this.getY() + y, this.getZ() + z);
 	}
 
 	@Override
@@ -615,7 +626,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	@Override
 	public @NotNull Vec3 getDismountLocationForPassenger(LivingEntity passenger) {
 		if (!passenger.level().isClientSide && passenger instanceof Player player) {
-			PacketDistributor.sendToPlayer((ServerPlayer)player, new SwitchCamera());
+			ModPackets.sendToPlayer((ServerPlayer)player, new SwitchCamera());
 		}
 		Vec3 vec3 = getCollisionHorizontalEscapeVector((double)this.getBbWidth(),
 				(double)passenger.getBbWidth(),
@@ -633,17 +644,8 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	}
 
 	@Override
-	protected @NotNull Vec3 getPassengerAttachmentPoint(@NotNull Entity passenger,
-															@NotNull EntityDimensions dimensions,
-															float offset) {
-		float rot = this.yBodyRot * ((float)Math.PI / 180F) + (float)Math.PI / 2F;
-		return new Vec3(- 0.3f * offset * Mth.cos(rot),
-				this.getPassengersRidingOffsetY(dimensions, offset) + 0.1F * offset,
-				- 0.3f * offset * Mth.sin(rot));
-	}
-
-	protected float getPassengersRidingOffsetY(EntityDimensions dimensions, float offset) {
-		return dimensions.height() + (this.isBaby() ? 0.2F : -0.15F) * offset;
+	public double getPassengersRidingOffset() {
+		return this.getBbHeight() + (this.isBaby() ? 0.2F : -0.15F);
 	}
 
 	@Override

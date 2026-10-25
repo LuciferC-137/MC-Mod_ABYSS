@@ -64,9 +64,9 @@ public class CrystalLaserEntity extends Entity {
     }
 
     @Override
-    public void onAddedToLevel() {
+    public void onAddedToWorld() {
         this.playBlastSound();
-        super.onAddedToLevel();
+        super.onAddedToWorld();
     }
 
     public void tick() {
@@ -347,21 +347,21 @@ public class CrystalLaserEntity extends Entity {
     }
 
     @Override
-    public void onRemovedFromLevel() {
+    public void onRemovedFromWorld() {
         this.unlitAllCrystals();
-        super.onRemovedFromLevel();
+        super.onRemovedFromWorld();
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        builder.define(CRYSTAL, Crystal.getDefault().getIndex());
-        builder.define(TARGET_1, BlockPos.ZERO);
-        builder.define(TARGET_2, BlockPos.ZERO);
-        builder.define(TARGET_3, BlockPos.ZERO);
-        builder.define(TARGET_4, BlockPos.ZERO);
-        builder.define(TARGET_5, BlockPos.ZERO);
-        builder.define(SIZE, 0);
-        builder.define(ACTIVE_SEGMENT, 0);
+    protected void defineSynchedData() {
+        entityData.define(CRYSTAL, Crystal.getDefault().getIndex());
+        entityData.define(TARGET_1, BlockPos.ZERO);
+        entityData.define(TARGET_2, BlockPos.ZERO);
+        entityData.define(TARGET_3, BlockPos.ZERO);
+        entityData.define(TARGET_4, BlockPos.ZERO);
+        entityData.define(TARGET_5, BlockPos.ZERO);
+        entityData.define(SIZE, 0);
+        entityData.define(ACTIVE_SEGMENT, 0);
     }
 
     protected void readAdditionalSaveData(@NotNull CompoundTag tag) {

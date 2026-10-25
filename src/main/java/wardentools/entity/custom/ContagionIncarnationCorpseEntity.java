@@ -12,6 +12,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -103,57 +104,68 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
         }
     }
 
-    public boolean hurt(@NotNull DamageSource source, float damage) {
+    public boolean hurt(@NotNull DamageSource damageSource, float amount) {
         if (!this.level().isClientSide && !this.isRemoved()) {
-            if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+            if (damageSource.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
                 this.kill();
                 return false;
-            } else if (!this.isInvulnerableTo(source)) {
-                if (source.is(DamageTypeTags.IS_EXPLOSION)) {
-                    this.brokenByAnything(source);
+            } else if (!this.isInvulnerableTo(damageSource)) {
+                if (damageSource.is(DamageTypeTags.IS_EXPLOSION)) {
+                    this.brokenByAnything(damageSource);
                     this.kill();
                     return false;
-                } else if (source.is(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
+                } else if (damageSource.is(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
                     if (this.isOnFire()) {
-                        this.causeDamage(source, 0.15F);
+                        this.causeDamage(damageSource, 0.15F);
+                    } else {
+                        this.setSecondsOnFire(5);
                     }
+
                     return false;
-                } else if (source.is(DamageTypeTags.BURNS_ARMOR_STANDS) && this.getHealth() > 0.5F) {
-                    this.causeDamage(source, 4.0F);
+                } else if (damageSource.is(DamageTypeTags.BURNS_ARMOR_STANDS) && this.getHealth() > 0.5F) {
+                    this.causeDamage(damageSource, 4.0F);
                     return false;
                 } else {
-                    boolean flag = source.is(DamageTypeTags.CAN_BREAK_ARMOR_STAND);
-                    boolean flag1 = source.is(DamageTypeTags.ALWAYS_KILLS_ARMOR_STANDS);
-                    if (!flag && !flag1) {
+                    boolean flag = damageSource.getDirectEntity() instanceof AbstractArrow;
+                    boolean flag1 = flag && ((AbstractArrow)damageSource.getDirectEntity()).getPierceLevel() > 0;
+                    boolean flag2 = "player".equals(damageSource.getMsgId());
+                    if (!flag2 && !flag) {
                         return false;
                     } else {
-                        Entity entity = source.getEntity();
+                        Entity entity = damageSource.getEntity();
                         if (entity instanceof Player player) {
                             if (!player.getAbilities().mayBuild) {
                                 return false;
                             }
                         }
-                        if (source.isCreativePlayer()) {
+
+                        if (damageSource.isCreativePlayer()) {
                             this.playBrokenSound();
                             this.showBreakingParticles();
                             this.kill();
+                            return flag1;
                         } else {
                             long i = this.level().getGameTime();
-                            if (i - this.lastHit > 5L && !flag1) {
+                            if (i - this.lastHit > 5L && !flag) {
                                 this.level().broadcastEntityEvent(this, (byte)32);
-                                this.gameEvent(GameEvent.ENTITY_DAMAGE, source.getEntity());
+                                this.gameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getEntity());
                                 this.lastHit = i;
                             } else {
-                                this.brokenByPlayer(source);
+                                this.brokenByPlayer(damageSource);
                                 this.showBreakingParticles();
                                 this.kill();
                             }
+
+                            return true;
                         }
-                        return true;
                     }
                 }
-            } else return false;
-        } else return false;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     private void causeDamage(DamageSource damageSource, float damage) {
@@ -188,7 +200,7 @@ public class ContagionIncarnationCorpseEntity extends LivingEntity {
     private void brokenByAnything(DamageSource source) {
         this.playBrokenSound();
         if (this.level().isClientSide) return;
-        this.dropAllDeathLoot((ServerLevel)this.level(), source);
+        this.dropAllDeathLoot(source);
         for(int j = 0; j < this.armorItems.size(); ++j) {
             ItemStack itemStack = this.armorItems.get(j);
             if (!itemStack.isEmpty()) {

@@ -14,7 +14,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -142,15 +145,15 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-		super.defineSynchedData(builder);
-		builder.define(CRYSTAL, Crystal.getDefault().getIndex());
-		builder.define(STATE, GolemState.DEACTIVATED_2.getId());
-		builder.define(CURRENT_CANDLE_TARGET, BlockPos.ZERO);
-		builder.define(LASER_TICK, 0);
-		builder.define(SYNC_Y_ROT, 0F);
-		builder.define(GRIEF, false);
-		builder.define(SCULK, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(CRYSTAL, Crystal.getDefault().getIndex());
+		entityData.define(STATE, GolemState.DEACTIVATED_2.getId());
+		entityData.define(CURRENT_CANDLE_TARGET, BlockPos.ZERO);
+		entityData.define(LASER_TICK, 0);
+		entityData.define(SYNC_Y_ROT, 0F);
+		entityData.define(GRIEF, false);
+		entityData.define(SCULK, false);
 	}
 
 	@Override
@@ -184,7 +187,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		if (this.getState() == GolemState.CHARGING_LASER) {
 			if (this.getLaserTick() == 0) {
 				this.setLaserTick(LASER_DURATION);
-				this.makeSound(ModSounds.LASER_CHARGE.get());
+				this.playSound(ModSounds.LASER_CHARGE.get());
 			} else {
 				this.setLaserTick(this.getLaserTick() - 1);
 				if (this.getLaserTick() == 0 && !this.level().isClientSide()) {
@@ -367,7 +370,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		this.nextFlickerScheduledTick = 0;
 		this.turningOnTick = 0;
 		this.setGrief(false);
-		this.makeSound(ModSounds.CRYSTAL_GOLEM_TURNING_OFF.get());
+		this.playSound(ModSounds.CRYSTAL_GOLEM_TURNING_OFF.get());
 	}
 
 	public void onTurningOn() {
@@ -375,7 +378,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 		this.turningOffTick = 0;
 		this.flickerState = true;
 		this.nextFlickerScheduledTick = this.tickCount + 1;
-		this.makeSound(ModSounds.CRYSTAL_GOLEM_TURNING_ON.get());
+		this.playSound(ModSounds.CRYSTAL_GOLEM_TURNING_ON.get());
 	}
 
 	public List<BlockPos> getUnlitCandles() {
@@ -393,9 +396,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 
 	public void pollUnlitCandle() {
 		if (!unlitCandles.isEmpty()) {
-			unlitCandles.removeFirst();
+			unlitCandles.remove(0);
 			if (!unlitCandles.isEmpty()) {
-				this.setCurrentCandleTarget(unlitCandles.getFirst());
+				this.setCurrentCandleTarget(unlitCandles.get(0));
 			} else {
 				this.setCurrentCandleTarget(BlockPos.ZERO);
 			}
@@ -403,7 +406,7 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	public BlockPos peekUnlitCandle() {
-		return unlitCandles.isEmpty() ? BlockPos.ZERO : unlitCandles.getFirst();
+		return unlitCandles.isEmpty() ? BlockPos.ZERO : unlitCandles.get(0);
 	}
 
 	public float distanceToTarget() {
@@ -500,9 +503,9 @@ public class CrystalGolemEntity extends PathfinderMob {
 	public void lightCandleAtPos() {
 		if (this.level().isClientSide) return;
 		if (!this.unlitCandles.isEmpty()) {
-			BlockState state = this.level().getBlockState(this.unlitCandles.getFirst());
+			BlockState state = this.level().getBlockState(this.unlitCandles.get(0));
 			if (!state.getValue(CandleBlock.LIT)) {
-				this.level().setBlock(this.unlitCandles.getFirst(),
+				this.level().setBlock(this.unlitCandles.get(0),
 						state.setValue(CandleBlock.LIT, true), Block.UPDATE_ALL);
 				this.playSound(SoundEvents.FIRECHARGE_USE, 0.2F, 1.0F);
 			}

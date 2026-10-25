@@ -1,13 +1,12 @@
 package wardentools.entity.custom;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.entity.PartEntity;
+import net.minecraftforge.entity.PartEntity;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -26,7 +25,7 @@ public class ContagionIncarnationPart extends PartEntity<ContagionIncarnationPar
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder data) {
+    protected void defineSynchedData() {
     }
 
     @Override

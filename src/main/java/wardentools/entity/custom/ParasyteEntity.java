@@ -7,7 +7,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AnimationState;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -58,9 +60,9 @@ public class ParasyteEntity extends CorruptionMonster {
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-		super.defineSynchedData(entityData);
-		entityData.define(CLIMBING, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(CLIMBING, false);
 	}
 
 	public boolean isClimbing() {

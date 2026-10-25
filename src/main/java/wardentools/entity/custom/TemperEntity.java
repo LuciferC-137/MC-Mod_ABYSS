@@ -64,7 +64,7 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 		super(entity, level);
 		this.moveControl = new FlyingMoveControl(this, 20, true);
 		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
-		this.setTame(false, false);
+		this.setTame(false);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.0D, true));
 		this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D,
-				5.0F, 100.0F));
+				5.0F, 100.0F, true));
 		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 4f));
 		this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1.0D));
 		this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
@@ -177,8 +177,8 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-		super.defineSynchedData(entityData);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
 		entityData.define(DATA_REMAINING_ANGER_TIME, 0);
 		entityData.define(attackAnimationTick, 0);
 	}
@@ -334,17 +334,19 @@ public class TemperEntity extends TamableAnimal implements NeutralMob {
 		this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
 	}
 
+
 	public boolean wantsToAttack(@NotNull LivingEntity target, @NotNull LivingEntity owner) {
-		if (!(target instanceof Creeper) && !(target instanceof Ghast)) {
-            return switch (target) {
-                case Wolf wolf -> !wolf.isTame() || wolf.getOwner() != owner;
-                case TemperEntity temperTarget -> !temperTarget.isTame() || temperTarget.getOwner() != owner;
-                case Player player when owner instanceof Player && !((Player) owner).canHarmPlayer(player) -> false;
-                case AbstractHorse abstractHorse when abstractHorse.isTamed() -> false;
-                default -> !(target instanceof TamableAnimal) || !((TamableAnimal) target).isTame();
-            };
-		} else {
+		if (target instanceof Creeper || target instanceof Ghast) return false;
+		if (target instanceof Wolf wolf) return !wolf.isTame() || wolf.getOwner() != owner;
+		if (target instanceof TemperEntity temperTarget) {
+			return !temperTarget.isTame() || temperTarget.getOwner() != owner;
+		}
+		if (target instanceof Player player && owner instanceof Player ownerPlayer
+				&& !ownerPlayer.canHarmPlayer(player)) {
 			return false;
 		}
+		if (target instanceof AbstractHorse horse && horse.isTamed()) return false;
+		return !(target instanceof TamableAnimal animal) || !animal.isTame();
 	}
+
 }

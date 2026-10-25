@@ -3,7 +3,6 @@ package wardentools.entity.custom;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -36,11 +35,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.*;
+import net.minecraft.world.level.gameevent.DynamicGameEventListener;
+import net.minecraft.world.level.gameevent.EntityPositionSource;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.level.gameevent.vibrations.VibrationSystem;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.fluids.FluidType;
+import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -257,9 +259,9 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 	}
 
 	@Override
-	protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-		super.defineSynchedData(entityData);
-		entityData.define(IS_STASIS, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(IS_STASIS, false);
 	}
 
 	@Override
@@ -361,14 +363,14 @@ public class ShadowEntity extends MimicEntity implements VibrationSystem {
 
 		@Override
 		public boolean canReceiveVibration(@NotNull ServerLevel serverLevel, @NotNull BlockPos blockPos,
-										   @NotNull Holder<GameEvent> holder,
+										   @NotNull GameEvent event,
 										   GameEvent.@NotNull Context context) {
 			return ShadowEntity.this.isStasis();
 		}
 
 		@Override
 		public void onReceiveVibration(@NotNull ServerLevel level, @NotNull BlockPos blockPos,
-									   @NotNull Holder<GameEvent> holder, @Nullable Entity source,
+									   @NotNull GameEvent event, @Nullable Entity source,
 									   @Nullable Entity entity1, float v) {
 			if (source instanceof ServerPlayer player && !player.isCreative()) {
 				if (ShadowEntity.this.isStasis()) {

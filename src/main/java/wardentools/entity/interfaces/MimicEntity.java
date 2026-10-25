@@ -36,7 +36,7 @@ public class MimicEntity extends CorruptionMonster {
     }
 
     @Override
-    public @NotNull EntityDimensions getDefaultDimensions(@NotNull Pose pose) {
+    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
         return Objects.requireNonNullElse(mimicEntity, this).getType().getDimensions();
     }
 
@@ -47,8 +47,8 @@ public class MimicEntity extends CorruptionMonster {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-        super.defineSynchedData(entityData);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
         entityData.define(MIMIC_ENTITY_ID, -1);
     }
 

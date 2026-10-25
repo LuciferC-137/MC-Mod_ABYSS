@@ -156,8 +156,8 @@ public class DeepLurkerEntity extends Animal {
 	}
 	
 	@Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-        super.defineSynchedData(entityData);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
         entityData.define(CLIMBING, false);
         entityData.define(SCARED, false);
         entityData.define(IS_AT_TOP_OF_TREE, false);

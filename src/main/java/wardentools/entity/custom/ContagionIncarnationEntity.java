@@ -1,5 +1,6 @@
 package wardentools.entity.custom;
 
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -7,6 +8,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -32,11 +35,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
 import wardentools.block.BlockRegistry;
 import wardentools.blockentity.DysfunctionningCatalystBlockEntity;
 import wardentools.effect.ModEffects;
@@ -46,6 +47,7 @@ import wardentools.entity.utils.IncarnationMoveControl;
 import wardentools.entity.utils.goal.IncarnationAttackGoal;
 import wardentools.entity.utils.goal.IncarnationSonicStrikeAttackGoal;
 import wardentools.entity.utils.goal.TurnTowardsTargetGoal;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.ThemeIncarnationStart;
 import wardentools.network.payloads.special_effects.ThemeIncarnationStop;
 import wardentools.sounds.ModSounds;
@@ -55,6 +57,8 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 
 public class ContagionIncarnationEntity extends ContagionIncarnationPartManager implements Enemy {
+    private static final Logger LOGGER = LogUtils.getLogger();
+
 	public static final double MOV_SPEED = 0.2D;
 	private final ServerBossEvent bossEvent;
 	public static final int CHANCE_OF_SCREAM_ON_HIT = 4;
@@ -147,14 +151,14 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
     public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossEvent.addPlayer(player);
-        PacketDistributor.sendToPlayer(player, new ThemeIncarnationStart());
+        ModPackets.sendToPlayer(player, new ThemeIncarnationStart());
     }
 
     @Override
     public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossEvent.removePlayer(player);
-        PacketDistributor.sendToPlayer(player, new ThemeIncarnationStop());
+        ModPackets.sendToPlayer(player, new ThemeIncarnationStop());
     }
 
     @Override
@@ -351,16 +355,14 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
         return Math.abs(angleDifference) <= degreeMax;
     }
 
-
-
     @Override
-    protected void defineSynchedData(SynchedEntityData.@NotNull Builder entityData) {
-        super.defineSynchedData(entityData);
-        entityData.define(tickSpawn, 0);
-        entityData.define(rightSwingTick, 0);
-        entityData.define(leftSwingTick, 0);
-        entityData.define(sonicStrikeTick, 0);
-        entityData.define(hasBeenSummonedByCatalyst, false);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(tickSpawn, 0);
+        this.entityData.define(rightSwingTick, 0);
+        this.entityData.define(leftSwingTick, 0);
+        this.entityData.define(sonicStrikeTick, 0);
+        this.entityData.define(hasBeenSummonedByCatalyst, false);
     }
 
     @Override
@@ -473,7 +475,7 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
            if (level instanceof ServerLevel serverlevel) {
                if (entity == null || entity.killedEntity(serverlevel, this)) {
                  this.gameEvent(GameEvent.ENTITY_DIE);
-                 this.dropAllDeathLoot(serverlevel, source);
+                 this.dropAllDeathLoot(source);
                  this.createWitherRose(livingentity);
                }
                this.level().broadcastEntityEvent(this, (byte)3);
@@ -516,16 +518,14 @@ public class ContagionIncarnationEntity extends ContagionIncarnationPartManager 
             field.setAccessible(true);
             field.set(this, new IncarnationBodyRotationControl(this));
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            System.out.println("Failed to set custom body rotation control for Contagion Incarnation.");
-            e.printStackTrace();
+            LOGGER.error("Failed to set custom body rotation control for Contagion Incarnation.", e);
         }
         try {
             Field field = Entity.class.getDeclaredField("eyeHeight");
             field.setAccessible(true);
             field.set(this, 4.5F);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            System.out.println("Failed to set custom eye height for Contagion Incarnation.");
-            e.printStackTrace();
+            LOGGER.error("Failed to set custom eye height for Contagion Incarnation.", e);
         }
     }
 
