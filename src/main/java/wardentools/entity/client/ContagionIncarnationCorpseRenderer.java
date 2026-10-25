@@ -10,7 +10,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.custom.ContagionIncarnationCorpseEntity;
-import wardentools.particle.ParticleRegistry;
 
 @OnlyIn(Dist.CLIENT)
 public class ContagionIncarnationCorpseRenderer

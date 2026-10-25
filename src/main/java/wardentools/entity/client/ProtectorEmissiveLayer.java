@@ -31,6 +31,7 @@ public class ProtectorEmissiveLayer extends RenderLayer<ProtectorEntity, Protect
                        float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F),
+                1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

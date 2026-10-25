@@ -31,6 +31,7 @@ public class NoctilureEmissiveLayer extends RenderLayer<NoctilureEntity, Noctilu
                        float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F),
+                1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

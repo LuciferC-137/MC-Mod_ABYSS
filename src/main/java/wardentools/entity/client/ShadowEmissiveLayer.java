@@ -32,6 +32,7 @@ public class ShadowEmissiveLayer extends RenderLayer<ShadowEntity, Shadow> {
         if (entity.getMimicEntity() != null) return;
         VertexConsumer vertexConsumer = bufferSource.getBuffer(EMISSIVE);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F),
+                1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

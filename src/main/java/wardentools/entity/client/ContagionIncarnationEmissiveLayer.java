@@ -32,6 +32,7 @@ public class ContagionIncarnationEmissiveLayer extends RenderLayer<ContagionInca
                        float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(SHELL);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F),
+                1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

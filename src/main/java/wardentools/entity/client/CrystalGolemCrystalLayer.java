@@ -17,7 +17,7 @@ import wardentools.entity.custom.CrystalGolemEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class CrystalGolemCrystalLayer extends RenderLayer<CrystalGolemEntity, CrystalGolem> {
-    private static final RenderType GLOW = RenderType.entityTranslucent(ResourceLocation
+    private static final RenderType GLOW = RenderType.entityTranslucent(new ResourceLocation
             (ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem_glow_overlay.png"));
 
     public CrystalGolemCrystalLayer(RenderLayerParent<CrystalGolemEntity, CrystalGolem> renderLayerParent) {
@@ -33,7 +33,8 @@ public class CrystalGolemCrystalLayer extends RenderLayer<CrystalGolemEntity, Cr
             VertexConsumer vertexConsumer = bufferSource.getBuffer(GLOW);
             this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT,
                     LivingEntityRenderer.getOverlayCoords(golem, 0.0F),
-                        golem.getFadedColor());
+                        golem.getFadedColor() / 255.0F, golem.getFadedColor() / 255.0F,
+                    golem.getFadedColor() / 255.0F, 1.0F);
         }
     }
 }

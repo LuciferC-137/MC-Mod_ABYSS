@@ -341,8 +341,8 @@ public class Noctilure  extends HierarchicalModel<NoctilureEntity> {
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay, int i) {
-		this.ROOT.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+							   int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		this.ROOT.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override

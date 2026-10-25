@@ -58,9 +58,9 @@ public class Shadow extends HierarchicalModel<ShadowEntity> {
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay, int i) {
+							   int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		if (this.renderToBufferFunction == null) {
-			this.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+			this.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		} else {
 			this.renderToBufferFunction
 					.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay);

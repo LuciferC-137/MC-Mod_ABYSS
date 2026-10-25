@@ -654,8 +654,8 @@ public class ContagionIncarnationCorpse extends HierarchicalModel<ContagionIncar
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay, int i) {
-		FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+							   int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override

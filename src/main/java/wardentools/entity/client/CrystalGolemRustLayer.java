@@ -16,7 +16,7 @@ import wardentools.entity.custom.CrystalGolemEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class CrystalGolemRustLayer extends RenderLayer<CrystalGolemEntity, CrystalGolem> {
-    private static final RenderType RUST = RenderType.entityTranslucent(ResourceLocation
+    private static final RenderType RUST = RenderType.entityTranslucent(new ResourceLocation
             (ModMain.MOD_ID, "textures/entity/crystal_golem/crystal_golem_rust_overlay.png"));
 
     public CrystalGolemRustLayer(RenderLayerParent<CrystalGolemEntity, CrystalGolem> renderLayerParent) {
@@ -30,6 +30,7 @@ public class CrystalGolemRustLayer extends RenderLayer<CrystalGolemEntity, Cryst
                        float netHeadYaw, float headPitch) {
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RUST);
         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, packedLight,
-        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F));
+        		LivingEntityRenderer.getOverlayCoords(entity, 0.0F),
+                1.0F, 1.0F, 1.0F, 1.0F);
     }
 }

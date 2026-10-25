@@ -70,8 +70,8 @@ public class Parasyte extends HierarchicalModel<ParasyteEntity> {
 
 	@Override
 	public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer,
-							   int packedLight, int packedOverlay, int i) {
-		this.parts.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, i);
+							   int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+		this.parts.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	@Override

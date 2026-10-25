@@ -82,20 +82,20 @@ public class CrystalLaserRenderer extends EntityRenderer<CrystalLaserEntity> {
         Vec3 v3 = end.subtract(side);
         Vec3 v4 = end.add(side);
         consumer.vertex(matrix, (float) v1.x, (float) v1.y, (float) v1.z)
-                .setColor(r, g, b, a)
-                .setNormal(0, 1, 0);
+                .color(r, g, b, a)
+                .normal(0, 1, 0);
 
         consumer.vertex(matrix, (float) v2.x, (float) v2.y, (float) v2.z)
-                .setColor(r, g, b, a)
-                .setNormal(0, 1, 0);
+                .color(r, g, b, a)
+                .normal(0, 1, 0);
 
         consumer.vertex(matrix, (float) v3.x, (float) v3.y, (float) v3.z)
-                .setColor(r, g, b, a)
-                .setNormal(0, 1, 0);
+                .color(r, g, b, a)
+                .normal(0, 1, 0);
 
         consumer.vertex(matrix, (float) v4.x, (float) v4.y, (float) v4.z)
-                .setColor(r, g, b, a)
-                .setNormal(0, 1, 0);
+                .color(r, g, b, a)
+                .normal(0, 1, 0);
     }
 
     @SuppressWarnings("deprecation")
