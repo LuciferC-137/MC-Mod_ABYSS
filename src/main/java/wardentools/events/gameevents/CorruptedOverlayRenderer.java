@@ -8,10 +8,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
-import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import wardentools.ModMain;
 import wardentools.effect.ModEffects;
 
@@ -29,7 +29,7 @@ public class CorruptedOverlayRenderer {
     private static final float transparentMax = 0.9f;
 
     @SubscribeEvent
-    public static void onRenderOverlay(RenderGuiLayerEvent.Pre event) {
+    public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
            Player player = Minecraft.getInstance().player;
            if (player != null && player.hasEffect(ModEffects.CORRUPTED.get())
                && !player.hasEffect(ModEffects.PURIFIED.get())) {

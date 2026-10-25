@@ -3,10 +3,16 @@ package wardentools.events;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -19,6 +25,8 @@ import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.block.BlockRegistry;
 import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
+import wardentools.items.ItemRegistry;
+import wardentools.items.PotionRegistry;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.armors.ConfigurableDefenseItem;
 import wardentools.items.armors.ModMaterials;
@@ -35,10 +43,31 @@ public class CommonModEvents {
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
+		// FLOWER POTS
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
 			ModCriteriaTriggers.register();
+		});
+		// POTIONS
+		event.enqueueWork(() -> {
+			BrewingRecipeRegistry.addRecipe(
+					Ingredient.of(Items.POTION),
+					Ingredient.of(ItemRegistry.WANDERER_PAW.get()),
+					PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.PURIFIED_POTION.get())
+			);
+
+			BrewingRecipeRegistry.addRecipe(
+					Ingredient.of(Items.POTION),
+					Ingredient.of(ItemRegistry.LURKER_EYE.get()),
+					PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.LONG_NIGHT_VISION)
+			);
+
+			BrewingRecipeRegistry.addRecipe(
+					Ingredient.of(Items.POTION),
+					Ingredient.of(ItemRegistry.NOCTILURE_FEATHER.get()),
+					PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING)
+			);
 		});
     }
 

@@ -6,9 +6,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import wardentools.AbyssConfig;
 import wardentools.ModMain;
 import wardentools.worldgen.dimension.ModDimensions;
@@ -18,7 +18,7 @@ import wardentools.worldgen.portal.ModTeleporter;
 public class FallIntoVoidEvent {
 	
 	@SubscribeEvent
-	public static void playerFallIntoVoid(LivingDamageEvent.Pre event) {
+	public static void playerFallIntoVoid(LivingDamageEvent event) {
 		if ((event.getEntity() instanceof Player)) {
 			if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD)) {
 				if (AbyssConfig.COMMON.ENABLE_VOID_FALL_TELEPORT.get()) {

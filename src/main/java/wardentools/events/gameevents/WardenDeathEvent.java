@@ -7,12 +7,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.entity.monster.warden.Warden;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.ModMain;
 import wardentools.block.BlockRegistry;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.special_effects.WardenDeathParticle;
 
 @EventBusSubscriber(modid = ModMain.MOD_ID)
@@ -25,9 +25,8 @@ public class WardenDeathEvent {
         	BlockPos pos = event.getEntity().blockPosition();
    
         	if (level instanceof ServerLevel serverLevel) {
-                PacketDistributor.sendToPlayersTrackingChunk(
-                        serverLevel,
-                        serverLevel.getChunkAt(pos).getPos(),
+                ModPackets.sendToAllTrackingChunk(
+                        serverLevel, pos,
                         new WardenDeathParticle(pos.getCenter().toVector3f())
                 );
         	        		   	        		
@@ -53,8 +52,8 @@ public class WardenDeathEvent {
                     	}
                     }
         		}
-                    
         	}
+
 	private static int placeDeepCristal(Level level, BlockPos pos) {
         BlockState deepCristalState = BlockRegistry.DEEP_CRISTAL.get().defaultBlockState();
         if (level.getBlockState(pos.above()).isFaceSturdy(level, pos.above(), Direction.DOWN)) {
