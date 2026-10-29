@@ -8,10 +8,12 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import wardentools.ModMain;
@@ -23,6 +25,7 @@ import wardentools.blockentity.renderer.*;
 import wardentools.client.AbyssDimensionSpecialEffect;
 import wardentools.client.DysfunctionningCatalystScreen;
 import wardentools.client.RadianceCatalystScreen;
+import wardentools.client.gui.AbyssConfigScreen;
 import wardentools.entity.ModEntities;
 import wardentools.entity.client.*;
 import wardentools.gui.MenuRegistry;
@@ -51,6 +54,12 @@ public class ClientModEvents {
 					DysfunctionningCatalystScreen::new
 			);
 		});
+		ModLoadingContext.get().registerExtensionPoint(
+				ConfigScreenHandler.ConfigScreenFactory.class,
+				() -> new ConfigScreenHandler.ConfigScreenFactory(
+						(minecraft, parent) -> new AbyssConfigScreen(parent)
+				)
+		);
 	}
 
 	@SubscribeEvent
