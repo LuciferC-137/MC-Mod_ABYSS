@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "wardentools:block/abyssalite_redstone_ore_top",
+    "side": "wardentools:block/abyssalite_redstone_ore",
+    "top": "wardentools:block/abyssalite_redstone_ore_top"
+  }
+}

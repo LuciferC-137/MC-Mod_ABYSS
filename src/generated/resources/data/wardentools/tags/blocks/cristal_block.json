@@ -1,0 +1,10 @@
+{
+  "values": [
+    "wardentools:echo_block",
+    "wardentools:pale_cristal_block",
+    "wardentools:citrine_block",
+    "wardentools:malachite_block",
+    "wardentools:ruby_block",
+    "minecraft:amethyst_block"
+  ]
+}

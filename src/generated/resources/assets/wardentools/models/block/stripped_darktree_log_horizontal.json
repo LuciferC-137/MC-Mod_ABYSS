@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "wardentools:block/stripped_darktree_log_top",
+    "side": "wardentools:block/stripped_darktree_log"
+  }
+}

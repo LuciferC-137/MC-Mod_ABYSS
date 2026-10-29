@@ -1,0 +1,19 @@
+{
+  "type": "wardentools:cristal_formation",
+  "config": {
+    "cristal_block": {
+      "Name": "wardentools:citrine_block"
+    },
+    "cristal_bud": {
+      "Name": "wardentools:citrine",
+      "Properties": {
+        "facing": "up",
+        "overcharged": "false",
+        "waterlogged": "false"
+      }
+    },
+    "cristal_bud_rarity": 4,
+    "length_to_radius_ratio": 5.0,
+    "max_length": 15
+  }
+}

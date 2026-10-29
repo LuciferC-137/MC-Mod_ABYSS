@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "wardentools:block/chiseled_abyssalite_top",
+    "side": "wardentools:block/chiseled_abyssalite",
+    "top": "wardentools:block/chiseled_abyssalite_top"
+  }
+}

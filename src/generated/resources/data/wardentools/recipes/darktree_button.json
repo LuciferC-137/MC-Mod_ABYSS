@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "wardentools:darktree_planks"
+    }
+  ],
+  "result": {
+    "item": "wardentools:darktree_button"
+  }
+}

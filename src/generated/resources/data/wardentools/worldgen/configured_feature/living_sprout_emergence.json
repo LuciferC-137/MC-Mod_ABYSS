@@ -1,0 +1,9 @@
+{
+  "type": "wardentools:living_sprout_emergence",
+  "config": {
+    "max_length": 7,
+    "min_length": 1,
+    "shift_prob": 0.2,
+    "upward": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "wardentools:cristal_formation",
+  "config": {
+    "cristal_block": {
+      "Name": "wardentools:echo_block"
+    },
+    "cristal_bud": {
+      "Name": "wardentools:echo_cristal",
+      "Properties": {
+        "facing": "up",
+        "overcharged": "false",
+        "waterlogged": "false"
+      }
+    },
+    "cristal_bud_rarity": 4,
+    "length_to_radius_ratio": 6.0,
+    "max_length": 12
+  }
+}

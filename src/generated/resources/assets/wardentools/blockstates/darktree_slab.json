@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "wardentools:block/darktree_slab"
+    },
+    "type=double": {
+      "model": "wardentools:block/darktree_planks"
+    },
+    "type=top": {
+      "model": "wardentools:block/darktree_slab_top"
+    }
+  }
+}

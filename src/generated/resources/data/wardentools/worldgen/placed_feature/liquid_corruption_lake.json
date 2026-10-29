@@ -1,0 +1,9 @@
+{
+  "feature": "wardentools:liquid_corruption_floor",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 1
+    }
+  ]
+}

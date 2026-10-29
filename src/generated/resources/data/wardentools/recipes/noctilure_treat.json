@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wardentools:deep_fruit"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "wardentools:blue_glow_berries"
+    }
+  ],
+  "result": {
+    "item": "wardentools:noctilure_treat"
+  }
+}

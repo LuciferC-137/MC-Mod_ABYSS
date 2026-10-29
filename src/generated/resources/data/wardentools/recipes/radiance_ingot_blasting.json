@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 2.0,
+  "ingredient": {
+    "item": "wardentools:radiance_cristal"
+  },
+  "result": "wardentools:radiance_ingots"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "wardentools:radiance_catalyst",
+  "energy_cost": 100,
+  "input": {
+    "item": "wardentools:corrupted_essence"
+  },
+  "result": {
+    "item": "wardentools:pure_essence"
+  }
+}

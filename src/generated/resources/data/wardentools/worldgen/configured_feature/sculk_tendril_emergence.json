@@ -1,0 +1,11 @@
+{
+  "type": "wardentools:sculk_tendrils_emergence",
+  "config": {
+    "branch_probability": 0.4,
+    "deviation_strength": 0.5,
+    "height_reduction_factor": 0.95,
+    "max_depth": 5,
+    "max_length": 15,
+    "upward": true
+  }
+}

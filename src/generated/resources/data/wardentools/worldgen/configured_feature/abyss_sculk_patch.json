@@ -1,0 +1,13 @@
+{
+  "type": "wardentools:abyss_sculk_patch",
+  "config": {
+    "amount_per_charge": 32,
+    "can_have_tendril": true,
+    "catalyst_chance": 0.5,
+    "charge_count": 10,
+    "extra_rare_growths": 0,
+    "growth_rounds": 0,
+    "spread_attempts": 64,
+    "spread_rounds": 1
+  }
+}

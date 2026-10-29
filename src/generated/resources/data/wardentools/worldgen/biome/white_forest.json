@@ -1,0 +1,92 @@
+{
+  "carvers": {
+    "air": "wardentools:abyss_cave"
+  },
+  "creature_spawn_probability": 0.3,
+  "downfall": 0.8,
+  "effects": {
+    "fog_color": 2844,
+    "foliage_color": 2706773,
+    "grass_color": 7844268,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    },
+    "music": {
+      "max_delay": 12000,
+      "min_delay": 6000,
+      "replace_current_music": false,
+      "sound": "wardentools:white_forest_music"
+    },
+    "particle": {
+      "options": {
+        "type": "wardentools:abyss_ambient"
+      },
+      "probability": 0.0025
+    },
+    "sky_color": 2844,
+    "water_color": 674907,
+    "water_fog_color": 2844
+  },
+  "features": [
+    [
+      "wardentools:liquid_corruption_lake"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "wardentools:coal_ore",
+      "wardentools:lapis_ore",
+      "wardentools:diamond_ore",
+      "wardentools:deep_ore",
+      "wardentools:redstone_ore"
+    ],
+    [],
+    [],
+    [
+      "minecraft:brown_mushroom_normal",
+      "minecraft:red_mushroom_normal",
+      "wardentools:whitetree_placed",
+      "wardentools:white_grass",
+      "wardentools:tall_white_grass",
+      "wardentools:white_torchflower"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "minecraft:allay",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 10
+      },
+      {
+        "type": "wardentools:pale_wanderer",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 40
+      },
+      {
+        "type": "wardentools:noctilure",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
+      }
+    ],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.7
+}

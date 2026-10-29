@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "wardentools:citrine_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "wardentools:citrine_fragment"
+  }
+}

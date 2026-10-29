@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side_tall",
+  "textures": {
+    "wall": "wardentools:block/cracked_abyssalite_bricks"
+  }
+}

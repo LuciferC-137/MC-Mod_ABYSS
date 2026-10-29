@@ -6,7 +6,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 import wardentools.ModMain;
 import wardentools.advancement.ModAdvancementProvider;
 import wardentools.datagen.loot.ModGlobalLootModifiersProvider;
@@ -15,7 +15,7 @@ import wardentools.worldgen.biome.ModBiomeTagGenerator;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(modid = ModMain.MOD_ID)
+@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {

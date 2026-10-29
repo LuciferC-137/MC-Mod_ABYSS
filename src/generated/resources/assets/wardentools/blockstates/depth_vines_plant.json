@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "berries=false": {
+      "model": "wardentools:block/depth_vines_plant"
+    },
+    "berries=true": {
+      "model": "wardentools:block/depth_vines_plant_berries"
+    }
+  }
+}

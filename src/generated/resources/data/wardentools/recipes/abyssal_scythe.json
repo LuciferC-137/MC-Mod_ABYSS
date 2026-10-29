@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": {
+      "item": "wardentools:dark_stick"
+    },
+    "I": {
+      "item": "wardentools:deepingots"
+    }
+  },
+  "pattern": [
+    "III",
+    "  D",
+    "  D"
+  ],
+  "result": {
+    "item": "wardentools:abyssal_scythe"
+  },
+  "show_notification": true
+}

@@ -90,7 +90,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("EPE")
                 .pattern("IEI")
                 .unlockedBy("has_item", has(ItemRegistry.PALE_SHARD.get()))
-                .unlockedBy("has_item", has(Items.ECHO_SHARD))
+                .unlockedBy("has_item1", has(Items.ECHO_SHARD))
                 .save(recipeOutput);
 
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemRegistry.CITRINE_FRAGMENT.get()),
@@ -122,7 +122,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("PEP")
                 .pattern("GPG")
                 .unlockedBy("has_item", has(ItemRegistry.CORRUPTED_ESSENCE.get()))
-                .unlockedBy("has_item", has(ItemRegistry.PALE_SHARD.get()))
+                .unlockedBy("has_item1", has(ItemRegistry.PALE_SHARD.get()))
                 .save(recipeOutput);
 
 
@@ -220,7 +220,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .requires(Items.SUGAR)
                 .requires(ItemRegistry.BLUE_GLOW_BERRIES.get())
                 .unlockedBy("has_item", has(ItemRegistry.DEEP_FRUIT.get()))
-                .unlockedBy("has_item", has(ItemRegistry.BLUE_GLOW_BERRIES.get()))
+                .unlockedBy("has_item1", has(ItemRegistry.BLUE_GLOW_BERRIES.get()))
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.SUGAR)
@@ -255,7 +255,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("ICI")
                 .pattern("GIG")
                 .unlockedBy("has_item", has(ItemRegistry.RADIANT_CORE.get()))
-                .unlockedBy("has_item", has(ItemRegistry.RADIANCE_FRAGMENT.get()))
+                .unlockedBy("has_item1", has(ItemRegistry.RADIANCE_FRAGMENT.get()))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.RADIANT_CORE.get())
@@ -265,7 +265,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("FWF")
                 .pattern("FFF")
                 .unlockedBy("has_item", has(ItemRegistry.RADIANCE_FRAGMENT.get()))
-                .unlockedBy("has_item", has(ItemRegistry.WHITE_SEED.get()))
+                .unlockedBy("has_item1", has(ItemRegistry.WHITE_SEED.get()))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.WHISTLE.get(), 1)
@@ -289,7 +289,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .requires(Items.BOOK)
                 .requires(ItemRegistry.DARKTREE_LEAVES.get())
                 .unlockedBy("has_item", has(ItemRegistry.NOCTILURE_FEATHER.get()))
-                .unlockedBy("has_item", has(ItemRegistry.DARKTREE_LEAVES.get()))
+                .unlockedBy("has_item1", has(ItemRegistry.DARKTREE_LEAVES.get()))
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS,
@@ -306,7 +306,7 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("ACA")
                 .pattern(" A ")
                 .unlockedBy("has_item", has(Items.COMPASS))
-                .unlockedBy("has_item", has(Items.AMETHYST_SHARD))
+                .unlockedBy("has_item1", has(Items.AMETHYST_SHARD))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ItemRegistry.SONIC_BLASTER.get())
@@ -465,9 +465,8 @@ public class ModRecipesGenerator extends RecipeProvider {
                     .save(recipeOutput);
         }
         if (button != null) {
-            ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, button, 1)
-                    .define('P', plank)
-                    .pattern("P")
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, button, 1)
+                    .requires(plank)
                     .unlockedBy("has_item", has(plank))
                     .save(recipeOutput);
         }
@@ -512,8 +511,8 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("SSS")
                 .pattern("SSS")
                 .unlockedBy("has_item", has(crystal))
-                .unlockedBy("has_item", has(shard))
-                .unlockedBy("has_item", has(block))
+                .unlockedBy("has_item1", has(shard))
+                .unlockedBy("has_item2", has(block))
                 .save(recipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, crystal, 1)
                 .define('S', shard)
@@ -521,14 +520,14 @@ public class ModRecipesGenerator extends RecipeProvider {
                 .pattern("SSS")
                 .pattern(" S ")
                 .unlockedBy("has_item", has(crystal))
-                .unlockedBy("has_item", has(shard))
-                .unlockedBy("has_item", has(block))
+                .unlockedBy("has_item1", has(shard))
+                .unlockedBy("has_item2", has(block))
                 .save(recipeOutput);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, shard, 9)
                 .requires(block)
                 .unlockedBy("has_item", has(crystal))
-                .unlockedBy("has_item", has(shard))
-                .unlockedBy("has_item", has(block))
+                .unlockedBy("has_item1", has(shard))
+                .unlockedBy("has_item2", has(block))
                 .save(recipeOutput);
     }
 
