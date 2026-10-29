@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 
-
+@SuppressWarnings("deprecation")
 public class ModMusics {
     public static final int ONE_SECOND = 20;
     public static final int THIRTY_SECONDS = 600;
