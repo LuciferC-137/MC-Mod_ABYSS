@@ -57,11 +57,12 @@ public class RadianceCatalystRecipeBuilder {
         }
 
         this.criteria.put("has_item",
-                ModRecipesGenerator.hasItem(
-                        Arrays.stream(input.getItems())
-                                .findFirst()
-                                .orElseThrow()
-                                .getItem()
+                new Criterion(ModRecipesGenerator.hasItem(
+                                Arrays.stream(input.getItems())
+                                        .findFirst()
+                                        .orElseThrow()
+                                        .getItem()
+                        )
                 )
         );
 

@@ -1,9 +1,0 @@
-{
-  "type": "wardentools:depth_vine",
-  "config": {
-    "adaptative": true,
-    "average_length": 10,
-    "max": 100,
-    "min": 1
-  }
-}

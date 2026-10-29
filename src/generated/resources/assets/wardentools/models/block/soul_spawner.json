@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "all": "wardentools:block/soul_spawner"
-  }
-}

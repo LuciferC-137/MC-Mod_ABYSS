@@ -1,13 +1,14 @@
 package wardentools.block.depthvines;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -17,18 +18,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 import wardentools.block.BlockRegistry;
 import wardentools.items.ItemRegistry;
-import wardentools.tags.ModTags;
 
 public class DepthVinesBlock extends GrowingPlantHeadBlock implements BonemealableBlock, DepthVines {
-    public static final MapCodec<net.minecraft.world.level.block.CaveVinesBlock> CODEC = simpleCodec(net.minecraft.world.level.block.CaveVinesBlock::new);
     private static final float CHANCE_OF_BERRIES_ON_GROWTH = 0.11F;
-
-    public @NotNull MapCodec<net.minecraft.world.level.block.CaveVinesBlock> codec() {
-        return CODEC;
-    }
 
     public DepthVinesBlock(BlockBehaviour.Properties properties) {
         super(properties, Direction.DOWN, SHAPE, false, 0.1);
@@ -63,17 +59,17 @@ public class DepthVinesBlock extends GrowingPlantHeadBlock implements Bonemealab
                 .setValue(BERRIES, random.nextFloat() < CHANCE_OF_BERRIES_ON_GROWTH);
     }
 
-    @SuppressWarnings("deprecation")
-    public @NotNull ItemStack getCloneItemStack(@NotNull LevelReader reader, @NotNull BlockPos pos,
-                                                @NotNull BlockState state) {
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         return new ItemStack(ItemRegistry.DEPTH_BERRIES.get());
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
-                                                        @NotNull BlockPos pos, @NotNull Player player,
-                                                        @NotNull BlockHitResult hitResult) {
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level,
+                                          @NotNull BlockPos pos, @NotNull Player player,
+                                          @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         return DepthVines.use(player, state, level, pos);
+
     }
 
     @Override

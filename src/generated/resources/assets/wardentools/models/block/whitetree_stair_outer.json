@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "wardentools:block/whitetree_planks",
-    "side": "wardentools:block/whitetree_planks",
-    "top": "wardentools:block/whitetree_planks"
-  }
-}

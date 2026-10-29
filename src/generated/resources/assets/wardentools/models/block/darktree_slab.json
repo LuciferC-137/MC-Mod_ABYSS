@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "wardentools:block/darktree_planks",
-    "side": "wardentools:block/darktree_planks",
-    "top": "wardentools:block/darktree_planks"
-  }
-}

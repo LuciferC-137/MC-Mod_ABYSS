@@ -20,7 +20,7 @@ public class NoctilureSprintBarGuiRender {
             "textures/gui/sprint_bar/noctilure_progress.png");
 
     @SubscribeEvent
-    private static void onRenderGuiLayers(RenderGuiEvent.Post event) {
+    public static void onRenderGuiLayers(RenderGuiEvent.Post event) {
         GuiGraphics graphics = event.getGuiGraphics();
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null && minecraft.player.getVehicle() != null) {

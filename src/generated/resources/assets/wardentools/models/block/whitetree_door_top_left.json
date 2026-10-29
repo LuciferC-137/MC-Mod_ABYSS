@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_left",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "bottom": "wardentools:block/whitetree_door_bottom",
-    "top": "wardentools:block/whitetree_door_top"
-  }
-}

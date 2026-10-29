@@ -17,10 +17,10 @@ import wardentools.advancement.criteria.CorruptionVesselCriteria;
 import wardentools.advancement.criteria.RadianceBringerCriteria;
 import wardentools.advancement.criteria.SummonProtectorCriteria;
 import wardentools.datagen.loot.ModAdvancementLootTables;
-import wardentools.items.armors.ArmorRegistry;
 import wardentools.effect.ModEffects;
 import wardentools.entity.ModEntities;
 import wardentools.items.ItemRegistry;
+import wardentools.items.armors.ArmorRegistry;
 import wardentools.worldgen.dimension.ModDimensions;
 
 import java.util.function.Consumer;
@@ -109,7 +109,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 )
                 .addCriterion("to_the_abyss",
                         ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.ABYSS_LEVEL_KEY))
-                .rewards(AdvancementRewards.Builder.loot(ModAdvancementLootTables.WIND_JOURNAL_LT.location()))
+                .rewards(AdvancementRewards.Builder.loot(ModAdvancementLootTables.WIND_JOURNAL_LT))
                 .save(saver, new ResourceLocation(ModMain.MOD_ID, "the_abyss"), existingFileHelper);
 
         Advancement cristals = Advancement.Builder.advancement()

@@ -49,5 +49,22 @@ public class ModMaterials {
 
 		return protection;
 	}
+
+	public static void refreshArmorProtection() {
+		updateArmor(ArmorRegistry.DEEPCRISTAL_BOOTS.get(), ArmorItem.Type.BOOTS);
+		updateArmor(ArmorRegistry.DEEPCRISTAL_LEGGINGS.get(), ArmorItem.Type.LEGGINGS);
+		updateArmor(ArmorRegistry.DEEPCRISTAL_CHESTPLATE.get(), ArmorItem.Type.CHESTPLATE);
+		updateArmor(ArmorRegistry.DEEPCRISTAL_HELMET.get(), ArmorItem.Type.HELMET);
+	}
+
+	private static void updateArmor(
+			Item item,
+			ArmorItem.Type type
+	) {
+		if (item instanceof ConfigurableDefenseItem armor) {
+			armor.updateDefense(getAbyssArmorProtection(type));
+		}
+	}
+
 }
 

@@ -63,7 +63,7 @@ public class Shadow extends HierarchicalModel<ShadowEntity> {
 			this.FULL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 		} else {
 			this.renderToBufferFunction
-					.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay);
+					.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, red, green , blue, alpha);
 		}
 	}
 

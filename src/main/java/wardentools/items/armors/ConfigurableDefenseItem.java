@@ -28,7 +28,7 @@ public class ConfigurableDefenseItem extends ArmorItem {
         this.modifierId = UUID.nameUUIDFromBytes(("wardentools:armor." + type.getName())
                 .getBytes(StandardCharsets.UTF_8));
 
-        this.updateDefense(ModMaterials.getAbyssArmorProtection(type));
+        this.updateDefense(material.getDefenseForType(type));
     }
 
     @Override

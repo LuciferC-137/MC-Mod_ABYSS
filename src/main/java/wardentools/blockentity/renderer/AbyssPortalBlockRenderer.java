@@ -53,14 +53,15 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
         Matrix4f model = poseStack.last().pose();
 
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder bb = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        BufferBuilder bb = tesselator.getBuilder();
+        bb.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 
         for (Direction dir : Direction.values()) {
             if (!entity.shouldRenderFace(dir)) continue;
             emitFace(bb, model, view, projection, dir);
         }
 
-        BufferUploader.drawWithShader(bb.buildOrThrow());
+        BufferUploader.drawWithShader(bb.end());
 
         RenderSystem.enableCull();
         RenderSystem.disableBlend();
@@ -84,7 +85,7 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
         for (float[] c : corners) {
             float x = c[0], y = c[1], z = c[2];
             float[] uv = projectToUv(model, view, projection, x, y, z); // UVs from P * V * M
-            bb.vertex(model, x, y, z).setUv(uv[0], uv[1]).color(255, 255, 255, 255);
+            bb.vertex(model, x, y, z).uv(uv[0], uv[1]).color(255, 255, 255, 255);
         }
     }
 
