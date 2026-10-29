@@ -5,10 +5,10 @@ import com.mojang.brigadier.context.CommandContextBuilder;
 import com.mojang.brigadier.context.ParsedArgument;
 import com.mojang.brigadier.context.ParsedCommandNode;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.event.CommandEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.event.CommandEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import wardentools.AbyssConfig;
 import wardentools.ModMain;
 import wardentools.worldgen.dimension.ModDimensions;
@@ -24,7 +24,7 @@ public class AbyssWeatherEventServer {
 	public static final AbyssWeatherManager WEATHER_MANAGER = new AbyssWeatherManager();
 
 	@SubscribeEvent
-	public static void onServerTickEvent(ServerTickEvent.Pre event) {
+	public static void onServerTickEvent(TickEvent.ServerTickEvent event) {
 		ServerLevel abyssLevel = event.getServer().getLevel(ModDimensions.ABYSS_LEVEL_KEY);
         if (!AbyssConfig.SERVER.DO_ABYSS_WEATHER.get()) return;
 		if (abyssLevel == null) return;
@@ -35,7 +35,7 @@ public class AbyssWeatherEventServer {
 	public static void onWeatherCommand(CommandEvent event) {
 		CommandContextBuilder<?> context = event.getParseResults().getContext();
         if (context.getNodes().isEmpty()) return;
-		String command = context.getNodes().getFirst().getNode().getName();
+		String command = context.getNodes().get(0).getNode().getName();
         if (command.equals("weather")) {
             handleWeatherCommand(context, event.getParseResults().getContext().getSource().getLevel());
         }

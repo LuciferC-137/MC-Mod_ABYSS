@@ -3,9 +3,9 @@ package wardentools.weather;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
 import wardentools.ModMain;
 
 /**
@@ -17,7 +17,7 @@ public class AbyssWeatherEventClient {
 	public static final AbyssFogClientHandler CLIENT_WEATHER = new AbyssFogClientHandler();
 
 	@SubscribeEvent
-	public static void onClientLevelTickEvent(ClientTickEvent.Pre event) {
+	public static void onClientLevelTickEvent(TickEvent.ClientTickEvent event) {
 		Minecraft minecraft = Minecraft.getInstance();
 		if (minecraft.level == null || minecraft.player == null) return;
 		CLIENT_WEATHER.updateFogDistanceOnTick(minecraft.level);

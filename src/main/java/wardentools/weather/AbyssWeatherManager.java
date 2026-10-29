@@ -8,12 +8,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
 import wardentools.entity.ModEntities;
-import wardentools.network.payloads.special_effects.WindWhisperSound;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.SendFogStateToClient;
+import wardentools.network.payloads.special_effects.WindWhisperSound;
 import wardentools.weather.lightning.AbyssLightningEntity;
 
 import java.util.HashSet;
@@ -124,7 +124,7 @@ public class AbyssWeatherManager {
         this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
-                    PacketDistributor.sendToPlayer(player,
+                    ModPackets.sendToPlayer(player,
                             new WindWhisperSound(WindWhisperSound.StormStatus.START));
                 });
     }
@@ -134,18 +134,18 @@ public class AbyssWeatherManager {
         this.sendServerFogDistanceToAllClients();
         level.players().stream().filter(player -> player.level() == level)
                 .forEach((player) -> {
-                    PacketDistributor.sendToPlayer(player,
+                    ModPackets.sendToPlayer(player,
                             new WindWhisperSound(WindWhisperSound.StormStatus.END));
                 });
         this.timeSinceStormBegin = 0;
     }
 
     public void sendServerFogDistanceToAllClients() {
-        PacketDistributor.sendToAllPlayers(new SendFogStateToClient(this.isStorming));
+        ModPackets.sendToAll(new SendFogStateToClient(this.isStorming));
     }
 
     public void sendServerFogDistanceToClient(ServerPlayer player) {
-        PacketDistributor.sendToPlayer(player, new SendFogStateToClient(this.isStorming));
+        ModPackets.sendToPlayer(player, new SendFogStateToClient(this.isStorming));
     }
 }
 

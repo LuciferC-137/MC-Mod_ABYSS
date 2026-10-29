@@ -2,7 +2,7 @@ package wardentools.weather.lightning;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -167,13 +167,13 @@ public class AbyssLightningRenderer extends EntityRenderer<AbyssLightningEntity>
                                  float endX, float endZ, float red, float green, float blue, float thicknessStart, float thicknessEnd,
                                  boolean flipXStart, boolean flipZStart, boolean flipXEnd, boolean flipZEnd) {
         vertexConsumer.vertex(matrix, startX + (flipXStart ? thicknessEnd : -thicknessEnd), (float)(segment * 16), startZ + (flipZStart ? thicknessEnd : -thicknessEnd))
-                .setColor(red, green, blue, OPACITY);
+                .color(red, green, blue, OPACITY);
         vertexConsumer.vertex(matrix, endX + (flipXStart ? thicknessStart : -thicknessStart), (float)((segment + 1) * 16), endZ + (flipZStart ? thicknessStart : -thicknessStart))
-                .setColor(red, green, blue, OPACITY);
+                .color(red, green, blue, OPACITY);
         vertexConsumer.vertex(matrix, endX + (flipXEnd ? thicknessStart : -thicknessStart), (float)((segment + 1) * 16), endZ + (flipZEnd ? thicknessStart : -thicknessStart))
-                .setColor(red, green, blue, OPACITY);
+                .color(red, green, blue, OPACITY);
         vertexConsumer.vertex(matrix, startX + (flipXEnd ? thicknessEnd : -thicknessEnd), (float)(segment * 16), startZ + (flipZEnd ? thicknessEnd : -thicknessEnd))
-                .setColor(red, green, blue, OPACITY);
+                .color(red, green, blue, OPACITY);
     }
 
 

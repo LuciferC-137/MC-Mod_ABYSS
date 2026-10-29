@@ -5,8 +5,8 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
 import wardentools.AbyssConfig;
+import wardentools.network.ModPackets;
 import wardentools.network.payloads.RequestStormStateFromServer;
 
 /**
@@ -25,7 +25,7 @@ public class AbyssFogClientHandler {
 
     public void updateFogDistanceOnTick(Level level) {
         if (this.lastUpdate == 0) {
-            PacketDistributor.sendToServer(new RequestStormStateFromServer());
+            ModPackets.sendToServer(new RequestStormStateFromServer());
             this.lastUpdate = UPDATE_INTERVAL;
         } else {
             this.lastUpdate--;
