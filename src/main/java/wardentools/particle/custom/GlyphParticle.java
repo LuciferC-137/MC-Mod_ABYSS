@@ -49,7 +49,7 @@ public class GlyphParticle extends TextureSheetParticle {
     public void tick() {
         super.tick();
         if (this.hasGoal) {
-            double distanceSq = this.getPos().distanceToSqr(this.goal);
+            double distanceSq = (new Vec3(this.x, this.y, this.z)).distanceToSqr(this.goal);
             if (distanceSq < 0.005) {
                 this.remove();
                 return;
