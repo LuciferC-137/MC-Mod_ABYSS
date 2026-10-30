@@ -1,0 +1,30 @@
+{
+  "parent": "wardentools:protector_invoker",
+  "criteria": {
+    "protector": {
+      "conditions": {},
+      "trigger": "wardentools:summon_protector_criteria"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.protector.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:protector_heart"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.protector.title"
+    }
+  },
+  "requirements": [
+    [
+      "protector"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,38 @@
+{
+  "parent": "wardentools:radiance",
+  "criteria": {
+    "radiance_catalyst": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:radiance_catalyst"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.radiance_catalyst.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:radiance_catalyst"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.radiance_catalyst.title"
+    }
+  },
+  "requirements": [
+    [
+      "radiance_catalyst"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

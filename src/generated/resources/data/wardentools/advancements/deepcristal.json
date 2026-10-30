@@ -1,0 +1,38 @@
+{
+  "parent": "wardentools:the_abyss",
+  "criteria": {
+    "deepcristal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:deepcristal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.deepcristal.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:deepcristal"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.deepcristal.title"
+    }
+  },
+  "requirements": [
+    [
+      "deepcristal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

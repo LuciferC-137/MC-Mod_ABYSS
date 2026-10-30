@@ -1,0 +1,34 @@
+{
+  "parent": "wardentools:deepcristal",
+  "criteria": {
+    "corrupted": {
+      "conditions": {
+        "effects": {
+          "wardentools:corrupted": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.corrupted.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:corrupted_essence"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.corrupted.title"
+    }
+  },
+  "requirements": [
+    [
+      "corrupted"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

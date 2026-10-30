@@ -1,0 +1,31 @@
+{
+  "parent": "wardentools:abyssdiver",
+  "criteria": {
+    "escape": {
+      "conditions": {},
+      "trigger": "wardentools:abyss_portal_open"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.escape.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:radiant_staff",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.escape.title"
+    }
+  },
+  "requirements": [
+    [
+      "escape"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

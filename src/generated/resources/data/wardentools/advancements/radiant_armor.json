@@ -1,0 +1,35 @@
+{
+  "parent": "wardentools:radiance_catalyst",
+  "criteria": {
+    "radiant_armor": {
+      "conditions": {
+        "effects": {
+          "wardentools:radiance_bringer": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.radiant_armor.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:radiance_cristal_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.radiant_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "radiant_armor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

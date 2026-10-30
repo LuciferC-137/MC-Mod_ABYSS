@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "wardentools:item/radiance_cristal_leggings",
+    "layer1": "minecraft:trims/items/leggings_trim_gold"
+  }
+}

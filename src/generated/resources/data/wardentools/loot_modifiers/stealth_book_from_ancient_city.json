@@ -1,0 +1,9 @@
+{
+  "type": "wardentools:add_stealth_book",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/ancient_city"
+    }
+  ]
+}

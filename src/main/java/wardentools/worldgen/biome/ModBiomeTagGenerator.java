@@ -5,16 +5,18 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
+import wardentools.ModMain;
 import wardentools.tags.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 
 public class ModBiomeTagGenerator extends TagsProvider<Biome> {
 
-    @SuppressWarnings("deprecation")
-    public ModBiomeTagGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
-        super(packOutput, Registries.BIOME, completableFuture);
+    public ModBiomeTagGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture,
+                                ExistingFileHelper existingFileHelper) {
+        super(packOutput, Registries.BIOME, completableFuture, ModMain.MOD_ID, existingFileHelper);
     }
 
     @Override

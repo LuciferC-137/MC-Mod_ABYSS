@@ -1,0 +1,39 @@
+{
+  "parent": "wardentools:corrupted_heart",
+  "criteria": {
+    "has_abyssdiver": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "wardentools:abyss_diver"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.abyssdiver.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:abyss_diver",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.abyssdiver.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_abyssdiver"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

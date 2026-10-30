@@ -1,0 +1,30 @@
+{
+  "parent": "wardentools:incarnation",
+  "criteria": {
+    "corruption_vessel": {
+      "conditions": {},
+      "trigger": "wardentools:corruption_vessel_criteria"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.corruption_vessel.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:corrupted_vessel"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.corruption_vessel.title"
+    }
+  },
+  "requirements": [
+    [
+      "corruption_vessel"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

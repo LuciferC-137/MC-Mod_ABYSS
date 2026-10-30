@@ -243,12 +243,12 @@ public class ModItemModelProvider extends ItemModelProvider {
                     default -> "";
                 };
 
-                String armorItemPath = armorItem.toString();
+                ResourceLocation armorItemResLoc = itemRegistryObject.getId();
+
                 String trimPath = "trims/items/" + armorType + "_trim_" + trimMaterial.location().getPath();
-                String currentTrimName = armorItemPath + "_" + trimMaterial.location().getPath() + "_trim";
-                ResourceLocation armorItemResLoc = ResourceLocation.tryParse(armorItemPath);
+                String currentTrimName = armorItemResLoc.getPath() + "_" + trimMaterial.location().getPath() + "_trim";
                 ResourceLocation trimResLoc = ResourceLocation.tryParse(trimPath); // minecraft namespace
-                ResourceLocation trimNameResLoc = ResourceLocation.tryParse(currentTrimName);
+                ResourceLocation trimNameResLoc = new ResourceLocation(MOD_ID, currentTrimName);
 
                 // This is used for making the ExistingFileHelper acknowledge that this texture exist, so this will
                 // avoid an IllegalArgumentException

@@ -1,0 +1,37 @@
+{
+  "parent": "wardentools:abyss",
+  "criteria": {
+    "to_the_abyss": {
+      "conditions": {
+        "to": "wardentools:abyssdim"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.theabyss.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:darkgrass_block"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.theabyss.title"
+    }
+  },
+  "requirements": [
+    [
+      "to_the_abyss"
+    ]
+  ],
+  "rewards": {
+    "loot": [
+      "wardentools:advancements/wind_journal"
+    ]
+  },
+  "sends_telemetry_event": true
+}

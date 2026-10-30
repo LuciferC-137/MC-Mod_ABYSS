@@ -1,0 +1,40 @@
+{
+  "parent": "wardentools:deepcristal",
+  "criteria": {
+    "kill_contagion_incarnation": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "wardentools:contagion_incarnation"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.incarnation.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:chiseled_abyssalite"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.incarnation.title"
+    }
+  },
+  "requirements": [
+    [
+      "kill_contagion_incarnation"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

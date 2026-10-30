@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "has_sculk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:sculk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "wardentools:textures/gui/advancements/backgrounds/sculk.png",
+    "description": {
+      "translate": "advancements.wardentools.abyss.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:sculk"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.abyss.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_sculk"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

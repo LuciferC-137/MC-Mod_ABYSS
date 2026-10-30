@@ -1,0 +1,30 @@
+{
+  "parent": "wardentools:incarnation",
+  "criteria": {
+    "radiance_bringer": {
+      "conditions": {},
+      "trigger": "wardentools:radiance_bringer_criteria"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.radiance_bringer.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:pure_vessel"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.radiance_bringer.title"
+    }
+  },
+  "requirements": [
+    [
+      "radiance_bringer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

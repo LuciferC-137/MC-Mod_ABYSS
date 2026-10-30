@@ -1,0 +1,35 @@
+{
+  "parent": "wardentools:deepcristal",
+  "criteria": {
+    "deep_armor": {
+      "conditions": {
+        "effects": {
+          "wardentools:corruption_vessel": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.wardentools.deep_armor.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "wardentools:deepcristal_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.wardentools.deep_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "deep_armor"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
