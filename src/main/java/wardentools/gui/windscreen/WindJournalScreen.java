@@ -174,6 +174,7 @@ public class WindJournalScreen extends Screen {
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         this.updateCache();
+        this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTick);
         if (this.cachedLeftPageIndex == 0) {
             this.renderFirstPage(graphics);

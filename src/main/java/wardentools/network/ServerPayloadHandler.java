@@ -18,13 +18,10 @@ import wardentools.network.payloads.TeleportPlayerTo;
 import wardentools.network.payloads.datasync.SyncDataTaskToServer;
 import wardentools.network.payloads.datasync.SyncKnownWhisperToServer;
 import wardentools.playerdata.ModCapabilities;
-import wardentools.playerdata.serializables.CompletedTasks;
-import wardentools.playerdata.serializables.KnownWindWhispers;
 import wardentools.weather.AbyssWeatherEventServer;
 import wardentools.worldgen.dimension.ModDimensions;
 import wardentools.worldgen.portal.ModTeleporter;
 
-import java.lang.reflect.Method;
 import java.util.Objects;
 
 public class ServerPayloadHandler {
@@ -81,50 +78,29 @@ public class ServerPayloadHandler {
 
     public static void syncTaskData(SyncDataTaskToServer msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            CompletedTasks data = getEntityData(ctx.player(), ModCapabilities.COMPLETED_TASKS);
-            if (msg.remove()) {
-                data.removeCompletedTask(msg.taskId());
-            } else {
-                data.addCompletedTask(msg.taskId());
-            }
-            setEntityData(ctx.player(), ModCapabilities.COMPLETED_TASKS, data);
+            if (!(ctx.player() instanceof ServerPlayer player)) return;
+            player.getCapability(ModCapabilities.COMPLETED_TASKS).ifPresent(data -> {
+                if (msg.remove()) {
+                    data.removeCompletedTask(msg.taskId());
+                } else {
+                    data.addCompletedTask(msg.taskId());
+                }
+            });
         }, ctx);
     }
 
     public static void syncWindWhisperData(SyncKnownWhisperToServer msg, final ForgePayloadContext ctx) {
         handleDataOnNetwork(() -> {
-            KnownWindWhispers data = getEntityData(ctx.player(), ModCapabilities.KNOWN_WIND_WHISPERS);
-            if (msg.remove()) {
-                data.removeKnownWhisper(msg.whisperId());
-            } else {
-                data.addKnownWhisper(msg.whisperId());
-            }
-            setEntityData(ctx.player(), ModCapabilities.KNOWN_WIND_WHISPERS, data);
-        }, ctx);
-    }
+            if (!(ctx.player() instanceof ServerPlayer player)) return;
 
-    @SuppressWarnings("unchecked")
-    private static <T> T getEntityData(Entity entity, Object attachmentKey) {
-        try {
-            Method method = entity.getClass().getMethod("getData", attachmentKey.getClass());
-            return (T) method.invoke(entity, attachmentKey);
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("Entity data API not available during network sync", e);
-        }
-    }
-
-    private static void setEntityData(Entity entity, Object attachmentKey, Object data) {
-        for (Method method : entity.getClass().getMethods()) {
-            if (method.getName().equals("setData") && method.getParameterCount() == 2) {
-                try {
-                    method.invoke(entity, attachmentKey, data);
-                    return;
-                } catch (ReflectiveOperationException e) {
-                    throw new IllegalStateException("Failed to set entity data during network sync", e);
+            player.getCapability(ModCapabilities.KNOWN_WIND_WHISPERS).ifPresent(data -> {
+                if (msg.remove()) {
+                    data.removeKnownWhisper(msg.whisperId());
+                } else {
+                    data.addKnownWhisper(msg.whisperId());
                 }
-            }
-        }
-        throw new IllegalStateException("Entity data API not available during network sync");
+            });
+        }, ctx);
     }
 
     private static void teleport(ServerLevel level, Entity entity, int x, int y, int z) {
