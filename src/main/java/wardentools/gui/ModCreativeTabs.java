@@ -212,6 +212,8 @@ public class ModCreativeTabs {
                         ALL_ITEMS.forEach(item -> event.accept(item.get()));
                     }).build());
 
+    /**
+    // Commented because Forge load tables in a strange ways that makes DITA predominant.
     public static final Supplier<CreativeModeTab> BLOCKS
             = CREATIVE_MODE_TABS.register("blocks",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ItemRegistry.ABYSSALITE.get()))
@@ -287,6 +289,7 @@ public class ModCreativeTabs {
                     .displayItems((pParameters, event) -> {
                         getItemsByTag(Tag.EGG).forEach(item -> event.accept(item.get()));
                     }).build());
+    */
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
