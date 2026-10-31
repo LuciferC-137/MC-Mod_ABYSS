@@ -36,7 +36,7 @@ import wardentools.weather.lightning.AbyssLightningRenderer;
 import wardentools.worldgen.dimension.ModDimensions;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents {
 
 	@SubscribeEvent
