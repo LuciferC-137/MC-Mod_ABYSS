@@ -1,9 +1,12 @@
 package wardentools.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -38,9 +41,12 @@ public class AbyssDimensionSpecialEffect extends DimensionSpecialEffects {
     public boolean renderSky(@NotNull ClientLevel level, int ticks, float partialTick,
                              @NotNull PoseStack poseStack, @NotNull Camera camera,
                              @NotNull Matrix4f projectionMatrix, boolean isFoggy, @NotNull Runnable setupFog) {
+        setupFog.run();
+        FogRenderer.setupNoFog();
+        RenderSystem.setProjectionMatrix(projectionMatrix, VertexSorting.DISTANCE_TO_ORIGIN);
         int brightness = (int)(230f * AbyssWeatherEventClient.CLIENT_WEATHER.currentFogDistance()
                 / AbyssFogClientHandler.getMaxFogDistance());
-        LevelRendererUtils.renderSky(level, brightness);
+        LevelRendererUtils.renderSky(level, brightness, poseStack);
         return true;
     }
 

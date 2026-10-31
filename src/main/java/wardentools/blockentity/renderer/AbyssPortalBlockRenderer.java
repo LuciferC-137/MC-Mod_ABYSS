@@ -39,11 +39,10 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
 
         poseStack.pushPose();
 
-        RenderSystem.enableBlend();
+        RenderSystem.disableBlend();
         RenderSystem.disableCull();
-
         RenderSystem.enableDepthTest();
-        RenderSystem.depthMask(false);
+        RenderSystem.depthMask(true);
 
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, skyTex);
@@ -85,7 +84,7 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
         for (float[] c : corners) {
             float x = c[0], y = c[1], z = c[2];
             float[] uv = projectToUv(model, view, projection, x, y, z); // UVs from P * V * M
-            bb.vertex(model, x, y, z).uv(uv[0], uv[1]).color(255, 255, 255, 255);
+            bb.vertex(model, x, y, z).uv(uv[0], uv[1]).color(255, 255, 255, 255).endVertex();
         }
     }
 
@@ -99,7 +98,7 @@ public class AbyssPortalBlockRenderer implements BlockEntityRenderer<AbyssPortal
         float ndcX = v.x / w;
         float ndcY = v.y / w;
         float u = 0.5f * (ndcX + 1.0f);
-        float vtex = 0.5f * (1.0f - ndcY);
+        float vtex = 0.5f * (ndcY + 1.0f);
         if (u < 0f) u = 0f; if (u > 1f) u = 1f;
         if (vtex < 0f) vtex = 0f; if (vtex > 1f) vtex = 1f;
         return new float[] { u, vtex };

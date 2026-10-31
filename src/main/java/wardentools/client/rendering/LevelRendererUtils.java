@@ -40,49 +40,54 @@ public class LevelRendererUtils {
             = List.of(STAR_0, STAR_1, STAR_2, STAR_3, STAR_4);
     public static final Vec3i SKYCOLOR = new Vec3i(0, 75, 85);
 
-    public static void renderSky(ClientLevel level, int brightness) {
-        PoseStack posestack = new PoseStack();
+    public static void renderSky(ClientLevel level, int brightness, PoseStack poseStack) {
         Tesselator tesselator = Tesselator.getInstance();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        RenderSystem.depthMask(false);
-        RenderSystem.disableDepthTest();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(
-                GlStateManager.SourceFactor.SRC_ALPHA,
-                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
-        );
+        poseStack.pushPose();
 
-        renderSkyBackGround(posestack, tesselator, brightness);
+        try {
+            RenderSystem.setShader(GameRenderer::getPositionColorShader);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        float alpha = brightness / 255F;
+            RenderSystem.depthMask(false);
+            RenderSystem.disableDepthTest();
+            RenderSystem.enableBlend();
+            RenderSystem.blendFunc(
+                    GlStateManager.SourceFactor.SRC_ALPHA,
+                    GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
+            );
 
-        if (alpha > 0.0F) {
-            renderMultipleStarLayers(level, alpha, posestack, tesselator);
+            renderSkyBackGround(poseStack, tesselator, brightness);
+
+            float alpha = brightness / 255F;
+
+            if (alpha > 0.0F) {
+                renderMultipleStarLayers(level, alpha, poseStack, tesselator);
+            }
+
+        } finally {
+            RenderSystem.defaultBlendFunc();
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.depthMask(true);
+            RenderSystem.enableDepthTest();
+
+            poseStack.popPose();
         }
-
-        // POST
-        RenderSystem.defaultBlendFunc();
-        posestack.popPose();
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.depthMask(true);
     }
-
     public static void renderSkyBackGround(PoseStack posestack, Tesselator tesselator, int brightness) {
         // Rendering top hemisphere (zenith to horizon) with the sky color.
         posestack.pushPose();
         posestack.mulPose(Axis.XP.rotationDegrees(90.0F));
-        float red = ((float) SKYCOLOR.getX()) / 255F;
-        float blue = ((float) SKYCOLOR.getY()) / 255F;
-        float green = ((float) SKYCOLOR.getZ()) / 255F;
+        float red = SKYCOLOR.getX() / 255F;
+        float green = SKYCOLOR.getY() / 255F;
+        float blue = SKYCOLOR.getZ() / 255F;
         float alpha = brightness / 255F;
         Matrix4f matrix4f = posestack.last().pose();
         posestack.mulPose(Axis.XP.rotationDegrees(-90.0F));
         BufferBuilder bufferbuilder = tesselator.getBuilder();
         bufferbuilder.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
         bufferbuilder.vertex(matrix4f, 0.0F, 90.0F, 0.0F)
-                .color(0F, 0.1F, 0.1F, alpha);
+                .color(0F, 0.1F, 0.1F, alpha).endVertex();
 
         // Draw circle from zenith to horizon
         int N = 32;
@@ -91,8 +96,7 @@ public class LevelRendererUtils {
             float x = 90.0F * Mth.cos(azimuth);
             float y = -10.0F; // A bit lower than the Horizon
             float z = 90.0F * Mth.sin(azimuth);
-            bufferbuilder.vertex(matrix4f, x, y, z)
-                    .color(red, green, blue, 0.0F);
+            bufferbuilder.vertex(matrix4f, x, y, z).color(red, green, blue, 0.0F).endVertex();
         }
 
         BufferUploader.drawWithShader(bufferbuilder.end());
@@ -205,10 +209,10 @@ public class LevelRendererUtils {
                 Vector3f c2 = new Vector3f(-star.size(),  star.size(), 0.0F).rotate(q).add(star.pos()); // (0,1)
                 Vector3f c3 = new Vector3f(-star.size(), -star.size(), 0.0F).rotate(q).add(star.pos()); // (0,0)
 
-                starBuf.vertex(mat, c0.x(), c0.y(), c0.z()).uv(1.0F, 0.0F);
-                starBuf.vertex(mat, c1.x(), c1.y(), c1.z()).uv(1.0F, 1.0F);
-                starBuf.vertex(mat, c2.x(), c2.y(), c2.z()).uv(0.0F, 1.0F);
-                starBuf.vertex(mat, c3.x(), c3.y(), c3.z()).uv(0.0F, 0.0F);
+                starBuf.vertex(mat, c0.x(), c0.y(), c0.z()).uv(1.0F, 0.0F).endVertex();
+                starBuf.vertex(mat, c1.x(), c1.y(), c1.z()).uv(1.0F, 1.0F).endVertex();
+                starBuf.vertex(mat, c2.x(), c2.y(), c2.z()).uv(0.0F, 1.0F).endVertex();
+                starBuf.vertex(mat, c3.x(), c3.y(), c3.z()).uv(0.0F, 0.0F).endVertex();
             }
 
             BufferUploader.drawWithShader(starBuf.end());

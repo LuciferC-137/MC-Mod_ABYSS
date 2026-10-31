@@ -98,40 +98,40 @@ public class CrystalGolemRenderer extends MobRenderer<CrystalGolemEntity, Crysta
 		float s = 0.3F; // Cube Half Size
 
 		// Down Face
-		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).normal(0f, -1f, 0f);
-		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).normal(0f, -1f, 0f);
-		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).normal(0f, -1f, 0f);
-		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).normal(0f, -1f, 0f);
+		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).normal(0f, -1f, 0f).endVertex();
+		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).normal(0f, -1f, 0f).endVertex();
+		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).normal(0f, -1f, 0f).endVertex();
+		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).normal(0f, -1f, 0f).endVertex();
 
 		// Up Face
-		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).normal(0f, 1f, 0f);
-		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).normal(0f, 1f, 0f);
-		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).normal(0f, 1f, 0f);
-		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).normal(0f, 1f, 0f);
+		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).normal(0f, 1f, 0f).endVertex();
+		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).normal(0f, 1f, 0f).endVertex();
+		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).normal(0f, 1f, 0f).endVertex();
+		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).normal(0f, 1f, 0f).endVertex();
 
 		// North Face
-		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).normal(0f, 0f, -1f);
-		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).normal(0f, 0f, -1f);
-		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).normal(0f, 0f, -1f);
-		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).normal(0f, 0f, -1f);
+		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).normal(0f, 0f, -1f).endVertex();
+		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).normal(0f, 0f, -1f).endVertex();
+		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).normal(0f, 0f, -1f).endVertex();
+		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).normal(0f, 0f, -1f).endVertex();
 
 		// South Face
-		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).normal(0f, 0f, 1f);
-		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).normal(0f, 0f, 1f);
-		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).normal(0f, 0f, 1f);
-		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).normal(0f, 0f, 1f);
+		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).normal(0f, 0f, 1f).endVertex();
+		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).normal(0f, 0f, 1f).endVertex();
+		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).normal(0f, 0f, 1f).endVertex();
+		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).normal(0f, 0f, 1f).endVertex();
 
 		// Left Face
-		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).normal(-1f, 0f, 0f);
-		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).normal(-1f, 0f, 0f);
-		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).normal(-1f, 0f, 0f);
-		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).normal(-1f, 0f, 0f);
+		consumer.vertex(entry.pose(), -s, -s, -s).color(ri, gi, bi, ai).normal(-1f, 0f, 0f).endVertex();
+		consumer.vertex(entry.pose(), -s, -s,  s).color(ri, gi, bi, ai).normal(-1f, 0f, 0f).endVertex();
+		consumer.vertex(entry.pose(), -s,  s,  s).color(ri, gi, bi, ai).normal(-1f, 0f, 0f).endVertex();
+		consumer.vertex(entry.pose(), -s,  s, -s).color(ri, gi, bi, ai).normal(-1f, 0f, 0f).endVertex();
 
 		// East Face
-		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).normal(1f, 0f, 0f);
-		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).normal(1f, 0f, 0f);
-		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).normal(1f, 0f, 0f);
-		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).normal(1f, 0f, 0f);
+		consumer.vertex(entry.pose(),  s, -s, -s).color(ri, gi, bi, ai).normal(1f, 0f, 0f).endVertex();
+		consumer.vertex(entry.pose(),  s,  s, -s).color(ri, gi, bi, ai).normal(1f, 0f, 0f).endVertex();
+		consumer.vertex(entry.pose(),  s,  s,  s).color(ri, gi, bi, ai).normal(1f, 0f, 0f).endVertex();
+		consumer.vertex(entry.pose(),  s, -s,  s).color(ri, gi, bi, ai).normal(1f, 0f, 0f).endVertex();
 	}
 
 }

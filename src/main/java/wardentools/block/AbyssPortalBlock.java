@@ -1,6 +1,6 @@
 package wardentools.block;
 
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
@@ -116,6 +117,11 @@ public class AbyssPortalBlock extends Block implements EntityBlock {
                 teleportToAncientCity(entity, Level.OVERWORLD, ancientCityPos);
             }
         }
+    }
+
+    @Override
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
+        return RenderShape.INVISIBLE;
     }
 
     private BlockPos findNearestStructure(ServerLevel level, ResourceKey<Structure> structureKey,
