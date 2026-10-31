@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.BlockEntityRegistry;
@@ -47,7 +48,7 @@ public class DysfunctionningCatalystBlock extends Block implements EntityBlock {
 		if (!(blockEntity instanceof DysfunctionningCatalystBlockEntity)) return InteractionResult.PASS;
 		if (level.isClientSide()) return InteractionResult.SUCCESS;
 		if (player instanceof ServerPlayer sPlayer) {
-			sPlayer.openMenu((MenuProvider)blockEntity);
+			NetworkHooks.openScreen(sPlayer, (MenuProvider) blockEntity, pos);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;

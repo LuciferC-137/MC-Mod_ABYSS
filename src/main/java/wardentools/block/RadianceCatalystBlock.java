@@ -1,9 +1,5 @@
 package wardentools.block;
 
-import net.minecraftforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,6 +18,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import wardentools.blockentity.BlockEntityRegistry;
 import wardentools.blockentity.RadianceCatalystBlockEntity;
 import wardentools.items.ItemRegistry;
@@ -51,7 +51,7 @@ public class RadianceCatalystBlock extends Block implements EntityBlock {
 		if (!(blockEntity instanceof RadianceCatalystBlockEntity)) return InteractionResult.PASS;
 		if (level.isClientSide()) return InteractionResult.SUCCESS;
 		if (player instanceof ServerPlayer sPlayer) {
-			sPlayer.openMenu((MenuProvider)blockEntity);
+			NetworkHooks.openScreen(sPlayer, (MenuProvider) blockEntity, pos);
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.FAIL;
