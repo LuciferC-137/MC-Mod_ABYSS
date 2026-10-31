@@ -1,8 +1,21 @@
+buildscript {
+    repositories {
+        maven {
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
 plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '6.0.34'
 }
+apply plugin: 'org.spongepowered.mixin'
 version = mod_version
 group = mod_group_id
 base {
@@ -66,6 +79,13 @@ minecraft {
         }
     }
 }
+mixin {
+    add sourceSets.main, 'wardentools.refmap.json'
+    config 'wardentools.mixins.json'
+
+    debug.verbose = true
+    debug.export = true
+}
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     mavenLocal()
@@ -73,6 +93,7 @@ repositories {
 }
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 tasks.named('jar', Jar).configure {
     manifest {

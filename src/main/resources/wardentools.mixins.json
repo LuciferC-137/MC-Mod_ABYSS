@@ -1,14 +1,18 @@
 {
+  "required": true,
   "minVersion": "0.8.5",
   "package": "wardentools.mixin",
-  "required": true,
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "wardentools.refmap.json",
   "mixins": [
     "WardenTargetMixin"
   ],
   "client": [
     "LocalPlayerMixin",
     "MusicManagerMixin",
-    "BookAccessMixin",
-    "MusicManagerMixin"
-  ]
+    "WritableBookAccessMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
