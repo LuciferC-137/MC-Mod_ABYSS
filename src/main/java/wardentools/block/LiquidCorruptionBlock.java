@@ -35,7 +35,7 @@ public class LiquidCorruptionBlock extends LiquidBlock {
 
     public LiquidCorruptionBlock(java.util.function.Supplier<? extends FlowingFluid> supplier,
                                  BlockBehaviour.Properties properties) {
-        super(supplier.get(), properties);
+        super(supplier, properties);
     }
 
     @Override

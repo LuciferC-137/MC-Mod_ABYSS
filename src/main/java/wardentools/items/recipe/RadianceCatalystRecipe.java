@@ -15,7 +15,7 @@ import wardentools.ModMain;
 import javax.annotation.Nullable;
 
 
-public record RadianceCatalystRecipe(Ingredient inputItem, ItemStack output, int energyCost)
+public record RadianceCatalystRecipe(ResourceLocation id, Ingredient inputItem, ItemStack output, int energyCost)
         implements Recipe<RadianceCatalystRecipeInput> {
 
     private static final ResourceLocation ID = new ResourceLocation(ModMain.MOD_ID, "radiance_catalyst");
@@ -50,7 +50,7 @@ public record RadianceCatalystRecipe(Ingredient inputItem, ItemStack output, int
 
     @Override
     public @NotNull ResourceLocation getId() {
-        return ID;
+        return this.id;
     }
 
     @Override
@@ -68,12 +68,12 @@ public record RadianceCatalystRecipe(Ingredient inputItem, ItemStack output, int
 
         @Override
         public @NotNull RadianceCatalystRecipe fromJson(@NotNull ResourceLocation recipeId, @NotNull JsonObject json) {
-            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
+            Ingredient ingredient = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "input"));
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
 
             int energyCost = GsonHelper.getAsInt(json, "energy_cost");
 
-            return new RadianceCatalystRecipe(ingredient, output, energyCost);
+            return new RadianceCatalystRecipe(recipeId, ingredient, output, energyCost);
         }
 
         @Override
@@ -82,7 +82,7 @@ public record RadianceCatalystRecipe(Ingredient inputItem, ItemStack output, int
             ItemStack output = buffer.readItem();
             int energyCost = buffer.readVarInt();
 
-            return new RadianceCatalystRecipe(ingredient, output, energyCost);
+            return new RadianceCatalystRecipe(recipeId, ingredient, output, energyCost);
         }
 
         @Override

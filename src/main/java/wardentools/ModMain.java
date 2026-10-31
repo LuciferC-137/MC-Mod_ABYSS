@@ -2,9 +2,7 @@ package wardentools;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -20,6 +18,7 @@ import wardentools.fluid.ModFluidTypes;
 import wardentools.gui.MenuRegistry;
 import wardentools.gui.ModCreativeTabs;
 import wardentools.items.ItemRegistry;
+import wardentools.items.PaintingsRegistry;
 import wardentools.items.PotionRegistry;
 import wardentools.items.armors.ArmorRegistry;
 import wardentools.items.enchantment.EnchantmentRegistry;
@@ -59,6 +58,7 @@ public class ModMain {
 		ModFluidTypes.FLUID_TYPES.register(bus);
 		ModFeatures.FEATURES.register(bus);
 		ParticleRegistry.PARTICLE_TYPES.register(bus);
+		PaintingsRegistry.PAINTINGS.register(bus);
 		ModEffects.MOB_EFFECTS.register(bus);
 		ModCreativeTabs.CREATIVE_MODE_TABS.register(bus);
 		PotionRegistry.POTIONS.register(bus);
@@ -69,12 +69,6 @@ public class ModMain {
 		EnchantmentRegistry.ENCHANTMENTS.register(bus);
 
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        LOGGER.info("HELLO from server starting");
     }
 }
 

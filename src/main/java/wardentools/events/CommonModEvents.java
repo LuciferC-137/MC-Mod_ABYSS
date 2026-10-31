@@ -15,11 +15,9 @@ import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.RegisterEvent;
 import wardentools.ModMain;
 import wardentools.advancement.ModCriteriaTriggers;
 import wardentools.block.BlockRegistry;
@@ -27,19 +25,11 @@ import wardentools.entity.ModEntities;
 import wardentools.entity.custom.*;
 import wardentools.items.ItemRegistry;
 import wardentools.items.PotionRegistry;
-import wardentools.items.armors.ArmorRegistry;
-import wardentools.items.armors.ConfigurableDefenseItem;
-import wardentools.items.armors.ModMaterials;
 import wardentools.particle.ParticleRegistry;
 import wardentools.particle.custom.*;
 
-@Mod.EventBusSubscriber(modid = ModMain.MOD_ID)
+@Mod.EventBusSubscriber(modid = ModMain.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class CommonModEvents {
-
-	@SubscribeEvent
-	public static void registerEvent(RegisterEvent event) {
-		ModCriteriaTriggers.init();
-	}
 
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
@@ -47,7 +37,6 @@ public class CommonModEvents {
 		event.enqueueWork(()->{
 			((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlockRegistry.WHITE_TORCHFLOWER.getId(),
 					BlockRegistry.POTTED_WHITE_TORCHFLOWER);
-			ModCriteriaTriggers.register();
 		});
 		// POTIONS
 		event.enqueueWork(() -> {
@@ -69,16 +58,8 @@ public class CommonModEvents {
 					PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING)
 			);
 		});
-    }
-
-    @SubscribeEvent
-    public static void serverStart(ServerAboutToStartEvent event) {
-        for (ConfigurableDefenseItem armorItem : ArmorRegistry.getDeepcristalArmorSet()) {
-            armorItem.updateDefense(ModMaterials.getAbyssArmorProtection(armorItem.getType()));
-        }
-        for (ConfigurableDefenseItem armorItem : ArmorRegistry.getRadianceCristalArmorSet()) {
-            armorItem.updateDefense(ModMaterials.getAbyssArmorProtection(armorItem.getType()));
-        }
+		// Advancement Criteria
+		event.enqueueWork(ModCriteriaTriggers::register);
     }
     
     @SubscribeEvent
