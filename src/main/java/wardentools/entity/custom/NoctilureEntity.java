@@ -566,15 +566,11 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 	@Override
 	protected void positionRider(@NotNull Entity rider, Entity.@NotNull MoveFunction moveFunction) {
 		super.positionRider(rider, moveFunction);
-		if (!this.hasPassenger(rider)) {
-			return;
-		}
+		if (!this.hasPassenger(rider)) return;
 
-		float rot = this.yBodyRot * ((float) Math.PI / 180F)
-				+ (float) Math.PI / 2F;
+		float rot = this.yBodyRot * ((float) Math.PI / 180F) + (float) Math.PI / 2F;
 
 		double offset = 0.3F;
-
 		double x = -offset * Mth.cos(rot);
 		double z = -offset * Mth.sin(rot);
 		double y = this.getPassengersRidingOffset();
@@ -645,7 +641,7 @@ public class NoctilureEntity extends TamableAnimal implements NeutralMob, Ownabl
 
 	@Override
 	public double getPassengersRidingOffset() {
-		return this.getBbHeight() + (this.isBaby() ? 0.2F : -0.15F);
+		return this.getBbHeight() + (this.isBaby() ? 0.2F : -0.5F);
 	}
 
 	@Override
