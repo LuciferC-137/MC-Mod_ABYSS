@@ -64,6 +64,7 @@ public class GolemStoneBlock extends HorizontalDirectionalBlock implements Entit
 				CrystalGolemEntity.GolemState.DEACTIVATED_1 :
 				CrystalGolemEntity.GolemState.DEACTIVATED_2);
 		golem.setSculk(state.getValue(HAS_SCULK));
+		golem.setPersistenceRequired();
 		level.addFreshEntity(golem);
 	}
 
