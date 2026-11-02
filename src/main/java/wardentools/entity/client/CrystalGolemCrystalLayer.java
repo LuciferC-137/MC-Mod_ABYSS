@@ -13,6 +13,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import wardentools.ModMain;
+import wardentools.client.color.ColorUtils;
 import wardentools.entity.custom.CrystalGolemEntity;
 
 @OnlyIn(Dist.CLIENT)
@@ -33,8 +34,10 @@ public class CrystalGolemCrystalLayer extends RenderLayer<CrystalGolemEntity, Cr
             VertexConsumer vertexConsumer = bufferSource.getBuffer(GLOW);
             this.getParentModel().renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT,
                     LivingEntityRenderer.getOverlayCoords(golem, 0.0F),
-                        golem.getFadedColor() / 255.0F, golem.getFadedColor() / 255.0F,
-                    golem.getFadedColor() / 255.0F, 1.0F);
+                        ColorUtils.getRed(golem.getFadedColor()) / 255.0F,
+                    ColorUtils.getGreen(golem.getFadedColor()) / 255.0F,
+                    ColorUtils.getBlue(golem.getFadedColor()) / 255.0F,
+                    golem.getAlphaColor() / 255.0F);
         }
     }
 }

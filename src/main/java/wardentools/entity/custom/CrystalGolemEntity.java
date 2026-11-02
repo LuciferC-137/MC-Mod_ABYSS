@@ -346,12 +346,15 @@ public class CrystalGolemEntity extends PathfinderMob {
 	}
 
 	public int getFadedColor() {
+		return this.getCrystal().getColorARGB();
+	}
+
+	public int getAlphaColor() {
 		if (this.turningOffTick > 0) {
 			float progress = (FADING_DURATION - this.turningOffTick) / (float)FADING_DURATION;
-			int alpha = (int)(255 * (1.0f - progress));
-			return this.getCrystal().getColorARGB() & 0x00FFFFFF | (alpha << 24);
+			return (int)(255 * (1.0f - progress));
 		}
-		return this.getCrystal().getColorARGB();
+		return 255;
 	}
 
 	public float getLaserChargingPosition() {
